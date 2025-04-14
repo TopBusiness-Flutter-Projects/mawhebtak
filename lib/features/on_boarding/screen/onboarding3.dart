@@ -91,6 +91,8 @@ class OnBoarding3 extends StatelessWidget {
                         ),
                         SizedBox(
                           height: 30.h,
+
+
                         ),
                         Padding(
                           padding: EdgeInsets.only(right: 100.w, left: 100.w),
