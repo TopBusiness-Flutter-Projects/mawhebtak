@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:mawhebtak/core/utils/assets_manager.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../../config/routes/app_routes.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../core/utils/dialogs.dart';
+import '../../../core/exports.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -30,30 +30,31 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _getStoreUser() async {
-    Navigator.pushReplacementNamed(context, Routes.loginRoute);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // if (prefs.getString('onBoarding') != null) {
-    //   if (prefs.getString('user') != null) {
-    //     Navigator.pushReplacementNamed(context, Routes.mainRoute);
-    //   } else {
-    //     Navigator.pushNamedAndRemoveUntil(
-    //       context,
-    //       Routes.loginRoute,
-    //       ModalRoute.withName(
-    //         Routes.initialRoute,
-    //       ),
-    //     );
-    //   }
-    // } else {
-    //   Navigator.pushReplacementNamed(
-    //     context,
-    //     Routes.initialRoute,
+    String? firstInstall = await Preferences.instance.getFirstInstall();
 
-    //     ///onBprading
-    //   );
-    // }
+    if (firstInstall != null) {
+      if (prefs.getString('user') != null) {
+        print("main screen");
+        Navigator.pushReplacementNamed(context, Routes.mainRoute);
+      } else {
+        print("login");
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          Routes.loginRoute,
+          ModalRoute.withName(Routes.initialRoute),
+        );
+      }
+    } else {
+      print("onboarding");
+      Navigator.pushReplacementNamed(
+        context,
+        Routes.onboardingPageScreenRoute,
+      );
+    }
   }
+
 
   @override
   void initState() {
@@ -81,9 +82,9 @@ class _SplashScreenState extends State<SplashScreen>
               tag: 'logo',
               child: SizedBox(
                 child: Image.asset(
-                  ImageAssets.logoImage,
-                  // height: getSize(context) / 1.2,
-                  // width: getSize(context) / 1.2,
+                  ImageAssets.appIcon,
+                  height: getSize(context) / 1.3,
+                  width: getSize(context) / 1.3,
                 ),
               ),
             ),
