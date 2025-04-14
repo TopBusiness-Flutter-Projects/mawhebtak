@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'hex_color.dart';
 
 class AppColors {
-  static Color primary = const Color(0xff3646ff);
-  static Color secondPrimary = HexColor('#F4E07D');
+  static Color primary = const Color(0xff3761EA);
+  static Color secondPrimary = HexColor('#48B6F0');
 
   static Color red = HexColor('#FF0000');
   static Color black = Colors.black;
@@ -14,7 +14,7 @@ class AppColors {
   static Color error = Colors.red;
   static Color transparent = Colors.transparent;
 
-  static Color gray = Colors.grey;
+  static Color gray = const Color(0xff5175ED);
 
   Color darken(Color color, [double amount = .1]) {
     assert(amount >= 0 && amount <= 1);

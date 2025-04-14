@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
+import 'package:mawhebtak/features/on_boarding/screen/onboarding_screen.dart';
 import 'package:mawhebtak/features/splash/screens/splash_screen.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
@@ -33,6 +34,13 @@ class AppRoutes {
       case Routes.loginRoute:
         return PageTransition(
           child: const LoginScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+     case Routes.onboardingPageScreenRoute:
+        return PageTransition(
+          child: const OnBoardingScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
