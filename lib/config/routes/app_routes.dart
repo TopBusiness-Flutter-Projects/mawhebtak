@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mawhebtak/features/forget_password/screens/forget_password_screen.dart';
 import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
 import 'package:mawhebtak/features/on_boarding/screen/onboarding_screen.dart';
 import 'package:mawhebtak/features/splash/screens/splash_screen.dart';
@@ -11,6 +12,7 @@ class Routes {
   static const String loginRoute = '/login';
   static const String mainRoute = '/main';
   static const String onboardingPageScreenRoute = '/onboardingPageScreenRoute';
+  static const String forgetPasswordRoute = '/forgetPassword';
 }
 
 class AppRoutes {
@@ -53,17 +55,13 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      //
-      // case Routes.resultOfLessonExam:
-      //   ResponseOfApplyLessonExmamData model =
-      //       settings.arguments as ResponseOfApplyLessonExmamData;
-      //   return PageTransition(
-      //     child: ResultExamLessonScreen(model: model),
-      //     type: PageTransitionType.fade,
-      //     alignment: Alignment.center,
-      //     duration: const Duration(milliseconds: 800),
-      //   );
-
+        case Routes.forgetPasswordRoute:
+        return PageTransition(
+          child: const ForgetPasswordScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
       default:
         return undefinedRoute();
     }

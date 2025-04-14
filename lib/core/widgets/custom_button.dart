@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../../../core/utils/app_colors.dart';
-import '../../../core/utils/app_strings.dart';
-import '../../../core/utils/get_size.dart';
+import 'package:mawhebtak/core/exports.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -16,17 +12,17 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: getSize(context) / 12, vertical: getSize(context) / 32),
+          horizontal: 5.w, vertical: 10.h),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(getSize(context) / 12),
+        borderRadius: BorderRadius.circular(8.r),
         child: Container(
           width: double.infinity,
           alignment: Alignment.center,
-          padding: EdgeInsets.all(getSize(context) / 32),
+          padding: EdgeInsets.all(12.r),
           decoration: BoxDecoration(
             color: AppColors.primary,
-            borderRadius: BorderRadius.circular(getSize(context) / 12),
+            borderRadius: BorderRadius.circular(8.sp),
           ),
           child: Text(
             title,

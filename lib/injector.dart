@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mawhebtak/features/forget_password/cubit/forget_password_cubit.dart';
+import 'package:mawhebtak/features/forget_password/data/repos/forget_password_repo.dart';
 import 'package:mawhebtak/features/login/cubit/cubit.dart';
 import 'package:mawhebtak/features/login/data/login_repo.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
@@ -40,11 +42,16 @@ Future<void> setup() async {
     () => OnboardingCubit(
 
     ),
+  ); serviceLocator.registerFactory(
+    () => ForgetPasswordCubit(
+      serviceLocator(),
+    ),
   );
 //!----------------------------------------------------------------
 ///////////////////////////////////////////////////////////////////
 //!-------------------------Declare Repo---------------------------
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
 
 //!----------------------------------------------------------------

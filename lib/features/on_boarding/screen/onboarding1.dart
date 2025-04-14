@@ -1,6 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../cubit/onboarding_cubit.dart';
 
 class OnBoarding1 extends StatelessWidget {
@@ -43,7 +43,7 @@ class OnBoarding1 extends StatelessWidget {
               SmoothPageIndicator(
                   controller: cubit.pageController,
                   count: cubit.numPages,
-                  textDirection: TextDirection.ltr,
+                 // textDirection: TextDirection.ltr,
                   effect: WormEffect(
                     activeDotColor: AppColors.secondPrimary,
                     dotColor: AppColors.gray,
@@ -59,7 +59,7 @@ class OnBoarding1 extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         horizontal: getSize(context) / 44),
                     child: Text(
-                      'Largest Community bettween artists',
+                      "onboarding1_title".tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: 'NotoSans',
@@ -71,8 +71,8 @@ class OnBoarding1 extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(getSize(context) / 44),
                     child: Text(
+                      "onboarding1_description".tr(),
                       textAlign: TextAlign.center,
-                      'Mawahbtak big platform connects all artists in all fields to make large community between artists in Egypt',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontFamily: 'NotoSans',
@@ -99,8 +99,7 @@ class OnBoarding1 extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.sp),
                         ),
                         child: Text(
-                          //trans.tr('next'),
-                          'Next',
+                          "next".tr(),
                           style: TextStyle(
                               fontFamily: 'Noto Sans',
                               color: AppColors.white,

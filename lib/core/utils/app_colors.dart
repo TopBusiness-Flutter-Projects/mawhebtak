@@ -9,12 +9,13 @@ class AppColors {
   static Color red = HexColor('#FF0000');
   static Color black = Colors.black;
   static Color blackLite = Colors.black12;
+  static Color grayLite = const Color(0xffF7F7F7);
   static Color success = Colors.green;
   static Color white = Colors.white;
   static Color error = Colors.red;
   static Color transparent = Colors.transparent;
-
-  static Color gray = const Color(0xff5175ED);
+  static Color gray = const Color(0xffC0C0C0);
+  static Color darkGray = const Color(0xff464545);
 
   Color darken(Color color, [double amount = .1]) {
     assert(amount >= 0 && amount <= 1);
