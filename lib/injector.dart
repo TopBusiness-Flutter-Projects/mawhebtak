@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
-import 'features/main_screen/data/main_repo.dart';
+import 'features/main_screen/data/repo/main_repo_impl.dart';
 
 // import 'features/downloads_videos/cubit/downloads_videos_cubit.dart';
 
@@ -39,7 +39,7 @@ Future<void> setup() async {
 ///////////////////////////////////////////////////////////////////
 //!-------------------------Declare Repo---------------------------
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => MainRepoImpl(serviceLocator()));
 
 //!----------------------------------------------------------------
 
