@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mawhebtak/features/login/cubit/cubit.dart';
 import 'package:mawhebtak/features/login/data/login_repo.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
+import 'package:mawhebtak/features/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:mawhebtak/features/splash/cubit/cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -39,6 +40,11 @@ Future<void> setup() async {
   );serviceLocator.registerFactory(
     () => HomeCubit(
       serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => OnboardingCubit(
+
     ),
   );
 //!----------------------------------------------------------------
