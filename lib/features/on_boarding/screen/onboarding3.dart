@@ -98,6 +98,7 @@ class OnBoarding3 extends StatelessWidget {
                             onTap: () {
                             Navigator.pushNamed(context, Routes.loginRoute);
                             },
+
                             child: Container(
                               padding: EdgeInsets.only(
                                   left: 40.w,
