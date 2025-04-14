@@ -17,7 +17,7 @@ class ImageAssets {
   static const String introBackgroundImage = '$imagePath/on1.png';
   static const String introBackgroundImage2 = '$imagePath/on2.png';
   static const String profileImage = '$imagePath/profile_image.png';
-  static const String testImage = '$imagePath/test.jpg';
+  static const String testImage = '$imagePath/test_image.jpeg';
    // static const String   = '$imagePath/profile_image.png';
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';

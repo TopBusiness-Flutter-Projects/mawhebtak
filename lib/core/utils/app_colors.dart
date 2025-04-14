@@ -10,12 +10,16 @@ class AppColors {
   static Color black = Colors.black;
   static Color blackLite = HexColor('#2B2430');
   static Color primaryScreen = HexColor('#151F41');
+  static Color blueMeduim = HexColor('#311F3A');
   static Color success = Colors.green;
+  static Color lbny = HexColor('#2ECAEF');
   static Color white = Colors.white;
   static Color error = Colors.red;
   static Color transparent = Colors.transparent;
 
-  static Color gray = HexColor('#464545');
+  static Color grayDark = HexColor('#464545');
+  static Color grayLight = HexColor('#BFBFBF');
+  static Color grayText = HexColor('#C3C3C3');
 
   Color darken(Color color, [double amount = .1]) {
     assert(amount >= 0 && amount <= 1);

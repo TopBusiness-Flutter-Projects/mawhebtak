@@ -85,18 +85,18 @@ class _MainScreenState extends State<MainScreen> {
                                       width: getHeightSize(context) * 0.03,
                                       color: cubit.currentpage == 0
                                           ? AppColors.primary
-                                          : AppColors.gray,
+                                          : AppColors.grayLight,
                                     ),
                                     SizedBox(
                                         height: getHeightSize(context) * 0.008),
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text("home".tr(),
-                                          style: getSemiBoldStyle(
+                                          style: getRegularStyle(
                                               color: cubit.currentpage == 0
                                                   ? AppColors.primary
-                                                  : AppColors.gray,
-                                              fontSize: 12.sp)),
+                                                  : AppColors.grayLight,
+                                              fontSize: 13.sp)),
                                     ),
 
                                   ],
@@ -114,16 +114,16 @@ class _MainScreenState extends State<MainScreen> {
                                       width: getHeightSize(context) * 0.03,
                                       color: cubit.currentpage == 1
                                           ? AppColors.primary
-                                          : AppColors.gray,
+                                          : AppColors.grayLight,
                                     ),
                                     SizedBox(
                                         height: getHeightSize(context) * 0.008),
                                     Text("feeds".tr(),
-                                        style: getSemiBoldStyle(
+                                        style: getRegularStyle(
                                             color: cubit.currentpage == 1
                                                 ? AppColors.primary
-                                                : AppColors.gray,
-                                            fontSize: 12.sp)),
+                                                : AppColors.grayLight,
+                                            fontSize: 13.sp)),
 
                                   ],
                                 ),
@@ -140,16 +140,16 @@ class _MainScreenState extends State<MainScreen> {
                                       width: getHeightSize(context) * 0.03,
                                       color: cubit.currentpage == 2
                                           ? AppColors.primary
-                                          : AppColors.gray,
+                                          : AppColors.grayLight,
                                     ),
                                     SizedBox(
                                         height: getHeightSize(context) * 0.008),
                                     Text("casting".tr(),
-                                        style: getSemiBoldStyle(
+                                        style: getRegularStyle(
                                             color: cubit.currentpage == 2
                                                 ? AppColors.primary
-                                                : AppColors.gray,
-                                            fontSize: 12.sp)),
+                                                : AppColors.grayLight,
+                                            fontSize: 13.sp)),
 
                                   ],
                                 ),
@@ -166,16 +166,16 @@ class _MainScreenState extends State<MainScreen> {
                                       width: getHeightSize(context) * 0.03,
                                       color: cubit.currentpage == 3
                                           ? AppColors.primary
-                                          : AppColors.gray,
+                                          : AppColors.grayLight,
                                     ),
                                     SizedBox(
                                         height: getHeightSize(context) * 0.008),
                                     Text("calendar".tr(),
-                                        style: getSemiBoldStyle(
+                                        style: getRegularStyle(
                                             color: cubit.currentpage == 3
                                                 ? AppColors.primary
-                                                : AppColors.gray,
-                                            fontSize: 12.sp)),
+                                                : AppColors.grayLight,
+                                            fontSize: 13.sp)),
 
                                   ],
                                 ),
@@ -192,18 +192,18 @@ class _MainScreenState extends State<MainScreen> {
                                       width: getHeightSize(context) * 0.03,
                                       color: cubit.currentpage == 4
                                           ? AppColors.primary
-                                          : AppColors.gray,
+                                          : AppColors.grayLight,
                                     ),
                                     SizedBox(
                                         height: getHeightSize(context) * 0.008),
                                     Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Text("more".tr(),
-                                          style: getSemiBoldStyle(
+                                          style: getRegularStyle(
                                               color: cubit.currentpage == 4
                                                   ? AppColors.primary
-                                                  : AppColors.gray,
-                                              fontSize: 12.sp)),
+                                                  : AppColors.grayLight,
+                                              fontSize: 13.sp)),
                                     ),
 
                                   ],

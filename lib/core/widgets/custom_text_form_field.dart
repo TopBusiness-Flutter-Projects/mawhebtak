@@ -86,18 +86,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 filled: true,
                 fillColor: widget.enabled!
                     ? AppColors.white
-                    : AppColors.gray.withOpacity(0.5),
+                    : AppColors.grayDark.withOpacity(0.5),
                 labelText: widget.labelText,
                 labelStyle: getRegularStyle(
                     fontHeight: 1.5,
                     color: myFocusNode.hasFocus
                         ? AppColors.primary
-                        : AppColors.gray),
+                        : AppColors.grayDark),
                 prefixIcon: widget.prefixIcon,
                 prefixIconColor:
-                    myFocusNode.hasFocus ? AppColors.primary : AppColors.gray,
+                    myFocusNode.hasFocus ? AppColors.primary : AppColors.grayDark,
                 suffixIconColor:
-                    myFocusNode.hasFocus ? AppColors.primary : AppColors.gray,
+                    myFocusNode.hasFocus ? AppColors.primary : AppColors.grayDark,
                 suffixIcon: widget.isPassword
                     ? showPassword
                         ? IconButton(
@@ -128,14 +128,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     : widget.suffixIcon,
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 8, vertical: 18.h),
-                hintStyle: getRegularStyle(color: AppColors.gray, fontSize: 14),
+                hintStyle: getRegularStyle(color: AppColors.grayDark, fontSize: 14),
                 errorStyle: getRegularStyle(color: AppColors.red),
                 enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.gray, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.grayDark, width: 1.5),
                     borderRadius: BorderRadius.all(
                         Radius.circular(widget.borderRadius ?? 10.r))),
                 disabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.gray, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.grayDark, width: 1.5),
                     borderRadius: BorderRadius.all(
                         Radius.circular(widget.borderRadius ?? 10.r))),
                 // focused border style

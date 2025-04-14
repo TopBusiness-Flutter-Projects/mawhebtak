@@ -93,7 +93,7 @@ class _CheckInternetWidgetState extends State<CheckInternetWidget> {
                   Text(
                     "lostConnection",
                     style: getMediumStyle(
-                      color: AppColors.gray,
+                      color: AppColors.grayDark,
                     ),
                   ),
                 ],
@@ -107,7 +107,7 @@ class _CheckInternetWidgetState extends State<CheckInternetWidget> {
                   // Icons.error,
                   CupertinoIcons.refresh_thin,
                   size: 50.h,
-                  color: AppColors.gray,
+                  color: AppColors.grayDark,
                 ),
               ),
             ],
@@ -141,7 +141,7 @@ class CustomErrorWidget extends StatelessWidget {
             Text(
               "someThingWrong",
               style: getMediumStyle(
-                color: AppColors.gray,
+                color: AppColors.grayDark,
               ),
             ),
           ],
@@ -153,7 +153,7 @@ class CustomErrorWidget extends StatelessWidget {
             // Icons.error,
             CupertinoIcons.refresh_thin,
             size: 50.h,
-            color: AppColors.gray,
+            color: AppColors.grayDark,
           ),
         ),
       ],
