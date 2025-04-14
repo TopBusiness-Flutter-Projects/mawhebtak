@@ -1,12 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:travel_club/core/exports.dart';
-import 'package:travel_club/features/home/cubit/home_cubit.dart';
-import 'package:travel_club/features/home/cubit/home_state.dart';
-import 'package:travel_club/features/main_screen/cubit/cubit.dart';
-import 'package:travel_club/features/main_screen/cubit/state.dart';
-import 'package:travel_club/features/my_account/cubit/account_cubit.dart';
 
+
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../../core/exports.dart';
+import '../cubit/cubit.dart';
+import '../cubit/state.dart';
 import 'check_internet_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
         return WillPopScope(
           onWillPop: () async {
             if (cubit.currentpage == 0) {
-              return await showExitDialog(context);
+            //  return await showExitDialog(context);
             } else {
               await cubit.changePage(0);
             }
@@ -35,22 +36,26 @@ class _MainScreenState extends State<MainScreen> {
           child: Scaffold(
             body: Stack(
               children: [
-                BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
-                  return CheckInternetWidget(
-                    whenResumed: () {
-                      context.read<HomeCubit>().getHomeData();
-                      context.read<AccountCubit>().getUserData();
-                    },
-                    child: state is ErrorGetHomeData &&
-                            context.read<HomeCubit>().homeModel.data == null
-                        ? CustomErrorWidget(
-                            onTap: () {
-                              context.read<HomeCubit>().getHomeData();
-                            },
-                          )
-                        : cubit.screens[cubit.currentpage],
-                  );
-                }),
+                // BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
+                //   return CheckInternetWidget(
+                //     whenResumed: () {
+                //       // context.read<HomeCubit>().getHomeData();
+                //       // context.read<AccountCubit>().getUserData();
+                //     },
+                //     child:
+                //     // state is ErrorGetHomeData &&
+                //     //         context.read<HomeCubit>().homeModel.data == null
+                //     //     ? CustomErrorWidget(
+                //     //         onTap: () {
+                //     //           context.read<HomeCubit>().getHomeData();
+                //     //         },
+                //     //       )
+                //     //     :
+                //
+                //   );
+               // }
+              //  ),
+                cubit.screens[cubit.currentpage],
                 Positioned(
                     bottom: 0,
                     child: Container(
@@ -58,13 +63,13 @@ class _MainScreenState extends State<MainScreen> {
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(0),
                           ),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 2),
+                              horizontal: 0, vertical: 0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -74,26 +79,26 @@ class _MainScreenState extends State<MainScreen> {
                                 },
                                 child: Column(
                                   children: [
+                                    SizedBox(height: 4.h,),
                                     SvgPicture.asset(
-                                      AppIcons.home,
-                                      width: getHeightSize(context) * 0.04,
+                                      AppIcons.homeIcon,
+                                      width: getHeightSize(context) * 0.03,
                                       color: cubit.currentpage == 0
                                           ? AppColors.primary
-                                          : AppColors.grey,
+                                          : AppColors.gray,
                                     ),
                                     SizedBox(
                                         height: getHeightSize(context) * 0.008),
-                                    Text(AppTranslations.home,
-                                        style: getSemiBoldStyle(
-                                            color: cubit.currentpage == 0
-                                                ? AppColors.primary
-                                                : AppColors.grey,
-                                            fontSize: 12.sp)),
-                                    if (cubit.currentpage == 0)
-                                      SvgPicture.asset(
-                                        AppIcons.choosenNav,
-                                        width: 40.w,
-                                      )
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text("home".tr(),
+                                          style: getSemiBoldStyle(
+                                              color: cubit.currentpage == 0
+                                                  ? AppColors.primary
+                                                  : AppColors.gray,
+                                              fontSize: 12.sp)),
+                                    ),
+
                                   ],
                                 ),
                               ),
@@ -103,26 +108,23 @@ class _MainScreenState extends State<MainScreen> {
                                 },
                                 child: Column(
                                   children: [
+                                    SizedBox(height: 4.h,),
                                     SvgPicture.asset(
-                                      AppIcons.myBookings,
-                                      width: getHeightSize(context) * 0.04,
+                                      AppIcons.feeds,
+                                      width: getHeightSize(context) * 0.03,
                                       color: cubit.currentpage == 1
                                           ? AppColors.primary
-                                          : AppColors.grey,
+                                          : AppColors.gray,
                                     ),
                                     SizedBox(
                                         height: getHeightSize(context) * 0.008),
-                                    Text(AppTranslations.myBookings,
+                                    Text("feeds".tr(),
                                         style: getSemiBoldStyle(
                                             color: cubit.currentpage == 1
                                                 ? AppColors.primary
-                                                : AppColors.grey,
+                                                : AppColors.gray,
                                             fontSize: 12.sp)),
-                                    if (cubit.currentpage == 1)
-                                      SvgPicture.asset(
-                                        AppIcons.choosenNav,
-                                        width: 40.w,
-                                      )
+
                                   ],
                                 ),
                               ),
@@ -132,26 +134,23 @@ class _MainScreenState extends State<MainScreen> {
                                 },
                                 child: Column(
                                   children: [
+                                    SizedBox(height: 4.h,),
                                     SvgPicture.asset(
-                                      AppIcons.favourites,
-                                      width: getHeightSize(context) * 0.04,
+                                      AppIcons.casting,
+                                      width: getHeightSize(context) * 0.03,
                                       color: cubit.currentpage == 2
                                           ? AppColors.primary
-                                          : AppColors.grey,
+                                          : AppColors.gray,
                                     ),
                                     SizedBox(
                                         height: getHeightSize(context) * 0.008),
-                                    Text(AppTranslations.favorites,
+                                    Text("casting".tr(),
                                         style: getSemiBoldStyle(
                                             color: cubit.currentpage == 2
                                                 ? AppColors.primary
-                                                : AppColors.grey,
+                                                : AppColors.gray,
                                             fontSize: 12.sp)),
-                                    if (cubit.currentpage == 2)
-                                      SvgPicture.asset(
-                                        AppIcons.choosenNav,
-                                        width: 40.w,
-                                      )
+
                                   ],
                                 ),
                               ),
@@ -161,29 +160,56 @@ class _MainScreenState extends State<MainScreen> {
                                 },
                                 child: Column(
                                   children: [
+                                    SizedBox(height: 4.h,),
                                     SvgPicture.asset(
-                                      AppIcons.myAccount,
-                                      width: getHeightSize(context) * 0.04,
+                                      AppIcons.calendar,
+                                      width: getHeightSize(context) * 0.03,
                                       color: cubit.currentpage == 3
                                           ? AppColors.primary
-                                          : AppColors.grey,
+                                          : AppColors.gray,
                                     ),
                                     SizedBox(
                                         height: getHeightSize(context) * 0.008),
-                                    Text(AppTranslations.myAccount,
+                                    Text("calendar".tr(),
                                         style: getSemiBoldStyle(
                                             color: cubit.currentpage == 3
                                                 ? AppColors.primary
-                                                : AppColors.grey,
+                                                : AppColors.gray,
                                             fontSize: 12.sp)),
-                                    if (cubit.currentpage == 3)
-                                      SvgPicture.asset(
-                                        AppIcons.choosenNav,
-                                        width: 40.w,
-                                      )
+
                                   ],
                                 ),
                               ),
+                              GestureDetector(
+                                onTap: () {
+                                  cubit.changePage(4);
+                                },
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 4.h,),
+                                    SvgPicture.asset(
+                                      AppIcons.more,
+                                      width: getHeightSize(context) * 0.03,
+                                      color: cubit.currentpage == 4
+                                          ? AppColors.primary
+                                          : AppColors.gray,
+                                    ),
+                                    SizedBox(
+                                        height: getHeightSize(context) * 0.008),
+                                    Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text("more".tr(),
+                                          style: getSemiBoldStyle(
+                                              color: cubit.currentpage == 4
+                                                  ? AppColors.primary
+                                                  : AppColors.gray,
+                                              fontSize: 12.sp)),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+
                             ],
                           ),
                         )))
