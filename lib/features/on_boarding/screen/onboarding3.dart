@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
@@ -52,7 +53,6 @@ class OnBoarding3 extends StatelessWidget {
                         SmoothPageIndicator(
                           controller: cubit.pageController,
                           count: cubit.numPages,
-                          textDirection: TextDirection.ltr,
                           effect: WormEffect(
                             activeDotColor: AppColors.secondPrimary,
                             dotColor: AppColors.grayDark,
@@ -68,7 +68,7 @@ class OnBoarding3 extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: getSize(context) / 44),
                           child: Text(
-                            'Contact for jobs',
+                            "onboarding3_title".tr(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily: 'NotoSans',
@@ -81,8 +81,7 @@ class OnBoarding3 extends StatelessWidget {
                           padding: EdgeInsets.all(getSize(context) / 44),
                           child: Text(
                             textAlign: TextAlign.center,
-                            'Mawahbtak big platform connects all artists in all fields to make large community between artists in Egypt',
-                            style: TextStyle(
+                            "onboarding3_description".tr(),                            style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontFamily: 'NotoSans',
                                 color: AppColors.white,
@@ -91,16 +90,13 @@ class OnBoarding3 extends StatelessWidget {
                         ),
                         SizedBox(
                           height: 30.h,
-
-
                         ),
                         Padding(
                           padding: EdgeInsets.only(right: 100.w, left: 100.w),
                           child: GestureDetector(
                             onTap: () {
-                            Navigator.pushNamed(context, Routes.loginRoute);
+                              Navigator.pushNamed(context, Routes.loginRoute);
                             },
-
                             child: Container(
                               padding: EdgeInsets.only(
                                   left: 40.w,
@@ -112,8 +108,7 @@ class OnBoarding3 extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8.sp),
                               ),
                               child: Text(
-                                //trans.tr('next'),
-                                'Let’s start',
+                                "Let_is_start".tr(),
                                 style: TextStyle(
                                     fontFamily: 'Noto Sans',
                                     color: AppColors.white,

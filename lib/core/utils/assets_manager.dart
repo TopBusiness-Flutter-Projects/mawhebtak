@@ -5,6 +5,7 @@ const String lottiePath = 'assets/lottie';
 class ImageAssets {
   //images
   static const String appIcon = '$imagePath/splash_logo.png';
+  static const String appIconWhite = '$imagePath/app_icon_white.png';
   static const String onboarding1Image = '$imagePath/onboarding1.png';
   static const String onboarding2Image = '$imagePath/onboarding2.png';
   static const String onboarding3Image = '$imagePath/onboarding3.png';
@@ -20,7 +21,10 @@ class ImageAssets {
   static const String testImage = '$imagePath/test_image.jpeg';
    // static const String   = '$imagePath/profile_image.png';
   // icons
-  static const String phoneIcon = '$iconsPath/phone.svg';
+  static const String emailIcon = '$iconsPath/email_icon.svg';
+  static const String passwordIcon = '$iconsPath/Password_icon.svg';
+  static const String facebookIcon = '$iconsPath/facebook.svg';
+  static const String googleIcon = '$iconsPath/google.svg';
 
   //Lottie
 

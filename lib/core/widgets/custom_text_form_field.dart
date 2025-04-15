@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/exports.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -15,6 +16,8 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
+  final String? hintText;
+  final double? hintTextSize;
   //FocusNode myFocusNode = FocusNode();
   const CustomTextField({
     super.key,
@@ -31,7 +34,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.onSubmitted,
     this.borderRadius,
-    this.enabled = true,
+    this.enabled = true, this.hintText, this.hintTextSize,
   });
 
   @override
@@ -63,17 +66,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return SizedBox(
       height: widget.isMessage ? 150.h : null,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8),
+        padding: EdgeInsets.symmetric(vertical: 8.w),
         child: TextFormField(
             enabled: widget.enabled,
             controller: widget.controller,
             expands: false,
             onTap: widget.onTap,
-            onTapOutside: (event) {
-              FocusManager.instance.primaryFocus?.unfocus();
-            },
+            onTapOutside: (event) {FocusManager.instance.primaryFocus?.unfocus();},
             focusNode: myFocusNode,
-            style: getBoldStyle(),
+            style: getRegularStyle(),
             onChanged: widget.onChanged,
             validator: widget.validator,
             keyboardType: widget.keyboardType,
@@ -84,29 +85,26 @@ class _CustomTextFieldState extends State<CustomTextField> {
             obscureText: widget.isPassword ? !showPassword : false,
             decoration: InputDecoration(
                 filled: true,
-                fillColor: widget.enabled!
-                    ? AppColors.white
-                    : AppColors.grayDark.withOpacity(0.5),
+                fillColor: AppColors.grayLite,
                 labelText: widget.labelText,
                 labelStyle: getRegularStyle(
                     fontHeight: 1.5,
                     color: myFocusNode.hasFocus
                         ? AppColors.primary
-                        : AppColors.grayDark),
+                        : AppColors.gray),
                 prefixIcon: widget.prefixIcon,
                 prefixIconColor:
-                    myFocusNode.hasFocus ? AppColors.primary : AppColors.grayDark,
+                    myFocusNode.hasFocus ?
+                    AppColors.primary :
+                    AppColors.gray,
                 suffixIconColor:
-                    myFocusNode.hasFocus ? AppColors.primary : AppColors.grayDark,
+                    myFocusNode.hasFocus ?
+                    AppColors.primary :
+                    AppColors.gray,
                 suffixIcon: widget.isPassword
                     ? showPassword
                         ? IconButton(
-                            icon: Icon(
-                              widget.isPassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: AppColors.primary,
-                            ),
+                            icon: SvgPicture.asset(ImageAssets.passwordIcon),
                             onPressed: () {
                               setState(() {
                                 showPassword = !showPassword;
@@ -114,12 +112,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             },
                           )
                         : IconButton(
-                            icon: Icon(
-                              !widget.isPassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: AppColors.primary,
-                            ),
+                            icon: SvgPicture.asset(ImageAssets.passwordIcon),
                             onPressed: () {
                               setState(() {
                                 showPassword = !showPassword;
@@ -127,21 +120,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             })
                     : widget.suffixIcon,
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 8, vertical: 18.h),
-                hintStyle: getRegularStyle(color: AppColors.grayDark, fontSize: 14),
-                errorStyle: getRegularStyle(color: AppColors.red),
+                    EdgeInsets.only(left: 20.w,right: 20.w),
+                hintText: widget.hintText ,
+                hintStyle: getRegularStyle(color: AppColors.gray, fontSize:  widget.hintTextSize ?? 14.sp),
+                errorStyle: getRegularStyle(color: AppColors.red,fontSize: 14.sp),
                 enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.grayDark, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.white, width: 1.5),
                     borderRadius: BorderRadius.all(
                         Radius.circular(widget.borderRadius ?? 10.r))),
                 disabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.grayDark, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.white, width: 1.5),
                     borderRadius: BorderRadius.all(
                         Radius.circular(widget.borderRadius ?? 10.r))),
-                // focused border style
                 focusedBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: AppColors.primary, width: 1.5),
+                        BorderSide(color: AppColors.white, width: 1.5),
                     borderRadius: BorderRadius.all(
                         Radius.circular(widget.borderRadius ?? 10.r))),
 
