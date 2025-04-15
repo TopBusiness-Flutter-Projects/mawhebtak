@@ -106,10 +106,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: CustomButton(
                               onTap: () {
                                 if (cubit.formKey.currentState!.validate()) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Processing Data')),
-                                  );
+                                  // ScaffoldMessenger.of(context).showSnackBar(
+                                  //   const SnackBar(
+                                  //       content: Text('Processing Data')),
+                                  // );
+                                  Navigator.pushNamed(context, Routes.mainRoute);
                                 }
                               },
                               title: 'login'.tr()),

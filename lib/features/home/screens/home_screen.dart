@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return Container(
         height: getHeightSize(context),
         width: getWidthSize(context),
-        color: AppColors.primaryHome,
+        color: AppColors.homeColor,
         child:  Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
