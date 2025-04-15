@@ -8,6 +8,8 @@ import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:mawhebtak/features/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:mawhebtak/features/splash/cubit/cubit.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mawhebtak/features/verification/cubit/verification_cubit.dart';
+import 'package:mawhebtak/features/verification/data/repos/verification.repo.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,6 +55,11 @@ Future<void> setup() async {
       serviceLocator(),
     ),
   );
+   serviceLocator.registerFactory(
+    () => VerificationCubit(
+      serviceLocator(),
+    ),
+  );
 //!----------------------------------------------------------------
 ///////////////////////////////////////////////////////////////////
 //!-------------------------Declare Repo---------------------------
@@ -60,6 +67,7 @@ Future<void> setup() async {
   serviceLocator.registerLazySingleton(() => MainRepoImpl(serviceLocator()));
   serviceLocator.registerLazySingleton(() => HomeRepoImpl(serviceLocator()));
   serviceLocator.registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => VerificationRepo(serviceLocator()));
 
 //!----------------------------------------------------------------
 
