@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 
+import 'package:mawhebtak/core/utils/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/login_model.dart';
-
+late SharedPreferences prefs;
 class Preferences {
   static final Preferences instance = Preferences._internal();
 
@@ -12,7 +13,9 @@ class Preferences {
 
   factory Preferences() => instance;
 
-
+  Future<void> init() async {
+    prefs = await SharedPreferences.getInstance();
+  }
   Future<void> setFirstInstall() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('onBoarding', 'Done');
@@ -34,6 +37,15 @@ class Preferences {
     preferences.setString(
         'user', jsonEncode(LoginModel.fromJson(loginModel.toJson())));
     print(await getUserModel());
+  }
+  /// Save app language using SharedPreferences
+  Future<void> savedLang(String local) async {
+    await prefs.setString(AppStrings.locale, local);
+  }
+
+  /// Get app language using SharedPreferences
+  Future<String> getSavedLang() async {
+    return prefs.getString(AppStrings.locale) ?? 'ar'; // Default to 'ar'
   }
  Future<void> clearShared()async{
    SharedPreferences preferences = await SharedPreferences.getInstance();

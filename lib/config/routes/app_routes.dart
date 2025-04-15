@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:mawhebtak/features/about_us/screens/about_us_screen.dart';
+import 'package:mawhebtak/features/auth/change_password/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/auth/forget_password/screens/forget_password_screen.dart';
 import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dart';
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
+import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
+import 'package:mawhebtak/features/contact_us/screens/contact_us_screen.dart';
 import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
 import 'package:mawhebtak/features/auth/new_password/screens/new_password_screen.dart';
 import 'package:mawhebtak/features/auth/verification/screens/verification_screen.dart';
+import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
+import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_condition.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/auth/login/screens/login_screen.dart';
 import '../../features/events/screens/event_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
 import '../../features/home/screens/video_screen.dart';
+import '../../features/referral_code/screens/referral_code_screen.dart';
 
 class Routes {
   static const String initialRoute = '/';
@@ -20,6 +27,13 @@ class Routes {
   static const String forgetPasswordRoute = '/forgetPassword';
   static const String verificationRoute = '/verification';
   static const String newPasswordRoute = '/newPassword';
+  static const String moreRoute = '/more';
+  static const String changeLanguageRoute = '/changeLanguage';
+  static const String changePasswordRoute = '/changePassword';
+  static const String aboutUsRoute = '/aboutUs';
+  static const String contactUsRoute = '/contactUs';
+  static const String referralCodeRoute = '/referralCode';
+  static const String termsAndConditionRoute = '/termsAndCondition';
   static const String videoScreenRoute = '/videoScreenRoute';
   static const String eventScreen = '/eventScreen';
   static const String notificationScreen = '/notificationScreen';
@@ -60,7 +74,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-     case Routes.onboardingPageScreenRoute:
+      case Routes.onboardingPageScreenRoute:
         return PageTransition(
           child: const OnBoardingScreen(),
           type: PageTransitionType.fade,
@@ -75,23 +89,70 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.forgetPasswordRoute:
+      case Routes.forgetPasswordRoute:
         return PageTransition(
           child: const ForgetPasswordScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.verificationRoute:
+      case Routes.verificationRoute:
         return PageTransition(
           child: const VerificationScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.newPasswordRoute:
+      case Routes.newPasswordRoute:
         return PageTransition(
           child: const NewPasswordScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+      case Routes.moreRoute:
+        return PageTransition(
+          child: const MoreScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+      case Routes.changeLanguageRoute:
+        return PageTransition(
+          child: const ChangeLanguageScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+      case Routes.changePasswordRoute:
+        return PageTransition(
+          child: const ChangePasswordScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+      case Routes.aboutUsRoute:
+        return PageTransition(
+          child: const AboutUsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+      case Routes.termsAndConditionRoute:
+        return PageTransition(
+          child: const TermsAndConditionScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );    case Routes.contactUsRoute:
+        return PageTransition(
+          child: const ContactUsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );  case Routes.referralCodeRoute:
+        return PageTransition(
+          child: const ReferralCodeScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

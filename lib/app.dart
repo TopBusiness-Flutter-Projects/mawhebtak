@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mawhebtak/features/about_us/cubit/about_us_cubit.dart';
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
+import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
@@ -12,11 +14,14 @@ import 'config/themes/app_theme.dart';
 import 'core/utils/app_strings.dart';
 import 'package:mawhebtak/injector.dart' as injector;
 
+import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/auth/splash/cubit/cubit.dart';
+import 'features/change_langauge/cubit/change_language_cubit.dart';
 import 'features/events/cubit/event_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
+import 'features/referral_code/cubit/about_us_cubit.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -47,6 +52,8 @@ class _MyAppState extends State<MyApp> {
           ),  BlocProvider(
             create: (_) => injector.serviceLocator<EventCubit>(),
           ), BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<HomeCubit>(),
           ),
           BlocProvider(
@@ -66,6 +73,18 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<NewPasswordCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => injector.serviceLocator<ContactUsCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => injector.serviceLocator<ChangePasswordCubit>(),
+          ),  BlocProvider(
+            create: (_) => injector.serviceLocator<ChangeLanguageCubit>(),
+          ),BlocProvider(
+            create: (_) => injector.serviceLocator<AboutUsCubit>(),
+          ),BlocProvider(
+            create: (_) => injector.serviceLocator<ReferralCodeCubit>(),
           ),
         ],
         child: GetMaterialApp(
