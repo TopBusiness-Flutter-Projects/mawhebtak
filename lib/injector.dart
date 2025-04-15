@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:mawhebtak/features/forget_password/cubit/forget_password_cubit.dart';
-import 'package:mawhebtak/features/forget_password/data/repos/forget_password_repo.dart';
-import 'package:mawhebtak/features/login/cubit/cubit.dart';
-import 'package:mawhebtak/features/login/data/login_repo.dart';
+import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
+import 'package:mawhebtak/features/auth/forget_password/data/repos/forget_password_repo.dart';
+import 'package:mawhebtak/features/auth/login/cubit/cubit.dart';
+import 'package:mawhebtak/features/auth/login/data/login_repo.dart';
+import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
+import 'package:mawhebtak/features/auth/splash/cubit/cubit.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
-import 'package:mawhebtak/features/on_boarding/cubit/onboarding_cubit.dart';
-import 'package:mawhebtak/features/splash/cubit/cubit.dart';
+import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
+import 'package:mawhebtak/features/auth/new_password/data/repos/new_password_repo.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mawhebtak/features/verification/cubit/verification_cubit.dart';
-import 'package:mawhebtak/features/verification/data/repos/verification.repo.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.dart';
+import 'package:mawhebtak/features/auth/verification/data/repos/verification.repo.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,6 +59,10 @@ Future<void> setup() async {
     () => VerificationCubit(
       serviceLocator(),
     ),
+  );  serviceLocator.registerFactory(
+    () => NewPasswordCubit(
+      serviceLocator(),
+    ),
   );
 //!----------------------------------------------------------------
 ///////////////////////////////////////////////////////////////////
@@ -68,6 +72,7 @@ Future<void> setup() async {
   serviceLocator.registerLazySingleton(() => HomeRepoImpl(serviceLocator()));
   serviceLocator.registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => VerificationRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => NewPasswordRepo(serviceLocator()));
 
 //!----------------------------------------------------------------
 

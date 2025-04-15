@@ -2,11 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/models/login_model.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
-import 'package:mawhebtak/features/login/cubit/cubit.dart';
-import 'package:mawhebtak/features/login/cubit/state.dart';
+import 'package:mawhebtak/features/auth/login/cubit/cubit.dart';
+import 'package:mawhebtak/features/auth/login/cubit/state.dart';
 
-import '../../../core/widgets/custom_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -106,10 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: CustomButton(
                               onTap: () {
                                 if (cubit.formKey.currentState!.validate()) {
-                                  // ScaffoldMessenger.of(context).showSnackBar(
-                                  //   const SnackBar(
-                                  //       content: Text('Processing Data')),
-                                  // );
+                                  Preferences.instance.setUser(LoginModel());
                                   Navigator.pushNamed(context, Routes.mainRoute);
                                 }
                               },

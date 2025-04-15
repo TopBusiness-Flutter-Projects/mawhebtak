@@ -1,9 +1,9 @@
 import 'dart:async';
+import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../config/routes/app_routes.dart';
-import '../../../core/exports.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

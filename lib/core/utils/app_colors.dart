@@ -10,6 +10,7 @@ class AppColors {
   static Color gray = const Color(0xffC0C0C0);
 
   static Color red = HexColor('#FF0000');
+  static Color redLight = HexColor('#C598C2');
   static Color black = Colors.black;
   static Color blackLite = HexColor('#2B2430');
   static Color homeColor = HexColor('#151F41');
