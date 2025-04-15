@@ -14,6 +14,7 @@ class ImageAssets {
   static const String logo2Image = '$imagePath/app_icon.png';
   static const String logo3Image = '$imagePath/app_icon.png';
   static const String logoImage = '$imagePath/1.png';
+  static const String homeTestImage = '$imagePath/home_test_image.png';
   // static const String profileDefault = '$imagePath/1.png';
   static const String topbusinessImage = '$imagePath/topbusiness.png';
   static const String introBackgroundImage = '$imagePath/on1.png';
@@ -40,6 +41,7 @@ class AppIcons {
   static const String more = '$iconsPath/More.svg';
   static const String searchIcon = '$iconsPath/search_icon.svg';
   static const String videoIcon = '$iconsPath/video_icon.svg';
+  static const String calenderIcon = '$iconsPath/calender.svg';
   static const String notificationIcon = '$iconsPath/notification_icon.svg';
   static const String profileDefault = '$iconsPath/profile_image.svg';
 
