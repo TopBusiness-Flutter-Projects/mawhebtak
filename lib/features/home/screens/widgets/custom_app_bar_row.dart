@@ -12,31 +12,10 @@ class CustomAppBarRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
-            child: Container(height: 40.h,width: 40.w,
-              decoration: BoxDecoration(
-                color: AppColors.grayDark,
-                borderRadius: BorderRadius.circular(8.r),),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(
-                    height: 21.h,width: 18.w,
-                    AppIcons.notificationIcon),
-              ),),
-          ),
+          SizedBox(
+              height: 40.h,width: 40.w,
+              child: Image.asset(ImageAssets.profileImage,)),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Container(height: 40.h,width: 40.w,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(8.r),),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(AppIcons.videoIcon),
-              ),),
-          ),
 
           Container(
               height: 40.h,
@@ -52,20 +31,45 @@ class CustomAppBarRow extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SvgPicture.asset(AppIcons.searchIcon),
-                    Spacer(),
                     Text(
                         "search".tr(),
                         style: getRegularStyle(
-fontSize: 13.sp,
+                            fontSize: 13.sp,
                             color: AppColors.white   )),
+                    Spacer(),
+
+                    SvgPicture.asset(AppIcons.searchIcon),
+
 
                   ],
                 ),
               )),
-          SizedBox(
-              height: 40.h,width: 40.w,
-              child: Image.asset(ImageAssets.profileImage,)),
+
+
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 10.0.w),
+            child: Container(height: 40.h,width: 40.w,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(8.r),),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SvgPicture.asset(AppIcons.videoIcon),
+              ),),
+          ),
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 1.0.w),
+            child: Container(height: 40.h,width: 40.w,
+              decoration: BoxDecoration(
+                color: AppColors.grayDark,
+                borderRadius: BorderRadius.circular(8.r),),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                    height: 21.h,width: 18.w,
+                    AppIcons.notificationIcon),
+              ),),
+          ),
         ]);
   }
 }

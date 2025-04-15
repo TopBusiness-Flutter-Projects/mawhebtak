@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_button.dart';
 
@@ -15,6 +17,26 @@ class UnderCustomRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+
+           // ممكن تحط Spacer هنا بدلًا منه لو المكان يسمح
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 40.h,
+                    width: 40.w,
+                    child: Image.asset(ImageAssets.profileImage),
+                  ),
+                  Text("Ahmed Mokhtar", style: getMediumStyle(color: AppColors.white,fontSize: 16.sp)),
+                  Text("Talent / Actor Expert", style: getRegularStyle(color: AppColors.grayText,fontSize: 14.sp)),
+               //   CustomButton(title: 'Follow', style: getMediumStyle(color: AppColors.white))
+                ],
+              ),
+            ),
+            Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -29,25 +51,7 @@ class UnderCustomRow extends StatelessWidget {
                   Text("20 K followers", style: getMediumStyle(color: AppColors.white,fontSize: 14.sp)),
                   SizedBox(height: 5.h,),
                   // Text("Ahmed Mokhtar", style: getMediumStyle(color: AppColors.white)),
-CustomButton(title: "Follow",)
-                ],
-              ),
-            ),
-            Spacer(), // ممكن تحط Spacer هنا بدلًا منه لو المكان يسمح
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: 40.h,
-                    width: 40.w,
-                    child: Image.asset(ImageAssets.profileImage),
-                  ),
-                  Text("Ahmed Mokhtar", style: getMediumStyle(color: AppColors.white,fontSize: 16.sp)),
-                  Text("Talent / Actor Expert", style: getRegularStyle(color: AppColors.grayText,fontSize: 14.sp)),
-               //   CustomButton(title: 'Follow', style: getMediumStyle(color: AppColors.white))
+                  CustomButton(title: "follow".tr(),)
                 ],
               ),
             ),
