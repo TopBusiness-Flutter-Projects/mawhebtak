@@ -7,4 +7,5 @@ import 'verification_state.dart';
 class VerificationCubit extends Cubit<VerificationState> {
   VerificationCubit(this.exRepo) : super(VerificationInitial());
   VerificationRepo exRepo;
+  TextEditingController pinController = TextEditingController();
 }

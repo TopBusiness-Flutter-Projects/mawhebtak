@@ -48,7 +48,7 @@ class OnBoarding1 extends StatelessWidget {
                  // textDirection: TextDirection.ltr,
                   effect: WormEffect(
                     activeDotColor: AppColors.secondPrimary,
-                    dotColor: AppColors.grayDark,
+                    dotColor: AppColors.grayLite.withOpacity(0.2),
                     dotHeight:5.h,
                     dotWidth: 13.w,
                     type: WormType.thin,

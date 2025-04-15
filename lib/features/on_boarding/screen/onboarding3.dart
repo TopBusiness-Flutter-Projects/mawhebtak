@@ -1,12 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../../core/exports.dart';
-import '../../../core/utils/assets_manager.dart';
-import '../../../core/utils/get_size.dart';
 import '../cubit/onboarding_cubit.dart';
 
 class OnBoarding3 extends StatelessWidget {
@@ -55,8 +50,7 @@ class OnBoarding3 extends StatelessWidget {
                           count: cubit.numPages,
                           effect: WormEffect(
                             activeDotColor: AppColors.secondPrimary,
-                            dotColor: AppColors.grayDark,
-                            dotHeight: 5.h,
+                            dotColor: AppColors.grayLite.withOpacity(0.2),                            dotHeight: 5.h,
                             dotWidth: 13.w,
                             type: WormType.thin,
                           ),
