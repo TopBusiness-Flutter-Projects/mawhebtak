@@ -21,12 +21,27 @@ class ImageAssets {
   static const String introBackgroundImage2 = '$imagePath/on2.png';
   static const String profileImage = '$imagePath/profile_image.png';
   static const String testImage = '$imagePath/test_image.jpeg';
+  static const String referralCodeImage = '$imagePath/referral_code.png';
    // static const String   = '$imagePath/profile_image.png';
   // icons
   static const String emailIcon = '$iconsPath/email_icon.svg';
   static const String passwordIcon = '$iconsPath/Password_icon.svg';
   static const String facebookIcon = '$iconsPath/facebook.svg';
   static const String googleIcon = '$iconsPath/google.svg';
+  static const String myProfileIcon = '$iconsPath/my_profile.svg';
+  static const String myFavoriteIcon = '$iconsPath/my_favorite.svg';
+  static const String walletIcon = '$iconsPath/wallet.svg';
+  static const String referralCode = '$iconsPath/Referral_Code.svg';
+  static const String changeLanguage = '$iconsPath/change_language.svg';
+  static const String changePassword = '$iconsPath/change_password.svg';
+  static const String aboutUs = '$iconsPath/about_us.svg';
+  static const String contactUs = '$iconsPath/contact_us.svg';
+  static const String termsAndCondition = '$iconsPath/terms_and_condition.svg';
+  static const String logout = '$iconsPath/logout.svg';
+  static const String whatsapp = '$iconsPath/watsapp.svg';
+  static const String messenger = '$iconsPath/messager.svg';
+  static const String xIcon = '$iconsPath/x_icon.svg';
+  static const String face = '$iconsPath/face.svg';
 
   //Lottie
 
@@ -44,5 +59,6 @@ class AppIcons {
   static const String calenderIcon = '$iconsPath/calender.svg';
   static const String notificationIcon = '$iconsPath/notification_icon.svg';
   static const String profileDefault = '$iconsPath/profile_image.svg';
+  static const String notificationWithBlueContainer = '$iconsPath/notification_with_blue_container.svg';
 
 }
