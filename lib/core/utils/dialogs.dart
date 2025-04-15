@@ -1,9 +1,13 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:mawhebtak/core/utils/assets_manager.dart';
-import 'package:get/get.dart';
-import 'package:mawhebtak/core/utils/app_colors.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:mawhebtak/core/exports.dart';
+
 import 'package:overlay_loader_with_app_icon/overlay_loader_with_app_icon.dart';
+// import 'package:easy_localization/easy_localization.dart' as easy;
 
 /*----------------------------------------------------------------------------*/
 /*------------------------------  Error Get Bar  -----------------------------*/
@@ -12,7 +16,7 @@ errorGetBar(String message) {
   Get.showSnackbar(
     GetSnackBar(
       messageText: Text(
-        message!,
+        message,
         style: Get.textTheme.titleSmall!.copyWith(
           color: Colors.white,
           height: 1.3,
@@ -37,7 +41,7 @@ errorGetBar(String message) {
 successGetBar(String? message) {
   Get.showSnackbar(GetSnackBar(
     messageText: Text(
-      message ?? 'success'.tr,
+      message ?? 'success'.tr(),
       style: Get.textTheme.bodyMedium!.copyWith(
         color: Colors.white,
         height: 1.5,
@@ -130,3 +134,136 @@ loadingDialog({required bool isLoading, required Widget child}) {
 /*------------------------------  Bottom Sheet  ----------------------------*/
 /*----------------------------------------------------------------------------*/
 
+/*----------------------------------------------------------------------------*/
+/*------------------------------  Custom Dialogs  ----------------------------*/
+/*----------------------------------------------------------------------------*/
+
+// checkLoggingStatus(BuildContext context, {void Function()? onPressed}) async {
+//   print("AppConst.isLogged: ${AppConst.isLogged}");
+//   if (AppConst.isLogged) {
+//     if (onPressed != null) {
+//       onPressed();
+//     }
+//   } else {
+//     await AwesomeDialog(
+//       context: context,
+//       customHeader: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Image.asset(
+//           ImageAssets.logoImage,
+//         ),
+//       ),
+//       animType: AnimType.topSlide,
+//       showCloseIcon: true,
+//       padding: EdgeInsets.all(10.w),
+//       title: AppTranslations.notLogin,
+//       titleTextStyle: getRegularStyle(fontSize: 16.sp),
+//       btnOkText: AppTranslations.login,
+//       btnOkOnPress: () {
+//         Navigator.pushNamedAndRemoveUntil(
+//             context, Routes.loginRoute, (route) => false);
+//       },
+//       btnCancelOnPress: () {},
+//       btnCancelText: AppTranslations.cancel,
+//     ).show();
+//   }
+// }
+
+/// check is Go Tohome
+// checkGoToHome(BuildContext context, {String? message}) async {
+//   await AwesomeDialog(
+//     context: context,
+//     customHeader: Padding(
+//       padding: const EdgeInsets.all(8.0),
+//       child: Image.asset(
+//         ImageAssets.logoImage,
+//       ),
+//     ),
+//     animType: AnimType.topSlide,
+//     padding: EdgeInsets.all(10.w),
+//     title: AppTranslations.reservationWillCanceled,
+//     titleTextStyle: getRegularStyle(fontSize: 16.sp),
+//     showCloseIcon: true,
+//     btnOk: CustomButton(
+//         title: AppTranslations.goHome,
+//         onTap: () {
+//           Navigator.pushNamedAndRemoveUntil(
+//               context, Routes.mainRoute, (route) => false);
+//         }),
+//   ).show();
+// }
+
+// Exit app
+// showExitDialog(BuildContext context) async {
+//   AwesomeDialog(
+//     context: context,
+//     // dialogType: DialogType.noHeader, // Change to CUSTOM to use custom header
+//     customHeader: Padding(
+//       padding: const EdgeInsets.all(8.0),
+//       child: Image.asset(
+//         ImageAssets.logoImage,
+//         // height: 50.h,
+//         // width: 50.h,
+//       ),
+//     ),
+//     animType: AnimType.topSlide,
+//     padding: EdgeInsets.all(10.w),
+//     title: AppTranslations.areYouSureClose,
+//     titleTextStyle: getRegularStyle(fontSize: 16.sp),
+//     showCloseIcon: true,
+//
+//     btnOkText: AppTranslations.exit,
+//     btnOkOnPress: () {
+//       Navigator.of(context).pop();
+//       SystemNavigator.pop();
+//     },
+//     btnCancelOnPress: () {},
+//     btnCancelText: AppTranslations.cancel,
+//   ).show();
+//   //  showDialog<void>(
+//   //   context: context,
+//   //   barrierDismissible: false,
+//   //   builder: (BuildContext context) {
+//   //     return AlertDialog(
+//   //       title: Text(AppTranslations.areYouSureClose),
+//   //       content: Text(AppTranslations.appClose),
+//   //       actions: <Widget>[
+//   //         TextButton(
+//   //           child: Text(AppTranslations.cancel),
+//   //           onPressed: () {
+//   //             Navigator.of(context).pop();
+//   //           },
+//   //         ),
+//   //         TextButton(
+//   //           child: Text(AppTranslations.exit),
+//   //           onPressed: () {
+//   //             Navigator.of(context).pop();
+//   //             SystemNavigator.pop();
+//   //           },
+//   //         ),
+//   //       ],
+//   //     );
+//   //   },
+//   // );
+// }
+
+deleteAccountDialog(BuildContext context, {void Function()? onPressed}) async {
+  await AwesomeDialog(
+    context: context,
+    customHeader: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Image.asset(
+        ImageAssets.logoImage,
+      ),
+    ),
+    animType: AnimType.topSlide,
+    showCloseIcon: true,
+    padding: EdgeInsets.all(10.w),
+    title: "delete_account_desc".tr(),
+    titleTextStyle: getRegularStyle(fontSize: 16.sp),
+    btnOkText: "delete".tr(),
+    btnOkOnPress: onPressed,
+    btnCancelOnPress: () {},
+    btnCancelText: "cancel".tr(),
+  ).show();
+}

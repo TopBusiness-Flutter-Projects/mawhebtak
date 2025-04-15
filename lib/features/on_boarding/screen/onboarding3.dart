@@ -55,7 +55,7 @@ class OnBoarding3 extends StatelessWidget {
                           count: cubit.numPages,
                           effect: WormEffect(
                             activeDotColor: AppColors.secondPrimary,
-                            dotColor: AppColors.gray,
+                            dotColor: AppColors.grayDark,
                             dotHeight: 5.h,
                             dotWidth: 13.w,
                             type: WormType.thin,

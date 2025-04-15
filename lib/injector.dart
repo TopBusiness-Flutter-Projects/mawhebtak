@@ -15,7 +15,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
-import 'features/main_screen/data/main_repo.dart';
+import 'features/home/cubit/home_cubit.dart';
+import 'features/home/data/repo/home_repo_impl.dart';
+import 'features/main_screen/data/repo/main_repo_impl.dart';
 
 // import 'features/downloads_videos/cubit/downloads_videos_cubit.dart';
 
@@ -37,6 +39,10 @@ Future<void> setup() async {
     () => MainCubit(
       serviceLocator(),
     ),
+  );serviceLocator.registerFactory(
+    () => HomeCubit(
+      serviceLocator(),
+    ),
   );
   serviceLocator.registerFactory(
     () => OnboardingCubit(
@@ -51,8 +57,9 @@ Future<void> setup() async {
 ///////////////////////////////////////////////////////////////////
 //!-------------------------Declare Repo---------------------------
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => MainRepoImpl(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => HomeRepoImpl(serviceLocator()));
   serviceLocator.registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
 
 //!----------------------------------------------------------------
 
