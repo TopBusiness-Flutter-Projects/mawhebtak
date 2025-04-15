@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'hex_color.dart';
 
 class AppColors {
-  static Color primary = const Color(0xff3646ff);
-  static Color secondPrimary = HexColor('#F4E07D');
+  static Color primary = const Color(0xff3761EA);
+  static Color secondPrimary = HexColor('#48B6F0');
   static Color grayLite = const Color(0xffF7F7F7);
   static Color darkGray = const Color(0xff464545);
   static Color gray = const Color(0xffC0C0C0);
