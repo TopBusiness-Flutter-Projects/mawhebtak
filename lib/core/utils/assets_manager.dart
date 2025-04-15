@@ -49,6 +49,39 @@ class ImageAssets {
   static const String face = '$iconsPath/face.svg';
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//sanaaaaaaaaaaaaaaaaaaaaaaa
   //Lottie
 
   static const String noLessons = '$lottiePath/no_lessons.json';
@@ -72,4 +105,24 @@ class AppIcons {
 
   static const String notificationWithBlueContainer = '$iconsPath/notification_with_blue_container.svg';
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//sanaaa
 }

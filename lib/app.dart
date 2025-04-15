@@ -51,7 +51,6 @@ class _MyAppState extends State<MyApp> {
             create: (_) => injector.serviceLocator<SplashCubit>(),
           ),  BlocProvider(
             create: (_) => injector.serviceLocator<EventCubit>(),
-          ), BlocProvider(
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<HomeCubit>(),
@@ -86,6 +85,23 @@ class _MyAppState extends State<MyApp> {
           ),BlocProvider(
             create: (_) => injector.serviceLocator<ReferralCodeCubit>(),
           ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          //sanssssssssssssssssssssssssssss
+
         ],
         child: GetMaterialApp(
           supportedLocales: context.supportedLocales,
