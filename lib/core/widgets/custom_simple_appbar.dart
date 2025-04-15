@@ -6,7 +6,8 @@ class CustomSimpleAppbar extends StatelessWidget {
 final String title;
   @override
   Widget build(BuildContext context) {
-    return          Container(
+    return
+      Container(
       height: getSize(context)/6,
       decoration: BoxDecoration(color: AppColors.white, boxShadow: [
         BoxShadow(
@@ -21,14 +22,20 @@ final String title;
             onTap: () {
               Navigator.pop(context);
             },
-            child: Container(
-
-              decoration: BoxDecoration(
-                  color: AppColors.grayLite,borderRadius: BorderRadius.circular(8.r)),
-              padding: EdgeInsets.only(left: 10.w, right: 10.w),
-              child:  Padding(
-                padding:  EdgeInsets.all(6.r),
-                child: Icon(Icons.arrow_back,color: AppColors.darkGray,size: 16.sp,),
+            child: Padding(
+              padding:  EdgeInsets.only(left: 10.w,right: 10.w),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColors.grayLite,
+                    borderRadius: BorderRadius.circular(8.r)),
+                padding: EdgeInsets.only(left: 5.w, right: 5.w,bottom: 5.h,top: 5.h),
+                child:  Padding(
+                  padding:  EdgeInsets.all(6.r),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: AppColors.darkGray,
+                    size: 16.sp,),
+                ),
               ),
             ),
           ),

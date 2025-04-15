@@ -3,6 +3,7 @@ import 'package:mawhebtak/features/forget_password/screens/forget_password_scree
 import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
 import 'package:mawhebtak/features/on_boarding/screen/onboarding_screen.dart';
 import 'package:mawhebtak/features/splash/screens/splash_screen.dart';
+import 'package:mawhebtak/features/verification/screens/verification_screen.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/login/screens/login_screen.dart';
@@ -13,6 +14,7 @@ class Routes {
   static const String mainRoute = '/main';
   static const String onboardingPageScreenRoute = '/onboardingPageScreenRoute';
   static const String forgetPasswordRoute = '/forgetPassword';
+  static const String verificationRoute = '/verification';
 }
 
 class AppRoutes {
@@ -25,14 +27,6 @@ class AppRoutes {
           builder: (context) => const SplashScreen(),
         );
 
-      // case Routes.detailsRoute:
-      //   final service = settings.arguments as ServicesModel;
-      //   return MaterialPageRoute(
-      //     // Extract the service model argument from the settings arguments map
-      //
-      //     builder: (context) => Details(service: service),
-      //   );
-      //
       case Routes.loginRoute:
         return PageTransition(
           child: const LoginScreen(),
@@ -58,6 +52,13 @@ class AppRoutes {
         case Routes.forgetPasswordRoute:
         return PageTransition(
           child: const ForgetPasswordScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.verificationRoute:
+        return PageTransition(
+          child: const VerificationScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

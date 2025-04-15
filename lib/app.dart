@@ -14,6 +14,7 @@ import 'package:mawhebtak/injector.dart' as injector;
 import 'features/home/cubit/home_cubit.dart';
 import 'features/login/cubit/cubit.dart';
 import 'features/splash/cubit/cubit.dart';
+import 'features/verification/cubit/verification_cubit.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -52,8 +53,12 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<OnboardingCubit>(),
-          ), BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<ForgetPasswordCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => injector.serviceLocator<VerificationCubit>(),
           ),
         ],
         child: GetMaterialApp(
