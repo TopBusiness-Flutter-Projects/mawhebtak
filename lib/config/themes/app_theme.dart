@@ -7,7 +7,7 @@ import '../../core/utils/app_strings.dart';
 ThemeData appTheme() {
   return ThemeData(
     primaryColor: AppColors.primary,
-    hintColor: AppColors.gray,
+    hintColor: AppColors.grayDark,
     //  useMaterial3: false,
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColors.white,
@@ -22,7 +22,7 @@ ThemeData appTheme() {
       iconTheme: IconThemeData(color: AppColors.black),
       centerTitle: false,
       elevation: 0.0,
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.grayDark,
       titleTextStyle: TextStyle(
         fontSize: 22.0.sp,
         // letterSpacing: 1.5,
@@ -37,7 +37,7 @@ ThemeData appTheme() {
 ThemeData appDarkTheme() {
   return ThemeData(
     primaryColor: AppColors.white,
-    hintColor: AppColors.gray,
+    hintColor: AppColors.grayDark,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColors.blackLite,
     fontFamily: AppStrings.fontFamily,

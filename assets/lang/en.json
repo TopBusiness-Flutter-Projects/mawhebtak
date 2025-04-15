@@ -1,5 +1,14 @@
 {
     "hi": "Hi",
+    "feeds": "Feeds",
+    "casting": "Casting",
+    "calendar": "Calendar",
+    "more": "More",
+    "see_all": "See All",
+    "top_talents": "Top Talents",
+    "search": "Search",
+    "home": "Home",
+    "hi": "Hi",
     "onboarding1_title": "The Largest Community of Artists",
     "onboarding1_description": "Mawhebtak is a large platform that connects all artists across various fields to create a vast community of artists in Egypt.",
     "onboarding2_title": "Follow Your Favorite Artist",
@@ -17,5 +26,6 @@
     "create_new_account": "Create New Account",
     "skip_login": "Skip Login",
     "forget_Password": "Forget Password",
-    "reset_password": "Reset Password"
+    "reset_password": "Reset Password",
+    "sanaaaaaaaaaaaaaaaaaaaaaaaaaa": ""
 }

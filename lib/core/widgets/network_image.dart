@@ -31,7 +31,7 @@ class CustomNetworkImage extends StatelessWidget {
           );
         },
         errorBuilder: (context, error, stackTrace) => Image.asset(
-              isUser ? ImageAssets.profileDefault : ImageAssets.logoImage,
+              isUser ? AppIcons.profileDefault : ImageAssets.logoImage,
               height: height,
               width: width,
               fit: BoxFit.cover,

@@ -9,3 +9,11 @@ class AppStrings {
   static const String applicationJson = 'application/json';
   // static const String googleApiKey = '';
 }
+
+class AppConst {
+  // static bool isLogged = prefs.getBool("ISLOGGED") ?? false;
+
+ // static bool get isLogged  =>  prefs.getBool("ISLOGGED") ?? false;
+
+
+}

@@ -26,7 +26,7 @@ choosePhoto(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.camera_alt, size: 45, color: AppColors.gray),
+                    Icon(Icons.camera_alt, size: 45, color: AppColors.grayDark),
                     Text('camera')
                   ],
                 ),
@@ -41,7 +41,7 @@ choosePhoto(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.photo, size: 45, color: AppColors.gray),
+                    Icon(Icons.photo, size: 45, color: AppColors.grayDark),
                     Text('Gallery')
                   ],
                 ),

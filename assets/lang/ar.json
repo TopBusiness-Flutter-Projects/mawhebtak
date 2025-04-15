@@ -1,5 +1,15 @@
 {
   "hi": "مرحباً",
+  "feeds": "يغذي",
+  "casting": "الصب",
+  "calendar": "التقويم اليومي",
+  "more": " المزيد ",
+  "see_all": "رؤية الكل",
+  "top_talents": "افضل المواهب",
+  "search": "البحث",
+  "home": "الصفحه الرئيسية",
+
+  "hi": "مرحباً",
   "onboarding1_title": "أكبر مجتمع بين الفنانين",
   "onboarding1_description": "مواهبتك منصة كبيرة تربط كل الفنانين في كل المجالات لخلق مجتمع كبير بين الفنانين في مصر",
   "onboarding2_title": "اتبع الفنان المفضل لديك",
@@ -18,5 +28,7 @@
   "create_new_account": "تسجيل بحساب جديد",
   "skip_login": "تخطي تسجيل الدخول",
   "forget_Password": "نسيت كلمة المرور",
-  "reset_password": "اعادة تعين كلمة المرور"
+  "reset_password": "اعادة تعين كلمة المرور",
+  "sanaaaaaaaaaaaaaaaaaaaaaaaaaa": ""
+
 }
