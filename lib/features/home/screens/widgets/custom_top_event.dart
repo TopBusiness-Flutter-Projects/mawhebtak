@@ -2,25 +2,26 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/exports.dart';
-import '../../follow_button.dart';
+import 'follow_button.dart';
 
 class CustomTopEventList extends StatelessWidget {
-  const CustomTopEventList({super.key,required this.isLeftPadding,required this.isRightPadding});
-  final bool isLeftPadding;
-  final bool isRightPadding;
+  const CustomTopEventList({super.key, this.isLeftPadding, this.isRightPadding,this.isAll});
+  final bool ?isLeftPadding;
+  final bool ?isRightPadding;
+  final bool ?isAll;
   @override
   Widget build(BuildContext context) {
     return  Padding(
-      padding: EdgeInsetsDirectional.only(start:isLeftPadding? 16.w:10.w,end: isRightPadding?16.w:0.0),
+      padding: EdgeInsetsDirectional.only(start:isLeftPadding??false? 16.w:8.w,end: isRightPadding??false?16.w:0.0),
       child: Stack(
         alignment: Alignment.centerLeft, // Add alignment to the Stack
         children: [
           // Image container
           ClipRRect(
-            borderRadius: BorderRadius.circular(16.r),
+            borderRadius: BorderRadius.circular(8.r),
             child: SizedBox(
               height: 200.h,
-              width: 287.w,
+              width: isAll??false?getWidthSize(context)/.9:287.w,
               child: Image.asset(
                 ImageAssets.homeTestImage,
                 fit: BoxFit.cover,
@@ -38,12 +39,12 @@ class CustomTopEventList extends StatelessWidget {
           // ),
           // Content to display over image
           SizedBox(
-            width: 198.w, // Match image width
-            height: 184.h, // Match image height
+             width:isAll??false?getWidthSize(context)/.9: 287.w, // Match image width
+            // height: 184.h, // Match image height
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start, // Center vertically
+                mainAxisAlignment: MainAxisAlignment.end, // Center vertically
                 crossAxisAlignment: CrossAxisAlignment.start, // Center horizontally
                 children: [
                   SizedBox(height: 80),
@@ -63,27 +64,38 @@ class CustomTopEventList extends StatelessWidget {
 
 
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                        SvgPicture.asset(AppIcons.calenderIcon),
-                        Text("16 june 2022",style: getRegularStyle(fontSize: 13.sp),),
-                      ],),
-                      Spacer(),
-                      Text("16 june 2022",style: getRegularStyle(fontSize: 13.sp),),
-
-                      // CustomContainerButton(
-                      //   title: "follow".tr(),
-                      //   color: AppColors.white,
-                      //   textColor: AppColors.primary,
-                      //   width: 100.w,
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(AppIcons.calenderIcon),
+                            SizedBox(width: 5.w),
+                            Expanded(
+                              child: Text(
+                                "16 june 2022",
+                                style: getRegularStyle(fontSize: 13.sp,color: AppColors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Text(
+                      //   "16 june 2022",
+                      //   style: getRegularStyle(fontSize: 13.sp),
                       // ),
+                      CustomContainerButton(
+                        title: "details".tr(),
+                        color: AppColors.transparent,
+                        textColor: isAll??false?AppColors.lbny:AppColors.primary,
+                        borderColor: isAll??false?AppColors.lbny:AppColors.primary,
+                        width: 100.w,
+                      ),
                     ],
                   ),
+
                   SizedBox(height: 5.h,)
                 ],
               ),

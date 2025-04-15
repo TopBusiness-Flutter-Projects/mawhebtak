@@ -2,9 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/utils/app_colors.dart';
-import '../../../core/utils/app_strings.dart';
-import '../../../core/utils/get_size.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/app_strings.dart';
+import '../../../../../core/utils/get_size.dart';
 
 class CustomContainerButton extends StatelessWidget {
   const CustomContainerButton({
@@ -14,11 +14,13 @@ class CustomContainerButton extends StatelessWidget {
     this.color,
     this.height,
     this.width,
+    this.borderColor,
     this.textColor,
   });
   final  void Function()? onTap;
   final String title;
   final Color ?textColor;
+  final Color ?borderColor;
   final double ?height;
   final double ?width;
   final Color ?color;
@@ -35,7 +37,7 @@ class CustomContainerButton extends StatelessWidget {
         decoration: BoxDecoration(
             color: color??AppColors.transparent,
             borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(width: 1.0,color: AppColors.white)
+            border: Border.all(width: 1.0,color: borderColor??AppColors.white)
         ),
         child: AutoSizeText(
           title,

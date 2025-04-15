@@ -14,6 +14,8 @@ class ImageAssets {
   static const String logo2Image = '$imagePath/app_icon.png';
   static const String logo3Image = '$imagePath/app_icon.png';
   static const String logoImage = '$imagePath/1.png';
+  static const String tasweerPhoto = '$imagePath/tasweer_image.png';
+  static const String banner = '$imagePath/banner.png';
   static const String homeTestImage = '$imagePath/home_test_image.png';
   // static const String profileDefault = '$imagePath/1.png';
   static const String topbusinessImage = '$imagePath/topbusiness.png';
@@ -21,12 +23,16 @@ class ImageAssets {
   static const String introBackgroundImage2 = '$imagePath/on2.png';
   static const String profileImage = '$imagePath/profile_image.png';
   static const String testImage = '$imagePath/test_image.jpeg';
+  static const String videoCallImage = '$imagePath/video_call_image.png';
+  static const String calenderImage = '$imagePath/calender_image.png';
+  static const String notificationImage = '$imagePath/notification.png';
    // static const String   = '$imagePath/profile_image.png';
   // icons
   static const String emailIcon = '$iconsPath/email_icon.svg';
   static const String passwordIcon = '$iconsPath/Password_icon.svg';
   static const String facebookIcon = '$iconsPath/facebook.svg';
   static const String googleIcon = '$iconsPath/google.svg';
+
 
   //Lottie
 
@@ -39,10 +45,15 @@ class AppIcons {
   static const String casting = '$iconsPath/casting.svg';
   static const String calendar = '$iconsPath/Calendar.svg';
   static const String more = '$iconsPath/More.svg';
+  static const String dollarSign = '$iconsPath/dollar_sign.svg';
   static const String searchIcon = '$iconsPath/search_icon.svg';
   static const String videoIcon = '$iconsPath/video_icon.svg';
+  static const String locationIcon = '$iconsPath/location_icon.svg';
   static const String calenderIcon = '$iconsPath/calender.svg';
   static const String notificationIcon = '$iconsPath/notification_icon.svg';
   static const String profileDefault = '$iconsPath/profile_image.svg';
+  static const String removeIcon = '$iconsPath/remove_icon.svg';
+  static const String eventIcon = '$iconsPath/event_icon.svg';
+
 
 }

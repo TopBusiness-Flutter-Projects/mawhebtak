@@ -13,6 +13,7 @@ import 'core/utils/app_strings.dart';
 import 'package:mawhebtak/injector.dart' as injector;
 
 import 'features/auth/splash/cubit/cubit.dart';
+import 'features/events/cubit/event_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
@@ -43,6 +44,8 @@ class _MyAppState extends State<MyApp> {
         providers: [
           BlocProvider(
             create: (_) => injector.serviceLocator<SplashCubit>(),
+          ),  BlocProvider(
+            create: (_) => injector.serviceLocator<EventCubit>(),
           ), BlocProvider(
             create: (_) => injector.serviceLocator<HomeCubit>(),
           ),

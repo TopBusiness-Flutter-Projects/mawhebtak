@@ -1,5 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:mawhebtak/features/home/cubit/home_cubit.dart';
+import 'package:mawhebtak/features/home/cubit/home_state.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import '../home_screen.dart';
 
@@ -8,22 +11,27 @@ class CustomList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return      Positioned(
-      bottom: 15,
-      left: 0,
-      right: 0,
+    var cubit=context.read<HomeCubit>();
+  return BlocBuilder<HomeCubit,HomeState>(builder: (BuildContext context, state) { return         Positioned(
+    bottom: 15,
+    left: 0,
+    right: 0,
 
-      child: SizedBox(
-        height: 130,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          physics: AlwaysScrollableScrollPhysics(),
-          itemCount:items.length,
-          shrinkWrap: true,
-          // controller: BouncingScrollPhysics(),
-          //  padding: const EdgeInsets.symmetric(horizontal: 16),
-          itemBuilder: (context, index) {
-            return Padding(
+    child: SizedBox(
+      height: 130,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: AlwaysScrollableScrollPhysics(),
+        itemCount:cubit.items.length,
+        shrinkWrap: true,
+        // controller: BouncingScrollPhysics(),
+        //  padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: (){
+              Navigator.pushNamed(context, Routes.eventScreen);
+            },
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0),
               child: Column(
                 children: [
@@ -39,22 +47,23 @@ class CustomList extends StatelessWidget {
                       ),
                       child: Center(
                         child: Icon(
-                          items[index].icon,
+                       cubit.   items[index].icon,
                           color: Colors.cyanAccent,
                         ),
                       ),
                     ),
                   ),
                   AutoSizeText(
-                    items[index].label,
+                   cubit. items[index].label,
                     style: getMediumStyle(fontSize: 14.sp,color: AppColors.white),
                   ),
                 ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
-    );
+    ),
+  ); },);
   }
 }

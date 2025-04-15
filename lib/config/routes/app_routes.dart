@@ -8,6 +8,9 @@ import 'package:mawhebtak/features/auth/verification/screens/verification_screen
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/auth/login/screens/login_screen.dart';
+import '../../features/events/screens/event_screen.dart';
+import '../../features/home/screens/notification_screen.dart';
+import '../../features/home/screens/video_screen.dart';
 
 class Routes {
   static const String initialRoute = '/';
@@ -17,6 +20,9 @@ class Routes {
   static const String forgetPasswordRoute = '/forgetPassword';
   static const String verificationRoute = '/verification';
   static const String newPasswordRoute = '/newPassword';
+  static const String videoScreenRoute = '/videoScreenRoute';
+  static const String eventScreen = '/eventScreen';
+  static const String notificationScreen = '/notificationScreen';
 }
 
 class AppRoutes {
@@ -32,6 +38,24 @@ class AppRoutes {
       case Routes.loginRoute:
         return PageTransition(
           child: const LoginScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );  case Routes.eventScreen:
+        return PageTransition(
+          child: const EventScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );    case Routes.notificationScreen:
+        return PageTransition(
+          child: const NotificationScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );  case Routes.videoScreenRoute:
+        return PageTransition(
+          child: const VideoScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

@@ -12,4 +12,5 @@ class ErrorHomeFilterDataState extends HomeState {}
 class HomeModuleSelected extends HomeState {}
 class SucessHomeFilterDataState extends HomeState {}
 class IndexChanged extends HomeState {}
+class ImageDeleted extends HomeState {}
 
