@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_row.dart';
+import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
+import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/under_custom_row.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart'
 import '../../../core/exports.dart';
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
+import '../follow_button.dart';
 final List<_HomeItem> items = [
   _HomeItem(icon: Icons.event, label: 'Events'),
   _HomeItem(icon: Icons.leaderboard, label: 'Events'),
@@ -60,56 +63,71 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     var cubit = context.read<HomeCubit>();
     return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
-      return Container(
-        height: getHeightSize(context),
-        width: getWidthSize(context),
-        color: AppColors.homeColor,
-        child:  Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Stack(
+      return Scaffold(
+        body: Container(
+        //  height: getHeightSize(context),
+          width: getWidthSize(context),
+          color: AppColors.homeColor,
+          child: ListView(
+           // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-               // color: Colors.green,
-                height: getHeightSize(context) / 1.5,
-                width: getWidthSize(context),
-                child: Image.asset(ImageAssets.testImage, width: getWidthSize(context) ,  height: getHeightSize(context) / 1.5,),
+              Stack(
+                children: [
+                  SizedBox(
+                    height: getHeightSize(context) / 1.5,
+                    width: getWidthSize(context),
+                    child: Image.asset(
+                      ImageAssets.testImage,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    top: 35,
+                    left: 16,
+                    right: 16,
+                    child: CustomAppBarRow(),
+                  ),
+                  UnderCustomRow(),
+                  CustomList(),
+                ],
               ),
+              SizedBox(height: 10.h),
+              CustomRow(text: 'top_talents',),
+              SizedBox(height: 4.h,),
+              SizedBox(
+                   height: 184.h,
 
-              // Row اللي فوق
-              Positioned(
-                top: 35,
-                left: 16,
-                right: 16,
-                child: CustomAppBarRow(),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemCount:items.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                  return CustomTopTalentsList(isLeftPadding:index==0?true:false, isRightPadding: index==items.length-1?true:false,);
+                },),
               ),
+              CustomRow(text: 'top_events',),
+              SizedBox(height: 4.h,),
 
-              // تحت الـ Row
-              // Positioned(
-              //   top: 80,
-              //   left: 0,
-              //   right: 0,
-              //   child:,
-              // ),
-              UnderCustomRow(),
-              // تحت UnderCustomRow مباشرة
-              CustomList(),
+              SizedBox(
+                height: 215.h,
 
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemCount:items.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CustomTopEventList(isLeftPadding:index==0?true:false, isRightPadding: index==items.length-1?true:false,);
+                  },),
+              ),
+              SizedBox(height: 60.h),
 
             ],
           ),
-
-
-           SizedBox(height: 5.h),
-          CustomRow()
-
-        ],
-      ),
-
+        ),
       );
     });
   }

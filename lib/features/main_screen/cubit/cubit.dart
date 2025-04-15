@@ -13,6 +13,7 @@ class MainCubit extends Cubit<MainState> {
       Container(color: AppColors.black,),
       Container(width: 200,height: 200,color: AppColors.secondPrimary,),
       Container(width: 200,height: 200,color: AppColors.blackLite,),
+      Container(width: 200,height: 200,color: AppColors.blackLite,),
     // const MyReservationsScreen(),
     // const FavouritesScreen(),
     // const AccountScreen()

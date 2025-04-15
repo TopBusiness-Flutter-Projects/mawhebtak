@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_button.dart';
-import '../../button.dart';
+import '../../follow_button.dart';
 
 class UnderCustomRow extends StatelessWidget {
   const UnderCustomRow({super.key});
@@ -52,7 +52,7 @@ class UnderCustomRow extends StatelessWidget {
                   Text("20 K followers", style: getMediumStyle(color: AppColors.white,fontSize: 14.sp)),
                   SizedBox(height: 5.h,),
                   // Text("Ahmed Mokhtar", style: getMediumStyle(color: AppColors.white)),
-                  CustomButtonnnnnnnn(title: "follow".tr(),)
+                  CustomContainerButton(title: "follow".tr(),)
                 ],
               ),
             ),

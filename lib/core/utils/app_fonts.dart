@@ -66,6 +66,7 @@ TextStyle getMediumStyle({Color? color, double? fontHeight, double? fontSize}) {
       fontWeight: FontWeight.w500,
       fontSize: fontSize ?? 18.sp,
       fontHeight: fontHeight);
+
 }
 
 // semi bold style 600
