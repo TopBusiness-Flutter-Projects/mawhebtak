@@ -60,7 +60,6 @@ Future<void> setup() async {
   serviceLocator.registerLazySingleton(() => MainRepoImpl(serviceLocator()));
   serviceLocator.registerLazySingleton(() => HomeRepoImpl(serviceLocator()));
   serviceLocator.registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
 
 //!----------------------------------------------------------------
 
