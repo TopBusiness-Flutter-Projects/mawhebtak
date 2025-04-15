@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
+import 'package:mawhebtak/features/home/screens/widgets/custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/under_custom_row.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return Container(
         height: getHeightSize(context),
         width: getWidthSize(context),
-        color: AppColors.primaryHome,
+        color: AppColors.homeColor,
         child:  Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -104,17 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
            SizedBox(height: 5.h),
-Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 6.0),
-  child: Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Text("see_all".tr(),style: getUnderLine(fontSize: 14.sp,color: AppColors.lbny),),
-
-      Text("top_talents".tr(),style: getMediumStyle(fontSize: 14.sp,color: AppColors.white),),
-  ],),
-)
+          CustomRow()
 
         ],
       ),

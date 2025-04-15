@@ -12,7 +12,7 @@ class AppColors {
   static Color red = HexColor('#FF0000');
   static Color black = Colors.black;
   static Color blackLite = HexColor('#2B2430');
-  static Color primaryHome = HexColor('#151F41');
+  static Color homeColor = HexColor('#151F41');
   static Color blueMeduim = HexColor('#311F3A');
   static Color success = Colors.green;
   static Color lbny = HexColor('#2ECAEF');
