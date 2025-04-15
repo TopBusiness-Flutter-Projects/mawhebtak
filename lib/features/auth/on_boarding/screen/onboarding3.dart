@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../../core/exports.dart';
 import '../cubit/onboarding_cubit.dart';
 
 class OnBoarding3 extends StatelessWidget {
@@ -89,6 +90,7 @@ class OnBoarding3 extends StatelessWidget {
                           padding: EdgeInsets.only(right: 100.w, left: 100.w),
                           child: GestureDetector(
                             onTap: () {
+                              Preferences.instance.setFirstInstall();
                               Navigator.pushNamed(context, Routes.loginRoute);
                             },
                             child: Container(

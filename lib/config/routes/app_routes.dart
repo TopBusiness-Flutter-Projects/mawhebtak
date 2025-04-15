@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mawhebtak/features/forget_password/screens/forget_password_screen.dart';
+import 'package:mawhebtak/features/auth/forget_password/screens/forget_password_screen.dart';
+import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dart';
+import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
-import 'package:mawhebtak/features/on_boarding/screen/onboarding_screen.dart';
-import 'package:mawhebtak/features/splash/screens/splash_screen.dart';
-import 'package:mawhebtak/features/verification/screens/verification_screen.dart';
+import 'package:mawhebtak/features/auth/new_password/screens/new_password_screen.dart';
+import 'package:mawhebtak/features/auth/verification/screens/verification_screen.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
-import '../../features/login/screens/login_screen.dart';
+import '../../features/auth/login/screens/login_screen.dart';
 
 class Routes {
   static const String initialRoute = '/';
@@ -15,6 +16,7 @@ class Routes {
   static const String onboardingPageScreenRoute = '/onboardingPageScreenRoute';
   static const String forgetPasswordRoute = '/forgetPassword';
   static const String verificationRoute = '/verification';
+  static const String newPasswordRoute = '/newPassword';
 }
 
 class AppRoutes {
@@ -59,6 +61,13 @@ class AppRoutes {
         case Routes.verificationRoute:
         return PageTransition(
           child: const VerificationScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.newPasswordRoute:
+        return PageTransition(
+          child: const NewPasswordScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
