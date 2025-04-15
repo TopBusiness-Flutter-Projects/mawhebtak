@@ -1,11 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../core/utils/assets_manager.dart';
-import '../../../core/utils/get_size.dart';
 import '../cubit/onboarding_cubit.dart';
 
 class OnBoarding2 extends StatelessWidget {

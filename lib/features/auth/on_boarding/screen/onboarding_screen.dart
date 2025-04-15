@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mawhebtak/features/on_boarding/screen/onboarding3.dart';
+import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding3.dart';
 import '../cubit/onboarding_cubit.dart';
 import 'onboarding1.dart';
 import 'onboarding2.dart';

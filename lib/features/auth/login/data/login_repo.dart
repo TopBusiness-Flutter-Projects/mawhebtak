@@ -1,4 +1,5 @@
-import '../../../core/api/base_api_consumer.dart';
+
+import 'package:mawhebtak/core/api/base_api_consumer.dart';
 
 class LoginRepo {
   BaseApiConsumer api;
