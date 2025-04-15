@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 import 'package:mawhebtak/features/forget_password/cubit/forget_password_cubit.dart';
@@ -37,7 +38,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                           controller: cubit.emailController,
                           hintText: "Example@mail.com",
                         ),
-                        CustomButton(title: 'reset_password'.tr()),
+                        CustomButton(title: 'reset_password'.tr(),onTap: () {
+                          Navigator.pushNamed(context, Routes.verificationRoute);
+                        },),
                       ],
                     ),
                   ),

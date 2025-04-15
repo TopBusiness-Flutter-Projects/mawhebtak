@@ -18,5 +18,6 @@
   "create_new_account": "تسجيل بحساب جديد",
   "skip_login": "تخطي تسجيل الدخول",
   "forget_Password": "نسيت كلمة المرور",
-  "reset_password": "اعادة تعين كلمة المرور"
+  "reset_password": "اعادة تعين كلمة المرور",
+  "verification": "التحقق"
 }

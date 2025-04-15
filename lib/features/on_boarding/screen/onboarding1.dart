@@ -31,7 +31,9 @@ class OnBoarding1 extends StatelessWidget {
               ),
           Stack(
             children: [
-              Image.asset(ImageAssets.onboardingBackground),
+              Image.asset(
+                ImageAssets.onboardingBackground,
+                width: double.infinity,),
               Positioned(child:
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

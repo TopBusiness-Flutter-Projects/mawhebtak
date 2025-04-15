@@ -17,5 +17,6 @@
     "create_new_account": "Create New Account",
     "skip_login": "Skip Login",
     "forget_Password": "Forget Password",
-    "reset_password": "Reset Password"
+    "reset_password": "Reset Password",
+    "verification":"Verification"
 }
