@@ -1,9 +1,12 @@
 
+import 'package:flutter_svg/svg.dart';
+
 import '../exports.dart';
 
 class CustomSimpleAppbar extends StatelessWidget {
-  const CustomSimpleAppbar({super.key, required this.title});
+  const CustomSimpleAppbar({super.key, required this.title, this.isEventScreen});
 final String title;
+final bool ?isEventScreen;
   @override
   Widget build(BuildContext context) {
     return
@@ -46,7 +49,11 @@ final String title;
               style: TextStyle(fontSize: 16.sp, color: AppColors.black),
             ),
           ),
-        ],
+          if(isEventScreen??false)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SvgPicture.asset(AppIcons.eventIcon),
+            )        ],
       ),
     );
   }

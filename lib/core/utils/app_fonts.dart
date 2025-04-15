@@ -44,7 +44,7 @@ TextStyle getUnderLine({Color? color, double? fontSize}) {
     fontSize: fontSize ?? 18.sp,
     fontFamily: AppStrings.fontFamily,
     color: color ?? AppColors.black,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
   );
 }
 //textcolor

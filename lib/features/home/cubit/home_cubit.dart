@@ -14,6 +14,7 @@ import '../../../core/exports.dart';
 import '../data/models/home_filter_model.dart';
 import '../data/models/home_model.dart';
 import '../data/repo/home_repo_impl.dart';
+import '../screens/home_screen.dart';
 import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -22,7 +23,27 @@ class HomeCubit extends Cubit<HomeState> {
   int moduleslenth = 5;
   TextEditingController searchController = TextEditingController();
 
-   String? selectedModule; // المتغير الذي يحمل القيمة المختارة
+   String? selectedModule;
+  final List<HomeItem> items = [
+    HomeItem(icon: Icons.event, label: 'Events'),
+    HomeItem(icon: Icons.leaderboard, label: 'Events'),
+    HomeItem(icon: Icons.announcement, label: 'Casting'),
+    HomeItem(icon: Icons.announcement, label: 'Announce'),
+    HomeItem(icon: Icons.announcement, label: 'Announce'),
+    HomeItem(icon: Icons.work, label: 'Jobs'),
+    HomeItem(icon: Icons.work, label: 'Jobs'),
+    HomeItem(icon: Icons.work, label: 'Jobs'),
+    HomeItem(icon: Icons.work, label: 'Jobs'),
+    HomeItem(icon: Icons.work, label: 'Jobs'),
+
+  ];
+   // المتغير الذي يحمل القيمة المختارة
+  void removeImage(int indexx){
+    print(indexx);
+    print(items.length);
+    items.removeAt(indexx);
+    emit(ImageDeleted());
+  }
   // ModuleModel? selectedModulee; // حفظ الكائن المختار
   // String? moduleId; // حفظ الكائن المختار
   //
