@@ -1,7 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:mawhebtak/core/utils/app_colors.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
+import 'package:mawhebtak/features/login/cubit/cubit.dart';
+import 'package:mawhebtak/features/login/cubit/state.dart';
 
-import '../../../config/routes/app_routes.dart';
+import '../../../core/widgets/custom_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,15 +18,222 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<LoginCubit>();
     return Scaffold(
-      backgroundColor: AppColors.secondPrimary,
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, Routes.mainRoute);
-            },
-            child: const Text('Nav To Main Screen')),
-      ),
-    );
+        body: BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
+      return Form(
+        key: cubit.formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              50.h.verticalSpace,
+              Image.asset(
+                ImageAssets.appIconWhite,
+                height: 80.h,
+                width: 250.w,
+              ),
+              50.h.verticalSpace,
+              Padding(
+                padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "email_address".tr(),
+                      style:
+                          TextStyle(color: AppColors.darkGray, fontSize: 14.sp),
+                    ),
+                    CustomTextField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter email';
+                        }
+                        return null;
+                      },
+                      controller: cubit.emailController,
+                      hintText: "Example@mail.com",
+                      suffixIcon: Padding(
+                        padding: EdgeInsets.all(10.0.h),
+                        child: SvgPicture.asset(
+                          ImageAssets.emailIcon,
+                        ),
+                      ),
+                    ),
+                    20.h.verticalSpace,
+                    Text(
+                      "password".tr(),
+                      style:
+                          TextStyle(color: AppColors.darkGray, fontSize: 14.sp),
+                    ),
+                    CustomTextField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter password';
+                        }
+                        return null;
+                      },
+                      controller: cubit.passwordController,
+                      isPassword: true,
+                      hintTextSize: 18.sp,
+                      hintText: ("● ● ● ● ● ● ● ● ● ●"),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SvgPicture.asset(
+                          ImageAssets.passwordIcon,
+                        ),
+                      ),
+                    ),
+                    20.h.verticalSpace,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.forgetPasswordRoute);
+                          },
+                          child: Text(
+                            "forget_password".tr(),
+                            style: TextStyle(
+                                color: AppColors.secondPrimary,
+                                fontSize: 14.sp,
+                                decoration: TextDecoration.underline,
+                                decorationColor: AppColors.secondPrimary),
+                          ),
+                        ),
+                        30.w.horizontalSpace,
+                        Expanded(
+                          child: CustomButton(
+                              onTap: () {
+                                if (cubit.formKey.currentState!.validate()) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Processing Data')),
+                                  );
+                                }
+                              },
+                              title: 'login'.tr()),
+                        ),
+                      ],
+                    ),
+                    30.h.verticalSpace,
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        "or_login_with".tr(),
+                        style: TextStyle(fontSize: 16.sp),
+                      ),
+                    ),
+                    10.h.verticalSpace,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.sp),
+                              border: Border.all(color: AppColors.grayLite),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: 15.w,
+                                  right: 15.w,
+                                  top: 10.h,
+                                  bottom: 10.h),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(ImageAssets.facebookIcon),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  Text(
+                                    "facebook".tr(),
+                                    style: TextStyle(
+                                        color: AppColors.primary,
+                                        fontSize: 15.sp),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.sp),
+                              border: Border.all(color: AppColors.grayLite),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: 15.w,
+                                  right: 15.w,
+                                  top: 10.h,
+                                  bottom: 10.h),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(ImageAssets.googleIcon),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  Text(
+                                    "google".tr(),
+                                    style: TextStyle(
+                                        color:
+                                            AppColors.darkGray.withOpacity(0.8),
+                                        fontSize: 15.sp),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    20.h.verticalSpace,
+                    Container(
+                      padding: EdgeInsets.all(15.h),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.primary),
+                          borderRadius: BorderRadius.circular(10)),
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          "create_new_account".tr(),
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                    20.h.verticalSpace,
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        "skip_login".tr(),
+                        style: TextStyle(
+                            color: AppColors.secondPrimary,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.secondPrimary,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    }));
   }
 }
