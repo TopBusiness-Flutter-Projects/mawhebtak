@@ -28,7 +28,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   Flexible(
                     child: PageView(
                       controller: cubit.pageController,
-                      reverse: true,
+                      reverse: false,
                       onPageChanged: (int page) {
                         cubit.onPageChanged(page);
                       },
