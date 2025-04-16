@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 
@@ -39,8 +40,8 @@ width: 299.w,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
-                      Text(
+                      AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
+                      AutoSizeText(
                         "Talent / Actor Expert",
                         style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayLight),
                       ),
@@ -61,8 +62,8 @@ width: 299.w,
                 ),
               ),
               SizedBox(height: 8.h),
-              Text("Talent / Actor Expert", style: getSemiBoldStyle(fontSize: 14.sp, color: AppColors.grayDark)),
-              Text("Hi show my latest scenes with an amazing team Let’s start our work", style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayDark)),
+              AutoSizeText("Talent / Actor Expert", style: getSemiBoldStyle(fontSize: 14.sp, color: AppColors.grayDark)),
+              AutoSizeText("Hi show my latest scenes with an amazing team Let’s start our work", style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayDark)),
               SizedBox(height: 5.h,),
               Row(children: [
                 Expanded(
@@ -77,7 +78,7 @@ width: 299.w,
                   SvgPicture.asset(AppIcons.dollarSign),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("200 L.E",style: getRegularStyle(fontSize: 14.sp,color: AppColors.blueLight),),
+                    child: AutoSizeText("200 L.E",style: getRegularStyle(fontSize: 14.sp,color: AppColors.blueLight),),
                   )
                 ],
               )

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import 'follow_button.dart';
 
@@ -87,6 +88,9 @@ class CustomTopEventList extends StatelessWidget {
                       //   style: getRegularStyle(fontSize: 13.sp),
                       // ),
                       CustomContainerButton(
+                        onTap: (){
+                          Navigator.pushNamed(context, Routes.detailsEventScreen);
+                        },
                         title: "details".tr(),
                         color: AppColors.transparent,
                         textColor: isAll??false?AppColors.lbny:AppColors.primary,

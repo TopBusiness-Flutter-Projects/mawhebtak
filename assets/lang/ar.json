@@ -9,7 +9,6 @@
   "search": "البحث",
   "home": "الصفحه الرئيسية",
 
-  "hi": "مرحباً",
   "onboarding1_title": "أكبر مجتمع بين الفنانين",
   "onboarding1_description": "مواهبتك منصة كبيرة تربط كل الفنانين في كل المجالات لخلق مجتمع كبير بين الفنانين في مصر",
   "onboarding2_title": "اتبع الفنان المفضل لديك",
@@ -41,6 +40,26 @@
   "schedule_conference": "جدولة المؤتمر",
   "notification": "الاشعارات",
   "events": "الأحداث",
+  "events_details": "تفاصيل الأحداث",
+  "follow_event": "تتبع الأحداث",
+  "location": "الموقع",
+  "apply_for_this_event": "التقدم لهذا الحدث",
+  "type": "نوع",
+  "privacy": "الخصوصيه",
+  "event_date": "تاريخ الحدث",
+  "cancel_this_event": "تاريخ الحدث",
+  "statistics": "إحصائيات",
+  "enrolled": "مسجل",
+  "revenu": "الإيرادات",
+  "enrolled_users": "المستخدمون المسجلون",
+  "message": "الرساله",
+  "add_photo_video": "ضيف صورة او فيديو",
+  "expected_fees": "الرسوم المتوقعة",
+  "apply": "يتقدم",
+  "description_here": "اكتب وصفك هنا",
+  "specify_needs": "تحديد الاحتياجات",
+  "apply_for_event": "التقديم علي الحدث",
+
 
 
 
@@ -119,7 +138,6 @@
   "logout": "تسجيل الخروج",
   "old_password": "كلمة المرور القديمة",
   "about_mawahbtak": "عن موهبتك",
-  "privacy": "الخصوصية",
   "send": "ارسال",
   "phone_number": "رقم التليفون",
   "are_you_sure_logout": "هل أنت متأكد أنك تريد تسجيل الخروج؟",

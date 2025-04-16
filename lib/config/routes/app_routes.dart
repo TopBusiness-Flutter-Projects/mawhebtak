@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mawhebtak/features/about_us/screens/about_us_screen.dart';
 import 'package:mawhebtak/features/auth/change_password/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/auth/forget_password/screens/forget_password_screen.dart';
-import 'package:mawhebtak/features/auth/new_account/screens/new_account_screen.dart';
 import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dart';
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
@@ -17,8 +16,11 @@ import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_conditi
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/auth/login/screens/login_screen.dart';
+import '../../features/events/screens/apply_for_event.dart';
+import '../../features/events/screens/details_event_screen.dart';
 import '../../features/calender/screens/widgets/calender_widget.dart';
 import '../../features/events/screens/event_screen.dart';
+import '../../features/events/screens/second_details_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
 import '../../features/home/screens/video_screen.dart';
 import '../../features/referral_code/screens/referral_code_screen.dart';
@@ -40,7 +42,10 @@ class Routes {
   static const String termsAndConditionRoute = '/termsAndCondition';
   static const String videoScreenRoute = '/videoScreenRoute';
   static const String eventScreen = '/eventScreen';
+  static const String detailsEventScreen = '/detailsEventScreen';
   static const String notificationScreen = '/notificationScreen';
+  static const String secondDetailsSecond = '/secondDetailsSecond';
+  static const String applyEvent = '/applyEvent';
 
 
 
@@ -103,6 +108,18 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
+        );   case Routes.secondDetailsSecond:
+        return PageTransition(
+          child: const SecondDetailsEventScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );   case Routes.detailsEventScreen:
+        return PageTransition(
+          child: const DetailsEventScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
         );  case Routes.eventScreen:
         return PageTransition(
           child: const EventScreen(),
@@ -133,6 +150,12 @@ class AppRoutes {
       case Routes.mainRoute:
         return PageTransition(
           child: const MainScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        ); case Routes.applyEvent:
+        return PageTransition(
+          child: const ApplyForEvent(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
