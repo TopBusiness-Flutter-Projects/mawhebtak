@@ -197,18 +197,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     20.h.verticalSpace,
-                    Container(
-                      padding: EdgeInsets.all(15.h),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.primary),
-                          borderRadius: BorderRadius.circular(10)),
-                      width: double.infinity,
-                      child: Center(
-                        child: Text(
-                          "create_new_account".tr(),
-                          style: TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 14.sp,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.newAccountRoute);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(15.h),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.primary),
+                            borderRadius: BorderRadius.circular(10)),
+                        width: double.infinity,
+                        child: Center(
+                          child: Text(
+                            "create_new_account".tr(),
+                            style: TextStyle(
+                              color: AppColors.primary,
+                              fontSize: 14.sp,
+                            ),
                           ),
                         ),
                       ),
