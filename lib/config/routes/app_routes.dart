@@ -73,7 +73,11 @@ class Routes {
 
 
 
+
   //sanaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+  static const String newAccountRoute = '/newAccount';
 }
 
 class AppRoutes {
