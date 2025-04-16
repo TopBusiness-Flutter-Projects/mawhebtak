@@ -35,7 +35,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         Text("old_password".tr(),style: TextStyle(fontSize: 14.sp),),
                         CustomTextField(
                           hintTextSize: 18.sp,
-                          controller: cubit.passwordController,
+                          controller: cubit.oldPasswordController,
                           hintText: "● ● ● ● ● ● ● ● ● ●",
                         ),Text("new_password".tr(),style: TextStyle(fontSize: 14.sp),),
                         CustomTextField(

@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
@@ -44,10 +43,9 @@ class NewPasswordScreen extends StatelessWidget {
                           hintText: "● ● ● ● ● ● ● ● ● ●",
                         ),
                         CustomButton(
-
                           title: 'reset_password'.tr(),
                           onTap: () {
-                          Navigator.pushNamed(context, Routes.verificationRoute);
+
                         },),
                       ],
                     ),

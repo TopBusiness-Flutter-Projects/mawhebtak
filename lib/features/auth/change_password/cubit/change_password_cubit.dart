@@ -8,6 +8,7 @@ import '../data/repos/change_password_repo.dart';
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   ChangePasswordCubit(this.forgetPasswordRepo) : super(ChangePasswordInitial());
   ChangePasswordRepo forgetPasswordRepo;
+  TextEditingController oldPasswordController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 }
