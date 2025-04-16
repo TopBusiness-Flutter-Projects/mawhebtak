@@ -8,6 +8,7 @@ import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 import 'package:mawhebtak/features/auth/login/cubit/cubit.dart';
 import 'package:mawhebtak/features/auth/login/cubit/state.dart';
+import 'package:mawhebtak/features/auth/login/screens/widgets/register_or_login_with_goole_or_facebook.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -126,76 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     10.h.verticalSpace,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.sp),
-                              border: Border.all(color: AppColors.grayLite),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 15.w,
-                                  right: 15.w,
-                                  top: 10.h,
-                                  bottom: 10.h),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(ImageAssets.facebookIcon),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Text(
-                                    "facebook".tr(),
-                                    style: TextStyle(
-                                        color: AppColors.primary,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.sp),
-                              border: Border.all(color: AppColors.grayLite),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 15.w,
-                                  right: 15.w,
-                                  top: 10.h,
-                                  bottom: 10.h),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(ImageAssets.googleIcon),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
-                                  Text(
-                                    "google".tr(),
-                                    style: TextStyle(
-                                        color:
-                                            AppColors.darkGray.withOpacity(0.8),
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    const GoogleAndFacebookWidget(),
                     20.h.verticalSpace,
                     GestureDetector(
                       onTap: () {
