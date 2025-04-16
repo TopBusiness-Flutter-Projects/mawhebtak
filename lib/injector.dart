@@ -4,6 +4,8 @@ import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cu
 import 'package:mawhebtak/features/auth/forget_password/data/repos/forget_password_repo.dart';
 import 'package:mawhebtak/features/auth/login/cubit/cubit.dart';
 import 'package:mawhebtak/features/auth/login/data/login_repo.dart';
+import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
+import 'package:mawhebtak/features/auth/new_account/data/repos/new_account.repo.dart';
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:mawhebtak/features/auth/splash/cubit/cubit.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
@@ -95,7 +97,8 @@ Future<void> setup() async {
     () => AboutUsCubit(
       serviceLocator(),
     ),
-  );serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => ReferralCodeCubit(
       serviceLocator(),
     ),
@@ -124,7 +127,11 @@ Future<void> setup() async {
 
   //sanaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
-
+  serviceLocator.registerFactory(
+        () => NewAccountCubit(
+      serviceLocator(),
+    ),
+  );
 
 //!----------------------------------------------------------------
 ///////////////////////////////////////////////////////////////////
@@ -166,6 +173,8 @@ Future<void> setup() async {
 
 
   //sanaaaaaaaaaaaaaaaaaaaaa
+  serviceLocator.registerLazySingleton(() => NewAccountRepo(serviceLocator()));
+
 //!----------------------------------------------------------------
 
   //! External

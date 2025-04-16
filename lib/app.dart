@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/features/about_us/cubit/about_us_cubit.dart';
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
+import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
@@ -101,6 +102,9 @@ class _MyAppState extends State<MyApp> {
 
 
           //sanssssssssssssssssssssssssssss
+          BlocProvider(
+            create: (_) => injector.serviceLocator<NewAccountCubit>(),
+          ),
 
         ],
         child: GetMaterialApp(

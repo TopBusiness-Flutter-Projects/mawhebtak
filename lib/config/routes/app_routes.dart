@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mawhebtak/features/about_us/screens/about_us_screen.dart';
 import 'package:mawhebtak/features/auth/change_password/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/auth/forget_password/screens/forget_password_screen.dart';
+import 'package:mawhebtak/features/auth/new_account/screens/new_account_screen.dart';
 import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dart';
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
@@ -194,6 +195,13 @@ class AppRoutes {
         );  case Routes.referralCodeRoute:
         return PageTransition(
           child: const ReferralCodeScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.newAccountRoute:
+        return PageTransition(
+          child: const NewAccountScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
