@@ -60,6 +60,9 @@ dependencies:
   awesome_dialog: ^3.2.1
   video_player: ^2.9.5
   auto_size_text: ^3.0.0
+  table_calendar: ^3.0.9
+  syncfusion_flutter_calendar: ^29.1.38
+  easy_date_timeline: ^2.0.9
 
   # ! main packages
  

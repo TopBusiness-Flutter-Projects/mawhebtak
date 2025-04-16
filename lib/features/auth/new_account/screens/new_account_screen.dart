@@ -7,7 +7,6 @@ import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
 import 'package:mawhebtak/features/auth/new_account/screens/widgets/role_selection_widget.dart';
-
 import '../../login/screens/widgets/register_or_login_with_goole_or_facebook.dart';
 
 class NewAccountScreen extends StatelessWidget {
