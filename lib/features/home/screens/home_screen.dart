@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ), CustomRow(text: 'announcements',),
               SizedBox(height: 4.h),
               SizedBox(
-                height: 300.h, // Match image width
+                height: getHeightSize(context)/2.2, // Match image width
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: AlwaysScrollableScrollPhysics(),

@@ -5,16 +5,19 @@ import 'package:mawhebtak/features/auth/forget_password/screens/forget_password_
 import 'package:mawhebtak/features/auth/new_account/screens/new_account_screen.dart';
 import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dart';
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
+import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
 import 'package:mawhebtak/features/contact_us/screens/contact_us_screen.dart';
 import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
 import 'package:mawhebtak/features/auth/new_password/screens/new_password_screen.dart';
 import 'package:mawhebtak/features/auth/verification/screens/verification_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
+import 'package:mawhebtak/features/new_event/screens/new_event_screen.dart';
 import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_condition.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/auth/login/screens/login_screen.dart';
+import '../../features/calender/screens/widgets/calender_widget.dart';
 import '../../features/events/screens/event_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
 import '../../features/home/screens/video_screen.dart';
@@ -79,6 +82,9 @@ class Routes {
 
 
   static const String newAccountRoute = '/newAccount';
+  static const String calenderRoute = '/calender';
+  static const String newEventRoute = '/newEvent';
+
 }
 
 class AppRoutes {
@@ -199,9 +205,23 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
+        // sanaaaaaaaaaaaaaaa
         case Routes.newAccountRoute:
         return PageTransition(
           child: const NewAccountScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.calenderRoute:
+        return PageTransition(
+          child: const CalendarScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );case Routes.newEventRoute:
+        return PageTransition(
+          child: const NewEventScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
