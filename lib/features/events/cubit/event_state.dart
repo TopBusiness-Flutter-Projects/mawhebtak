@@ -4,6 +4,6 @@ part of 'event_cubit.dart';
 sealed class EventState {}
 
 final class EventInitial extends EventState {}
-final class ChangeToggleState extends EventState {
-
-}
+final class ChangeToggleState extends EventState {}
+final class ChangePhotoState extends EventState {}
+final class ChangeCurrencyState extends EventState {}

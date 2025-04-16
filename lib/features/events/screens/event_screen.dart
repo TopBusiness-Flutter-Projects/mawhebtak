@@ -21,8 +21,6 @@ class EventScreen extends StatelessWidget {
           SizedBox(height: 20.h,),
           CustomSimpleAppbar(title: 'events'.tr(),isEventScreen: true,),
           Expanded(
-
-
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Center(

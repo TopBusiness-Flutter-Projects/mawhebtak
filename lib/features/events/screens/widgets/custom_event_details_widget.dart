@@ -75,31 +75,34 @@ class CustomEventDetailsWidget extends StatelessWidget {
                 SizedBox(height: 10.h),
 
 
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(AppIcons.calenderIcon),
-                          SizedBox(width: 5.w),
-                          Expanded(
-                            child: Text(
-                              "16 june 2022",
-                              style: getRegularStyle(fontSize: 13.sp,color: AppColors.white),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(AppIcons.calenderIcon),
+                            SizedBox(width: 5.w),
+                            Expanded(
+                              child: Text(
+                                "16 june 2022",
+                                style: getRegularStyle(fontSize: 13.sp,color: AppColors.white),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Text(
-                      "500 L.E",
-                      style: getSemiBoldStyle(fontSize: 17.sp,color: AppColors.green),
-                    ),
+                      Text(
+                        "500 L.E",
+                        style: getSemiBoldStyle(fontSize: 17.sp,color: AppColors.green),
+                      ),
 
-                  ],
+                    ],
+                  ),
                 ),
 
                 SizedBox(height: 8.h,),

@@ -60,6 +60,7 @@ dependencies:
   awesome_dialog: ^3.2.1
   video_player: ^2.9.5
   auto_size_text: ^3.0.0
+  currency_code_to_currency_symbol: ^0.0.4
 
   # ! main packages
  
