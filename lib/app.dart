@@ -17,6 +17,7 @@ import 'package:mawhebtak/injector.dart' as injector;
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/auth/splash/cubit/cubit.dart';
 import 'features/change_langauge/cubit/change_language_cubit.dart';
+import 'features/events/cubit/event_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
@@ -48,6 +49,8 @@ class _MyAppState extends State<MyApp> {
         providers: [
           BlocProvider(
             create: (_) => injector.serviceLocator<SplashCubit>(),
+          ),  BlocProvider(
+            create: (_) => injector.serviceLocator<EventCubit>(),
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<HomeCubit>(),
@@ -82,6 +85,23 @@ class _MyAppState extends State<MyApp> {
           ),BlocProvider(
             create: (_) => injector.serviceLocator<ReferralCodeCubit>(),
           ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          //sanssssssssssssssssssssssssssss
+
         ],
         child: GetMaterialApp(
           supportedLocales: context.supportedLocales,

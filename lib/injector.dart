@@ -23,6 +23,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
+import 'features/events/cubit/event_cubit.dart';
+import 'features/events/data/repo/event_repo_impl.dart';
 import 'features/about_us/cubit/about_us_cubit.dart';
 import 'features/about_us/data/repos/about_us_repo.dart';
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
@@ -74,6 +76,10 @@ Future<void> setup() async {
       serviceLocator(),
     ),
   ); serviceLocator.registerFactory(
+    () => EventCubit(
+      serviceLocator(),
+    ),
+  ); serviceLocator.registerFactory(
     () => ContactUsCubit(
       serviceLocator(),
     ),
@@ -95,6 +101,31 @@ Future<void> setup() async {
     ),
   );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //sanaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+
 //!----------------------------------------------------------------
 ///////////////////////////////////////////////////////////////////
 //!-------------------------Declare Repo---------------------------
@@ -109,7 +140,32 @@ Future<void> setup() async {
   serviceLocator.registerLazySingleton(() => ChangeLanguageRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => AboutUsRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => ReferralCodeRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => EventRepoImpl(serviceLocator()));
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //sanaaaaaaaaaaaaaaaaaaaaa
 //!----------------------------------------------------------------
 
   //! External

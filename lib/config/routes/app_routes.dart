@@ -14,6 +14,9 @@ import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_conditi
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/auth/login/screens/login_screen.dart';
+import '../../features/events/screens/event_screen.dart';
+import '../../features/home/screens/notification_screen.dart';
+import '../../features/home/screens/video_screen.dart';
 import '../../features/referral_code/screens/referral_code_screen.dart';
 
 class Routes {
@@ -31,6 +34,46 @@ class Routes {
   static const String contactUsRoute = '/contactUs';
   static const String referralCodeRoute = '/referralCode';
   static const String termsAndConditionRoute = '/termsAndCondition';
+  static const String videoScreenRoute = '/videoScreenRoute';
+  static const String eventScreen = '/eventScreen';
+  static const String notificationScreen = '/notificationScreen';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //sanaaaaaaaaaaaaaaaaaaaaaaaa
 }
 
 class AppRoutes {
@@ -46,6 +89,24 @@ class AppRoutes {
       case Routes.loginRoute:
         return PageTransition(
           child: const LoginScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );  case Routes.eventScreen:
+        return PageTransition(
+          child: const EventScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );    case Routes.notificationScreen:
+        return PageTransition(
+          child: const NotificationScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );  case Routes.videoScreenRoute:
+        return PageTransition(
+          child: const VideoScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

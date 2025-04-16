@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_button.dart';
-import '../../follow_button.dart';
+import 'follow_button.dart';
 
 class UnderCustomRow extends StatelessWidget {
   const UnderCustomRow({super.key});

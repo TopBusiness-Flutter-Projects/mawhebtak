@@ -3,9 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/exports.dart';
 
 class CustomRow extends StatelessWidget {
-   CustomRow({super.key,required this.text});
+   CustomRow({super.key,required this.text, this.onTap});
 String text;
-  @override
+   void Function()? onTap;
+   @override
   Widget build(BuildContext context) {
     return Padding(
       padding:  EdgeInsets.symmetric(horizontal: 16.0.w),
@@ -15,8 +16,9 @@ String text;
         children: [
 
           Text(text.tr(),style: getMediumStyle(fontSize: 14.sp,color: AppColors.white),),
-          Text("see_all".tr(),style: getUnderLine(fontSize: 14.sp,color: AppColors.lbny),),
-
+          InkWell(
+            onTap: onTap,
+              child: Text("see_all".tr(),style: getUnderLine(fontSize: 14.sp,color: AppColors.lbny),)),
         ],),
     );
   }
