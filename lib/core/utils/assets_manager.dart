@@ -27,6 +27,7 @@ class ImageAssets {
   static const String videoCallImage = '$imagePath/video_call_image.png';
   static const String calenderImage = '$imagePath/calender_image.png';
   static const String notificationImage = '$imagePath/notification.png';
+  static const String imagePicked = '$imagePath/imagePicked.png';
    // static const String   = '$imagePath/profile_image.png';
   // icons
   static const String emailIcon = '$iconsPath/email_icon.svg';
@@ -102,6 +103,9 @@ class AppIcons {
   static const String profileDefault = '$iconsPath/profile_image.svg';
   static const String removeIcon = '$iconsPath/remove_icon.svg';
   static const String eventIcon = '$iconsPath/event_icon.svg';
+  static const String settingIcon = '$iconsPath/setting.svg';
+  static const String xIcon = '$iconsPath/x.svg';
+  static const String imagePicked = '$iconsPath/image_pick.svg';
 
   static const String notificationWithBlueContainer = '$iconsPath/notification_with_blue_container.svg';
 

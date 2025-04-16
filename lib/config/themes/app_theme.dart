@@ -22,7 +22,7 @@ ThemeData appTheme() {
       iconTheme: IconThemeData(color: AppColors.black),
       centerTitle: false,
       elevation: 0.0,
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.transparent,
       titleTextStyle: TextStyle(
         fontSize: 22.0.sp,
         // letterSpacing: 1.5,
