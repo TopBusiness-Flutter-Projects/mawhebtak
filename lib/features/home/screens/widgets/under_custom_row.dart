@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_button.dart';
 import 'follow_button.dart';
@@ -19,17 +20,21 @@ class UnderCustomRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
 
-           // ممكن تحط Spacer هنا بدلًا منه لو المكان يسمح
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
-                    height: 40.h,
-                    width: 40.w,
-                    child: Image.asset(ImageAssets.profileImage),
+                  InkWell(
+                    onTap:(){
+                      Navigator.pushNamed(context, Routes.profileScreen);
+                    },
+                    child: SizedBox(
+                      height: 40.h,
+                      width: 40.w,
+                      child: Image.asset(ImageAssets.profileImage),
+                    ),
                   ),
                   Text("Ahmed Mokhtar", style: getMediumStyle(color: AppColors.white,fontSize: 16.sp)),
                   Text("Talent / Actor Expert", style: getRegularStyle(color: AppColors.grayText,fontSize: 14.sp)),

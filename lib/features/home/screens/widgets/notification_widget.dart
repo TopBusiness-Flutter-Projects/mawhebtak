@@ -8,7 +8,8 @@ class NotificationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return       Padding(
       padding:  EdgeInsets.symmetric(horizontal: 8.0.w),
-      child: CustomContainerWithShadow(child: Padding(
+      child: CustomContainerWithShadow(
+          child: Padding(
         padding:  EdgeInsets.all(10.0.w),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

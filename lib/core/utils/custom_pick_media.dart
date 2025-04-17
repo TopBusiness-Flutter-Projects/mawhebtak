@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mawhebtak/features/events/cubit/event_cubit.dart';
-
 import '../exports.dart';
 import 'app_colors.dart';
 import '../../features/home/screens/widgets/follow_button.dart';
