@@ -28,7 +28,6 @@ class MoreScreen extends StatelessWidget {
             5.h.verticalSpace,
             Expanded(child: Container(
               decoration: BoxDecoration(
-
                 color:AppColors.grayLight.withOpacity(0.2),
               ),
               child: Padding(
