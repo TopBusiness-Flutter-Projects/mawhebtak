@@ -37,7 +37,7 @@ class _ApplyForEventState extends State<ApplyForEvent> {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomApplyAppBar(),
+                CustomAppBarWithClearWidget(title:  "apply_for_event".tr(),),
                 SizedBox(height: getHeightSize(context) / 33),
 
                 // الصورة والزر

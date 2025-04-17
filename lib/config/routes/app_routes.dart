@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mawhebtak/features/about_us/screens/about_us_screen.dart';
 import 'package:mawhebtak/features/auth/change_password/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/auth/forget_password/screens/forget_password_screen.dart';
+import 'package:mawhebtak/features/auth/new_account/screens/new_account_screen.dart';
 import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dart';
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/screens/calender_screen.dart';

@@ -4,9 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/utils/app_colors.dart';
 
-class CustomApplyAppBar extends StatelessWidget {
-  const CustomApplyAppBar({super.key});
-
+class CustomAppBarWithClearWidget extends StatelessWidget {
+  const CustomAppBarWithClearWidget({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     return    Container(
@@ -24,7 +24,12 @@ class CustomApplyAppBar extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Text("apply_for_event".tr()),
+                child: Text(title,style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.blackLite
+
+                ),),
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
@@ -36,7 +41,7 @@ class CustomApplyAppBar extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: getHeightSize(context)/80,),
+          SizedBox(height: getHeightSize(context)/150,),
           Container(
             color: AppColors.grayLite,
             width: double.infinity,height: 2.h,)
