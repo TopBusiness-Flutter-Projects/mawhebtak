@@ -25,6 +25,8 @@ import '../../features/events/screens/event_screen.dart';
 import '../../features/events/screens/second_details_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
 import '../../features/home/screens/video_screen.dart';
+import '../../features/profile/screens/followers_screen.dart';
+import '../../features/profile/screens/profile_screen.dart';
 import '../../features/referral_code/screens/referral_code_screen.dart';
 
 class Routes {
@@ -48,6 +50,8 @@ class Routes {
   static const String notificationScreen = '/notificationScreen';
   static const String secondDetailsSecond = '/secondDetailsSecond';
   static const String applyEvent = '/applyEvent';
+  static const String profileScreen = '/profileScreen';
+  static const String followersScreen = '/followersScreen';
 
 
 
@@ -107,6 +111,18 @@ class AppRoutes {
       case Routes.loginRoute:
         return PageTransition(
           child: const LoginScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        ); case Routes.profileScreen:
+        return PageTransition(
+          child: const ProfileScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );case Routes.followersScreen:
+        return PageTransition(
+          child: const FollowersScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

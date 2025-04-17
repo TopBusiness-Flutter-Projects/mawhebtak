@@ -28,6 +28,8 @@ class ImageAssets {
   static const String calenderImage = '$imagePath/calender_image.png';
   static const String notificationImage = '$imagePath/notification.png';
   static const String imagePicked = '$imagePath/imagePicked.png';
+  static const String profileAppBar = '$imagePath/profile_app_bar.png';
+  static const String experience = '$imagePath/experience.png';
    // static const String   = '$imagePath/profile_image.png';
   // icons
   static const String emailIcon = '$iconsPath/email_icon.svg';
@@ -103,9 +105,16 @@ class AppIcons {
   static const String profileDefault = '$iconsPath/profile_image.svg';
   static const String removeIcon = '$iconsPath/remove_icon.svg';
   static const String eventIcon = '$iconsPath/event_icon.svg';
-  static const String settingIcon = '$iconsPath/setting.svg';
+  static const String settingIcon = '$iconsPath/setting_icon.svg';
+  static const String likeIcon = '$iconsPath/like_icon.svg';
   static const String xIcon = '$iconsPath/x.svg';
   static const String imagePicked = '$iconsPath/image_pick.svg';
+  static const String shareIcon = '$iconsPath/share_icon.svg';
+  static const String bioIcon = '$iconsPath/bio.svg';
+  static const String settingIconn = '$iconsPath/setting_icon.svg';
+  static const String experinceIcon= '$iconsPath/experince_icon.svg';
+  static const String commentIcon= '$iconsPath/comment_icon.svg';
+  static const String shareIcon2= '$iconsPath/share_icon2.svg';
 
   static const String notificationWithBlueContainer = '$iconsPath/notification_with_blue_container.svg';
 

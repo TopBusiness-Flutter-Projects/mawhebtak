@@ -4,12 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import '../exports.dart';
 
 class CustomSimpleAppbar extends StatelessWidget {
-  const CustomSimpleAppbar({super.key, required this.title, this.isEventScreen,this.colorButton,this.color,this.titleColor});
+  const CustomSimpleAppbar({super.key, this.actionIcon,required this.title, this.isActionButton,this.colorButton,this.color,this.titleColor});
 final String title;
-final bool ?isEventScreen;
+final bool ?isActionButton;
 final Color ?color;
 final Color ?titleColor;
 final Color ?colorButton;
+final String ?actionIcon;
   @override
   Widget build(BuildContext context) {
     return
@@ -52,10 +53,10 @@ final Color ?colorButton;
               style: TextStyle(fontSize: 16.sp, color: titleColor??AppColors.black),
             ),
           ),
-          if(isEventScreen??false)
+          if(isActionButton??false)
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: SvgPicture.asset(AppIcons.eventIcon),
+              child: SvgPicture.asset(actionIcon??AppIcons.eventIcon),
             )        ],
       ),
     );

@@ -34,6 +34,8 @@ import 'features/change_langauge/data/repos/change_language_repo.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/home/data/repo/home_repo_impl.dart';
 import 'features/main_screen/data/repo/main_repo_impl.dart';
+import 'features/profile/cubit/profile_cubit.dart';
+import 'features/profile/data/repo/profile_repo_impl.dart';
 
 // import 'features/downloads_videos/cubit/downloads_videos_cubit.dart';
 
@@ -87,6 +89,10 @@ Future<void> setup() async {
     ),
   ); serviceLocator.registerFactory(
     () => ChangePasswordCubit(
+      serviceLocator(),
+    ),
+  );serviceLocator.registerFactory(
+    () => ProfileCubit(
       serviceLocator(),
     ),
   );serviceLocator.registerFactory(
@@ -148,6 +154,7 @@ Future<void> setup() async {
   serviceLocator.registerLazySingleton(() => AboutUsRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => ReferralCodeRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => EventRepoImpl(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => profileRepoImpl(serviceLocator()));
 
 
 

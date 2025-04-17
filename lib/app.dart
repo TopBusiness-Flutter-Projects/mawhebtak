@@ -22,6 +22,7 @@ import 'features/events/cubit/event_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
 import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
+import 'features/profile/cubit/profile_cubit.dart';
 import 'features/referral_code/cubit/about_us_cubit.dart';
 
 class MyApp extends StatefulWidget {
@@ -85,6 +86,8 @@ class _MyAppState extends State<MyApp> {
             create: (_) => injector.serviceLocator<AboutUsCubit>(),
           ),BlocProvider(
             create: (_) => injector.serviceLocator<ReferralCodeCubit>(),
+          ),BlocProvider(
+            create: (_) => injector.serviceLocator<ProfileCubit>(),
           ),
 
 

@@ -98,7 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 4.h,),
               SizedBox(
                    height: 184.h,
-
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: AlwaysScrollableScrollPhysics(),
@@ -132,6 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: Image.asset(ImageAssets.banner),
               ),
+              // request_gigs
               CustomRow(text: 'request_gigs',),
               SizedBox(height: 4.h),
               SizedBox(
@@ -144,7 +144,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return CustomRequestGigstList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
                   },),
-              ), CustomRow(text: 'announcements',),
+              ),
+              //annaouncement
+              CustomRow(text: 'announcements',),
               SizedBox(height: 4.h),
               SizedBox(
                 height:getHeightSize(context)/2.3, // Match image width

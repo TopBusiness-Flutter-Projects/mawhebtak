@@ -10,6 +10,7 @@ class AppColors {
   static Color whiteSecond =  HexColor('#8C7B95');
   static Color darkGray = const Color(0xff464545);
   static Color gray = const Color(0xffC0C0C0);
+  static Color grayMedium = HexColor('#ADADAD');
 
   static Color red = HexColor('#FF0000');
   static Color redLight = HexColor('#C598C2');
@@ -31,6 +32,8 @@ class AppColors {
   static Color grayDate = HexColor('#BABABA');
   static Color grayText = HexColor('#C3C3C3');
   static Color grayText2 = HexColor('#C8C8C8');
+  static Color grayText3 = HexColor('#928F8F');
+  static Color grayDarkkk = HexColor('#B4B4B4');
 
   Color darken(Color color, [double amount = .1]) {
     assert(amount >= 0 && amount <= 1);
