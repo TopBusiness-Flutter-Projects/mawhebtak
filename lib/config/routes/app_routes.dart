@@ -6,13 +6,14 @@ import 'package:mawhebtak/features/auth/new_account/screens/new_account_screen.d
 import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dart';
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
+import 'package:mawhebtak/features/casting/screens/casting_screen.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
 import 'package:mawhebtak/features/contact_us/screens/contact_us_screen.dart';
 import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
 import 'package:mawhebtak/features/auth/new_password/screens/new_password_screen.dart';
 import 'package:mawhebtak/features/auth/verification/screens/verification_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
-import 'package:mawhebtak/features/new_event/screens/new_event_screen.dart';
+import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
 import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_condition.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
@@ -95,6 +96,7 @@ class Routes {
   static const String newAccountRoute = '/newAccount';
   static const String calenderRoute = '/calender';
   static const String newEventRoute = '/newEvent';
+  static const String castingRoute = '/casting';
 
 }
 
@@ -263,6 +265,12 @@ class AppRoutes {
         );case Routes.newEventRoute:
         return PageTransition(
           child: const NewEventScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );case Routes.castingRoute:
+        return PageTransition(
+          child: const CastingScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

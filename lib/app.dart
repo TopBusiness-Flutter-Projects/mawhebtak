@@ -5,6 +5,7 @@ import 'package:mawhebtak/features/about_us/cubit/about_us_cubit.dart';
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
+import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -17,6 +18,7 @@ import 'package:mawhebtak/injector.dart' as injector;
 
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/auth/splash/cubit/cubit.dart';
+import 'features/casting/cubit/casting_cubit.dart';
 import 'features/change_langauge/cubit/change_language_cubit.dart';
 import 'features/events/cubit/event_cubit.dart';
 import 'features/home/cubit/home_cubit.dart';
@@ -107,6 +109,10 @@ class _MyAppState extends State<MyApp> {
           //sanssssssssssssssssssssssssssss
           BlocProvider(
             create: (_) => injector.serviceLocator<NewAccountCubit>(),
+          ),        BlocProvider(
+            create: (_) => injector.serviceLocator<CalenderCubit>(),
+          ),      BlocProvider(
+            create: (_) => injector.serviceLocator<CastingCubit>(),
           ),
 
         ],

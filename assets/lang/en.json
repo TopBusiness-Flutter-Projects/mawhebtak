@@ -171,5 +171,21 @@
     "text_about_us": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance.",
     "new_account": "New Account",
     "i_am": "I am ",
-    "new_event": "New Event"
+    "new_event": "New Event",
+    "title_of_event": "Title of the event",
+    "select_location": "Select Location",
+    "open_map": "Open Map",
+    "description": "Description",
+    "event_created": "Event Created Successfully",
+    "event_created_subtext": "Your event added to your events list, you can share it now",
+    "back": "Back",
+    "create_event": "Create Event",
+    "event_information": "Event Information",
+    "required_talents": "Required Talents",
+    "private" : "Private",
+    "public" : "Public",
+    "type_of_event": "Type of event",
+    "event_type": "Event Type",
+    "select_type": "Select Type",
+    "select_required_talents":"Select Required Talents"
 }
