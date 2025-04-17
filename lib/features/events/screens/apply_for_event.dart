@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
+import 'package:mawhebtak/core/utils/custom_pick_media.dart';
 
 import '../../../core/exports.dart';
 import '../../../core/utils/app_colors.dart';
@@ -41,31 +42,8 @@ class _ApplyForEventState extends State<ApplyForEvent> {
                 SizedBox(height: getHeightSize(context) / 33),
 
                 // الصورة والزر
-                Container(
-                  color: AppColors.grayLite,
-                  width: double.infinity,
-                  height: getHeightSize(context) / 3.5,
-                  child: Column(
-                    children: [
-                     cubit. selectedImage != null
-                          ? Image.file(cubit.selectedImage!, height: 150, fit: BoxFit.cover)
-                          : Image.asset(ImageAssets.imagePicked, height: 150),
-
-                      SizedBox(
-                        width: 239.w,
-                        height: 30.h,
-                        child: GestureDetector(
-                          onTap:cubit. pickImage,
-                          child: CustomContainerButton(
-                            title: "add_photo_video".tr(),
-                            color: AppColors.blueveryLight,
-                            textColor: AppColors.primary,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                CustomPickMediaWidget()
+                ,
 
                 // باقي النموذج
                 Padding(

@@ -17,6 +17,7 @@ import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_conditi
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/auth/login/screens/login_screen.dart';
+import '../../features/auth/new_account/screens/new_account_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
 import '../../features/calender/screens/widgets/calender_widget.dart';
