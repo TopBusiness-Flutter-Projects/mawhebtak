@@ -129,4 +129,8 @@ class AppIcons {
 
 
 //sanaaa
+  static const String dateIcon = '$iconsPath/date.svg';
+  static const String successIcon = '$iconsPath/success.svg';
+  static const String share = '$iconsPath/share.svg';
+
 }

@@ -18,6 +18,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputType? keyboardType;
   final String? hintText;
   final double? hintTextSize;
+  final int? maxLines;
   //FocusNode myFocusNode = FocusNode();
   const CustomTextField({
     super.key,
@@ -34,7 +35,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.onSubmitted,
     this.borderRadius,
-    this.enabled = true, this.hintText, this.hintTextSize,
+    this.enabled = true, this.hintText, this.hintTextSize, this.maxLines,
   });
 
   @override
@@ -63,6 +64,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    int minLines = widget.isMessage ? 4 : 1;
+    int maxLines = widget.isMessage
+        ? (widget.maxLines != null && widget.maxLines! >= minLines
+        ? widget.maxLines!
+        : minLines)
+        : 1;
     return SizedBox(
       height: widget.isMessage ? 150.h : null,
       child: Padding(
@@ -78,7 +85,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             onChanged: widget.onChanged,
             validator: widget.validator,
             keyboardType: widget.keyboardType,
-            maxLines: widget.isMessage ? 4 : 1,
+            maxLines: widget.isMessage ? (widget.maxLines?? 4) : 1,
             minLines: widget.isMessage ? 4 : 1,
             onFieldSubmitted: widget.onSubmitted,
             initialValue: widget.initialValue,

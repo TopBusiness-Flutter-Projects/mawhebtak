@@ -8,6 +8,7 @@ import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart
 import 'package:mawhebtak/features/auth/new_account/data/repos/new_account.repo.dart';
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:mawhebtak/features/auth/splash/cubit/cubit.dart';
+import 'package:mawhebtak/features/calender/data/repos/calender.repo.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/contact_us/data/repos/contact_us_repo.dart';
@@ -25,6 +26,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
+import 'features/calender/cubit/calender_cubit.dart';
+import 'features/casting/cubit/casting_cubit.dart';
+import 'features/casting/data/repos/casting.repo.dart';
 import 'features/events/cubit/event_cubit.dart';
 import 'features/events/data/repo/event_repo_impl.dart';
 import 'features/about_us/cubit/about_us_cubit.dart';
@@ -133,6 +137,17 @@ Future<void> setup() async {
     ),
   );
 
+  serviceLocator.registerFactory(
+        () => CalenderCubit(
+      serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+        () => CastingCubit(
+      serviceLocator(),
+    ),
+  );
+
 //!----------------------------------------------------------------
 ///////////////////////////////////////////////////////////////////
 //!-------------------------Declare Repo---------------------------
@@ -174,6 +189,8 @@ Future<void> setup() async {
 
   //sanaaaaaaaaaaaaaaaaaaaaa
   serviceLocator.registerLazySingleton(() => NewAccountRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => CalenderRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => CastingRepo(serviceLocator()));
 
 //!----------------------------------------------------------------
 

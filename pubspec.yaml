@@ -38,7 +38,7 @@ dependencies:
   # ! main packages
   dio: ^5.7.0
   flutter_bloc: ^8.1.6
-  get_it: ^7.6.7 
+  get_it: ^7.6.7
   dartz: ^0.10.1
   get: ^4.6.6
   easy_localization: ^3.0.7
