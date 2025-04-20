@@ -133,14 +133,14 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                     setState(() {
                                       currentStep = 2;
 
-                                      cubit.addEvent(
-                                        title: cubit
-                                            .titleOfTheEventController.text,
-                                        date: cubit.selectedDate ??
-                                            DateTime.now(),
-                                      );
+                                      // cubit.addEvent(
+                                      //   title: cubit
+                                      //       .titleOfTheEventController.text,
+                                      //   date: cubit.selectedDate ??
+                                      //       DateTime.now(),
+                                      // );
 
-                                      Navigator.pop(context);
+                                      // Navigator.pop(context);
                                     });
                                   } else {
                                     print(

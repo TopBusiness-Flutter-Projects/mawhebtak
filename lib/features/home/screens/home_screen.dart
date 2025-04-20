@@ -87,9 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: CustomAppBarRow(),
                   ),
                   //under custom row
-                  UnderCustomRow(),
+                  const UnderCustomRow(),
                   //custom list
-                  CustomList(),
+                  const CustomList(),
                 ],
               ),
               SizedBox(height: 10.h),
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                    height: 184.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount:5,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount:cubit.items.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 145.w, // Match image width
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount:cubit.items.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
@@ -152,15 +152,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 height:getHeightSize(context)/2.3, // Match image width
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount:cubit.items.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return CustomAnnouncementWidget(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
+                    return CustomAnnouncementWidget(isLeftPadding:index==0
+                        ?true:false,
+                      isRightPadding: index==cubit.items.length-1?
+                      true:false,);
                   },),
               ),
 
-              SizedBox(height: 100,)
+              const SizedBox(height: 100,)
             ],
           ),
         ),
