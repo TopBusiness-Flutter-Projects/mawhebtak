@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/features/home/cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubit/home_state.dart';
 
@@ -29,7 +30,8 @@ class CustomList extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: (){
-              Navigator.pushNamed(context, Routes.eventScreen);
+              cubit.items[index].label=="Jobs"? Navigator.pushNamed(context, Routes.eventScreen):
+              cubit.items[index].label=="Jobs"?  Navigator.pushNamed(context, Routes.eventScreen):Navigator.pushNamed(context, Routes.profileScreen);
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0),
