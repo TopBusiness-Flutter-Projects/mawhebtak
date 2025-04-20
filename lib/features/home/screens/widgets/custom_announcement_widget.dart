@@ -4,22 +4,31 @@ import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 
 import '../../../../core/exports.dart';
 
-class CustomAnnouncementWidget extends StatelessWidget {
-  const CustomAnnouncementWidget({
+class CustomAnnouncementWidget extends StatefulWidget {
+   CustomAnnouncementWidget({
     super.key,
-    required this.isLeftPadding,
-    required this.isRightPadding,
+     this.isLeftPadding,
+     this.isRightPadding,
+    this.isAnnouncements,
+    this.isFav
   });
 
-  final bool isLeftPadding;
-  final bool isRightPadding;
+  final bool ?isLeftPadding;
+  final bool ?isRightPadding;
+  final bool ?isAnnouncements;
+   bool ?isFav ;
 
+  @override
+  State<CustomAnnouncementWidget> createState() => _CustomAnnouncementWidgetState();
+}
+
+class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsDirectional.only(
-        start: isLeftPadding ? 16.w : 10.w,
-        end: isRightPadding ? 16.w : 0.0,
+        start: widget.isLeftPadding??false ? 16.w : 10.w,
+        end: widget.isRightPadding??false ? 16.w : 0.0,
       ),
       child: CustomContainerWithShadow(
 width: 299.w,
@@ -37,7 +46,57 @@ width: 299.w,
                     child: Image.asset(ImageAssets.profileImage),
                   ),
                   SizedBox(width: 8.w),
-                  Column(
+                  widget.isAnnouncements??false?
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
+                            AutoSizeText(
+                              "Talent / Actor Expert",
+                              style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayLight),
+                            ),
+                          ],
+                        ),
+
+                        Row(children: [
+                          InkWell(
+                              onTap: () {  InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      widget.isFav != widget.isFav!;
+                                      print( widget.   isFav);
+                                    });
+                                  },
+                                  child: Icon(
+                                  widget.   isFav == true
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    size: 20.sp,
+                                    color:   widget.   isFav??false ? AppColors.primary : AppColors.darkGray.withOpacity(0.5),
+
+                                  ));},
+                              child: Icon(
+                                widget.isFav == true
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                size: 20.sp,
+                                color: widget.isFav??false ? AppColors.primary : AppColors.darkGray.withOpacity(0.5),
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset(AppIcons.settingIcon),
+                          ),
+
+
+
+                    ],)
+                      ],
+                    ),
+                  ): Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
