@@ -146,7 +146,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   },),
               ),
               //annaouncement
-              CustomRow(text: 'announcements'.tr(),),
+              CustomRow(text: 'announcements'.tr(),onTap: (){
+                Navigator.pushNamed(context, Routes.announcementScreen);
+              },),
               SizedBox(height: 4.h),
               SizedBox(
                 height:getHeightSize(context)/2.3, // Match image width
@@ -158,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return CustomAnnouncementWidget(isLeftPadding:index==0
                         ?true:false,
+
                       isRightPadding: index==cubit.items.length-1?
                       true:false,);
                   },),
