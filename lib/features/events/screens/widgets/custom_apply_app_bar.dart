@@ -24,11 +24,9 @@ class CustomAppBarWithClearWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Text(title,style: TextStyle(
+                child: Text(title,style:getMediumStyle(
+                    color: AppColors.blackLite,
                   fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.blackLite
-
                 ),),
               ),
               Padding(

@@ -28,6 +28,7 @@ import '../../features/home/screens/notification_screen.dart';
 import '../../features/home/screens/video_screen.dart';
 import '../../features/profile/screens/followers_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
+import '../../features/profile/screens/write_post.dart';
 import '../../features/referral_code/screens/referral_code_screen.dart';
 
 class Routes {
@@ -53,6 +54,7 @@ class Routes {
   static const String applyEvent = '/applyEvent';
   static const String profileScreen = '/profileScreen';
   static const String followersScreen = '/followersScreen';
+  static const String writePostScreen = '/writePostScreen';
 
 
 
@@ -113,6 +115,12 @@ class AppRoutes {
       case Routes.loginRoute:
         return PageTransition(
           child: const LoginScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        ); case Routes.writePostScreen:
+        return PageTransition(
+          child: const WritePost(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

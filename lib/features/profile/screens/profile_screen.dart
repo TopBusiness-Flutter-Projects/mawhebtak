@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/about_widgets/about_widget.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/info_for_followers.dart';
+import 'package:mawhebtak/features/profile/screens/widgets/my_gigs/gigs_widget.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_app_bar.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_taps.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/time_line_widget/time_line_widget.dart';
@@ -64,7 +65,9 @@ class ProfileScreen extends StatelessWidget {
       ]else if(cubit.selectedIndex==1)...[
         TimeLineWidget()
       ]  else if(cubit.selectedIndex==2)...[
-        TimeLineWidget()
+        GigsWidget()
+      ]else if(cubit.selectedIndex==3)...[
+        GigsWidget()
       ]
          // SizedBox(height: 100,)
         ],
