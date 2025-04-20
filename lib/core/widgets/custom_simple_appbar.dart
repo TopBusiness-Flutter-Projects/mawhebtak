@@ -20,7 +20,7 @@ final String ?actionIcon;
         BoxShadow(
           color:color?? AppColors.grayLite,
           blurStyle: BlurStyle.inner,
-         // offset: const Offset(0, 1),
+         offset: const Offset(0, 1),
         )
       ]),
       child: Row(

@@ -22,3 +22,11 @@ double getheightSize(BuildContext context) {
 double getVerticalPadding(BuildContext context) {
   return 20.h;
 }
+double textScaleFactor(BuildContext context) {
+  final screenWidth = MediaQuery.of(context).size.width;
+  if (screenWidth > 600) {
+    // Tablet scaling
+    return 1.5; // Increase font size for tablets
+  }
+  return 1.0; // Default scaling for mobile
+}

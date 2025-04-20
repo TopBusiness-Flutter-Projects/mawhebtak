@@ -9,24 +9,27 @@ import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
 import 'package:mawhebtak/features/casting/screens/casting_screen.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
 import 'package:mawhebtak/features/contact_us/screens/contact_us_screen.dart';
+import 'package:mawhebtak/features/jobs/screens/job_details_screen.dart';
+import 'package:mawhebtak/features/jobs/screens/jobs_screen.dart';
 import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
 import 'package:mawhebtak/features/auth/new_password/screens/new_password_screen.dart';
 import 'package:mawhebtak/features/auth/verification/screens/verification_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
+import 'package:mawhebtak/features/records/screens/add_new_record_screen.dart';
+import 'package:mawhebtak/features/records/screens/records_screen.dart';
 import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_condition.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/auth/login/screens/login_screen.dart';
-import '../../features/auth/new_account/screens/new_account_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
-import '../../features/calender/screens/widgets/calender_widget.dart';
 import '../../features/events/screens/event_screen.dart';
 import '../../features/events/screens/second_details_screen.dart';
 import '../../features/feeds/screens/feeds_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
 import '../../features/home/screens/video_screen.dart';
+import '../../features/jobs/screens/add_new_job_screen.dart';
 import '../../features/profile/screens/followers_screen.dart';
 import '../../features/profile/screens/gigs_details.dart';
 import '../../features/profile/screens/new_gigs_screen.dart';
@@ -105,6 +108,11 @@ class Routes {
   static const String calenderRoute = '/calender';
   static const String newEventRoute = '/newEvent';
   static const String castingRoute = '/casting';
+  static const String jobsRoute = '/jobs';
+  static const String addNewJobRoute = '/addNewJob';
+  static const String jobDetailsRoute = '/jobDetails';
+  static const String recordsRoute = '/records';
+  static const String addNewRecordRoute = '/addNewRecord';
 
 }
 
@@ -281,6 +289,11 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
+
+
+
+
+
         // sanaaaaaaaaaaaaaaa
         case Routes.newAccountRoute:
         return PageTransition(
@@ -304,6 +317,40 @@ class AppRoutes {
         );case Routes.castingRoute:
         return PageTransition(
           child: const CastingScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.jobsRoute:
+        return PageTransition(
+          child:  const JobsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );case Routes.addNewJobRoute:
+        return PageTransition(
+          child:  const AddNewJobScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.jobDetailsRoute:
+        return PageTransition(
+          child:  const JobDetailsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.recordsRoute:
+        return PageTransition(
+          child:  const RecordsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.addNewRecordRoute:
+        return PageTransition(
+          child:  const AddNewRecordScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

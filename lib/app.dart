@@ -7,9 +7,11 @@ import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
+import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
+import 'package:mawhebtak/features/records/cubit/records_cubit.dart';
 
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
@@ -53,7 +55,8 @@ class _MyAppState extends State<MyApp> {
         providers: [
           BlocProvider(
             create: (_) => injector.serviceLocator<SplashCubit>(),
-          ),  BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<EventCubit>(),
           ),
           BlocProvider(
@@ -82,39 +85,37 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<ChangePasswordCubit>(),
-          ),  BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<ChangeLanguageCubit>(),
-          ),BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<AboutUsCubit>(),
-          ),BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<ReferralCodeCubit>(),
-          ),BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<ProfileCubit>(),
           ),
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
           //sanssssssssssssssssssssssssssss
           BlocProvider(
             create: (_) => injector.serviceLocator<NewAccountCubit>(),
-          ),        BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<CalenderCubit>(),
-          ),      BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<CastingCubit>(),
           ),
-
+          BlocProvider(
+            create: (_) => injector.serviceLocator<JobsCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => injector.serviceLocator<RecordsCubit>(),
+          ),
         ],
         child: GetMaterialApp(
           supportedLocales: context.supportedLocales,

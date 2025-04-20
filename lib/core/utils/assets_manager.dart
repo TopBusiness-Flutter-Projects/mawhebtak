@@ -160,5 +160,6 @@ class AppIcons {
   static const String successIcon = '$iconsPath/success.svg';
   static const String share = '$iconsPath/share.svg';
   static const String dollar= '$iconsPath/mdi_dollar.svg';
+  static const String bagIcon= '$iconsPath/bag_icon.svg';
 
 }

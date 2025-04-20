@@ -42,6 +42,7 @@ dependencies:
   dartz: ^0.10.1
   get: ^4.6.6
   easy_localization: ^3.0.7
+  dotted_border: ^2.1.0
   equatable: ^2.0.5
   shared_preferences: ^2.2.3
   permission_handler: ^10.3.0
