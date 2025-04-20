@@ -11,6 +11,7 @@ import 'package:mawhebtak/features/profile/screens/widgets/time_line_widget/time
 
 import '../../../core/exports.dart';
 import '../../../core/widgets/custom_simple_appbar.dart';
+import '../../casting/screens/widgets/gigs_widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
