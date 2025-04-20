@@ -21,6 +21,7 @@ import 'package:mawhebtak/features/records/screens/records_screen.dart';
 import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_condition.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../features/announcement/screens/announcement_screen.dart';
 import '../../features/auth/login/screens/login_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
@@ -64,6 +65,7 @@ class Routes {
   static const String newGigsScreen = '/newGigsScreen';
   static const String gigsDetailsScreen = '/gigsDetailsScreen';
   static const String feedsScreen = '/feedsScreen';
+  static const String announcementScreen = '/announcementScreen';
 
 
 
@@ -147,6 +149,12 @@ class AppRoutes {
         ); case Routes.writePostScreen:
         return PageTransition(
           child: const WritePost(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );case Routes.announcementScreen:
+        return PageTransition(
+          child: const AnnouncementScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

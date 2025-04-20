@@ -1,3 +1,5 @@
+import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
+
 import '../../../core/exports.dart';
 
 class AnnouncementScreen extends StatelessWidget {
@@ -7,7 +9,7 @@ class AnnouncementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(body:
     Column(children: [
-
+CustomSimpleAppbar(title: "title")
     ],),
     );
   }

@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: 35,
                     left: 16,
                     right: 16,
-                    child: CustomAppBarRow(),
+                    child: CustomAppBarRow(color: AppColors.transparent,),
                   ),
                   //under custom row
                   const UnderCustomRow(),

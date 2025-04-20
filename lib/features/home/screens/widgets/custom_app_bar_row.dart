@@ -5,17 +5,18 @@ import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 import '../../../../core/exports.dart';
 
 class CustomAppBarRow extends StatelessWidget {
-  CustomAppBarRow({super.key, this.backgroundNotification,this.isMore,this.colorSearchIcon,this.backgroundColorTextFieldSearch,this.colorTextFromSearchTextField});
+  CustomAppBarRow({super.key,this.color, this.backgroundNotification,this.isMore,this.colorSearchIcon,this.backgroundColorTextFieldSearch,this.colorTextFromSearchTextField});
   bool? isMore;
   Color? colorSearchIcon;
   Color? backgroundColorTextFieldSearch;
   Color? colorTextFromSearchTextField;
   Color? backgroundNotification;
+  Color? color;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: AppColors.white,
+      color:color?? AppColors.white,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
