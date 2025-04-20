@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import 'follow_button.dart';
 
@@ -39,30 +40,35 @@ class CustomRequestGigstList extends StatelessWidget {
           //   ),
           // ),
           // Content to display over image
-          SizedBox(
-            width: 137.w, // Match image width
-            height: 137.w, // Match image height
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end, // Center vertically
-                crossAxisAlignment: CrossAxisAlignment.start, // Center horizontally
-                children: [
-                  SizedBox(height: 80),
+          InkWell(
+            onTap: (){
+              Navigator.pushNamed(context, Routes.gigsDetailsScreen);
+            },
+            child: SizedBox(
+              width: 137.w, // Match image width
+              height: 137.w, // Match image height
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end, // Center vertically
+                  crossAxisAlignment: CrossAxisAlignment.start, // Center horizontally
+                  children: [
+                    SizedBox(height: 80),
 
-                  Text(
+                    Text(
 
-                    "Sports",
-                    style: getMediumStyle(color: AppColors.white, fontSize: 14.sp,),
-                    textAlign: TextAlign.end,
-                  ),
-
-
+                      "Sports",
+                      style: getMediumStyle(color: AppColors.white, fontSize: 14.sp,),
+                      textAlign: TextAlign.end,
+                    ),
 
 
 
-                  SizedBox(height: 5.h,)
-                ],
+
+
+                    SizedBox(height: 5.h,)
+                  ],
+                ),
               ),
             ),
           ),

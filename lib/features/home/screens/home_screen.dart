@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Image.asset(ImageAssets.banner),
               ),
               // request_gigs
-              CustomRow(text: 'request_gigs',),
+              CustomRow(text: 'request_gigs'.tr(),),
               SizedBox(height: 4.h),
               SizedBox(
                 height: 145.w, // Match image width
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },),
               ),
               //annaouncement
-              CustomRow(text: 'announcements',),
+              CustomRow(text: 'announcements'.tr(),),
               SizedBox(height: 4.h),
               SizedBox(
                 height:getHeightSize(context)/2.3, // Match image width

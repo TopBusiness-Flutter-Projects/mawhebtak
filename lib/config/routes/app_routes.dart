@@ -24,9 +24,12 @@ import '../../features/events/screens/details_event_screen.dart';
 import '../../features/calender/screens/widgets/calender_widget.dart';
 import '../../features/events/screens/event_screen.dart';
 import '../../features/events/screens/second_details_screen.dart';
+import '../../features/feeds/screens/feeds_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
 import '../../features/home/screens/video_screen.dart';
 import '../../features/profile/screens/followers_screen.dart';
+import '../../features/profile/screens/gigs_details.dart';
+import '../../features/profile/screens/new_gigs_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/profile/screens/write_post.dart';
 import '../../features/referral_code/screens/referral_code_screen.dart';
@@ -55,6 +58,9 @@ class Routes {
   static const String profileScreen = '/profileScreen';
   static const String followersScreen = '/followersScreen';
   static const String writePostScreen = '/writePostScreen';
+  static const String newGigsScreen = '/newGigsScreen';
+  static const String gigsDetailsScreen = '/gigsDetailsScreen';
+  static const String feedsScreen = '/feedsScreen';
 
 
 
@@ -118,6 +124,18 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
+        );   case Routes.gigsDetailsScreen:
+        return PageTransition(
+          child: const GigsDetailsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );    case Routes.newGigsScreen:
+        return PageTransition(
+          child: const NewGigsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
         ); case Routes.writePostScreen:
         return PageTransition(
           child: const WritePost(),
@@ -127,6 +145,13 @@ class AppRoutes {
         ); case Routes.profileScreen:
         return PageTransition(
           child: const ProfileScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.feedsScreen:
+        return PageTransition(
+          child: const FeedsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

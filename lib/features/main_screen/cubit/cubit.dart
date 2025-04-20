@@ -3,6 +3,7 @@ import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 import '../../../core/exports.dart';
 import '../../calender/screens/calender_screen.dart';
 import '../../casting/screens/casting_screen.dart';
+import '../../feeds/screens/feeds_screen.dart';
 import '../../home/screens/home_screen.dart';
 import '../data/repo/main_repo_impl.dart';
 import 'state.dart';
@@ -12,7 +13,7 @@ class MainCubit extends Cubit<MainState> {
   MainRepoImpl api;
   List<Widget> screens = [
     const HomeScreen(),
-      Container(color: AppColors.black,),
+    FeedsScreen(),
     const CastingScreen(),
     const CalendarScreen(),
 

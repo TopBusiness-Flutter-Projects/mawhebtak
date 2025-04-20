@@ -15,28 +15,31 @@ class WhatDoYouWant extends StatelessWidget {
       },
       child: Column(
         children: [
-          Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'what_do_you_want_to_write'.tr(),
-              style: getRegularStyle(
-                fontSize: 14.sp,
-                color: AppColors.grayMedium,
+          Container(
+            color: AppColors.white,
+            child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'what_do_you_want_to_write'.tr(),
+                style: getRegularStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.grayMedium,
+                ),
               ),
-            ),
-            SizedBox(
-              child: Icon(
-                Icons.arrow_right,
-                color: AppColors.primary,
-                size: 24.sp,
+              SizedBox(
+                child: Icon(
+                  Icons.arrow_right,
+                  color: AppColors.primary,
+                  size: 24.sp,
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+                    ),
+                  ),
+          ),
         SizedBox(height: 8.h,),
         Container(
           height: 8.h,

@@ -77,8 +77,20 @@
     "comments_count": "10 Comments",
     "un_follow": "unfollow",
     "share_post": "Share Post",
-
-
+    "upload_photo": "Upload Photo",
+    "upload_video": "Upload Video",
+    "new_gig": "New Gig",
+    "gig_title_you_will_offer": "Gig title you will offer",
+    "price_range": "Price range",
+    "image_or_video": "Image or video",
+    "create_gig": "Create Gig",
+    "see_less": "See Less",
+    "see_more": "See More",
+    "gig_details": "Gigs Details",
+    "gig_requests": "Request Gigs",
+    "new": "New",
+    "reject": "Reject",
+    "accept": "Accept",
 
 
 

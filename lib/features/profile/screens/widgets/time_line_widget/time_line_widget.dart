@@ -29,7 +29,8 @@ ListView.separated(
     itemCount: 6, itemBuilder: (BuildContext context, int index) {
   return TimeLineList();
     }, separatorBuilder: (BuildContext context, int index) {
-      return SizedBox(height: 15.h,); },)
+      return SizedBox(height: 15.h,); },),
+        SizedBox(height: 100.h,)
       ],
     );
   }
