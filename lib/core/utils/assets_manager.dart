@@ -30,7 +30,20 @@ class ImageAssets {
   static const String imagePicked = '$imagePath/imagePicked.png';
   static const String profileAppBar = '$imagePath/profile_app_bar.png';
   static const String experience = '$imagePath/experience.png';
-   // static const String   = '$imagePath/profile_image.png';
+
+
+
+
+
+
+
+
+
+
+  //sanaaaaaaaaaa
+  static const String testBallImage= '$imagePath/test_image.png';
+
+  // static const String   = '$imagePath/profile_image.png';
   // icons
   static const String emailIcon = '$iconsPath/email_icon.svg';
   static const String passwordIcon = '$iconsPath/Password_icon.svg';
@@ -116,6 +129,7 @@ class AppIcons {
   static const String commentIcon= '$iconsPath/comment_icon.svg';
   static const String shareIcon2= '$iconsPath/share_icon2.svg';
 
+
   static const String notificationWithBlueContainer = '$iconsPath/notification_with_blue_container.svg';
 
 
@@ -141,5 +155,6 @@ class AppIcons {
   static const String dateIcon = '$iconsPath/date.svg';
   static const String successIcon = '$iconsPath/success.svg';
   static const String share = '$iconsPath/share.svg';
+  static const String dollar= '$iconsPath/mdi_dollar.svg';
 
 }
