@@ -18,6 +18,7 @@ import 'config/themes/app_theme.dart';
 import 'core/utils/app_strings.dart';
 import 'package:mawhebtak/injector.dart' as injector;
 
+import 'features/announcement/cubit/announcement_cubit.dart';
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/auth/splash/cubit/cubit.dart';
 import 'features/casting/cubit/casting_cubit.dart';
@@ -115,6 +116,8 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<RecordsCubit>(),
+          ),   BlocProvider(
+            create: (_) => injector.serviceLocator<AnnouncementCubit>(),
           ),
         ],
         child: GetMaterialApp(
