@@ -30,6 +30,7 @@ class ImageAssets {
   static const String imagePicked = '$imagePath/imagePicked.png';
   static const String profileAppBar = '$imagePath/profile_app_bar.png';
   static const String experience = '$imagePath/experience.png';
+  static const String imageOrVideo = '$imagePath/image_or_video.png';
 
 
 
@@ -128,6 +129,9 @@ class AppIcons {
   static const String experinceIcon= '$iconsPath/experince_icon.svg';
   static const String commentIcon= '$iconsPath/comment_icon.svg';
   static const String shareIcon2= '$iconsPath/share_icon2.svg';
+  static const String photoIcon= '$iconsPath/photo.svg';
+  static const String videoUploadIcon= '$iconsPath/video_upload.svg';
+  static const String addIcon = '$iconsPath/add_button.svg';
 
 
   static const String notificationWithBlueContainer = '$iconsPath/notification_with_blue_container.svg';

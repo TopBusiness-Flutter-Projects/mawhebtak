@@ -11,6 +11,7 @@ class AppColors {
   static Color darkGray = const Color(0xff464545);
   static Color gray = const Color(0xffC0C0C0);
   static Color grayMedium = HexColor('#ADADAD');
+  static Color grayAfaf = HexColor('#AFAFAF');
 
   static Color red = HexColor('#FF0000');
   static Color redLight = HexColor('#C598C2');
@@ -23,9 +24,10 @@ class AppColors {
   static Color blueveryLight = HexColor('#E1E6F3');
   static Color success = Colors.green;
   static Color lbny = HexColor('#2ECAEF');
-  static Color white = Colors.white;
+  static Color white = HexColor('#FFFFFF');
   static Color error = Colors.red;
   static Color transparent = Colors.transparent;
+  static Color backgroundColor = HexColor('#F9F9F9');
 
   static Color grayDark = HexColor('#464545');
   static Color grayLight = HexColor('#BFBFBF');

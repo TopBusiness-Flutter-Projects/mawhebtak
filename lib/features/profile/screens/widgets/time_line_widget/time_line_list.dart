@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/core/widgets/see_more_text.dart';
 
 import '../../../../../core/exports.dart';
 import 'like_comment_share.dart';
@@ -59,15 +60,9 @@ class TimeLineList extends StatelessWidget {
       //profile desc
       Padding(
         padding:  EdgeInsets.only(left: 10.0.w),
-        child: Text(
-          'Hi show my latest scenes with an amazing team Let’s start our work  See More'.tr(),
-          maxLines: 2,
-          style: getRegularStyle(
-            fontSize: 13.sp,
-            color: AppColors.grayMedium,
-          ),
+        child: ExpandableTextWidget(text: 'Hi show my latest scenes with an amazing team Let’s start our work  ',),
         ),
-      ),
+
       SizedBox(height: 5.h,),
       //photo
       SizedBox(

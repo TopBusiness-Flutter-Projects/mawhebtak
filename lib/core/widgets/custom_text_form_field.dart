@@ -64,7 +64,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    int minLines = widget.isMessage ? 4 : 1;
+    int minLines = widget.isMessage ? 8 : 1;
     int maxLines = widget.isMessage
         ? (widget.maxLines != null && widget.maxLines! >= minLines
         ? widget.maxLines!
