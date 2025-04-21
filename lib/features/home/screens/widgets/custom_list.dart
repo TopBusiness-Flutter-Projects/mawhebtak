@@ -1,11 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/features/home/cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubit/home_state.dart';
-
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
-import '../home_screen.dart';
 
 class CustomList extends StatelessWidget {
   const CustomList({super.key});
@@ -22,7 +19,7 @@ class CustomList extends StatelessWidget {
       height: 130,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         itemCount:cubit.items.length,
         shrinkWrap: true,
         // controller: BouncingScrollPhysics(),
@@ -30,8 +27,13 @@ class CustomList extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: (){
-              cubit.items[index].label=="Jobs"? Navigator.pushNamed(context, Routes.eventScreen):
-              cubit.items[index].label=="Jobs"?  Navigator.pushNamed(context, Routes.eventScreen):Navigator.pushNamed(context, Routes.profileScreen);
+              cubit.items[index].label=="Jobs"?
+              Navigator.pushNamed(context, Routes.jobsRoute):
+              cubit.items[index].label=="Events"?
+              Navigator.pushNamed(context, Routes.eventScreen):
+              cubit.items[index].label=="Records"?
+              Navigator.pushNamed(context, Routes.recordsRoute):
+                  null;
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0),

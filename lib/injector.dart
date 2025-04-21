@@ -12,12 +12,16 @@ import 'package:mawhebtak/features/calender/data/repos/calender.repo.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/contact_us/data/repos/contact_us_repo.dart';
+import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
+import 'package:mawhebtak/features/jobs/data/repos/jobs.repo.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
 import 'package:mawhebtak/features/auth/new_password/data/repos/new_password_repo.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.dart';
 import 'package:mawhebtak/features/auth/verification/data/repos/verification.repo.dart';
+import 'package:mawhebtak/features/records/cubit/records_cubit.dart';
+import 'package:mawhebtak/features/records/data/repos/records.repo.dart';
 import 'package:mawhebtak/features/referral_code/cubit/about_us_cubit.dart';
 import 'package:mawhebtak/features/referral_code/data/repos/referral_code_repo.dart';
 
@@ -153,6 +157,15 @@ Future<void> setup() async {
       serviceLocator(),
     ),
   );
+  serviceLocator.registerFactory(
+        () => JobsCubit(
+      serviceLocator(),
+    ),
+  ); serviceLocator.registerFactory(
+        () => RecordsCubit(
+      serviceLocator(),
+    ),
+  );
 
 //!----------------------------------------------------------------
 ///////////////////////////////////////////////////////////////////
@@ -198,6 +211,8 @@ Future<void> setup() async {
   serviceLocator.registerLazySingleton(() => NewAccountRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => CalenderRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => CastingRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => JobsRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => RecordsRepo(serviceLocator()));
 
 //!----------------------------------------------------------------
 
