@@ -20,6 +20,5 @@ class CastingCubit extends Cubit<CastingState> {
     HomeItem(icon: Icons.work, label: 'Jobs'),
     HomeItem(icon: Icons.work, label: 'Jobs'),
     HomeItem(icon: Icons.work, label: 'Jobs'),
-
   ];
 }
