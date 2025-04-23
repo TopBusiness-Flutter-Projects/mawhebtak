@@ -38,7 +38,7 @@ class NewGigsScreen extends StatelessWidget {
               //     hintTextSize: 18.sp,
               //     suffixIcon: Icon(Icons.keyboard_arrow_down_sharp)
               // ),
-              PriceDropdownTextField(prices: ["100","200","300"],),
+              PriceDropdownTextField(prices: ["100","200","300"], hintText: '1000',),
               Text("select_location".tr(),style: getRegularStyle(fontSize: 14.sp),),
 
               CustomTextField(hintText: "".tr(),

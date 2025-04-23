@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/exports.dart';
 
 String getCurrentFormattedDate() {
@@ -21,8 +22,15 @@ class DatePickerField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String formatDate(DateTime dateTime) {
+      final formatter = DateFormat('d MMMM y \'at\' hh:mm a', 'en');
+      return formatter.format(dateTime);
+    }
+    DateTime now = DateTime(2022, 6, 16, 2, 0); // مثال ثابت
+
+    final formatted = formatDate(now);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.0.sp),
+      padding: EdgeInsets.symmetric(horizontal: 2.0.sp),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,10 +40,7 @@ class DatePickerField extends StatelessWidget {
           ),
           Text(
             title,
-            style: TextStyle(
-                fontSize: 16.sp,
-                color: AppColors.black,
-                fontWeight: FontWeight.bold),
+            style: getRegularStyle(fontSize: 14.sp),
           ),
           SizedBox(
             height: 10.sp,
@@ -44,8 +49,9 @@ class DatePickerField extends StatelessWidget {
             onTap: onTab,
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(10),
+            //    border: Border.all(color: Colors.grey),
+                color: AppColors.grayLite,
+                borderRadius: BorderRadius.circular(10.r),
               ),
               padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
               child: Row(
@@ -56,10 +62,10 @@ class DatePickerField extends StatelessWidget {
                         ? isWithTime
                             ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}\n${selectedDate!.hour}:${selectedDate!.minute}'
                             : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
-                        : "data_filter".tr(),
+                        : formatDate(now),
                     style: TextStyle(fontSize: 16.sp),
                   ),
-                  const Icon(Icons.calendar_today, color: Colors.grey),
+                   SvgPicture.asset(ImageAssets.calendarBold),
                 ],
               ),
             ),

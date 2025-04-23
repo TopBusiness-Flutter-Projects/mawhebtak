@@ -64,6 +64,7 @@ class ImageAssets {
   static const String messenger = '$iconsPath/messager.svg';
   static const String xIcon = '$iconsPath/x_icon.svg';
   static const String face = '$iconsPath/face.svg';
+  static const String calendarBold = '$iconsPath/solar_calendar-bold.svg';
 
 
 

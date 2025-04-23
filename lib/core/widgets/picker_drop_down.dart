@@ -2,8 +2,9 @@ import '../exports.dart';
 import 'custom_text_form_field.dart';
 
 class PriceDropdownTextField extends StatefulWidget {
-  const PriceDropdownTextField({super.key,required this.prices});
+   PriceDropdownTextField({super.key,required this.prices, required this.hintText});
   final List<String> prices ;
+  final String hintText ;
 
   @override
   State<PriceDropdownTextField> createState() => _PriceDropdownTextFieldState();
@@ -83,7 +84,7 @@ class _PriceDropdownTextFieldState extends State<PriceDropdownTextField> {
         key: _key,
         child: CustomTextField(
           controller: _controller,
-          hintText: '1000',
+          hintText: widget.hintText,
           hintTextSize: 18.sp,
           enabled: true,
           onTap: _toggleDropdown,

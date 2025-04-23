@@ -36,6 +36,7 @@ class AppColors {
   static Color grayText2 = HexColor('#C8C8C8');
   static Color grayText3 = HexColor('#928F8F');
   static Color grayDarkkk = HexColor('#B4B4B4');
+  static Color gray666 = HexColor('#666666');
 
   Color darken(Color color, [double amount = .1]) {
     assert(amount >= 0 && amount <= 1);

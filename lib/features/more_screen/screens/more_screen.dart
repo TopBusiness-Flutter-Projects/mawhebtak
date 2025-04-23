@@ -46,7 +46,9 @@ class MoreScreen extends StatelessWidget {
                           moreContainer(
                               text: "my_profile".tr(),
                               imageUrl: ImageAssets.myProfileIcon,
-                              onTap: (){}
+                              onTap: (){
+                                Navigator.pushNamed(context, Routes.profileScreen);
+                              }
                           ),
                           moreContainer(
                               text: "my_favorites".tr(),

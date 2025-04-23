@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
 
+import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../home/screens/widgets/custom_announcement_widget.dart';
 import '../../home/screens/widgets/custom_request_gigs.dart';
@@ -28,8 +30,24 @@ class AnnouncementScreen extends StatelessWidget {
             return CustomRequestGigstList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
           },),
       ),
-      CustomAnnouncementWidget(isAnnouncements: true,)
+      CustomAnnouncementWidget(isAnnouncements: true,),
+
     ],),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+Navigator.pushNamed(context, Routes.newAnnouncementScreen);
+        },
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        splashColor: Colors.transparent,
+        highlightElevation: 0,
+        child: SvgPicture.asset(
+          AppIcons.addIcon,
+          // width: 56, // نفس مقاس الفلوتينج الأصلي
+          // height: 56,
+        ),
+      ),
+
     ); },);
   }
 }
