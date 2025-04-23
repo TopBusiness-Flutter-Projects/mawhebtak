@@ -92,6 +92,12 @@
     "reject": "Reject",
     "accept": "Accept",
     "announcments": "Announcments",
+    "request_this_gigs": "Request this gigs",
+    "create_announcments": "Create Announcments",
+    "select_category": "Select Category",
+    "announcment_title": "Announcment Title",
+    "new_announcments": "New Announcement",
+    "expire_in": "Expire in",
 
 
 

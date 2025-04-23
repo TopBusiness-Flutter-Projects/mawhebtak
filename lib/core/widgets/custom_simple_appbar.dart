@@ -64,6 +64,7 @@ final String ?actionIcon;
                 )      ,
             ],
           ),
+          SizedBox(height: 5.h,),
           if(isSearchWidget??false)
 
             Padding(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../config/routes/app_routes.dart';
@@ -84,7 +85,7 @@ class GigsWidget extends StatelessWidget {
          if(isWithButton??false)
           Padding(
             padding:  EdgeInsets.only(bottom: 10.h),
-            child: const CustomButton(title: "Request this gigs"),
+            child:  CustomButton(title: "request_this_gigs".tr(),)
           ),
 
         ],

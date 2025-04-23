@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 
 class CustomAppBarRow extends StatelessWidget {
@@ -57,16 +58,21 @@ class CustomAppBarRow extends StatelessWidget {
                   ? Container()
                   : Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.0.w),
-                      child: Container(
-                        height: 40.h,
-                        width: 40.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SvgPicture.asset(AppIcons.videoIcon),
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.pushNamed(context, Routes.videoScreenRoute);
+                        },
+                        child: Container(
+                          height: 40.h,
+                          width: 40.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset(AppIcons.videoIcon),
+                          ),
                         ),
                       ),
                     ),

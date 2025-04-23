@@ -22,6 +22,8 @@ import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_conditi
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/announcement/screens/announcement_screen.dart';
+import '../../features/announcement/screens/details_announcement.dart';
+import '../../features/announcement/screens/new_announcement.dart';
 import '../../features/auth/login/screens/login_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
@@ -66,6 +68,8 @@ class Routes {
   static const String gigsDetailsScreen = '/gigsDetailsScreen';
   static const String feedsScreen = '/feedsScreen';
   static const String announcementScreen = '/announcementScreen';
+  static const String newAnnouncementScreen = '/newAnnouncementScreen';
+  static const String detailsAnnouncementScreen = '/detailsAnnouncementScreen';
 
 
 
@@ -140,6 +144,12 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
+        );case Routes.detailsAnnouncementScreen:
+        return PageTransition(
+          child: const DetailsAnnouncementScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
         );    case Routes.newGigsScreen:
         return PageTransition(
           child: const NewGigsScreen(),
@@ -155,6 +165,12 @@ class AppRoutes {
         );case Routes.announcementScreen:
         return PageTransition(
           child: const AnnouncementScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        ); case Routes.newAnnouncementScreen:
+        return PageTransition(
+          child: const NewAnnouncementScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

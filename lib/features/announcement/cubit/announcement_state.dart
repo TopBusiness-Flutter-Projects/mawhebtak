@@ -4,3 +4,7 @@ part of 'announcement_cubit.dart';
 sealed class AnnouncementState {}
 
 final class AnnouncementInitial extends AnnouncementState {}
+final class DateTimeSelected extends AnnouncementState {
+  String? formattedDateTime;
+  DateTimeSelected(this.formattedDateTime);
+}

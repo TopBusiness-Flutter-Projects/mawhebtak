@@ -5,12 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mawhebtak/injector.dart' as injector;
 import 'app.dart';
 import 'app_bloc_observer.dart';
+import 'core/preferences/preferences.dart';
 import 'core/utils/restart_app_class.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
+  await Preferences.instance.init(); // ✨ مهم جدًا
 
   await injector.setup();
   Bloc.observer = AppBlocObserver();
