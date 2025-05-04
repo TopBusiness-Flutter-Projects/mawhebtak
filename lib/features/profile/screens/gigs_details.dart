@@ -21,6 +21,7 @@ class GigsDetailsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+
         CustomSimpleAppbar(title: "gig_details".tr()),
         SizedBox(height: 15.h,),
         //gigs widget

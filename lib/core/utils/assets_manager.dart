@@ -17,7 +17,6 @@ class ImageAssets {
   static const String tasweerPhoto = '$imagePath/tasweer_image.png';
   static const String banner = '$imagePath/banner.png';
   static const String homeTestImage = '$imagePath/home_test_image.png';
-  // static const String profileDefault = '$imagePath/1.png';
   static const String topbusinessImage = '$imagePath/topbusiness.png';
   static const String introBackgroundImage = '$imagePath/on1.png';
   static const String introBackgroundImage2 = '$imagePath/on2.png';
@@ -31,40 +30,8 @@ class ImageAssets {
   static const String profileAppBar = '$imagePath/profile_app_bar.png';
   static const String experience = '$imagePath/experience.png';
   static const String imageOrVideo = '$imagePath/image_or_video.png';
-
-
-
-
-
-
-
-
-
-
-  //sanaaaaaaaaaa
   static const String testBallImage= '$imagePath/test_image.png';
 
-  // static const String   = '$imagePath/profile_image.png';
-  // icons
-  static const String emailIcon = '$iconsPath/email_icon.svg';
-  static const String passwordIcon = '$iconsPath/Password_icon.svg';
-  static const String facebookIcon = '$iconsPath/facebook.svg';
-  static const String googleIcon = '$iconsPath/google.svg';
-  static const String myProfileIcon = '$iconsPath/my_profile.svg';
-  static const String myFavoriteIcon = '$iconsPath/my_favorite.svg';
-  static const String walletIcon = '$iconsPath/wallet.svg';
-  static const String referralCode = '$iconsPath/Referral_Code.svg';
-  static const String changeLanguage = '$iconsPath/change_language.svg';
-  static const String changePassword = '$iconsPath/change_password.svg';
-  static const String aboutUs = '$iconsPath/about_us.svg';
-  static const String contactUs = '$iconsPath/contact_us.svg';
-  static const String termsAndCondition = '$iconsPath/terms_and_condition.svg';
-  static const String logout = '$iconsPath/logout.svg';
-  static const String whatsapp = '$iconsPath/watsapp.svg';
-  static const String messenger = '$iconsPath/messager.svg';
-  static const String xIcon = '$iconsPath/x_icon.svg';
-  static const String face = '$iconsPath/face.svg';
-  static const String calendarBold = '$iconsPath/solar_calendar-bold.svg';
 
 
 
@@ -99,7 +66,8 @@ class ImageAssets {
 
 
 
-//sanaaaaaaaaaaaaaaaaaaaaaaa
+
+
   //Lottie
 
   static const String noLessons = '$lottiePath/no_lessons.json';
@@ -110,6 +78,7 @@ class AppIcons {
   static const String feeds = '$iconsPath/Feeds.svg';
   static const String casting = '$iconsPath/casting.svg';
   static const String calendar = '$iconsPath/Calendar.svg';
+  static const String eventCalenderSecondColorIcon = '$iconsPath/event(calender_second_color).svg';
   static const String more = '$iconsPath/More.svg';
   static const String dollarSign = '$iconsPath/dollar_sign.svg';
   static const String searchIcon = '$iconsPath/search_icon.svg';
@@ -133,34 +102,33 @@ class AppIcons {
   static const String photoIcon= '$iconsPath/photo.svg';
   static const String videoUploadIcon= '$iconsPath/video_upload.svg';
   static const String addIcon = '$iconsPath/add_button.svg';
-
-
   static const String notificationWithBlueContainer = '$iconsPath/notification_with_blue_container.svg';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//sanaaa
   static const String dateIcon = '$iconsPath/date.svg';
   static const String successIcon = '$iconsPath/success.svg';
   static const String share = '$iconsPath/share.svg';
   static const String dollar= '$iconsPath/mdi_dollar.svg';
   static const String bagIcon= '$iconsPath/bag_icon.svg';
+  static const String announceIcon = '$iconsPath/announce.svg';
+  static const String emailIcon = '$iconsPath/email_icon.svg';
+  static const String passwordIcon = '$iconsPath/Password_icon.svg';
+  static const String facebookIcon = '$iconsPath/facebook.svg';
+  static const String googleIcon = '$iconsPath/google.svg';
+  static const String myProfileIcon = '$iconsPath/my_profile.svg';
+  static const String myFavoriteIcon = '$iconsPath/my_favorite.svg';
+  static const String walletIcon = '$iconsPath/wallet.svg';
+  static const String referralCode = '$iconsPath/Referral_Code.svg';
+  static const String changeLanguage = '$iconsPath/change_language.svg';
+  static const String changePassword = '$iconsPath/change_password.svg';
+  static const String aboutUs = '$iconsPath/about_us.svg';
+  static const String contactUs = '$iconsPath/contact_us.svg';
+  static const String termsAndCondition = '$iconsPath/terms_and_condition.svg';
+  static const String logout = '$iconsPath/logout.svg';
+  static const String whatsapp = '$iconsPath/watsapp.svg';
+  static const String messenger = '$iconsPath/messager.svg';
+  static const String face = '$iconsPath/face.svg';
+  static const String calendarBold = '$iconsPath/solar_calendar-bold.svg';
+  static const String jopIcon = '$iconsPath/jop.svg';
+  static const String assistantIcon = '$iconsPath/assistant.svg';
+
 
 }

@@ -6,7 +6,7 @@ import 'package:mawhebtak/features/auth/new_account/data/repos/new_account.repo.
 
 class NewAccountCubit extends Cubit<NewAccountState> {
   NewAccountCubit(this.exRepo) : super(NewAccountInitial());
-  NewAccountRepo exRepo ;
+  NewAccount exRepo ;
   TextEditingController fullNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();

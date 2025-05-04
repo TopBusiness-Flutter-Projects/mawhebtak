@@ -8,9 +8,9 @@ import '../../../../core/preferences/preferences.dart';
 import '../models/home_filter_model.dart';
 import '../models/home_model.dart';
 
-class EventRepoImpl {
+class EventRepo {
   final BaseApiConsumer dio;
-  EventRepoImpl(this.dio);
+  EventRepo(this.dio);
 
 
 }

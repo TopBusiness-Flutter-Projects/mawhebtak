@@ -2,24 +2,24 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
-import 'package:mawhebtak/features/records/cubit/records_cubit.dart';
-import 'package:mawhebtak/features/records/cubit/records_state.dart';
+import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
+import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 
 import '../../../core/exports.dart';
 
-class RecordsDetailsScreen extends StatefulWidget {
-  const RecordsDetailsScreen({super.key});
+class AssistantDetailsScreen extends StatefulWidget {
+  const AssistantDetailsScreen({super.key});
 
   @override
-  State<RecordsDetailsScreen> createState() => _RecordsDetailsScreenState();
+  State<AssistantDetailsScreen> createState() => _AssistantDetailsScreenState();
 }
 
-class _RecordsDetailsScreenState extends State<RecordsDetailsScreen> {
+class _AssistantDetailsScreenState extends State<AssistantDetailsScreen> {
   @override
 
 
   Widget build(BuildContext context) {
-    var cubit = context.read<RecordsCubit>();
+    var cubit = context.read<AssistantCubit>();
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light.copyWith(
         statusBarColor: Colors.transparent, // الشفافية
@@ -33,7 +33,7 @@ class _RecordsDetailsScreenState extends State<RecordsDetailsScreen> {
               children: [
                 10.h.verticalSpace,
                 CustomSimpleAppbar(title: "records".tr()),
-                BlocBuilder<RecordsCubit,RecordsState>(
+                BlocBuilder<AssistantCubit,AssistantState>(
                   builder: (context,state) {
                     return Expanded(
                       child: Container(

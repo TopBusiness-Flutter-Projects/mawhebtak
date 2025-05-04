@@ -98,66 +98,6 @@
     "announcment_title": "Announcment Title",
     "new_announcments": "New Announcement",
     "expire_in": "Expire in",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    "sanaaaaaaaaaaaaaaaaaaaaaaaaaa": "",
     "title_otp": "Verify Your Mobile Number",
     "mobile_number": "Mobile Number",
     "full_name": "Full Name",
@@ -192,6 +132,7 @@
     "new_account": "New Account",
     "i_am": "I am ",
     "new_event": "New Event",
+    "event_req": "Event Requirement",
     "title_of_event": "Title of the event",
     "select_location": "Select Location",
     "open_map": "Open Map",
@@ -214,9 +155,10 @@
     "talents": "Talents",
     "jobs": "Jobs",
     "to": "To",
+    "complaining": "Complaining",
+    "advertising_and_publicity": "Advertising and publicity",
     "from": "From",
     "needed_talent": "Needed Talent",
-    "price_range": "Price Range",
     "new_job": "New Job",
     "create_jop": "Create Job",
     "job_details": "Job Details",
@@ -233,6 +175,7 @@
     "work_name": "Work name",
     "create_work": "Create work",
     "new_word": "New Work",
+    "assistant": "Assistant",
     "description_from_new_work": "Please add new work to start saving your racords",
     "job_description_sample": "Mawhebtak is a big platform that connects all artists in all fields to form a large artistic community in Egypt."
 }

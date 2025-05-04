@@ -19,11 +19,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   @override
+
+
   Widget build(BuildContext context) {
+
     var cubit = context.read<LoginCubit>();
     return Scaffold(
-        body: BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
+        body: BlocBuilder<LoginCubit, LoginState>(
+            builder: (context, state) {
       return Form(
         key: cubit.formKey,
         child: SingleChildScrollView(
@@ -59,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       suffixIcon: Padding(
                         padding: EdgeInsets.all(10.0.h),
                         child: SvgPicture.asset(
-                          ImageAssets.emailIcon,
+                          AppIcons.emailIcon,
                         ),
                       ),
                     ),
@@ -83,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SvgPicture.asset(
-                          ImageAssets.passwordIcon,
+                          AppIcons.passwordIcon,
                         ),
                       ),
                     ),
@@ -107,9 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         30.w.horizontalSpace,
                         Expanded(
                           child: CustomButton(
-                              onTap: () {
+                              onTap: () async{
                                 if (cubit.formKey.currentState!.validate()) {
                                   Preferences.instance.setUser(LoginModel());
+
                                   Navigator.pushNamed(context, Routes.mainRoute);
                                 }
                               },

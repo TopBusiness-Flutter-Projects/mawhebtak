@@ -17,7 +17,7 @@ final String ?actionIcon;
   Widget build(BuildContext context) {
     return
       Container(
-     // height: getSize(context)/5,
+     // height: getSize(context)/7,
       decoration: BoxDecoration(color: color??AppColors.white, boxShadow: [
         BoxShadow(
           color:color?? AppColors.grayLite,
@@ -27,42 +27,45 @@ final String ?actionIcon;
       ]),
       child: Column(
         children: [
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Padding(
-                  padding:  EdgeInsets.only(left: 10.w,right: 10.w),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: colorButton??AppColors.grayLite,
-                        borderRadius: BorderRadius.circular(8.r)),
-                    padding: EdgeInsets.only(left: 5.w, right: 5.w,bottom: 5.h,top: 5.h),
-                    child:  Padding(
-                      padding:  EdgeInsets.all(6.r),
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: AppColors.darkGray,
-                        size: 16.sp,),
+          Padding(
+            padding:  EdgeInsets.only(top: 20.h),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding:  EdgeInsets.only(left: 10.w,right: 10.w),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: colorButton??AppColors.grayLite,
+                          borderRadius: BorderRadius.circular(8.r)),
+                      padding: EdgeInsets.only(left: 5.w, right: 5.w,bottom: 5.h,top: 5.h),
+                      child:  Padding(
+                        padding:  EdgeInsets.all(6.r),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: AppColors.darkGray,
+                          size: 16.sp,),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Text(
-                  textAlign: TextAlign.center,
-                  title,
-                  style: TextStyle(fontSize: 16.sp, color: titleColor??AppColors.black),
+                Expanded(
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    title,
+                    style: TextStyle(fontSize: 16.sp, color: titleColor??AppColors.black),
+                  ),
                 ),
-              ),
-              if(isActionButton??false)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(actionIcon??AppIcons.eventIcon),
-                )      ,
-            ],
+                if(isActionButton??false)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SvgPicture.asset(actionIcon??AppIcons.eventIcon),
+                  )      ,
+              ],
+            ),
           ),
           SizedBox(height: 5.h,),
           if(isSearchWidget??false)

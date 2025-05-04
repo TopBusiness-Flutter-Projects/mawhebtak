@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/features/about_us/cubit/about_us_cubit.dart';
+import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
@@ -11,13 +12,10 @@ import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
-import 'package:mawhebtak/features/records/cubit/records_cubit.dart';
-
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
 import 'core/utils/app_strings.dart';
 import 'package:mawhebtak/injector.dart' as injector;
-
 import 'features/announcement/cubit/announcement_cubit.dart';
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/auth/splash/cubit/cubit.dart';
@@ -99,9 +97,6 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) => injector.serviceLocator<ProfileCubit>(),
           ),
-
-
-          //sanssssssssssssssssssssssssssss
           BlocProvider(
             create: (_) => injector.serviceLocator<NewAccountCubit>(),
           ),
@@ -115,14 +110,14 @@ class _MyAppState extends State<MyApp> {
             create: (_) => injector.serviceLocator<JobsCubit>(),
           ),
           BlocProvider(
-            create: (_) => injector.serviceLocator<RecordsCubit>(),
-          ),   BlocProvider(
+            create: (_) => injector.serviceLocator<AssistantCubit>(),
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<AnnouncementCubit>(),
           ),
         ],
         child: GetMaterialApp(
           supportedLocales: context.supportedLocales,
-
           locale: context.locale,
           theme: appTheme(),
           themeMode: ThemeMode.light,

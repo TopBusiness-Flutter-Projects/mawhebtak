@@ -12,7 +12,7 @@ part 'event_state.dart';
 
 class EventCubit extends Cubit<EventState> {
   EventCubit(this.api) : super(EventInitial());
-  HomeRepoImpl api;
+  HomeRepo api;
   int selectedIndex=0;
   //change toogel in seconde details
   void changeToggle(index){

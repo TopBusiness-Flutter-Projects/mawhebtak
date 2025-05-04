@@ -8,9 +8,9 @@ import '../../../../core/preferences/preferences.dart';
 import '../models/home_filter_model.dart';
 import '../models/home_model.dart';
 
-class HomeRepoImpl {
+class HomeRepo {
   final BaseApiConsumer dio;
-  HomeRepoImpl(this.dio);
+  HomeRepo(this.dio);
 
 
 }

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 import 'package:mawhebtak/core/utils/custom_pick_media.dart';
+import 'package:mawhebtak/features/events/screens/widgets/event_requirement_type_fropdown.dart';
 
 import '../../../core/exports.dart';
 import '../../../core/utils/app_colors.dart';
@@ -20,8 +21,6 @@ class ApplyForEvent extends StatefulWidget {
 }
 
 class _ApplyForEventState extends State<ApplyForEvent> {
-
-
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<EventCubit>();
@@ -35,100 +34,126 @@ class _ApplyForEventState extends State<ApplyForEvent> {
           ),
           child: Scaffold(
             backgroundColor: AppColors.white,
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomAppBarWithClearWidget(title:  "apply_for_event".tr(),),
-                SizedBox(height: getHeightSize(context) / 33),
-
-                // الصورة والزر
-                CustomPickMediaWidget()
-                ,
-
-                // باقي النموذج
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 3.h),
-                  child: Text(
-                    'expected_fees'.tr(),
-                    style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
-                  ),
-                ),
-
-
-
-
-          Padding(
-          padding: EdgeInsets.symmetric(horizontal: 21.0.w),
-          child: CustomTextField(
-            hintText: "selectedCurrency",
-            suffixIcon: Padding(
-              padding: EdgeInsets.all(10.0.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(cubit.selectedCurrency, style: getMediumStyle(fontSize: 13.sp, color: AppColors.primary)),
-                  Icon(Icons.keyboard_arrow_down_sharp, size: 24.sp),
+                  CustomAppBarWithClearWidget(
+                    title: "apply_for_event".tr(),
+                  ),
+                  SizedBox(height: getHeightSize(context) / 33),
+                  // الصورة والزر
+                  const CustomPickMediaWidget(),
+                  // باقي النموذج
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 3.h),
+                    child: Text(
+                      'expected_fees'.tr(),
+                      style: getMediumStyle(
+                          fontSize: 14.sp, color: AppColors.darkGray),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 21.0.w),
+                    child: CustomTextField(
+                      hintText: "selectedCurrency",
+                      suffixIcon: Padding(
+                        padding: EdgeInsets.all(10.0.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(cubit.selectedCurrency,
+                                style: getMediumStyle(
+                                    fontSize: 13.sp, color: AppColors.primary)),
+                            Icon(Icons.keyboard_arrow_down_sharp, size: 24.sp),
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => Container(
+                            padding: EdgeInsets.symmetric(vertical: 20.h),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: Text("L.E (Egyptian Pound)",
+                                      style: getRegularStyle()),
+                                  onTap: () {
+                                    cubit.changeCurency("L.E");
+
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                ListTile(
+                                  title:
+                                      Text("(\$US)", style: getRegularStyle()),
+                                  onTap: () {
+                                    cubit.changeCurency("(\$US)");
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 20.0.w, vertical: 10.h),
+                    child: EventRequirementTypeDropdown(
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 3.h),
+                    child: Text(
+                      'specify_needs'.tr(),
+                      style: getMediumStyle(
+                          fontSize: 14.sp, color: AppColors.darkGray),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 21.0.w),
+                    child: CustomTextField(
+                      hintText: "description_here".tr(),
+                      isMessage: true,
+                    ),
+                  ),
+                  Center(
+                    child: CustomContainerButton(
+                      title: "apply".tr(),
+                      color: AppColors.primary,
+                      width: 327.w,
+                      height: 48.h,
+                    ),
+                  )
                 ],
               ),
-            ),
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => Container(
-                  padding: EdgeInsets.symmetric(vertical: 20.h),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ListTile(
-                        title: Text("L.E (Egyptian Pound)", style: getRegularStyle()),
-                        onTap: () {
-                         cubit.changeCurency("L.E");
-
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        title: Text("(\$US)", style: getRegularStyle()),
-                        onTap: () {
-                          cubit.changeCurency("(\$US)");
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 3.h),
-                  child: Text(
-                    'expected_fees'.tr(),
-                    style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 21.0.w),
-                  child: CustomTextField(
-                    hintText: "description_here".tr(),
-                    isMessage: true,
-                  ),
-                ),
-                Center(
-                  child: CustomContainerButton(
-                    title: "apply".tr(),
-                    color: AppColors.primary,
-                    width: 327.w,
-                    height: 48.h,
-                  ),
-                )
-              ],
             ),
           ),
         );
       },
     );
   }
+}
+
+Widget _label(String text) {
+  return Padding(
+    padding: EdgeInsets.only(bottom: 8.h, top: 16.h),
+    child: Text(
+      text,
+      style: TextStyle(
+        color: AppColors.blackLite,
+        fontWeight: FontWeight.w400,
+        fontSize: 14.sp,
+      ),
+    ),
+  );
 }

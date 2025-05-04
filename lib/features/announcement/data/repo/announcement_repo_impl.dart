@@ -2,9 +2,9 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/api/base_api_consumer.dart';
 
 
-class AnnouncementRepoImpl {
+class AnnouncementRepo {
   final BaseApiConsumer dio;
-  AnnouncementRepoImpl(this.dio);
+  AnnouncementRepo(this.dio);
 
 
 }

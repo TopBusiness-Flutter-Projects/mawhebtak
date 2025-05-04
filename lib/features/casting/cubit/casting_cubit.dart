@@ -10,16 +10,12 @@ class CastingCubit extends Cubit<CastingState> {
   CastingCubit(this.exRepo) : super(CastingInitial());
   CastingRepo exRepo ;
   final List<HomeItem> items = [
-    HomeItem(icon: Icons.event, label: 'Events'),
-    HomeItem(icon: Icons.leaderboard, label: 'Events'),
-    HomeItem(icon: Icons.announcement, label: 'Casting'),
-    HomeItem(icon: Icons.announcement, label: 'Announce'),
-    HomeItem(icon: Icons.announcement, label: 'Announce'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
+
+    HomeItem(icon:AppIcons.eventIcon, label: 'Events'),
+    HomeItem(icon:AppIcons.aboutUs, label: 'Casting'),
+    HomeItem(icon: AppIcons.announceIcon, label: 'Announce'),
+    HomeItem(icon: AppIcons.jopIcon, label: 'Jobs'),
+    HomeItem(icon: AppIcons.assistantIcon, label: 'Assistant'),
 
   ];
 }

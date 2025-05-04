@@ -1,7 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_announcement_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_request_gigs.dart';
@@ -10,21 +7,18 @@ import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/under_custom_row.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
-import 'widgets/follow_button.dart';
 
 
 class HomeItem {
-  final IconData icon;
+  final String icon;
   final String label;
-
-  HomeItem({required this.icon, required this.label});
+  Color? colorIcon;
+  HomeItem({required this.icon, required this.label,this.colorIcon});
 }
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -36,25 +30,45 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late VideoPlayerController _videoController;
+  late PageController _pageController;
+  int _currentPage = 0;
+
+  // قائمة الفيديوهات
+  final List<String> videoPaths = [
+    "assets/videos/video.mp4",
+    "assets/videos/video.mp4",
+    "assets/videos/video.mp4",
+  ];
+
+  // قائمة الكنترولرز للفيديوهات
+  late List<VideoPlayerController> _videoControllers;
 
   @override
-  //لو حد هياخد الكود بعدي وهيشغل الفيديو فده الكود بحبكم
-  // void initState() {
-  //   // super.initState();
-  //   // _videoController = VideoPlayerController.asset("assets/videos/video.mp4")
-  //   //   ..initialize().then((_) {
-  //   //     setState(() {});
-  //   //     _videoController.setLooping(true);
-  //   //     _videoController.play();
-  //   //   });
-  // }
-  //
-  // @override
-  // void dispose() {
-  //   // _videoController.dispose();
-  //   // super.dispose();
-  // }
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+
+    // تهيئة الكنترولرز
+    _videoControllers = videoPaths.map((path) {
+      final controller = VideoPlayerController.asset(path);
+      controller.initialize().then((_) {
+        setState(() {}); // لازم لإعادة البناء بعد التهيئة
+        controller.setLooping(true);
+        controller.play(); // تشغيل تلقائي
+      });
+      return controller;
+    }).toList();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    for (var controller in _videoControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,12 +88,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: getHeightSize(context) / 1.5,
                     width: getWidthSize(context),
-                    child: Image.asset(
-                      ImageAssets.testImage,
-                      fit: BoxFit.cover,
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: _videoControllers.length,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _videoControllers[_currentPage].pause(); // إيقاف القديم
+                          _currentPage = index;
+                          _videoControllers[_currentPage].play(); // تشغيل الجديد
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        final controller = _videoControllers[index];
+                        return controller.value.isInitialized
+                            ? VideoPlayer(controller)
+                            : const Center(child: CircularProgressIndicator());
+                      },
                     ),
                   ),
-                  //custom row
+
                   Positioned(
                     top: 35,
                     left: 16,
@@ -89,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   //under custom row
                   const UnderCustomRow(),
                   //custom list
-                  const CustomList(),
+                   const CustomList(),
                 ],
               ),
               SizedBox(height: 10.h),
@@ -145,13 +172,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     return CustomRequestGigstList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
                   },),
               ),
-              //annaouncement
               CustomRow(text: 'announcements'.tr(),onTap: (){
                 Navigator.pushNamed(context, Routes.announcementScreen);
               },),
-              SizedBox(height: 4.h),
+              10.h.verticalSpace,
               SizedBox(
-                height:getHeightSize(context)/2.3, // Match image width
+                height:getHeightSize(context)/1.9, // Match image width
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -160,7 +186,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return CustomAnnouncementWidget(isLeftPadding:index==0
                         ?true:false,
-
                       isRightPadding: index==cubit.items.length-1?
                       true:false,);
                   },),

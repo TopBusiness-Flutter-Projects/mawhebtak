@@ -8,8 +8,8 @@ import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_state.dart';
 
 class ContactUsScreen extends StatelessWidget {
-  const ContactUsScreen({super.key});
-
+  const ContactUsScreen({super.key, required this.type});
+   final String type;
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ContactUsCubit>();
@@ -20,7 +20,7 @@ class ContactUsScreen extends StatelessWidget {
           return Column(
             children: [
               CustomSimpleAppbar(
-                title: "contact_us".tr(),
+                title: type == "advertising_and_publicity" ? "advertising_and_publicity".tr():"complaining".tr(),
               ),
               Expanded(
                 child: Container(

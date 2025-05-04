@@ -19,22 +19,18 @@ import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this.api) : super(HomeInitial());
-  HomeRepoImpl api;
+  HomeRepo api;
   int moduleslenth = 5;
   TextEditingController searchController = TextEditingController();
 
    String? selectedModule;
   final List<HomeItem> items = [
-    HomeItem(icon: Icons.event, label: 'Events'),
-    HomeItem(icon: Icons.leaderboard, label: 'Events'),
-    HomeItem(icon: Icons.announcement, label: 'Casting'),
-    HomeItem(icon: Icons.announcement, label: 'Records'),
-    HomeItem(icon: Icons.announcement, label: 'Announce'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
+    HomeItem(icon:AppIcons.eventCalenderSecondColorIcon, label: 'Events',colorIcon: AppColors.secondPrimary),
+    HomeItem(icon:AppIcons.aboutUs, label: 'Casting'),
+    HomeItem(icon: AppIcons.announceIcon, label: 'Announce'),
+    HomeItem(icon: AppIcons.jopIcon, label: 'Jobs'),
+    HomeItem(icon: AppIcons.assistantIcon, label: 'Assistant'),
+
 
   ];
    // المتغير الذي يحمل القيمة المختارة
