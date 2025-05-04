@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
+import 'package:mawhebtak/features/assistant/data/repos/assistant.repo.dart';
 import 'package:mawhebtak/features/auth/change_password/data/repos/change_password_repo.dart';
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
 import 'package:mawhebtak/features/auth/forget_password/data/repos/forget_password_repo.dart';
@@ -20,8 +22,6 @@ import 'package:mawhebtak/features/auth/new_password/data/repos/new_password_rep
 import 'package:get_it/get_it.dart';
 import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.dart';
 import 'package:mawhebtak/features/auth/verification/data/repos/verification.repo.dart';
-import 'package:mawhebtak/features/records/cubit/records_cubit.dart';
-import 'package:mawhebtak/features/records/data/repos/records.repo.dart';
 import 'package:mawhebtak/features/referral_code/cubit/about_us_cubit.dart';
 import 'package:mawhebtak/features/referral_code/data/repos/referral_code_repo.dart';
 
@@ -67,53 +67,61 @@ Future<void> setup() async {
     () => MainCubit(
       serviceLocator(),
     ),
-  );serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => HomeCubit(
       serviceLocator(),
     ),
-  );serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => AnnouncementCubit(
       serviceLocator(),
     ),
   );
   serviceLocator.registerFactory(
-    () => OnboardingCubit(
-
-    ),
-  ); serviceLocator.registerFactory(
+    () => OnboardingCubit(),
+  );
+  serviceLocator.registerFactory(
     () => ForgetPasswordCubit(
       serviceLocator(),
     ),
   );
-   serviceLocator.registerFactory(
+  serviceLocator.registerFactory(
     () => VerificationCubit(
       serviceLocator(),
     ),
-  );  serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => NewPasswordCubit(
       serviceLocator(),
     ),
-  ); serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => EventCubit(
       serviceLocator(),
     ),
-  ); serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => ContactUsCubit(
       serviceLocator(),
     ),
-  ); serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => ChangePasswordCubit(
       serviceLocator(),
     ),
-  );serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => ProfileCubit(
       serviceLocator(),
     ),
-  );serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => ChangeLanguageCubit(
       serviceLocator(),
     ),
-  );serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => AboutUsCubit(
       serviceLocator(),
     ),
@@ -123,52 +131,29 @@ Future<void> setup() async {
       serviceLocator(),
     ),
   );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //sanaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
   serviceLocator.registerFactory(
-        () => NewAccountCubit(
+    () => NewAccountCubit(
       serviceLocator(),
     ),
   );
 
   serviceLocator.registerFactory(
-        () => CalenderCubit(
+    () => CalenderCubit(
       serviceLocator(),
     ),
   );
   serviceLocator.registerFactory(
-        () => CastingCubit(
+    () => CastingCubit(
       serviceLocator(),
     ),
   );
   serviceLocator.registerFactory(
-        () => JobsCubit(
+    () => JobsCubit(
       serviceLocator(),
     ),
-  ); serviceLocator.registerFactory(
-        () => RecordsCubit(
+  );
+  serviceLocator.registerFactory(
+    () => AssistantCubit(
       serviceLocator(),
     ),
   );
@@ -177,49 +162,30 @@ Future<void> setup() async {
 ///////////////////////////////////////////////////////////////////
 //!-------------------------Declare Repo---------------------------
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => MainRepoImpl(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => HomeRepoImpl(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => VerificationRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => HomeRepo(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => VerificationRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => NewPasswordRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => ContactUsRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => ChangePasswordRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => ChangeLanguageRepo(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => ChangePasswordRepo(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => ChangeLanguageRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => AboutUsRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => ReferralCodeRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => EventRepoImpl(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => profileRepoImpl(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => AnnouncementRepoImpl(serviceLocator()));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //sanaaaaaaaaaaaaaaaaaaaaa
-  serviceLocator.registerLazySingleton(() => NewAccountRepo(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => ReferralCodeRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => EventRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => profileRepo(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => AnnouncementRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => NewAccount(serviceLocator()));
   serviceLocator.registerLazySingleton(() => CalenderRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => CastingRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => JobsRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => RecordsRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => AssistantRepo(serviceLocator()));
 
 //!----------------------------------------------------------------
 

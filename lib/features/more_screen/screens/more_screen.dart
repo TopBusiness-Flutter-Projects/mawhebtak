@@ -45,66 +45,72 @@ class MoreScreen extends StatelessWidget {
                         children: [
                           moreContainer(
                               text: "my_profile".tr(),
-                              imageUrl: ImageAssets.myProfileIcon,
+                              imageUrl: AppIcons.myProfileIcon,
                               onTap: (){
                                 Navigator.pushNamed(context, Routes.profileScreen);
                               }
                           ),
                           moreContainer(
                               text: "my_favorites".tr(),
-                              imageUrl: ImageAssets.myFavoriteIcon,
+                              imageUrl: AppIcons.myFavoriteIcon,
                               onTap: (){}
                           ),
 
                           moreContainer(
                               text: "wallet".tr(),
-                              imageUrl: ImageAssets.walletIcon,
+                              imageUrl: AppIcons.walletIcon,
                               onTap: (){}
                           ),
                           moreContainer(
                               text: "referral_code".tr(),
-                              imageUrl: ImageAssets.referralCode,
+                              imageUrl: AppIcons.referralCode,
                               onTap: (){
                                 Navigator.pushNamed(context, Routes.referralCodeRoute);
                               }
                           ),moreContainer(
                               text: "change_language".tr(),
-                              imageUrl: ImageAssets.changeLanguage,
+                              imageUrl: AppIcons.changeLanguage,
                               onTap: (){
                                 Navigator.pushNamed(context, Routes.changeLanguageRoute);
                               }
                           ),
                           moreContainer(
                               text: "change_password".tr(),
-                              imageUrl: ImageAssets.changePassword,
+                              imageUrl: AppIcons.changePassword,
                               onTap: (){
                                 Navigator.pushNamed(context, Routes.changePasswordRoute);
                               }
                           ),
                           moreContainer(
                               text: "about_us".tr(),
-                              imageUrl: ImageAssets.aboutUs,
+                              imageUrl: AppIcons.aboutUs,
                               onTap: (){
                                 Navigator.pushNamed(context, Routes.aboutUsRoute);
                               }
                           ),
                           moreContainer(
-                              text: "contact_us".tr(),
-                              imageUrl: ImageAssets.contactUs,
+                              text: "advertising_and_publicity".tr(),
+                              imageUrl: AppIcons.contactUs,
                               onTap: (){
-                                Navigator.pushNamed(context, Routes.contactUsRoute);
+                                Navigator.pushNamed(context, Routes.contactUsRoute,arguments: "advertising_and_publicity");
+                              }
+                          ), moreContainer(
+                              text: "complaining".tr(),
+                              imageUrl: AppIcons.contactUs,
+                              onTap: (){
+                                Navigator.pushNamed(context, Routes.contactUsRoute,arguments: "complaining");
                               }
                           ),
                           moreContainer(
                               text: "terms_and_condition".tr(),
-                              imageUrl: ImageAssets.termsAndCondition,
+                              imageUrl: AppIcons.termsAndCondition,
                               onTap: (){
                                 Navigator.pushNamed(context, Routes.termsAndConditionRoute);
                               }
                           ),
                           moreContainer(
                               text: "logout".tr(),
-                              imageUrl: ImageAssets.logout,
+                              imageUrl: AppIcons.logout,
                             onTap: () {
                               showAnimatedLogoutDialog(context, () {
                               Navigator.pushNamed(context, Routes.loginRoute);

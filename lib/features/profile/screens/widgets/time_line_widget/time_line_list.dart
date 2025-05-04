@@ -17,7 +17,7 @@ class TimeLineList extends StatelessWidget {
       //profile info
 
       Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding:  EdgeInsets.only(bottom: 10.h,top: 10.h,right: 10.w,left: 10.w),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,7 +60,7 @@ class TimeLineList extends StatelessWidget {
       //profile desc
       Padding(
         padding:  EdgeInsets.only(left: 10.0.w),
-        child: ExpandableTextWidget(text: 'Hi show my latest scenes with an amazing team Let’s start our work  ',),
+        child: const ExpandableTextWidget(text: 'Hi show my latest scenes with an amazing team Let’s start our work  ',),
         ),
 
       SizedBox(height: 5.h,),
@@ -112,7 +112,8 @@ class TimeLineList extends StatelessWidget {
         color: AppColors.grayLite,
       ),
       //like and comment and share
-      LikeCommentShare(),
+      const LikeCommentShare(),
+        Container(color: AppColors.grayLite,height: 10.h,)
     ],);
   }
 }

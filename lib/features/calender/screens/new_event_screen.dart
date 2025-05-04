@@ -20,6 +20,9 @@ class NewEventScreen extends StatefulWidget {
 
 class _NewEventScreenState extends State<NewEventScreen> {
   int currentStep = 0;
+  bool isFree = true;
+  final TextEditingController ticketPriceController = TextEditingController();
+
   List<TalentRequirement> talentRequirements = [
     TalentRequirement(type: 'Workshop', fee: '3000', currency: 'L.E'),
   ];
@@ -187,6 +190,64 @@ class _NewEventScreenState extends State<NewEventScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12.r),
+
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.event_available, color: AppColors.primary),
+                        SizedBox(width: 10.w),
+                        Text(
+                          'Is this event free?',
+                          style: getMediumStyle(fontSize: 14.sp, color: AppColors.grayDark),
+                        ),
+                      ],
+                    ),
+                    Switch(
+                      value: isFree,
+                      activeColor: AppColors.primary,
+                      onChanged: (value) {
+                        setState(() {
+                          isFree = value;
+                          if (isFree) ticketPriceController.clear();
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              if (!isFree)
+                Padding(
+                  padding: EdgeInsets.only(top: 12.h),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: TextFormField(
+                      controller: ticketPriceController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Ticket Price (L.E)',
+                        prefixIcon: Icon(Icons.attach_money, color: AppColors.primary),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: AppColors.grayLite,
+                      ),
+                    ),
+                  ),
+                ),
+
               _label("title_of_event".tr()),
               CustomTextField(
                 controller: cubit.titleOfTheEventController,
@@ -234,6 +295,9 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 hintTextSize: 14.sp,
                 hintText: "",
               ),
+
+              10.h.verticalSpace,
+
               PublicPrivateToggle(
                 onToggle: (isPublic) {},
               ),

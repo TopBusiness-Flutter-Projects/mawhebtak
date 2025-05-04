@@ -98,10 +98,10 @@ class ReferralCodeScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _buildIcon(ImageAssets.xIcon),
-                          _buildIcon(ImageAssets.face),
-                          _buildIcon(ImageAssets.messenger),
-                          _buildIcon(ImageAssets.whatsapp),
+                          _buildIcon(AppIcons.xIcon),
+                          _buildIcon(AppIcons.face),
+                          _buildIcon(AppIcons.messenger),
+                          _buildIcon(AppIcons.whatsapp),
                         ],
                       ),
                     ],

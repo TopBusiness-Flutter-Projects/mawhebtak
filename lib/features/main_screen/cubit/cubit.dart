@@ -10,7 +10,7 @@ import 'state.dart';
 
 class MainCubit extends Cubit<MainState> {
   MainCubit(this.api) : super(MainInitial());
-  MainRepoImpl api;
+  MainRepo api;
   List<Widget> screens = [
     const HomeScreen(),
     FeedsScreen(),

@@ -1,6 +1,6 @@
 import '../../../../core/api/base_api_consumer.dart';
 
-class MainRepoImpl {
+class MainRepo {
   final BaseApiConsumer api;
-  MainRepoImpl(this.api);
+  MainRepo(this.api);
 }

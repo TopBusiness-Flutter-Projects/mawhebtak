@@ -1,6 +1,4 @@
-import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:meta/meta.dart';
 
 import '../../../core/exports.dart';
 import '../../home/screens/home_screen.dart';
@@ -10,21 +8,17 @@ part 'announcement_state.dart';
 
 class AnnouncementCubit extends Cubit<AnnouncementState> {
   AnnouncementCubit(this.api) : super(AnnouncementInitial());
-  AnnouncementRepoImpl api;
+  AnnouncementRepo api;
   DateTime? selectedDate;
   TextEditingController eventDateController = TextEditingController();
 
   final List<HomeItem> items = [
-    HomeItem(icon: Icons.event, label: 'Events'),
-    HomeItem(icon: Icons.leaderboard, label: 'Events'),
-    HomeItem(icon: Icons.announcement, label: 'Casting'),
-    HomeItem(icon: Icons.announcement, label: 'Records'),
-    HomeItem(icon: Icons.announcement, label: 'Announce'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
-    HomeItem(icon: Icons.work, label: 'Jobs'),
+
+    HomeItem(icon:AppIcons.eventIcon, label: 'Events'),
+    HomeItem(icon:AppIcons.aboutUs, label: 'Casting'),
+    HomeItem(icon: AppIcons.announceIcon, label: 'Announce'),
+    HomeItem(icon: AppIcons.jopIcon, label: 'Jobs'),
+    HomeItem(icon: AppIcons.assistantIcon, label: 'Assistant'),
 
   ];
   Future<void> selectDateTime(BuildContext context) async {

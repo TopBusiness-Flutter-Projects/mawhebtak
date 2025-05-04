@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
-import 'package:mawhebtak/features/records/cubit/records_cubit.dart';
+import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
+import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import '../../../core/widgets/custom_simple_appbar.dart';
-import '../../records/cubit/records_state.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   const JobDetailsScreen({super.key});
@@ -19,7 +19,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<RecordsCubit>();
+    var cubit = context.read<AssistantCubit>();
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light.copyWith(
         statusBarColor: Colors.transparent,
@@ -37,7 +37,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                     title: 'job_details'.tr(),
                     isActionButton: true,
                   ),
-                  BlocBuilder<RecordsCubit,RecordsState>(
+                  BlocBuilder<AssistantCubit,AssistantState>(
                     builder: (context,state) {
                       return Column(
                         children: [

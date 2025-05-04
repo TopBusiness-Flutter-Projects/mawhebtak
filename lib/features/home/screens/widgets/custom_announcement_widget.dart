@@ -6,7 +6,7 @@ import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 
 class CustomAnnouncementWidget extends StatefulWidget {
-  CustomAnnouncementWidget({
+  const CustomAnnouncementWidget({
     super.key,
     this.isLeftPadding,
     this.isRightPadding,
@@ -115,7 +115,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                   borderRadius: BorderRadius.circular(16.r),
                   child: SizedBox(
                     width: 290.w,
-                    height: 137.w,
+                    height: 180.w,
                     child: Image.asset(
                       ImageAssets.tasweerPhoto,
                       fit: BoxFit.cover,

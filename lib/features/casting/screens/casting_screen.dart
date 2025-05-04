@@ -28,7 +28,7 @@ class _CastingScreenState extends State<CastingScreen> {
         body: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 20.h, left: 20.w, right: 20.w),
+              padding: EdgeInsets.only( left: 20.w, right: 20.w),
               child: CustomAppBarRow(
                 colorTextFromSearchTextField: AppColors.darkGray.withOpacity(0.3),
                 backgroundColorTextFieldSearch: AppColors.grayLite,
@@ -194,7 +194,7 @@ class _CastingScreenState extends State<CastingScreen> {
                             ),
                           )),
                       Positioned(
-                        bottom: 70.h,
+                        bottom: 10.h,
                         right: 20.w,
                         child: GestureDetector(
                           onTap: () {
@@ -218,6 +218,7 @@ class _CastingScreenState extends State<CastingScreen> {
                 );
               }
             ),
+            60.h.verticalSpace,
           ],
         ),
       ),

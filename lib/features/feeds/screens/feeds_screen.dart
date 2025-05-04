@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 
 import '../../../core/exports.dart';
 import '../../home/screens/widgets/custom_app_bar_row.dart';
@@ -10,38 +9,47 @@ class FeedsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return AnnotatedRegion<SystemUiOverlayStyle>(
-       value: SystemUiOverlayStyle.light.copyWith(
-       statusBarColor: Colors.transparent, // الشفافية
-       statusBarIconBrightness: Brightness.light, // لون الأيقونات (أبيض)
-   ),child:Scaffold(
-    backgroundColor: AppColors.backgroundColor,
-    body:    SingleChildScrollView(
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-     SizedBox(height: getHeightSize(context)/40,),
-    CustomAppBarRow(
-    colorTextFromSearchTextField: AppColors.darkGray.withOpacity(0.3),
-    backgroundColorTextFieldSearch: AppColors.grayLite,
-    isMore: true,
-    colorSearchIcon: AppColors.secondPrimary,
-    backgroundNotification: AppColors.primary,
-    ),
-    SizedBox(height: getHeightSize(context)/50,),
-    //what do you want
-    WhatDoYouWant(),
-    SizedBox(height: 10.h,),
-    ListView.separated(
-    shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
-    itemCount: 9, itemBuilder: (BuildContext context, int index) {
-    return TimeLineList();
-    }, separatorBuilder: (BuildContext context, int index) {
-    return SizedBox(height: 15.h,); },)
-    ],
-    ),
-    ),    ));
+    return Scaffold(
+
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+             padding: EdgeInsets.only(top: 20.h, ),
+             child: CustomAppBarRow(
+                colorTextFromSearchTextField:
+                    AppColors.darkGray.withOpacity(0.3),
+                backgroundColorTextFieldSearch: AppColors.grayLite,
+                isMore: true,
+                colorSearchIcon: AppColors.secondPrimary,
+                backgroundNotification: AppColors.primary,
+              ),
+            ),
+            Container(
+             color: AppColors.grayLite,
+              height: getHeightSize(context) / 50,
+            ),
+            //what do you want
+            const WhatDoYouWant(),
+           10.h.verticalSpace,
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 9,
+              itemBuilder: (BuildContext context, int index) {
+                return const TimeLineList();
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: 15.h,
+                );
+              },
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
