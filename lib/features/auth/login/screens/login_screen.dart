@@ -157,17 +157,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     20.h.verticalSpace,
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        "skip_login".tr(),
-                        style: TextStyle(
-                            color: AppColors.secondPrimary,
-                            decoration: TextDecoration.underline,
-                            decorationColor: AppColors.secondPrimary,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400),
+                    InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, Routes.mainRoute);
+
+                      },
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          "skip_login".tr(),
+                          style: TextStyle(
+                              color: AppColors.secondPrimary,
+                              decoration: TextDecoration.underline,
+                              decorationColor: AppColors.secondPrimary,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400),
+                        ),
                       ),
                     ),
                   ],
