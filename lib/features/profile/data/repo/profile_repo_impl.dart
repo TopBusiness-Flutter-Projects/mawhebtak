@@ -1,6 +1,6 @@
 import '../../../../core/api/base_api_consumer.dart';
 
-class profileRepoImpl {
+class profileRepo {
   final BaseApiConsumer dio;
-  profileRepoImpl(this.dio);
+  profileRepo(this.dio);
 }

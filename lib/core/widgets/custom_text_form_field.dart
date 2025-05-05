@@ -111,7 +111,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 suffixIcon: widget.isPassword
                     ? showPassword
                         ? IconButton(
-                            icon: SvgPicture.asset(ImageAssets.passwordIcon),
+                            icon: SvgPicture.asset(AppIcons.passwordIcon),
                             onPressed: () {
                               setState(() {
                                 showPassword = !showPassword;
@@ -119,7 +119,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             },
                           )
                         : IconButton(
-                            icon: SvgPicture.asset(ImageAssets.passwordIcon),
+                            icon: SvgPicture.asset(AppIcons.passwordIcon),
                             onPressed: () {
                               setState(() {
                                 showPassword = !showPassword;

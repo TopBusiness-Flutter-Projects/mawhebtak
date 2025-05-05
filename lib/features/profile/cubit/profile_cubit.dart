@@ -11,7 +11,7 @@ part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(this.api) : super(ProfileInitial());
-  profileRepoImpl api;
+  profileRepo api;
   int selectedIndex = 0;
   bool isFollowing = true;
 

@@ -1,7 +1,7 @@
 
 import 'package:mawhebtak/core/api/base_api_consumer.dart';
 
-class RecordsRepo {
+class AssistantRepo {
   BaseApiConsumer api;
-  RecordsRepo(this.api);
+  AssistantRepo(this.api);
 }

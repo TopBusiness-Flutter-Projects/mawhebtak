@@ -65,7 +65,7 @@ class DatePickerField extends StatelessWidget {
                         : formatDate(now),
                     style: TextStyle(fontSize: 16.sp),
                   ),
-                   SvgPicture.asset(ImageAssets.calendarBold),
+                   SvgPicture.asset(AppIcons.calendarBold),
                 ],
               ),
             ),

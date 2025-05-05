@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mawhebtak/features/about_us/screens/about_us_screen.dart';
+import 'package:mawhebtak/features/assistant/screens/add_new_assistant_screen.dart';
+import 'package:mawhebtak/features/assistant/screens/assistant_screen.dart';
 import 'package:mawhebtak/features/auth/change_password/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/auth/forget_password/screens/forget_password_screen.dart';
 import 'package:mawhebtak/features/auth/new_account/screens/new_account_screen.dart';
@@ -16,8 +18,6 @@ import 'package:mawhebtak/features/auth/new_password/screens/new_password_screen
 import 'package:mawhebtak/features/auth/verification/screens/verification_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
-import 'package:mawhebtak/features/records/screens/add_new_record_screen.dart';
-import 'package:mawhebtak/features/records/screens/records_screen.dart';
 import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_condition.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
@@ -70,46 +70,6 @@ class Routes {
   static const String announcementScreen = '/announcementScreen';
   static const String newAnnouncementScreen = '/newAnnouncementScreen';
   static const String detailsAnnouncementScreen = '/detailsAnnouncementScreen';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //sanaaaaaaaaaaaaaaaaaaaaaaaa
-
-
   static const String newAccountRoute = '/newAccount';
   static const String calenderRoute = '/calender';
   static const String newEventRoute = '/newEvent';
@@ -300,9 +260,13 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );    case Routes.contactUsRoute:
+        );
+        case Routes.contactUsRoute:
+          String type = settings.arguments as String;
         return PageTransition(
-          child: const ContactUsScreen(),
+          child:  ContactUsScreen(
+            type: type,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
@@ -367,14 +331,14 @@ class AppRoutes {
         );
         case Routes.recordsRoute:
         return PageTransition(
-          child:  const RecordsScreen(),
+          child:  const AssistantScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
         case Routes.addNewRecordRoute:
         return PageTransition(
-          child:  const AddNewRecordScreen(),
+          child:  const AddNewAssistantScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

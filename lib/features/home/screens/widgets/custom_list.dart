@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/home/cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubit/home_state.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 
 class CustomList extends StatelessWidget {
-  const CustomList({super.key});
+   const CustomList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +32,12 @@ class CustomList extends StatelessWidget {
               Navigator.pushNamed(context, Routes.jobsRoute):
               cubit.items[index].label=="Events"?
               Navigator.pushNamed(context, Routes.eventScreen):
-              cubit.items[index].label=="Records"?
+              cubit.items[index].label=="Assistant"?
               Navigator.pushNamed(context, Routes.recordsRoute):
+              cubit.items[index].label=="Casting"?
+              Navigator.pushNamed(context, Routes.castingRoute):
+              cubit.items[index].label=="Announce"?
+              Navigator.pushNamed(context, Routes.announcementScreen):
                   null;
             },
             child: Padding(
@@ -50,10 +55,10 @@ class CustomList extends StatelessWidget {
                         border: Border.all(color: AppColors.grayDark,width: 2),
                       ),
                       child: Center(
-                        child: Icon(
-                       cubit.   items[index].icon,
-                          color: Colors.cyanAccent,
-                        ),
+                        child: SvgPicture.asset(
+                          cubit.items[index].icon,
+
+                        )
                       ),
                     ),
                   ),
