@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
@@ -10,7 +9,6 @@ import 'package:mawhebtak/features/profile/screens/widgets/time_line_widget/time
 
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
-import '../../../core/widgets/custom_simple_appbar.dart';
 import '../../casting/screens/widgets/gigs_widgets.dart';
 
 class ProfileScreen extends StatelessWidget {

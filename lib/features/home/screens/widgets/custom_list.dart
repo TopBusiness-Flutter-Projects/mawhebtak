@@ -47,7 +47,7 @@ class CustomList extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Container(
-                      height: 71.h,
+                      height: 60.h,
                       width: 68.w,
                       decoration: BoxDecoration(
                         color: AppColors.blueMeduim,

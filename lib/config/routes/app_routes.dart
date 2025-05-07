@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/about_us/screens/about_us_screen.dart';
-import 'package:mawhebtak/features/assistant/screens/add_new_assistant_screen.dart';
-import 'package:mawhebtak/features/assistant/screens/assistant_screen.dart';
+import 'package:mawhebtak/features/assistant/screens/add_assistant_screen.dart';
+import 'package:mawhebtak/features/assistant/screens/add_new_work_screen.dart';
+import 'package:mawhebtak/features/assistant/screens/work_details_screen.dart';
+import 'package:mawhebtak/features/assistant/screens/work_screen.dart';
 import 'package:mawhebtak/features/auth/change_password/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/auth/forget_password/screens/forget_password_screen.dart';
 import 'package:mawhebtak/features/auth/new_account/screens/new_account_screen.dart';
@@ -31,7 +34,6 @@ import '../../features/events/screens/event_screen.dart';
 import '../../features/events/screens/second_details_screen.dart';
 import '../../features/feeds/screens/feeds_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
-import '../../features/home/screens/video_screen.dart';
 import '../../features/jobs/screens/add_new_job_screen.dart';
 import '../../features/profile/screens/followers_screen.dart';
 import '../../features/profile/screens/gigs_details.dart';
@@ -78,7 +80,9 @@ class Routes {
   static const String addNewJobRoute = '/addNewJob';
   static const String jobDetailsRoute = '/jobDetails';
   static const String recordsRoute = '/records';
-  static const String addNewRecordRoute = '/addNewRecord';
+  static const String addNewWorkRoute = '/addNewWork';
+  static const String workDetailsRoute = '/workDetails';
+  static const String addAssistantRoute = '/addAssistant';
 
 }
 
@@ -177,13 +181,22 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );  case Routes.videoScreenRoute:
+        );
+        case Routes.workDetailsRoute:
+          Work work = settings.arguments as Work;
         return PageTransition(
-          child: const VideoScreen(),
+          child:  WorkDetailsScreen(work: work,),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
+        // case Routes.videoScreenRoute:
+        // return PageTransition(
+        //   child: const VideoScreen(),
+        //   type: PageTransitionType.fade,
+        //   alignment: Alignment.center,
+        //   duration: const Duration(milliseconds: 800),
+        // );
       case Routes.onboardingPageScreenRoute:
         return PageTransition(
           child: const OnBoardingScreen(),
@@ -277,12 +290,6 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-
-
-
-
-
-        // sanaaaaaaaaaaaaaaa
         case Routes.newAccountRoute:
         return PageTransition(
           child: const NewAccountScreen(),
@@ -336,9 +343,15 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.addNewRecordRoute:
+        case Routes.addNewWorkRoute:
         return PageTransition(
-          child:  const AddNewAssistantScreen(),
+          child:  const AddNewWorkScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        ); case Routes.addAssistantRoute:
+        return PageTransition(
+          child:  const AddAssistantScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

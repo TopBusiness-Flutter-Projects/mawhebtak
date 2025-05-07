@@ -1,9 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
+import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
-
-import '../../../core/exports.dart';
-import '../../../core/widgets/picker_drop_down.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
 import '../cubit/profile_cubit.dart';
 
@@ -34,11 +31,7 @@ class NewGigsScreen extends StatelessWidget {
 
                 hintText: "John doe".tr(),hintTextSize: 18.sp,),
               Text("price_range".tr(),style: getRegularStyle(fontSize: 14.sp),),
-              // CustomTextField(hintText: "1000".tr(),
-              //     hintTextSize: 18.sp,
-              //     suffixIcon: Icon(Icons.keyboard_arrow_down_sharp)
-              // ),
-              PriceDropdownTextField(prices: ["100","200","300"], hintText: '1000',),
+              DropdownTextFieldWidget(dataLists: const ["100","200","300"], hintText: '1000',),
               Text("select_location".tr(),style: getRegularStyle(fontSize: 14.sp),),
 
               CustomTextField(hintText: "".tr(),

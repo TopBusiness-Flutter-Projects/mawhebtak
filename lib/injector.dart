@@ -5,7 +5,7 @@ import 'package:mawhebtak/features/auth/change_password/data/repos/change_passwo
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
 import 'package:mawhebtak/features/auth/forget_password/data/repos/forget_password_repo.dart';
 import 'package:mawhebtak/features/auth/login/cubit/cubit.dart';
-import 'package:mawhebtak/features/auth/login/data/login_repo.dart';
+import 'package:mawhebtak/features/auth/login/data/repos/login_repo.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/data/repos/new_account.repo.dart';
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
@@ -24,9 +24,7 @@ import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.da
 import 'package:mawhebtak/features/auth/verification/data/repos/verification.repo.dart';
 import 'package:mawhebtak/features/referral_code/cubit/about_us_cubit.dart';
 import 'package:mawhebtak/features/referral_code/data/repos/referral_code_repo.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
@@ -47,13 +45,9 @@ import 'features/main_screen/data/repo/main_repo_impl.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/profile/data/repo/profile_repo_impl.dart';
 
-// import 'features/downloads_videos/cubit/downloads_videos_cubit.dart';
-
 final serviceLocator = GetIt.instance;
 
-Future<void> setup() async {
-//!-------------------------Declare Cubit-------------------------
-
+Future<void> setupCubit() async {
   serviceLocator.registerFactory(
     () => SplashCubit(),
   );
@@ -157,10 +151,9 @@ Future<void> setup() async {
       serviceLocator(),
     ),
   );
+}
 
-//!----------------------------------------------------------------
-///////////////////////////////////////////////////////////////////
-//!-------------------------Declare Repo---------------------------
+Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => HomeRepo(serviceLocator()));
@@ -186,20 +179,14 @@ Future<void> setup() async {
   serviceLocator.registerLazySingleton(() => CastingRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => JobsRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => AssistantRepo(serviceLocator()));
+}
 
-//!----------------------------------------------------------------
-
-  //! External
-  // Shared Preferences
+Future<void> setupSharedPreferences() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   serviceLocator.registerLazySingleton(() => sharedPreferences);
-
-  ///! (dio)
   serviceLocator.registerLazySingleton<BaseApiConsumer>(
       () => DioConsumer(client: serviceLocator()));
   serviceLocator.registerLazySingleton(() => AppInterceptors());
-
-  // Dio
   serviceLocator.registerLazySingleton(
     () => Dio(
       BaseOptions(

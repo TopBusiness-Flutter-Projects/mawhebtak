@@ -10,6 +10,7 @@ class CustomTextField extends StatefulWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final double? borderRadius;
+
   final bool? enabled;
   final bool isMessage;
   final bool isPassword;
@@ -64,12 +65,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    int minLines = widget.isMessage ? 8 : 1;
-    int maxLines = widget.isMessage
-        ? (widget.maxLines != null && widget.maxLines! >= minLines
-        ? widget.maxLines!
-        : minLines)
-        : 1;
+
     return SizedBox(
       height: widget.isMessage ? 150.h : null,
       child: Padding(

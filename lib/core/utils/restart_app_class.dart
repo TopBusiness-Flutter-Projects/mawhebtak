@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class HotRestartController extends StatefulWidget {
   final Widget child;
 
-  HotRestartController({required this.child});
+  const HotRestartController({super.key, required this.child});
 
   static performHotRestart(BuildContext context) {
     final _HotRestartControllerState? state =
@@ -13,21 +13,21 @@ class HotRestartController extends StatefulWidget {
   }
 
   @override
-  _HotRestartControllerState createState() => new _HotRestartControllerState();
+  _HotRestartControllerState createState() => _HotRestartControllerState();
 }
 
 class _HotRestartControllerState extends State<HotRestartController> {
-  Key key = new UniqueKey();
+  Key key = UniqueKey();
 
   void performHotRestart() {
-    this.setState(() {
-      key = new UniqueKey();
+    setState(() {
+      key = UniqueKey();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return Container(
       key: key,
       child: widget.child,
     );

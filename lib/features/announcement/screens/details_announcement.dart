@@ -1,12 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
-
-import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../home/screens/widgets/custom_announcement_widget.dart';
-import '../../home/screens/widgets/custom_request_gigs.dart';
 import '../cubit/announcement_cubit.dart';
 
 class DetailsAnnouncementScreen extends StatelessWidget {

@@ -29,94 +29,102 @@ class OnBoarding1 extends StatelessWidget {
                   ),
                 ),
               ),
-          Stack(
-            children: [
-              Image.asset(
-                ImageAssets.onboardingBackground,
-                width: double.infinity,),
-              Positioned(child:
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Stack(
                 children: [
-                  SizedBox(
-                    height: getSize(context)/9,
-                  ),
-              SmoothPageIndicator(
-                  controller: cubit.pageController,
-                  count: cubit.numPages,
-                 // textDirection: TextDirection.ltr,
-                  effect: WormEffect(
-                    activeDotColor: AppColors.secondPrimary,
-                    dotColor: AppColors.grayLite.withOpacity(0.2),
-                    dotHeight:5.h,
-                    dotWidth: 13.w,
-                    type: WormType.thin,
-                  ),
-                ),
-                  SizedBox(
-                    height: getSize(context)/7,
+                  Image.asset(
+                    ImageAssets.onboardingBackground,
+                    width: double.infinity,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: getSize(context) / 44),
-                    child: Text(
-                      "onboarding1_title".tr(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'NotoSans',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
-                          color: AppColors.white),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(getSize(context) / 44),
-                    child: Text(
-                      "onboarding1_description".tr(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'NotoSans',
-                          color: AppColors.white,
-                          fontSize: 13.sp),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 100.w, left: 100.w),
-                    child: GestureDetector(
-                      onTap: () {
-                        cubit.pageController.animateToPage(1,
-                            duration: const Duration(milliseconds: 1000),
-                            curve: Curves.easeInOut);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            left: 40.w, right: 40.w, top: 10.h, bottom: 10.h),
-                        decoration: BoxDecoration(
-                          color: AppColors.secondPrimary,
-                          borderRadius: BorderRadius.circular(8.sp),
+                    decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50.r),
+                            topLeft: Radius.circular(50.r))),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: getSize(context) / 6,
                         ),
-                        child: Text(
-                          "next".tr(),
-                          style: TextStyle(
-                              fontFamily: 'Noto Sans',
-                              color: AppColors.white,
-                              fontSize: 15.sp),
+                        SmoothPageIndicator(
+                          controller: cubit.pageController,
+                          count: cubit.numPages,
+                          // textDirection: TextDirection.ltr,
+                          effect: WormEffect(
+                            activeDotColor: AppColors.secondPrimary,
+                            dotColor: AppColors.grayLite.withOpacity(0.2),
+                            dotHeight: 5.h,
+                            dotWidth: 13.w,
+                            type: WormType.thin,
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: getSize(context) / 7,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: getSize(context) / 44),
+                          child: Text(
+                            "onboarding1_title".tr(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: 'NotoSans',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18.sp,
+                                color: AppColors.white),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(getSize(context) / 44),
+                          child: Text(
+                            "onboarding1_description".tr(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'NotoSans',
+                                color: AppColors.white,
+                                fontSize: 13.sp),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 100.w, left: 100.w),
+                          child: GestureDetector(
+                            onTap: () {
+                              cubit.pageController.animateToPage(1,
+                                  duration: const Duration(milliseconds: 1000),
+                                  curve: Curves.easeInOut);
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  left: 40.w,
+                                  right: 40.w,
+                                  top: 10.h,
+                                  bottom: 10.h),
+                              decoration: BoxDecoration(
+                                color: AppColors.secondPrimary,
+                                borderRadius: BorderRadius.circular(8.sp),
+                              ),
+                              child: Text(
+                                "next".tr(),
+                                style: TextStyle(
+                                    fontFamily: 'Noto Sans',
+                                    color: AppColors.white,
+                                    fontSize: 15.sp),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: getSize(context) / 4,
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: getSize(context)/4,
-                  ),
+                  )
                 ],
-              ),)
-            ],
-          )
+              )
             ],
           ),
         );

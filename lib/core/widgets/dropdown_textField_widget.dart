@@ -1,22 +1,32 @@
-import '../exports.dart';
-import 'custom_text_form_field.dart';
+import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 
-class PriceDropdownTextField extends StatefulWidget {
-   PriceDropdownTextField({super.key,required this.prices, required this.hintText});
-  final List<String> prices ;
-  final String hintText ;
+class DropdownTextFieldWidget extends StatefulWidget {
+   DropdownTextFieldWidget({
+    super.key,
+    required this.dataLists,
+    required this.hintText,
+    this.isWithCurrency = false,
+    this.currencyList = const ["L.E", "\$US", "€EU", "£GBP"], // عملات افتراضية
+  });
+
+  final List<String> dataLists;
+   bool isWithCurrency ;
+  final String hintText;
+  final List<String> currencyList;
 
   @override
-  State<PriceDropdownTextField> createState() => _PriceDropdownTextFieldState();
+  State<DropdownTextFieldWidget> createState() => _DropdownTextFieldWidgetState();
 }
 
-class _PriceDropdownTextFieldState extends State<PriceDropdownTextField> {
+class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
   final LayerLink _layerLink = LayerLink();
   final GlobalKey _key = GlobalKey();
   final TextEditingController _controller = TextEditingController();
   OverlayEntry? _overlayEntry;
 
   bool _isDropdownOpen = false;
+  String? selectedCurrency;
 
   void _toggleDropdown() {
     if (_isDropdownOpen) {
@@ -30,7 +40,6 @@ class _PriceDropdownTextFieldState extends State<PriceDropdownTextField> {
       });
     }
   }
-
 
   OverlayEntry _createOverlayEntry() {
     RenderBox renderBox = _key.currentContext!.findRenderObject() as RenderBox;
@@ -52,11 +61,11 @@ class _PriceDropdownTextFieldState extends State<PriceDropdownTextField> {
             child: ListView(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
-              children:widget. prices.map((price) {
+              children: widget.dataLists.map((item) {
                 return ListTile(
-                  title: Text(price),
+                  title: Text(item),
                   onTap: () {
-                    _controller.text = price;
+                    _controller.text = item;
                     _toggleDropdown();
                     setState(() {});
                   },
@@ -64,6 +73,29 @@ class _PriceDropdownTextFieldState extends State<PriceDropdownTextField> {
               }).toList(),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  void _showCurrencyPicker() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: EdgeInsets.symmetric(vertical: 20.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: widget.currencyList.map((currency) {
+            return ListTile(
+              title: Text(currency, style: getRegularStyle()),
+              onTap: () {
+                setState(() => selectedCurrency = currency);
+                // إذا عندك Cubit للعملة:
+                // context.read<CurrencyCubit>().changeCurrency(currency);
+                Navigator.pop(context);
+              },
+            );
+          }).toList(),
         ),
       ),
     );
@@ -88,13 +120,21 @@ class _PriceDropdownTextFieldState extends State<PriceDropdownTextField> {
           hintTextSize: 18.sp,
           enabled: true,
           onTap: _toggleDropdown,
-
           suffixIcon: InkWell(
-            onTap: _toggleDropdown,
-            child: const Icon(Icons.keyboard_arrow_down_sharp),
+            onTap: _showCurrencyPicker,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                 if(widget.isWithCurrency==true )
+                   Text(
+                  selectedCurrency ?? 'L.E',
+                  style: getRegularStyle(color: Colors.blue, fontSize: 14.sp),
+                ),
+                const Icon(Icons.keyboard_arrow_down_sharp, color: Colors.blue),
+              ],
+            ),
           ),
         ),
-
       ),
     );
   }

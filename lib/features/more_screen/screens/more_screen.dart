@@ -120,6 +120,7 @@ class MoreScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 40.h,),
 
+
                         ],
                       ),
                     )

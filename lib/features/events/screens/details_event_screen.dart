@@ -1,15 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_button.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_event_details_widget.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_row_event.dart';
-
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
-import '../../../core/widgets/custom_simple_appbar.dart';
-import '../../home/screens/widgets/custom_row.dart';
-import '../../home/screens/widgets/follow_button.dart';
+
 
 class DetailsEventScreen extends StatelessWidget {
   const DetailsEventScreen({super.key});

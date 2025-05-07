@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
-import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_state.dart';
 import 'package:mawhebtak/features/jobs/screens/widgets/jop_widget.dart';

@@ -1,13 +1,10 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:mawhebtak/core/exports.dart';
-
 import 'package:overlay_loader_with_app_icon/overlay_loader_with_app_icon.dart';
-// import 'package:easy_localization/easy_localization.dart' as easy;
 
 /*----------------------------------------------------------------------------*/
 /*------------------------------  Error Get Bar  -----------------------------*/

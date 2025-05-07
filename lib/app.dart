@@ -48,8 +48,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // print(text);
-
     return MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -122,7 +120,6 @@ class _MyAppState extends State<MyApp> {
           theme: appTheme(),
           themeMode: ThemeMode.light,
           darkTheme: ThemeData.light(),
-          // standard dark theme
           localizationsDelegates: context.localizationDelegates,
           debugShowCheckedModeBanner: false,
           title: AppStrings.appName,

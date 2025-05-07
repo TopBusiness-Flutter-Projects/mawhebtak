@@ -13,14 +13,6 @@ TextStyle _getTextStyle(
       fontWeight: fontWeight);
 }
 
-// light style 300
-// TextStyle getLightStyle({Color? color, double? fontHeight, double? fontSize}) {
-//   return _getTextStyle(
-//       color: color ?? AppColors.primaryText,
-//       fontWeight: FontWeight.w300,
-//       fontSize: fontSize ?? 16.sp,
-//       fontHeight: fontHeight);
-// }
 
 TextStyle getLineOverStyle({bool isBold = true}) {
   return TextStyle(
@@ -47,9 +39,7 @@ TextStyle getUnderLine({Color? color, double? fontSize}) {
     fontWeight: FontWeight.w500,
   );
 }
-//textcolor
 
-// regular style 400
 TextStyle getRegularStyle(
     {Color? color, double? fontHeight, double? fontSize}) {
   return _getTextStyle(
@@ -59,7 +49,6 @@ TextStyle getRegularStyle(
       fontHeight: fontHeight);
 }
 
-// regular style 500
 TextStyle getMediumStyle({Color? color, double? fontHeight, double? fontSize}) {
   return _getTextStyle(
       color: color ?? AppColors.black,
@@ -69,7 +58,6 @@ TextStyle getMediumStyle({Color? color, double? fontHeight, double? fontSize}) {
 
 }
 
-// semi bold style 600
 TextStyle getSemiBoldStyle(
     {Color? color,
     double? fontHeight,
@@ -82,7 +70,6 @@ TextStyle getSemiBoldStyle(
       fontHeight: fontHeight);
 }
 
-// bold style 700
 TextStyle getBoldStyle(
     {Color? color,
     double? fontHeight,
@@ -95,7 +82,6 @@ TextStyle getBoldStyle(
       fontHeight: fontHeight);
 }
 
-// Extra Bold style 800
 TextStyle getExtraStyle({Color? color, double? fontHeight, double? fontSize}) {
   return _getTextStyle(
       color: color ?? AppColors.black,

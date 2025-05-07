@@ -1,18 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 import 'package:mawhebtak/features/events/cubit/event_cubit.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_event_details_widget.dart';
-import 'package:mawhebtak/features/events/screens/widgets/custom_row_event.dart';
 import 'package:mawhebtak/features/events/screens/widgets/event_details_body.dart';
-import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
 import 'package:mawhebtak/features/events/screens/widgets/toggle_tabs.dart';
 
 import '../../../core/exports.dart';
-import '../../../core/widgets/custom_simple_appbar.dart';
-import '../../home/screens/widgets/custom_row.dart';
 import '../../home/screens/widgets/follow_button.dart';
 
 class SecondDetailsEventScreen extends StatelessWidget {

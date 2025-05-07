@@ -1,15 +1,10 @@
 import 'dart:async';
 import 'dart:developer' as developer;
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../core/exports.dart';
-import '../../../core/utils/app_colors.dart';
-import '../../../core/utils/app_fonts.dart';
-import '../../../core/utils/app_translations.dart';
+
 
 
 class CheckInternetWidget extends StatefulWidget {
