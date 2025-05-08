@@ -13,13 +13,13 @@ import '../../../core/exports.dart';
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
 
-
 class HomeItem {
   final String icon;
   final String label;
   Color? colorIcon;
-  HomeItem({required this.icon, required this.label,this.colorIcon});
+  HomeItem({required this.icon, required this.label, this.colorIcon});
 }
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
@@ -67,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }).toList();
   }
 
-
   @override
   void dispose() {
     _pageController.dispose();
@@ -76,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     super.dispose();
   }
+
   bool _isMuted = false;
 
   @override
@@ -84,11 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
       return Scaffold(
         body: Container(
-        //  height: getHeightSize(context),
+          //  height: getHeightSize(context),
           width: getWidthSize(context),
           color: AppColors.homeColor,
           child: ListView(
-           // crossAxisAlignment: CrossAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
                 children: [
@@ -113,7 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           newController.play();
                         });
                       },
-
                       itemBuilder: (context, index) {
                         final controller = _videoControllers[index];
                         return controller.value.isInitialized
@@ -133,7 +132,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         setState(() {
                           _isMuted = !_isMuted;
-                          _videoControllers[_currentPage].setVolume(_isMuted ? 0 : 1);
+                          _videoControllers[_currentPage]
+                              .setVolume(_isMuted ? 0 : 1);
                         });
                       },
                     ),
@@ -142,87 +142,120 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: 35,
                     left: 16,
                     right: 16,
-                    child: CustomAppBarRow(color: AppColors.transparent,),
+                    child: CustomAppBarRow(
+                      color: AppColors.transparent,
+                    ),
                   ),
                   //under custom row
                   const UnderCustomRow(),
                   //custom list
-                   const CustomList(),
+                  const CustomList(),
                 ],
               ),
               SizedBox(height: 10.h),
               //top talents
-              CustomRow(text: 'top_talents',),
-              SizedBox(height: 4.h,),
+              CustomRow(
+                text: 'top_talents',
+              ),
               SizedBox(
-                   height: 184.h,
+                height: 4.h,
+              ),
+              SizedBox(
+                height: 184.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount:5,
+                  itemCount: 5,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                  return CustomTopTalentsList(
-                    index:index,
-                    isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
-                },),
+                    return CustomTopTalentsList(
+                      index: index,
+                      isLeftPadding: index == 0 ? true : false,
+                      isRightPadding:
+                          index == cubit.items.length - 1 ? true : false,
+                    );
+                  },
+                ),
               ),
               //top events
-              CustomRow(text: 'top_events',onTap: (){
-                Navigator.pushNamed(context, Routes.eventScreen);
-              },),
-              SizedBox(height: 4.h,),
+              CustomRow(
+                text: 'top_events',
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.eventScreen);
+                },
+              ),
+              SizedBox(
+                height: 4.h,
+              ),
 
               SizedBox(
                 height: 215.h,
-
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount:cubit.items.length,
+                  itemCount: cubit.items.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return CustomTopEventList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
-                  },),
+                    return CustomTopEventList(
+                      isLeftPadding: index == 0 ? true : false,
+                      isRightPadding:
+                          index == cubit.items.length - 1 ? true : false,
+                    );
+                  },
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Image.asset(ImageAssets.banner),
               ),
               // request_gigs
-              CustomRow(text: 'request_gigs'.tr(),),
+              CustomRow(
+                text: 'request_gigs'.tr(),
+              ),
               SizedBox(height: 4.h),
               SizedBox(
                 height: 145.w, // Match image width
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount:cubit.items.length,
+                  itemCount: cubit.items.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return CustomRequestGigstList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
-                  },),
+                    return CustomRequestGigstList(
+                      isLeftPadding: index == 0 ? true : false,
+                      isRightPadding:
+                          index == cubit.items.length - 1 ? true : false,
+                    );
+                  },
+                ),
               ),
-              CustomRow(text: 'announcements'.tr(),onTap: (){
-                Navigator.pushNamed(context, Routes.announcementScreen);
-              },),
+              CustomRow(
+                text: 'announcements'.tr(),
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.announcementScreen);
+                },
+              ),
               10.h.verticalSpace,
               SizedBox(
-                height:getHeightSize(context)/1.9, // Match image width
+                height: getHeightSize(context) / 1.9, // Match image width
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount:cubit.items.length,
+                  itemCount: cubit.items.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return CustomAnnouncementWidget(isLeftPadding:index==0
-                        ?true:false,
-                      isRightPadding: index==cubit.items.length-1?
-                      true:false,);
-                  },),
+                    return CustomAnnouncementWidget(
+                      isLeftPadding: index == 0 ? true : false,
+                      isRightPadding:
+                          index == cubit.items.length - 1 ? true : false,
+                    );
+                  },
+                ),
               ),
 
-              const SizedBox(height: 100,)
+              const SizedBox(
+                height: 100,
+              )
             ],
           ),
         ),
