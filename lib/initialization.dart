@@ -24,5 +24,4 @@ Future<void> initialization() async {
 
   await WorkHiveManager.initialize();
   await Hive.initFlutter();
-
 }

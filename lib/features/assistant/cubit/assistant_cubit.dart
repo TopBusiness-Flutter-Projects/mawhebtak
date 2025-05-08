@@ -11,13 +11,15 @@ class AssistantCubit extends Cubit<AssistantState> {
   TextEditingController workNameController = TextEditingController();
   ScrollController scrollController = ScrollController();
   TextEditingController assistantTitleController = TextEditingController();
-  TextEditingController assistantDescriptionController = TextEditingController();
+  TextEditingController assistantDescriptionController =
+      TextEditingController();
 
   DateTime? selectedDate;
   void updateSelectedDate(DateTime date) {
     selectedDate = date;
     emit(UpdateSelectedDateState());
   }
+
   Future<void> addNewWork(BuildContext context) async {
     await WorkHiveManager.addWork(workNameController.text);
     WorkHiveManager.getAllWorks();
@@ -33,8 +35,11 @@ class AssistantCubit extends Cubit<AssistantState> {
     }
     emit(AddNewWorkState());
   }
-  Future<void> addAssistantFromWork(BuildContext context,{required int workId}) async {
-    await WorkHiveManager.addAssistantToWork(workId,
+
+  Future<void> addAssistantFromWork(BuildContext context,
+      {required int workId}) async {
+    await WorkHiveManager.addAssistantToWork(
+        workId,
         Assistant(
             title: assistantTitleController.text,
             description: assistantDescriptionController.text,
@@ -77,8 +82,9 @@ class AssistantCubit extends Cubit<AssistantState> {
     works = newList;
     emit(GetAllWorksState());
   }
-  Future<void>  getAllAssistantFromWork(int workId) async {
-    assistants = await WorkHiveManager.getAssistantsFromWork(workId) ;
+
+  Future<void> getAllAssistantFromWork(int workId) async {
+    assistants = await WorkHiveManager.getAssistantsFromWork(workId);
     final newList = works?.reversed.toList();
     works = newList;
     emit(GetAllWorksState());

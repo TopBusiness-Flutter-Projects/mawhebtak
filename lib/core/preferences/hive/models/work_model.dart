@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'work_model.g.dart';
+// part 'work_model.g.dart';
 
 @HiveType(typeId: 3)
 class Work extends HiveObject {
@@ -12,8 +12,6 @@ class Work extends HiveObject {
 
   @HiveField(2)
   List<Assistant>? assistants;
-
-
 
   Work({
     required this.id,
@@ -43,10 +41,10 @@ class Assistant extends HiveObject {
   DateTime? remindedTime;
 
   Assistant({
-     this.id,
+    this.id,
     required this.title,
     required this.description,
-     this.images,
+    this.images,
     required this.date,
     required this.remindedTime,
   });
