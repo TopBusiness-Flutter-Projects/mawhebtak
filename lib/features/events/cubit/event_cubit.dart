@@ -1,9 +1,4 @@
 import 'dart:io';
-
-import 'package:bloc/bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
-
 import '../../../core/exports.dart';
 import '../../../core/widgets/media_picker.dart';
 import '../../home/data/repo/home_repo_impl.dart';
@@ -23,7 +18,7 @@ class EventCubit extends Cubit<EventState> {
   // File? selectedImage; // الصورة اللي المستخدم يختارها
   // File? selectedVideo;
 
-  void changeCurency(String currency){
+  void changeCurrency(String currency){
   selectedCurrency=currency;
   emit(ChangeCurrencyState());
 }

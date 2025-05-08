@@ -1,9 +1,10 @@
-import 'package:hive/hive.dart';
+
+import 'package:hive_flutter/hive_flutter.dart';
 
 part 'work_model.g.dart';
 
-@HiveType(typeId: 3)
-class Work extends HiveObject {
+@HiveType(typeId: 0)
+class WorkModel extends HiveObject {
   @HiveField(0)
   int? id;
 
@@ -15,14 +16,14 @@ class Work extends HiveObject {
 
 
 
-  Work({
+  WorkModel({
     required this.id,
     required this.title,
     required this.assistants,
   });
 }
 
-@HiveType(typeId: 4)
+@HiveType(typeId: 1)
 class Assistant extends HiveObject {
   @HiveField(0)
   int? id;
@@ -34,7 +35,7 @@ class Assistant extends HiveObject {
   String? description;
 
   @HiveField(3)
-  List<String>? images; // List of image URLs or paths
+  List<String>? images;
 
   @HiveField(4)
   DateTime? date;
@@ -42,12 +43,17 @@ class Assistant extends HiveObject {
   @HiveField(5)
   DateTime? remindedTime;
 
+  @HiveField(6)
+  bool? isActive;
+
   Assistant({
-     this.id,
-    required this.title,
-    required this.description,
-     this.images,
-    required this.date,
-    required this.remindedTime,
+    this.id,
+     this.title,
+     this.description,
+    this.images,
+     this.date,
+    this.remindedTime,
+    this.isActive,
   });
 }
+

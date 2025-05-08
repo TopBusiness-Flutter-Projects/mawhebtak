@@ -9,7 +9,7 @@ import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.d
 
 class AddAssistantScreen extends StatefulWidget {
   const AddAssistantScreen({super.key, this.work});
-  final Work? work;
+  final WorkModel? work;
   @override
   State<AddAssistantScreen> createState() => _AddAssistantScreenState();
 }
@@ -47,17 +47,20 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
+
                         "assistant_title".tr(),
                         style: TextStyle(fontSize: 14.sp),
                       ),
-                      const CustomTextField(
-                        hintText: "task details",
+                       CustomTextField(
+                        controller:cubit.assistantTitleController ,
+                        hintText: "task title",
                       ),
                       Text(
                         "assistant_description".tr(),
                         style: TextStyle(fontSize: 14.sp),
                       ),
-                      const CustomTextField(
+                       CustomTextField(
+                        controller:cubit.assistantDescriptionController ,
                         isMessage: true,
                         hintText: "task details",
                       ),
@@ -97,7 +100,12 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                         hintText: DateFormat('yyyy-MM-dd').format(selectedDate)
                       ),
                       CustomButton(title: "add_assistant".tr(),onTap: () {
-                        cubit.addAssistantFromWork(context,workId: widget.work?.id?? 0);
+                        if (widget.work != null) {
+                          cubit.addAssistantFromWork(context, workId: widget.work!.id ?? 0);
+                        } else {
+                          print("the work id : ${widget.work}");
+                          errorGetBar("العمل غير موجود أو لم يتم تحديده");
+                        }
                       },),
                     ],
                   ),

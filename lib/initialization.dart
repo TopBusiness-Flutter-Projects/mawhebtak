@@ -16,13 +16,10 @@ Future<void> initialization() async {
   await injector.setupRepo();
   await injector.setupSharedPreferences();
   Bloc.observer = AppBlocObserver();
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-
-  await WorkHiveManager.initialize();
   await Hive.initFlutter();
+  Hive.registerAdapter(WorkModelAdapter());
+  Hive.registerAdapter(AssistantAdapter());
+  await Hive.openBox(WorkHiveManager.workBoxName);
+
 
 }

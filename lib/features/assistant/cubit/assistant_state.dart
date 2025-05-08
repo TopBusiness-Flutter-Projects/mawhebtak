@@ -6,3 +6,6 @@
  class DeleteNewWorkState extends AssistantState {}
  class UpdateSelectedDateState extends AssistantState {}
  class AddAssistantState extends AssistantState {}
+ class GetAllAssistantState extends AssistantState {}
+ class VideoPickedState extends AssistantState {}
+ class ImagePickedState extends AssistantState {}

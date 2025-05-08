@@ -8,7 +8,7 @@ import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.d
 
 class AddNewWorkScreen extends StatefulWidget {
   const AddNewWorkScreen({super.key, this.work});
-  final Work? work;
+  final WorkModel? work;
   @override
   State<AddNewWorkScreen> createState() => _AddNewWorkScreenState();
 }
