@@ -1,7 +1,6 @@
-
 import 'package:hive_flutter/hive_flutter.dart';
 
-// part 'work_model.g.dart';
+part 'work_model.g.dart';
 
 @HiveType(typeId: 0)
 class WorkModel extends HiveObject {
@@ -13,8 +12,6 @@ class WorkModel extends HiveObject {
 
   @HiveField(2)
   List<Assistant>? assistants;
-
-
 
   WorkModel({
     required this.id,
@@ -48,12 +45,11 @@ class Assistant extends HiveObject {
 
   Assistant({
     this.id,
-     this.title,
-     this.description,
+    this.title,
+    this.description,
     this.images,
-     this.date,
+    this.date,
     this.remindedTime,
     this.isActive,
   });
 }
-

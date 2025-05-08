@@ -9,7 +9,8 @@ class GoogleAndFacebookWidget extends StatefulWidget {
   const GoogleAndFacebookWidget({super.key});
 
   @override
-  State<GoogleAndFacebookWidget> createState() => _GoogleAndFacebookWidgetState();
+  State<GoogleAndFacebookWidget> createState() =>
+      _GoogleAndFacebookWidgetState();
 }
 
 class _GoogleAndFacebookWidgetState extends State<GoogleAndFacebookWidget> {
@@ -63,19 +64,18 @@ class _GoogleAndFacebookWidgetState extends State<GoogleAndFacebookWidget> {
   //
   // }
   @override
-
   Widget build(BuildContext context) {
-    return   Row(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Expanded(
           child: GestureDetector(
-            onTap:
-            () async{
-      // UserCredential? userCredential = await _handleSignInWithFace();
-      //
-      // if (userCredential != null) {
-      //   print('User signed in: ${userCredential.user?.displayName}');
-      // }
+            onTap: () async {
+              // UserCredential? userCredential = await _handleSignInWithFace();
+              //
+              // if (userCredential != null) {
+              //   print('User signed in: ${userCredential.user?.displayName}');
+              // }
             },
             child: Container(
               decoration: BoxDecoration(
@@ -84,22 +84,20 @@ class _GoogleAndFacebookWidgetState extends State<GoogleAndFacebookWidget> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                    left: 15.w,
-                    right: 15.w,
-                    top: 10.h,
-                    bottom: 10.h),
+                    left: 15.w, right: 15.w, top: 10.h, bottom: 10.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(AppIcons.facebookIcon),
-                    SizedBox(
-                      width: 10.w,
+                    SvgPicture.asset(
+                      AppIcons.appleIcon,
+                      width: 30.w,
                     ),
+                    SizedBox(width: 10.w),
                     Text(
-                      "facebook".tr(),
+                      "apple".tr(),
                       style: TextStyle(
-                          color: AppColors.primary,
+                          color: AppColors.darkGray.withOpacity(0.8),
                           fontSize: 15.sp),
                     ),
                   ],
@@ -111,17 +109,17 @@ class _GoogleAndFacebookWidgetState extends State<GoogleAndFacebookWidget> {
         SizedBox(
           width: 20.w,
         ),
-        GestureDetector(
-          onTap: () async{
-            // UserCredential? userCredential = await _handleSignInWithGoogle();
-            //
-            // if (userCredential != null) {
-            //
-            //   print('User signed in: ${userCredential.user?.displayName}');
-            //
-            // }
-          },
-          child: Expanded(
+        Expanded(
+          child: GestureDetector(
+            onTap: () async {
+              // UserCredential? userCredential = await _handleSignInWithGoogle();
+              //
+              // if (userCredential != null) {
+              //
+              //   print('User signed in: ${userCredential.user?.displayName}');
+              //
+              // }
+            },
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.sp),
@@ -129,27 +127,21 @@ class _GoogleAndFacebookWidgetState extends State<GoogleAndFacebookWidget> {
               ),
               child: Padding(
                 padding: EdgeInsets.only(
-                    left: 15.w,
-                    right: 15.w,
-                    top: 10.h,
-                    bottom: 10.h),
+                    left: 15.w, right: 15.w, top: 10.h, bottom: 10.h),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(AppIcons.googleIcon),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Text(
-                      "google".tr(),
-                      style: TextStyle(
-                          color:
-                          AppColors.darkGray.withOpacity(0.8),
-                          fontSize: 15.sp),
-                    ),
-                  ],
-                ),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        AppIcons.googleIcon,
+                        width: 30.w,
+                      ),
+                      SizedBox(width: 10.w),
+                      Text("google".tr(),
+                          style: TextStyle(
+                              color: AppColors.darkGray.withOpacity(0.8),
+                              fontSize: 15.sp))
+                    ]),
               ),
             ),
           ),
