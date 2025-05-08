@@ -182,7 +182,9 @@ class _NewEventScreenState extends State<NewEventScreen> {
   Widget _buildEventInformationStep(CalenderCubit cubit) {
     return Column(
       children: [
-        const CustomPickMediaWidget(),
+         CustomPickMediaWidget(
+          onTap: (){},
+        ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Column(

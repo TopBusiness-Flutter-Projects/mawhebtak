@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
@@ -36,7 +35,9 @@ class _ApplyForEventState extends State<ApplyForEvent> {
                     title: "apply_for_event".tr(),
                   ),
                   SizedBox(height: getHeightSize(context) / 33),
-                  const CustomPickMediaWidget(),
+                  CustomPickMediaWidget(
+                    onTap: () {},
+                  ),
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 3.h),
@@ -49,13 +50,15 @@ class _ApplyForEventState extends State<ApplyForEvent> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 21.0.w),
                     child: DropdownTextFieldWidget(
-                     isWithCurrency: true,
-                      currencyList: const ["L.E","USA"],
-                      dataLists: const ["Example@mail.com","Example@mail.com"], hintText: 'Example@mail.com',),
+                      isWithCurrency: true,
+                      currencyList: const ["L.E", "USA"],
+                      dataLists: const ["Example@mail.com", "Example@mail.com"],
+                      hintText: 'Example@mail.com',
+                    ),
                   ),
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 3.h),
+                        EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 3.h),
                     child: Text(
                       'event_req'.tr(),
                       style: getMediumStyle(
@@ -65,10 +68,10 @@ class _ApplyForEventState extends State<ApplyForEvent> {
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: 20.0.w, vertical: 10.h),
-                    child:   DropdownTextFieldWidget(
-
-                      dataLists: const ["Teacher","Singer"], hintText: '',),
-
+                    child: DropdownTextFieldWidget(
+                      dataLists: const ["Teacher", "Singer"],
+                      hintText: '',
+                    ),
                   ),
                   Padding(
                     padding:
@@ -79,7 +82,6 @@ class _ApplyForEventState extends State<ApplyForEvent> {
                           fontSize: 14.sp, color: AppColors.darkGray),
                     ),
                   ),
-
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 21.0.w),
                     child: CustomTextField(
