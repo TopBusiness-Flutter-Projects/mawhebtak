@@ -17,6 +17,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
   @override
   void initState() {
     context.read<AssistantCubit>().getAllWorks();
+    print("the works ${context.read<AssistantCubit>().getAllWorks()}");
     super.initState();
   }
 

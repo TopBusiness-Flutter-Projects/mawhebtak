@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/hive/hive.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
+import 'package:mawhebtak/core/widgets/media_picker.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import 'package:mawhebtak/features/assistant/data/repos/assistant.repo.dart';
 
@@ -36,25 +39,60 @@ class AssistantCubit extends Cubit<AssistantState> {
     emit(AddNewWorkState());
   }
 
-  Future<void> addAssistantFromWork(BuildContext context,
-      {required int workId}) async {
-    await WorkHiveManager.addAssistantToWork(
-        workId,
-        Assistant(
-            title: assistantTitleController.text,
-            description: assistantDescriptionController.text,
-            date: DateTime.now(),
-            remindedTime: selectedDate));
-    WorkHiveManager.getAllWorks();
-    successGetBar("add_assistant_successful".tr());
-    assistantDescriptionController.clear();
-    assistantTitleController.clear();
-    getAllWorks();
-    Navigator.pop(context);
-    emit(AddAssistantState());
+  File? selectedImage;
+  File? selectedVideo;
+
+  Future<void> pickMedia(BuildContext context) async {
+    MediaPickerHelper.pickMedia(
+      context: context,
+      onImagePicked: (image) {
+        selectedImage = image;
+        selectedVideo = null;
+        emit(ImagePickedState());
+      },
+      onVideoPicked: (video) {
+        selectedVideo = video;
+        selectedImage = null;
+        emit(VideoPickedState());
+      },
+    );
   }
 
-  List<Work>? works;
+  Future<void> addAssistantFromWork(BuildContext context,
+      {required int workId}) async {
+    if (assistantTitleController.text.trim().isEmpty) {
+      errorGetBar("assistant_title_required".tr());
+      return;
+    }
+
+    final now = DateTime.now();
+
+    final newAssistant = Assistant(
+      id: DateTime.now().millisecondsSinceEpoch,
+      title: assistantTitleController.text.trim(),
+      description: assistantDescriptionController.text.trim(),
+      date: now,
+      remindedTime: selectedDate,
+      isActive: selectedDate != null && selectedDate!.isBefore(now),
+      images: selectedImage != null ? [selectedImage!.path] : [],
+    );
+
+    await WorkHiveManager.addAssistantToWork(workId, newAssistant);
+
+    successGetBar("add_assistant_successful".tr());
+    assistantTitleController.clear();
+    assistantDescriptionController.clear();
+    selectedImage = null;
+    selectedVideo = null;
+
+    await getAllWorks();
+    await getAllAssistantFromWork(workId);
+    emit(AddAssistantState());
+
+    if (context.mounted) Navigator.pop(context);
+  }
+
+  List<WorkModel>? works;
   List<Assistant>? assistants;
 
   Future<void> deleteWork(BuildContext context, {required int workId}) async {
@@ -83,10 +121,10 @@ class AssistantCubit extends Cubit<AssistantState> {
     emit(GetAllWorksState());
   }
 
-  Future<void> getAllAssistantFromWork(int workId) async {
+  Future<List<Assistant>?> getAllAssistantFromWork(int workId) async {
     assistants = await WorkHiveManager.getAssistantsFromWork(workId);
     final newList = works?.reversed.toList();
     works = newList;
-    emit(GetAllWorksState());
+    emit(GetAllAssistantState());
   }
 }
