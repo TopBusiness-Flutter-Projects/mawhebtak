@@ -1,110 +1,110 @@
-// To parse this JSON data, do
-//
-//     final loginModel = loginModelFromJson(jsonString);
 
-import 'dart:convert';
 
-LoginModel loginModelFromJson(String str) => LoginModel.fromJson(json.decode(str));
-
-String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
-  final Data? data;
-  final String? message;
-  final int? code;
-
-  @override
-  String toString() {
-    return 'LoginModel{data: $data, message: $message, code: $code}';
-  }
+  UserModel? data;
+  String? msg;
+  int? status;
 
   LoginModel({
     this.data,
-    this.message,
-    this.code,
+    this.msg,
+    this.status,
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    message: json["code"]==422?'':json["message"],
-    code: json["code"],
-  );
+        data: json["data"] == null ? null : UserModel.fromJson(json["data"]),
+        msg: json["msg"],
+        status: json["status"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data?.toJson(),
-    "message": message,
-    "code": code,
-  };
+        "data": data?.toJson(),
+        "msg": msg,
+        "status": status,
+      };
+
+  LoginModel copyWith({
+    UserModel? data,
+    String? msg,
+    int? status,
+  }) {
+    return LoginModel(
+      data: data ?? this.data,
+      msg: msg ?? this.msg,
+      status: status ?? this.status,
+    );
+  }
 }
 
-class Data {
-  final User? user;
-  final String? accessToken;
-  final String? tokenType;
+class UserModel {
+  int? id;
+  String? name;
+  int? notification;
+  String? image;
+  String? email;
+  String? phone;
+  int? wallet;
+  dynamic socialType;
+  String? token;
 
-  Data({
-    this.user,
-    this.accessToken,
-    this.tokenType,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
-    accessToken: json["access_token"],
-    tokenType: json["token_type"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "user": user?.toJson(),
-    "access_token": accessToken,
-    "token_type": tokenType,
-  };
-}
-
-class User {
-  final int? id;
-    String? name;
-  final dynamic phoneCode;
-  final String? phone;
-  final String? email;
-  final dynamic location;
-  final int? status;
-  final String? image;
-  final int? userType;
-
-  User({
+  UserModel.User({
     this.id,
     this.name,
-    this.phoneCode,
-    this.phone,
-    this.email,
-    this.location,
-    this.status,
+    this.notification,
     this.image,
-    this.userType,
+    this.email,
+    this.phone,
+    this.wallet,
+    this.socialType,
+    this.token,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    name: json["name"],
-    phoneCode: json["phone_code"],
-    phone: json["phone"],
-    email: json["email"],
-    location: json["location"],
-    status: json["status"],
-    image: json["image"],
-    userType: json["user_type"],
-  );
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel.User(
+        id: json["id"],
+        name: json["name"],
+        notification: json["notification"],
+        image: json["image"],
+        email: json["email"],
+        phone: json["phone"],
+        wallet: json["wallet"],
+        socialType: json["social_type"],
+        token: json["token"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "phone_code": phoneCode,
-    "phone": phone,
-    "email": email,
-    "location": location,
-    "status": status,
-    "image": image,
-    "user_type": userType,
-  };
+        "id": id,
+        "name": name,
+        "notification": notification,
+        "image": image,
+        "email": email,
+        "phone": phone,
+        "wallet": wallet,
+        "social_type": socialType,
+        "token": token,
+      };
+
+  UserModel copyWith({
+    int? id,
+    String? name,
+    int? notification,
+    String? image,
+    String? email,
+    String? phone,
+    int? wallet,
+    dynamic socialType,
+    String? token,
+  }) {
+    return UserModel.User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      notification: notification ?? this.notification,
+      image: image ?? this.image,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      wallet: wallet ?? this.wallet,
+      socialType: socialType ?? this.socialType,
+      token: token ?? this.token,
+    );
+  }
 }

@@ -14,7 +14,8 @@ class AssistantCubit extends Cubit<AssistantState> {
   TextEditingController workNameController = TextEditingController();
   ScrollController scrollController = ScrollController();
   TextEditingController assistantTitleController = TextEditingController();
-  TextEditingController assistantDescriptionController = TextEditingController();
+  TextEditingController assistantDescriptionController =
+      TextEditingController();
 
   DateTime? selectedDate;
   void updateSelectedDate(DateTime date) {
@@ -63,6 +64,27 @@ class AssistantCubit extends Cubit<AssistantState> {
 
   List<Assistant>? assistants;
   Future<void> addAssistantFromWork(BuildContext context, {required int workId}) async {
+  File? selectedImage;
+  File? selectedVideo;
+
+  Future<void> pickMedia(BuildContext context) async {
+    MediaPickerHelper.pickMedia(
+      context: context,
+      onImagePicked: (image) {
+        selectedImage = image;
+        selectedVideo = null;
+        emit(ImagePickedState());
+      },
+      onVideoPicked: (video) {
+        selectedVideo = video;
+        selectedImage = null;
+        emit(VideoPickedState());
+      },
+    );
+  }
+
+  Future<void> addAssistantFromWork(BuildContext context,
+      {required int workId}) async {
     if (assistantTitleController.text.trim().isEmpty) {
       errorGetBar("assistant_title_required".tr());
       return;
@@ -90,8 +112,9 @@ class AssistantCubit extends Cubit<AssistantState> {
     emit(AddAssistantState());
 
   }
+
   Future<List<Assistant>?> getAllAssistantFromWork(int workId) async {
-    assistants = await WorkHiveManager.getAssistantsFromWork(workId) ;
+    assistants = await WorkHiveManager.getAssistantsFromWork(workId);
     final newList = works?.reversed.toList();
     works = newList;
     emit(GetAllAssistantState());

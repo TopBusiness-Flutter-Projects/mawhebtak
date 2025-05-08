@@ -70,7 +70,8 @@ class WorkHiveManager {
 
   //! Assistant methods
 
-  static Future<void> addAssistantToWork(int workId, Assistant assistant) async {
+  static Future<void> addAssistantToWork(
+      int workId, Assistant assistant) async {
     final box = Hive.box(workBoxName);
     List<WorkModel> works =
         box.get('works', defaultValue: []).cast<WorkModel>();

@@ -11,6 +11,7 @@ class CastingCubit extends Cubit<CastingState> {
   CastingRepo exRepo ;
   final List<HomeItem> items = [
 
+
     HomeItem(icon:AppIcons.eventIcon, label: 'Events'),
     HomeItem(icon:AppIcons.aboutUs, label: 'Casting'),
     HomeItem(icon: AppIcons.announceIcon, label: 'Announce'),
