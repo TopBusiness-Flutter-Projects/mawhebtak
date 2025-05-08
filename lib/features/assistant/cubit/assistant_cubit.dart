@@ -32,7 +32,9 @@ class AssistantCubit extends Cubit<AssistantState> {
     workNameController.clear();
     emit(DeleteNewWorkState());
   }
-  Future<void> updateWork(BuildContext context, {required int workId, required String newTitle}) async {
+
+  Future<void> updateWork(BuildContext context,
+      {required int workId, required String newTitle}) async {
     await WorkHiveManager.updateWork(workId: workId, newTitle: newTitle);
     WorkHiveManager.getAllWorks();
     successGetBar("update_work_successful");
@@ -40,12 +42,14 @@ class AssistantCubit extends Cubit<AssistantState> {
     workNameController.clear();
     emit(DeleteNewWorkState());
   }
+
   Future<void> getAllWorks() async {
     works = WorkHiveManager.getAllWorks();
     final newList = works?.reversed.toList();
     works = newList;
     emit(GetAllWorksState());
   }
+
   Future<void> addNewWork(BuildContext context) async {
     await WorkHiveManager.addWork(workNameController.text);
     WorkHiveManager.getAllWorks();
@@ -63,26 +67,6 @@ class AssistantCubit extends Cubit<AssistantState> {
   }
 
   List<Assistant>? assistants;
-  Future<void> addAssistantFromWork(BuildContext context, {required int workId}) async {
-  File? selectedImage;
-  File? selectedVideo;
-
-  Future<void> pickMedia(BuildContext context) async {
-    MediaPickerHelper.pickMedia(
-      context: context,
-      onImagePicked: (image) {
-        selectedImage = image;
-        selectedVideo = null;
-        emit(ImagePickedState());
-      },
-      onVideoPicked: (video) {
-        selectedVideo = video;
-        selectedImage = null;
-        emit(VideoPickedState());
-      },
-    );
-  }
-
   Future<void> addAssistantFromWork(BuildContext context,
       {required int workId}) async {
     if (assistantTitleController.text.trim().isEmpty) {
@@ -98,7 +82,6 @@ class AssistantCubit extends Cubit<AssistantState> {
       remindedTime: selectedDate,
       isActive: selectedDate != null && selectedDate!.isBefore(now),
       image: selectedImage?.path ?? "",
-
     );
     await WorkHiveManager.addAssistantToWork(workId, newAssistant);
     successGetBar("add_assistant_successful".tr());
@@ -110,7 +93,6 @@ class AssistantCubit extends Cubit<AssistantState> {
     await getAllWorks();
     await getAllAssistantFromWork(workId);
     emit(AddAssistantState());
-
   }
 
   Future<List<Assistant>?> getAllAssistantFromWork(int workId) async {
@@ -119,18 +101,21 @@ class AssistantCubit extends Cubit<AssistantState> {
     works = newList;
     emit(GetAllAssistantState());
   }
-  Future<void> deleteAssistant(BuildContext context, {required int workId, required int assistantId}) async {
+
+  Future<void> deleteAssistant(BuildContext context,
+      {required int workId, required int assistantId}) async {
     await WorkHiveManager.removeAssistantFromWork(workId, assistantId);
     successGetBar("delete_assistant_successful".tr());
     await getAllAssistantFromWork(workId);
     getAllWorks();
     emit(DeleteAssistantState());
   }
+
   Future<void> updateAssistant(
-      BuildContext context, {
-        required int workId,
-        required Assistant updatedAssistant,
-      }) async {
+    BuildContext context, {
+    required int workId,
+    required Assistant updatedAssistant,
+  }) async {
     await WorkHiveManager.updateAssistantsInWork(workId, updatedAssistant);
     successGetBar("update_assistant_successful".tr());
     await getAllAssistantFromWork(workId);
@@ -155,7 +140,4 @@ class AssistantCubit extends Cubit<AssistantState> {
       },
     );
   }
-
-
-
 }

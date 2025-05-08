@@ -60,7 +60,7 @@ class AssistantAdapter extends TypeAdapter<Assistant> {
       id: fields[0] as int?,
       title: fields[1] as String?,
       description: fields[2] as String?,
-      images: (fields[3] as List?)?.cast<String>(),
+      image: fields[3] as String?,
       date: fields[4] as DateTime?,
       remindedTime: fields[5] as DateTime?,
       isActive: fields[6] as bool?,
@@ -78,7 +78,7 @@ class AssistantAdapter extends TypeAdapter<Assistant> {
       ..writeByte(2)
       ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.images)
+      ..write(obj.image)
       ..writeByte(4)
       ..write(obj.date)
       ..writeByte(5)
