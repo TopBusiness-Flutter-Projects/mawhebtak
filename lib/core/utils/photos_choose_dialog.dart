@@ -8,8 +8,8 @@ choosePhoto(
   showDialog(
     context: context,
     builder: (ctx) => AlertDialog(
-      title: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+      title: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 5),
         child: Text('Choose'),
       ),
       contentPadding: EdgeInsets.zero,
@@ -27,7 +27,7 @@ choosePhoto(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.camera_alt, size: 45, color: AppColors.grayDark),
-                    Text('camera')
+                    const Text('camera')
                   ],
                 ),
               ),
@@ -42,7 +42,7 @@ choosePhoto(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.photo, size: 45, color: AppColors.grayDark),
-                    Text('Gallery')
+                    const Text('Gallery')
                   ],
                 ),
               ),
@@ -56,7 +56,7 @@ choosePhoto(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Cancel'))
+            child: const Text('Cancel'))
       ],
     ),
   );

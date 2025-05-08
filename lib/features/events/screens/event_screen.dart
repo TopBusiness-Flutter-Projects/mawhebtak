@@ -1,11 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/events/cubit/event_cubit.dart';
 
 import '../../../core/exports.dart';
-import '../../../core/widgets/custom_simple_appbar.dart';
 import '../../home/screens/widgets/custom_top_event.dart';
-import '../../home/screens/widgets/notification_widget.dart';
 
 class EventScreen extends StatelessWidget {
   const EventScreen({super.key});

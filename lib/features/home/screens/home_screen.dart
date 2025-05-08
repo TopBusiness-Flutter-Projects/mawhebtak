@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
   int _currentPage = 0;
 
-  // قائمة الفيديوهات
   final List<String> videoPaths = [
     "assets/videos/video.mp4",
     "assets/videos/video.mp4",
@@ -44,21 +43,30 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<VideoPlayerController> _videoControllers;
 
   @override
+  @override
   void initState() {
     super.initState();
     _pageController = PageController();
 
-    // تهيئة الكنترولرز
-    _videoControllers = videoPaths.map((path) {
+    _videoControllers = videoPaths.asMap().entries.map((entry) {
+      int index = entry.key;
+      String path = entry.value;
+
       final controller = VideoPlayerController.asset(path);
       controller.initialize().then((_) {
-        setState(() {}); // لازم لإعادة البناء بعد التهيئة
         controller.setLooping(true);
-        controller.play(); // تشغيل تلقائي
+        if (index == 0) {
+          controller.setVolume(_isMuted ? 0 : 1);
+          controller.play();
+        } else {
+          controller.setVolume(0);
+        }
+        setState(() {});
       });
       return controller;
     }).toList();
   }
+
 
   @override
   void dispose() {
@@ -68,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     super.dispose();
   }
-
+  bool _isMuted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -93,11 +101,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: _videoControllers.length,
                       onPageChanged: (index) {
                         setState(() {
-                          _videoControllers[_currentPage].pause(); // إيقاف القديم
+                          // أوقف القديم
+                          final oldController = _videoControllers[_currentPage];
+                          oldController.pause();
+                          oldController.setVolume(0);
+
+                          // شغل الجديد
                           _currentPage = index;
-                          _videoControllers[_currentPage].play(); // تشغيل الجديد
+                          final newController = _videoControllers[_currentPage];
+                          newController.setVolume(_isMuted ? 0 : 1);
+                          newController.play();
                         });
                       },
+
                       itemBuilder: (context, index) {
                         final controller = _videoControllers[index];
                         return controller.value.isInitialized
@@ -106,7 +122,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-
+                  Positioned(
+                    top: 100,
+                    right: 20,
+                    child: IconButton(
+                      icon: Icon(
+                        _isMuted ? Icons.volume_off : Icons.volume_up,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isMuted = !_isMuted;
+                          _videoControllers[_currentPage].setVolume(_isMuted ? 0 : 1);
+                        });
+                      },
+                    ),
+                  ),
                   Positioned(
                     top: 35,
                     left: 16,

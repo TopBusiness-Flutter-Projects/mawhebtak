@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
-import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_state.dart';
 

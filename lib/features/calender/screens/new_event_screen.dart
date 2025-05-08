@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_state.dart';
-import 'package:mawhebtak/features/calender/screens/widgets/event_type_dropdown.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/public_and_private_widget.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/required_talents_selector_widget.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/stepper_widget.dart';
@@ -224,30 +222,9 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 ),
               ),
               if (!isFree)
-                Padding(
-                  padding: EdgeInsets.only(top: 12.h),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: TextFormField(
-                      controller: ticketPriceController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: 'Ticket Price (L.E)',
-                        prefixIcon: Icon(Icons.attach_money, color: AppColors.primary),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: AppColors.grayLite,
-                      ),
-                    ),
-                  ),
-                ),
-
+                 DropdownTextFieldWidget(
+                   isWithCurrency: true,
+                   dataLists: ["100","200","300"], hintText: '1000',),
               _label("title_of_event".tr()),
               CustomTextField(
                 controller: cubit.titleOfTheEventController,
@@ -301,11 +278,20 @@ class _NewEventScreenState extends State<NewEventScreen> {
               PublicPrivateToggle(
                 onToggle: (isPublic) {},
               ),
+              10.h.verticalSpace,
+              Text(
+                'event_type'.tr(),
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.only(top: 20.h),
-                child: EventTypeDropdown(
-                  onChanged: (value) {},
-                ),
+                child:  DropdownTextFieldWidget(
+                  dataLists: const ['Workshop', 'Conference', 'Seminar', 'Webinar', 'Meeting'],
+                  hintText: 'Workshop',),
               ),
             ],
           ),

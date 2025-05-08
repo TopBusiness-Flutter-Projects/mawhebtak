@@ -1,9 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 import 'package:mawhebtak/features/home/screens/widgets/notification_widget.dart';
-
 import '../../../core/exports.dart';
-import '../../../core/widgets/custom_simple_appbar.dart';
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
 

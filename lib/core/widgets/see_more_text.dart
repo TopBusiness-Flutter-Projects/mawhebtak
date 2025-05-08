@@ -21,7 +21,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
     const int maxLengthBeforeEllipsis = 60;
 
     final String visibleText = widget.text.length > maxLengthBeforeEllipsis && !_isExpanded
-        ? widget.text.substring(0, maxLengthBeforeEllipsis) + '... '
+        ? '${widget.text.substring(0, maxLengthBeforeEllipsis)}... '
         : widget.text;
 
     return Padding(

@@ -1,24 +1,32 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
-import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 
-class AddNewAssistantScreen extends StatefulWidget {
-  const AddNewAssistantScreen({super.key});
-
+class AddNewWorkScreen extends StatefulWidget {
+  const AddNewWorkScreen({super.key, this.work});
+  final Work? work;
   @override
-  State<AddNewAssistantScreen> createState() => _AddNewAssistantScreenState();
+  State<AddNewWorkScreen> createState() => _AddNewWorkScreenState();
 }
 
-class _AddNewAssistantScreenState extends State<AddNewAssistantScreen> {
+class _AddNewWorkScreenState extends State<AddNewWorkScreen> {
+  @override
+
+  void initState() {
+    super.initState();
+    final work = widget.work;
+    if (work != null) {
+      context.read<AssistantCubit>().workNameController.text = work.title ?? "";
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var cubit =  context.read<AssistantCubit>();
     return Scaffold(
-
       body: Column(
         children: [
           10.h.verticalSpace,
@@ -39,7 +47,27 @@ class _AddNewAssistantScreenState extends State<AddNewAssistantScreen> {
                       hintText: "sanaa adel",
                     ),
                     10.h.verticalSpace,
-                    CustomButton(title: "create_work".tr()),
+                    CustomButton(
+                      title: widget.work == null ? "create_work".tr() : "save".tr(),
+                      onTap: () async {
+                        final workName = cubit.workNameController.text.trim();
+                        if (workName.isNotEmpty) {
+                          if (widget.work == null) {
+                            cubit.addNewWork(context);
+                            Navigator.pop(context);
+                          } else {
+                            cubit.updateWork(context, workId: widget.work!.id ?? 0, newTitle: workName);
+                            Navigator.pop(context);
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            errorGetBar("please_add_work_name".tr()),
+                          );
+                        }
+                      },
+                    ),
+
+
                   ],
                 ),
               );

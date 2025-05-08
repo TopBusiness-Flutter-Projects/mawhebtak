@@ -5,7 +5,6 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
-import '../../../core/widgets/custom_simple_appbar.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   const JobDetailsScreen({super.key});

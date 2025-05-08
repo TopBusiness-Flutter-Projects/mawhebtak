@@ -38,7 +38,12 @@ class OnBoarding3 extends StatelessWidget {
               Stack(
                 children: [
                   Image.asset(ImageAssets.onboardingBackground),
-                  Positioned(
+                  Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50.r),
+                            topLeft: Radius.circular(50.r))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

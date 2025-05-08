@@ -16,9 +16,7 @@ double getHorizontalPadding(BuildContext context) {
 double getSize(BuildContext context) {
   return MediaQuery.of(context).size.width;
 }
-double getheightSize(BuildContext context) {
-  return MediaQuery.of(context).size.height;
-}
+
 double getVerticalPadding(BuildContext context) {
   return 20.h;
 }

@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
-
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../home/screens/widgets/custom_announcement_widget.dart';

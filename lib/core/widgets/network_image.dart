@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:mawhebtak/core/exports.dart';
 
-// Amer
 class CustomNetworkImage extends StatelessWidget {
   const CustomNetworkImage({
     super.key,

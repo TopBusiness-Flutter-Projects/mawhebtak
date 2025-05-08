@@ -1,6 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/core/preferences/preferences.dart';
-import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_state.dart';
 import '../../../core/exports.dart';

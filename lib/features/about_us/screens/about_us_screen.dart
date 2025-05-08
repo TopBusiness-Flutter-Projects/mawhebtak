@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
-import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
 import 'package:mawhebtak/features/about_us/cubit/about_us_cubit.dart';
 import 'package:mawhebtak/features/about_us/cubit/about_us_state.dart';
 

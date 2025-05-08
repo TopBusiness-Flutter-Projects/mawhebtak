@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:mawhebtak/core/utils/app_strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/login_model.dart';
+import '../../features/auth/login/data/models/login_model.dart';
 late SharedPreferences prefs;
 class Preferences {
   static final Preferences instance = Preferences._internal();
