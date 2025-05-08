@@ -2,10 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
-import '../../../core/exports.dart';
+
 class WorkDetailsScreen extends StatefulWidget {
   const WorkDetailsScreen({super.key, this.work});
   final WorkModel? work;
@@ -18,7 +19,10 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AssistantCubit>().getAllAssistantFromWork(widget.work?.id ?? 0);
+    context
+        .read<AssistantCubit>()
+        .getAllAssistantFromWork(widget.work?.id ?? 0);
+    context.read<AssistantCubit>().getAllWorks();
   }
 
   @override
@@ -38,53 +42,57 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                 BlocBuilder<AssistantCubit, AssistantState>(
                   builder: (context, state) {
                     final cubit = context.read<AssistantCubit>();
-
-
-
                     return Expanded(
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.grayLite
-                        ),
+                        decoration: BoxDecoration(color: AppColors.grayLite),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             10.h.verticalSpace,
                             Padding(
-                              padding:  EdgeInsets.only(left: 20.w,right: 20.w , bottom: 10.h , top: 10.h),
-                              child: Text("my_work".tr(),style: TextStyle(
-                                color: AppColors.blackLite,
-                                fontSize: 14.sp
-                              ),),
+                              padding: EdgeInsets.only(
+                                  left: 20.w,
+                                  right: 20.w,
+                                  bottom: 10.h,
+                                  top: 10.h),
+                              child: Text(
+                                "my_work".tr(),
+                                style: TextStyle(
+                                    color: AppColors.blackLite,
+                                    fontSize: 14.sp),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(bottom: 10.h),
                               child: Container(
-                                decoration: BoxDecoration(color: AppColors.white),
+                                decoration:
+                                    BoxDecoration(color: AppColors.white),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 10.h, horizontal: 20.w),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SvgPicture.asset(AppIcons.bagIcon),
                                       10.w.horizontalSpace,
                                       Expanded(
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: AppColors.white
-                                          ),
+                                              color: AppColors.white),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 widget.work?.title ?? "",
-                                                style: getMediumStyle(fontSize: 14.sp),
+                                                style: getMediumStyle(
+                                                    fontSize: 14.sp),
                                               ),
                                               10.h.verticalSpace,
                                               Text(
-                                                "${widget.work?.assistants?.length ?? 0} Racors",
+                                                "${widget.work?.assistants?.length ?? 0} ${"assistant".tr()}",
                                                 style: getMediumStyle(
                                                   fontSize: 13.sp,
                                                   color: AppColors.secondPrimary,
@@ -99,103 +107,8 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                                 ),
                               ),
                             ),
-                                            // if (cubit.assistants == null || cubit.assistants!.isEmpty) {
-                                            // return Expanded(
-                                            // child: Center(
-                                            // child: Text(
-                                            // "no_assistant_found".tr(),
-                                            // style: getRegularStyle(
-                                            // fontSize: 18.sp, color: AppColors.blackLite),
-                                            // ),
-                                            // ),
-                                            // );
-                                            // },
-                            // Expanded(
-                            //   child: ListView.builder(
-                            //     controller: cubit.scrollController,
-                            //     padding: EdgeInsets.symmetric(
-                            //         horizontal: 16.w, vertical: 10.h),
-                            //     itemCount: cubit.assistants!.length,
-                            //     itemBuilder: (context, index) {
-                            //       final assistant = cubit.assistants![index];
-                            //       return Container(
-                            //         margin: EdgeInsets.only(bottom: 12.h),
-                            //         padding: EdgeInsets.all(12.w),
-                            //         decoration: BoxDecoration(
-                            //           color: Colors.white,
-                            //           borderRadius: BorderRadius.circular(12.r),
-                            //           boxShadow: const [
-                            //             BoxShadow(
-                            //               color: Colors.black12,
-                            //               blurRadius: 5,
-                            //               offset: Offset(0, 2),
-                            //             ),
-                            //           ],
-                            //         ),
-                            //         child: Column(
-                            //           crossAxisAlignment: CrossAxisAlignment.start,
-                            //           children: [
-                            //             Text(
-                            //               assistant.title ?? "",
-                            //               style: getBoldStyle(
-                            //                   fontSize: 16.sp,
-                            //                   color: AppColors.primary),
-                            //             ),
-                            //             8.h.verticalSpace,
-                            //             Text(
-                            //               assistant.description ?? "",
-                            //               style: getRegularStyle(fontSize: 14.sp),
-                            //             ),
-                            //             8.h.verticalSpace,
-                            //             Row(
-                            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //               children: [
-                            //                 Text(
-                            //                   assistant.date != null
-                            //                       ? DateFormat('d MMMM, yyyy')
-                            //                       .format(assistant.date!)
-                            //                       : '',
-                            //                   style: getRegularStyle(
-                            //                       fontSize: 12.sp, color: Colors.grey),
-                            //                 ),
-                            //                 GestureDetector(
-                            //                   onTap: () {
-                            //                     // TODO: Handle reminder setup
-                            //                   },
-                            //                   child: Row(
-                            //                     children: [
-                            //                       Icon(
-                            //                         Icons.notifications,
-                            //                         color: assistant.remindedTime != null
-                            //                             ? Colors.red
-                            //                             : Colors.grey,
-                            //                         size: 18,
-                            //                       ),
-                            //                       4.w.horizontalSpace,
-                            //                       Text(
-                            //                         assistant.remindedTime != null
-                            //                             ? "Set Assistant (${assistant.remindedTime!.isUtc}:00)"
-                            //                             : "Set Assistant",
-                            //                         style: getRegularStyle(
-                            //                           fontSize: 12.sp,
-                            //                           color: assistant.remindedTime != null
-                            //                               ? Colors.red
-                            //                               : Colors.grey,
-                            //                         ),
-                            //                       ),
-                            //                     ],
-                            //                   ),
-                            //                 ),
-                            //               ],
-                            //             ),
-                            //           ],
-                            //         ),
-                            //       );
-                            //     },
-                            //   ),
-                            // ),
                             20.h.verticalSpace,
-                            Expanded(child: AssistantsList()),
+                            const Expanded(child: AssistantsList()),
                           ],
                         ),
                       ),
@@ -209,7 +122,8 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
               right: 20.w,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, Routes.addAssistantRoute,arguments: widget.work);
+                  Navigator.pushNamed(context, Routes.addAssistantRoute,
+                      arguments: widget.work);
                 },
                 child: Container(
                   width: 60.w,
@@ -230,59 +144,35 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
     );
   }
 }
+
 class AssistantsList extends StatelessWidget {
-  AssistantsList({Key? key}) : super(key: key);
-  //
-  // final List<AssistantItem> reminders = [
-  //   AssistantItem(
-  //     title: 'Scene 10 Football Match',
-  //     details: [
-  //       'The T-shirt should be number 10',
-  //       'Captin should have a cap',
-  //       'I have a dange in my leg',
-  //     ],
-  //     date: '10 March, 2022',
-  //     isActive: true,
-  //     reminderTime: '30:00',
-  //   ),
-  //   AssistantItem(
-  //     title: 'Scene 10 Football Match',
-  //     details: [
-  //       'The T-shirt should be number 10',
-  //       'Captin should have a cap',
-  //       'I have a dange in my leg',
-  //     ],
-  //     date: '10 March, 2022',
-  //     isActive: false,
-  //   ),
-  //   AssistantItem(
-  //     title: 'Scene 10 Football Match',
-  //     details: [
-  //       'The T-shirt should be number 10',
-  //       'Captin should have a cap',
-  //       'I have a dange in my leg',
-  //     ],
-  //     date: '10 March, 2022',
-  //     isActive: false,
-  //   ),
-  // ];
+  const AssistantsList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var assistants =  context.read<AssistantCubit>().assistants;
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      itemCount:assistants?.length ?? 0,
-      itemBuilder: (context, index) {
-        return TimelineAssistantItem(
-          assistants: assistants![index],
-          isLast: index == assistants.length - 1,
+    return BlocBuilder<AssistantCubit, AssistantState>(
+      builder: (context, state) {
+        var assistants = context.read<AssistantCubit>().assistants;
+
+        if (assistants == null || assistants.isEmpty) {
+          return Center(
+              child: Text("no_assistant".tr())); // أو Spinner لو في تحميل
+        }
+
+        return ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: assistants.length,
+          itemBuilder: (context, index) {
+            return TimelineAssistantItem(
+              assistants: assistants[index],
+              isLast: index == assistants.length - 1,
+            );
+          },
         );
       },
     );
   }
 }
-
 
 class TimelineAssistantItem extends StatelessWidget {
   final Assistant assistants;
@@ -296,11 +186,14 @@ class TimelineAssistantItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<AssistantCubit>();
+    final workId =
+        context.findAncestorWidgetOfExactType<WorkDetailsScreen>()?.work?.id ??
+            0;
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Timeline line and dot
           SizedBox(
             width: 20,
             child: Column(
@@ -326,13 +219,18 @@ class TimelineAssistantItem extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          // Assistant content
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(bottom: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+                  SizedBox(
+                      height: 150.h,
+                      width: double.infinity,
+                      child: Image.asset(assistants.image ?? "" ),
+                  ),
                   Text(
                     assistants.title ?? "",
                     style: const TextStyle(
@@ -342,7 +240,7 @@ class TimelineAssistantItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Text(
                       assistants.description ?? "",
@@ -352,11 +250,11 @@ class TimelineAssistantItem extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  8.h.verticalSpace,
                   Row(
                     children: [
                       Text(
-                        assistants.date.toString()?? "",
+                        DateFormat('d MMMM, y').format(assistants.date!),
                         style: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 12,
@@ -376,15 +274,40 @@ class TimelineAssistantItem extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            assistants.isActive ??  false
-                                ? 'Set Assistant (${assistants.remindedTime})'
-                                : 'Set Assistant',
+                            (assistants.isActive ??
+                                    false && assistants.remindedTime != null)
+                                ? 'Set Reminder (${DateFormat('d MMMM, y - h:mm a').format(assistants.remindedTime!)})'
+                                : 'Set Reminder',
                             style: TextStyle(
-                              color:(assistants.isActive ??  false)
+                              color: (assistants.isActive ?? false)
                                   ? Colors.blue
                                   : Colors.grey.shade500,
                               fontSize: 12,
                             ),
+                          ),
+                          const SizedBox(width: 10),
+                          PopupMenuButton<String>(
+                            onSelected: (value) {
+                              if (value == 'edit') {
+                              } else if (value == 'delete') {
+                                cubit.deleteAssistant(
+                                  context,
+                                  workId: workId,
+                                  assistantId: assistants.id ?? 0,
+                                );
+                              }
+                            },
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                value: 'edit',
+                                child: Text('Edit'),
+                              ),
+                              const PopupMenuItem(
+                                value: 'delete',
+                                child: Text('Delete'),
+                              ),
+                            ],
+                            icon: const Icon(Icons.more_vert, size: 18),
                           ),
                         ],
                       ),

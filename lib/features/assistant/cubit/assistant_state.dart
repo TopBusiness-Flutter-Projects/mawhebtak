@@ -9,3 +9,5 @@
  class GetAllAssistantState extends AssistantState {}
  class VideoPickedState extends AssistantState {}
  class ImagePickedState extends AssistantState {}
+ class UpdateAssistantState extends AssistantState {}
+ class DeleteAssistantState extends AssistantState {}

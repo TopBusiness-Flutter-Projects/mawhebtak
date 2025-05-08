@@ -4,18 +4,12 @@ import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 class WorkHiveManager {
   static const String workBoxName = 'workBox';
 
-  // static Future<void> initialize() async {
-  //   await Hive.initFlutter();
-  //   Hive.registerAdapter(WorkModelAdapter());
-  //   Hive.registerAdapter(AssistantAdapter());
-  //   await Hive.openBox(workBoxName);
-  // }
 
-  //! Work methods
 
   static Future<void> saveWork(WorkModel work) async {
     final box = Hive.box(workBoxName);
-    List<WorkModel> works = box.get('works', defaultValue: []).cast<WorkModel>();
+    List<WorkModel> works =
+        box.get('works', defaultValue: []).cast<WorkModel>();
     works.add(work);
     await box.put('works', works);
   }
@@ -27,14 +21,16 @@ class WorkHiveManager {
 
   static Future<void> removeWork(int workId) async {
     final box = Hive.box(workBoxName);
-    List<WorkModel> works = box.get('works', defaultValue: []).cast<WorkModel>();
+    List<WorkModel> works =
+        box.get('works', defaultValue: []).cast<WorkModel>();
     works.removeWhere((work) => work.id == workId);
     await box.put('works', works);
   }
 
   static Future<void> addWork(String workName) async {
     final box = Hive.box(workBoxName);
-    List<WorkModel> works = box.get('works', defaultValue: []).cast<WorkModel>();
+    List<WorkModel> works =
+        box.get('works', defaultValue: []).cast<WorkModel>();
 
     final newWork = WorkModel(
       id: DateTime.now().millisecondsSinceEpoch,
@@ -52,7 +48,8 @@ class WorkHiveManager {
     required String newTitle,
   }) async {
     final box = Hive.box(workBoxName);
-    List<WorkModel> works = box.get('works', defaultValue: []).cast<WorkModel>();
+    List<WorkModel> works =
+        box.get('works', defaultValue: []).cast<WorkModel>();
 
     final index = works.indexWhere((work) => work.id == workId);
     if (index != -1) {
@@ -76,7 +73,8 @@ class WorkHiveManager {
   static Future<void> addAssistantToWork(
       int workId, Assistant assistant) async {
     final box = Hive.box(workBoxName);
-    List<WorkModel> works = box.get('works', defaultValue: []).cast<WorkModel>();
+    List<WorkModel> works =
+        box.get('works', defaultValue: []).cast<WorkModel>();
     int index = works.indexWhere((work) => work.id == workId);
     if (index != -1) {
       works[index].assistants ??= [];
@@ -88,7 +86,8 @@ class WorkHiveManager {
   static Future<void> removeAssistantFromWork(
       int workId, int assistantId) async {
     final box = Hive.box(workBoxName);
-    List<WorkModel> works = box.get('works', defaultValue: []).cast<WorkModel>();
+    List<WorkModel> works =
+        box.get('works', defaultValue: []).cast<WorkModel>();
     int index = works.indexWhere((work) => work.id == workId);
     if (index != -1) {
       works[index]
@@ -101,7 +100,8 @@ class WorkHiveManager {
   static Future<void> updateAssistantsInWork(
       int workId, Assistant assistant) async {
     final box = Hive.box(workBoxName);
-    List<WorkModel> works = box.get('works', defaultValue: []).cast<WorkModel>();
+    List<WorkModel> works =
+        box.get('works', defaultValue: []).cast<WorkModel>();
     int index = works.indexWhere((work) => work.id == workId);
     if (index != -1) {
       works[index].assistants ??= [];
@@ -114,7 +114,8 @@ class WorkHiveManager {
 
   static Future<List<Assistant>?> getAssistantsFromWork(int workId) async {
     final box = Hive.box(workBoxName);
-    List<WorkModel> works = box.get('works', defaultValue: []).cast<WorkModel>();
+    List<WorkModel> works =
+        box.get('works', defaultValue: []).cast<WorkModel>();
     int index = works.indexWhere((work) => work.id == workId);
 
     if (index != -1) {

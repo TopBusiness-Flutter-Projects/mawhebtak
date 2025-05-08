@@ -38,7 +38,11 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
             return Column(
               children: [
                 10.h.verticalSpace,
-                const CustomPickMediaWidget(),
+                 CustomPickMediaWidget(onTap: (){
+                   cubit.pickMedia(context);
+                 },
+
+                ),
                 Padding(
                   padding: EdgeInsets.only(
                       left: 20.w, right: 20.w, bottom: 20.h, top: 20.h),
@@ -102,8 +106,8 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                       CustomButton(title: "add_assistant".tr(),onTap: () {
                         if (widget.work != null) {
                           cubit.addAssistantFromWork(context, workId: widget.work!.id ?? 0);
+
                         } else {
-                          print("the work id : ${widget.work}");
                           errorGetBar("العمل غير موجود أو لم يتم تحديده");
                         }
                       },),

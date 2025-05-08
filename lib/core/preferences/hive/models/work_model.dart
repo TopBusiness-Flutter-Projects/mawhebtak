@@ -1,3 +1,5 @@
+
+import 'dart:io';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'work_model.g.dart';
@@ -32,7 +34,7 @@ class Assistant extends HiveObject {
   String? description;
 
   @HiveField(3)
-  List<String>? images;
+  String? image;
 
   @HiveField(4)
   DateTime? date;
@@ -45,6 +47,10 @@ class Assistant extends HiveObject {
 
   Assistant({
     this.id,
+     this.title,
+     this.description,
+     this.image,
+     this.date,
     this.title,
     this.description,
     this.images,

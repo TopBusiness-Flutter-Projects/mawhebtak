@@ -28,7 +28,6 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
   int _currentPage = 0;
@@ -39,19 +38,15 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/videos/video.mp4",
   ];
 
-  // قائمة الكنترولرز للفيديوهات
   late List<VideoPlayerController> _videoControllers;
 
-  @override
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-
     _videoControllers = videoPaths.asMap().entries.map((entry) {
       int index = entry.key;
       String path = entry.value;
-
       final controller = VideoPlayerController.asset(path);
       controller.initialize().then((_) {
         controller.setLooping(true);
@@ -76,14 +71,18 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  bool _isMuted = false;
 
+  bool _isMuted = false;
+  bool _isMuted = true;
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
     return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
       return Scaffold(
         body: Container(
+          width: getWidthSize(context),
+          color: AppColors.homeColor,
+          child: ListView(
           //  height: getHeightSize(context),
           width: getWidthSize(context),
           color: AppColors.homeColor,
@@ -92,7 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Stack(
                 children: [
-                  //image in back
                   SizedBox(
                     height: getHeightSize(context) / 1.5,
                     width: getWidthSize(context),
@@ -101,12 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: _videoControllers.length,
                       onPageChanged: (index) {
                         setState(() {
-                          // أوقف القديم
                           final oldController = _videoControllers[_currentPage];
                           oldController.pause();
                           oldController.setVolume(0);
-
-                          // شغل الجديد
                           _currentPage = index;
                           final newController = _videoControllers[_currentPage];
                           newController.setVolume(_isMuted ? 0 : 1);
@@ -157,6 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
               CustomRow(
                 text: 'top_talents',
               ),
+              SizedBox(
+                height: 4.h,
+              ),
+              SizedBox(
               SizedBox(
                 height: 4.h,
               ),
