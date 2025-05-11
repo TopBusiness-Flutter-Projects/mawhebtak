@@ -19,6 +19,7 @@ class HomeItem {
   Color? colorIcon;
   HomeItem({required this.icon, required this.label, this.colorIcon});
 }
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
@@ -70,6 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+
+  bool _isMuted = false;
   bool _isMuted = true;
   @override
   Widget build(BuildContext context) {
@@ -80,6 +83,11 @@ class _HomeScreenState extends State<HomeScreen> {
           width: getWidthSize(context),
           color: AppColors.homeColor,
           child: ListView(
+          //  height: getHeightSize(context),
+          width: getWidthSize(context),
+          color: AppColors.homeColor,
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stack(
                 children: [
@@ -144,6 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
               CustomRow(
                 text: 'top_talents',
               ),
+              SizedBox(
+                height: 4.h,
+              ),
+              SizedBox(
               SizedBox(
                 height: 4.h,
               ),

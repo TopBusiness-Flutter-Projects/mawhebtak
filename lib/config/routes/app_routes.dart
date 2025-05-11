@@ -83,7 +83,6 @@ class Routes {
   static const String addNewWorkRoute = '/addNewWork';
   static const String workDetailsRoute = '/workDetails';
   static const String addAssistantRoute = '/addAssistant';
-
 }
 
 class AppRoutes {
@@ -102,80 +101,92 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );   case Routes.gigsDetailsScreen:
+        );
+      case Routes.gigsDetailsScreen:
         return PageTransition(
           child: const GigsDetailsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );case Routes.detailsAnnouncementScreen:
+        );
+      case Routes.detailsAnnouncementScreen:
         return PageTransition(
           child: const DetailsAnnouncementScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );    case Routes.newGigsScreen:
+        );
+      case Routes.newGigsScreen:
         return PageTransition(
           child: const NewGigsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        ); case Routes.writePostScreen:
+        );
+      case Routes.writePostScreen:
         return PageTransition(
           child: const WritePost(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );case Routes.announcementScreen:
+        );
+      case Routes.announcementScreen:
         return PageTransition(
           child: const AnnouncementScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        ); case Routes.newAnnouncementScreen:
+        );
+      case Routes.newAnnouncementScreen:
         return PageTransition(
           child: const NewAnnouncementScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        ); case Routes.profileScreen:
+        );
+      case Routes.profileScreen:
         return PageTransition(
           child: const ProfileScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.feedsScreen:
+      case Routes.feedsScreen:
         return PageTransition(
           child: const FeedsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );case Routes.followersScreen:
+        );
+      case Routes.followersScreen:
         return PageTransition(
           child: const FollowersScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );   case Routes.secondDetailsSecond:
+        );
+      case Routes.secondDetailsSecond:
         return PageTransition(
           child: const SecondDetailsEventScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );   case Routes.detailsEventScreen:
+        );
+      case Routes.detailsEventScreen:
         return PageTransition(
           child: const DetailsEventScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );  case Routes.eventScreen:
+        );
+      case Routes.eventScreen:
         return PageTransition(
           child: const EventScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );    case Routes.notificationScreen:
+        );
+      case Routes.notificationScreen:
         return PageTransition(
           child: const NotificationScreen(),
           type: PageTransitionType.fade,
@@ -185,18 +196,20 @@ class AppRoutes {
         case Routes.workDetailsRoute:
           WorkModel work = settings.arguments as WorkModel;
         return PageTransition(
-          child:  WorkDetailsScreen(work: work,),
+          child: WorkDetailsScreen(
+            work: work,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        // case Routes.videoScreenRoute:
-        // return PageTransition(
-        //   child: const VideoScreen(),
-        //   type: PageTransitionType.fade,
-        //   alignment: Alignment.center,
-        //   duration: const Duration(milliseconds: 800),
-        // );
+      // case Routes.videoScreenRoute:
+      // return PageTransition(
+      //   child: const VideoScreen(),
+      //   type: PageTransitionType.fade,
+      //   alignment: Alignment.center,
+      //   duration: const Duration(milliseconds: 800),
+      // );
       case Routes.onboardingPageScreenRoute:
         return PageTransition(
           child: const OnBoardingScreen(),
@@ -211,7 +224,8 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        ); case Routes.applyEvent:
+        );
+      case Routes.applyEvent:
         return PageTransition(
           child: const ApplyForEvent(),
           type: PageTransitionType.fade,
@@ -274,78 +288,82 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.contactUsRoute:
-          String type = settings.arguments as String;
+      case Routes.contactUsRoute:
+        String type = settings.arguments as String;
         return PageTransition(
-          child:  ContactUsScreen(
+          child: ContactUsScreen(
             type: type,
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );  case Routes.referralCodeRoute:
+        );
+      case Routes.referralCodeRoute:
         return PageTransition(
           child: const ReferralCodeScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.newAccountRoute:
+      case Routes.newAccountRoute:
         return PageTransition(
           child: const NewAccountScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.calenderRoute:
+      case Routes.calenderRoute:
         return PageTransition(
           child: const CalendarScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );case Routes.newEventRoute:
+        );
+      case Routes.newEventRoute:
         return PageTransition(
           child: const NewEventScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );case Routes.castingRoute:
+        );
+      case Routes.castingRoute:
         return PageTransition(
           child: const CastingScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.jobsRoute:
+      case Routes.jobsRoute:
         return PageTransition(
-          child:  const JobsScreen(),
-          type: PageTransitionType.fade,
-          alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
-        );case Routes.addNewJobRoute:
-        return PageTransition(
-          child:  const AddNewJobScreen(),
+          child: const JobsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.jobDetailsRoute:
+      case Routes.addNewJobRoute:
         return PageTransition(
-          child:  const JobDetailsScreen(),
+          child: const AddNewJobScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.recordsRoute:
+      case Routes.jobDetailsRoute:
         return PageTransition(
-          child:  const AssistantScreen(),
+          child: const JobDetailsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.addNewWorkRoute:
+      case Routes.recordsRoute:
         return PageTransition(
-          child:  const AddNewWorkScreen(),
+          child: const AssistantScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+      case Routes.addNewWorkRoute:
+        return PageTransition(
+          child: const AddNewWorkScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
