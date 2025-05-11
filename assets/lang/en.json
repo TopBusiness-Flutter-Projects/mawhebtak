@@ -194,6 +194,7 @@
     "write_new_address": "Write New Address",
     "modify_address": "Modify Address",
     "no_assistant": "No Assistant",
+    "update_assistant_successful": "Update assistant successful !",
     "delete_assistant_successful": "Delete assistant successful !",
     "no_work":"The job does not exist or has not been identified.",
     "description_from_new_work": "Please add new work to start saving your racords",
