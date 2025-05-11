@@ -30,13 +30,21 @@ class AssistantCubit extends Cubit<AssistantState> {
   }
   List<WorkModel>? works;
   Future<void> deleteWork(BuildContext context, {required int workId}) async {
+    final assistants = await WorkHiveManager.getAssistants(workId);
+    for (var assistant in assistants!) {
+      if (assistant.remindedTime != null) {
+        notificationService!.cancelNotification(
+          assistant.id!.remainder(2147483647),
+        );
+      }
+    }
     await WorkHiveManager.removeWork(workId);
-    refreshWorks();
-    // notificationService!.cancelNotification();
-    successGetBar("delete_work_successful".tr());
+    await refreshWorks();
     clearWorksInput();
+    successGetBar("delete_work_successful".tr());
     emit(DeleteNewWorkState());
   }
+
 
   Future<void> updateWork(BuildContext context,
       {required int workId, required String newTitle}) async {
