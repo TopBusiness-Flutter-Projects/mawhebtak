@@ -88,6 +88,8 @@ class AssistantCubit extends Cubit<AssistantState> {
       isActive: selectedReminderDate != null && selectedReminderDate!.isAfter(now),
       image: selectedImage?.path ?? "",
     );
+
+
     await WorkHiveManager.addAssistant(workId, newAssistant);
     clearAssistantInput();
     successGetBar("add_assistant_successful".tr());
