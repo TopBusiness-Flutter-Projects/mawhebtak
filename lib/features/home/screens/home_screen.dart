@@ -28,6 +28,7 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
 class _HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
   int _currentPage = 0;
@@ -71,194 +72,187 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-
-  bool _isMuted = false;
   bool _isMuted = true;
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
     return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
       return Scaffold(
-        body: Container(
-          width: getWidthSize(context),
-          color: AppColors.homeColor,
-          child: ListView(
-          //  height: getHeightSize(context),
-          width: getWidthSize(context),
-          color: AppColors.homeColor,
-          child: ListView(
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    height: getHeightSize(context) / 1.5,
-                    width: getWidthSize(context),
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: _videoControllers.length,
-                      onPageChanged: (index) {
-                        setState(() {
-                          final oldController = _videoControllers[_currentPage];
-                          oldController.pause();
-                          oldController.setVolume(0);
-                          _currentPage = index;
-                          final newController = _videoControllers[_currentPage];
-                          newController.setVolume(_isMuted ? 0 : 1);
-                          newController.play();
-                        });
-                      },
-                      itemBuilder: (context, index) {
-                        final controller = _videoControllers[index];
-                        return controller.value.isInitialized
-                            ? VideoPlayer(controller)
-                            : const Center(child: CircularProgressIndicator());
-                      },
-                    ),
+          body: Container(
+        width: getWidthSize(context),
+        color: AppColors.homeColor,
+        child: ListView(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                SizedBox(
+                  height: getHeightSize(context) / 1.5,
+                  width: getWidthSize(context),
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: _videoControllers.length,
+                    onPageChanged: (index) {
+                      setState(() {
+                        final oldController = _videoControllers[_currentPage];
+                        oldController.pause();
+                        oldController.setVolume(0);
+                        _currentPage = index;
+                        final newController = _videoControllers[_currentPage];
+                        newController.setVolume(_isMuted ? 0 : 1);
+                        newController.play();
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      final controller = _videoControllers[index];
+                      return controller.value.isInitialized
+                          ? VideoPlayer(controller)
+                          : const Center(child: CircularProgressIndicator());
+                    },
                   ),
-                  Positioned(
-                    top: 100,
-                    right: 20,
-                    child: IconButton(
-                      icon: Icon(
-                        _isMuted ? Icons.volume_off : Icons.volume_up,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isMuted = !_isMuted;
-                          _videoControllers[_currentPage]
-                              .setVolume(_isMuted ? 0 : 1);
-                        });
-                      },
-                    ),
-                  ),
-                  Positioned(
-                    top: 35,
-                    left: 16,
-                    right: 16,
-                    child: CustomAppBarRow(
-                      color: AppColors.transparent,
-                    ),
-                  ),
-                  //under custom row
-                  const UnderCustomRow(),
-                  //custom list
-                  const CustomList(),
-                ],
-              ),
-              SizedBox(height: 10.h),
-              //top talents
-              CustomRow(
-                text: 'top_talents',
-              ),
-              SizedBox(
-                height: 4.h,
-              ),
-              SizedBox(
-              SizedBox(
-                height: 4.h,
-              ),
-              SizedBox(
-                height: 184.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: 5,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CustomTopTalentsList(
-                      index: index,
-                      isLeftPadding: index == 0 ? true : false,
-                      isRightPadding:
-                          index == cubit.items.length - 1 ? true : false,
-                    );
-                  },
                 ),
-              ),
-              //top events
-              CustomRow(
-                text: 'top_events',
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.eventScreen);
+                Positioned(
+                  top: 100,
+                  right: 20,
+                  child: IconButton(
+                    icon: Icon(
+                      _isMuted ? Icons.volume_off : Icons.volume_up,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isMuted = !_isMuted;
+                        _videoControllers[_currentPage]
+                            .setVolume(_isMuted ? 0 : 1);
+                      });
+                    },
+                  ),
+                ),
+                Positioned(
+                  top: 35,
+                  left: 16,
+                  right: 16,
+                  child: CustomAppBarRow(
+                    color: AppColors.transparent,
+                  ),
+                ),
+                //under custom row
+                const UnderCustomRow(),
+                //custom list
+                const CustomList(),
+              ],
+            ),
+            SizedBox(height: 10.h),
+            //top talents
+            CustomRow(
+              text: 'top_talents',
+            ),
+            SizedBox(
+              height: 4.h,
+            ),
+
+            SizedBox(
+              height: 4.h,
+            ),
+            SizedBox(
+              height: 184.h,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: 5,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return CustomTopTalentsList(
+                    index: index,
+                    isLeftPadding: index == 0 ? true : false,
+                    isRightPadding:
+                        index == cubit.items.length - 1 ? true : false,
+                  );
                 },
               ),
-              SizedBox(
-                height: 4.h,
-              ),
+            ),
+            //top events
+            CustomRow(
+              text: 'top_events',
+              onTap: () {
+                Navigator.pushNamed(context, Routes.eventScreen);
+              },
+            ),
+            SizedBox(
+              height: 4.h,
+            ),
 
-              SizedBox(
-                height: 215.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: cubit.items.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CustomTopEventList(
-                      isLeftPadding: index == 0 ? true : false,
-                      isRightPadding:
-                          index == cubit.items.length - 1 ? true : false,
-                    );
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Image.asset(ImageAssets.banner),
-              ),
-              // request_gigs
-              CustomRow(
-                text: 'request_gigs'.tr(),
-              ),
-              SizedBox(height: 4.h),
-              SizedBox(
-                height: 145.w, // Match image width
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: cubit.items.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CustomRequestGigstList(
-                      isLeftPadding: index == 0 ? true : false,
-                      isRightPadding:
-                          index == cubit.items.length - 1 ? true : false,
-                    );
-                  },
-                ),
-              ),
-              CustomRow(
-                text: 'announcements'.tr(),
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.announcementScreen);
+            SizedBox(
+              height: 215.h,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: cubit.items.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return CustomTopEventList(
+                    isLeftPadding: index == 0 ? true : false,
+                    isRightPadding:
+                        index == cubit.items.length - 1 ? true : false,
+                  );
                 },
               ),
-              10.h.verticalSpace,
-              SizedBox(
-                height: getHeightSize(context) / 1.9, // Match image width
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: cubit.items.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CustomAnnouncementWidget(
-                      isLeftPadding: index == 0 ? true : false,
-                      isRightPadding:
-                          index == cubit.items.length - 1 ? true : false,
-                    );
-                  },
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.asset(ImageAssets.banner),
+            ),
+            // request_gigs
+            CustomRow(
+              text: 'request_gigs'.tr(),
+            ),
+            SizedBox(height: 4.h),
+            SizedBox(
+              height: 145.w, // Match image width
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: cubit.items.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return CustomRequestGigstList(
+                    isLeftPadding: index == 0 ? true : false,
+                    isRightPadding:
+                        index == cubit.items.length - 1 ? true : false,
+                  );
+                },
               ),
+            ),
+            CustomRow(
+              text: 'announcements'.tr(),
+              onTap: () {
+                Navigator.pushNamed(context, Routes.announcementScreen);
+              },
+            ),
+            10.h.verticalSpace,
+            SizedBox(
+              height: getHeightSize(context) / 1.9, // Match image width
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: cubit.items.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return CustomAnnouncementWidget(
+                    isLeftPadding: index == 0 ? true : false,
+                    isRightPadding:
+                        index == cubit.items.length - 1 ? true : false,
+                  );
+                },
+              ),
+            ),
 
-              const SizedBox(
-                height: 100,
-              )
-            ],
-          ),
+            const SizedBox(
+              height: 100,
+            )
+          ],
         ),
-      );
+      ));
     });
   }
 }

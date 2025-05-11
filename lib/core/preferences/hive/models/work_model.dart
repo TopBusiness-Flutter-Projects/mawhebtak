@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -47,13 +46,9 @@ class Assistant extends HiveObject {
 
   Assistant({
     this.id,
-     this.title,
-     this.description,
-     this.image,
-     this.date,
     this.title,
     this.description,
-    this.images,
+    this.image,
     this.date,
     this.remindedTime,
     this.isActive,

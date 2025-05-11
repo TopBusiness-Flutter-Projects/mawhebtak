@@ -46,14 +46,19 @@ class AssistantCubit extends Cubit<AssistantState> {
     emit(DeleteNewWorkState());
   }
 
+
   Future<void> getWorks() async {
     works = WorkHiveManager.getWorks();
+
+  
     final newList = works?.reversed.toList();
     works = newList;
     emit(GetAllWorksState());
   }
 
+
   Future<void> addWork(BuildContext context) async {
+
     await WorkHiveManager.addWork(workNameController.text);
 
     successGetBar("add_work_successful");
@@ -71,6 +76,7 @@ class AssistantCubit extends Cubit<AssistantState> {
 
   List<Assistant>? assistants;
   Future<void> addAssistant(BuildContext context,
+
       {required int workId}) async {
     if (assistantTitleController.text.trim().isEmpty) {
       errorGetBar("assistant_title_required".tr());
@@ -133,6 +139,12 @@ class AssistantCubit extends Cubit<AssistantState> {
           : oldAssistant.image,
     );
     await WorkHiveManager.updateAssistant(workId, updatedAssistant);
+
+    BuildContext context, {
+    required int workId,
+    required Assistant updatedAssistant,
+  }) async {
+    await WorkHiveManager.updateAssistantsInWork(workId, updatedAssistant);
     successGetBar("update_assistant_successful".tr());
     await getAssistants(workId);
     await refreshWorks();
@@ -160,6 +172,7 @@ class AssistantCubit extends Cubit<AssistantState> {
       },
     );
   }
+
   void clearAssistantInput() {
     assistantTitleController.clear();
     assistantDescriptionController.clear();
@@ -172,5 +185,6 @@ class AssistantCubit extends Cubit<AssistantState> {
     selectedImage = null;
     selectedVideo = null;
   }
+
 
 }
