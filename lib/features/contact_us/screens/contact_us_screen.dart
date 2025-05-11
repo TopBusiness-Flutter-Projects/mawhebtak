@@ -9,7 +9,7 @@ import 'package:mawhebtak/features/contact_us/cubit/contact_us_state.dart';
 
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key, required this.type});
-   final String type;
+  final String type;
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ContactUsCubit>();
@@ -20,7 +20,9 @@ class ContactUsScreen extends StatelessWidget {
           return Column(
             children: [
               CustomSimpleAppbar(
-                title: type == "advertising_and_publicity" ? "advertising_and_publicity".tr():"complaining".tr(),
+                title: type == "advertising_and_publicity"
+                    ? "advertising_and_publicity".tr()
+                    : "complaining".tr(),
               ),
               Expanded(
                 child: Container(
@@ -32,27 +34,35 @@ class ContactUsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("title".tr(),style: TextStyle(fontSize: 14.sp),),
+                        Text(
+                          "title".tr(),
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
                         CustomTextField(
                           hintTextSize: 18.sp,
                           controller: cubit.titleController,
-                        ),Text("phone_number".tr(),style: TextStyle(fontSize: 14.sp),),
+                        ),
+                        Text(
+                          "phone_number".tr(),
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
                         CustomTextField(
                           hintTextSize: 18.sp,
                           controller: cubit.phoneNumberController,
-                        ), Text("message".tr(),style: TextStyle(fontSize: 14.sp),),
+                        ),
+                        Text(
+                          "message".tr(),
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
                         CustomTextField(
                           isMessage: true,
                           hintTextSize: 18.sp,
                           controller: cubit.messageController,
-
                         ),
                         CustomButton(
-
                           title: 'send'.tr(),
-                          onTap: () {
-                          Navigator.pushNamed(context, Routes.verificationRoute);
-                        },),
+                          onTap: () {},
+                        ),
                       ],
                     ),
                   ),

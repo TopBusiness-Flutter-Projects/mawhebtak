@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/config/routes/app_routes.dart';
+
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.dart';
@@ -7,11 +7,14 @@ import 'package:mawhebtak/features/auth/verification/cubit/verification_state.da
 import 'package:pinput/pinput.dart';
 
 class VerificationScreen extends StatelessWidget {
-  const VerificationScreen({super.key});
+  const VerificationScreen({super.key, required this.isRegister});
+
+  final bool isRegister;
 
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<VerificationCubit>();
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -128,7 +131,7 @@ class VerificationScreen extends StatelessWidget {
                           return null;
                         },
                         // onCompleted: (pin) {
-                        //   cubit.validateOTP(pin);
+                        //   cubit.validateOTP(isRegister, context);
                         // },
                       ),
                     ),
@@ -137,7 +140,9 @@ class VerificationScreen extends StatelessWidget {
                       child: CustomButton(
                         title: "verify".tr(),
                         onTap: () {
-                          Navigator.pushNamed(context, Routes.newPasswordRoute);
+                          cubit.validateOTP(isRegister, context);
+                          //! Regiser
+                          // Navigator.pushNamed(context, Routes.newPasswordRoute);
                         },
                       ),
                     ),

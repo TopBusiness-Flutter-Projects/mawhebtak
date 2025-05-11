@@ -1,8 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
-import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
-import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
+
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_state.dart';
 
@@ -31,12 +30,19 @@ class NewPasswordScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("new_password".tr(),style: TextStyle(fontSize: 14.sp),),
+                        Text(
+                          "new_password".tr(),
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
                         CustomTextField(
                           hintTextSize: 18.sp,
                           controller: cubit.passwordController,
                           hintText: "● ● ● ● ● ● ● ● ● ●",
-                        ), Text("confirm_new_password".tr(),style: TextStyle(fontSize: 14.sp),),
+                        ),
+                        Text(
+                          "confirm_new_password".tr(),
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
                         CustomTextField(
                           hintTextSize: 18.sp,
                           controller: cubit.confirmPasswordController,
@@ -45,8 +51,10 @@ class NewPasswordScreen extends StatelessWidget {
                         CustomButton(
                           title: 'reset_password'.tr(),
                           onTap: () {
-
-                        },),
+                            //!
+                            cubit.resetPassword(context);
+                          },
+                        ),
                       ],
                     ),
                   ),

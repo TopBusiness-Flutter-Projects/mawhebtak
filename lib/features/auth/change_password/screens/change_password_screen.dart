@@ -32,28 +32,41 @@ class ChangePasswordScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("old_password".tr(),style: TextStyle(fontSize: 14.sp),),
+                        Text(
+                          "old_password".tr(),
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
                         CustomTextField(
                           hintTextSize: 18.sp,
                           controller: cubit.oldPasswordController,
                           hintText: "● ● ● ● ● ● ● ● ● ●",
-                        ),Text("new_password".tr(),style: TextStyle(fontSize: 14.sp),),
+                        ),
+                        Text(
+                          "new_password".tr(),
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
                         CustomTextField(
                           hintTextSize: 18.sp,
                           controller: cubit.passwordController,
                           hintText: "● ● ● ● ● ● ● ● ● ●",
-                        ), Text("confirm_new_password".tr(),style: TextStyle(fontSize: 14.sp),),
+                        ),
+                        Text(
+                          "confirm_new_password".tr(),
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
                         CustomTextField(
                           hintTextSize: 18.sp,
                           controller: cubit.confirmPasswordController,
                           hintText: "● ● ● ● ● ● ● ● ● ●",
                         ),
                         CustomButton(
-
                           title: 'change_password'.tr(),
                           onTap: () {
-                          Navigator.pushNamed(context, Routes.verificationRoute);
-                        },),
+                            Navigator.pushNamed(
+                                context, Routes.verificationRoute,
+                                arguments: false);
+                          },
+                        ),
                       ],
                     ),
                   ),

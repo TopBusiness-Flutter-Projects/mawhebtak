@@ -4,9 +4,11 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
 import 'package:mawhebtak/features/auth/new_account/data/repos/new_account.repo.dart';
+import 'package:mawhebtak/features/auth/verification/data/model/validate_data.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../initialization.dart';
+import '../../verification/cubit/verification_cubit.dart';
 import '../data/model/user_types.dart';
 
 class NewAccountCubit extends Cubit<NewAccountState> {
@@ -42,9 +44,14 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       if (r.status == 200 || r.status == 201) {
         successGetBar(r.msg);
         Navigator.pop(context);
-
         Navigator.pushReplacementNamed(context, Routes.mainRoute);
         await Preferences.instance.setUser(r);
+        emailAddressController.clear();
+        fullNameController.clear();
+        passwordController.clear();
+        mobileNumberController.clear();
+        context.read<VerificationCubit>().pinController.clear();
+
         emit(LoadedAddNewAccountState());
       } else {
         emit(ErrorAddNewAccountState('error_msg'.tr()));

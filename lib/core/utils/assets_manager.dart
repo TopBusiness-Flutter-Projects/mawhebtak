@@ -23,6 +23,7 @@ class ImageAssets {
   static const String introBackgroundImage2 = '$imagePath/on2.png';
   static const String profileImage = '$imagePath/profile_image.png';
   static const String testImage = '$imagePath/test_image.jpeg';
+  static const String test2Image = '$imagePath/test_image2.jpg';
   static const String referralCodeImage = '$imagePath/referral_code.png';
   static const String videoCallImage = '$imagePath/video_call_image.png';
   static const String calenderImage = '$imagePath/calender_image.png';

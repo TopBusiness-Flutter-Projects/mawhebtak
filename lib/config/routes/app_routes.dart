@@ -240,8 +240,11 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.verificationRoute:
+        bool isRegister = settings.arguments as bool;
         return PageTransition(
-          child: const VerificationScreen(),
+          child: VerificationScreen(
+            isRegister: isRegister,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

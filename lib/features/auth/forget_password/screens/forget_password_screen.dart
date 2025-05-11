@@ -2,11 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
-import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
-import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_state.dart';
-
 
 class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen({super.key});
@@ -38,9 +35,13 @@ class ForgetPasswordScreen extends StatelessWidget {
                           controller: cubit.emailController,
                           hintText: "Example@mail.com",
                         ),
-                        CustomButton(title: 'reset_password'.tr(),onTap: () {
-                          Navigator.pushNamed(context, Routes.verificationRoute);
-                        },),
+                        CustomButton(
+                          title: 'reset_password'.tr(),
+                          onTap: () {
+                            cubit.forgetPassword(context);
+                            //.
+                          },
+                        ),
                       ],
                     ),
                   ),

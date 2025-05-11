@@ -6,6 +6,7 @@ import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
 import 'package:mawhebtak/features/auth/new_account/screens/widgets/role_selection_widget.dart';
 import '../../login/screens/widgets/register_or_login_with_goole_or_facebook.dart';
+import '../../verification/cubit/verification_cubit.dart';
 import '../data/model/user_types.dart';
 
 class NewAccountScreen extends StatefulWidget {
@@ -131,7 +132,19 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                             CustomButton(
                               title: "register".tr(),
                               onTap: () {
-                                cubit.register(context);
+                                context.read<VerificationCubit>().validateData(
+                                    context,
+                                    email: cubit.emailAddressController.text,
+                                    name: cubit.fullNameController.text,
+                                    password: cubit.passwordController.text,
+                                    phone: cubit.mobileNumberController.text,
+                                    userTypeId: cubit.selectedUserType?.id
+                                            ?.toString() ??
+                                        '');
+
+//make validate
+
+                                // cubit.register(context);
                               },
                             ),
                             Padding(
