@@ -4,6 +4,7 @@ import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
+import 'package:mawhebtak/features/assistant/screens/add_new_work_screen.dart';
 import '../../../core/exports.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -67,9 +68,12 @@ class _AssistantScreenState extends State<AssistantScreen> {
                                   return WorkItemWidget(
                                     work: work,
                                     onEdit: () {
-                                      Navigator.pushNamed(
-                                          context, Routes.addNewWorkRoute,
-                                          arguments: work);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => AddNewWorkScreen(work: work),
+                                        ),
+                                      );
                                     },
                                     onDelete: () {
                                       cubit.deleteWork(context,

@@ -6,13 +6,30 @@ import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 
-class AddNewWorkScreen extends StatelessWidget {
+class AddNewWorkScreen extends StatefulWidget {
   const AddNewWorkScreen({super.key, this.work});
   final WorkModel? work;
 
   @override
+  State<AddNewWorkScreen> createState() => _AddNewWorkScreenState();
+}
+
+class _AddNewWorkScreenState extends State<AddNewWorkScreen> {
+  late AssistantCubit cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    cubit = context.read<AssistantCubit>();
+
+    // Set the controller text if we're editing an existing work
+    if (widget.work != null) {
+      cubit.workNameController.text = widget.work!.title ?? '';
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var cubit = context.read<AssistantCubit>();
     return Scaffold(
       body: Column(
         children: [
@@ -24,7 +41,6 @@ class AddNewWorkScreen extends StatelessWidget {
                 padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h, top: 20.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text("description_from_new_work".tr(), style: getMediumStyle(fontSize: 19.sp)),
                     10.h.verticalSpace,
@@ -35,7 +51,7 @@ class AddNewWorkScreen extends StatelessWidget {
                     ),
                     10.h.verticalSpace,
                     CustomButton(
-                      title:work == null ? "add".tr() : "edit".tr(),
+                      title: widget.work == null ? "add".tr() : "edit".tr(),
                       onTap: () {
                         final workName = cubit.workNameController.text.trim();
 
@@ -44,16 +60,15 @@ class AddNewWorkScreen extends StatelessWidget {
                           return;
                         }
 
-                        if (work == null) {
+                        if (widget.work == null) {
                           cubit.addWork(context);
-                          Navigator.pop(context, true); // رجع قيمة لتحديث القائمة
                         } else {
-                          cubit.updateWork(context, workId: work!.id ?? 0, newTitle: workName);
-                          Navigator.pop(context, true);
+                          cubit.updateWork(context, workId: widget.work!.id ?? 0, newTitle: workName);
                         }
+
+                        Navigator.pop(context, true); // لتحديث القائمة
                       },
                     ),
-
                   ],
                 ),
               );

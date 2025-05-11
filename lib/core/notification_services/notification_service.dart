@@ -3,9 +3,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import '../exports.dart';
 import '../preferences/preferences.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
+
+
 
 bool isWithNotification = false;
 String notificationId = "0";
@@ -13,6 +16,11 @@ String notificationType = "";
 RemoteMessage? initialMessageRcieved;
 
 class NotificationService {
+  tz.TZDateTime _convertToTZDateTime(DateTime dateTime) {
+    tz.initializeTimeZones(); // Ideally move this to app startup
+    final location = tz.local;
+    return tz.TZDateTime.from(dateTime, location);
+  }
   static final NotificationService _instance = NotificationService._internal();
 
   factory NotificationService() => _instance;
@@ -213,9 +221,9 @@ class NotificationService {
   }) async {
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
-      'your_channel_id_ataaby',
-      'your_channel_name_ataaby',
-      channelDescription: 'your_channel_description_ataaby',
+      'your_channel_id_mawhebtak',
+      'your_channel_name_mawhebtak',
+      channelDescription: 'your_channel_description_mawhebtak',
       importance: Importance.max,
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
@@ -229,6 +237,41 @@ class NotificationService {
         _notificationCounter++, title, body, notificationDetails,
         payload: payload);
   }
+
+  Future<void> scheduleNotification({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduledTime,
+    String? payload,
+  }) async {
+    const androidDetails =   AndroidNotificationDetails(
+      'your_channel_id_mawhebtak',
+      'your_channel_name_mawhebtak',
+      channelDescription: 'your_channel_description_mawhebtak',
+      importance: Importance.max,
+      priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+      ticker: 'ticker',
+    );
+
+    final notificationDetails = NotificationDetails(android: androidDetails);
+
+    await _flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      _convertToTZDateTime(scheduledTime),
+      notificationDetails,
+      // matchDateTimeComponents: DateTimeComponents.time,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
+  }
+  Future<void> cancelNotification(int id) async {
+    await _flutterLocalNotificationsPlugin.cancel(id);
+    print('Notification with ID $id canceled');
+  }
+
 }
 
 class MessageStateManager {
@@ -255,3 +298,5 @@ class MessageStateManager {
     return roomId != null && _activeChatRoomIds.contains(roomId);
   }
 }
+
+
