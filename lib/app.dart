@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -14,6 +16,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
+import 'core/notification_services/notification_service.dart';
 import 'core/utils/app_strings.dart';
 import 'package:mawhebtak/injector.dart' as injector;
 import 'features/announcement/cubit/announcement_cubit.dart';
@@ -27,6 +30,7 @@ import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/referral_code/cubit/about_us_cubit.dart';
+import 'initialization.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -48,6 +52,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    log('YYYYYY ${initialMessageRcieved?.data['module_id']}');
+
     return MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -120,6 +126,7 @@ class _MyAppState extends State<MyApp> {
           locale: context.locale,
           theme: appTheme(),
           themeMode: ThemeMode.light,
+          navigatorKey: notificationService?.navigatorKey,
           darkTheme: ThemeData.light(),
           localizationsDelegates: context.localizationDelegates,
           debugShowCheckedModeBanner: false,

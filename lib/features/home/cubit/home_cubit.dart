@@ -8,11 +8,10 @@
 // import '../../other_services/data/models/sub_services_model.dart';
 // import '../../residence/data/models/lodges_model.dart';
 // import '../../transportation/data/models/get_companies_model.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/exports.dart';
 import '../data/models/home_filter_model.dart';
-import '../data/models/home_model.dart';
+
 import '../data/repo/home_repo_impl.dart';
 import '../screens/home_screen.dart';
 import 'home_state.dart';
@@ -23,23 +22,25 @@ class HomeCubit extends Cubit<HomeState> {
   int moduleslenth = 5;
   TextEditingController searchController = TextEditingController();
 
-   String? selectedModule;
+  String? selectedModule;
   final List<HomeItem> items = [
-    HomeItem(icon:AppIcons.eventCalenderSecondColorIcon, label: 'Events',colorIcon: AppColors.secondPrimary),
-    HomeItem(icon:AppIcons.aboutUs, label: 'Casting'),
+    HomeItem(
+        icon: AppIcons.eventCalenderSecondColorIcon,
+        label: 'Events',
+        colorIcon: AppColors.secondPrimary),
+    HomeItem(icon: AppIcons.aboutUs, label: 'Casting'),
     HomeItem(icon: AppIcons.announceIcon, label: 'Announce'),
     HomeItem(icon: AppIcons.jopIcon, label: 'Jobs'),
     HomeItem(icon: AppIcons.assistantIcon, label: 'Assistant'),
-
-
   ];
-   // المتغير الذي يحمل القيمة المختارة
-  void removeImage(int indexx){
+  // المتغير الذي يحمل القيمة المختارة
+  void removeImage(int indexx) {
     print(indexx);
     print(items.length);
     items.removeAt(indexx);
     emit(ImageDeleted());
   }
+
   // ModuleModel? selectedModulee; // حفظ الكائن المختار
   // String? moduleId; // حفظ الكائن المختار
   //
@@ -68,7 +69,6 @@ class HomeCubit extends Cubit<HomeState> {
   // GetCompaniesModel transportationFavouriteModel = GetCompaniesModel();
   // GetOthersModel othersModel = GetOthersModel();
   // GetWaysModel getWaysModel = GetWaysModel();
-
 
   // int selectedIndex = 0;
   // void changeContainer(int index, BuildContext context) {

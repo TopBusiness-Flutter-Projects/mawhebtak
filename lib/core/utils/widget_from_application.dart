@@ -10,10 +10,11 @@ class AppWidgets {
         builder: (context) {
           return AlertDialog(
             backgroundColor: AppColors.white,
-            content: Row(
+            contentPadding: EdgeInsets.zero,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 CircularProgressIndicator(color: AppColors.primary),
-                const Spacer(),
                 Text(
                   msg,
                   style: TextStyle(color: AppColors.black, fontSize: 15.0),

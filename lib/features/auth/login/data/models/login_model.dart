@@ -1,6 +1,3 @@
-
-
-
 class LoginModel {
   UserModel? data;
   String? msg;

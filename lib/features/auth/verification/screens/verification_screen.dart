@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
-import 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
 import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.dart';
 import 'package:mawhebtak/features/auth/verification/cubit/verification_state.dart';
 import 'package:pinput/pinput.dart';
@@ -24,28 +23,41 @@ class VerificationScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding:  EdgeInsets.only(top:20.h,bottom: 20.h),
-                      child: Image.asset(ImageAssets.pinCodeImage,width: 160.w,height: 160.h,),
+                      padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
+                      child: Image.asset(
+                        ImageAssets.pinCodeImage,
+                        width: 160.w,
+                        height: 160.h,
+                      ),
                     ),
-                    Text("title_otp".tr(),style: TextStyle(color: AppColors.black.withOpacity(0.7),fontSize: 16.sp),),
-
+                    Text(
+                      "title_otp".tr(),
+                      style: TextStyle(
+                          color: AppColors.black.withOpacity(0.7),
+                          fontSize: 16.sp),
+                    ),
                     Padding(
-                      padding:  EdgeInsets.only(
+                      padding: EdgeInsets.only(
                         top: 10.h,
                         bottom: 10.h,
                       ),
                       child: Padding(
-                        padding:  EdgeInsets.only(
+                        padding: EdgeInsets.only(
                           top: 10.h,
                           bottom: 10.h,
                         ),
-                        child: Text("description_otp".tr() + 'sanaa@gmail.com',
-                          textAlign:TextAlign.center,
-                          style: TextStyle(color: AppColors.darkGray.withOpacity(0.5),fontSize: 15.sp,fontWeight: FontWeight.w400),),
+                        child: Text(
+                          "description_otp".tr() + 'sanaa@gmail.com',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: AppColors.darkGray.withOpacity(0.5),
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w400),
+                        ),
                       ),
                     ),
                     Padding(
-                      padding:  EdgeInsets.only(
+                      padding: EdgeInsets.only(
                         top: 10.h,
                         bottom: 10.h,
                       ),
@@ -56,7 +68,8 @@ class VerificationScreen extends StatelessWidget {
                         // onSubmitted: (value) {
                         //   cubit.clearError();
                         // },
-                        controller: cubit.pinController, // Attach the controller
+                        controller:
+                            cubit.pinController, // Attach the controller
                         length: 6,
                         defaultPinTheme: PinTheme(
                           width: 40.w,
@@ -70,8 +83,8 @@ class VerificationScreen extends StatelessWidget {
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(8.r),
                             border: Border.all(
-                                color: AppColors.grayLite,
-                                ),
+                              color: AppColors.grayLite,
+                            ),
                           ),
                         ),
                         submittedPinTheme: PinTheme(
@@ -103,7 +116,7 @@ class VerificationScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.r),
                             border: Border.all(
                               color: AppColors.redLight,
-                                ),
+                            ),
                           ),
                         ),
                         showCursor: true,
@@ -120,50 +133,38 @@ class VerificationScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding:  EdgeInsets.only(left:20.w,right:20.w),
-                      child: CustomButton(title: "verify".tr(),
-                      onTap: () {
-                        Navigator.pushNamed(context, Routes.newPasswordRoute);
-                      },
+                      padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                      child: CustomButton(
+                        title: "verify".tr(),
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.newPasswordRoute);
+                        },
                       ),
                     ),
                     Padding(
-                      padding:  EdgeInsets.only(top:15.h,bottom:15.h),
+                      padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-
-                          Text("00:10",style: TextStyle(fontSize: 14.sp,color: AppColors.secondPrimary),),
-                          SizedBox(width: 5.w,),
-                          Text("send_again".tr(),style: TextStyle(fontSize: 14.sp,color: AppColors.darkGray.withOpacity(0.8)),),
+                          Text(
+                            "00:10",
+                            style: TextStyle(
+                                fontSize: 14.sp,
+                                color: AppColors.secondPrimary),
+                          ),
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          Text(
+                            "send_again".tr(),
+                            style: TextStyle(
+                                fontSize: 14.sp,
+                                color: AppColors.darkGray.withOpacity(0.8)),
+                          ),
                         ],
                       ),
                     ),
-                    // if (state.errorMessage != null)
-                    //   Padding(
-                    //     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                    //     child: Row(
-                    //
-                    //       children: [
-                    //         Container(
-                    //             width:24.w,
-                    //             height: 24.h,
-                    //             decoration: BoxDecoration(
-                    //               shape: BoxShape.circle,
-                    //               color: AppColors.red,
-                    //             ),
-                    //             child: const Icon(Icons.close, color: Colors.white)),
-                    //         SizedBox(width: 10.w,),
-                    //         Text(
-                    //           state.errorMessage!,
-                    //           style: TextStyle(color: Colors.red, fontSize: 16.sp,fontWeight: FontWeight.w400),
-                    //           textAlign: TextAlign.center,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-
                   ],
                 ),
               );
