@@ -67,6 +67,10 @@ dependencies:
   flutter_facebook_auth: ^7.1.1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  firebase_messaging: ^15.2.5
+  flutter_local_notifications: ^19.2.0
+  firebase_core: ^3.13.0
+
 
   # ! main packages
  

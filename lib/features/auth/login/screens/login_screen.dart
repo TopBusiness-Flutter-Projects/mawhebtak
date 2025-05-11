@@ -21,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<LoginCubit>();
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginStateLoading) {
@@ -29,12 +28,14 @@ class _LoginScreenState extends State<LoginScreen> {
               context: context, msg: 'loading'.tr());
         } else if (state is LoginStateLoaded) {
           Navigator.pop(context);
-          Navigator.pushNamed(context, Routes.mainRoute);
+          Navigator.pushReplacementNamed(context, Routes.mainRoute);
         } else if (state is LoginStateError) {
           Navigator.pop(context);
         }
       },
       builder: (context, state) {
+        var cubit = context.read<LoginCubit>();
+
         return Scaffold(body:
             BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
           return Form(

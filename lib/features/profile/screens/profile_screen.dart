@@ -16,10 +16,10 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit=context.read<ProfileCubit>();
-    return BlocBuilder<ProfileCubit,ProfileState>(
+    var cubit = context.read<ProfileCubit>();
+    return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (BuildContext context, state) {
-        return   AnnotatedRegion<SystemUiOverlayStyle>(
+        return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light.copyWith(
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.light,
@@ -35,7 +35,9 @@ class ProfileScreen extends StatelessWidget {
                       SizedBox(height: 35.h),
                       Padding(
                         padding: EdgeInsets.only(left: 16.0.w),
-                        child: Text("Ahmed Mokhtar", style: getMediumStyle(fontSize: 14.sp, color: AppColors.primary)),
+                        child: Text("Ahmed Mokhtar",
+                            style: getMediumStyle(
+                                fontSize: 14.sp, color: AppColors.primary)),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 16.0.w),
@@ -44,14 +46,20 @@ class ProfileScreen extends StatelessWidget {
                             text: "Talent / Actor Expert at studion masr",
                             style: getRegularStyle(fontSize: 14.sp),
                             children: <TextSpan>[
-                              TextSpan(text: ' (Amateur)', style: getRegularStyle(fontSize: 14.sp, color: AppColors.primary)),
+                              TextSpan(
+                                  text: ' (Amateur)',
+                                  style: getRegularStyle(
+                                      fontSize: 14.sp,
+                                      color: AppColors.primary)),
                             ],
                           ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 16.0.w),
-                        child: Text("Egypt, Cairo, Nasr City", style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayMedium)),
+                        child: Text("Egypt, Cairo, Nasr City",
+                            style: getRegularStyle(
+                                fontSize: 14.sp, color: AppColors.grayMedium)),
                       ),
                       SizedBox(height: 20.h),
                       InfoForFollowers(),
@@ -82,31 +90,28 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                cubit.  selectedIndex == 2?
-
-                  Positioned(
-                    bottom: 20.h,
-                    right: 16.w,
-                    child:
-                      InkWell(
-                        onTap: (){
-Navigator.pushNamed(context, Routes.newGigsScreen);
-                        },
-                          child: SvgPicture.asset(AppIcons.addIcon)),
-
-                  ):SizedBox()
+                cubit.selectedIndex == 2
+                    ? Positioned(
+                        bottom: 20.h,
+                        right: 16.w,
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, Routes.newGigsScreen);
+                            },
+                            child: SvgPicture.asset(AppIcons.addIcon)),
+                      )
+                    : SizedBox()
               ],
-
             ),
-              // floatingActionButton: cubit.selectedIndex==2 ?
-              // FloatingActionButton(
-              //   onPressed: (){}
-              //   ,child: SvgPicture.asset(AppIcons.addIcon),
-              // ):null
-
+            // floatingActionButton: cubit.selectedIndex==2 ?
+            // FloatingActionButton(
+            //   onPressed: (){}
+            //   ,child: SvgPicture.asset(AppIcons.addIcon),
+            // ):null
           ),
         );
-      },);
+      },
+    );
   }
 }

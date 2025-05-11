@@ -1,18 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../core/exports.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
-import 'check_internet_widget.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key, this.index});
-  final int? index;
+  const MainScreen({super.key});
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -27,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
         return WillPopScope(
           onWillPop: () async {
             if (cubit.currentpage == 0) {
-            //  return await showExitDialog(context);
+              //  return await showExitDialog(context);
             } else {
               await cubit.changePage(0);
             }
@@ -53,8 +49,8 @@ class _MainScreenState extends State<MainScreen> {
                 //     //     :
                 //
                 //   );
-               // }
-              //  ),
+                // }
+                //  ),
                 cubit.screens[cubit.currentpage],
                 Positioned(
                     bottom: 0,
@@ -79,7 +75,9 @@ class _MainScreenState extends State<MainScreen> {
                                 },
                                 child: Column(
                                   children: [
-                                    SizedBox(height: 4.h,),
+                                    SizedBox(
+                                      height: 4.h,
+                                    ),
                                     SvgPicture.asset(
                                       AppIcons.homeIcon,
                                       width: getHeightSize(context) * 0.03,
@@ -98,7 +96,6 @@ class _MainScreenState extends State<MainScreen> {
                                                   : AppColors.grayLight,
                                               fontSize: 13.sp)),
                                     ),
-
                                   ],
                                 ),
                               ),
@@ -108,7 +105,9 @@ class _MainScreenState extends State<MainScreen> {
                                 },
                                 child: Column(
                                   children: [
-                                    SizedBox(height: 4.h,),
+                                    SizedBox(
+                                      height: 4.h,
+                                    ),
                                     SvgPicture.asset(
                                       AppIcons.feeds,
                                       width: getHeightSize(context) * 0.03,
@@ -124,7 +123,6 @@ class _MainScreenState extends State<MainScreen> {
                                                 ? AppColors.primary
                                                 : AppColors.grayLight,
                                             fontSize: 13.sp)),
-
                                   ],
                                 ),
                               ),
@@ -134,7 +132,9 @@ class _MainScreenState extends State<MainScreen> {
                                 },
                                 child: Column(
                                   children: [
-                                    SizedBox(height: 4.h,),
+                                    SizedBox(
+                                      height: 4.h,
+                                    ),
                                     SvgPicture.asset(
                                       AppIcons.casting,
                                       width: getHeightSize(context) * 0.03,
@@ -150,7 +150,6 @@ class _MainScreenState extends State<MainScreen> {
                                                 ? AppColors.primary
                                                 : AppColors.grayLight,
                                             fontSize: 13.sp)),
-
                                   ],
                                 ),
                               ),
@@ -160,7 +159,9 @@ class _MainScreenState extends State<MainScreen> {
                                 },
                                 child: Column(
                                   children: [
-                                    SizedBox(height: 4.h,),
+                                    SizedBox(
+                                      height: 4.h,
+                                    ),
                                     SvgPicture.asset(
                                       AppIcons.calendar,
                                       width: getHeightSize(context) * 0.03,
@@ -176,7 +177,6 @@ class _MainScreenState extends State<MainScreen> {
                                                 ? AppColors.primary
                                                 : AppColors.grayLight,
                                             fontSize: 13.sp)),
-
                                   ],
                                 ),
                               ),
@@ -186,7 +186,9 @@ class _MainScreenState extends State<MainScreen> {
                                 },
                                 child: Column(
                                   children: [
-                                    SizedBox(height: 4.h,),
+                                    SizedBox(
+                                      height: 4.h,
+                                    ),
                                     SvgPicture.asset(
                                       AppIcons.more,
                                       width: getHeightSize(context) * 0.03,
@@ -205,11 +207,9 @@ class _MainScreenState extends State<MainScreen> {
                                                   : AppColors.grayLight,
                                               fontSize: 13.sp)),
                                     ),
-
                                   ],
                                 ),
                               ),
-
                             ],
                           ),
                         )))

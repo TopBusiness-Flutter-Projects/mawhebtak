@@ -193,8 +193,8 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.workDetailsRoute:
-          WorkModel work = settings.arguments as WorkModel;
+      case Routes.workDetailsRoute:
+        WorkModel work = settings.arguments as WorkModel;
         return PageTransition(
           child: WorkDetailsScreen(
             work: work,
@@ -368,10 +368,10 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.addAssistantRoute:
-          WorkModel work = settings.arguments as WorkModel;
+      case Routes.addAssistantRoute:
+        WorkModel work = settings.arguments as WorkModel;
         return PageTransition(
-          child:   AddAssistantScreen(
+          child: AddAssistantScreen(
             work: work,
           ),
           type: PageTransitionType.fade,

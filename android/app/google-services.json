@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "485614592327",
+    "project_id": "mawhebtak-36751",
+    "storage_bucket": "mawhebtak-36751.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485614592327:android:dabba56084c1affbc3ac62",
+        "android_client_info": {
+          "package_name": "com.topbusiness.mawhebtak"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYfllIkUu98s-LNgbLeqSPOAxjhsj5GjQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
