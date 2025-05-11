@@ -371,7 +371,9 @@ class AppRoutes {
       case Routes.addAssistantRoute:
         final args = settings.arguments as Map<String, dynamic>;
         WorkModel work = args['work'] as WorkModel;
-        Assistant? assistant = args.containsKey('assistant') ? args['assistant'] as Assistant : null;
+        Assistant? assistant = args.containsKey('assistant')
+            ? args['assistant'] as Assistant
+            : null;
 
         return PageTransition(
           child: AddAssistantScreen(
