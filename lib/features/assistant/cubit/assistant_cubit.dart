@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/hive/hive.dart';
@@ -7,6 +6,7 @@ import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/core/widgets/media_picker.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import 'package:mawhebtak/features/assistant/data/repos/assistant.repo.dart';
+import 'package:mawhebtak/initialization.dart';
 
 class AssistantCubit extends Cubit<AssistantState> {
   AssistantCubit(this.assistantRepository) : super(AssistantInitial());
@@ -32,7 +32,8 @@ class AssistantCubit extends Cubit<AssistantState> {
   Future<void> deleteWork(BuildContext context, {required int workId}) async {
     await WorkHiveManager.removeWork(workId);
     refreshWorks();
-    successGetBar("delete_work_successful");
+    // notificationService!.cancelNotification();
+    successGetBar("delete_work_successful".tr());
     clearWorksInput();
     emit(DeleteNewWorkState());
   }
@@ -40,7 +41,7 @@ class AssistantCubit extends Cubit<AssistantState> {
   Future<void> updateWork(BuildContext context,
       {required int workId, required String newTitle}) async {
     await WorkHiveManager.updateWork(workId: workId, newTitle: newTitle);
-    successGetBar("update_work_successful");
+    successGetBar("update_work_successful".tr());
     clearWorksInput();
     refreshWorks();
     emit(DeleteNewWorkState());
@@ -56,7 +57,7 @@ class AssistantCubit extends Cubit<AssistantState> {
   Future<void> addWork(BuildContext context) async {
     await WorkHiveManager.addWork(workNameController.text);
 
-    successGetBar("add_work_successful");
+    successGetBar("add_work_successful".tr());
     clearWorksInput();
 
     if (scrollController.hasClients) {
@@ -80,7 +81,7 @@ class AssistantCubit extends Cubit<AssistantState> {
 
     final now = DateTime.now();
     final newAssistant = Assistant(
-      id: DateTime.now().millisecondsSinceEpoch,
+      id: (DateTime.now().millisecondsSinceEpoch % 2147483647),
       title: assistantTitleController.text.trim(),
       description: assistantDescriptionController.text.trim(),
       date: now,
@@ -88,7 +89,16 @@ class AssistantCubit extends Cubit<AssistantState> {
       isActive: selectedReminderDate != null && selectedReminderDate!.isAfter(now),
       image: selectedImage?.path ?? "",
     );
+
+
     await WorkHiveManager.addAssistant(workId, newAssistant);
+    notificationService!.scheduleNotification(
+      title: newAssistant.title ?? "",
+      id: newAssistant.id ?? 0,
+      body: newAssistant.description ?? "",
+      scheduledTime: newAssistant.remindedTime!,
+      payload: '',
+    );
     clearAssistantInput();
     successGetBar("add_assistant_successful".tr());
     clearMedia();
@@ -96,6 +106,7 @@ class AssistantCubit extends Cubit<AssistantState> {
     Navigator.pop(context, true);
     await refreshWorks();
     await getAssistants(workId);
+
     emit(AddAssistantState());
   }
 
@@ -109,6 +120,7 @@ class AssistantCubit extends Cubit<AssistantState> {
   Future<void> deleteAssistant(BuildContext context,
       {required int workId, required int assistantId}) async {
     await WorkHiveManager.removeAssistant(workId, assistantId);
+    notificationService!.cancelNotification(assistantId);
     successGetBar("delete_assistant_successful".tr());
     await getAssistants(workId);
     refreshWorks();

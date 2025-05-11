@@ -96,20 +96,30 @@ class WorkHiveManager {
     }
   }
 
-  static Future<void> updateAssistant(
-      int workId, Assistant assistant) async {
+  static Future<void> updateAssistant(int workId, Assistant assistant) async {
     final box = Hive.box(workBoxName);
     List<WorkModel> works =
-        box.get('works', defaultValue: []).cast<WorkModel>();
-    int index = works.indexWhere((work) => work.id == workId);
-    if (index != -1) {
-      works[index].assistants ??= [];
-      if (!works[index].assistants!.any((a) => a.id == assistant.id)) {
-        works[index].assistants!.add(assistant);
-        await box.put('works', works);
+    box.get('works', defaultValue: []).cast<WorkModel>();
+
+    int workIndex = works.indexWhere((work) => work.id == workId);
+    if (workIndex != -1) {
+      List<Assistant>? assistants = works[workIndex].assistants;
+
+      if (assistants != null) {
+        int assistantIndex = assistants.indexWhere((a) => a.id == assistant.id);
+        if (assistantIndex != -1) {
+          assistants[assistantIndex] = assistant; // ✅ استبدال القديم بالجديد
+          works[workIndex] = WorkModel(
+            id: works[workIndex].id,
+            title: works[workIndex].title,
+            assistants: assistants,
+          );
+          await box.put('works', works); // ✅ حفظ التحديث
+        }
       }
     }
   }
+
 
   static Future<List<Assistant>?> getAssistants(int workId) async {
     final box = Hive.box(workBoxName);

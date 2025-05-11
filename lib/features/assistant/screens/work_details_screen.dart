@@ -122,12 +122,20 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
               bottom: 50.h,
               right: 20.w,
               child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.addAssistantRoute,
-                  arguments: {
-                  'work': widget.work,
-                  });
+                onTap: () async {
+                  final result = await Navigator.pushNamed(
+                    context,
+                    Routes.addAssistantRoute,
+                    arguments: {
+                      'work': widget.work,
+                    },
+                  );
+
+                  if (result != null) {
+                    context.read<AssistantCubit>().getAssistants(widget.work?.id ?? 0);
+                  }
                 },
+
                 child: Container(
                   width: 60.w,
                   height: 60.h,
@@ -296,16 +304,20 @@ class TimelineAssistantItem extends StatelessWidget {
                           ),
 
                           PopupMenuButton<String>(
-                            onSelected: (value) {
+                            onSelected: (value) async {
                               if (value == 'edit') {
-                                Navigator.pushNamed(
+                                final result = await Navigator.pushNamed(
                                   context,
                                   Routes.addAssistantRoute,
                                   arguments: {
-                                    'work':  work,
+                                    'work': work,
                                     'assistant': assistants,
                                   },
                                 );
+
+                                if (result != null) {
+                                  cubit.getAssistants(work.id ?? 0);
+                                }
                               } else if (value == 'delete') {
                                 cubit.deleteAssistant(
                                   context,
@@ -314,6 +326,7 @@ class TimelineAssistantItem extends StatelessWidget {
                                 );
                               }
                             },
+
 
                             itemBuilder: (context) => [
                               const PopupMenuItem(
