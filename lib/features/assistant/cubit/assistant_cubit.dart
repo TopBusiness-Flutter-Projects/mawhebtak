@@ -40,9 +40,9 @@ class AssistantCubit extends Cubit<AssistantState> {
   Future<void> updateWork(BuildContext context,
       {required int workId, required String newTitle}) async {
     await WorkHiveManager.updateWork(workId: workId, newTitle: newTitle);
-
     successGetBar("update_work_successful");
     clearWorksInput();
+    refreshWorks();
     emit(DeleteNewWorkState());
   }
 
@@ -66,6 +66,7 @@ class AssistantCubit extends Cubit<AssistantState> {
         curve: Curves.easeInOut,
       );
     }
+    refreshWorks();
     emit(AddNewWorkState());
   }
 
