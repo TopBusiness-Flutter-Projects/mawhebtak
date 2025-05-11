@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/features/events/cubit/event_cubit.dart';
+import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
+import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import '../exports.dart';
 import '../../features/home/screens/widgets/follow_button.dart';
 
@@ -8,8 +9,8 @@ class CustomPickMediaWidget extends StatelessWidget {
   final Function ()onTap;
   @override
   Widget build(BuildContext context) {
-    var cubit=context.read<EventCubit>();
-   return  BlocBuilder<EventCubit,EventState>
+    var cubit=context.read<AssistantCubit>();
+   return  BlocBuilder<AssistantCubit,AssistantState>
      (builder: (BuildContext context, state) {
      return Container(
      color: AppColors.grayLite,

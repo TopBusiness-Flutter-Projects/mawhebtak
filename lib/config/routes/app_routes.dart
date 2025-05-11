@@ -369,10 +369,14 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.addAssistantRoute:
-        WorkModel work = settings.arguments as WorkModel;
+        final args = settings.arguments as Map<String, dynamic>;
+        WorkModel work = args['work'] as WorkModel;
+        Assistant? assistant = args.containsKey('assistant') ? args['assistant'] as Assistant : null;
+
         return PageTransition(
           child: AddAssistantScreen(
             work: work,
+            assistant: assistant,
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
