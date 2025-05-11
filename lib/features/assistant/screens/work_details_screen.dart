@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,8 +22,8 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
     super.initState();
     context
         .read<AssistantCubit>()
-        .getAllAssistantFromWork(widget.work?.id ?? 0);
-    context.read<AssistantCubit>().getAllWorks();
+        .getAssistants(widget.work?.id ?? 0);
+    context.read<AssistantCubit>().getWorks();
   }
 
   @override
@@ -41,7 +42,6 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                 CustomSimpleAppbar(title: "assistant".tr()),
                 BlocBuilder<AssistantCubit, AssistantState>(
                   builder: (context, state) {
-                    final cubit = context.read<AssistantCubit>();
                     return Expanded(
                       child: Container(
                         decoration: BoxDecoration(color: AppColors.grayLite),
@@ -95,7 +95,8 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                                                 "${widget.work?.assistants?.length ?? 0} ${"assistant".tr()}",
                                                 style: getMediumStyle(
                                                   fontSize: 13.sp,
-                                                  color: AppColors.secondPrimary,
+                                                  color:
+                                                      AppColors.secondPrimary,
                                                 ),
                                               ),
                                             ],
@@ -108,7 +109,7 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                               ),
                             ),
                             20.h.verticalSpace,
-                            const Expanded(child: AssistantsList()),
+                             Expanded(child: AssistantsList(work: widget.work!,)),
                           ],
                         ),
                       ),
@@ -123,7 +124,9 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
               child: GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, Routes.addAssistantRoute,
-                      arguments: widget.work);
+                  arguments: {
+                  'work': widget.work,
+                  });
                 },
                 child: Container(
                   width: 60.w,
@@ -146,13 +149,13 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
 }
 
 class AssistantsList extends StatelessWidget {
-  const AssistantsList({Key? key}) : super(key: key);
-
+  const AssistantsList({Key? key, required this.work}) : super(key: key);
+  final WorkModel work;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AssistantCubit, AssistantState>(
       builder: (context, state) {
-        var assistants = context.read<AssistantCubit>().assistants;
+        var assistants = context.watch<AssistantCubit>().assistants;
 
         if (assistants == null || assistants.isEmpty) {
           return Center(
@@ -164,6 +167,7 @@ class AssistantsList extends StatelessWidget {
           itemCount: assistants.length,
           itemBuilder: (context, index) {
             return TimelineAssistantItem(
+              work: work,
               assistants: assistants[index],
               isLast: index == assistants.length - 1,
             );
@@ -177,19 +181,18 @@ class AssistantsList extends StatelessWidget {
 class TimelineAssistantItem extends StatelessWidget {
   final Assistant assistants;
   final bool isLast;
+  final WorkModel work;
 
   const TimelineAssistantItem({
     Key? key,
     required this.assistants,
-    required this.isLast,
+    required this.isLast, required this.work,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<AssistantCubit>();
-    final workId =
-        context.findAncestorWidgetOfExactType<WorkDetailsScreen>()?.work?.id ??
-            0;
+
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,19 +221,20 @@ class TimelineAssistantItem extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 12),
+           SizedBox(width: 12.w),
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(bottom: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                  SizedBox(
-                      height: 150.h,
+                  if (assistants.image != null && assistants.image!.isNotEmpty && File(assistants.image!).existsSync())
+                    Image.file(
+                      File(assistants.image ?? ""),
+                      fit: BoxFit.fill,
+                      height: 200.h,
                       width: double.infinity,
-                      child: Image.asset(assistants.image ?? "" ),
-                  ),
+                    ),
                   Text(
                     assistants.title ?? "",
                     style: const TextStyle(
@@ -253,11 +257,19 @@ class TimelineAssistantItem extends StatelessWidget {
                   8.h.verticalSpace,
                   Row(
                     children: [
-                      Text(
+                      assistants.date != null
+                          ? Text(
                         DateFormat('d MMMM, y').format(assistants.date!),
                         style: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 12,
+                        ),
+                      )
+                          : Text(
+                        'No Date',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12.sp,
                         ),
                       ),
                       const Spacer(),
@@ -267,36 +279,42 @@ class TimelineAssistantItem extends StatelessWidget {
                             assistants.isActive ?? false
                                 ? Icons.notifications_active
                                 : Icons.notifications_none,
-                            size: 18,
+                            size: 12,
                             color: assistants.isActive ?? false
                                 ? Colors.blue
                                 : Colors.grey.shade500,
                           ),
-                          const SizedBox(width: 4),
+                           SizedBox(width: 4.w),
                           Text(
-                            (assistants.isActive ??
-                                    false && assistants.remindedTime != null)
-                                ? 'Set Reminder (${DateFormat('d MMMM, y - h:mm a').format(assistants.remindedTime!)})'
+                            (assistants.remindedTime != null)
+                                ? 'Set Reminder (${DateFormat('dd MMM yyyy • hh:mm a').format(assistants.remindedTime!)})'
                                 : 'Set Reminder',
                             style: TextStyle(
-                              color: (assistants.isActive ?? false)
-                                  ? Colors.blue
-                                  : Colors.grey.shade500,
+                              color: (assistants.isActive ?? false) ? Colors.blue : Colors.grey.shade500,
                               fontSize: 12,
                             ),
                           ),
-                          const SizedBox(width: 10),
+
                           PopupMenuButton<String>(
                             onSelected: (value) {
                               if (value == 'edit') {
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.addAssistantRoute,
+                                  arguments: {
+                                    'work':  work,
+                                    'assistant': assistants,
+                                  },
+                                );
                               } else if (value == 'delete') {
                                 cubit.deleteAssistant(
                                   context,
-                                  workId: workId,
+                                  workId: work.id ?? 0,
                                   assistantId: assistants.id ?? 0,
                                 );
                               }
                             },
+
                             itemBuilder: (context) => [
                               const PopupMenuItem(
                                 value: 'edit',

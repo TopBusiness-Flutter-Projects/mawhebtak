@@ -197,6 +197,10 @@
   "save": "حفظ",
   "write_new_address": "اكتب عنوان جديد",
   "modify_address": "تعديل العنوان",
-  "no_assistant": "لا يوجد مساعدات حتي الان !"
-  "loading": "جاري التحميل"
+  "no_assistant": "لا يوجد مساعدات حتي الان !",
+  "loading": "جاري التحميل",
+  "delete_assistant_successful": "تم حذف المساعدة بنجاح !",
+  "no_work":"العمل غير موجود أو لم يتم تحديده"
+
+
 }

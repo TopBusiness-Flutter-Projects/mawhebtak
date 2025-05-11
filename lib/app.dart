@@ -113,6 +113,7 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) => injector.serviceLocator<AnnouncementCubit>(),
           ),
+
         ],
         child: GetMaterialApp(
           supportedLocales: context.supportedLocales,

@@ -8,8 +8,10 @@ import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 
 class AddAssistantScreen extends StatefulWidget {
-  const AddAssistantScreen({super.key, this.work});
+  const AddAssistantScreen({super.key, this.work, this.assistant});
   final WorkModel? work;
+  final Assistant? assistant;
+
   @override
   State<AddAssistantScreen> createState() => _AddAssistantScreenState();
 }
@@ -19,14 +21,22 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
   void initState() {
     super.initState();
     final work = widget.work;
+    final assistant = widget.assistant;
+    final cubit = context.read<AssistantCubit>();
+
     if (work != null) {
-      context.read<AssistantCubit>().workNameController.text = work.title ?? "";
+      cubit.workNameController.text = work.title ?? "";
+    }
+
+    if (assistant != null) {
+      cubit.assistantTitleController.text = assistant.title ?? "";
+      cubit.assistantDescriptionController.text = assistant.description ?? "";
+      cubit.selectedReminderDate = assistant.remindedTime; // تأكد من أن التاريخ يتعين هنا
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final selectedDate = context.watch<AssistantCubit>().selectedDate;
     var cubit = context.read<AssistantCubit>();
     return Scaffold(
       body: Column(
@@ -35,88 +45,115 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
           CustomAppBarWithClearWidget(title: "add_assistant".tr()),
           BlocBuilder<AssistantCubit, AssistantState>(
               builder: (context, state) {
-            return Column(
-              children: [
-                10.h.verticalSpace,
-                 CustomPickMediaWidget(onTap: (){
-                   cubit.pickMedia(context);
-                 },
+                return Column(
+                  children: [
+                    10.h.verticalSpace,
+                    CustomPickMediaWidget(
+                      onTap: () {
+                        cubit.pickMedia(context);
+                      },
+                    ),
+                    Padding(
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("assistant_title".tr(),
+                              style: TextStyle(fontSize: 14.sp)),
+                          CustomTextField(
+                            controller: cubit.assistantTitleController,
+                            hintText: "task title",
+                          ),
+                          Text("assistant_description".tr(),
+                              style: TextStyle(fontSize: 14.sp)),
+                          CustomTextField(
+                            controller: cubit.assistantDescriptionController,
+                            isMessage: true,
+                            hintText: "task details",
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              final DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: cubit.selectedReminderDate ?? DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2100),
+                              );
 
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 20.w, right: 20.w, bottom: 20.h, top: 20.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
+                              if (pickedDate != null) {
+                                final TimeOfDay? pickedTime = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.fromDateTime(cubit.selectedReminderDate ?? DateTime.now()),
+                                );
 
-                        "assistant_title".tr(),
-                        style: TextStyle(fontSize: 14.sp),
-                      ),
-                       CustomTextField(
-                        controller:cubit.assistantTitleController ,
-                        hintText: "task title",
-                      ),
-                      Text(
-                        "assistant_description".tr(),
-                        style: TextStyle(fontSize: 14.sp),
-                      ),
-                       CustomTextField(
-                        controller:cubit.assistantDescriptionController ,
-                        isMessage: true,
-                        hintText: "task details",
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          final DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100),
-                          );
-                          if (pickedDate != null) {
-                            cubit.updateSelectedDate(pickedDate);
-                          }
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.notifications_sharp,
-                              color: AppColors.grayLight,
-                              size: 20.sp,
+                                if (pickedTime != null) {
+                                  final DateTime finalDateTime = DateTime(
+                                    pickedDate.year,
+                                    pickedDate.month,
+                                    pickedDate.day,
+                                    pickedTime.hour,
+                                    pickedTime.minute,
+                                  );
+
+                                  cubit.updateSelectedDate(finalDateTime);
+                                }
+                              }
+                            },
+
+                            child: Row(
+                              children: [
+                                Icon(Icons.notifications_sharp,
+                                    color: AppColors.grayLight, size: 20.sp),
+                                10.w.horizontalSpace,
+                                Text("set_reminder_for_assistant".tr(),
+                                    style: TextStyle(
+                                        color: AppColors.grayLight,
+                                        fontSize: 14.sp)),
+                                const Spacer(),
+                                if (cubit.selectedReminderDate != null)
+                                  GestureDetector(
+                                    onTap: () {
+                                      cubit.clearSelectedDate();
+                                    },
+                                    child: Icon(Icons.clear,color: AppColors.red,),
+                                  ),
+                              ],
                             ),
-                            10.w.horizontalSpace,
-                            Text(
-                              "set_reminder_for_assistant".tr(),
-                              style: TextStyle(
-                                color: AppColors.grayLight,
-                                fontSize: 14.sp,
-                              ),
+                          ),
+                          if (cubit.selectedReminderDate != null)
+                            CustomTextField(
+                              enabled: false,
+                              hintText:
+                              DateFormat('yyyy-MM-dd').format(cubit.selectedReminderDate!),
                             ),
-                          ],
-                        ),
+                          CustomButton(
+                            title: widget.assistant != null
+                                ? "edit".tr()
+                                : "add_assistant".tr(),
+                            onTap: () {
+                              if (widget.work != null) {
+                                if (widget.assistant != null) {
+                                  cubit.updateAssistant(
+                                    context,
+                                    workId: widget.work!.id!,
+                                    oldAssistant: widget.assistant!,
+                                  );
+                                } else {
+                                  cubit.addAssistant(context,
+                                      workId: widget.work!.id!);
+                                }
+                              } else {
+                                errorGetBar("no_work".tr());
+                              }
+                            },
+                          ),
+                        ],
                       ),
-                     if(selectedDate != null)
-                       CustomTextField(
-                         enabled: false,
-                        hintText: DateFormat('yyyy-MM-dd').format(selectedDate)
-                      ),
-                      CustomButton(title: "add_assistant".tr(),onTap: () {
-                        if (widget.work != null) {
-                          cubit.addAssistantFromWork(context, workId: widget.work!.id ?? 0);
-
-                        } else {
-                          errorGetBar("العمل غير موجود أو لم يتم تحديده");
-                        }
-                      },),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          }),
+                    ),
+                  ],
+                );
+              }),
         ],
       ),
     );
