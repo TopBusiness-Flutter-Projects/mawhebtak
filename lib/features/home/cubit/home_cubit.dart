@@ -30,10 +30,7 @@ class HomeCubit extends Cubit<HomeState> {
     HomeItem(icon: AppIcons.jopIcon, label: 'Jobs'),
     HomeItem(icon: AppIcons.assistantIcon, label: 'Assistant'),
   ];
-  // المتغير الذي يحمل القيمة المختارة
   void removeImage(int indexx) {
-    print(indexx);
-    print(items.length);
     items.removeAt(indexx);
     emit(ImageDeleted());
   }
@@ -79,4 +76,8 @@ class HomeCubit extends Cubit<HomeState> {
   // onChangeSearch(String? value, BuildContext context) {
   //   getHomeFilterData(context: context);
   // }
+
+
+
+
 }

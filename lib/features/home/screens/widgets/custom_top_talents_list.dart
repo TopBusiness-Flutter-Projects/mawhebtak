@@ -45,7 +45,7 @@ class CustomTopTalentsList extends StatelessWidget {
                       right: 8.w, // لو عاوزاها top-left، استخدمي left بدل right
                       child: InkWell(
                           onTap: () {
-                        //    cubit.removeImage(index);
+                            //    cubit.removeImage(index);
                           },
                           child: SvgPicture.asset(AppIcons.removeIcon)),
                     ),
