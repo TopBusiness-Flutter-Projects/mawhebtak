@@ -1,6 +1,7 @@
 import 'package:mawhebtak/features/calender/screens/widgets/calender_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import '../../../core/exports.dart';
+import '../../home/data/models/home_model.dart';
 import '../../home/screens/widgets/custom_app_bar_row.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -122,7 +123,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                     itemBuilder: (context, index) => Padding(
                                           padding: EdgeInsets.only(
                                               left: 20.w, right: 20.w),
-                                          child: const CustomTopEventList(
+                                          child:  CustomTopEventList(
+                                            topEvent: Top(),
                                             isAll: true,
                                           ),
                                         )),

@@ -1,170 +1,196 @@
-// // To parse this JSON data, do
-// //
-// //     final getHomeModel = getHomeModelFromJson(jsonString);
-//
-// import 'dart:convert';
-//
-// import '../../../auth/data/models/login_model.dart';
-//
-// GetHomeModel getHomeModelFromJson(String str) =>
-//     GetHomeModel.fromJson(json.decode(str));
-//
-// String getHomeModelToJson(GetHomeModel data) => json.encode(data.toJson());
-//
-// class GetHomeModel {
-//   String? msg;
-//   Data? data;
-//   int? status;
-//
-//   GetHomeModel({
-//     this.msg,
-//     this.data,
-//     this.status,
-//   });
-//
-//   factory GetHomeModel.fromJson(Map<String, dynamic> json) => GetHomeModel(
-//         msg: json["msg"],
-//         data: json["data"] == null ? null : Data.fromJson(json["data"]),
-//         status: json["status"],
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "msg": msg,
-//         "data": data?.toJson(),
-//         "status": status,
-//       };
-// }
-//
-// class Data {
-//   int? notifications;
-//   UserDataModel? user;
-//   List<ModuleModel>? modules;
-//   List<Offer>? offers;
-//   List<Suitcase>? suitcases;
-//
-//   Data({
-//     this.notifications,
-//     this.user,
-//     this.modules,
-//     this.offers,
-//     this.suitcases,
-//   });
-//
-//   factory Data.fromJson(Map<String, dynamic> json) => Data(
-//         notifications: json["notifications"],
-//         user: json["user"],
-//         modules: json["modules"] == null
-//             ? []
-//             : List<ModuleModel>.from(
-//                 json["modules"]!.map((x) => ModuleModel.fromJson(x))),
-//         offers: json["offers"] == null
-//             ? []
-//             : List<Offer>.from(json["offers"]!.map((x) => Offer.fromJson(x))),
-//         suitcases: json["suitcases"] == null
-//             ? []
-//             : List<Suitcase>.from(
-//                 json["suitcases"]!.map((x) => Suitcase.fromJson(x))),
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "notifications": notifications,
-//         "user": user,
-//         "modules": modules == null
-//             ? []
-//             : List<dynamic>.from(modules!.map((x) => x.toJson())),
-//         "offers": offers == null
-//             ? []
-//             : List<dynamic>.from(offers!.map((x) => x.toJson())),
-//         "suitcases": suitcases == null
-//             ? []
-//             : List<dynamic>.from(suitcases!.map((x) => x.toJson())),
-//       };
-// }
-//
-// class ModuleModel {
-//   int? id;
-//   String? name;
-//   String? image;
-//   int? type;
-//
-//   ModuleModel({
-//     this.id,
-//     this.name,
-//     this.image,
-//     this.type,
-//   });
-//
-//   factory ModuleModel.fromJson(Map<String, dynamic> json) => ModuleModel(
-//         id: json["id"],
-//         name: json["name"],
-//         image: json["image"],
-//         type: json["type"],
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "id": id,
-//         "name": name,
-//         "image": image,
-//         "type": type,
-//       };
-// }
-//
-// class Offer {
-//   int? id;
-//   String? title;
-//   int? discount;
-//   String? image;
-//   String? description;
-//
-//   Offer({
-//     this.id,
-//     this.title,
-//     this.discount,
-//     this.image,
-//     this.description,
-//   });
-//
-//   factory Offer.fromJson(Map<String, dynamic> json) => Offer(
-//         id: json["id"],
-//         title: json["title"],
-//         discount: json["discount"],
-//         image: json["image"],
-//         description: json["description"],
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "id": id,
-//         "title": title,
-//         "discount": discount,
-//         "image": image,
-//         "description": description,
-//       };
-// }
-//
-// class Suitcase {
-//   int? id;
-//   String? title;
-//   int? price;
-//   String? image;
-//
-//   Suitcase({
-//     this.id,
-//     this.title,
-//     this.price,
-//     this.image,
-//   });
-//
-//   factory Suitcase.fromJson(Map<String, dynamic> json) => Suitcase(
-//         id: json["id"],
-//         title: json["title"],
-//         price: json["price"],
-//         image: json["image"],
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "id": id,
-//         "title": title,
-//         "price": price,
-//         "image": image,
-//       };
-// }
+
+class HomeModel {
+  HomeData? data;
+  String? msg;
+  int? status;
+
+  HomeModel({
+    this.data,
+    this.msg,
+    this.status,
+  });
+
+  factory HomeModel.fromJson(Map<String, dynamic> json) => HomeModel(
+    data: json["data"] == null ? null : HomeData.fromJson(json["data"]),
+    msg: json["msg"],
+    status: json["status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "data": data?.toJson(),
+    "msg": msg,
+    "status": status,
+  };
+}
+
+class HomeData {
+  List<Slider>? sliders;
+  List<TopTalent>? userSliders;
+  List<TopTalent>? topTalents;
+  List<Top>? topEvents;
+  List<Top>? topGigs;
+  List<Announcement>? announcements;
+
+  HomeData({
+    this.sliders,
+    this.userSliders,
+    this.topTalents,
+    this.topEvents,
+    this.topGigs,
+    this.announcements,
+  });
+
+  factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
+    sliders: json["sliders"] == null ? [] : List<Slider>.from(json["sliders"]!.map((x) => Slider.fromJson(x))),
+    userSliders: json["user_sliders"] == null ? [] : List<TopTalent>.from(json["user_sliders"]!.map((x) => TopTalent.fromJson(x))),
+    topTalents: json["top_talents"] == null ? [] : List<TopTalent>.from(json["top_talents"]!.map((x) => TopTalent.fromJson(x))),
+    topEvents: json["top_events"] == null ? [] : List<Top>.from(json["top_events"]!.map((x) => Top.fromJson(x))),
+    topGigs: json["top_gigs"] == null ? [] : List<Top>.from(json["top_gigs"]!.map((x) => Top.fromJson(x))),
+    announcements: json["announcements"] == null ? [] : List<Announcement>.from(json["announcements"]!.map((x) => Announcement.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "sliders": sliders == null ? [] : List<dynamic>.from(sliders!.map((x) => x.toJson())),
+    "user_sliders": userSliders == null ? [] : List<dynamic>.from(userSliders!.map((x) => x.toJson())),
+    "top_talents": topTalents == null ? [] : List<dynamic>.from(topTalents!.map((x) => x.toJson())),
+    "top_events": topEvents == null ? [] : List<dynamic>.from(topEvents!.map((x) => x.toJson())),
+    "top_gigs": topGigs == null ? [] : List<dynamic>.from(topGigs!.map((x) => x.toJson())),
+    "announcements": announcements == null ? [] : List<dynamic>.from(announcements!.map((x) => x.toJson())),
+  };
+}
+
+class Announcement {
+  int? id;
+  TopTalent? user;
+  String? image;
+  String? title;
+  String? description;
+  String? location;
+  String? price;
+
+  Announcement({
+    this.id,
+    this.user,
+    this.image,
+    this.title,
+    this.description,
+    this.location,
+    this.price,
+  });
+
+  factory Announcement.fromJson(Map<String, dynamic> json) => Announcement(
+    id: json["id"],
+    user: json["user"] == null ? null : TopTalent.fromJson(json["user"]),
+    image: json["image"],
+    title: json["title"],
+    description: json["description"],
+    location: json["location"],
+    price: json["price"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "user": user?.toJson(),
+    "image": image,
+    "title": title,
+    "description": description,
+    "location": location,
+    "price": price,
+  };
+}
+
+class TopTalent {
+  int? id;
+  String? name;
+  String? image;
+  dynamic headline;
+  int? followersCount;
+
+  TopTalent({
+    this.id,
+    this.name,
+    this.image,
+    this.headline,
+    this.followersCount,
+  });
+
+  factory TopTalent.fromJson(Map<String, dynamic> json) => TopTalent(
+    id: json["id"],
+    name: json["name"],
+    image: json["image"],
+    headline: json["headline"],
+    followersCount: json["followers_count"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "image": image,
+    "headline": headline,
+    "followers_count": followersCount,
+  };
+}
+
+class Slider {
+  int? id;
+  String? name;
+  String? image;
+  String? url;
+  String? urlType;
+
+  Slider({
+    this.id,
+    this.name,
+    this.image,
+    this.url,
+    this.urlType,
+  });
+
+  factory Slider.fromJson(Map<String, dynamic> json) => Slider(
+    id: json["id"],
+    name: json["name"],
+    image: json["image"],
+    url: json["url"],
+    urlType: json["url_type"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "image": image,
+    "url": url,
+    "url_type": urlType,
+  };
+}
+
+class Top {
+  int? id;
+  String? image;
+  String? title;
+  String? description;
+  String? from;
+
+  Top({
+    this.id,
+    this.image,
+    this.title,
+    this.description,
+    this.from,
+  });
+
+  factory Top.fromJson(Map<String, dynamic> json) => Top(
+    id: json["id"],
+    image: json["image"],
+    title: json["title"],
+    description: json["description"],
+    from: json["from"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "image": image,
+    "title": title,
+    "description": description,
+    "from": from,
+  };
+}

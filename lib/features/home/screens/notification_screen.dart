@@ -18,7 +18,10 @@ class NotificationScreen extends StatelessWidget {
          child: ListView.separated(
            shrinkWrap: true,
 
-           itemCount: 30, itemBuilder: (BuildContext context, int index) { return    NotificationWidget(); }, separatorBuilder: (BuildContext context, int index) { return SizedBox(height: 10.h,); },),
+
+           itemCount: 30,
+           itemBuilder: (BuildContext context, int index) {
+             return    NotificationWidget(); }, separatorBuilder: (BuildContext context, int index) { return SizedBox(height: 10.h,); },),
        )
 
      ],

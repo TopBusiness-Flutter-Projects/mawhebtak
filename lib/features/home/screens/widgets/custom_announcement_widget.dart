@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
+import 'package:mawhebtak/features/home/data/models/home_model.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
@@ -11,13 +12,14 @@ class CustomAnnouncementWidget extends StatefulWidget {
     this.isLeftPadding,
     this.isRightPadding,
     this.isAnnouncements,
-    this.isFav,
+    this.isFav, this.announcement,
   });
 
   final bool? isLeftPadding;
   final bool? isRightPadding;
   final bool? isAnnouncements;
   final bool? isFav;
+  final Announcement? announcement;
 
   @override
   State<CustomAnnouncementWidget> createState() => _CustomAnnouncementWidgetState();
@@ -68,9 +70,9 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
+                              AutoSizeText(widget.announcement?.user?.name ?? "Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
                               AutoSizeText(
-                                "Talent / Actor Expert",
+                                widget.announcement?.user?.headline ?? "Talent / Actor Expert",
                                 style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayLight),
                               ),
                             ],
@@ -101,9 +103,9 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                         : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
+                        AutoSizeText(widget.announcement?.user?.name ?? "Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
                         AutoSizeText(
-                          "Talent / Actor Expert",
+                          widget.announcement?.user?.headline ?? "Talent / Actor Expert",
                           style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayLight),
                         ),
                       ],
@@ -111,6 +113,8 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                   ],
                 ),
                 SizedBox(height: 10.h),
+                (widget.announcement?.image == null)?
+
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16.r),
                   child: SizedBox(
@@ -118,14 +122,25 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                     height: 180.w,
                     child: Image.asset(
                       ImageAssets.tasweerPhoto,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ):
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16.r),
+                  child: SizedBox(
+                    width: 290.w,
+                    height: 180.w,
+                    child: Image.network(
+                      widget.announcement?.image ?? "",
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 SizedBox(height: 8.h),
-                AutoSizeText("Talent / Actor Expert", style: getSemiBoldStyle(fontSize: 14.sp, color: AppColors.grayDark)),
+                AutoSizeText(widget.announcement?.title ?? "", style: getSemiBoldStyle(fontSize: 14.sp, color: AppColors.grayDark)),
                 AutoSizeText(
-                  "Hi show my latest scenes with an amazing team Let’s start our work",
+                  widget.announcement?.description ?? "",
                   style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayDark),
                 ),
                 SizedBox(height: 5.h),
@@ -138,7 +153,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                           SizedBox(width: 3.w),
                           Expanded(
                             child: Text(
-                              "Cairo, Nasr City",
+                              widget.announcement?.location ?? "Cairo, Nasr City",
                               style: getRegularStyle(color: AppColors.grayLight, fontSize: 14.sp),
                             ),
                           ),
@@ -151,7 +166,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: AutoSizeText(
-                            "200 L.E",
+                            "${widget.announcement?.price} L.E",
                             style: getRegularStyle(fontSize: 14.sp, color: AppColors.blueLight),
                           ),
                         )

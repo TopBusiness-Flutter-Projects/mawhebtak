@@ -131,7 +131,7 @@ class _CastingScreenState extends State<CastingScreen> {
                                             itemCount:cubit.items.length,
                                             shrinkWrap: true,
                                             itemBuilder: (BuildContext context, int index) {
-                                              return CustomRequestGigstList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
+                                              return CustomRequestGigsList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
                                             },),
                                         ),
                                         if (selectedIndex == 0) Column(
