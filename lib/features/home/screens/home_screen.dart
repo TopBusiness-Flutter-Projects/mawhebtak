@@ -101,12 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
             CustomRow(
               text: 'top_talents',
             ),
-            SizedBox(
-              height: 4.h,
-            ),
 
             SizedBox(
-              height: 4.h,
+              height: 8.h,
             ),
             SizedBox(
               height: 184.h,

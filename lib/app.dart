@@ -134,16 +134,17 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: AppStrings.appName,
           onGenerateRoute: AppRoutes.onGenerateRoute,
-          routes: {
-            '/': (context) => isWithNotification
-                ? initialMessageRcieved?.data['type'] == "add_assistant"
-                    ? WorkDetailsScreen(work:  WorkModel(
-                id: initialMessageRcieved?.data['id'],
-                title: initialMessageRcieved?.data['title'],
-                assistants: []))
-                    : const NotificationScreen()
-                : const SplashScreen()
-          },
+          // routes: {
+          //   '/': (context) => isWithNotification
+          //       ? initialMessageRcieved?.data['type'] == "add_assistant"
+          //           ? WorkDetailsScreen(work:
+          //           WorkModel(
+          //       id: initialMessageRcieved?.data['id'],
+          //       title: initialMessageRcieved?.data['title'],
+          //       assistants: []))
+          //           : const NotificationScreen()
+          //       : const SplashScreen()
+          // },
         ));
   }
 }

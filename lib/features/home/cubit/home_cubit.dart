@@ -24,10 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   String? selectedModule;
   final List<HomeItem> items = [
-    HomeItem(
-        icon: AppIcons.eventCalenderSecondColorIcon,
-        label: 'Events',
-        colorIcon: AppColors.secondPrimary),
+    HomeItem(icon: AppIcons.eventCalenderSecondColorIcon, label: 'Events', colorIcon: AppColors.secondPrimary),
     HomeItem(icon: AppIcons.aboutUs, label: 'Casting'),
     HomeItem(icon: AppIcons.announceIcon, label: 'Announce'),
     HomeItem(icon: AppIcons.jopIcon, label: 'Jobs'),
