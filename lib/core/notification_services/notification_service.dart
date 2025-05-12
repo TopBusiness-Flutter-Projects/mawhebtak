@@ -3,17 +3,18 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import '../exports.dart';
 import '../preferences/preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
 
-
-
 bool isWithNotification = false;
 String notificationId = "0";
 String notificationType = "";
 RemoteMessage? initialMessageRcieved;
+WorkModel? remoteWorModel;
 
 class NotificationService {
   tz.TZDateTime _convertToTZDateTime(DateTime dateTime) {
@@ -21,6 +22,7 @@ class NotificationService {
     final location = tz.local;
     return tz.TZDateTime.from(dateTime, location);
   }
+
   static final NotificationService _instance = NotificationService._internal();
 
   factory NotificationService() => _instance;
@@ -52,19 +54,27 @@ class NotificationService {
     RemoteMessage? initialMessage = await _messaging.getInitialMessage();
     if (initialMessage != null) {
       initialMessageRcieved = initialMessage;
+      log('000000000 ${initialMessageRcieved?.data['type']}');
+      isWithNotification = true;
 
-      // notificationType = initialMessage.data['reference_table'] ?? "";
-      // notificationId = initialMessage.data['modal_id'] ?? "";
       //! open
     }
 
     // Handle notification click when app is in
     //! [ background ]
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-    // Handle notification click when app is in
+    // Handle notification click when app is in forground
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       initialMessageRcieved = message;
 
+      if (message.data['type'] == "add_assistant") {
+        navigatorKey.currentState?.pushNamed(Routes.workDetailsRoute,
+            arguments: WorkModel(
+                id: message.data['id'],
+                title: message.data['title'],
+                assistants: []));
+        print("the message scdule");
+      }
       // if (
 
       //     message.data['type'] == "office_request") {
@@ -164,16 +174,24 @@ class NotificationService {
       ///! [ON CLIECK LOCAL NOTFICATION]
       onDidReceiveNotificationResponse: (details) {
         final payload = details.payload;
-        log('Notification payload: $payload userType==>');
 
+        log('Notification payload: $payload userType==>');
         try {
           if (payload != null) {
             Map<String, dynamic> message;
 
             message = jsonDecode(payload);
+            log('Notification payload: ${message['type']} userType==>');
 
             log('Notification message after parsing: $message');
-
+            if (message['type'] == "add_assistant") {
+              navigatorKey.currentState?.pushNamed(Routes.workDetailsRoute,
+                  arguments: WorkModel(
+                      id: message['id'],
+                      title: message['title'],
+                      assistants: []));
+              print("the message scdule");
+            }
             //   if (message['type'] == "office_delete_request" ||
             //       message['type'] == "change_type" ||
             //       message['type'] == "court_case_cancel" ||
@@ -245,7 +263,7 @@ class NotificationService {
     required DateTime scheduledTime,
     String? payload,
   }) async {
-    const androidDetails =   AndroidNotificationDetails(
+    const androidDetails = AndroidNotificationDetails(
       'your_channel_id_mawhebtak',
       'your_channel_name_mawhebtak',
       channelDescription: 'your_channel_description_mawhebtak',
@@ -265,13 +283,14 @@ class NotificationService {
       notificationDetails,
       // matchDateTimeComponents: DateTimeComponents.time,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      payload: payload,
     );
   }
+
   Future<void> cancelNotification(int id) async {
     await _flutterLocalNotificationsPlugin.cancel(id);
     print('Notification with ID $id canceled');
   }
-
 }
 
 class MessageStateManager {
@@ -298,5 +317,3 @@ class MessageStateManager {
     return roomId != null && _activeChatRoomIds.contains(roomId);
   }
 }
-
-

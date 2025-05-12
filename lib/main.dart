@@ -5,7 +5,6 @@ import 'package:mawhebtak/initialization.dart';
 import 'app.dart';
 
 import 'core/utils/restart_app_class.dart';
-//! Make TEst and validation on forget and pass and fields
 
 void main() async {
   await initialization();
