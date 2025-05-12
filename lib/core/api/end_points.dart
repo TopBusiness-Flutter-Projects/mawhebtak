@@ -6,7 +6,7 @@ class EndPoints {
       kReleaseMode
           ? 'mawhebtak.topbusiness.ebharbook.com/api/v1/'
           : 'http://192.168.1.18:8000/api/v1/';
-
+//! Authentication
   static const String loginUrl = '${baseUrl}login';
   static const String homeUrl = '${baseUrl}home';
   static const String registerUrl = '${baseUrl}register';
