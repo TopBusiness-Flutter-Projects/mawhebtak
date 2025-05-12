@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/home/cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubit/home_state.dart';
-
 import '../../../../core/exports.dart';
 import 'follow_button.dart';
 
@@ -46,7 +45,7 @@ class CustomTopTalentsList extends StatelessWidget {
                       right: 8.w, // لو عاوزاها top-left، استخدمي left بدل right
                       child: InkWell(
                           onTap: () {
-                            cubit.removeImage(index);
+                        //    cubit.removeImage(index);
                           },
                           child: SvgPicture.asset(AppIcons.removeIcon)),
                     ),

@@ -107,7 +107,8 @@ class AssistantCubit extends Cubit<AssistantState> {
         id: newAssistant.id ?? 0,
         body: newAssistant.description ?? "",
         scheduledTime: newAssistant.remindedTime!,
-        payload: jsonEncode({
+        payload: jsonEncode(
+            {
           "type": "add_assistant",
           "id":workId,
           "title":workTitle,

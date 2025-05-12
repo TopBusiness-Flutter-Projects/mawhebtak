@@ -54,7 +54,6 @@ class NotificationService {
     RemoteMessage? initialMessage = await _messaging.getInitialMessage();
     if (initialMessage != null) {
       initialMessageRcieved = initialMessage;
-      log('000000000 ${initialMessageRcieved?.data['type']}');
       isWithNotification = true;
 
       //! open
@@ -73,7 +72,6 @@ class NotificationService {
                 id: message.data['id'],
                 title: message.data['title'],
                 assistants: []));
-        print("the message scdule");
       }
       // if (
 
