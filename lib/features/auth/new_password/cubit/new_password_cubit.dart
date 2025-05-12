@@ -15,7 +15,8 @@ class NewPasswordCubit extends Cubit<NewPasswordState> {
   TextEditingController confirmPasswordController = TextEditingController();
 
   resetPassword(BuildContext context) async {
-    AppWidgets.createProgressDialog(context: context, msg: 'loading'.tr());
+    AppWidgets.create2ProgressDialog(context
+    );
     emit(ResetPasswordStateLoading());
     try {
       final res = await api.resetPassword(

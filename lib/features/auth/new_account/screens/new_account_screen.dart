@@ -29,6 +29,9 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
   bool isLoaded = true;
 
   List<MainRegisterUserTypesData>? listType;
+
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<NewAccountCubit>();
@@ -43,8 +46,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
           listType = state.data.data ?? [];
           isLoaded = false;
         } else if (state is LoadingAddNewAccountState) {
-          AppWidgets.createProgressDialog(
-              context: context, msg: 'loading'.tr());
+          AppWidgets.create2ProgressDialog(context);
         } else if (state is ErrorAddNewAccountState) {
           errorGetBar(state.errorMessage);
           Navigator.pop(context);
@@ -53,123 +55,164 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomSimpleAppbar(title: "new_account".tr()),
-                BlocBuilder<NewAccountCubit, NewAccountState>(
-                    builder: (context, state) {
-                  return Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 20.h),
-                            isLoaded
-                                ? SizedBox(
-                                    height: 3.h,
-                                    child: LinearProgressIndicator(
-                                        color: AppColors.primary))
-                                : RoleSelectionWidget(list: listType ?? []),
-                            Padding(
-                                padding: EdgeInsets.only(top: 20.h),
-                                child: Text("full_name".tr(),
-                                    style: TextStyle(
-                                        color: AppColors.blackLite,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.sp))),
-                            CustomTextField(
+            body: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomSimpleAppbar(title: "new_account".tr()),
+                  BlocBuilder<NewAccountCubit, NewAccountState>(
+                      builder: (context, state) {
+                    return Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 20.h),
+                              isLoaded
+                                  ? SizedBox(
+                                      height: 3.h,
+                                      child: LinearProgressIndicator(
+                                          color: AppColors.primary))
+                                  : RoleSelectionWidget(list: listType ?? []),
+                              Padding(
+                                  padding: EdgeInsets.only(top: 20.h),
+                                  child: Text("full_name".tr(),
+                                      style: TextStyle(
+                                          color: AppColors.blackLite,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.sp))),
+                              CustomTextField(
                                 controller: cubit.fullNameController,
-                                hintText: "full name"),
-                            Padding(
-                              padding: EdgeInsets.only(top: 20.h, bottom: 10.h),
-                              child: Text(
-                                "email_address".tr(),
-                                style: TextStyle(
-                                    color: AppColors.blackLite,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14.sp),
+                                hintText: "ahmed ...",
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'please_enter_name'.tr();
+                                  }
+                                  return null;
+                                },
                               ),
-                            ),
-                            CustomTextField(
-                              controller: cubit.emailAddressController,
-                              hintText: "email@gmail.com",
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 20.h, bottom: 10.h),
-                              child: Text(
-                                "mobile_number".tr(),
-                                style: TextStyle(
-                                    color: AppColors.blackLite,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14.sp),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 20.h, bottom: 10.h),
+                                child: Text(
+                                  "email_address".tr(),
+                                  style: TextStyle(
+                                      color: AppColors.blackLite,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp),
+                                ),
                               ),
-                            ),
-                            CustomTextField(
-                              controller: cubit.mobileNumberController,
-                              hintText: "01xxxxxxxx",
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 20.h, bottom: 10.h),
-                              child: Text(
-                                "password".tr(),
-                                style: TextStyle(
-                                    color: AppColors.blackLite,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14.sp),
+                              CustomTextField(
+                                controller: cubit.emailAddressController,
+                                hintText: "email@gmail.com",
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'please_enter_email'.tr();
+                                  }
+                                  return null;
+                                },
                               ),
-                            ),
-                            CustomTextField(
-                              controller: cubit.passwordController,
-                              hintTextSize: 16.sp,
-                              hintText: "● ● ● ● ● ● ● ● ● ●",
-                              isPassword: true,
-                            ),
-                            CustomButton(
-                              title: "register".tr(),
-                              onTap: () {
-                                context.read<VerificationCubit>().validateData(
-                                    context,
-                                    email: cubit.emailAddressController.text,
-                                    name: cubit.fullNameController.text,
-                                    password: cubit.passwordController.text,
-                                    phone: cubit.mobileNumberController.text,
-                                    userTypeId: cubit.selectedUserType?.id
-                                            ?.toString() ??
-                                        '');
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 20.h, bottom: 10.h),
+                                child: Text(
+                                  "mobile_number".tr(),
+                                  style: TextStyle(
+                                      color: AppColors.blackLite,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp),
+                                ),
+                              ),
+                              CustomTextField(
+                                controller: cubit.mobileNumberController,
+                                hintText: "01xxxxxxxx",
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'please_enter_phone_number'.tr();
+                                  }
+                                  return null;
+                                },
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 20.h, bottom: 10.h),
+                                child: Text(
+                                  "password".tr(),
+                                  style: TextStyle(
+                                      color: AppColors.blackLite,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14.sp),
+                                ),
+                              ),
+                              CustomTextField(
+                                controller: cubit.passwordController,
+                                hintTextSize: 16.sp,
+                                hintText: "● ● ● ● ● ● ● ● ● ●",
+                                isPassword: true,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'please_enter_password'.tr();
+                                  }
+                                  return null;
+                                },
+                              ),
+                              CustomButton(
+                                  title: "register".tr(),
+                                  onTap: () {
+                                    if (cubit.selectedUserType == null) {
+                                      errorGetBar(
+                                          'please_fill_all_fields'.tr());
+                                      return;
+                                    }
 
-//make validate
+                                    if (formKey.currentState!.validate()) {
+                                      final verificationCubit =
+                                          context.read<VerificationCubit>();
 
-                                // cubit.register(context);
-                              },
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Or sign up with",
-                                    style: TextStyle(
-                                        color: AppColors.blackLite,
-                                        fontSize: 16.sp),
-                                  ),
-                                ],
+                                      verificationCubit.validateData(
+                                        context,
+                                        email:
+                                            cubit.emailAddressController.text,
+                                        name: cubit.fullNameController.text,
+                                        password: cubit.passwordController.text,
+                                        phone:
+                                            cubit.mobileNumberController.text,
+                                        userTypeId: cubit.selectedUserType?.id
+                                                ?.toString() ??
+                                            '',
+                                      );
+                                    }
+                                  }),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(top: 10.h, bottom: 10.h),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "or_sign_up_with".tr(),
+                                      style: TextStyle(
+                                          color: AppColors.blackLite,
+                                          fontSize: 16.sp),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            const GoogleAndFacebookWidget(),
-                          ],
+                              const GoogleAndFacebookWidget(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                })
-              ],
+                    );
+                  })
+                ],
+              ),
             ),
           ),
         );

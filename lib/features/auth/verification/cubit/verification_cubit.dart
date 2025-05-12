@@ -1,5 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
-
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
@@ -14,7 +12,14 @@ class VerificationCubit extends Cubit<VerificationState> {
   VerificationRepo api;
 
   String? correctOTP = "";
+  DateTime? timerDate;
   TextEditingController pinController = TextEditingController();
+  // Method to reset timer and OTP
+  void resetTimerAndOTP() {
+    timerDate = null;
+    correctOTP = '';
+    emit(VerificationStateUpdated()); // Emit a state update if needed
+  }
 
   validateOTP(bool isRegister, BuildContext context) {
     if (pinController.text != correctOTP) {
@@ -28,8 +33,7 @@ class VerificationCubit extends Cubit<VerificationState> {
         Navigator.pushNamed(context, Routes.newPasswordRoute);
       }
       emit(state.copyWith(errorMessage: null));
-
-      // Navigate or do something
+      timerDate = null;
     }
   }
 
@@ -45,7 +49,7 @@ class VerificationCubit extends Cubit<VerificationState> {
     required String phone,
     required String userTypeId,
   }) async {
-    AppWidgets.createProgressDialog(context: context, msg: 'loading'.tr());
+    AppWidgets.create2ProgressDialog(context);
     emit(ValidateDataStateLoading());
     try {
       final res =
@@ -58,7 +62,7 @@ class VerificationCubit extends Cubit<VerificationState> {
           Navigator.pushNamed(context, Routes.verificationRoute,
               arguments: true);
           correctOTP = r.data?.otp.toString();
-
+          timerDate = r.data?.otpExpired;
           emit(ValidateDataStateLoaded());
         } else {
           errorGetBar(r.msg ?? '');

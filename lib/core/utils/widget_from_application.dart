@@ -50,12 +50,12 @@ class AppWidgets {
     );
   }
 
-  static create2ProgressDialog(BuildContext context, String? msg) {
+  static create2ProgressDialog(BuildContext context) {
     showDialog(
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          return const CustomLoadingIndicator();
+          return const CustomLoadingIndicator(withLogo: true,);
         });
   }
 }

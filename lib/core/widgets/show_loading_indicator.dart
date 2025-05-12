@@ -1,8 +1,6 @@
-
 import 'dart:io';
 
 import '../exports.dart';
-
 
 class CustomLoadingIndicator extends StatefulWidget {
   const CustomLoadingIndicator({super.key, this.withLogo = true});
@@ -37,19 +35,8 @@ class _CustomLoadingIndicatorState extends State<CustomLoadingIndicator>
         ? Stack(
             alignment: Alignment.center,
             children: [
-              Image.asset(
-                ImageAssets.logo2Image,
-                height: 15.h,
-                width: 15.h,
-              ),
-              // Platform specific loading indicator in the background
               Platform.isIOS
-                  ?
-                  // const CupertinoActivityIndicator(
-                  //         animating: true,
-                  //         radius: 30,
-                  //       )
-                  SizedBox(
+                  ? SizedBox(
                       height: 55.h, // Increased size
                       width: 55.h, // Increased size
                       child: CircularProgressIndicator(
@@ -69,7 +56,7 @@ class _CustomLoadingIndicatorState extends State<CustomLoadingIndicator>
               RotationTransition(
                 turns: _controller,
                 child: Image.asset(
-                  ImageAssets.logo3Image,
+                  ImageAssets.logoImage,
                   height: 50.h,
                   width: 50.h,
                 ),

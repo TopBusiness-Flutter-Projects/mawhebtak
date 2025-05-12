@@ -24,8 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginStateLoading) {
-          AppWidgets.createProgressDialog(
-              context: context, msg: 'loading'.tr());
+          AppWidgets.create2ProgressDialog(context);
         } else if (state is LoginStateLoaded) {
           Navigator.pop(context);
           Navigator.pushReplacementNamed(context, Routes.mainRoute);
@@ -64,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter email';
+                              return 'please_enter_email'.tr();
                             }
                             return null;
                           },
@@ -86,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter password';
+                              return 'please_enter_password'.tr();
                             }
                             return null;
                           },
@@ -185,6 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
+                        10.h.verticalSpace
                       ],
                     ),
                   )

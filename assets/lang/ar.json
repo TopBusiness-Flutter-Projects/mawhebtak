@@ -200,10 +200,14 @@
   "update_assistant_successful": "تم التعديل بنجاح !",
   "no_assistant": "لا يوجد مساعدات حتي الان !",
   "loading": "جاري التحميل",
-
-  "error_msg":"حدث خطأ ما، يرجى المحاولة مرة أخرى",
+  "error_msg": "حدث خطأ ما، يرجى المحاولة مرة أخرى",
   "delete_assistant_successful": "تم حذف المساعدة بنجاح !",
-  "no_work":"العمل غير موجود أو لم يتم تحديده"
-
-
+  "no_work": "العمل غير موجود أو لم يتم تحديده",
+  "please_fill_all_fields": "يرجى ملء جميع الحقول",
+  "or_sign_up_with": "او تسجيل الدخول باستخدام",
+  "please_enter_password": "من فضلك ادخل كلمة المرور",
+  "please_enter_email": "من فضلك ادخل البريد الالكتروني",
+  "please_enter_name": "من فضلك ادخل الاسم",
+  "please_enter_phone_number": "من فضلك ادخل رقم الهاتف",
+  "please_enter_verifification_code":"من فضلك ادخل رمز التحقق"
 }

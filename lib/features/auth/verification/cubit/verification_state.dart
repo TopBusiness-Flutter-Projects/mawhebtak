@@ -22,3 +22,5 @@ class ValidateDataStateLoading extends VerificationState {}
 class ValidateDataStateLoaded extends VerificationState {}
 
 class ValidateDataStateError extends VerificationState {}
+
+class VerificationStateUpdated extends VerificationState {}

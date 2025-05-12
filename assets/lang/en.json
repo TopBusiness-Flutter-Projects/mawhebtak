@@ -199,5 +199,18 @@
     "no_work":"The job does not exist or has not been identified.",
     "description_from_new_work": "Please add new work to start saving your racords",
     "job_description_sample": "Mawhebtak is a big platform that connects all artists in all fields to form a large artistic community in Egypt.",
-    "error_msg": "Something went wrong, please try again"
+    "error_msg": "Something went wrong, please try again",
+      "please_fill_all_fields":"Please fill all fields",
+      "or_sign_up_with":"Or sign up with",
+      "please_enter_password":"Please enter password",
+      "please_enter_email":"Please enter email",
+      "please_enter_name":"Please enter name",
+      "please_enter_phone_number":"Please enter phone number",
+        "please_enter_verifification_code":"Please enter your otp code"
+
+    
+      
+
+  
+
 }

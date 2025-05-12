@@ -70,6 +70,7 @@ class CustomSimpleAppbar extends StatelessWidget {
                   child: Text(
                     textAlign: TextAlign.center,
                     title,
+                    maxLines: 1,
                     style: TextStyle(
                         fontSize: 16.sp, color: titleColor ?? AppColors.black),
                   ),

@@ -2,19 +2,25 @@ import 'package:easy_localization/easy_localization.dart';
 
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
+import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.dart';
 import 'package:mawhebtak/features/auth/verification/cubit/verification_state.dart';
 import 'package:pinput/pinput.dart';
 
-class VerificationScreen extends StatelessWidget {
+import 'widget/custom_timer_widget.dart';
+
+class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key, required this.isRegister});
 
   final bool isRegister;
 
   @override
-  Widget build(BuildContext context) {
-    var cubit = context.read<VerificationCubit>();
+  State<VerificationScreen> createState() => _VerificationScreenState();
+}
 
+class _VerificationScreenState extends State<VerificationScreen> {
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -22,6 +28,9 @@ class VerificationScreen extends StatelessWidget {
             CustomSimpleAppbar(title: "verification".tr()),
             BlocBuilder<VerificationCubit, VerificationState>(
                 builder: (context, state) {
+              var cubit = context.read<VerificationCubit>();
+              var cubit2 = context.read<NewAccountCubit>();
+
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -50,7 +59,7 @@ class VerificationScreen extends StatelessWidget {
                           bottom: 10.h,
                         ),
                         child: Text(
-                          "description_otp".tr() + 'sanaa@gmail.com',
+                          '${"description_otp".tr()} ${cubit2.emailAddressController.text}',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: AppColors.darkGray.withOpacity(0.5),
@@ -60,10 +69,7 @@ class VerificationScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                        top: 10.h,
-                        bottom: 10.h,
-                      ),
+                      padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
                       child: Pinput(
                         // onChanged: (value) {
                         //   cubit.clearError();
@@ -126,7 +132,7 @@ class VerificationScreen extends StatelessWidget {
 
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter the code';
+                            return 'please_enter_verifification_code'.tr();
                           }
                           return null;
                         },
@@ -140,8 +146,9 @@ class VerificationScreen extends StatelessWidget {
                       child: CustomButton(
                         title: "verify".tr(),
                         onTap: () {
-                          cubit.validateOTP(isRegister, context);
+                          cubit.validateOTP(widget.isRegister, context);
                           //! Regiser
+
                           // Navigator.pushNamed(context, Routes.newPasswordRoute);
                         },
                       ),
@@ -152,20 +159,37 @@ class VerificationScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            "00:10",
-                            style: TextStyle(
-                                fontSize: 14.sp,
-                                color: AppColors.secondPrimary),
-                          ),
+                          if (cubit.timerDate != null)
+                            CountdownTimer(
+                                targetTime: cubit.timerDate ??
+                                    DateTime.now()
+                                        .add(const Duration(seconds: 60))),
                           SizedBox(
                             width: 5.w,
                           ),
-                          Text(
-                            "send_again".tr(),
-                            style: TextStyle(
-                                fontSize: 14.sp,
-                                color: AppColors.darkGray.withOpacity(0.8)),
+                          InkWell(
+                            onTap: () {
+                              var cubitx = context.read<NewAccountCubit>();
+                              if (cubit.timerDate == null) {
+                                cubit.validateData(
+                                  context,
+                                  email: cubitx.emailAddressController.text,
+                                  name: cubitx.fullNameController.text,
+                                  password: cubitx.passwordController.text,
+                                  phone: cubitx.mobileNumberController.text,
+                                  userTypeId:
+                                      cubitx.selectedUserType?.id?.toString() ??
+                                          '',
+                                );
+                              }
+                            },
+                            child: Text("send_again".tr(),
+                                style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: cubit.timerDate == null
+                                        ? AppColors.darkGray.withOpacity(0.8)
+                                        : AppColors.darkGray.withOpacity(0.4))),
                           ),
                         ],
                       ),
