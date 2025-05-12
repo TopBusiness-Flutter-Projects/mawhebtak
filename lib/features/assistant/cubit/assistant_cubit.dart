@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
@@ -30,13 +31,21 @@ class AssistantCubit extends Cubit<AssistantState> {
   }
   List<WorkModel>? works;
   Future<void> deleteWork(BuildContext context, {required int workId}) async {
+    final assistants = await WorkHiveManager.getAssistants(workId);
+    for (var assistant in assistants!) {
+      if (assistant.remindedTime != null) {
+        notificationService!.cancelNotification(
+          assistant.id!.remainder(2147483647),
+        );
+      }
+    }
     await WorkHiveManager.removeWork(workId);
-    refreshWorks();
-    // notificationService!.cancelNotification();
-    successGetBar("delete_work_successful".tr());
+    await refreshWorks();
     clearWorksInput();
+    successGetBar("delete_work_successful".tr());
     emit(DeleteNewWorkState());
   }
+
 
   Future<void> updateWork(BuildContext context,
       {required int workId, required String newTitle}) async {
@@ -73,7 +82,7 @@ class AssistantCubit extends Cubit<AssistantState> {
 
   List<Assistant>? assistants;
   Future<void> addAssistant(BuildContext context,
-      {required int workId}) async {
+      {required int workId,required String workTitle}) async {
     if (assistantTitleController.text.trim().isEmpty) {
       errorGetBar("assistant_title_required".tr());
       return;
@@ -92,13 +101,21 @@ class AssistantCubit extends Cubit<AssistantState> {
 
 
     await WorkHiveManager.addAssistant(workId, newAssistant);
-    notificationService!.scheduleNotification(
-      title: newAssistant.title ?? "",
-      id: newAssistant.id ?? 0,
-      body: newAssistant.description ?? "",
-      scheduledTime: newAssistant.remindedTime!,
-      payload: '',
-    );
+    if(newAssistant.remindedTime !=null){
+      notificationService!.scheduleNotification(
+        title: newAssistant.title ?? "",
+        id: newAssistant.id ?? 0,
+        body: newAssistant.description ?? "",
+        scheduledTime: newAssistant.remindedTime!,
+        payload: jsonEncode(
+            {
+          "type": "add_assistant",
+          "id":workId,
+          "title":workTitle,
+        }),
+      );
+    }
+
     clearAssistantInput();
     successGetBar("add_assistant_successful".tr());
     clearMedia();

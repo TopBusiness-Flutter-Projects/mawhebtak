@@ -12,16 +12,15 @@ import 'firebase_options.dart';
 
 import 'package:timezone/data/latest_all.dart' as tz;
 
-
 NotificationService? notificationService;
 Future<void> initialization() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  tz.initializeTimeZones(); // ضعها في الأعلى لضمان التوقيت
+  tz.initializeTimeZones();
 
   notificationService = NotificationService();
-  await notificationService!.initialize(); // <-- استخدم نفس المثيل هنا
+  await notificationService!.initialize();
 
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();

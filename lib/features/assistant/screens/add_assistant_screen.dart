@@ -141,7 +141,9 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                                   );
                                 } else {
                                   cubit.addAssistant(context,
-                                      workId: widget.work!.id!);
+                                      workId: widget.work!.id!,
+                                     workTitle: widget.work?.title ?? ""
+                                  );
                                 }
                               } else {
                                 errorGetBar("no_work".tr());

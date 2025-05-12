@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../config/routes/app_routes.dart';
+import '../../../../core/notification_services/notification_service.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,8 +19,10 @@ class _SplashScreenState extends State<SplashScreen>
   late Timer _timer;
 
   _goNext() {
-    _getStoreUser();
-  }
+    log('PPPPPPPP$isWithNotification${  initialMessageRcieved?.data['type']}');
+
+      _getStoreUser();
+    }
 
   _startDelay() async {
     _timer = Timer(
@@ -54,7 +58,6 @@ class _SplashScreenState extends State<SplashScreen>
       );
     }
   }
-
 
   @override
   void initState() {
