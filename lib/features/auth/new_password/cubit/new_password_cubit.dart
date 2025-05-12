@@ -6,7 +6,6 @@ import 'package:mawhebtak/features/auth/new_password/cubit/new_password_state.da
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/dialogs.dart';
 import '../../../../core/utils/widget_from_application.dart';
-import '../../verification/cubit/verification_cubit.dart';
 import '../data/repos/new_password_repo.dart';
 
 class NewPasswordCubit extends Cubit<NewPasswordState> {

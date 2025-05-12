@@ -15,7 +15,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   TextEditingController emailController = TextEditingController();
 
   forgetPassword(BuildContext context) async {
-    AppWidgets.createProgressDialog(context: context, msg: 'loading'.tr());
+    AppWidgets.create2ProgressDialog(context, 'loading'.tr());
     emit(ForgetPasswordStateLoading());
     try {
       final res = await api.forgetPassword(

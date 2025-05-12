@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/show_loading_indicator.dart';
 import 'app_colors.dart';
 
 class AppWidgets {
@@ -47,5 +48,14 @@ class AppWidgets {
         duration: Duration(milliseconds: message == "loading" ? 1500 : 3000),
       ),
     );
+  }
+
+  static create2ProgressDialog(BuildContext context, String? msg) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return const CustomLoadingIndicator();
+        });
   }
 }
