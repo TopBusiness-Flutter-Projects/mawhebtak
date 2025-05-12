@@ -1,16 +1,29 @@
-abstract class HomeState {}
+import 'package:equatable/equatable.dart';
+import 'package:mawhebtak/features/home/data/models/home_model.dart';
 
-class HomeInitial extends HomeState {}
-class LoadingHomeData extends HomeState {}
-class ErrorGetHomeData extends HomeState {}
-class SucessGetHomeData extends HomeState {}
-class SuccessCheckCopouneState extends HomeState {}
-class FailureCheckCopouneState extends HomeState {}
-class LoadingCheckCopouneState extends HomeState {}
-class LoadingHomeFilterDataState extends HomeState {}
-class ErrorHomeFilterDataState extends HomeState {}
-class HomeModuleSelected extends HomeState {}
-class SucessHomeFilterDataState extends HomeState {}
-class IndexChanged extends HomeState {}
-class ImageDeleted extends HomeState {}
+sealed class HomeState extends Equatable {
+  const HomeState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class HomeStateLoading extends HomeState {}
+
+final class HomeStateError extends HomeState {
+  final String? errorMessage;
+  const HomeStateError(this.errorMessage);
+
+  @override
+  List<Object?> get props => [errorMessage];
+}
+
+final class HomeStateLoaded extends HomeState {
+  final HomeModel? homeModel;
+  const HomeStateLoaded(this.homeModel);
+
+  @override
+  List<Object?> get props => [homeModel];
+}
+
 

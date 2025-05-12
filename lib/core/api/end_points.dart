@@ -9,6 +9,7 @@ class EndPoints {
 
   static const String loginUrl = '${baseUrl}login';
   static const String homeUrl = '${baseUrl}home';
+  static const String seeAllEventUrl = '${baseUrl}get-data?model=Event';
   static const String registerUrl = '${baseUrl}register';
   static const String validateDataUrl = '${baseUrl}validate-data';
   static const String getDataUserTypeUrl = '${baseUrl}get-data?model=UserType';

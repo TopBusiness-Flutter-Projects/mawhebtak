@@ -25,7 +25,7 @@ class AnnouncementScreen extends StatelessWidget {
           itemCount:cubit.items.length,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
-            return CustomRequestGigstList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
+            return CustomRequestGigsList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
           },),
       ),
       CustomAnnouncementWidget(isAnnouncements: true,),

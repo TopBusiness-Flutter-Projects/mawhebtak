@@ -1,16 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mawhebtak/features/home/data/models/home_model.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import 'follow_button.dart';
 
-class CustomRequestGigstList extends StatelessWidget {
-  const CustomRequestGigstList({super.key,
-    required this.isLeftPadding,required this.isRightPadding
+class CustomRequestGigsList extends StatelessWidget {
+  const CustomRequestGigsList({super.key,
+    required this.isLeftPadding,required this.isRightPadding, this.requestGigs
   });
   final bool isLeftPadding;
   final bool isRightPadding;
+  final Top? requestGigs;
   @override
   Widget build(BuildContext context) {
     return  Padding(
@@ -18,7 +20,7 @@ class CustomRequestGigstList extends StatelessWidget {
       child: Stack(
         alignment: Alignment.centerLeft, // Add alignment to the Stack
         children: [
-          // Image container
+          (requestGigs?.image == null) ?
           ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
             child: SizedBox(
@@ -29,17 +31,18 @@ class CustomRequestGigstList extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
+          ):
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16.r),
+            child: SizedBox(
+              width: 137.w, // Match image width
+              height: 137.w, // Match image height
+              child: Image.network(
+                requestGigs?.image ?? "",
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-          // Overlay with semi-transparent background for better text visibility
-          // ClipRRect(
-          //   borderRadius: BorderRadius.circular(16.r),
-          //   child: Container(
-          //     height: 184.h,
-          //     width: 198.w,
-          //     color: Colors.black.withOpacity(0.5), // Semi-transparent overlay
-          //   ),
-          // ),
-          // Content to display over image
           InkWell(
             onTap: (){
               Navigator.pushNamed(context, Routes.gigsDetailsScreen);
@@ -53,20 +56,19 @@ class CustomRequestGigstList extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end, // Center vertically
                   crossAxisAlignment: CrossAxisAlignment.start, // Center horizontally
                   children: [
-                    SizedBox(height: 80),
 
                     Text(
-
-                      "Sports",
+                      requestGigs?.title ?? "",
                       style: getMediumStyle(color: AppColors.white, fontSize: 14.sp,),
                       textAlign: TextAlign.end,
+                      maxLines: 2,
                     ),
 
 
 
 
 
-                    SizedBox(height: 5.h,)
+                    5.h.verticalSpace,
                   ],
                 ),
               ),

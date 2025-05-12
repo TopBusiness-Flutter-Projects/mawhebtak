@@ -1,18 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
-
-import '../../../../config/routes/app_routes.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import '../../../../core/exports.dart';
-import '../../../../core/widgets/custom_button.dart';
 import 'follow_button.dart';
 
 class UnderCustomRow extends StatelessWidget {
-  const UnderCustomRow({super.key});
-
+  const UnderCustomRow({super.key, this.userTalent});
+ final TopTalent? userTalent;
   @override
   Widget build(BuildContext context) {
     return         Positioned(
-      bottom:140,
-      // left: 30,
+      bottom:100.h,
+
       child: SizedBox(
         width: getWidthSize(context),
         child: Row(
@@ -21,7 +20,7 @@ class UnderCustomRow extends StatelessWidget {
           children: [
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:  EdgeInsets.all(8.0.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -36,15 +35,15 @@ class UnderCustomRow extends StatelessWidget {
                       child: Image.asset(ImageAssets.profileImage),
                     ),
                   ),
-                  Text("Ahmed Mokhtar", style: getMediumStyle(color: AppColors.white,fontSize: 16.sp)),
-                  Text("Talent / Actor Expert", style: getRegularStyle(color: AppColors.grayText,fontSize: 14.sp)),
+                  Text(userTalent?.name ?? "", style: getMediumStyle(color: AppColors.white,fontSize: 16.sp)),
+                  Text(userTalent?.headline ?? "Talent / Actor Expert", style: getRegularStyle(color: AppColors.grayText,fontSize: 14.sp)),
                //   CustomButton(title: 'Follow', style: getMediumStyle(color: AppColors.white))
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:  EdgeInsets.all(8.0.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -54,7 +53,7 @@ class UnderCustomRow extends StatelessWidget {
                     width: 40.w,
                     child: Container(),
                   ),
-                  Text("20 K followers", style: getMediumStyle(color: AppColors.white,fontSize: 14.sp)),
+                  Text("${userTalent?.followersCount ?? 20}  followers", style: getMediumStyle(color: AppColors.white,fontSize: 14.sp)),
                   SizedBox(height: 5.h,),
                   // Text("Ahmed Mokhtar", style: getMediumStyle(color: AppColors.white)),
                   CustomContainerButton(title: "follow".tr(),)

@@ -1,15 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mawhebtak/features/home/data/models/home_model.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import 'follow_button.dart';
 
 class CustomTopEventList extends StatelessWidget {
-  const CustomTopEventList({super.key, this.isLeftPadding, this.isRightPadding,this.isAll});
+  const CustomTopEventList({super.key, this.isLeftPadding, this.isRightPadding,this.isAll, required this.topEvent});
   final bool ?isLeftPadding;
   final bool ?isRightPadding;
   final bool ?isAll;
+  final Top? topEvent;
   @override
   Widget build(BuildContext context) {
     return  Padding(
@@ -18,6 +20,18 @@ class CustomTopEventList extends StatelessWidget {
         alignment: Alignment.centerLeft, // Add alignment to the Stack
         children: [
           // Image container
+          topEvent?.image != null ?
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.r),
+            child: SizedBox(
+              height: 200.h,
+              width: isAll??false?getWidthSize(context)/.9:287.w,
+              child: Image.network(
+                topEvent?.image ?? "",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ):
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
             child: SizedBox(

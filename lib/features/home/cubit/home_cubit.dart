@@ -1,83 +1,39 @@
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:travel_club/core/exports.dart';
-// import 'package:travel_club/features/home/data/models/home_model.dart';
-// import '../../entertainment/data/model/get_ways_model.dart';
-// import '../../food/data/models/get_catogrey_model.dart';
-// import '../../food/data/models/get_resturant_model.dart';
-// import '../../other_services/data/models/get_others_model.dart';
-// import '../../other_services/data/models/sub_services_model.dart';
-// import '../../residence/data/models/lodges_model.dart';
-// import '../../transportation/data/models/get_companies_model.dart';
-
+import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import '../../../core/exports.dart';
-import '../data/models/home_filter_model.dart';
-
 import '../data/repo/home_repo_impl.dart';
 import '../screens/home_screen.dart';
 import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(this.api) : super(HomeInitial());
+  HomeCubit(this.api) : super(HomeStateLoading());
   HomeRepo api;
-  int moduleslenth = 5;
   TextEditingController searchController = TextEditingController();
-
-  String? selectedModule;
   final List<HomeItem> items = [
-    HomeItem(icon: AppIcons.eventCalenderSecondColorIcon, label: 'Events', colorIcon: AppColors.secondPrimary),
+    HomeItem(
+        icon: AppIcons.eventCalenderSecondColorIcon,
+        label: 'Events',
+        colorIcon: AppColors.secondPrimary),
     HomeItem(icon: AppIcons.aboutUs, label: 'Casting'),
     HomeItem(icon: AppIcons.announceIcon, label: 'Announce'),
     HomeItem(icon: AppIcons.jopIcon, label: 'Jobs'),
     HomeItem(icon: AppIcons.assistantIcon, label: 'Assistant'),
   ];
-  void removeImage(int indexx) {
-    items.removeAt(indexx);
-    emit(ImageDeleted());
+  HomeModel? homeModel;
+  homeData() async {
+    emit(HomeStateLoading());
+    try {
+      final res = await api.homeData();
+
+      res.fold((l) {
+        emit(HomeStateError(l.toString()));
+      }, (r) {
+        homeModel = r;
+        emit(HomeStateLoaded(r));
+      });
+    } catch (e) {
+      emit(HomeStateError(e.toString()));
+      return null;
+    }
   }
-
-  // ModuleModel? selectedModulee; // حفظ الكائن المختار
-  // String? moduleId; // حفظ الكائن المختار
-  //
-  // void selectModule(ModuleModel module) {
-  //   selectedModulee = module;
-  //   print("module id is "+'${selectedModulee?.id.toString()}');
-  //   moduleId=selectedModulee?.id.toString();
-  //   emit(HomeModuleSelected()); // تحديث الحالة
-  // }
-  // GetHomeModel homeModel = GetHomeModel();
-  // getHomeData() async {
-  //   emit(LoadingHomeData());
-  //   final res = await api.getHome();
-  //   res.fold((l) {
-  //     emit(ErrorGetHomeData());
-  //   }, (r) {
-  //     homeModel = r;
-  //     homeModel.data!.modules =
-  //         homeModel.data!.modules!.sublist(0, moduleslenth);
-  //     emit(SucessGetHomeData());
-  //   });
-  // }
-  GetHomeFilter homeFilterModel = GetHomeFilter();
-  // GetLodgesModel residenceFavouriteModel = GetLodgesModel();
-  // GetRestaurantModel getRestaurantModel = GetRestaurantModel();
-  // GetCompaniesModel transportationFavouriteModel = GetCompaniesModel();
-  // GetOthersModel othersModel = GetOthersModel();
-  // GetWaysModel getWaysModel = GetWaysModel();
-
-  // int selectedIndex = 0;
-  // void changeContainer(int index, BuildContext context) {
-  //   print("index $index");
-  //   selectedIndex = index;
-  //   searchController.clear();
-  //   getHomeFilterData(context: context);
-  //   emit(IndexChanged());
-  // }
-
-  // onChangeSearch(String? value, BuildContext context) {
-  //   getHomeFilterData(context: context);
-  // }
-
-
-
-
 }
+
