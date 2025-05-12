@@ -2,21 +2,22 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/home/cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubit/home_state.dart';
+import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import '../../../../core/exports.dart';
 import 'follow_button.dart';
 
 class CustomTopTalentsList extends StatelessWidget {
   const CustomTopTalentsList(
-      {required this.index,
+      {
       super.key,
       required this.isLeftPadding,
-      required this.isRightPadding});
+      required this.isRightPadding, required this.topTalentsData});
   final bool isLeftPadding;
   final bool isRightPadding;
-  final int index;
+  final TopTalent? topTalentsData;
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<HomeCubit>();
+
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (BuildContext context, state) {
         return Padding(
@@ -26,7 +27,17 @@ class CustomTopTalentsList extends StatelessWidget {
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              // Stack for image and icon inside the ClipRRect
+              (topTalentsData?.image == null) ?
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.r),
+                child: SizedBox(
+                  height: 200.h,
+                  child: Image.asset(
+                    ImageAssets.homeTestImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ):
               ClipRRect(
                 borderRadius: BorderRadius.circular(16.r),
                 child: Stack(
@@ -34,18 +45,18 @@ class CustomTopTalentsList extends StatelessWidget {
                     SizedBox(
                       height: 160.h,
                       width: 198.w,
-                      child: Image.asset(
-                        ImageAssets.homeTestImage,
+                      child: Image.network(
+                        topTalentsData?.image ?? "",
                         fit: BoxFit.cover,
                       ),
                     ),
                     // Now inside the image container
                     Positioned(
                       top: 6.h,
-                      right: 8.w, // لو عاوزاها top-left، استخدمي left بدل right
+                      right: 8.w,
                       child: InkWell(
                           onTap: () {
-                        //    cubit.removeImage(index);
+                            //    cubit.removeImage(index);
                           },
                           child: SvgPicture.asset(AppIcons.removeIcon)),
                     ),
@@ -63,20 +74,20 @@ class CustomTopTalentsList extends StatelessWidget {
                   children: [
                     SizedBox(height: 20.h),
                     Text(
-                      "Ahmed Mokhtar",
+                      topTalentsData?.name ?? "",
                       style: getSemiBoldStyle(
                           color: AppColors.white, fontSize: 13.sp),
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      "Talent / Actor Expert",
+                      topTalentsData?.headline??  "Talent / Actor Expert",
                       style: getRegularStyle(
                           color: AppColors.grayText, fontSize: 13.sp),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 10.h),
                     Text(
-                      "20 K followers",
+                      "${topTalentsData?.followersCount ?? 20}  followers",
                       style: getMediumStyle(
                           color: AppColors.grayText, fontSize: 13.sp),
                       textAlign: TextAlign.center,
@@ -91,7 +102,7 @@ class CustomTopTalentsList extends StatelessWidget {
                         width: 129.w,
                       ),
                     ),
-                    SizedBox(height: 5.h),
+                  5.h.verticalSpace,
                   ],
                 ),
               ),

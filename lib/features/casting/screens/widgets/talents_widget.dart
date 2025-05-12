@@ -114,7 +114,7 @@ class TalentList extends StatelessWidget {
               top: 10.sp, // Adjust position as needed
               right: 15.sp, // Adjust position as needed
               child: InkWell(
-                onTap: () => cubit.removeImage(index),
+              //  onTap: () => cubit.removeImage(index),
                 child:
                   SvgPicture.asset(AppIcons.xIcon)
 
