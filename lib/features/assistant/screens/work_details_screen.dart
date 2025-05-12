@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/notification_services/notification_service.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
@@ -20,9 +21,7 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<AssistantCubit>()
-        .getAssistants(widget.work?.id ?? 0);
+    context.read<AssistantCubit>().getAssistants(widget.work?.id ?? 0);
     context.read<AssistantCubit>().getWorks();
   }
 
@@ -92,7 +91,7 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                                               ),
                                               10.h.verticalSpace,
                                               Text(
-                                                "${widget.work?.assistants?.length ?? 0} ${"assistant".tr()}",
+                                                "${context.watch<AssistantCubit>().assistants?.length ?? 0} ${"assistant".tr()}",
                                                 style: getMediumStyle(
                                                   fontSize: 13.sp,
                                                   color:
@@ -109,7 +108,10 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                               ),
                             ),
                             20.h.verticalSpace,
-                             Expanded(child: AssistantsList(work: widget.work!,)),
+                            Expanded(
+                                child: AssistantsList(
+                              work: widget.work!,
+                            )),
                           ],
                         ),
                       ),
@@ -132,10 +134,11 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                   );
 
                   if (result != null) {
-                    context.read<AssistantCubit>().getAssistants(widget.work?.id ?? 0);
+                    context
+                        .read<AssistantCubit>()
+                        .getAssistants(widget.work?.id ?? 0);
                   }
                 },
-
                 child: Container(
                   width: 60.w,
                   height: 60.h,
@@ -194,7 +197,8 @@ class TimelineAssistantItem extends StatelessWidget {
   const TimelineAssistantItem({
     Key? key,
     required this.assistants,
-    required this.isLast, required this.work,
+    required this.isLast,
+    required this.work,
   }) : super(key: key);
 
   @override
@@ -229,14 +233,16 @@ class TimelineAssistantItem extends StatelessWidget {
               ],
             ),
           ),
-           SizedBox(width: 12.w),
+          SizedBox(width: 12.w),
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(bottom: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (assistants.image != null && assistants.image!.isNotEmpty && File(assistants.image!).existsSync())
+                  if (assistants.image != null &&
+                      assistants.image!.isNotEmpty &&
+                      File(assistants.image!).existsSync())
                     Image.file(
                       File(assistants.image ?? ""),
                       fit: BoxFit.fill,
@@ -267,19 +273,19 @@ class TimelineAssistantItem extends StatelessWidget {
                     children: [
                       assistants.date != null
                           ? Text(
-                        DateFormat('d MMMM, y').format(assistants.date!),
-                        style: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontSize: 12,
-                        ),
-                      )
+                              DateFormat('d MMMM, y').format(assistants.date!),
+                              style: TextStyle(
+                                color: Colors.grey.shade500,
+                                fontSize: 12,
+                              ),
+                            )
                           : Text(
-                        'No Date',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 12.sp,
-                        ),
-                      ),
+                              'No Date',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12.sp,
+                              ),
+                            ),
                       const Spacer(),
                       Row(
                         children: [
@@ -292,17 +298,18 @@ class TimelineAssistantItem extends StatelessWidget {
                                 ? Colors.blue
                                 : Colors.grey.shade500,
                           ),
-                           SizedBox(width: 4.w),
+                          SizedBox(width: 4.w),
                           Text(
                             (assistants.remindedTime != null)
                                 ? 'Set Reminder (${DateFormat('dd MMM yyyy • hh:mm a').format(assistants.remindedTime!)})'
                                 : 'Set Reminder',
                             style: TextStyle(
-                              color: (assistants.isActive ?? false) ? Colors.blue : Colors.grey.shade500,
+                              color: (assistants.isActive ?? false)
+                                  ? Colors.blue
+                                  : Colors.grey.shade500,
                               fontSize: 12,
                             ),
                           ),
-
                           PopupMenuButton<String>(
                             onSelected: (value) async {
                               if (value == 'edit') {
@@ -326,8 +333,6 @@ class TimelineAssistantItem extends StatelessWidget {
                                 );
                               }
                             },
-
-
                             itemBuilder: (context) => [
                               const PopupMenuItem(
                                 value: 'edit',
