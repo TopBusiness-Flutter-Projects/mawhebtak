@@ -176,12 +176,14 @@ class NotificationService {
         log('Notification payload: $payload userType==>');
         try {
           if (payload != null) {
-            Map<String, dynamic> message;
-
+            Map<String, dynamic> message = {};
             message = jsonDecode(payload);
             log('Notification payload: ${message['type']} userType==>');
-
             log('Notification message after parsing: $message');
+            //!
+            initialMessageRcieved = RemoteMessage(data: message);
+            isWithNotification = true;
+            //!
             if (message['type'] == "add_assistant") {
               navigatorKey.currentState?.pushNamed(Routes.workDetailsRoute,
                   arguments: WorkModel(
@@ -199,7 +201,6 @@ class NotificationService {
             //           indexPageClientOrLawyer: userType ? 1 : 0,
             //         ));
           }
-
           // } else {
           //   // Default action if payload is null
           //   navigatorKey.currentState
@@ -207,7 +208,6 @@ class NotificationService {
           // }
         } catch (e) {
           log('Error parsing notification payload: $e');
-
           // navigatorKey.currentState
           //     ?.pushNamed(Routes.notificationRoute, );
         }
@@ -229,24 +229,23 @@ class NotificationService {
     }
   }
 
+  AndroidNotificationDetails androidDetails = const AndroidNotificationDetails(
+    'your_channel_id_mawhebtak',
+    'your_channel_name_mawhebtak',
+    channelDescription: 'your_channel_description_mawhebtak',
+    importance: Importance.max,
+    priority: Priority.high,
+    icon: '@mipmap/ic_launcher',
+    ticker: 'ticker',
+  );
+
   /// **Shows a Local Notification**
   Future<void> _showLocalNotification({
     required String title,
     required String body,
     String? payload,
   }) async {
-    const AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-      'your_channel_id_mawhebtak',
-      'your_channel_name_mawhebtak',
-      channelDescription: 'your_channel_description_mawhebtak',
-      importance: Importance.max,
-      priority: Priority.high,
-      icon: '@mipmap/ic_launcher',
-      ticker: 'ticker',
-    );
-
-    const NotificationDetails notificationDetails =
+    NotificationDetails notificationDetails =
         NotificationDetails(android: androidDetails);
 
     await _flutterLocalNotificationsPlugin.show(
@@ -261,15 +260,15 @@ class NotificationService {
     required DateTime scheduledTime,
     String? payload,
   }) async {
-    const androidDetails = AndroidNotificationDetails(
-      'your_channel_id_mawhebtak',
-      'your_channel_name_mawhebtak',
-      channelDescription: 'your_channel_description_mawhebtak',
-      importance: Importance.max,
-      priority: Priority.high,
-      icon: '@mipmap/ic_launcher',
-      ticker: 'ticker',
-    );
+    // const androidDetails = AndroidNotificationDetails(
+    //   'your_channel_id_mawhebtak',
+    //   'your_channel_name_mawhebtak',
+    //   channelDescription: 'your_channel_description_mawhebtak',
+    //   importance: Importance.max,
+    //   priority: Priority.high,
+    //   icon: '@mipmap/ic_launcher',
+    //   ticker: 'ticker',
+    // );
 
     final notificationDetails = NotificationDetails(android: androidDetails);
 
