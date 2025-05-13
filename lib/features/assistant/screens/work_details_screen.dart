@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
-import 'package:mawhebtak/core/notification_services/notification_service.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
@@ -286,66 +285,85 @@ class TimelineAssistantItem extends StatelessWidget {
                                 fontSize: 12.sp,
                               ),
                             ),
-                      const Spacer(),
-                      Row(
-                        children: [
-                          Icon(
-                            assistants.isActive ?? false
-                                ? Icons.notifications_active
-                                : Icons.notifications_none,
-                            size: 12,
-                            color: assistants.isActive ?? false
-                                ? Colors.blue
-                                : Colors.grey.shade500,
-                          ),
-                          SizedBox(width: 4.w),
-                          Text(
-                            (assistants.remindedTime != null)
-                                ? 'Set Reminder (${DateFormat('dd MMM yyyy • hh:mm a').format(assistants.remindedTime!)})'
-                                : 'Set Reminder',
-                            style: TextStyle(
-                              color: (assistants.isActive ?? false)
-                                  ? Colors.blue
-                                  : Colors.grey.shade500,
-                              fontSize: 12,
-                            ),
-                          ),
-                          PopupMenuButton<String>(
-                            onSelected: (value) async {
-                              if (value == 'edit') {
-                                final result = await Navigator.pushNamed(
-                                  context,
-                                  Routes.addAssistantRoute,
-                                  arguments: {
-                                    'work': work,
-                                    'assistant': assistants,
-                                  },
-                                );
 
-                                if (result != null) {
-                                  cubit.getAssistants(work.id ?? 0);
-                                }
-                              } else if (value == 'delete') {
-                                cubit.deleteAssistant(
-                                  context,
-                                  workId: work.id ?? 0,
-                                  assistantId: assistants.id ?? 0,
-                                );
-                              }
-                            },
-                            itemBuilder: (context) => [
-                              const PopupMenuItem(
-                                value: 'edit',
-                                child: Text('Edit'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap:(){
+                            Navigator.pushNamed(
+                              context,
+                              Routes.addAssistantRoute,
+                              arguments: {
+                                'work': work,
+                                'assistant': assistants,
+                              },
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                assistants.isActive ?? false
+                                    ? Icons.notifications_active
+                                    : Icons.notifications_none,
+                                size: 12,
+                                color: assistants.isActive ?? false
+                                    ? Colors.blue
+                                    : Colors.grey.shade500,
                               ),
-                              const PopupMenuItem(
-                                value: 'delete',
-                                child: Text('Delete'),
+                              SizedBox(width: 4.w),
+                              Text(
+                                (assistants.remindedTime != null)
+                                    ? 'Set Reminder (${DateFormat('dd MMM yyyy • hh:mm a').format(assistants.remindedTime!)})'
+                                    : 'Set Reminder',
+                                style: TextStyle(
+                                  color: (assistants.isActive ?? false)
+                                      ? Colors.blue
+                                      : Colors.grey.shade500,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                              const Spacer(),
+                              PopupMenuButton<String>(
+                                onSelected: (value) async {
+                                  if (value == 'edit') {
+                                    final result = await Navigator.pushNamed(
+                                      context,
+                                      Routes.addAssistantRoute,
+                                      arguments: {
+                                        'work': work,
+                                        'assistant': assistants,
+                                      },
+                                    );
+
+                                    if (result != null) {
+                                      cubit.getAssistants(work.id ?? 0);
+                                    }
+                                  } else if (value == 'delete') {
+                                    cubit.deleteAssistant(
+                                      context,
+                                      workId: work.id ?? 0,
+                                      assistantId: assistants.id ?? 0,
+                                    );
+                                  }
+                                },
+                                itemBuilder: (context) => [
+                                  const PopupMenuItem(
+                                    value: 'edit',
+                                    child: Text('Edit'),
+                                  ),
+                                  const PopupMenuItem(
+                                    value: 'delete',
+                                    child: Text('Delete'),
+                                  ),
+                                ],
+                                icon: const Icon(Icons.more_vert, size: 18),
                               ),
                             ],
-                            icon: const Icon(Icons.more_vert, size: 18),
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),

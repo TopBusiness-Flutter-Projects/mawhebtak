@@ -21,8 +21,6 @@ class _AddNewWorkScreenState extends State<AddNewWorkScreen> {
   void initState() {
     super.initState();
     cubit = context.read<AssistantCubit>();
-
-    // Set the controller text if we're editing an existing work
     if (widget.work != null) {
       cubit.workNameController.text = widget.work!.title ?? '';
     }

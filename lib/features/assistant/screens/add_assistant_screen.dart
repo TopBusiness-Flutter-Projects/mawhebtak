@@ -31,7 +31,7 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
     if (assistant != null) {
       cubit.assistantTitleController.text = assistant.title ?? "";
       cubit.assistantDescriptionController.text = assistant.description ?? "";
-      cubit.selectedReminderDate = assistant.remindedTime; // تأكد من أن التاريخ يتعين هنا
+      cubit.selectedReminderDate = assistant.remindedTime;
     }
   }
 
@@ -45,7 +45,9 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
           CustomAppBarWithClearWidget(title: "add_assistant".tr()),
           BlocBuilder<AssistantCubit, AssistantState>(
               builder: (context, state) {
-                return Column(
+            return Expanded(
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
                     10.h.verticalSpace,
                     CustomPickMediaWidget(
@@ -54,8 +56,8 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                       },
                     ),
                     Padding(
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.w, vertical: 20.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -76,15 +78,19 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                             onTap: () async {
                               final DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: cubit.selectedReminderDate ?? DateTime.now(),
+                                initialDate: cubit.selectedReminderDate ??
+                                    DateTime.now(),
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(2100),
                               );
 
                               if (pickedDate != null) {
-                                final TimeOfDay? pickedTime = await showTimePicker(
+                                final TimeOfDay? pickedTime =
+                                    await showTimePicker(
                                   context: context,
-                                  initialTime: TimeOfDay.fromDateTime(cubit.selectedReminderDate ?? DateTime.now()),
+                                  initialTime: TimeOfDay.fromDateTime(
+                                      cubit.selectedReminderDate ??
+                                          DateTime.now()),
                                 );
 
                                 if (pickedTime != null) {
@@ -100,7 +106,6 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                                 }
                               }
                             },
-
                             child: Row(
                               children: [
                                 Icon(Icons.notifications_sharp,
@@ -116,7 +121,10 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                                     onTap: () {
                                       cubit.clearSelectedDate();
                                     },
-                                    child: Icon(Icons.clear,color: AppColors.red,),
+                                    child: Icon(
+                                      Icons.clear,
+                                      color: AppColors.red,
+                                    ),
                                   ),
                               ],
                             ),
@@ -124,8 +132,8 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                           if (cubit.selectedReminderDate != null)
                             CustomTextField(
                               enabled: false,
-                              hintText:
-                              DateFormat('yyyy-MM-dd').format(cubit.selectedReminderDate!),
+                              hintText: DateFormat('yyyy-MM-dd')
+                                  .format(cubit.selectedReminderDate!),
                             ),
                           CustomButton(
                             title: widget.assistant != null
@@ -142,8 +150,7 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                                 } else {
                                   cubit.addAssistant(context,
                                       workId: widget.work!.id!,
-                                     workTitle: widget.work?.title ?? ""
-                                  );
+                                      workTitle: widget.work?.title ?? "");
                                 }
                               } else {
                                 errorGetBar("no_work".tr());
@@ -154,8 +161,10 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                       ),
                     ),
                   ],
-                );
-              }),
+                ),
+              ),
+            );
+          }),
         ],
       ),
     );
