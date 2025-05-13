@@ -64,7 +64,7 @@ dependencies:
   currency_code_to_currency_symbol: ^0.0.4
   google_sign_in: ^6.2.2
   firebase_auth: ^5.5.2
-  flutter_facebook_auth: ^7.1.1
+
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   firebase_messaging: ^15.2.5
@@ -133,6 +133,9 @@ flutter:
     - family: NotoSans
       fonts:
         - asset: assets/fonts/NotoSans-Regular.ttf
+    - family: Almarai
+      fonts:
+        - asset: assets/fonts/Almarai-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

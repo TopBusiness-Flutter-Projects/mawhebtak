@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 
@@ -20,9 +19,10 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
     // هنا هنحسب عدد الحروف اللي تعادل سطر ونص (تقدير تقريبي)
     const int maxLengthBeforeEllipsis = 60;
 
-    final String visibleText = widget.text.length > maxLengthBeforeEllipsis && !_isExpanded
-        ? '${widget.text.substring(0, maxLengthBeforeEllipsis)}... '
-        : widget.text;
+    final String visibleText =
+        widget.text.length > maxLengthBeforeEllipsis && !_isExpanded
+            ? '${widget.text.substring(0, maxLengthBeforeEllipsis)}... '
+            : widget.text;
 
     return Padding(
       padding: EdgeInsets.only(left: 10.0.w),
@@ -40,7 +40,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
                 style: getUnderLine(
                   fontSize: 13.sp,
                   color: AppColors.primary,
-                ).copyWith(fontWeight: FontWeight.bold),
+                ).copyWith(fontWeight: FontWeight.w200),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     setState(() {

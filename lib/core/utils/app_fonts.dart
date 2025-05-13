@@ -13,7 +13,6 @@ TextStyle _getTextStyle(
       fontWeight: fontWeight);
 }
 
-
 TextStyle getLineOverStyle({bool isBold = true}) {
   return TextStyle(
     decoration: TextDecoration.lineThrough,
@@ -32,7 +31,7 @@ TextStyle getUnderLine({Color? color, double? fontSize}) {
     decoration: TextDecoration.underline,
     decorationColor: color ?? AppColors.black,
     // height: 2,
-    decorationThickness: 4,
+    decorationThickness: 2,
     fontSize: fontSize ?? 18.sp,
     fontFamily: AppStrings.fontFamily,
     color: color ?? AppColors.black,
@@ -55,7 +54,6 @@ TextStyle getMediumStyle({Color? color, double? fontHeight, double? fontSize}) {
       fontWeight: FontWeight.w500,
       fontSize: fontSize ?? 18.sp,
       fontHeight: fontHeight);
-
 }
 
 TextStyle getSemiBoldStyle(

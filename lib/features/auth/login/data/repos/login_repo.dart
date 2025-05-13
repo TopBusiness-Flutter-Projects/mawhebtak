@@ -22,4 +22,30 @@ class LoginRepo {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, LoginModel>> loginWithSocial(
+    String email,
+    String password,
+    String phone,
+    String name,
+    String socialType,
+  ) async {
+    try {
+      var response = await dio.post(
+        EndPoints.loginWithSocial,
+        body: {
+          'key': 'loginWithSocial',
+          'email': email,
+          'password': password,
+          'name': name,
+          'phone': phone,
+
+          'social_type': socialType,
+        },
+      );
+      return Right(LoginModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }
