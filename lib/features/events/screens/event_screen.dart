@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mawhebtak/core/utils/custom_loadingindicator.dart';
 import 'package:mawhebtak/features/events/cubit/event_cubit.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
-
 import '../../../core/exports.dart';
 import '../../home/screens/widgets/custom_top_event.dart';
 
@@ -18,8 +18,8 @@ class _EventScreenState extends State<EventScreen> {
     context.read<EventCubit>().seeAllEventData();
     super.initState();
   }
-  @override
 
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<EventCubit, EventState>(
       builder: (BuildContext context, state) {
@@ -29,12 +29,14 @@ class _EventScreenState extends State<EventScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               CustomSimpleAppbar(
                 title: 'events'.tr(),
                 isActionButton: true,
               ),
-
+              if (state is SeeAllEventStateLoading)
+                const Center(
+                  child: CustomLoadingIndicator(),
+                ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -46,7 +48,7 @@ class _EventScreenState extends State<EventScreen> {
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         return CustomTopEventList(
-                          topEvent: Top(),
+                          topEvent: seeAllEventData?.data?[index],
                           isAll: true,
                         );
                       },
@@ -59,9 +61,6 @@ class _EventScreenState extends State<EventScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20.h,
-              )
             ],
           ),
         );

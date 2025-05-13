@@ -62,16 +62,15 @@ class CustomTopEventList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end, // Center vertically
                 crossAxisAlignment: CrossAxisAlignment.start, // Center horizontally
                 children: [
-                  SizedBox(height: 80),
-
+                  40.h.verticalSpace,
                   Text(
 
-                    "Ahmed Mokhtar",
+                    topEvent?.title ?? "",
                     style: getMediumStyle(color: AppColors.white, fontSize: 14.sp,),
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    "We can meet with best artists in egypt to can match rqueriments anywhere",
+                    topEvent?.description ?? "",
                     style: getRegularStyle(color: AppColors.grayText, fontSize: 12.sp),
                     textAlign: TextAlign.left,
                   ),
@@ -90,7 +89,7 @@ class CustomTopEventList extends StatelessWidget {
                             SizedBox(width: 5.w),
                             Expanded(
                               child: Text(
-                                "16 june 2022",
+                                topEvent?.from ?? "",
                                 style: getRegularStyle(fontSize: 13.sp,color: AppColors.white),
                               ),
                             ),
@@ -114,7 +113,7 @@ class CustomTopEventList extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(height: 5.h,)
+                  5.h.verticalSpace,
                 ],
               ),
             ),
