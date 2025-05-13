@@ -14,6 +14,7 @@ import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
 import 'package:mawhebtak/features/casting/screens/casting_screen.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
 import 'package:mawhebtak/features/contact_us/screens/contact_us_screen.dart';
+import 'package:mawhebtak/features/home/screens/top_talents_screen.dart';
 import 'package:mawhebtak/features/jobs/screens/job_details_screen.dart';
 import 'package:mawhebtak/features/jobs/screens/jobs_screen.dart';
 import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
@@ -83,6 +84,7 @@ class Routes {
   static const String addNewWorkRoute = '/addNewWork';
   static const String workDetailsRoute = '/workDetails';
   static const String addAssistantRoute = '/addAssistant';
+  static const String topTalentsRoute = '/topTalentsRoute';
 }
 
 class AppRoutes {
@@ -367,6 +369,13 @@ class AppRoutes {
       case Routes.addNewWorkRoute:
         return PageTransition(
           child: const AddNewWorkScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.topTalentsRoute:
+        return PageTransition(
+          child: const TopTalentsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -11,6 +10,7 @@ import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart'
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/screens/notification_screen.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
@@ -28,7 +28,6 @@ import 'features/auth/splash/cubit/cubit.dart';
 import 'features/casting/cubit/casting_cubit.dart';
 import 'features/change_langauge/cubit/change_language_cubit.dart';
 import 'features/events/cubit/event_cubit.dart';
-import 'features/home/cubit/home_cubit.dart';
 import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
@@ -55,7 +54,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    log('YYYYYY ${initialMessageRcieved?.data['module_id']}');
 
     return MultiBlocProvider(
         providers: [

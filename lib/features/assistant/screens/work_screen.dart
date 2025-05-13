@@ -71,7 +71,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (_) => AddNewWorkScreen(work: work),
+                                          builder: (_) =>
+                                              AddNewWorkScreen(work: work),
                                         ),
                                       );
                                     },

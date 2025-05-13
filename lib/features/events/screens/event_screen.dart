@@ -39,10 +39,9 @@ class _EventScreenState extends State<EventScreen> {
                 ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding:  EdgeInsets.symmetric(horizontal: 20.0.w),
                   child: Center(
                     child: ListView.separated(
-                      // scrollDirection: Axis.horizontal,
                       physics: const AlwaysScrollableScrollPhysics(),
                       itemCount: seeAllEventData?.data?.length ?? 0,
                       shrinkWrap: true,

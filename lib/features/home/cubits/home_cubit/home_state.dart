@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
+import 'package:mawhebtak/features/home/data/models/top_talents_model.dart';
 
 sealed class HomeState extends Equatable {
   const HomeState();
@@ -25,5 +26,6 @@ final class HomeStateLoaded extends HomeState {
   @override
   List<Object?> get props => [homeModel];
 }
+
 
 
