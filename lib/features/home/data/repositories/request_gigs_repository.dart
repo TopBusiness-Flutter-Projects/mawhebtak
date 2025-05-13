@@ -2,21 +2,23 @@ import 'package:dartz/dartz.dart';
 import 'package:mawhebtak/core/api/end_points.dart';
 import 'package:mawhebtak/core/error/exceptions.dart';
 import 'package:mawhebtak/core/error/failures.dart';
-import 'package:mawhebtak/features/home/data/models/home_model.dart';
-
+import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 import '../../../../core/api/base_api_consumer.dart';
 
 
-class HomeRepo {
-  final BaseApiConsumer dio;
-  HomeRepo(this.dio);
-  Future<Either<Failure, HomeModel>> homeData()async {
+class RequestGigsRepository {
+  final BaseApiConsumer dio ;
+  RequestGigsRepository(this.dio);
+
+
+  Future<Either<Failure, RequestGigsModel>> requestGigsData({required String page})async {
     try {
       var response = await dio.get(
-        EndPoints.homeUrl,
+        EndPoints.requestGigsUrl +page,
+
 
       );
-      return Right(HomeModel.fromJson(response));
+      return Right(RequestGigsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

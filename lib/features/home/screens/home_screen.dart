@@ -1,7 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
-import 'package:mawhebtak/features/home/cubit/home_cubit.dart';
-import 'package:mawhebtak/features/home/cubit/home_state.dart';
+import 'package:mawhebtak/features/home/cubits/announcements_cubit/announcements_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
+import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
+import 'package:mawhebtak/features/home/screens/announcements_screen.dart';
+import 'package:mawhebtak/features/home/screens/request_gigs_screen.dart';
+import 'package:mawhebtak/features/home/screens/top_talents_screen.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_announcement_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_request_gigs.dart';
@@ -54,8 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return Scaffold(
           body: switch (state) {
         HomeStateLoading() => const Center(child: CustomLoadingIndicator()),
-        HomeStateError() => Center(
-              child: Text(
+        HomeStateError() => Center(child: Text(
             state.errorMessage.toString(),
             style: TextStyle(fontSize: 15.sp, color: AppColors.primary),
           )),
@@ -112,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
-                  if( homeData?.userSliders?.length == 0)
+                  if( homeData?.userSliders?.length != 0)
                       PageView.builder(
                       controller: _userController,
                       itemCount: homeData?.userSliders?.length ?? 0,
@@ -148,6 +153,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomRow(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider(
+                                create: (context) => TopTalentsCubit()..topTalentsData(),
+                                child: const TopTalentsScreen(),
+                              ),
+                            ),
+                          );
+                        },
                         text: 'top_talents',
                       ),
                       8.h.verticalSpace,
@@ -215,6 +231,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: EdgeInsets.only(bottom: 4.h),
                         child: CustomRow(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => BlocProvider(
+                                  create: (context) => RequestGigsCubit()..requestGigsData(page: '1'),
+                                  child: const RequestGigsScreen(),
+                                ),
+                              ),
+                            );
+                          },
                           text: 'request_gigs'.tr(),
                         ),
                       ),
@@ -247,14 +274,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: CustomRow(
                           text: 'announcements'.tr(),
                           onTap: () {
-                            Navigator.pushNamed(
-                                context, Routes.announcementScreen);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => BlocProvider(
+                                  create: (context) => AnnouncementsCubit()..announcementsData(),
+                                  child: const AnnouncementsScreen(),
+                                ),
+                              ),
+                            );
                           },
                         ),
                       ),
                       SizedBox(
                         height:
-                            getHeightSize(context) / 2.2, // Match image width
+                            getHeightSize(context) / 2.3, // Match image width
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           physics: const AlwaysScrollableScrollPhysics(),
