@@ -15,6 +15,7 @@ ThemeData appTheme() {
     textTheme: TextTheme(
       bodyMedium: TextStyle(
         height: 1.5,
+        fontFamily: 'Almarai',
         fontSize: 18.0.sp,
       ),
     ),
@@ -27,6 +28,7 @@ ThemeData appTheme() {
         fontSize: 22.0.sp,
         // letterSpacing: 1.5,
         fontFamily: AppStrings.fontFamily,
+        
         fontWeight: FontWeight.w500,
         color: AppColors.black,
       ),

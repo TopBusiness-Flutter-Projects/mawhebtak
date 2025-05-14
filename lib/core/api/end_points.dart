@@ -17,7 +17,9 @@ class EndPoints {
   static const String unWantedUserUrl = '${baseUrl}un-wanted-user';
   static const String registerUrl = '${baseUrl}register';
   static const String validateDataUrl = '${baseUrl}validate-data';
-  static const String getDataUserTypeUrl = '${baseUrl}get-data?model=UserType';
+  static const String getDataUserTypeUrl =
+      '${baseUrl}get-data?model=UserType&where[0]=status,1';
   static const String forgetPasswordUrl = '${baseUrl}forget-password';
   static const String updatePasswordUrl = '${baseUrl}update-password';
+  static const String loginWithSocial = '${baseUrl}login-with-social';
 }

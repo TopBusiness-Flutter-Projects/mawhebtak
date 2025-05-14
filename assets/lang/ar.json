@@ -1,10 +1,10 @@
 {
   "hi": "مرحباً",
-  "feeds": "يغذي",
-  "casting": "الصب",
-  "calendar": "التقويم اليومي",
+  "feeds": "المنشورات",
+  "casting": "الفن",
+  "calendar": "التقويم",
   "more": " المزيد ",
-  "see_all": "رؤية الكل",
+  "see_all": "عرض الكل",
   "top_talents": "افضل المواهب",
   "search": "البحث",
   "home": "الصفحه الرئيسية",
@@ -153,9 +153,9 @@
   "event_type": "نوع الحدث",
   "select_type": "حدد النوع",
   "select_required_talents": "حدد المواهب المطلوبة",
-  "gigs_list": "قائمة الحفلات الموسيقية",
+  "gigs_list": "قائمة العروض",
   "top_talent": "أفضل المواهب",
-  "gigs": "الحفلات الموسيقية",
+  "gigs": "العروض",
   "talents": "المواهب",
   "jobs": "الوظائف",
   "create_jop": "انشاء مهمة",
@@ -211,4 +211,8 @@
   "please_enter_verification_code":"من فضلك ادخل رمز التحقق",
   "no_assistant_found": "لا يوجد مساعدات ",
   "no_data": "لا يوجد بيانات !"
+    "out": "خروج",
+  "exit_app": "الخروج من التطبيق",
+  "exit_app_desc": "هل أنت متأكد من أنك تريد الخروج من التطبيق؟",
+  "please_enter_verifification_code":"من فضلك ادخل رمز التحقق"
 }

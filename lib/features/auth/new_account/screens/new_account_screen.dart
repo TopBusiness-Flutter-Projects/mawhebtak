@@ -205,6 +205,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                 ),
                               ),
                               const GoogleAndFacebookWidget(),
+                              12.h.verticalSpace
                             ],
                           ),
                         ),

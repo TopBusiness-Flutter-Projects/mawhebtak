@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mawhebtak/core/exports.dart';
@@ -14,36 +16,29 @@ class GoogleAndFacebookWidget extends StatefulWidget {
 }
 
 class _GoogleAndFacebookWidgetState extends State<GoogleAndFacebookWidget> {
-  @override
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  //
-  // final GoogleSignIn googleSignIn = GoogleSignIn();
-  // Future<UserCredential?> _handleSignInWithGoogle() async {
-  //   try {
-  //
-  //     final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-  //
-  //     final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount!.authentication;
-  //
-  //     final AuthCredential credential = GoogleAuthProvider.credential(
-  //
-  //       accessToken: googleSignInAuthentication.accessToken,
-  //
-  //       idToken: googleSignInAuthentication.idToken,
-  //
-  //     );
-  //
-  //     return await _auth.signInWithCredential(credential);
-  //
-  //   } catch (error) {
-  //
-  //     print(error);
-  //
-  //     return null;
-  //
-  //   }
-  //
-  // }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  Future<UserCredential?> _handleSignInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
+
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount!.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken);
+
+      return await _auth.signInWithCredential(credential);
+    } catch (error) {
+      log(error.toString());
+      errorGetBar(error.toString());
+      return null;
+    }
+  }
+
   // Future<UserCredential?> _handleSignInWithFace() async {
   //
   //   try {
@@ -112,13 +107,11 @@ class _GoogleAndFacebookWidgetState extends State<GoogleAndFacebookWidget> {
         Expanded(
           child: GestureDetector(
             onTap: () async {
-              // UserCredential? userCredential = await _handleSignInWithGoogle();
-              //
-              // if (userCredential != null) {
-              //
-              //   print('User signed in: ${userCredential.user?.displayName}');
-              //
-              // }
+              UserCredential? userCredential = await _handleSignInWithGoogle();
+
+              if (userCredential != null) {
+                print('User signed in: ${userCredential.user?.displayName}');
+              }
             },
             child: Container(
               decoration: BoxDecoration(

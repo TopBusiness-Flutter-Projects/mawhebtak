@@ -153,7 +153,8 @@
     "select_type": "Select Type",
     "select_required_talents": "Select Required Talents",
     "gigs_list": "Gigs List",
-    "top_talent": "Top talent",
+    "top_talent": "Top Talents",
+
     "gigs": "Gigs",
     "talents": "Talents",
     "jobs": "Jobs",
@@ -207,8 +208,11 @@
       "please_enter_name":"Please enter name",
       "please_enter_phone_number":"Please enter phone number",
      "please_enter_verification_code":"Please enter your otp code",
-      "no_data": "No Data !"
-
+      "no_data": "No Data !",
+        "please_enter_verifification_code":"Please enter your otp code",
+          "out": "Exit",
+            "exit_app": "Exit Application",
+  "exit_app_desc": "Are you sure you want to exit the application?"
 
 
 
