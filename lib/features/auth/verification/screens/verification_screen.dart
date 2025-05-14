@@ -132,7 +132,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'please_enter_verifification_code'.tr();
+                            return 'please_enter_verification_code'.tr();
                           }
                           return null;
                         },

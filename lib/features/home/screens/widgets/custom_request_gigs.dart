@@ -1,5 +1,6 @@
 
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
+import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 
@@ -11,7 +12,7 @@ class CustomRequestGigsList extends StatelessWidget {
       this.requestGigs});
   final bool isLeftPadding;
   final bool isRightPadding;
-  final Top? requestGigs;
+  final EventAndGigsModel? requestGigs;
   @override
   Widget build(BuildContext context) {
     return Padding(

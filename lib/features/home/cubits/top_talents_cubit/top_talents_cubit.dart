@@ -1,4 +1,4 @@
-
+import 'package:equatable/equatable.dart';
 import 'package:mawhebtak/features/home/data/models/top_talents_model.dart';
 import 'package:mawhebtak/features/home/data/repositories/top_talents_repository.dart';
 import 'package:mawhebtak/injector.dart';
@@ -8,19 +8,55 @@ part 'top_talents_state.dart';
 class TopTalentsCubit extends Cubit<TopTalentsState> {
   TopTalentsCubit() : super(TopTalentsStateLoading());
   TopTalentsRepository? api = TopTalentsRepository(serviceLocator());
- TopTalentsModel? topTalents;
-  topTalentsData() async {
+  TopTalentsModel? topTalents;
+  bool isLoadingMore = false;
+
+  topTalentsData({bool isGetMore = false, required String page}) async {
+    if (isGetMore) {
+      isLoadingMore = true;
+      emit(TopTalentsStateLoadingMore());
+    } else {
+      emit(TopTalentsStateLoading());
+    }
     try {
-      final res = await api!.topTalentsData();
+      final res = await api!.topTalentsData(page: page);
 
       res.fold((l) {
         emit(TopTalentsStateError(l.toString()));
       }, (r) {
-        topTalents = r;
+        if (isGetMore) {
+          topTalents = TopTalentsModel(
+            links: r.links,
+            status: r.status,
+            msg: r.msg,
+            data: [...topTalents!.data!, ...r.data!],
+          );
+          emit(TopTalentsStateLoaded(topTalents!));
+        } else {
+          topTalents = r;
+          emit(TopTalentsStateLoaded(r));
+        }
         emit(TopTalentsStateLoaded(r));
       });
     } catch (e) {
       emit(TopTalentsStateError(e.toString()));
+    } finally {
+      isLoadingMore = false;
+    }
+  }
+
+  hideTopTalent({required String unwantedUserId}) async {
+    emit( HideTopTalentStateLoading());
+    try {
+      final res = await api!.hideTopTalents(unwantedUserId: unwantedUserId);
+
+      res.fold((l) {
+        emit(HideTopTalentStateError(l.toString()));
+      }, (r) {
+        emit( HideTopTalentStateLoaded());
+      });
+    } catch (e) {
+      emit(HideTopTalentStateError(e.toString()));
       return null;
     }
   }

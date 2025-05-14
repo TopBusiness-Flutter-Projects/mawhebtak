@@ -4,6 +4,7 @@ part of 'announcements_cubit.dart';
 sealed class AnnouncementsState {}
 
 final class AnnouncementsStateLoading extends AnnouncementsState {}
+final class AnnouncementsStateLoadingMore extends AnnouncementsState {}
 
 final class AnnouncementsStateError extends AnnouncementsState {
   final String? errorMessage;

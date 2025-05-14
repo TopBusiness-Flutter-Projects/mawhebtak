@@ -2,29 +2,26 @@ import 'package:dartz/dartz.dart';
 import 'package:mawhebtak/core/api/end_points.dart';
 import 'package:mawhebtak/core/error/exceptions.dart';
 import 'package:mawhebtak/core/error/failures.dart';
-import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
+import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import '../../../../core/api/base_api_consumer.dart';
 
-
-class RequestGigsRepository {
+class FeedsRepository {
   final BaseApiConsumer dio ;
-  RequestGigsRepository(this.dio);
+  FeedsRepository(this.dio);
 
-
-  Future<Either<Failure, RequestGigsModel>> requestGigsData({required String page})async {
+  Future<Either<Failure, PostsModel>> feedsData({required String page})async {
     try {
       var response = await dio.get(
-        EndPoints.requestGigsUrl,
+          EndPoints.feedsUrl,
           queryParameters: {
-            "model" :"Gig",
+            "model" :"Post",
             "where[0]":"status,1",
             "paginate":"true",
             "page":page
 
           }
       );
-
-      return Right(RequestGigsModel.fromJson(response));
+      return Right(PostsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

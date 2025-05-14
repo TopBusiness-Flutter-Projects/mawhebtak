@@ -22,9 +22,12 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
   _scrollListener() {
     if (scrollController.position.maxScrollExtent == scrollController.offset) {
       if (context.read<RequestGigsCubit>().requestGigs?.links?.next != null) {
-        Uri uri = Uri.parse(context.read<RequestGigsCubit>().requestGigs?.links?.next??"");
+        Uri uri = Uri.parse(
+            context.read<RequestGigsCubit>().requestGigs?.links?.next??"");
         String? page = uri.queryParameters['page'];
-        context.read<RequestGigsCubit>().requestGigsData(page: page ??'1' , isGetMore: true);
+        context.
+        read<RequestGigsCubit>().
+        requestGigsData(page: page ??'1' , isGetMore: true);
       }
     }
   }
@@ -33,53 +36,52 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
     return Scaffold(
       body: BlocBuilder<RequestGigsCubit, RequestGigsState>(
           builder: (context, state) {
-        var requestGigs = context.read<RequestGigsCubit>().requestGigs;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomSimpleAppbar(
-              title: 'request_gigs'.tr(),
-              isActionButton: true,
-            ),
-            switch (state) {
-              RequestGigsStateLoading() => const Expanded(
-                  child: Center(
-                    child: CustomLoadingIndicator(),
-                  ),
+            var requestGigs = context.read<RequestGigsCubit>().requestGigs;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomSimpleAppbar(
+                  title: 'request_gigs'.tr(),
+                  isActionButton: true,
                 ),
-              RequestGigsStateError() => Expanded(
-                  child: Center(child: Text(state.errorMessage.toString()))),
-              RequestGigsStateLoaded() || RequestGigsStateLoadingMore()  => Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                  child: GridView.builder(
-                    controller: scrollController,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount:2,
-                      childAspectRatio: 1.1,
+                switch (state) {
+                  RequestGigsStateLoading() => const Expanded(
+                    child: Center(
+                      child: CustomLoadingIndicator(),
                     ),
-                    itemBuilder: (context, index) =>
-
-                        CustomRequestGigsList(
-                      requestGigs: requestGigs?.data?[index],
-                      isLeftPadding: index == 0 ? true : false,
-                      isRightPadding:
-                          index == (requestGigs?.data?.length ?? 1) - 1
-                              ? true
-                              : false,
-                    ),
-                    itemCount: requestGigs?.data?.length ?? 0,
                   ),
-                )),
-              // TODO: Handle this case.
+                  RequestGigsStateError() => Expanded(
+                      child: Center(child: Text(state.errorMessage.toString()))),
+                  RequestGigsStateLoaded() || RequestGigsStateLoadingMore()  =>
+                      Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 8.w, right: 8.w),
+                        child: GridView.builder(
+                          controller: scrollController,
+                          gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:2,
+                            childAspectRatio: 1.1,
+                          ),
+                          itemBuilder: (context, index) =>
+                              CustomRequestGigsList(
+                                requestGigs: requestGigs?.data?[index],
+                                isLeftPadding: index == 0 ? true : false,
+                                isRightPadding:
+                                index == (requestGigs?.data?.length ?? 1) - 1
+                                    ? true
+                                    : false,
+                              ),
+                          itemCount: requestGigs?.data?.length ?? 0,
+                        ),
+                      )),
 
-            }  ,if (state is RequestGigsStateLoadingMore)
-             const CustomLoadingIndicator(),
-          ],
-        );
-      }),
+                }  ,if (state is RequestGigsStateLoadingMore)
+                  const CustomLoadingIndicator(),
+              ],
+            );
+          }),
     );
   }
 }

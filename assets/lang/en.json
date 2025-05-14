@@ -206,11 +206,11 @@
       "please_enter_email":"Please enter email",
       "please_enter_name":"Please enter name",
       "please_enter_phone_number":"Please enter phone number",
-        "please_enter_verifification_code":"Please enter your otp code"
+     "please_enter_verification_code":"Please enter your otp code",
+      "no_data": "No Data !"
 
-    
-      
 
-  
+
+
 
 }

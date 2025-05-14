@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
+import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
@@ -16,7 +17,7 @@ class CustomTopEventList extends StatelessWidget {
   final bool? isLeftPadding;
   final bool? isRightPadding;
   final bool? isAll;
-  final Top? topEvent;
+  final EventAndGigsModel? topEvent;
   @override
   Widget build(BuildContext context) {
     return Padding(

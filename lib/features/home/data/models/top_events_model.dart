@@ -1,15 +1,15 @@
 
 import 'package:mawhebtak/core/models/pagenation_model.dart';
+import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 
-
-class RequestGigsModel {
+class TopEventsModel {
   List<EventAndGigsModel>? data;
   PaginationModel? links;
   PaginationModel? meta;
   String? msg;
   int? status;
 
-  RequestGigsModel({
+  TopEventsModel({
     this.data,
     this.links,
     this.meta,
@@ -17,7 +17,7 @@ class RequestGigsModel {
     this.status,
   });
 
-  factory RequestGigsModel.fromJson(Map<String, dynamic> json) => RequestGigsModel(
+  factory TopEventsModel.fromJson(Map<String, dynamic> json) => TopEventsModel(
     data: json["data"] == null ? [] : List<EventAndGigsModel>.from(json["data"]!.map((x) => EventAndGigsModel.fromJson(x))),
     links: json["links"] == null ? null : PaginationModel.fromJson(json["links"]),
     meta: json["meta"] == null ? null : PaginationModel.fromJson(json["meta"]),
@@ -34,34 +34,4 @@ class RequestGigsModel {
   };
 }
 
-class EventAndGigsModel {
-  int? id;
-  String? image;
-  String? title;
-  String? description;
-  String? from;
 
-  EventAndGigsModel({
-    this.id,
-    this.image,
-    this.title,
-    this.description,
-    this.from,
-  });
-
-  factory EventAndGigsModel.fromJson(Map<String, dynamic> json) => EventAndGigsModel(
-    id: json["id"],
-    image: json["image"],
-    title: json["title"],
-    description: json["description"],
-    from: json["from"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "image": image,
-    "title": title,
-    "description": description,
-    "from": from,
-  };
-}
