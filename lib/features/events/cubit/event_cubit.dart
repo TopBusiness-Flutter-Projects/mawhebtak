@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:mawhebtak/features/events/data/models/sell_all_event_model.dart';
+import 'package:mawhebtak/features/home/data/models/top_events_model.dart';
 import 'package:mawhebtak/features/events/data/repo/event_repo_impl.dart';
 
 import '../../../core/exports.dart';
@@ -40,23 +40,7 @@ class EventCubit extends Cubit<EventState> {
       },
     );
   }
-  SeeAllEventModel? seeAllEventModel;
-  seeAllEventData() async {
-    emit(SeeAllEventStateLoading());
-    try {
-      final res = await api.seeAllEventData();
 
-      res.fold((l) {
-        emit(SeeAllEventStateError(l.toString()));
-      }, (r) {
-        seeAllEventModel = r;
-        emit(SeeAllEventStateLoaded(r));
-      });
-    } catch (e) {
-      emit(SeeAllEventStateError(e.toString()));
-      return null;
-    }
-  }
 
 
 

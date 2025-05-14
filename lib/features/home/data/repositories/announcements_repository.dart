@@ -10,11 +10,18 @@ class AnnouncementsRepository {
   final BaseApiConsumer dio ;
   AnnouncementsRepository(this.dio);
 
-  String date = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());  Future<Either<Failure, AnnouncementsModel>> announcementsData()async {
+  String date = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+  Future<Either<Failure, AnnouncementsModel>> announcementsData({required String page})async {
     try {
       var response = await dio.get(
-        EndPoints.announcementsUrl+date,
+        EndPoints.announcementsUrl,
+          queryParameters: {
+            "model" :"Announce",
+            "where[0]":"expire_in,>=,$date",
+            "paginate":"true",
+            "page":page
 
+          }
       );
       return Right(AnnouncementsModel.fromJson(response));
     } on ServerException {

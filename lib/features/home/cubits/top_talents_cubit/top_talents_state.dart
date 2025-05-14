@@ -1,8 +1,14 @@
 part of 'top_talents_cubit.dart';
 
 @immutable
-sealed class TopTalentsState {}
-final class TopTalentsStateLoading extends TopTalentsState {}
+sealed class TopTalentsState extends Equatable{}
+final class TopTalentsStateLoading extends TopTalentsState {
+  @override
+  List<Object?> get props => [];
+}
+final class TopTalentsStateLoadingMore extends TopTalentsState {
+  List<Object?> get props => [];
+}
 
 final class TopTalentsStateError extends TopTalentsState {
   final String? errorMessage;
@@ -18,4 +24,21 @@ final class TopTalentsStateLoaded extends TopTalentsState {
 
   @override
   List<Object?> get props => [topTalents];
+}
+final class HideTopTalentStateError extends TopTalentsState {
+  final String? errorMessage;
+   HideTopTalentStateError(this.errorMessage);
+  @override
+  List<Object?> get props => [errorMessage];
+}
+
+final class HideTopTalentStateLoaded extends TopTalentsState {
+   HideTopTalentStateLoaded();
+  @override
+  List<Object?> get props => [];
+}
+final class HideTopTalentStateLoading extends TopTalentsState {
+   HideTopTalentStateLoading();
+  @override
+  List<Object?> get props => [];
 }

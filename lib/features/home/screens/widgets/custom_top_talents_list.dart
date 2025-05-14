@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import '../../../../core/exports.dart';
 import 'follow_button.dart';
@@ -9,10 +10,11 @@ class CustomTopTalentsList extends StatelessWidget {
       {
       super.key,
       required this.isLeftPadding,
-      required this.isRightPadding, required this.topTalentsData});
+      required this.isRightPadding, required this.topTalentsData,  this.topTalentsCubit});
   final bool isLeftPadding;
   final bool isRightPadding;
   final TopTalent? topTalentsData;
+  final TopTalentsCubit? topTalentsCubit;
   @override
   Widget build(BuildContext context) {
 
@@ -51,7 +53,7 @@ class CustomTopTalentsList extends StatelessWidget {
                   right: 8.w,
                   child: InkWell(
                       onTap: () {
-                        //    cubit.removeImage(index);
+                        topTalentsCubit?.hideTopTalent(unwantedUserId: topTalentsData?.id.toString() ?? "0");
                       },
                       child: SvgPicture.asset(AppIcons.removeIcon)),
                 ),

@@ -1,6 +1,17 @@
-part of 'feeds_cubit.dart';
+import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 
-@immutable
 sealed class FeedsState {}
 
-final class FeedsInitial extends FeedsState {}
+final class FeedsStateLoadingMore extends FeedsState {}
+final class FeedsStateLoading extends FeedsState {}
+final class FeedsStateLoaded extends FeedsState {
+  final PostsModel? postsModel;
+
+  FeedsStateLoaded(this.postsModel);
+}
+final class FeedsStateError extends FeedsState {
+  final String errorMessage;
+
+  FeedsStateError(this.errorMessage);
+
+}

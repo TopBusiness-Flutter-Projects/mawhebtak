@@ -2,20 +2,19 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/see_more_text.dart';
+import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 
 import '../../../../../core/exports.dart';
 import 'like_comment_share.dart';
 
 class TimeLineList extends StatelessWidget {
-  const TimeLineList({super.key});
-
+  const TimeLineList({super.key,  this.feeds});
+  final  PostsModelData? feeds;
   @override
   Widget build(BuildContext context) {
     return  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      //profile info
-
       Padding(
         padding:  EdgeInsets.only(bottom: 10.h,top: 10.h,right: 10.w,left: 10.w),
         child: Row(
@@ -39,11 +38,11 @@ class TimeLineList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AutoSizeText(
-                      'Ahmed Mokhtar'.tr(),
+                     feeds?.user?.name??"",
                       style: getMediumStyle(fontSize: 16.sp),
                     ),
                     AutoSizeText(
-                      'Talent / Actor Expert'.tr(),
+                      feeds?.user?.headline ?? "Telent / Actor Expert",
                       style: getRegularStyle(
                         fontSize: 14.sp,
                         color: AppColors.grayLight,
@@ -60,11 +59,11 @@ class TimeLineList extends StatelessWidget {
       //profile desc
       Padding(
         padding:  EdgeInsets.only(left: 10.0.w),
-        child: const ExpandableTextWidget(text: 'Hi show my latest scenes with an amazing team Let’s start our work  ',),
+        child:  ExpandableTextWidget(text:   feeds?.body ?? "",),
         ),
-
       SizedBox(height: 5.h,),
       //photo
+        feeds?.user?.image == null ?
       SizedBox(
         width: double.infinity,
         height: getHeightSize(context) / 3.7,
@@ -72,9 +71,16 @@ class TimeLineList extends StatelessWidget {
           ImageAssets.tasweerPhoto,
           fit: BoxFit.cover,
         ),
-      ),
+      ):
+        SizedBox(
+          width: double.infinity,
+          height: getHeightSize(context) / 3.7,
+          child: Image.network(
+            feeds?.user?.image ?? "",
+            fit: BoxFit.cover,
+          ),
+        ),
       SizedBox(height: 5.h),
-      //like and comments
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -85,7 +91,7 @@ class TimeLineList extends StatelessWidget {
                 child: SvgPicture.asset(AppIcons.likeIcon),
               ),
               Text(
-                '200',
+               feeds?.reactionCount.toString() ?? "0",
                 style: getSemiBoldStyle(
                   fontSize: 14.sp,
                   color: AppColors.primary,
@@ -94,9 +100,9 @@ class TimeLineList extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(2.0),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
-              "10"+" "+'comment'.tr(),
+              "${feeds?.commentCount.toString()}  ${'comment'.tr()}",
               style: getRegularStyle(
                 fontSize: 14.sp,
                 color: AppColors.grayDate,

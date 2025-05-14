@@ -7,19 +7,39 @@ class AnnouncementsCubit extends Cubit<AnnouncementsState> {
   AnnouncementsCubit() : super(AnnouncementsStateLoading());
   AnnouncementsRepository? api = AnnouncementsRepository(serviceLocator());
   AnnouncementsModel? announcements;
-  announcementsData() async {
+  bool isLoadingMore = false;
+  announcementsData({bool isGetMore = false,required String page }) async {
+    if (isGetMore) {
+      isLoadingMore = true;
+      emit(AnnouncementsStateLoadingMore());
+    } else {
+      emit(AnnouncementsStateLoading());
+    }
     try {
-      final res = await api!.announcementsData();
-
+      final res = await api!.announcementsData(page: page);
       res.fold((l) {
         emit(AnnouncementsStateError(l.toString()));
       }, (r) {
-        announcements = r;
-        emit(AnnouncementsStateLoaded(r));
+        if (isGetMore) {
+          announcements = AnnouncementsModel(
+            links: r.links,
+            status: r.status,
+            msg: r.msg,
+            data: [...announcements!.data!, ...r.data!],
+          );
+          emit(AnnouncementsStateLoaded(announcements!));
+        }else{
+          announcements = r;
+          emit(AnnouncementsStateLoaded(r));
+        }
+
       });
     } catch (e) {
       emit(AnnouncementsStateError(e.toString()));
-      return null;
+
+    }
+    finally {
+      isLoadingMore = false;
     }
   }
 }

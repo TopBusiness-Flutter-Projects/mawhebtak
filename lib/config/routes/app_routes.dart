@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/about_us/screens/about_us_screen.dart';
 import 'package:mawhebtak/features/assistant/screens/add_assistant_screen.dart';
@@ -14,6 +15,9 @@ import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
 import 'package:mawhebtak/features/casting/screens/casting_screen.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
 import 'package:mawhebtak/features/contact_us/screens/contact_us_screen.dart';
+import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/top_events_cubit/top_events_cubit.dart';
+import 'package:mawhebtak/features/home/screens/request_gigs_screen.dart';
 import 'package:mawhebtak/features/home/screens/top_talents_screen.dart';
 import 'package:mawhebtak/features/jobs/screens/job_details_screen.dart';
 import 'package:mawhebtak/features/jobs/screens/jobs_screen.dart';
@@ -31,7 +35,7 @@ import '../../features/announcement/screens/new_announcement.dart';
 import '../../features/auth/login/screens/login_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
-import '../../features/events/screens/event_screen.dart';
+import '../../features/home/screens/top_events_screen.dart';
 import '../../features/events/screens/second_details_screen.dart';
 import '../../features/feeds/screens/feeds_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
@@ -59,7 +63,7 @@ class Routes {
   static const String referralCodeRoute = '/referralCode';
   static const String termsAndConditionRoute = '/termsAndCondition';
   static const String videoScreenRoute = '/videoScreenRoute';
-  static const String eventScreen = '/eventScreen';
+  static const String topEventsScreen = '/topEventScreen';
   static const String detailsEventScreen = '/detailsEventScreen';
   static const String notificationScreen = '/notificationScreen';
   static const String secondDetailsSecond = '/secondDetailsSecond';
@@ -85,6 +89,7 @@ class Routes {
   static const String workDetailsRoute = '/workDetails';
   static const String addAssistantRoute = '/addAssistant';
   static const String topTalentsRoute = '/topTalentsRoute';
+  static const String requestGigsRoute = '/requestGigsRoute';
 }
 
 class AppRoutes {
@@ -181,9 +186,11 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      case Routes.eventScreen:
+      case Routes.topEventsScreen:
         return PageTransition(
-          child: const EventScreen(),
+          child: BlocProvider(
+              create: (context) => TopEventsCubit()..topEventsData(page: '1'),
+              child: const TopEventsScreen()),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
@@ -376,6 +383,14 @@ class AppRoutes {
         case Routes.topTalentsRoute:
         return PageTransition(
           child: const TopTalentsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        ); case Routes.requestGigsRoute:
+        return PageTransition(
+          child: BlocProvider(
+              create: (context) => RequestGigsCubit()..requestGigsData(page: '1'),
+              child: const RequestGigsScreen()),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
