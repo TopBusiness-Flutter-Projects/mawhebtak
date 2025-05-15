@@ -12,11 +12,8 @@ import 'package:mawhebtak/features/home/screens/widgets/custom_request_gigs.dart
 import 'package:mawhebtak/features/home/screens/widgets/custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
-import 'package:mawhebtak/features/home/screens/widgets/local_video_player.dart';
 import 'package:mawhebtak/features/home/screens/widgets/under_custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
-import 'package:mawhebtak/features/home/screens/widgets/youtube_player_screen.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 
@@ -37,16 +34,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late PageController _pageController;
-  late PageController _userController;
-  int _currentPage = 0;
-  int _userCount = 0;
+  late PageController userController;
+  int userCount = 0;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
-    _userController = PageController();
+    userController = PageController();
     context.read<HomeCubit>().homeData();
   }
 
@@ -77,78 +71,61 @@ class _HomeScreenState extends State<HomeScreen> {
               color: AppColors.homeColor,
               child: ListView(
                 children: [
-                  // Stack(
-                  //   children: [
-                  //     SizedBox(
-                  //       height: getHeightSize(context) / 1.5,
-                  //       width: getWidthSize(context),
-                  //       child: PageView.builder(
-                  //         controller: _pageController,
-                  //         itemCount: homeData?.sliders?.length ?? 0,
-                  //         onPageChanged: (index) {
-                  //           setState(() {
-                  //             _currentPage = index;
-                  //           });
-                  //         },
-                  //         itemBuilder: (context, index) {
-                  //           final sliderItem = homeData?.sliders?[index];
-                  //           final imageUrl = sliderItem?.image ?? "";
-                  //           final videoUrl = sliderItem?.url ?? "";
-                  //           final typeUrl = sliderItem?.urlType ?? "";
-                  //
-                  //           return GestureDetector(
-                  //             onTap: () {
-                  //               if (typeUrl == "youtube") {
-                  //                 final videoId = YoutubePlayer.convertUrlToId(videoUrl);
-                  //                 if (videoId != null) {
-                  //                   Navigator.push(
-                  //                     context,
-                  //                     MaterialPageRoute(
-                  //                       builder: (context) => YoutubePlayerScreen(videoId: videoId),
-                  //                     ),
-                  //                   );
-                  //                 }
-                  //               } else if (videoUrl.endsWith(".mp4")) {
-                  //                 Navigator.push(
-                  //                   context,
-                  //                   MaterialPageRoute(
-                  //                     builder: (context) => LocalVideoPlayerScreen(videoUrl: videoUrl),
-                  //                   ),
-                  //                 );
-                  //               }
-                  //             },
-                  //             child: Image.network(
-                  //               imageUrl,
-                  //               fit: BoxFit.fill,
-                  //             ),
-                  //           );
-                  //         },
-                  //       ),
-                  //     ),
-                  //     if (homeData?.userSliders?.isNotEmpty ?? false)
-                  //       PageView.builder(
-                  //         controller: _userController,
-                  //         itemCount: homeData?.userSliders?.length ?? 0,
-                  //         onPageChanged: (userIndex) {
-                  //           setState(() {
-                  //             _userCount = userIndex;
-                  //           });
-                  //         },
-                  //         itemBuilder: (context, index) {
-                  //           return homeData?.userSliders != null
-                  //               ? UnderCustomRow(userTalent: homeData?.userSliders?[index])
-                  //               : const Center(child: CircularProgressIndicator());
-                  //         },
-                  //       ),
-                  //     const CustomList(),
-                  //     Positioned(
-                  //       top: 35,
-                  //       left: 16,
-                  //       right: 16,
-                  //       child: CustomAppBarRow(color: AppColors.transparent),
-                  //     ),
-                  //   ],
-                  // ),
+                  Stack(
+                    children: [
+                      SizedBox(
+                        height: getHeightSize(context) / 1.5,
+                        width: getWidthSize(context),
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.network(
+                              homeData?.sliders?.image ?? "",
+                              fit: BoxFit.cover,
+                            ),
+                            Container(
+                              color: Colors.black.withOpacity(0.5),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: 450.h,
+                        child: Column(
+                          children: [
+                            if ((homeData?.userSliders ?? []).isNotEmpty)
+                              SizedBox(
+                                height: 360.h,
+                                child: PageView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  allowImplicitScrolling: true,
+                                  controller: userController,
+                                  itemCount: homeData!.userSliders!.length,
+                                  onPageChanged: (userIndex) {
+                                    setState(() {
+                                      userCount = userIndex;
+                                    });
+                                  },
+                                  itemBuilder: (context, index) {
+                                    final userTalent = homeData.userSliders![index];
+                                    return UnderCustomRow(userTalent: userTalent);
+                                  },
+                                ),
+                              ),
+                            const Expanded(child: CustomList()),
+                          ],
+                        ),
+                      ),
+
+
+                      Align(
+                          alignment: Alignment.topCenter,
+                          child: CustomAppBarRow(color: AppColors.transparent)),
+                    ],
+                  ),
                   SizedBox(height: 10.h),
                   if (homeData?.topTalents?.isNotEmpty ?? false)
                     Column(
@@ -173,10 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemCount: homeData?.topTalents?.length ?? 0,
                             itemBuilder: (context, index) {
                               return CustomTopTalentsList(
-                                // topTalentsCubit: context.read<TopTalentsCubit>(),
+                                 topTalentsCubit: context.read<TopTalentsCubit>(),
                                 topTalentsData: homeData?.topTalents?[index],
                                 isLeftPadding: index == 0,
-                                isRightPadding: index == homeDataCubit.items.length - 1,
+                                isRightPadding:
+                                    index == homeDataCubit.items.length - 1,
                               );
                             },
                           ),
@@ -190,7 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.only(bottom: 4.h),
                           child: CustomRow(
                             text: 'top_events',
-                            onTap: () => Navigator.pushNamed(context, Routes.topEventsScreen),
+                            onTap: () => Navigator.pushNamed(
+                                context, Routes.topEventsScreen),
                           ),
                         ),
                         SizedBox(
@@ -202,7 +181,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CustomTopEventList(
                                 topEvent: homeData?.topEvents?[index],
                                 isLeftPadding: index == 0,
-                                isRightPadding: index == (homeData?.topEvents?.length ?? 1) - 1,
+                                isRightPadding: index ==
+                                    (homeData?.topEvents?.length ?? 1) - 1,
                               );
                             },
                           ),
@@ -219,7 +199,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: EdgeInsets.only(bottom: 4.h),
                           child: CustomRow(
-                            onTap: () => Navigator.pushNamed(context, Routes.requestGigsRoute),
+                            onTap: () => Navigator.pushNamed(
+                                context, Routes.requestGigsRoute),
                             text: 'request_gigs'.tr(),
                           ),
                         ),
@@ -232,7 +213,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CustomRequestGigsList(
                                 requestGigs: homeData?.topGigs?[index],
                                 isLeftPadding: index == 0,
-                                isRightPadding: index == (homeData?.topGigs?.length ?? 1) - 1,
+                                isRightPadding: index ==
+                                    (homeData?.topGigs?.length ?? 1) - 1,
                               );
                             },
                           ),
@@ -251,7 +233,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => BlocProvider(
-                                    create: (context) => AnnouncementsCubit()..announcementsData(page: '1'),
+                                    create: (context) => AnnouncementsCubit()
+                                      ..announcementsData(page: '1'),
                                     child: const AnnouncementsScreen(),
                                   ),
                                 ),
@@ -268,7 +251,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CustomAnnouncementWidget(
                                 announcement: homeData?.announcements?[index],
                                 isLeftPadding: index == 0,
-                                isRightPadding: index == (homeData?.announcements?.length ?? 1) - 1,
+                                isRightPadding: index ==
+                                    (homeData?.announcements?.length ?? 1) - 1,
                               );
                             },
                           ),
@@ -286,5 +270,4 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
-
 }

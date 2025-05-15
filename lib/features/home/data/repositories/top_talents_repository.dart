@@ -37,8 +37,6 @@ class TopTalentsRepository {
           body: {
             "unwanted_user_id": unwantedUserId,
           }
-
-
       );
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {

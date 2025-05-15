@@ -30,17 +30,17 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
         text: TextSpan(
           text: visibleText,
           style: getRegularStyle(
-            fontSize: 13.sp,
-            color: AppColors.grayMedium,
+            fontSize: 15.sp,
+            color: AppColors.blackLite,
           ),
           children: <TextSpan>[
             if (widget.text.length > maxLengthBeforeEllipsis)
               TextSpan(
                 text: _isExpanded ? 'see_less'.tr() : 'see_more'.tr(),
-                style: getUnderLine(
-                  fontSize: 13.sp,
-                  color: AppColors.primary,
-                ).copyWith(fontWeight: FontWeight.w200),
+                style:TextStyle(
+                fontSize: 14.sp,
+                color: AppColors.gray
+                ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     setState(() {

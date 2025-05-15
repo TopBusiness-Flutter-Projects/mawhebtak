@@ -26,7 +26,7 @@ class HomeModel {
 }
 
 class HomeData {
-  List<Slider>? sliders;
+  Slider? sliders;
   List<TopTalent>? userSliders;
   List<TopTalent>? topTalents;
   List<EventAndGigsModel>? topEvents;
@@ -43,7 +43,7 @@ class HomeData {
   });
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
-    sliders: json["sliders"] == null ? [] : List<Slider>.from(json["sliders"]!.map((x) => Slider.fromJson(x))),
+    sliders: json["sliders"] == null ? null : Slider.fromJson(json["sliders"]),
     userSliders: json["user_sliders"] == null ? [] : List<TopTalent>.from(json["user_sliders"]!.map((x) => TopTalent.fromJson(x))),
     topTalents: json["top_talents"] == null ? [] : List<TopTalent>.from(json["top_talents"]!.map((x) => TopTalent.fromJson(x))),
     topEvents: json["top_events"] == null ? [] : List<EventAndGigsModel>.from(json["top_events"]!.map((x) => EventAndGigsModel.fromJson(x))),
@@ -52,7 +52,7 @@ class HomeData {
   );
 
   Map<String, dynamic> toJson() => {
-    "sliders": sliders == null ? [] : List<dynamic>.from(sliders!.map((x) => x.toJson())),
+    "sliders": sliders?.toJson(),
     "user_sliders": userSliders == null ? [] : List<dynamic>.from(userSliders!.map((x) => x.toJson())),
     "top_talents": topTalents == null ? [] : List<dynamic>.from(topTalents!.map((x) => x.toJson())),
     "top_events": topEvents == null ? [] : List<dynamic>.from(topEvents!.map((x) => x.toJson())),

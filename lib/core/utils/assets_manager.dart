@@ -41,13 +41,13 @@ class ImageAssets {
 
 class AppIcons {
   static const String phoneIcon = '$iconsPath/phone.svg';
-  static const String homeIcon = '$iconsPath/home.svg';
+  static const String homeIcon = '$iconsPath/Home.svg';
   static const String feeds = '$iconsPath/Feeds.svg';
   static const String casting = '$iconsPath/casting.svg';
   static const String calendar = '$iconsPath/Calendar.svg';
   static const String eventCalenderSecondColorIcon =
       '$iconsPath/event(calender_second_color).svg';
-  static const String more = '$iconsPath/more.svg';
+  static const String more = '$iconsPath/More.svg';
   static const String dollarSign = '$iconsPath/dollar_sign.svg';
   static const String searchIcon = '$iconsPath/search_icon.svg';
   static const String videoIcon = '$iconsPath/video_icon.svg';
