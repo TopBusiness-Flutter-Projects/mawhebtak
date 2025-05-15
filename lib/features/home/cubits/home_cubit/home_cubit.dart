@@ -35,8 +35,4 @@ class HomeCubit extends Cubit<HomeState> {
       return null;
     }
   }
-
-
-
 }
-

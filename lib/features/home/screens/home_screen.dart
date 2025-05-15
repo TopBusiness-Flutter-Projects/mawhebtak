@@ -176,7 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 // topTalentsCubit: context.read<TopTalentsCubit>(),
                                 topTalentsData: homeData?.topTalents?[index],
                                 isLeftPadding: index == 0,
-                                isRightPadding: index == homeDataCubit.items.length - 1,
+                                isRightPadding:
+                                    index == homeDataCubit.items.length - 1,
                               );
                             },
                           ),
@@ -190,7 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.only(bottom: 4.h),
                           child: CustomRow(
                             text: 'top_events',
-                            onTap: () => Navigator.pushNamed(context, Routes.topEventsScreen),
+                            onTap: () => Navigator.pushNamed(
+                                context, Routes.topEventsScreen),
                           ),
                         ),
                         SizedBox(
@@ -202,7 +204,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CustomTopEventList(
                                 topEvent: homeData?.topEvents?[index],
                                 isLeftPadding: index == 0,
-                                isRightPadding: index == (homeData?.topEvents?.length ?? 1) - 1,
+                                isRightPadding: index ==
+                                    (homeData?.topEvents?.length ?? 1) - 1,
                               );
                             },
                           ),
@@ -219,7 +222,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: EdgeInsets.only(bottom: 4.h),
                           child: CustomRow(
-                            onTap: () => Navigator.pushNamed(context, Routes.requestGigsRoute),
+                            onTap: () => Navigator.pushNamed(
+                                context, Routes.requestGigsRoute),
                             text: 'request_gigs'.tr(),
                           ),
                         ),
@@ -232,7 +236,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CustomRequestGigsList(
                                 requestGigs: homeData?.topGigs?[index],
                                 isLeftPadding: index == 0,
-                                isRightPadding: index == (homeData?.topGigs?.length ?? 1) - 1,
+                                isRightPadding: index ==
+                                    (homeData?.topGigs?.length ?? 1) - 1,
                               );
                             },
                           ),
@@ -251,7 +256,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => BlocProvider(
-                                    create: (context) => AnnouncementsCubit()..announcementsData(page: '1'),
+                                    create: (context) => AnnouncementsCubit()
+                                      ..announcementsData(page: '1'),
                                     child: const AnnouncementsScreen(),
                                   ),
                                 ),
@@ -268,7 +274,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CustomAnnouncementWidget(
                                 announcement: homeData?.announcements?[index],
                                 isLeftPadding: index == 0,
-                                isRightPadding: index == (homeData?.announcements?.length ?? 1) - 1,
+                                isRightPadding: index ==
+                                    (homeData?.announcements?.length ?? 1) - 1,
                               );
                             },
                           ),
@@ -286,5 +293,4 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
-
 }
