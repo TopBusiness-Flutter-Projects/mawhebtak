@@ -15,14 +15,19 @@ void main() async {
       startLocale: const Locale('en', ''),
       fallbackLocale: const Locale('en', ''),
       child: HotRestartController(
-          child: ScreenUtilInit(
-        designSize: const Size(360, 690),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (ctx, child) {
-          return const MyApp();
-        },
-      )),
+        child: Builder(builder: (context) {
+          double width = MediaQuery.of(context).size.width;
+          double height = MediaQuery.of(context).size.height;
+          return ScreenUtilInit(
+            designSize: Size(width, height),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (ctx, child) {
+              return const MyApp();
+            },
+          );
+        }),
+      ),
     ),
   );
 }

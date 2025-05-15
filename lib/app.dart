@@ -56,7 +56,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     log('YYYYYY ${initialMessageRcieved?.data['module_id']}');
-
     return MultiBlocProvider(
         providers: [
           BlocProvider(
