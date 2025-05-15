@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:BlocBuilder<HomeCubit, HomeState>(
+      body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           var homeDataCubit = context.watch<HomeCubit>();
           var homeData = context.watch<HomeCubit>().homeModel?.data;
@@ -105,8 +105,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     });
                                   },
                                   itemBuilder: (context, index) {
-                                    final userTalent = homeData.userSliders![index];
-                                    return UnderCustomRow(userTalent: userTalent);
+                                    final userTalent =
+                                        homeData.userSliders![index];
+                                    return UnderCustomRow(
+                                        userTalent: userTalent);
                                   },
                                 ),
                               ),
@@ -143,12 +145,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemCount: homeData?.topTalents?.length ?? 0,
                             itemBuilder: (context, index) {
                               return CustomTopTalentsList(
-                                topTalentsCubit: context.read<TopTalentsCubit>(),
+                                topTalentsCubit:
+                                    context.read<TopTalentsCubit>(),
                                 topTalentsData: homeData?.topTalents?[index],
                                 isLeftPadding: index == 0,
                                 isRightPadding:
-                                index == homeDataCubit.items.length - 1,
-
+                                    index == homeDataCubit.items.length - 1,
                               );
                             },
                           ),
