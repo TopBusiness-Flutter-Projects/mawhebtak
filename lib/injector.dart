@@ -14,6 +14,10 @@ import 'package:mawhebtak/features/calender/data/repos/calender.repo.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/contact_us/data/repos/contact_us_repo.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
+import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
+import 'package:mawhebtak/features/home/data/repositories/top_talents_repository.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/data/repos/jobs.repo.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
@@ -39,8 +43,7 @@ import 'features/about_us/cubit/about_us_cubit.dart';
 import 'features/about_us/data/repos/about_us_repo.dart';
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/change_langauge/data/repos/change_language_repo.dart';
-import 'features/home/cubit/home_cubit.dart';
-import 'features/home/data/repo/home_repo_impl.dart';
+
 import 'features/main_screen/data/repo/main_repo_impl.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/profile/data/repo/profile_repo_impl.dart';
@@ -150,13 +153,17 @@ Future<void> setupCubit() async {
     () => AssistantCubit(
       serviceLocator(),
     ),
+  ); serviceLocator.registerFactory(
+    () => TopTalentsCubit(
+
+    ),
   );
 }
 
 Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => HomeRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => HomeRepository(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
   serviceLocator
@@ -179,6 +186,7 @@ Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => CastingRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => JobsRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => AssistantRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => TopTalentsRepository(serviceLocator()));
 }
 
 Future<void> setupSharedPreferences() async {

@@ -2,8 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
-import 'package:mawhebtak/features/home/cubit/home_cubit.dart';
-import 'package:mawhebtak/features/home/cubit/home_state.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
 import '../../../../core/exports.dart';
 

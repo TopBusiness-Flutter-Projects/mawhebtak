@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/screens/widgets/notification_widget.dart';
 import '../../../core/exports.dart';
-import '../cubit/home_cubit.dart';
-import '../cubit/home_state.dart';
+
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});

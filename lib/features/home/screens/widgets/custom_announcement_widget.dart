@@ -141,6 +141,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                 AutoSizeText(widget.announcement?.title ?? "", style: getSemiBoldStyle(fontSize: 14.sp, color: AppColors.grayDark)),
                 AutoSizeText(
                   widget.announcement?.description ?? "",
+                  maxLines: 2,
                   style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayDark),
                 ),
                 SizedBox(height: 5.h),

@@ -1,4 +1,6 @@
 
+import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
+
 class HomeModel {
   HomeData? data;
   String? msg;
@@ -27,8 +29,8 @@ class HomeData {
   List<Slider>? sliders;
   List<TopTalent>? userSliders;
   List<TopTalent>? topTalents;
-  List<Top>? topEvents;
-  List<Top>? topGigs;
+  List<EventAndGigsModel>? topEvents;
+  List<EventAndGigsModel>? topGigs;
   List<Announcement>? announcements;
 
   HomeData({
@@ -44,8 +46,8 @@ class HomeData {
     sliders: json["sliders"] == null ? [] : List<Slider>.from(json["sliders"]!.map((x) => Slider.fromJson(x))),
     userSliders: json["user_sliders"] == null ? [] : List<TopTalent>.from(json["user_sliders"]!.map((x) => TopTalent.fromJson(x))),
     topTalents: json["top_talents"] == null ? [] : List<TopTalent>.from(json["top_talents"]!.map((x) => TopTalent.fromJson(x))),
-    topEvents: json["top_events"] == null ? [] : List<Top>.from(json["top_events"]!.map((x) => Top.fromJson(x))),
-    topGigs: json["top_gigs"] == null ? [] : List<Top>.from(json["top_gigs"]!.map((x) => Top.fromJson(x))),
+    topEvents: json["top_events"] == null ? [] : List<EventAndGigsModel>.from(json["top_events"]!.map((x) => EventAndGigsModel.fromJson(x))),
+    topGigs: json["top_gigs"] == null ? [] : List<EventAndGigsModel>.from(json["top_gigs"]!.map((x) => EventAndGigsModel.fromJson(x))),
     announcements: json["announcements"] == null ? [] : List<Announcement>.from(json["announcements"]!.map((x) => Announcement.fromJson(x))),
   );
 
@@ -163,34 +165,4 @@ class Slider {
   };
 }
 
-class Top {
-  int? id;
-  String? image;
-  String? title;
-  String? description;
-  String? from;
 
-  Top({
-    this.id,
-    this.image,
-    this.title,
-    this.description,
-    this.from,
-  });
-
-  factory Top.fromJson(Map<String, dynamic> json) => Top(
-    id: json["id"],
-    image: json["image"],
-    title: json["title"],
-    description: json["description"],
-    from: json["from"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "image": image,
-    "title": title,
-    "description": description,
-    "from": from,
-  };
-}

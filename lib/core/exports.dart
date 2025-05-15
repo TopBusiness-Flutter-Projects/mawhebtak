@@ -10,5 +10,7 @@ export 'package:mawhebtak/core/utils/dialogs.dart';
 export 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
 export 'package:mawhebtak/core/widgets/dropdown_textField_widget.dart';
 export 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
+export  'package:mawhebtak/injector.dart';
+
 
 

@@ -1,4 +1,5 @@
 import 'package:mawhebtak/features/calender/screens/widgets/calender_widget.dart';
+import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import '../../../core/exports.dart';
 import '../../home/data/models/home_model.dart';
@@ -124,7 +125,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                           padding: EdgeInsets.only(
                                               left: 20.w, right: 20.w),
                                           child:  CustomTopEventList(
-                                            topEvent: Top(),
+                                            topEvent: EventAndGigsModel(),
                                             isAll: true,
                                           ),
                                         )),

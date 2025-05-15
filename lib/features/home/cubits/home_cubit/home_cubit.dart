@@ -1,12 +1,12 @@
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
-import '../../../core/exports.dart';
-import '../data/repo/home_repo_impl.dart';
-import '../screens/home_screen.dart';
-import 'home_state.dart';
+import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
+import '../../../../core/exports.dart';
+import '../../screens/home_screen.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this.api) : super(HomeStateLoading());
-  HomeRepo api;
+  HomeRepository api;
   TextEditingController searchController = TextEditingController();
   final List<HomeItem> items = [
     HomeItem(
@@ -35,5 +35,8 @@ class HomeCubit extends Cubit<HomeState> {
       return null;
     }
   }
+
+
+
 }
 
