@@ -38,7 +38,8 @@ class _CastingScreenState extends State<CastingScreen> {
               ),
             ),
             SizedBox(height: 5.h),
-            BlocBuilder<CastingCubit, CastingState>(builder: (context, state) {
+            BlocBuilder<CastingCubit, CastingState>
+              (builder: (context, state) {
               return Expanded(
                 child: Stack(
                   children: [
@@ -53,8 +54,8 @@ class _CastingScreenState extends State<CastingScreen> {
                               Padding(
                                   padding: EdgeInsets.only(
                                       top: 20.h,
-                                      left: 40.w,
-                                      right: 40.w,
+                                      left: 55.w,
+                                      right: 55.w,
                                       bottom: 20.h),
                                   child: Container(
                                     height: 35.h,
@@ -70,11 +71,11 @@ class _CastingScreenState extends State<CastingScreen> {
                                               (index) {
                                                 bool isSelected =
                                                     selectedIndex == index;
-
                                                 return GestureDetector(
                                                   onTap: () => setState(() =>
                                                       selectedIndex = index),
                                                   child: AnimatedContainer(
+
                                                     duration: const Duration(
                                                         milliseconds: 300),
                                                     curve: Curves.easeInOut,

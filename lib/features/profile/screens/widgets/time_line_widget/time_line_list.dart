@@ -2,14 +2,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/see_more_text.dart';
+import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 
 import '../../../../../core/exports.dart';
 import 'like_comment_share.dart';
 
 class TimeLineList extends StatelessWidget {
-  const TimeLineList({super.key,  this.feeds});
+  const TimeLineList({super.key,  this.feeds, this.feedsCubit, required this.postId});
   final  PostsModelData? feeds;
+  final FeedsCubit ? feedsCubit;
+  final String postId;
   @override
   Widget build(BuildContext context) {
     return  Column(
@@ -118,7 +121,11 @@ class TimeLineList extends StatelessWidget {
         color: AppColors.grayLite,
       ),
       //like and comment and share
-      const LikeCommentShare(),
+       LikeCommentShare(
+
+        feedsCubit: feedsCubit!,
+         postId: postId,
+      ),
         Container(color: AppColors.grayLite,height: 10.h,)
     ],);
   }

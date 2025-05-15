@@ -9,10 +9,8 @@ class UnderCustomRow extends StatelessWidget {
  final TopTalent? userTalent;
   @override
   Widget build(BuildContext context) {
-    return         Positioned(
-      bottom:100.h,
-
-      child: SizedBox(
+    return
+      SizedBox(
         width: getWidthSize(context),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,11 +27,19 @@ class UnderCustomRow extends StatelessWidget {
                     onTap:(){
                       Navigator.pushNamed(context, Routes.profileScreen);
                     },
-                    child: SizedBox(
+                    child:
+
+                    userTalent?.image == null ?
+                    SizedBox(
                       height: 40.h,
                       width: 40.w,
                       child: Image.asset(ImageAssets.profileImage),
-                    ),
+                    ):
+                        SizedBox(
+                          height: 40.h,
+                          width: 40.h,
+                          child: Image.network(userTalent?.image ?? ""),
+                        )
                   ),
                   Text(userTalent?.name ?? "", style: getMediumStyle(color: AppColors.white,fontSize: 16.sp)),
                   Text(userTalent?.headline ?? "Talent / Actor Expert", style: getRegularStyle(color: AppColors.grayText,fontSize: 14.sp)),
@@ -62,8 +68,7 @@ class UnderCustomRow extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    )
+      )
     ;
   }
 }

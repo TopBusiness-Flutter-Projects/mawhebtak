@@ -45,7 +45,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
     }
   }
 
-  hideTopTalent({required String unwantedUserId}) async {
+ Future<void> hideTopTalent({required String unwantedUserId}) async {
     emit( HideTopTalentStateLoading());
     try {
       final res = await api!.hideTopTalents(unwantedUserId: unwantedUserId);
@@ -54,6 +54,8 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
         emit(HideTopTalentStateError(l.toString()));
       }, (r) {
         emit( HideTopTalentStateLoaded());
+        successGetBar(r.msg ?? "");
+        topTalentsData(page: '1');
       });
     } catch (e) {
       emit(HideTopTalentStateError(e.toString()));

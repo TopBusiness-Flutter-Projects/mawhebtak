@@ -19,12 +19,7 @@ class MainCubit extends Cubit<MainState> {
         child: const FeedsScreen()),
     const CastingScreen(),
     const CalendarScreen(),
-
-
     const MoreScreen(),
-    // const MyReservationsScreen(),
-    // const FavouritesScreen(),
-
   ];
   int currentpage = 0;
 

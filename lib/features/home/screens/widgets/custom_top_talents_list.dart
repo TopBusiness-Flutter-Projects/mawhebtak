@@ -51,11 +51,13 @@ class CustomTopTalentsList extends StatelessWidget {
                 Positioned(
                   top: 6.h,
                   right: 8.w,
-                  child: InkWell(
-                      onTap: () {
-                        topTalentsCubit?.hideTopTalent(unwantedUserId: topTalentsData?.id.toString() ?? "0");
-                      },
-                      child: SvgPicture.asset(AppIcons.removeIcon)),
+                  child: GestureDetector(
+                    onTap: () async{
+                      print("Tapped");
+                      await topTalentsCubit?.hideTopTalent(unwantedUserId: topTalentsData?.id.toString() ?? "0");
+                    },
+                    child: SvgPicture.asset(AppIcons.removeIcon),
+                  ),
                 ),
               ],
             ),

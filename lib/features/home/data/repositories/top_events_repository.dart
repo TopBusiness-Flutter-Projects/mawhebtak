@@ -16,6 +16,7 @@ class TopEventsRepository {
           queryParameters: {
             "model" :"Event",
             "where[0]":"status,1",
+            "where[1]":"is_end,0",
             "paginate":"true",
             "page":page
 
