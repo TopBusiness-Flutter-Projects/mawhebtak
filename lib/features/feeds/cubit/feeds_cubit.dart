@@ -84,6 +84,7 @@ class FeedsCubit extends Cubit<FeedsState> {
           }
         }
         successGetBar(r.msg);
+        postsData(page: '1');
         emit(AddReactionStateLoaded());
       });
     }
