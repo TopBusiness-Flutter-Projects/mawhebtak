@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -55,7 +57,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
+    log('YYYYYY ${initialMessageRcieved?.data['module_id']}');
     return MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -122,7 +124,8 @@ class _MyAppState extends State<MyApp> {
             create: (_) => injector.serviceLocator<AnnouncementCubit>(),
           ),
           BlocProvider(
-            create: (_) => injector.serviceLocator<TopTalentsCubit>()..topTalentsData(page: '1'),
+            create: (_) => injector.serviceLocator<TopTalentsCubit>()
+              ..topTalentsData(page: '1'),
           ),
         ],
         child: GetMaterialApp(

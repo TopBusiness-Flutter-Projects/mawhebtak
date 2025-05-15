@@ -23,7 +23,6 @@ class HomeCubit extends Cubit<HomeState> {
     emit(HomeStateLoading());
     try {
       final res = await api.homeData();
-
       res.fold((l) {
         emit(HomeStateError(l.toString()));
       }, (r) {
@@ -35,8 +34,4 @@ class HomeCubit extends Cubit<HomeState> {
       return null;
     }
   }
-
-
-
 }
-
