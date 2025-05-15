@@ -9,8 +9,8 @@ class LikeCommentShare extends StatefulWidget {
   final FeedsCubit feedsCubit;
   final String postId;
 
-  const LikeCommentShare(
-      {super.key, required this.feedsCubit, required this.postId});
+
+  const LikeCommentShare({super.key, required this.feedsCubit, required this.postId });
 
   @override
   State<LikeCommentShare> createState() => _LikeCommentShareState();
@@ -19,13 +19,14 @@ class LikeCommentShare extends StatefulWidget {
 class _LikeCommentShareState extends State<LikeCommentShare> {
   @override
   Widget build(BuildContext context) {
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         GestureDetector(
           onTap: () async {
             await widget.feedsCubit.addReaction(
-              postId: widget.postId,
+              postId:widget.postId,
               reaction: "like",
             );
             setState(() {}); // لإعادة بناء الواجهة بعد تغيير البيانات
@@ -36,15 +37,11 @@ class _LikeCommentShareState extends State<LikeCommentShare> {
                 padding: const EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
                   AppIcons.likeIcon,
-                  color: widget.feedsCubit.post?.isLiked == true
-                      ? AppColors.primary
-                      : AppColors.grayDarkkk,
+                  color: widget.feedsCubit.post?.isLiked == true ? AppColors.primary : AppColors.grayDarkkk,
                 ),
               ),
               Text(
-                widget.feedsCubit.post?.isLiked == true
-                    ? 'like'.tr()
-                    : 'disLike'.tr(),
+                widget.feedsCubit.post?.isLiked == true ? 'like'.tr() : 'disLike'.tr(),
                 style: getRegularStyle(
                   fontSize: 14.sp,
                   color: AppColors.grayDate,
@@ -94,3 +91,7 @@ class _LikeCommentShareState extends State<LikeCommentShare> {
     );
   }
 }
+
+
+
+
