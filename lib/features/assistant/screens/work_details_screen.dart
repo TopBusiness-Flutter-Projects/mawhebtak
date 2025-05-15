@@ -28,9 +28,8 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
-      ),
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light),
       child: Scaffold(
         body: Stack(
           children: [
@@ -221,14 +220,14 @@ class TimelineAssistantItem extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                 ),
-                if (!isLast)
-                  Expanded(
-                    child: Container(
-                      width: 2,
-                      margin: const EdgeInsets.only(left: 5),
-                      color: Colors.grey.shade300,
-                    ),
+                // if (!isLast)
+                Expanded(
+                  child: Container(
+                    width: 2,
+                    margin: const EdgeInsets.only(left: 0),
+                    color: Colors.grey.shade300,
                   ),
+                ),
               ],
             ),
           ),
@@ -285,14 +284,13 @@ class TimelineAssistantItem extends StatelessWidget {
                                 fontSize: 12.sp,
                               ),
                             ),
-
                     ],
                   ),
                   Row(
                     children: [
                       Expanded(
                         child: GestureDetector(
-                          onTap:(){
+                          onTap: () {
                             Navigator.pushNamed(
                               context,
                               Routes.addAssistantRoute,

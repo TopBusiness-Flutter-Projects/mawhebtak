@@ -380,16 +380,18 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.topTalentsRoute:
+      case Routes.topTalentsRoute:
         return PageTransition(
           child: const TopTalentsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        ); case Routes.requestGigsRoute:
+        );
+      case Routes.requestGigsRoute:
         return PageTransition(
           child: BlocProvider(
-              create: (context) => RequestGigsCubit()..requestGigsData(page: '1'),
+              create: (context) =>
+                  RequestGigsCubit()..requestGigsData(page: '1'),
               child: const RequestGigsScreen()),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
