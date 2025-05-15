@@ -1,7 +1,6 @@
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
-
 import '../../../core/exports.dart';
 import '../../home/screens/widgets/custom_app_bar_row.dart';
 import '../../profile/screens/widgets/time_line_widget/time_line_list.dart';
@@ -19,8 +18,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
 
   @override
   void initState() {
+    super.initState();
     scrollController.addListener(_scrollListener);
-
   }
 
   _scrollListener() {
@@ -39,9 +38,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
+      body: BlocBuilder<FeedsCubit, FeedsState>
+        (builder: (context, state) {
         var feeds = context.read<FeedsCubit>().posts;
-
+        var feedsCubit = context.read<FeedsCubit>();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -50,7 +50,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
               padding: EdgeInsets.only(top: 20.h),
               child: CustomAppBarRow(
                 colorTextFromSearchTextField:
-                    AppColors.darkGray.withOpacity(0.3),
+                AppColors.darkGray.withOpacity(0.3),
                 backgroundColorTextFieldSearch: AppColors.grayLite,
                 isMore: true,
                 colorSearchIcon: AppColors.secondPrimary,
@@ -61,44 +61,46 @@ class _FeedsScreenState extends State<FeedsScreen> {
               color: AppColors.grayLite,
               height: getHeightSize(context) / 50,
             ),
-            //what do you want
             const WhatDoYouWant(),
             10.h.verticalSpace,
-            switch (state) {
-              FeedsStateLoading() => const Expanded(
-                  child: Center(
-                    child: CustomLoadingIndicator(),
-                  ),
+            if (state is FeedsStateLoading) ...[
+              const Expanded(
+                child: Center(
+                  child: CustomLoadingIndicator(),
                 ),
-              FeedsStateLoaded() ||
-              FeedsStateLoadingMore() =>
-                Expanded(
-                  child: ListView.separated(
-                    controller: scrollController,
-                    shrinkWrap: true,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: feeds?.data?.length ?? 0,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TimeLineList(
-                        feeds: feeds!.data![index],
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 15.h,
-                      );
-                    },
-                  ),
+              ),
+            ] else if (state is FeedsStateLoaded || state is FeedsStateLoadingMore) ...[
+              Expanded(
+                child: ListView.separated(
+                  controller: scrollController,
+                  shrinkWrap: true,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: feeds?.data?.length ?? 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    return TimeLineList(
+                      postId: feeds!.data![index].id.toString(),
+                      feedsCubit:feedsCubit ,
+                      feeds: feeds.data![index],
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      height: 15.h,
+                    );
+                  },
                 ),
-              FeedsStateError() => Expanded(
-                  child: Center(
-                    child: Text(state.errorMessage),
-                  ),
+              ),
+            ] else if (state is FeedsStateError) ...[
+              Expanded(
+                child: Center(
+                  child: Text(state.errorMessage),
                 ),
-            }
+              ),
+            ],
           ],
         );
       }),
     );
   }
+
 }

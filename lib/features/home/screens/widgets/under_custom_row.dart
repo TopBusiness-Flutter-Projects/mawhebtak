@@ -10,10 +10,7 @@ class UnderCustomRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-      Positioned(
-      bottom:100.h,
-
-      child: SizedBox(
+      SizedBox(
         width: getWidthSize(context),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,9 +27,9 @@ class UnderCustomRow extends StatelessWidget {
                     onTap:(){
                       Navigator.pushNamed(context, Routes.profileScreen);
                     },
-                    child: 
-                    
-                    userTalent?.image == null ? 
+                    child:
+
+                    userTalent?.image == null ?
                     SizedBox(
                       height: 40.h,
                       width: 40.w,
@@ -71,8 +68,7 @@ class UnderCustomRow extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    )
+      )
     ;
   }
 }

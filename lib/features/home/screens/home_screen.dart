@@ -46,27 +46,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
-      builder: (context, state) {
-        var homeDataCubit = context.watch<HomeCubit>();
-        var homeData = context.watch<HomeCubit>().homeModel?.data;
+    return Scaffold(
+      body:BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          var homeDataCubit = context.watch<HomeCubit>();
+          var homeData = context.watch<HomeCubit>().homeModel?.data;
 
-        if (state is HomeStateLoading) {
-          return const Scaffold(
-            body: Center(child: CustomLoadingIndicator()),
-          );
-        } else if (state is HomeStateError) {
-          return Scaffold(
-            body: Center(
+          if (state is HomeStateLoading) {
+            return const Center(child: CustomLoadingIndicator());
+          } else if (state is HomeStateError) {
+            return Center(
               child: Text(
                 state.errorMessage.toString(),
                 style: TextStyle(fontSize: 15.sp, color: AppColors.primary),
               ),
-            ),
-          );
-        } else if (state is HomeStateLoaded) {
-          return Scaffold(
-            body: Container(
+            );
+          } else if (state is HomeStateLoaded) {
+            return Container(
               width: getWidthSize(context),
               color: AppColors.homeColor,
               child: ListView(
@@ -101,7 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 360.h,
                                 child: PageView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  allowImplicitScrolling: true,
                                   controller: userController,
                                   itemCount: homeData!.userSliders!.length,
                                   onPageChanged: (userIndex) {
@@ -119,8 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-
-
                       Align(
                           alignment: Alignment.topCenter,
                           child: CustomAppBarRow(color: AppColors.transparent)),
@@ -150,11 +143,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemCount: homeData?.topTalents?.length ?? 0,
                             itemBuilder: (context, index) {
                               return CustomTopTalentsList(
-                                 topTalentsCubit: context.read<TopTalentsCubit>(),
+                                topTalentsCubit: context.read<TopTalentsCubit>(),
                                 topTalentsData: homeData?.topTalents?[index],
                                 isLeftPadding: index == 0,
                                 isRightPadding:
-                                    index == homeDataCubit.items.length - 1,
+                                index == homeDataCubit.items.length - 1,
                               );
                             },
                           ),
@@ -262,12 +255,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   50.h.verticalSpace,
                 ],
               ),
-            ),
-          );
-        } else {
-          return const SizedBox(); // fallback widget
-        }
-      },
+            );
+          } else {
+            return const SizedBox(); // fallback widget
+          }
+        },
+      ),
     );
   }
 }

@@ -13,6 +13,7 @@ class EndPoints {
   static const String topTalentsUrl = '${baseUrl}get-data';
   static const String requestGigsUrl = '${baseUrl}get-data';
   static const String announcementsUrl = '${baseUrl}get-data';
+  static const String addReactionUrl = '${baseUrl}add-reaction';
   static const String feedsUrl = '${baseUrl}get-data?model=Post&where[0]=status,1&paginate=true&page=';
   static const String unWantedUserUrl = '${baseUrl}un-wanted-user';
   static const String registerUrl = '${baseUrl}register';

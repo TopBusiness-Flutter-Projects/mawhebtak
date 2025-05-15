@@ -71,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
                       if (cubit.selectedIndex == 0) ...[
                         AboutWidget()
                       ] else if (cubit.selectedIndex == 1) ...[
-                        TimeLineWidget()
+                       // TimeLineWidget()
                       ] else if (cubit.selectedIndex == 2) ...[
                         ListView.separated(
                           physics: BouncingScrollPhysics(),
