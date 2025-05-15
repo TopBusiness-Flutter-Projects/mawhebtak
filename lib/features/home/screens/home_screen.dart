@@ -148,6 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 isLeftPadding: index == 0,
                                 isRightPadding:
                                 index == homeDataCubit.items.length - 1,
+
                               );
                             },
                           ),

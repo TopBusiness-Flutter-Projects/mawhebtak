@@ -12,7 +12,20 @@
           "package_name": "com.topbusiness.mawhebtak"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "485614592327-j4bpmrlpotpnknahsbgmrfucibnh8qbj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.topbusiness.mawhebtak",
+            "certificate_hash": "0714172e50e3486b050980b70afe18d7bff64a17"
+          }
+        },
+        {
+          "client_id": "485614592327-c86cn3g3h7njqj8vkirmu5dil9cbv7i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDYfllIkUu98s-LNgbLeqSPOAxjhsj5GjQ"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "485614592327-c86cn3g3h7njqj8vkirmu5dil9cbv7i5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "485614592327-g1erhp6l4c30vtse8dq7p3s35o8ulovj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.topbusiness.mawhebtak"
+              }
+            }
+          ]
         }
       }
     }
