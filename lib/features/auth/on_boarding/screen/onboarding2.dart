@@ -29,7 +29,6 @@ class OnBoarding2 extends StatelessWidget {
                   child: Center(
                     child: Image.asset(
                       ImageAssets.onboarding2Image,
-                      // width: getSize(context) / 1.1,
                     ),
                   ),
                 ),

@@ -189,6 +189,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         Column(
           children: [
             _buildMonthNavigator(),
+            10.h.verticalSpace,
             _buildWeekdayHeader(),
             Expanded(child: _buildCalendarBody()),
           ],

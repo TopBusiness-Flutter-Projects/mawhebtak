@@ -16,7 +16,6 @@ class UnderCustomRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-
             Padding(
               padding:  EdgeInsets.all(8.0.r),
               child: Column(
@@ -28,18 +27,20 @@ class UnderCustomRow extends StatelessWidget {
                       Navigator.pushNamed(context, Routes.profileScreen);
                     },
                     child:
-
                     userTalent?.image == null ?
                     SizedBox(
-                      height: 40.h,
-                      width: 40.w,
+
                       child: Image.asset(ImageAssets.profileImage),
                     ):
-                        SizedBox(
-                          height: 40.h,
-                          width: 40.h,
-                          child: Image.network(userTalent?.image ?? ""),
-                        )
+                    CircleAvatar(
+                      radius: 30.r,
+                      backgroundImage: userTalent?.image != null && userTalent!.image!.isNotEmpty
+                          ? NetworkImage(userTalent!.image!)
+                          : null,
+                      child: userTalent?.image == null || userTalent!.image!.isEmpty
+                          ? const Icon(Icons.person)
+                          : null,
+                    )
                   ),
                   Text(userTalent?.name ?? "", style: getMediumStyle(color: AppColors.white,fontSize: 16.sp)),
                   Text(userTalent?.headline ?? "Talent / Actor Expert", style: getRegularStyle(color: AppColors.grayText,fontSize: 14.sp)),

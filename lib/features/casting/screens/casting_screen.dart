@@ -8,8 +8,8 @@ import '../../../core/exports.dart';
 import '../../home/screens/widgets/custom_request_gigs.dart';
 
 class CastingScreen extends StatefulWidget {
-  const CastingScreen({super.key});
-
+  const CastingScreen({super.key, required this.isFromHome});
+  final bool isFromHome;
   @override
   State<CastingScreen> createState() => _CastingScreenState();
 }
@@ -26,8 +26,13 @@ class _CastingScreenState extends State<CastingScreen> {
       child: Scaffold(
         body: Column(
           children: [
+            if(widget.isFromHome !=  true)
+              CustomSimpleAppbar(
+              title: 'casting'.tr(),
+              isActionButton: true,
+            ),
             Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
+              padding: EdgeInsets.only(top: 20.h,left: 20.w, right: 20.w),
               child: CustomAppBarRow(
                 colorTextFromSearchTextField:
                     AppColors.darkGray.withOpacity(0.3),
@@ -38,8 +43,7 @@ class _CastingScreenState extends State<CastingScreen> {
               ),
             ),
             SizedBox(height: 5.h),
-            BlocBuilder<CastingCubit, CastingState>
-              (builder: (context, state) {
+            BlocBuilder<CastingCubit, CastingState>(builder: (context, state) {
               return Expanded(
                 child: Stack(
                   children: [
@@ -58,7 +62,7 @@ class _CastingScreenState extends State<CastingScreen> {
                                       right: 55.w,
                                       bottom: 20.h),
                                   child: Container(
-                                    height: 35.h,
+                                    height: 50.h,
                                     decoration: BoxDecoration(
                                       color: Colors.grey[200],
                                       borderRadius: BorderRadius.circular(12.r),
@@ -71,57 +75,60 @@ class _CastingScreenState extends State<CastingScreen> {
                                               (index) {
                                                 bool isSelected =
                                                     selectedIndex == index;
-                                                return GestureDetector(
-                                                  onTap: () => setState(() =>
-                                                      selectedIndex = index),
-                                                  child: AnimatedContainer(
-
-                                                    duration: const Duration(
-                                                        milliseconds: 300),
-                                                    curve: Curves.easeInOut,
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 0.w),
-                                                    padding: EdgeInsets.only(
-                                                        right: 40.w,
-                                                        left: 40.w),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.r),
-                                                      color: isSelected
-                                                          ? AppColors
-                                                              .secondPrimary
-                                                          : Colors.transparent,
-                                                      boxShadow: isSelected
-                                                          ? [
-                                                              BoxShadow(
-                                                                color: AppColors
-                                                                    .primary
+                                                return Expanded(
+                                                  child: GestureDetector(
+                                                    onTap: () => setState(() =>
+                                                        selectedIndex = index),
+                                                    child: AnimatedContainer(
+                                                      duration: const Duration(
+                                                          milliseconds: 300),
+                                                      curve: Curves.easeInOut,
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 0.w),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.r),
+                                                        color: isSelected
+                                                            ? AppColors
+                                                                .secondPrimary
+                                                            : Colors
+                                                                .transparent,
+                                                        boxShadow: isSelected
+                                                            ? [
+                                                                BoxShadow(
+                                                                  color: AppColors
+                                                                      .primary
+                                                                      .withOpacity(
+                                                                          0.2),
+                                                                  blurRadius: 6,
+                                                                  offset:
+                                                                      const Offset(
+                                                                          0, 2),
+                                                                )
+                                                              ]
+                                                            : null,
+                                                      ),
+                                                      child: Center(
+                                                        child: Text(
+                                                          roles[index],
+                                                          style: TextStyle(
+                                                            fontSize: 16.sp,
+                                                            fontWeight:
+                                                                isSelected
+                                                                    ? FontWeight
+                                                                        .w600
+                                                                    : FontWeight
+                                                                        .w500,
+                                                            color: isSelected
+                                                                ? AppColors
+                                                                    .white
+                                                                : AppColors
+                                                                    .grayDark
                                                                     .withOpacity(
-                                                                        0.2),
-                                                                blurRadius: 6,
-                                                                offset:
-                                                                    const Offset(
-                                                                        0, 2),
-                                                              )
-                                                            ]
-                                                          : null,
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        roles[index],
-                                                        style: TextStyle(
-                                                          fontSize: 16.sp,
-                                                          fontWeight: isSelected
-                                                              ? FontWeight.w600
-                                                              : FontWeight.w500,
-                                                          color: isSelected
-                                                              ? AppColors.white
-                                                              : AppColors
-                                                                  .grayDark
-                                                                  .withOpacity(
-                                                                      0.5),
+                                                                        0.5),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -176,30 +183,32 @@ class _CastingScreenState extends State<CastingScreen> {
                                                     fontSize: 16.sp),
                                               ),
                                             ),
-                                            GridView.builder(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 12.w),
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                mainAxisSpacing: 16.h,
-                                                crossAxisSpacing: 16.w,
-                                                childAspectRatio:
-                                                    0.75, // Adjust this ratio to control card proportions
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 10.w, right: 10.w),
+                                              child: GridView.builder(
+                                                gridDelegate:
+                                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  mainAxisSpacing: 16.h,
+                                                  crossAxisSpacing: 16.w,
+                                                  childAspectRatio:
+                                                      0.75, // Adjust this ratio to control card proportions
+                                                ),
+                                                scrollDirection: Axis.vertical,
+                                                physics:
+                                                    const BouncingScrollPhysics(),
+                                                itemCount:
+                                                    5,
+                                                shrinkWrap: true,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return TalentList(
+                                                    index: index,
+                                                  );
+                                                },
                                               ),
-                                              scrollDirection: Axis.vertical,
-                                              physics:
-                                                  const BouncingScrollPhysics(),
-                                              itemCount:
-                                                  5, // Replace with your actual item count
-                                              shrinkWrap: true,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return TalentList(
-                                                  index: index,
-                                                );
-                                              },
                                             ),
                                           ],
                                         )
@@ -268,7 +277,8 @@ class _CastingScreenState extends State<CastingScreen> {
                 ),
               );
             }),
-            60.h.verticalSpace,
+            if(widget.isFromHome == false)
+              60.h.verticalSpace,
           ],
         ),
       ),

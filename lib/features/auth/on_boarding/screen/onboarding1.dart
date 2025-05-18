@@ -19,21 +19,23 @@ class OnBoarding1 extends StatelessWidget {
           ),
           body: Column(
             children: [
+              SizedBox(
+                height: getSize(context) / 22,
+              ),
               Flexible(
                 fit: FlexFit.tight,
-                child: Center(
-                  child: Image.asset(
-                    ImageAssets.onboarding1Image,
-                    width: getSize(context) / 1.5,
-                    height: getSize(context) / 1.5,
+                child: Padding(
+                  padding: EdgeInsets.all(getSize(context) / 22),
+                  child: Center(
+                    child: Image.asset(
+                      ImageAssets.onboarding1Image,
+                    ),
                   ),
-                ),
-              ),
+              ),),
               Stack(
                 children: [
                   Image.asset(
                     ImageAssets.onboardingBackground,
-                    width: double.infinity,
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -44,7 +46,7 @@ class OnBoarding1 extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: getSize(context) / 6,
+                          height: getSize(context) / 9,
                         ),
                         SmoothPageIndicator(
                           controller: cubit.pageController,

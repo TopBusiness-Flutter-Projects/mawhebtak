@@ -1,5 +1,4 @@
 import 'package:mawhebtak/core/exports.dart';
-import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 
 class DropdownTextFieldWidget extends StatefulWidget {
    DropdownTextFieldWidget({
@@ -121,7 +120,7 @@ class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
           enabled: true,
           onTap: _toggleDropdown,
           suffixIcon: InkWell(
-            onTap: _showCurrencyPicker,
+            onTap:widget.isWithCurrency? _showCurrencyPicker : null,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
