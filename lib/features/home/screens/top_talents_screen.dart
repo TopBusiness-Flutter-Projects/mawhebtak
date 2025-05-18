@@ -39,10 +39,7 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
       body: BlocBuilder<TopTalentsCubit, TopTalentsState>(
         builder: (context, state) {
           var topTalentData = context.read<TopTalentsCubit>().topTalents;
-
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomSimpleAppbar(
                 title: 'top_talents'.tr(),
@@ -63,28 +60,25 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
               else if (state is TopTalentsStateLoaded ||
                     state is TopTalentsStateLoadingMore)
                   Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                      child: GridView.builder(
-                        controller: scrollController,
-                        gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.9,
-                        ),
-                        itemBuilder: (context, index) => CustomTopTalentsList(
-                          //topTalentsCubit:context.read<TopTalentsCubit>(),
-                          topTalentsData: topTalentData?.data?[index],
-                          isLeftPadding: index == 0,
-                          isRightPadding:
-                          index == (topTalentData?.data?.length ?? 1) - 1,
-                        ),
-                        itemCount: topTalentData?.data?.length ?? 0,
+                    child: GridView.builder(
+                      controller: scrollController,
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1.3,
                       ),
+                      itemBuilder: (context, index) => CustomTopTalentsList(
+                        //topTalentsCubit:context.read<TopTalentsCubit>(),
+                        topTalentsData: topTalentData?.data?[index],
+                        isLeftPadding: index == 0,
+                        isRightPadding:
+                        index == (topTalentData?.data?.length ?? 1) - 1,
+                      ),
+                      itemCount: topTalentData?.data?.length ?? 0,
                     ),
                   ),
               if (state is TopTalentsStateLoadingMore)
-                const CustomLoadingIndicator(),
+                const Expanded(child: CustomLoadingIndicator()),
             ],
           );
         },

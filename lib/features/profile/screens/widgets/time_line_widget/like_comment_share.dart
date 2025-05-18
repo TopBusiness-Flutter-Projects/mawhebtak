@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
-import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
-
 import '../../../../../core/exports.dart';
 
 class LikeCommentShare extends StatefulWidget {

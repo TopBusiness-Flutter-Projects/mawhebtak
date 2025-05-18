@@ -85,8 +85,9 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                       style: TextStyle(
                                           color: AppColors.blackLite,
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 14.sp))),
+                                          fontSize: 20.sp))),
                               CustomTextField(
+                                hintTextSize: 20.sp,
                                 controller: cubit.fullNameController,
                                 hintText: "ahmed ...",
                                 validator: (value) {
@@ -98,16 +99,17 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsets.only(top: 20.h, bottom: 10.h),
+                                    EdgeInsets.only(top: 20.h),
                                 child: Text(
                                   "email_address".tr(),
                                   style: TextStyle(
                                       color: AppColors.blackLite,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 14.sp),
+                                      fontSize: 20.sp),
                                 ),
                               ),
                               CustomTextField(
+                                hintTextSize: 20.sp,
                                 controller: cubit.emailAddressController,
                                 hintText: "email@gmail.com",
                                 validator: (value) {
@@ -125,10 +127,11 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                   style: TextStyle(
                                       color: AppColors.blackLite,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 14.sp),
+                                      fontSize: 20.sp),
                                 ),
                               ),
                               CustomTextField(
+                                hintTextSize: 20.sp,
                                 controller: cubit.mobileNumberController,
                                 hintText: "01xxxxxxxx",
                                 validator: (value) {
@@ -142,16 +145,18 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                 padding:
                                     EdgeInsets.only(top: 20.h, bottom: 10.h),
                                 child: Text(
+
                                   "password".tr(),
                                   style: TextStyle(
                                       color: AppColors.blackLite,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 14.sp),
+                                      fontSize: 20.sp),
                                 ),
                               ),
                               CustomTextField(
+
                                 controller: cubit.passwordController,
-                                hintTextSize: 16.sp,
+                                hintTextSize: 20.sp,
                                 hintText: "● ● ● ● ● ● ● ● ● ●",
                                 isPassword: true,
                                 validator: (value) {
@@ -199,7 +204,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                       "or_sign_up_with".tr(),
                                       style: TextStyle(
                                           color: AppColors.blackLite,
-                                          fontSize: 16.sp),
+                                          fontSize: 20.sp),
                                     ),
                                   ],
                                 ),

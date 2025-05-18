@@ -30,8 +30,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("email_address".tr()),
+                        Text("email_address".tr(),style: TextStyle(fontSize: 20.sp),),
                         CustomTextField(
+                          hintTextSize: 20.sp,
                           controller: cubit.emailController,
                           hintText: "Example@mail.com",
                         ),

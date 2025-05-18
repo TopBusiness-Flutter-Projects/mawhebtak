@@ -5,7 +5,6 @@ import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/announcements_screen.dart';
-import 'package:mawhebtak/features/home/screens/top_talents_screen.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_announcement_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_request_gigs.dart';
@@ -32,7 +31,6 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends State<HomeScreen> {
   late PageController userController;
   int userCount = 0;
@@ -51,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           var homeDataCubit = context.watch<HomeCubit>();
           var homeData = context.watch<HomeCubit>().homeModel?.data;
-
           if (state is HomeStateLoading) {
             return const Center(child: CustomLoadingIndicator());
           } else if (state is HomeStateError) {
@@ -70,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Stack(
                     children: [
                       SizedBox(
-                        height: getHeightSize(context) / 1.5,
+                        height: getHeightSize(context) / 1.8,
                         width: getWidthSize(context),
                         child: Stack(
                           fit: StackFit.expand,
@@ -89,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        height: 450.h,
+                        height: 470.h,
                         child: Column(
                           children: [
                             if ((homeData?.userSliders ?? []).isNotEmpty)
@@ -118,9 +115,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Align(
                           alignment: Alignment.topCenter,
-                          child: CustomAppBarRow(color: AppColors.transparent)),
+                          child: Padding(
+                            padding:  EdgeInsets.only(top: 10.h),
+                            child: CustomAppBarRow(color: AppColors.transparent),
+                          )),
                     ],
                   ),
+
+
+
+
+
+
+
+
+
+
+
+
                   SizedBox(height: 10.h),
                   if (homeData?.topTalents?.isNotEmpty ?? false)
                     Column(
@@ -128,12 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         CustomRow(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const TopTalentsScreen(),
-                              ),
-                            );
+                           Navigator.pushNamed(context, Routes.topTalentsRoute);
                           },
                           text: 'top_talents',
                         ),
@@ -201,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 145.w,
+                          height: 150.w,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: homeData?.topGigs?.length ?? 0,
@@ -255,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                  50.h.verticalSpace,
+                  70.h.verticalSpace,
                 ],
               ),
             );

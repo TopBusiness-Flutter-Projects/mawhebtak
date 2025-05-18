@@ -46,6 +46,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
           Navigator.pushNamed(context, Routes.detailsAnnouncementScreen);
         },
         child: CustomContainerWithShadow(
+          isShadow: false,
           reduis: widget.isAnnouncements ?? false ? 0.r : 8.r,
           width: widget.isAnnouncements ?? false ? double.infinity : 299.w,
           child: Padding(
@@ -118,8 +119,6 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16.r),
                   child: SizedBox(
-                    width: 290.w,
-                    height: 180.w,
                     child: Image.asset(
                       ImageAssets.tasweerPhoto,
                       fit: BoxFit.contain,
@@ -129,8 +128,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16.r),
                   child: SizedBox(
-                    width: 290.w,
-                    height: 180.w,
+
                     child: Image.network(
                       widget.announcement?.image ?? "",
                       fit: BoxFit.cover,
@@ -138,12 +136,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                   ),
                 ),
                 SizedBox(height: 8.h),
-                AutoSizeText(widget.announcement?.title ?? "", style: getSemiBoldStyle(fontSize: 14.sp, color: AppColors.grayDark)),
-                AutoSizeText(
-                  widget.announcement?.description ?? "",
-                  maxLines: 2,
-                  style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayDark),
-                ),
+                AutoSizeText(widget.announcement?.title ?? "Offer 20% on accessories photographs", style: getSemiBoldStyle(fontSize: 14.sp, color: AppColors.grayDark)),
                 SizedBox(height: 5.h),
                 Row(
                   children: [
