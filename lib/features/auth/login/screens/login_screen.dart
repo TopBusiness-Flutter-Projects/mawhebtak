@@ -53,12 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   50.h.verticalSpace,
                   Image.asset(
                     ImageAssets.appIconWhite,
-                    height: 80.h,
-                    width: 250.w,
+                    height: 100.h,
+                    width: 300.w,
                   ),
-                  50.h.verticalSpace,
                   Padding(
-                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                    padding: EdgeInsets.only(top:80.h,left: 20.w, right: 20.w,bottom: 20.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -66,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           "email_address".tr(),
                           style: TextStyle(
-                              color: AppColors.darkGray, fontSize: 14.sp),
+                              color: AppColors.darkGray, fontSize: 20.sp),
                         ),
                         CustomTextField(
                           validator: (value) {
@@ -77,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           controller: emailController,
                           hintText: "Example@mail.com",
+                          hintTextSize: 20.sp,
                           suffixIcon: Padding(
                             padding: EdgeInsets.all(10.0.h),
                             child: SvgPicture.asset(
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           "password".tr(),
                           style: TextStyle(
-                              color: AppColors.darkGray, fontSize: 14.sp),
+                              color: AppColors.darkGray, fontSize: 20.sp),
                         ),
                         CustomTextField(
                           validator: (value) {
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           controller: passwordController,
                           isPassword: true,
-                          hintTextSize: 18.sp,
+                          hintTextSize: 20.sp,
                           hintText: ("● ● ● ● ● ● ● ● ● ●"),
                           suffixIcon: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "forget_password".tr(),
                                 style: TextStyle(
                                     color: AppColors.secondPrimary,
-                                    fontSize: 14.sp,
+                                    fontSize: 20.sp,
                                     decoration: TextDecoration.underline,
                                     decorationColor: AppColors.secondPrimary),
                               ),
@@ -133,6 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (formKey.currentState!.validate()) {
                                       cubit.login(emailController.text,
                                           passwordController.text);
+                                      Navigator.pushNamed(context, Routes.mainRoute);
                                     }
                                   },
                                   title: 'login'.tr()),
@@ -145,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             textAlign: TextAlign.center,
                             "or_login_with".tr(),
-                            style: TextStyle(fontSize: 16.sp),
+                            style: TextStyle(fontSize: 20.sp),
                           ),
                         ),
                         10.h.verticalSpace,
@@ -167,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "create_new_account".tr(),
                                 style: TextStyle(
                                   color: AppColors.primary,
-                                  fontSize: 14.sp,
+                                  fontSize: 20.sp,
                                 ),
                               ),
                             ),
@@ -187,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: AppColors.secondPrimary,
                                   decoration: TextDecoration.underline,
                                   decorationColor: AppColors.secondPrimary,
-                                  fontSize: 14.sp,
+                                  fontSize: 20.sp,
                                   fontWeight: FontWeight.w400),
                             ),
                           ),

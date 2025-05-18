@@ -17,7 +17,7 @@ class MainCubit extends Cubit<MainState> {
     BlocProvider(
         create: (context) => FeedsCubit()..postsData(page: '1'),
         child: const FeedsScreen()),
-    const CastingScreen(),
+     const CastingScreen(isFromHome: true,),
     const CalendarScreen(),
     const MoreScreen(),
   ];

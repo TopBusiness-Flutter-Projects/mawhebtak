@@ -23,7 +23,7 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
           children: [
             Text(
               "i_am".tr(),
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w400),
+              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: 10.h),
             SizedBox(
@@ -60,7 +60,7 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
                       child: Text(
                         item?.name ?? "",
                         style: TextStyle(
-                          fontSize: 14.sp,
+                          fontSize: 20.sp,
                           fontWeight: FontWeight.w400,
                           color: (cubit.selectedUserType?.id?.toString() ==
                                   item?.id?.toString())

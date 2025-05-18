@@ -123,9 +123,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             })
                     : widget.suffixIcon,
                 contentPadding:
-                    EdgeInsets.only(left: 20.w,right: 20.w),
+                    EdgeInsets.only(left: 20.w,right: 20.w,top: 20.h,bottom: 20.h),
                 hintText: widget.hintText ,
-                hintStyle: getRegularStyle(color: AppColors.gray, fontSize:  widget.hintTextSize ?? 14.sp),
+                hintStyle: getRegularStyle(color: AppColors.gray,
+                    fontSize:  widget.hintTextSize ?? 14.sp),
                 errorStyle: getRegularStyle(color: AppColors.red,fontSize: 14.sp),
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.white, width: 1.5),

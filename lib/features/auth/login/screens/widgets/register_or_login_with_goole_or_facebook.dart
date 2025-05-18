@@ -51,7 +51,7 @@ class _GoogleAndFacebookWidgetState extends State<GoogleAndFacebookWidget> {
                           Text("apple".tr(),
                               style: TextStyle(
                                   color: AppColors.darkGray.withOpacity(0.8),
-                                  fontSize: 15.sp))
+                                  fontSize: 20.sp))
                         ],
                       ),
                     ),
@@ -84,7 +84,7 @@ class _GoogleAndFacebookWidgetState extends State<GoogleAndFacebookWidget> {
                       Text("google".tr(),
                           style: TextStyle(
                               color: AppColors.darkGray.withOpacity(0.8),
-                              fontSize: 15.sp))
+                              fontSize: 20.sp))
                     ]),
               ),
             ),

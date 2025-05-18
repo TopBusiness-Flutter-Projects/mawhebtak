@@ -243,25 +243,25 @@ class TimelineAssistantItem extends StatelessWidget {
                       File(assistants.image!).existsSync())
                     Image.file(
                       File(assistants.image ?? ""),
-                      fit: BoxFit.fill,
-                      height: 200.h,
+                      fit: BoxFit.cover,
+                      height: 300.h,
                       width: double.infinity,
                     ),
                   Text(
                     assistants.title ?? "",
-                    style: const TextStyle(
+                    style:  TextStyle(
                       color: Colors.blue,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  8.h.verticalSpace,
                   Padding(
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Text(
                       assistants.description ?? "",
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style:  TextStyle(
+                        fontSize: 14.sp,
                         color: Colors.black87,
                       ),
                     ),

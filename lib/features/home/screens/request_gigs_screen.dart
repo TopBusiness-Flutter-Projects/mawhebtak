@@ -55,26 +55,24 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
                       child: Center(child: Text(state.errorMessage.toString()))),
                   RequestGigsStateLoaded() || RequestGigsStateLoadingMore()  =>
                       Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                        child: GridView.builder(
-                          controller: scrollController,
-                          gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:2,
-                            childAspectRatio: 1.1,
-                          ),
-                          itemBuilder: (context, index) =>
-                              CustomRequestGigsList(
-                                requestGigs: requestGigs?.data?[index],
-                                isLeftPadding: index == 0 ? true : false,
-                                isRightPadding:
-                                index == (requestGigs?.data?.length ?? 1) - 1
-                                    ? true
-                                    : false,
-                              ),
-                          itemCount: requestGigs?.data?.length ?? 0,
+                      child: GridView.builder(
+                        controller: scrollController,
+                        gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount:2,
+                          mainAxisSpacing: 10
+
                         ),
+                        itemBuilder: (context, index) =>
+                            CustomRequestGigsList(
+                              requestGigs: requestGigs?.data?[index],
+                              isLeftPadding: index == 0 ? true : false,
+                              isRightPadding:
+                              index == (requestGigs?.data?.length ?? 1) - 1
+                                  ? true
+                                  : false,
+                            ),
+                        itemCount: requestGigs?.data?.length ?? 0,
                       )),
 
                 }  ,if (state is RequestGigsStateLoadingMore)

@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
-
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import 'follow_button.dart';
@@ -58,7 +56,7 @@ class CustomTopEventList extends StatelessWidget {
                     ? getWidthSize(context) / .9
                     : 287.w, // Match image width
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:  EdgeInsets.all(8.0.r),
                   child: Column(
                     mainAxisAlignment:
                         MainAxisAlignment.end, // Center vertically
@@ -80,6 +78,7 @@ class CustomTopEventList extends StatelessWidget {
                             color: AppColors.grayText, fontSize: 12.sp),
                         textAlign: TextAlign.left,
                       ),
+                      10.h.verticalSpace,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -100,6 +99,7 @@ class CustomTopEventList extends StatelessWidget {
                               ],
                             ),
                           ),
+
                           CustomContainerButton(
                             onTap: () {
                               Navigator.pushNamed(
@@ -113,7 +113,7 @@ class CustomTopEventList extends StatelessWidget {
                             borderColor: isAll ?? false
                                 ? AppColors.lbny
                                 : AppColors.primary,
-                            width: 100.w,
+                            width: 120.w,
                           ),
                         ],
                       ),
