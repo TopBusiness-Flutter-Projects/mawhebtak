@@ -59,7 +59,7 @@ class StepIndicator extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14.sp,
+                    fontSize: 16.sp,
                   ),
                 ),
               ),
@@ -181,7 +181,7 @@ class StepIndicatorArabic extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14.sp,
+                    fontSize: 20.sp,
                   ),
                 ),
               ),

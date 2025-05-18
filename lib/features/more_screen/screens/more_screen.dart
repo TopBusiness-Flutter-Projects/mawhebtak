@@ -44,7 +44,7 @@ class MoreScreen extends StatelessWidget {
                       padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
                       child: Text(
                         "more".tr(),
-                        style: TextStyle(fontSize: 14.sp),
+                        style: TextStyle(fontSize: 20.sp),
                       ),
                     ),
                     Expanded(
@@ -127,7 +127,7 @@ class MoreScreen extends StatelessWidget {
                             },
                           ),
                           SizedBox(
-                            height: 40.h,
+                            height: 50.h,
                           ),
                         ],
                       ),
@@ -180,12 +180,12 @@ class MoreScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SvgPicture.asset(imageUrl),
+                  SvgPicture.asset(imageUrl,height: 25.h,),
                   10.w.horizontalSpace,
                   Text(
                     text,
                     style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 20.sp,
                         color: AppColors.black,
                         fontWeight: FontWeight.w400),
                   ),

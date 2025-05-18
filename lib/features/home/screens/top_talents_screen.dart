@@ -58,27 +58,26 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
                   ),
                 )
               else if (state is TopTalentsStateLoaded ||
-                    state is TopTalentsStateLoadingMore)
-                  Expanded(
-                    child: GridView.builder(
-                      controller: scrollController,
-                      gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1.2,
-                      ),
-                      itemBuilder: (context, index) => CustomTopTalentsList(
-                        //topTalentsCubit:context.read<TopTalentsCubit>(),
-                        topTalentsData: topTalentData?.data?[index],
-                        isLeftPadding: index == 0,
-                        isRightPadding:
-                        index == (topTalentData?.data?.length ?? 1) - 1,
-                      ),
-                      itemCount: topTalentData?.data?.length ?? 0,
+                  state is TopTalentsStateLoadingMore)
+                Expanded(
+                  child: GridView.builder(
+                    controller: scrollController,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio:1,
+                      mainAxisSpacing: 1,
+                      crossAxisSpacing: 1,
                     ),
+                    itemBuilder: (context, index) => CustomTopTalentsList(
+                      //topTalentsCubit:context.read<TopTalentsCubit>(),
+                      topTalentsData: topTalentData?.data?[index],
+                    ),
+                    itemCount: topTalentData?.data?.length ?? 0
                   ),
+                ),
               if (state is TopTalentsStateLoadingMore)
-                const Expanded(child: CustomLoadingIndicator()),
+               const  CustomLoadingIndicator(),
             ],
           );
         },

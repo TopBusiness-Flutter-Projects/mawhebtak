@@ -56,15 +56,43 @@ class CustomRequestGigsList extends StatelessWidget {
                 width: 130.w,
                 child: Padding(
                   padding:  EdgeInsets.only(bottom: 10.h,left: 10.w,right: 10.w),
-                  child: Text(
-                    requestGigs?.title ?? "",
-                    style: getMediumStyle(
-                      color: AppColors.white,
-                      fontSize: 16.sp,
+                  child: Text.rich(
+
+                    TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:AppColors.secondPrimary,
+                            ),
+                            child: Text(
+                              (requestGigs?.title ?? "").substring(0,
+                                  (requestGigs?.title?.length ?? 0) >= 5 ? 5 :
+                                  (requestGigs?.title?.length ?? 0)
+                              ),
+                              style: getMediumStyle(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TextSpan(
+                          text: (requestGigs?.title?.length ?? 0) > 5
+                              ? (requestGigs?.title ?? "").substring(5)
+                              : "",
+                          style: getMediumStyle(
+                            color: AppColors.white,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      ],
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                  ),
+                  )
+
+
                 ),
               ),
             ),
