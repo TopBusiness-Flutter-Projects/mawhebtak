@@ -51,6 +51,15 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                   children: [
                     10.h.verticalSpace,
                     CustomPickMediaWidget(
+                      deleteImage: () {
+                        //!
+
+                        cubit.clearMedia();
+                        setState(() {
+                          widget.assistant?.image = null;
+                        });
+                      },
+                      imagePath: widget.assistant?.image,
                       onTap: () {
                         cubit.pickMedia(context);
                       },

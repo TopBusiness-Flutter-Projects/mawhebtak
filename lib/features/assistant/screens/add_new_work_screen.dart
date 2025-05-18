@@ -36,16 +36,20 @@ class _AddNewWorkScreenState extends State<AddNewWorkScreen> {
           BlocBuilder<AssistantCubit, AssistantState>(
             builder: (context, state) {
               return Padding(
-                padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h, top: 20.h),
+                padding: EdgeInsets.only(
+                    left: 20.w, right: 20.w, bottom: 20.h, top: 20.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("description_from_new_work".tr(), style: getMediumStyle(fontSize: 19.sp)),
+                    Text("description_from_new_work".tr(),
+                        style: getMediumStyle(fontSize: 19.sp)),
                     10.h.verticalSpace,
-                    Text("work_name".tr(), style: getMediumStyle(fontSize: 14.sp, color: AppColors.blackLite)),
+                    Text("work_name".tr(),
+                        style: getMediumStyle(
+                            fontSize: 14.sp, color: AppColors.blackLite)),
                     CustomTextField(
                       controller: cubit.workNameController,
-                      hintText: "sanaa adel",
+                      hintText: "go_to_cinema".tr(),
                     ),
                     10.h.verticalSpace,
                     CustomButton(
@@ -61,7 +65,8 @@ class _AddNewWorkScreenState extends State<AddNewWorkScreen> {
                         if (widget.work == null) {
                           cubit.addWork(context);
                         } else {
-                          cubit.updateWork(context, workId: widget.work!.id ?? 0, newTitle: workName);
+                          cubit.updateWork(context,
+                              workId: widget.work!.id ?? 0, newTitle: workName);
                         }
 
                         Navigator.pop(context, true); // لتحديث القائمة

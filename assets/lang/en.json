@@ -212,7 +212,8 @@
         "please_enter_verifification_code":"Please enter your otp code",
           "out": "Exit",
             "exit_app": "Exit Application",
-  "exit_app_desc": "Are you sure you want to exit the application?"
+  "exit_app_desc": "Are you sure you want to exit the application?",
+  "go_to_cinema":"Go to Cinema"
 
 
 

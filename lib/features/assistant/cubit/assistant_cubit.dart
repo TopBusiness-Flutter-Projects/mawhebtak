@@ -15,20 +15,24 @@ class AssistantCubit extends Cubit<AssistantState> {
   TextEditingController workNameController = TextEditingController();
   ScrollController scrollController = ScrollController();
   TextEditingController assistantTitleController = TextEditingController();
-  TextEditingController assistantDescriptionController = TextEditingController();
+  TextEditingController assistantDescriptionController =
+      TextEditingController();
 
   DateTime? selectedReminderDate;
   void updateSelectedDate(DateTime date) {
     selectedReminderDate = date;
     emit(UpdateSelectedDateState());
   }
+
   void clearSelectedDate() {
     selectedReminderDate = null;
     emit(UpdateSelectedDateState());
   }
+
   Future<void> refreshWorks() async {
     await getWorks();
   }
+
   List<WorkModel>? works;
   Future<void> deleteWork(BuildContext context, {required int workId}) async {
     final assistants = await WorkHiveManager.getAssistants(workId);
@@ -45,7 +49,6 @@ class AssistantCubit extends Cubit<AssistantState> {
     successGetBar("delete_work_successful".tr());
     emit(DeleteNewWorkState());
   }
-
 
   Future<void> updateWork(BuildContext context,
       {required int workId, required String newTitle}) async {
@@ -82,7 +85,7 @@ class AssistantCubit extends Cubit<AssistantState> {
 
   List<Assistant>? assistants;
   Future<void> addAssistant(BuildContext context,
-      {required int workId,required String workTitle}) async {
+      {required int workId, required String workTitle}) async {
     if (assistantTitleController.text.trim().isEmpty) {
       errorGetBar("assistant_title_required".tr());
       return;
@@ -95,28 +98,26 @@ class AssistantCubit extends Cubit<AssistantState> {
       description: assistantDescriptionController.text.trim(),
       date: now,
       remindedTime: selectedReminderDate,
-      isActive: selectedReminderDate != null && selectedReminderDate!.isAfter(now),
+      isActive:
+          selectedReminderDate != null && selectedReminderDate!.isAfter(now),
       image: selectedImage?.path ?? "",
     );
 
-
     await WorkHiveManager.addAssistant(workId, newAssistant);
-    if(newAssistant.remindedTime !=null){
+    if (newAssistant.remindedTime != null) {
       notificationService!.scheduleNotification(
         title: newAssistant.title ?? "",
         id: newAssistant.id ?? 0,
         body: newAssistant.description ?? "",
         scheduledTime: newAssistant.remindedTime!,
-        payload: jsonEncode(
-            {
+        payload: jsonEncode({
           "type": "add_assistant",
-          "id":workId,
-          "title":workTitle,
+          "id": workId,
+          "title": workTitle,
         }),
       );
     }
 
-    clearAssistantInput();
     successGetBar("add_assistant_successful".tr());
     clearMedia();
     clearAssistantInput();
@@ -132,6 +133,7 @@ class AssistantCubit extends Cubit<AssistantState> {
     final newList = works?.reversed.toList();
     works = newList;
     emit(GetAllAssistantState());
+    return assistants ?? [];
   }
 
   Future<void> deleteAssistant(BuildContext context,
@@ -146,12 +148,10 @@ class AssistantCubit extends Cubit<AssistantState> {
   }
 
   Future<void> updateAssistant(
-      BuildContext context, {
-        required int workId,
-        required Assistant oldAssistant,
-      }) async {
-
-
+    BuildContext context, {
+    required int workId,
+    required Assistant oldAssistant,
+  }) async {
     final now = DateTime.now();
     final updatedAssistant = Assistant(
       id: oldAssistant.id,
@@ -159,7 +159,8 @@ class AssistantCubit extends Cubit<AssistantState> {
       description: assistantDescriptionController.text.trim(),
       date: now,
       remindedTime: selectedReminderDate,
-      isActive: selectedReminderDate != null && selectedReminderDate!.isAfter(now),
+      isActive:
+          selectedReminderDate != null && selectedReminderDate!.isAfter(now),
       image: selectedImage?.path.isNotEmpty == true
           ? selectedImage!.path
           : oldAssistant.image,
@@ -173,7 +174,6 @@ class AssistantCubit extends Cubit<AssistantState> {
     Navigator.pop(context);
     emit(UpdateAssistantState());
   }
-
 
   File? selectedImage;
   File? selectedVideo;
@@ -192,10 +192,13 @@ class AssistantCubit extends Cubit<AssistantState> {
       },
     );
   }
+
   void clearAssistantInput() {
     assistantTitleController.clear();
     assistantDescriptionController.clear();
+    selectedReminderDate = null;
   }
+
   void clearWorksInput() {
     workNameController.clear();
   }
@@ -204,5 +207,4 @@ class AssistantCubit extends Cubit<AssistantState> {
     selectedImage = null;
     selectedVideo = null;
   }
-
 }
