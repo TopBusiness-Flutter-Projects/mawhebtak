@@ -26,13 +26,13 @@ class _CastingScreenState extends State<CastingScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            if(widget.isFromHome !=  true)
+            if (widget.isFromHome != true)
               CustomSimpleAppbar(
-              title: 'casting'.tr(),
-              isActionButton: true,
-            ),
+                title: 'casting'.tr(),
+                isActionButton: true,
+              ),
             Padding(
-              padding: EdgeInsets.only(top: 20.h,left: 20.w, right: 20.w),
+              padding: EdgeInsets.only(top: 20.h, left: 20.w, right: 20.w),
               child: CustomAppBarRow(
                 colorTextFromSearchTextField:
                     AppColors.darkGray.withOpacity(0.3),
@@ -198,15 +198,13 @@ class _CastingScreenState extends State<CastingScreen> {
                                                 scrollDirection: Axis.vertical,
                                                 physics:
                                                     const BouncingScrollPhysics(),
-                                                itemCount:
-                                                    5,
+                                                itemCount: 5,
                                                 shrinkWrap: true,
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
                                                   return TalentList(
-                                                    index: index,
-                                                  );
+                                                      index: index);
                                                 },
                                               ),
                                             ),
@@ -277,8 +275,7 @@ class _CastingScreenState extends State<CastingScreen> {
                 ),
               );
             }),
-            if(widget.isFromHome == false)
-              60.h.verticalSpace,
+            if (widget.isFromHome != false) 100.h.verticalSpace,
           ],
         ),
       ),
