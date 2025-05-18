@@ -65,7 +65,7 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
                       gridDelegate:
                       const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 1.3,
+                        childAspectRatio: 1.2,
                       ),
                       itemBuilder: (context, index) => CustomTopTalentsList(
                         //topTalentsCubit:context.read<TopTalentsCubit>(),
