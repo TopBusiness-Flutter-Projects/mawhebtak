@@ -31,6 +31,7 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
 class _HomeScreenState extends State<HomeScreen> {
   late PageController userController;
   int userCount = 0;
@@ -67,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Stack(
                     children: [
                       SizedBox(
-                        height: getHeightSize(context) / 1.8,
+                        height: getHeightSize(context) / 1.6,
                         width: getWidthSize(context),
                         child: Stack(
                           fit: StackFit.expand,
@@ -83,10 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Positioned(
-                        bottom: 0,
+                        bottom: 5.h,
                         left: 0,
                         right: 0,
-                        height: 470.h,
+                        height: getHeightSize(context) / 2,
                         child: Column(
                           children: [
                             if ((homeData?.userSliders ?? []).isNotEmpty)
@@ -116,23 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       Align(
                           alignment: Alignment.topCenter,
                           child: Padding(
-                            padding:  EdgeInsets.only(top: 10.h),
-                            child: CustomAppBarRow(color: AppColors.transparent),
+                            padding: EdgeInsets.only(top: 10.h),
+                            child:
+                                CustomAppBarRow(color: AppColors.transparent),
                           )),
                     ],
                   ),
-
-
-
-
-
-
-
-
-
-
-
-
                   SizedBox(height: 10.h),
                   if (homeData?.topTalents?.isNotEmpty ?? false)
                     Column(
@@ -140,7 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         CustomRow(
                           onTap: () {
-                           Navigator.pushNamed(context, Routes.topTalentsRoute);
+                            Navigator.pushNamed(
+                                context, Routes.topTalentsRoute);
                           },
                           text: 'top_talents',
                         ),
@@ -155,9 +146,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 topTalentsCubit:
                                     context.read<TopTalentsCubit>(),
                                 topTalentsData: homeData?.topTalents?[index],
-                                isLeftPadding: index == 0,
-                                isRightPadding:
-                                    index == homeDataCubit.items.length - 1,
                               );
                             },
                           ),

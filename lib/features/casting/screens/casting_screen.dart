@@ -277,8 +277,8 @@ class _CastingScreenState extends State<CastingScreen> {
                 ),
               );
             }),
-            if(widget.isFromHome == false)
-              60.h.verticalSpace,
+            if(widget.isFromHome != false)
+              100.h.verticalSpace,
           ],
         ),
       ),
