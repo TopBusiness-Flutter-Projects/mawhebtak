@@ -27,20 +27,27 @@ class _PublicPrivateToggleState extends State<PublicPrivateToggle> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildToggleOption(
-          text: 'public'.tr(),
-          isSelected: _isPublic,
-          onTap: () => _updateToggle(true),
+    return Padding(
+      padding:  EdgeInsets.only(right: 50.w),
+      child: SizedBox(
+        width: double.infinity,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildToggleOption(
+              text: 'public'.tr(),
+              isSelected: _isPublic,
+              onTap: () => _updateToggle(true),
+            ),
+            _buildToggleOption(
+              text: 'private'.tr(),
+              isSelected: !_isPublic,
+              onTap: () => _updateToggle(false),
+            ),
+          ],
         ),
-        _buildToggleOption(
-          text: 'private'.tr(),
-          isSelected: !_isPublic,
-          onTap: () => _updateToggle(false),
-        ),
-      ],
+      ),
     );
   }
 
@@ -52,8 +59,7 @@ class _PublicPrivateToggleState extends State<PublicPrivateToggle> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: 20.w),
+
         decoration: BoxDecoration(
           color: isSelected ? Colors.transparent : Colors.transparent,
           borderRadius: BorderRadius.circular(30),

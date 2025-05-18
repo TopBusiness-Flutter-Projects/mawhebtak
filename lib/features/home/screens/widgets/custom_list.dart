@@ -12,7 +12,7 @@ class CustomList extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = context.read<HomeCubit>();
     return SizedBox(
-      height: 140.h,
+      height: 150.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: const AlwaysScrollableScrollPhysics(),
@@ -39,11 +39,12 @@ class CustomList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 0),
               child: Column(
                 children: [
-                  Padding(
+                  Flexible(
+                    child: Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Container(
-                        height: 70.h,
-                        width: 68.w,
+                        height: 90.h,
+                        width: 90.w,
                         decoration: BoxDecoration(
                           color: AppColors.blueMeduim,
                           shape: BoxShape.circle,
@@ -51,16 +52,18 @@ class CustomList extends StatelessWidget {
                               Border.all(color: AppColors.grayDark, width: 2),
                         ),
                         child: Center(
-                          child: SvgPicture.asset(
-                            cubit.items[index].icon,
-                          ),
-                        ),
-                      )),
+                            child: SvgPicture.asset(
+                          cubit.items[index].icon,
+                        )),
+                      ),
+                    ),
+                  ),
                   AutoSizeText(
                     cubit.items[index].label,
                     style:
                         getMediumStyle(fontSize: 14.sp, color: AppColors.white),
                   ),
+                 5.h.verticalSpace,
                 ],
               ),
             ),

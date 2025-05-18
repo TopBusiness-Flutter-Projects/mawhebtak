@@ -48,7 +48,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                           Text(
                             'event_created'.tr(),
                             style: TextStyle(
-                              fontSize: 16.sp,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -57,7 +57,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                             textAlign: TextAlign.center,
                             'event_created_subtext'.tr(),
                             style: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -206,7 +206,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         SizedBox(width: 10.w),
                         Text(
                           'Is this event free?',
-                          style: getMediumStyle(fontSize: 14.sp, color: AppColors.grayDark),
+                          style: getMediumStyle(fontSize: 20.sp, color: AppColors.grayDark),
                         ),
                       ],
                     ),
@@ -226,7 +226,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
               if (!isFree)
                  DropdownTextFieldWidget(
                    isWithCurrency: true,
-                   dataLists: ["100","200","300"], hintText: '1000',),
+                   dataLists: const ["100","200","300"], hintText: '1000',),
               _label("title_of_event".tr()),
               CustomTextField(
                 controller: cubit.titleOfTheEventController,
@@ -242,13 +242,13 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 onTap: () {
                   cubit.selectDateTime(context);
                 },
-                hintTextSize: 14.sp,
+                hintTextSize: 20.sp,
                 hintText: "",
               ),
               _label("select_location".tr()),
               CustomTextField(
                 onTap: () {},
-                hintTextSize: 14.sp,
+                hintTextSize: 20.sp,
                 hintText: "",
               ),
               Align(
@@ -258,7 +258,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   child: Text(
                     "open_map".tr(),
                     style: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w400,
                       color: AppColors.primary,
                       decoration: TextDecoration.underline,
@@ -271,7 +271,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 controller: cubit.descriptionController,
                 onTap: () {},
                 isMessage: true,
-                hintTextSize: 14.sp,
+                hintTextSize: 20.sp,
                 hintText: "",
               ),
 
@@ -280,11 +280,11 @@ class _NewEventScreenState extends State<NewEventScreen> {
               PublicPrivateToggle(
                 onToggle: (isPublic) {},
               ),
-              10.h.verticalSpace,
+              20.h.verticalSpace,
               Text(
                 'event_type'.tr(),
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w500,
                   color: Colors.black87,
                 ),
@@ -322,7 +322,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
         style: TextStyle(
           color: AppColors.blackLite,
           fontWeight: FontWeight.w400,
-          fontSize: 14.sp,
+          fontSize: 20.sp,
         ),
       ),
     );

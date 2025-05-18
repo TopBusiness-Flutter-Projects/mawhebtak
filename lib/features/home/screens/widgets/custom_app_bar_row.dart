@@ -6,7 +6,14 @@ import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 
 class CustomAppBarRow extends StatelessWidget {
-  CustomAppBarRow({super.key,this.color, this.backgroundNotification,this.isMore,this.colorSearchIcon,this.backgroundColorTextFieldSearch,this.colorTextFromSearchTextField});
+  CustomAppBarRow(
+      {super.key,
+      this.color,
+      this.backgroundNotification,
+      this.isMore,
+      this.colorSearchIcon,
+      this.backgroundColorTextFieldSearch,
+      this.colorTextFromSearchTextField});
   bool? isMore;
   Color? colorSearchIcon;
   Color? backgroundColorTextFieldSearch;
@@ -17,7 +24,7 @@ class CustomAppBarRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color:color?? AppColors.white,
+      color: color ?? AppColors.white,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -35,7 +42,8 @@ class CustomAppBarRow extends StatelessWidget {
                     height: 40.h,
                     width: 171.w,
                     decoration: BoxDecoration(
-                      color: backgroundColorTextFieldSearch ?? AppColors.blackLite,
+                      color:
+                          backgroundColorTextFieldSearch ?? AppColors.blackLite,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     margin: const EdgeInsets.only(left: 10),
@@ -46,9 +54,14 @@ class CustomAppBarRow extends StatelessWidget {
                         children: [
                           Text("search".tr(),
                               style: getRegularStyle(
-                                  fontSize: 13.sp, color: colorTextFromSearchTextField ?? AppColors.white)),
+                                  fontSize: 13.sp,
+                                  color: colorTextFromSearchTextField ??
+                                      AppColors.white)),
                           const Spacer(),
-                          SvgPicture.asset( AppIcons.searchIcon,color:colorSearchIcon ?? AppColors.white ,),
+                          SvgPicture.asset(
+                            AppIcons.searchIcon,
+                            color: colorSearchIcon ?? AppColors.white,
+                          ),
                         ],
                       ),
                     )),
@@ -59,7 +72,7 @@ class CustomAppBarRow extends StatelessWidget {
                   : Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                       child: InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pushNamed(context, Routes.videoScreenRoute);
                         },
                         child: Container(
@@ -82,13 +95,17 @@ class CustomAppBarRow extends StatelessWidget {
                   height: 40.h,
                   width: 40.w,
                   decoration: BoxDecoration(
-                    color:backgroundNotification ??  AppColors.grayDark,
+                    color: backgroundNotification ?? AppColors.grayDark,
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SvgPicture.asset(
-                        height: 21.h, width: 18.w,isMore ==  true ? AppIcons.notificationWithBlueContainer : AppIcons.notificationIcon),
+                        height: 21.h,
+                        width: 18.w,
+                        isMore == true
+                            ? AppIcons.notificationWithBlueContainer
+                            : AppIcons.notificationIcon),
                   ),
                 ),
               ),

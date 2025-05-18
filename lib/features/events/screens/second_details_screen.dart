@@ -18,8 +18,8 @@ class SecondDetailsEventScreen extends StatelessWidget {
     return BlocBuilder<EventCubit,EventState>(builder: (BuildContext context, state) {
       return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light.copyWith(
-          statusBarColor: Colors.transparent, // الشفافية
-          statusBarIconBrightness: Brightness.light, // لون الأيقونات (أبيض)
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
         ),child:
     Scaffold(
       //backgroundColor: AppColors.grayDark,
@@ -29,17 +29,17 @@ class SecondDetailsEventScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
 
-            CustomEventDetailsWidget(isSecondEventDetails: true,),
+            const CustomEventDetailsWidget(isSecondEventDetails: true,),
             //toogle
             SizedBox(height: getHeightSize(context)/55,),
-            ToggleTabs(),
+            const ToggleTabs(),
             if(cubit.selectedIndex==0)...[
-              EventDetailsBody()
+              const EventDetailsBody()
             ]
 else...[
   ListView.separated(
     shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
+    physics: const NeverScrollableScrollPhysics(),
     itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
     return   Padding(

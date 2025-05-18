@@ -292,7 +292,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               style: TextStyle(
                 color: Colors.blue.shade700,
                 fontWeight: FontWeight.w500,
-                fontSize: 12.sp,
+                fontSize: 18.sp,
               ),
             ),
           ),
@@ -367,7 +367,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.w),
           child: Container(
-            height: 30.h,
+            height: 50.h,
             decoration: BoxDecoration(
               color: AppColors.secondPrimary,
               borderRadius: BorderRadius.horizontal(
