@@ -26,19 +26,19 @@ class TalentList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
-                  Padding(
-                    padding:  EdgeInsets.only(bottom: 10.h,top: 30.h),
-                    child: SizedBox(
-                        height: 50.h,
-                        width: 50.w,
-                        child: Image.asset(
-                          ImageAssets.profileImage,
-                        )),
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 10.h, top: 30.h),
+                      child: SizedBox(
+                          height: 50.h,
+                          width: 50.w,
+                          child: Image.asset(
+                            ImageAssets.profileImage,
+                          )),
+                    ),
                   ),
-
                   Padding(
-                    padding:  EdgeInsets.only(bottom: 5.w),
+                    padding: EdgeInsets.only(bottom: 5.w),
                     child: AutoSizeText(
                       "Ahmad Mokhtar",
                       style: getMediumStyle(
@@ -49,7 +49,7 @@ class TalentList extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding:  EdgeInsets.only(bottom: 5.w),
+                    padding: EdgeInsets.only(bottom: 5.w),
                     child: AutoSizeText(
                       "Talent / Actor Expert",
                       style: getRegularStyle(
@@ -60,7 +60,7 @@ class TalentList extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding:  EdgeInsets.only(bottom: 20.w),
+                    padding: EdgeInsets.only(bottom: 20.w),
                     child: AutoSizeText(
                       "20 K followers",
                       style: getMediumStyle(
@@ -71,7 +71,7 @@ class TalentList extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding:  EdgeInsets.only(bottom: 10.h),
+                    padding: EdgeInsets.only(bottom: 10.h),
                     child: FollowButton(
                       isFollowing: true,
                       onChanged: (p0) {},
@@ -127,11 +127,11 @@ class _FollowButtonState extends State<FollowButton> {
         widget.onChanged?.call(_isFollowing); // Notify parent of the change
       },
       child: Padding(
-        padding:  EdgeInsets.only(left: 10.w,right: 10.w),
+        padding: EdgeInsets.only(left: 10.w, right: 10.w),
         child: Container(
           height: 40.h,
           width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 6.h,horizontal: 5.w),
+          padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
           decoration: BoxDecoration(
             color: _isFollowing
                 ? AppColors.primary

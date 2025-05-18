@@ -23,6 +23,8 @@ class _AddNewWorkScreenState extends State<AddNewWorkScreen> {
     cubit = context.read<AssistantCubit>();
     if (widget.work != null) {
       cubit.workNameController.text = widget.work!.title ?? '';
+    } else {
+      cubit.workNameController.clear();
     }
   }
 
