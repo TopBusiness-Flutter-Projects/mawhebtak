@@ -5,7 +5,7 @@ import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 
 class CustomList extends StatelessWidget {
-   const CustomList({super.key});
+  const CustomList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,20 +51,21 @@ class CustomList extends StatelessWidget {
                         child: SvgPicture.asset(
                           cubit.items[index].icon,
 
-                        )
+                        ),
+
                     ),
                   ),
-                ),
-                AutoSizeText(
-                  cubit. items[index].label,
-                  style: getMediumStyle(fontSize: 14.sp,color: AppColors.white),
-                ),
-              ],
+                  AutoSizeText(
+                    cubit.items[index].label,
+                    style:
+                        getMediumStyle(fontSize: 14.sp, color: AppColors.white),
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
-    ),
-  );
+          );
+        },
+      ),
+    );
   }
 }
