@@ -15,7 +15,7 @@ class MoreScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 20.h),
+            padding: EdgeInsets.only(top: 40.h),
             child: CustomAppBarRow(
               colorTextFromSearchTextField: AppColors.darkGray.withOpacity(0.3),
               backgroundColorTextFieldSearch: AppColors.grayLite,
