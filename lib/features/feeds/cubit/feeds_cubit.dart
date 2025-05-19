@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
@@ -111,8 +112,13 @@ class FeedsCubit extends Cubit<FeedsState> {
       emit(AddPostStateError(e.toString()));
     }
   }
+  Future<LoginModel> getUserFromPreferences() async {
+    final user = await Preferences.instance.getUserModel();
+    return user;
+  }
+  LoginModel? user;
 
-  Future<void> sharedPreference() async {
-    await Preferences.instance.getUserModel();
+  Future<void> loadUserFromPreferences() async {
+    user = await Preferences.instance.getUserModel();
   }
 }
