@@ -12,15 +12,6 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
   DateTime? selectedDate;
   TextEditingController eventDateController = TextEditingController();
 
-  final List<HomeItem> items = [
-
-    HomeItem(icon:AppIcons.eventIcon, label: 'Events'),
-    HomeItem(icon:AppIcons.aboutUs, label: 'Casting'),
-    HomeItem(icon: AppIcons.announceIcon, label: 'Announce'),
-    HomeItem(icon: AppIcons.jopIcon, label: 'Jobs'),
-    HomeItem(icon: AppIcons.assistantIcon, label: 'Assistant'),
-
-  ];
   Future<void> selectDateTime(BuildContext context) async {
     DateTime? date = await showDatePicker(
       context: context,
@@ -47,12 +38,11 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
         selectedDate = finalDateTime; // ✅ احفظ التاريخ المختار
 
         String formattedDateTime =
-        DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
+            DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
         eventDateController.text = formattedDateTime;
 
         emit(DateTimeSelected(formattedDateTime));
       }
     }
   }
-
 }

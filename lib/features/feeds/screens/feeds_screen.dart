@@ -38,8 +38,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<FeedsCubit, FeedsState>
-        (builder: (context, state) {
+      body: BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
         var feeds = context.read<FeedsCubit>().posts;
         var feedsCubit = context.read<FeedsCubit>();
         return Column(
@@ -50,7 +49,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
               padding: EdgeInsets.only(top: 20.h),
               child: CustomAppBarRow(
                 colorTextFromSearchTextField:
-                AppColors.darkGray.withOpacity(0.3),
+                    AppColors.darkGray.withOpacity(0.3),
                 backgroundColorTextFieldSearch: AppColors.grayLite,
                 isMore: true,
                 colorSearchIcon: AppColors.secondPrimary,
@@ -69,7 +68,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   child: CustomLoadingIndicator(),
                 ),
               ),
-            ] else if (state is FeedsStateLoaded || state is FeedsStateLoadingMore) ...[
+            ] else if (state is FeedsStateLoaded ||
+                state is FeedsStateLoadingMore) ...[
               Expanded(
                 child: ListView.separated(
                   controller: scrollController,
@@ -79,7 +79,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return TimeLineList(
                       postId: feeds!.data![index].id.toString(),
-                      feedsCubit:feedsCubit ,
+                      feedsCubit: feedsCubit,
                       feeds: feeds.data![index],
                     );
                   },
@@ -102,5 +102,4 @@ class _FeedsScreenState extends State<FeedsScreen> {
       }),
     );
   }
-
 }

@@ -340,9 +340,9 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.castingRoute:
-         bool isFromHome = settings.arguments as bool;
+        bool isFromHome = settings.arguments as bool;
         return PageTransition(
-          child:  CastingScreen(
+          child: CastingScreen(
             isFromHome: isFromHome,
           ),
           type: PageTransitionType.fade,
@@ -387,7 +387,7 @@ class AppRoutes {
       case Routes.topTalentsRoute:
         return PageTransition(
           child: BlocProvider(
-               create:(context) => TopTalentsCubit()..topTalentsData(page: '1'),
+              create: (context) => TopTalentsCubit()..topTalentsData(page: '1'),
               child: const TopTalentsScreen()),
           type: PageTransitionType.fade,
           alignment: Alignment.center,

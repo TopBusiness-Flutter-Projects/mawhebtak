@@ -196,7 +196,7 @@ class WorkItemWidget extends StatelessWidget {
                   ),
                   10.h.verticalSpace,
                   Text(
-                    "${work.assistants?.length ?? 0} ${"assistant".tr()}",
+                    "${work.assistants?.length ?? 0} ${"assistants".tr()}",
                     style: getMediumStyle(
                         fontSize: 13.sp, color: AppColors.secondPrimary),
                   ),

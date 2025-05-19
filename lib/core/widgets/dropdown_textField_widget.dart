@@ -1,7 +1,7 @@
 import 'package:mawhebtak/core/exports.dart';
 
 class DropdownTextFieldWidget extends StatefulWidget {
-   DropdownTextFieldWidget({
+  DropdownTextFieldWidget({
     super.key,
     required this.dataLists,
     required this.hintText,
@@ -10,12 +10,13 @@ class DropdownTextFieldWidget extends StatefulWidget {
   });
 
   final List<String> dataLists;
-   bool isWithCurrency ;
+  bool isWithCurrency;
   final String hintText;
   final List<String> currencyList;
 
   @override
-  State<DropdownTextFieldWidget> createState() => _DropdownTextFieldWidgetState();
+  State<DropdownTextFieldWidget> createState() =>
+      _DropdownTextFieldWidgetState();
 }
 
 class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
@@ -103,7 +104,7 @@ class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
   @override
   void dispose() {
     _controller.dispose();
-    _overlayEntry?.remove();
+    // _overlayEntry?.remove();
     super.dispose();
   }
 
@@ -120,15 +121,15 @@ class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
           enabled: true,
           onTap: _toggleDropdown,
           suffixIcon: InkWell(
-            onTap:widget.isWithCurrency? _showCurrencyPicker : null,
+            onTap: widget.isWithCurrency ? _showCurrencyPicker : null,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                 if(widget.isWithCurrency==true )
-                   Text(
-                  selectedCurrency ?? 'L.E',
-                  style: getRegularStyle(color: Colors.blue, fontSize: 14.sp),
-                ),
+                if (widget.isWithCurrency == true)
+                  Text(
+                    selectedCurrency ?? 'L.E',
+                    style: getRegularStyle(color: Colors.blue, fontSize: 14.sp),
+                  ),
                 const Icon(Icons.keyboard_arrow_down_sharp, color: Colors.blue),
               ],
             ),

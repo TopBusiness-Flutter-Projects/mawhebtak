@@ -1,4 +1,3 @@
-
 import '../exports.dart';
 
 double getWidthSize(BuildContext context) {
@@ -20,6 +19,7 @@ double getSize(BuildContext context) {
 double getVerticalPadding(BuildContext context) {
   return 20.h;
 }
+
 double textScaleFactor(BuildContext context) {
   final screenWidth = MediaQuery.of(context).size.width;
   if (screenWidth > 600) {

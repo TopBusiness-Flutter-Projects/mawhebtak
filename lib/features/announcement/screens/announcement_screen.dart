@@ -11,41 +11,54 @@ class AnnouncementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit=context.read<AnnouncementCubit>();
-    return BlocBuilder<AnnouncementCubit, AnnouncementState>(builder: (BuildContext context, state) { return  Scaffold(body:
-    Column(children: [
-      SizedBox(height: 20.h,),
-      CustomSimpleAppbar(title: "announcments".tr(),isSearchWidget: true),
-      SizedBox(height: 4.h),
-      SizedBox(
-        height: 145.w, // Match image width
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemCount:cubit.items.length,
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            return CustomRequestGigsList(isLeftPadding:index==0?true:false, isRightPadding: index==cubit.items.length-1?true:false,);
-          },),
-      ),
-      CustomAnnouncementWidget(isAnnouncements: true,),
-
-    ],),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-Navigator.pushNamed(context, Routes.newAnnouncementScreen);
-        },
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        splashColor: Colors.transparent,
-        highlightElevation: 0,
-        child: SvgPicture.asset(
-          AppIcons.addIcon,
-          // width: 56, // نفس مقاس الفلوتينج الأصلي
-          // height: 56,
-        ),
-      ),
-
-    ); },);
+    var cubit = context.read<AnnouncementCubit>();
+    return BlocBuilder<AnnouncementCubit, AnnouncementState>(
+      builder: (BuildContext context, state) {
+        return Scaffold(
+          body: Column(
+            children: [
+              SizedBox(
+                height: 20.h,
+              ),
+              CustomSimpleAppbar(
+                  title: "announcments".tr(), isSearchWidget: true),
+              SizedBox(height: 4.h),
+              SizedBox(
+                height: 145.w, // Match image width
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: 5,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CustomRequestGigsList(
+                      isLeftPadding: index == 0 ? true : false,
+                      isRightPadding: false,
+                    );
+                  },
+                ),
+              ),
+              CustomAnnouncementWidget(
+                isAnnouncements: true,
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.newAnnouncementScreen);
+            },
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            splashColor: Colors.transparent,
+            highlightElevation: 0,
+            child: SvgPicture.asset(
+              AppIcons.addIcon,
+              // width: 56, // نفس مقاس الفلوتينج الأصلي
+              // height: 56,
+            ),
+          ),
+        );
+      },
+    );
   }
 }

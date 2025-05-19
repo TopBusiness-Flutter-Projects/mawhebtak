@@ -19,8 +19,14 @@ import '../../../core/exports.dart';
 class HomeItem {
   final String icon;
   final String label;
+  final String title;
   Color? colorIcon;
-  HomeItem({required this.icon, required this.label, this.colorIcon});
+  HomeItem({
+    required this.icon,
+    required this.label,
+    this.colorIcon,
+    required this.title,
+  });
 }
 
 class HomeScreen extends StatefulWidget {
@@ -48,9 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
-          var homeDataCubit = context.watch<HomeCubit>();
-          var homeData = context.watch<HomeCubit>().homeModel?.data;
-          if (state is HomeStateLoading) {
+          var homeDataCubit = context.read<HomeCubit>();
+          var homeData = homeDataCubit.homeModel?.data;
+          if (state is HomeStateLoading && homeData == null) {
             return const Center(child: CustomLoadingIndicator());
           } else if (state is HomeStateError) {
             return Center(
@@ -59,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(fontSize: 15.sp, color: AppColors.primary),
               ),
             );
-          } else if (state is HomeStateLoaded) {
+          } else {
             return Container(
               width: getWidthSize(context),
               color: AppColors.homeColor,
@@ -73,10 +79,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            Image.network(
-                              homeData?.sliders?.image ?? "",
-                              fit: BoxFit.cover,
-                            ),
+                            Image.network(homeData?.sliders?.image ?? "",
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                ImageAssets.homeTestImage,
+                                fit: BoxFit.cover,
+                              );
+                            }),
                             Container(
                               color: Colors.black.withOpacity(0.5),
                             ),
@@ -89,35 +99,40 @@ class _HomeScreenState extends State<HomeScreen> {
                         right: 0,
                         height: getHeightSize(context) / 2,
                         child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             if ((homeData?.userSliders ?? []).isNotEmpty)
-                              SizedBox(
-                                height: 360.h,
-                                child: PageView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  controller: userController,
-                                  itemCount: homeData!.userSliders!.length,
-                                  onPageChanged: (userIndex) {
-                                    setState(() {
-                                      userCount = userIndex;
-                                    });
-                                  },
-                                  itemBuilder: (context, index) {
-                                    final userTalent =
-                                        homeData.userSliders![index];
-                                    return UnderCustomRow(
-                                        userTalent: userTalent);
-                                  },
+                              Flexible(
+                                child: SizedBox(
+                                  height: 360.h,
+                                  child: PageView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    controller: userController,
+                                    itemCount: homeData!.userSliders!.length,
+                                    onPageChanged: (userIndex) {
+                                      setState(() {
+                                        userCount = userIndex;
+                                      });
+                                    },
+                                    itemBuilder: (context, index) {
+                                      final userTalent =
+                                          homeData.userSliders![index];
+                                      return UnderCustomRow(
+                                          userTalent: userTalent);
+                                    },
+                                  ),
                                 ),
                               ),
-                            const Expanded(child: CustomList()),
+                            const CustomList(),
+                            5.h.verticalSpace,
                           ],
                         ),
                       ),
                       Align(
                           alignment: Alignment.topCenter,
                           child: Padding(
-                            padding: EdgeInsets.only(top: 10.h),
+                            padding: EdgeInsets.only(top: 5.h),
                             child:
                                 CustomAppBarRow(color: AppColors.transparent),
                           )),
@@ -254,8 +269,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             );
-          } else {
-            return const SizedBox(); // fallback widget
           }
         },
       ),

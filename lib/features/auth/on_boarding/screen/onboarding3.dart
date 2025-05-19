@@ -14,10 +14,7 @@ class OnBoarding3 extends StatelessWidget {
       builder: (context, state) {
         OnboardingCubit cubit = context.read<OnboardingCubit>();
         return Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            actions: [],
-          ),
+          appBar: AppBar(elevation: 0),
           body: Column(
             children: [
               SizedBox(
@@ -37,8 +34,9 @@ class OnBoarding3 extends StatelessWidget {
               ),
               Stack(
                 children: [
-                  Image.asset(ImageAssets.onboardingBackground),
                   Container(
+                    height: getHeightSize(context) / 2.2,
+                    width: double.infinity,
                     decoration: BoxDecoration(
                         color: AppColors.primary,
                         borderRadius: BorderRadius.only(
@@ -56,7 +54,8 @@ class OnBoarding3 extends StatelessWidget {
                           count: cubit.numPages,
                           effect: WormEffect(
                             activeDotColor: AppColors.secondPrimary,
-                            dotColor: AppColors.grayLite.withOpacity(0.2),                            dotHeight: 5.h,
+                            dotColor: AppColors.grayLite.withOpacity(0.2),
+                            dotHeight: 5.h,
                             dotWidth: 13.w,
                             type: WormType.thin,
                           ),
@@ -81,7 +80,8 @@ class OnBoarding3 extends StatelessWidget {
                           padding: EdgeInsets.all(getSize(context) / 44),
                           child: Text(
                             textAlign: TextAlign.center,
-                            "onboarding3_description".tr(),                            style: TextStyle(
+                            "onboarding3_description".tr(),
+                            style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontFamily: 'NotoSans',
                                 color: AppColors.white,

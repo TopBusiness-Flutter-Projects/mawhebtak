@@ -9,13 +9,14 @@ class OnBoarding1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<OnboardingCubit, OnboardingState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        //!
+      },
       builder: (context, state) {
         OnboardingCubit cubit = context.read<OnboardingCubit>();
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
-            actions: [],
           ),
           body: Column(
             children: [
@@ -31,13 +32,13 @@ class OnBoarding1 extends StatelessWidget {
                       ImageAssets.onboarding1Image,
                     ),
                   ),
-              ),),
+                ),
+              ),
               Stack(
                 children: [
-                  Image.asset(
-                    ImageAssets.onboardingBackground,
-                  ),
                   Container(
+                    height: getHeightSize(context) / 2.2,
+                    width: double.infinity,
                     decoration: BoxDecoration(
                         color: AppColors.primary,
                         borderRadius: BorderRadius.only(
@@ -45,13 +46,10 @@ class OnBoarding1 extends StatelessWidget {
                             topLeft: Radius.circular(50.r))),
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: getSize(context) / 9,
-                        ),
+                        SizedBox(height: getSize(context) / 9),
                         SmoothPageIndicator(
                           controller: cubit.pageController,
                           count: cubit.numPages,
-                          // textDirection: TextDirection.ltr,
                           effect: WormEffect(
                             activeDotColor: AppColors.secondPrimary,
                             dotColor: AppColors.grayLite.withOpacity(0.2),
@@ -60,9 +58,7 @@ class OnBoarding1 extends StatelessWidget {
                             type: WormType.thin,
                           ),
                         ),
-                        SizedBox(
-                          height: getSize(context) / 7,
-                        ),
+                        SizedBox(height: getSize(context) / 7),
                         Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: getSize(context) / 44),
@@ -70,7 +66,7 @@ class OnBoarding1 extends StatelessWidget {
                             "onboarding1_title".tr(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontFamily: 'NotoSans',
+                                fontFamily: AppStrings.fontFamily2,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18.sp,
                                 color: AppColors.white),
@@ -83,14 +79,12 @@ class OnBoarding1 extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
-                                fontFamily: 'NotoSans',
+                                fontFamily: AppStrings.fontFamily2,
                                 color: AppColors.white,
                                 fontSize: 13.sp),
                           ),
                         ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
+                        SizedBox(height: 30.h),
                         Padding(
                           padding: EdgeInsets.only(right: 100.w, left: 100.w),
                           child: GestureDetector(
@@ -112,15 +106,12 @@ class OnBoarding1 extends StatelessWidget {
                               child: Text(
                                 "next".tr(),
                                 style: TextStyle(
-                                    fontFamily: 'Noto Sans',
+                                    fontFamily: AppStrings.fontFamily2,
                                     color: AppColors.white,
                                     fontSize: 15.sp),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: getSize(context) / 4,
                         ),
                       ],
                     ),

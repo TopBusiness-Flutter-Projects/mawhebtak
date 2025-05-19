@@ -22,28 +22,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         return OrientationBuilder(
           builder: (context, orientation) {
             return Scaffold(
-              backgroundColor: Colors.white,
-              body: Column(
-                children: [
+                backgroundColor: Colors.white,
+                body: Column(children: [
                   Flexible(
-                    child: PageView(
-                      controller: cubit.pageController,
-                      reverse: false,
-                      onPageChanged: (int page) {
-                        cubit.onPageChanged(page);
-                      },
-                      children: const [
+                      child: PageView(
+                          controller: cubit.pageController,
+                          reverse: false,
+                          onPageChanged: (int page) {
+                            cubit.onPageChanged(page);
+                          },
+                          children: const [
                         OnBoarding1(),
                         OnBoarding2(),
-                        OnBoarding3(),
-                      ],
-                    ),
-                  ),
-
-
-                ],
-              ),
-            );
+                        OnBoarding3()
+                      ]))
+                ]));
           },
         );
       },

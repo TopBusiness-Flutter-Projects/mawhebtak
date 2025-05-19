@@ -36,7 +36,9 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
             Column(
               children: [
                 10.h.verticalSpace,
-                CustomSimpleAppbar(title: "assistant".tr()),
+                CustomSimpleAppbar(
+                  title: widget.work?.title ?? "",
+                ),
                 BlocBuilder<AssistantCubit, AssistantState>(
                   builder: (context, state) {
                     return Expanded(
@@ -89,7 +91,7 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                                               ),
                                               10.h.verticalSpace,
                                               Text(
-                                                "${context.watch<AssistantCubit>().assistants?.length ?? 0} ${"assistant".tr()}",
+                                                "${context.watch<AssistantCubit>().assistants?.length ?? 0} ${"assistants".tr()}",
                                                 style: getMediumStyle(
                                                   fontSize: 13.sp,
                                                   color:
@@ -249,7 +251,7 @@ class TimelineAssistantItem extends StatelessWidget {
                     ),
                   Text(
                     assistants.title ?? "",
-                    style:  TextStyle(
+                    style: TextStyle(
                       color: Colors.blue,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
@@ -260,7 +262,7 @@ class TimelineAssistantItem extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Text(
                       assistants.description ?? "",
-                      style:  TextStyle(
+                      style: TextStyle(
                         fontSize: 14.sp,
                         color: Colors.black87,
                       ),

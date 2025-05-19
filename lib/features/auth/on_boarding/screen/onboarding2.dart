@@ -15,7 +15,6 @@ class OnBoarding2 extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
-            actions: [],
           ),
           body: Column(
             children: [
@@ -35,33 +34,32 @@ class OnBoarding2 extends StatelessWidget {
               ),
               Stack(
                 children: [
-                  Image.asset(ImageAssets.onboardingBackground),
                   Container(
+                    height: getHeightSize(context) / 2.2,
+                    width: double.infinity,
                     decoration: BoxDecoration(
                         color: AppColors.primary,
                         borderRadius: BorderRadius.only(
                             topRight: Radius.circular(50.r),
                             topLeft: Radius.circular(50.r))),
                     child: Column(
-
                       children: [
                         SizedBox(
-                          height: getSize(context)/9,
+                          height: getSize(context) / 9,
                         ),
                         SmoothPageIndicator(
                           controller: cubit.pageController,
                           count: cubit.numPages,
-
                           effect: WormEffect(
                             activeDotColor: AppColors.secondPrimary,
                             dotColor: AppColors.grayLite.withOpacity(0.2),
-                            dotHeight:5.h,
+                            dotHeight: 5.h,
                             dotWidth: 13.w,
                             type: WormType.thin,
                           ),
                         ),
                         SizedBox(
-                          height: getSize(context)/7,
+                          height: getSize(context) / 7,
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(
@@ -70,7 +68,7 @@ class OnBoarding2 extends StatelessWidget {
                             "onboarding2_title".tr(),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontFamily: 'NotoSans',
+                                fontFamily: AppStrings.fontFamily2,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 18.sp,
                                 color: AppColors.white),
@@ -83,7 +81,7 @@ class OnBoarding2 extends StatelessWidget {
                             "onboarding2_description".tr(),
                             style: TextStyle(
                                 fontWeight: FontWeight.w400,
-                                fontFamily: 'NotoSans',
+                                fontFamily: AppStrings.fontFamily2,
                                 color: AppColors.white,
                                 fontSize: 13.sp),
                           ),
@@ -101,7 +99,10 @@ class OnBoarding2 extends StatelessWidget {
                             },
                             child: Container(
                               padding: EdgeInsets.only(
-                                  left: 40.w, right: 40.w, top: 10.h, bottom: 10.h),
+                                  left: 40.w,
+                                  right: 40.w,
+                                  top: 10.h,
+                                  bottom: 10.h),
                               decoration: BoxDecoration(
                                 color: AppColors.secondPrimary,
                                 borderRadius: BorderRadius.circular(8.sp),
@@ -109,7 +110,7 @@ class OnBoarding2 extends StatelessWidget {
                               child: Text(
                                 "next".tr(),
                                 style: TextStyle(
-                                    fontFamily: 'Noto Sans',
+                                    fontFamily: AppStrings.fontFamily2,
                                     color: AppColors.white,
                                     fontSize: 15.sp),
                               ),
@@ -117,7 +118,7 @@ class OnBoarding2 extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: getSize(context)/4,
+                          height: getSize(context) / 4,
                         ),
                       ],
                     ),

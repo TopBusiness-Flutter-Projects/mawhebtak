@@ -5,7 +5,6 @@ import 'package:mawhebtak/features/profile/screens/widgets/about_widgets/about_w
 import 'package:mawhebtak/features/profile/screens/widgets/info_for_followers.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_app_bar.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_taps.dart';
-import 'package:mawhebtak/features/profile/screens/widgets/time_line_widget/time_line_widget.dart';
 
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
@@ -71,7 +70,7 @@ class ProfileScreen extends StatelessWidget {
                       if (cubit.selectedIndex == 0) ...[
                         AboutWidget()
                       ] else if (cubit.selectedIndex == 1) ...[
-                       // TimeLineWidget()
+                        // TimeLineWidget()
                       ] else if (cubit.selectedIndex == 2) ...[
                         ListView.separated(
                           physics: BouncingScrollPhysics(),

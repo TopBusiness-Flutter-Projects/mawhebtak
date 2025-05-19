@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
@@ -10,13 +12,29 @@ class HomeCubit extends Cubit<HomeState> {
   TextEditingController searchController = TextEditingController();
   final List<HomeItem> items = [
     HomeItem(
+        title: 'events'.tr(),
         icon: AppIcons.eventCalenderSecondColorIcon,
         label: 'Events',
         colorIcon: AppColors.secondPrimary),
-    HomeItem(icon: AppIcons.aboutUs, label: 'Casting'),
-    HomeItem(icon: AppIcons.announceIcon, label: 'Announce'),
-    HomeItem(icon: AppIcons.jopIcon, label: 'Jobs'),
-    HomeItem(icon: AppIcons.assistantIcon, label: 'Assistant'),
+    HomeItem(
+      title: 'casting'.tr(),
+      icon: AppIcons.aboutUs,
+      label: 'Casting',
+    ),
+    HomeItem(
+      title: 'announcements'.tr(),
+      icon: AppIcons.announceIcon,
+      label: 'Announce',
+    ),
+    HomeItem(
+      title: 'jobs'.tr(),
+      icon: AppIcons.jopIcon,
+      label: 'Jobs',
+    ),
+    HomeItem(
+        title: 'assistant'.tr(),
+        icon: AppIcons.assistantIcon,
+        label: 'Assistant'),
   ];
   HomeModel? homeModel;
   homeData() async {

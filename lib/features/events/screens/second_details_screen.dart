@@ -14,76 +14,99 @@ class SecondDetailsEventScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit=context.read<EventCubit>();
-    return BlocBuilder<EventCubit,EventState>(builder: (BuildContext context, state) {
-      return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light.copyWith(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light,
-        ),child:
-    Scaffold(
-      //backgroundColor: AppColors.grayDark,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-
-            const CustomEventDetailsWidget(isSecondEventDetails: true,),
-            //toogle
-            SizedBox(height: getHeightSize(context)/55,),
-            const ToggleTabs(),
-            if(cubit.selectedIndex==0)...[
-              const EventDetailsBody()
-            ]
-else...[
-  ListView.separated(
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-    return   Padding(
-      padding:  EdgeInsets.all(10.0.w),
-      child: CustomContainerWithShadow(
-        reduis: 8.r,
-        child:
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 40.h,
-                    width: 40.w,
-                    child: Image.asset(ImageAssets.profileImage),
-                  ),
-                  SizedBox(width: 8.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
-                      AutoSizeText(
-                        "Talent / Actor Expert",
-                        style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayLight),
-                      ),
-                    ],
-                  ),
-                ],
+    var cubit = context.read<EventCubit>();
+    return BlocBuilder<EventCubit, EventState>(
+      builder: (BuildContext context, state) {
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle.light.copyWith(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.light,
+            ),
+            child: Scaffold(
+              //backgroundColor: AppColors.grayDark,
+              body: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const CustomEventDetailsWidget(
+                      isSecondEventDetails: true,
+                    ),
+                    //toogle
+                    SizedBox(
+                      height: getHeightSize(context) / 55,
+                    ),
+                    const ToggleTabs(),
+                    if (cubit.selectedIndex == 0) ...[
+                      const EventDetailsBody()
+                    ] else ...[
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 10,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: EdgeInsets.all(10.0.w),
+                            child: CustomContainerWithShadow(
+                              reduis: 8.r,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 40.h,
+                                          width: 40.w,
+                                          child: Image.asset(
+                                              ImageAssets.profileImage),
+                                        ),
+                                        SizedBox(width: 8.w),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            AutoSizeText("Ahmed Mokhtar",
+                                                style: getMediumStyle(
+                                                    fontSize: 16.sp)),
+                                            AutoSizeText(
+                                              "Talent / Actor Expert",
+                                              style: getRegularStyle(
+                                                  fontSize: 14.sp,
+                                                  color: AppColors.grayLight),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    CustomContainerButton(
+                                      title: "message",
+                                      borderColor: AppColors.primary,
+                                      textColor: AppColors.primary,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            height: 10.h,
+                          );
+                        },
+                      )
+                    ]
+                  ],
+                ),
               ),
-              CustomContainerButton(title: "message",borderColor: AppColors.primary,textColor: AppColors.primary,)
-            ],
-          ),
-        ),),
+            ));
+      },
     );
-        }, separatorBuilder: (BuildContext context, int index) { return SizedBox(height: 10.h,); },)
-
-            ]
-          ],),
-      ),
-    )); },);
   }
 }
