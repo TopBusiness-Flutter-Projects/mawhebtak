@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 
 sealed class FeedsState {}
@@ -27,3 +29,22 @@ final class AddReactionStateError extends FeedsState {
 
   AddReactionStateError(this.errorMessage);
 }
+final class AddPostStateLoading extends FeedsState {}
+
+final class AddPostStateLoaded extends FeedsState {}
+
+final class AddPostStateError extends FeedsState {
+  final String errorMessage;
+
+  AddPostStateError(this.errorMessage);
+}
+class MediaPickedSuccessfullyState extends FeedsState {
+  final List<File> files;
+  MediaPickedSuccessfullyState(this.files);
+}
+
+class MediaPickErrorState extends FeedsState {
+  final String error;
+  MediaPickErrorState(this.error);
+}
+class MediaSelectionUpdated extends FeedsState {}

@@ -33,16 +33,16 @@ class RequstGigsRequest extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
+                          AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 18.sp)),
                           AutoSizeText(
                             "Talent / Actor Expert",
-                            style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayLight),
+                            style: getRegularStyle(fontSize: 16.sp, color: AppColors.grayLight),
                           ),
                         ],
                       ),
                       Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Text("new".tr(),style: getRegularStyle(fontSize: 14.sp,color: AppColors.red),),
+                        child: Text("new".tr(),style: getRegularStyle(fontSize: 18.sp,color: AppColors.red),),
                       ),
 
                     ],

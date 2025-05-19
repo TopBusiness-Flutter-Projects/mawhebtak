@@ -14,9 +14,7 @@ class MainCubit extends Cubit<MainState> {
   MainRepo api;
   List<Widget> screens = [
     const HomeScreen(),
-    BlocProvider(
-        create: (context) => FeedsCubit()..postsData(page: '1'),
-        child: const FeedsScreen()),
+    const FeedsScreen(),
     const CastingScreen(isFromHome: true),
     const CalendarScreen(),
     const MoreScreen(),
