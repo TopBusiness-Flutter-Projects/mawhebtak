@@ -68,9 +68,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   child: CustomLoadingIndicator(),
                 ),
               ),
-            ] else if (
-            state is FeedsStateLoaded
-                ||
+            ] else if (state is FeedsStateLoaded ||
                 state is FeedsStateLoadingMore) ...[
               Expanded(
                 child: ListView.separated(
