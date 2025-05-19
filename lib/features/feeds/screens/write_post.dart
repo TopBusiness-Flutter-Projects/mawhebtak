@@ -141,8 +141,20 @@ import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
 import '../../../core/exports.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
 
-class WritePost extends StatelessWidget {
+class WritePost extends StatefulWidget {
   const WritePost({super.key});
+
+  @override
+  State<WritePost> createState() => _WritePostState();
+}
+
+class _WritePostState extends State<WritePost> {
+  @override
+  void initState() {
+    context.read<FeedsCubit>().getUserFromPreferences();
+    context.read<FeedsCubit>().loadUserFromPreferences();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +188,7 @@ class WritePost extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AutoSizeText(
-                              "Ahmed Mokhtar",
+                              cubit.user?.data?.name ?? "",
                               style: getMediumStyle(fontSize: 16.sp),
                             ),
                           ],
