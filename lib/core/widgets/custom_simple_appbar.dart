@@ -60,7 +60,7 @@ class CustomSimpleAppbar extends StatelessWidget {
                         child: Icon(
                           Icons.arrow_back,
                           color: AppColors.darkGray,
-                          size: 16.sp,
+                          size: 20.sp,
                         ),
                       ),
                     ),
@@ -72,7 +72,7 @@ class CustomSimpleAppbar extends StatelessWidget {
                     title,
                     maxLines: 1,
                     style: TextStyle(
-                        fontSize: 16.sp, color: titleColor ?? AppColors.black),
+                        fontSize: 20.sp, color: titleColor ?? AppColors.black),
                   ),
                 ),
                 if (isActionButton ?? false)

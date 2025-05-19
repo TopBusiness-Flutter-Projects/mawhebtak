@@ -17,27 +17,27 @@ class GigsDetailsScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
 
-        CustomSimpleAppbar(title: "gig_details".tr()),
-        SizedBox(height: 15.h,),
-        //gigs widget
+        Padding(
+          padding:  EdgeInsets.only(top: 20.h,bottom: 15.h),
+          child: CustomSimpleAppbar(title: "gig_details".tr()),
+        ),
         GigsWidget(),
         SizedBox(height: 10.h,),
-        //gig requests
         Column(
         crossAxisAlignment: CrossAxisAlignment.start,
           children: [
         Padding(
           padding:  EdgeInsets.only(left: 20.0.w),
-          child: Text("gig_requests".tr(),style: getMediumStyle(fontSize: 14.sp,color: AppColors.darkGray),),
+          child: Text("gig_requests".tr(),style: getMediumStyle(fontSize: 20.sp,color: AppColors.darkGray),),
         ),
             SizedBox(height: 1.h,),
             //list of requests
             ListView.separated(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
                itemCount: 5,
               itemBuilder: (BuildContext context, int index) {
-              return RequstGigsRequest() ;
+              return const RequstGigsRequest() ;
               },
               separatorBuilder: (BuildContext context, int index) {
               return SizedBox(height: 10.h,);

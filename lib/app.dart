@@ -12,6 +12,7 @@ import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart'
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
+import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/notification_screen.dart';
@@ -126,6 +127,10 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) => injector.serviceLocator<TopTalentsCubit>()
               ..topTalentsData(page: '1'),
+          ),
+          BlocProvider(
+            create: (_) =>
+                injector.serviceLocator<FeedsCubit>()..postsData(page: '1'),
           ),
         ],
         child: GetMaterialApp(

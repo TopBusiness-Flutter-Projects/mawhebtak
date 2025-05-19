@@ -7,8 +7,8 @@ class LikeCommentShare extends StatefulWidget {
   final FeedsCubit feedsCubit;
   final String postId;
 
-
-  const LikeCommentShare({super.key, required this.feedsCubit, required this.postId });
+  const LikeCommentShare(
+      {super.key, required this.feedsCubit, required this.postId});
 
   @override
   State<LikeCommentShare> createState() => _LikeCommentShareState();
@@ -17,17 +17,15 @@ class LikeCommentShare extends StatefulWidget {
 class _LikeCommentShareState extends State<LikeCommentShare> {
   @override
   Widget build(BuildContext context) {
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         GestureDetector(
-          onTap: () async {
-            await widget.feedsCubit.addReaction(
-              postId:widget.postId,
-              reaction: "like",
+          onTap: () {
+            widget.feedsCubit.addReaction(
+              postId: widget.postId,
             );
-            setState(() {}); // لإعادة بناء الواجهة بعد تغيير البيانات
+            setState(() {});
           },
           child: Row(
             children: [
@@ -35,33 +33,36 @@ class _LikeCommentShareState extends State<LikeCommentShare> {
                 padding: const EdgeInsets.all(8.0),
                 child: SvgPicture.asset(
                   AppIcons.likeIcon,
-                  color: widget.feedsCubit.post?.isLiked == true ? AppColors.primary : AppColors.grayDarkkk,
+                  width: 20.sp,
+                  color: widget.feedsCubit.postLikes[widget.postId] == true
+                      ? AppColors.primary
+                      : AppColors.grayDarkkk,
                 ),
               ),
               Text(
-                widget.feedsCubit.post?.isLiked == true ? 'like'.tr() : 'disLike'.tr(),
+                'like'.tr(),
                 style: getRegularStyle(
-                  fontSize: 14.sp,
+                  fontSize: 18.sp,
                   color: AppColors.grayDate,
                 ),
               ),
             ],
           ),
         ),
-        // باقي الأزرار
         Row(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SvgPicture.asset(
                 AppIcons.commentIcon,
+                width: 20.sp,
                 color: AppColors.grayDarkkk,
               ),
             ),
             Text(
               'comment'.tr(),
               style: getRegularStyle(
-                fontSize: 14.sp,
+                fontSize: 16.sp,
                 color: AppColors.grayDate,
               ),
             ),
@@ -73,13 +74,14 @@ class _LikeCommentShareState extends State<LikeCommentShare> {
               padding: const EdgeInsets.all(8.0),
               child: SvgPicture.asset(
                 AppIcons.shareIcon2,
+                width: 20.sp,
                 color: AppColors.grayDarkkk,
               ),
             ),
             Text(
               'share'.tr(),
               style: getRegularStyle(
-                fontSize: 14.sp,
+                fontSize: 18.sp,
                 color: AppColors.grayDate,
               ),
             ),
@@ -89,7 +91,3 @@ class _LikeCommentShareState extends State<LikeCommentShare> {
     );
   }
 }
-
-
-
-

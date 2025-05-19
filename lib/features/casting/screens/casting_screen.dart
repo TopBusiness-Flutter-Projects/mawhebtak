@@ -114,7 +114,7 @@ class _CastingScreenState extends State<CastingScreen> {
                                                         child: Text(
                                                           roles[index],
                                                           style: TextStyle(
-                                                            fontSize: 16.sp,
+                                                            fontSize: 18.sp,
                                                             fontWeight:
                                                                 isSelected
                                                                     ? FontWeight
@@ -175,12 +175,12 @@ class _CastingScreenState extends State<CastingScreen> {
                                             Padding(
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 20.w,
-                                                  vertical: 10.h),
+                                                  vertical: 20.h),
                                               child: Text(
                                                 "talents".tr(),
                                                 style: TextStyle(
                                                     color: AppColors.blackLite,
-                                                    fontSize: 16.sp),
+                                                    fontSize: 20.sp),
                                               ),
                                             ),
                                             Padding(
@@ -220,12 +220,12 @@ class _CastingScreenState extends State<CastingScreen> {
                                             Padding(
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 20.w,
-                                                  vertical: 10.h),
+                                                  vertical: 20.h),
                                               child: Text(
                                                 "gigs_list".tr(),
                                                 style: TextStyle(
                                                     color: AppColors.blackLite,
-                                                    fontSize: 16.sp),
+                                                    fontSize: 20.sp),
                                               ),
                                             ),
                                             ListView.builder(

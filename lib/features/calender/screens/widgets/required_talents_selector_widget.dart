@@ -78,7 +78,7 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
           child: Text(
             'select_required_talents'.tr(),
             style: TextStyle(
-              fontSize: 16.sp,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w500,
               color: Colors.black87,
             ),
@@ -101,7 +101,7 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
                         Text(
                           'select_type'.tr(),
                           style: TextStyle(
-                            fontSize: 14.sp,
+                            fontSize: 18.sp,
                             color: Colors.black87,
                           ),
                         ),
@@ -118,7 +118,7 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
                         Text(
                           'Fees',
                           style: TextStyle(
-                            fontSize: 14.sp,
+                            fontSize: 18.sp,
                             color: Colors.black87,
                           ),
                         ),
@@ -228,7 +228,7 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
                 isDense: true,
               ),
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 16.sp,
                 color: Colors.black87,
               ),
               onChanged: (value) {
@@ -263,7 +263,7 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
                   child: Text(
                     value,
                     style: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: 16.sp,
                       color: Colors.blue.shade700,
                     ),
                   ),
@@ -319,51 +319,53 @@ class TalentRequirement {
 }
 
 // Example usage in a screen
-class RequiredTalentsScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Required Talents')),
-      body: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              RequiredTalentsSelector(
-                onTalentsChanged: (talents) {
-                  print('Talents updated: ${talents.length}');
-                  // Handle talents update
-                },
-                initialTalents: [
-                  TalentRequirement(type: 'Workshop', fee: '3000', currency: 'L.E'),
-                  TalentRequirement(type: 'Photographer', fee: '3000', currency: 'L.E'),
-                ],
-              ),
-              SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle submit
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: Text(
-                    'Next',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class RequiredTalentsScreen extends StatelessWidget {
+//   const RequiredTalentsScreen({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text("Required Talents")),
+//       body: Padding(
+//         padding: EdgeInsets.all(20.0.sp),
+//         child: SingleChildScrollView(
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               RequiredTalentsSelector(
+//                 onTalentsChanged: (talents) {
+//                   print('Talents updated: ${talents.length}');
+//                   // Handle talents update
+//                 },
+//                 initialTalents: [
+//                   TalentRequirement(type: 'Workshop', fee: '3000', currency: 'L.E'),
+//                   TalentRequirement(type: 'Photographer', fee: '3000', currency: 'L.E'),
+//                 ],
+//               ),
+//               const SizedBox(height: 24),
+//               SizedBox(
+//                 width: double.infinity,
+//                 height: 48,
+//                 child: ElevatedButton(
+//                   onPressed: () {
+//                     // Handle submit
+//                   },
+//                   style: ElevatedButton.styleFrom(
+//                     backgroundColor: Colors.blue,
+//                   ),
+//                   child: const Text(
+//                     'Next',
+//                     style: TextStyle(
+//                       color: Colors.white,
+//                       fontSize: 16,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -45,7 +45,7 @@ import '../../features/profile/screens/followers_screen.dart';
 import '../../features/profile/screens/gigs_details.dart';
 import '../../features/profile/screens/new_gigs_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
-import '../../features/profile/screens/write_post.dart';
+import '../../features/feeds/screens/write_post.dart';
 import '../../features/referral_code/screens/referral_code_screen.dart';
 
 class Routes {

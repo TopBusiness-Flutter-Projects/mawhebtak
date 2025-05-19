@@ -25,7 +25,7 @@ class WhatDoYouWant extends StatelessWidget {
               Text(
                 'what_do_you_want_to_write'.tr(),
                 style: getRegularStyle(
-                  fontSize: 14.sp,
+                  fontSize: 18.sp,
                   color: AppColors.grayMedium,
                 ),
               ),
@@ -33,7 +33,7 @@ class WhatDoYouWant extends StatelessWidget {
                 child: Icon(
                   Icons.arrow_right,
                   color: AppColors.primary,
-                  size: 24.sp,
+                  size: 30.sp,
                 ),
               ),
             ],
