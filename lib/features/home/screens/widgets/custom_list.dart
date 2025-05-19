@@ -18,7 +18,7 @@ class CustomList extends StatelessWidget {
         physics: const AlwaysScrollableScrollPhysics(),
         itemCount: cubit.items.length,
         shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
