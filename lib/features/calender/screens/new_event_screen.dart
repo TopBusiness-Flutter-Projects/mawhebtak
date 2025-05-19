@@ -35,40 +35,39 @@ class _NewEventScreenState extends State<NewEventScreen> {
           children: [
             CustomAppBarWithClearWidget(title: "new_event".tr()),
             if (currentStep == 2)
-              BlocBuilder<CalenderCubit,CalenderState>(
-                builder: (context,state) {
-                  return Expanded(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(AppIcons.successIcon),
-                          SizedBox(height: 16.h),
-                          Text(
-                            'event_created'.tr(),
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
+              BlocBuilder<CalenderCubit, CalenderState>(
+                  builder: (context, state) {
+                return Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(AppIcons.successIcon),
+                        SizedBox(height: 16.h),
+                        Text(
+                          'event_created'.tr(),
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
                           ),
-                          20.h.verticalSpace,
-                          Text(
-                            textAlign: TextAlign.center,
-                            'event_created_subtext'.tr(),
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
+                        ),
+                        20.h.verticalSpace,
+                        Text(
+                          textAlign: TextAlign.center,
+                          'event_created_subtext'.tr(),
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w400,
                           ),
-                          20.h.verticalSpace,
-                          SvgPicture.asset(AppIcons.share),
-                        ],
-                      ),
+                        ),
+                        20.h.verticalSpace,
+                        SvgPicture.asset(AppIcons.share),
+                      ],
                     ),
-                  );
-                }
-              )
+                  ),
+                );
+              })
             else
               Expanded(
                 child: Column(
@@ -117,7 +116,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                 'back'.tr(),
                                 style: TextStyle(
                                   color: AppColors.primary,
-                                  fontSize: 16.sp,
+                                  fontSize: 20.sp,
                                 ),
                               ),
                             ),
@@ -160,7 +159,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                       : 'create_event'.tr(),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 16.sp,
+                                    fontSize: 20.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -182,8 +181,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
   Widget _buildEventInformationStep(CalenderCubit cubit) {
     return Column(
       children: [
-         CustomPickMediaWidget(
-          onTap: (){},
+        CustomPickMediaWidget(
+          onTap: () {},
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -195,7 +194,6 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12.r),
-
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -206,7 +204,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         SizedBox(width: 10.w),
                         Text(
                           'Is this event free?',
-                          style: getMediumStyle(fontSize: 20.sp, color: AppColors.grayDark),
+                          style: getMediumStyle(
+                              fontSize: 20.sp, color: AppColors.grayDark),
                         ),
                       ],
                     ),
@@ -224,9 +223,11 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 ),
               ),
               if (!isFree)
-                 DropdownTextFieldWidget(
-                   isWithCurrency: true,
-                   dataLists: const ["100","200","300"], hintText: '1000',),
+                DropdownTextFieldWidget(
+                  isWithCurrency: true,
+                  dataLists: const ["100", "200", "300"],
+                  hintText: '1000',
+                ),
               _label("title_of_event".tr()),
               CustomTextField(
                 controller: cubit.titleOfTheEventController,
@@ -274,9 +275,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 hintTextSize: 20.sp,
                 hintText: "",
               ),
-
               10.h.verticalSpace,
-
               PublicPrivateToggle(
                 onToggle: (isPublic) {},
               ),
@@ -291,9 +290,16 @@ class _NewEventScreenState extends State<NewEventScreen> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 20.h),
-                child:  DropdownTextFieldWidget(
-                  dataLists: const ['Workshop', 'Conference', 'Seminar', 'Webinar', 'Meeting'],
-                  hintText: 'Workshop',),
+                child: DropdownTextFieldWidget(
+                  dataLists: const [
+                    'Workshop',
+                    'Conference',
+                    'Seminar',
+                    'Webinar',
+                    'Meeting'
+                  ],
+                  hintText: 'Workshop',
+                ),
               ),
             ],
           ),

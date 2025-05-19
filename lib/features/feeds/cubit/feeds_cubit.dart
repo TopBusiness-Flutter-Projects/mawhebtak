@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
@@ -8,6 +12,31 @@ class FeedsCubit extends Cubit<FeedsState> {
   FeedsCubit() : super(FeedsStateLoading());
   FeedsRepository? api = FeedsRepository(serviceLocator());
   PostsModel? posts;
+  TextEditingController bodyController = TextEditingController();
+  List<File> selectedImages = [];
+  List<File> selectedVideos = [];
+
+  Future<void> pickImages() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: true,
+    );
+    if (result != null) {
+      selectedImages = result.paths.map((path) => File(path!)).toList();
+      emit(MediaSelectionUpdated());
+    }
+  }
+
+  Future<void> pickVideos() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.video,
+      allowMultiple: true,
+    );
+    if (result != null) {
+      selectedVideos = result.paths.map((path) => File(path!)).toList();
+      emit(MediaSelectionUpdated()); // نفس الحالة
+    }
+  }
   bool isLoadingMore = false;
   postsData({bool isGetMore = false, required String page}) async {
     if (isGetMore) {
@@ -42,100 +71,48 @@ class FeedsCubit extends Cubit<FeedsState> {
   }
 
   DefaultMainModel? defaultMainModel;
-  PostsModelData ? post;
- addReaction({String? reaction = 'like',required String postId}) async {
-   emit(AddReactionStateLoading());
+  PostsModelData? post;
+  Map<String, bool> postLikes = {};
+  addReaction({required String postId}) async {
     try {
-      final res = await api!.addReaction(postId: postId, reaction:reaction!);
+      final res = await api!.addReaction(postId: postId);
       res.fold((l) {
         emit(AddReactionStateError(l.toString()));
       }, (r) {
-        if (reaction == 'like') {
-          if (post?.isLiked == true) {
-            // If already liked, unlike it
-            post?.isLiked = false;
-            post?.countLike = (post?.countLike ?? 1) - 1;
-          } else {
-            // If not liked, like it
-            post?.isLiked = true;
-            post?.countLike = (post?.countLike ?? 0) + 1;
-
-            // If previously disliked, reset the dislike state
-            if (post?.isDisliked == true) {
-              post?.isDisliked = false;
-              post?.countDislike = (post?.countDislike ?? 1) - 1;
-            }
-          }
-        } else if (reaction == 'dislike') {
-          if (post?.isDisliked == true) {
-            // If already disliked, undislike it
-            post?.isDisliked = false;
-            post?.countDislike = (post?.countDislike ?? 1) - 1;
-          } else {
-            // If not disliked, dislike it
-            post?.isDisliked = true;
-            post?.countDislike = (post?.countDislike ?? 0) + 1;
-
-            // If previously liked, reset the like state
-            if (post?.isLiked == true) {
-              post?.isLiked = false;
-              post?.countLike = (post?.countLike ?? 1) - 1;
-            }
-          }
-        }
+        postLikes[postId] = !(postLikes[postId] ?? false);
         successGetBar(r.msg);
-        postsData(page: '1');
-        emit(AddReactionStateLoaded());
       });
-    }
-    catch (e) {
+    } catch (e) {
       emit(AddReactionStateError(e.toString()));
     }
   }
-  // addPostAction(
-  //     {String? reaction = 'like', required PostsModelData post}) async {
-  //   emit(LoadingAddActionPostData());
-  //   final res = await api.addPostAction(
-  //       blogId: post.id?.toString() ?? 'like', reaction: reaction);
-  //   res.fold((l) {
-  //     emit(ErrorAddActionPostData());
-  //   }, (r) {
-  //     if (reaction == 'like') {
-  //       if (post.isLiked == true) {
-  //         // If already liked, unlike it
-  //         post.isLiked = false;
-  //         post.countLike = (post.countLike ?? 1) - 1;
-  //       } else {
-  //         // If not liked, like it
-  //         post.isLiked = true;
-  //         post.countLike = (post.countLike ?? 0) + 1;
-  //
-  //         // If previously disliked, reset the dislike state
-  //         if (post.isDisliked == true) {
-  //           post.isDisliked = false;
-  //           post.countDislike = (post.countDislike ?? 1) - 1;
-  //         }
-  //       }
-  //     } else if (reaction == 'dislike') {
-  //       if (post.isDisliked == true) {
-  //         // If already disliked, undislike it
-  //         post.isDisliked = false;
-  //         post.countDislike = (post.countDislike ?? 1) - 1;
-  //       } else {
-  //         // If not disliked, dislike it
-  //         post.isDisliked = true;
-  //         post.countDislike = (post.countDislike ?? 0) + 1;
-  //
-  //         // If previously liked, reset the like state
-  //         if (post.isLiked == true) {
-  //           post.isLiked = false;
-  //           post.countLike = (post.countLike ?? 1) - 1;
-  //         }
-  //       }
-  //     }
-  //
-  //     emit(LoadedAddActionPostData());
-  //   });
-  // }
 
+  addPost({required BuildContext context}) async {
+    emit(AddPostStateLoading());
+    try {
+      final user = await Preferences.instance.getUserModel();
+      final userId = user.data?.id?.toString() ?? '';
+      final res = await api!.addPost(
+        mediaFiles: [...selectedImages, ...selectedVideos],
+        body: bodyController.text,
+        userId: userId,
+      );
+      res.fold((l) {
+        emit(AddPostStateError(l.toString()));
+      }, (r) {
+        emit(AddPostStateLoaded());
+        Navigator.pop(context);
+        postsData(page: '1', isGetMore: true);
+        bodyController.clear();
+        selectedImages = [];
+        selectedVideos = [];
+      });
+    } catch (e) {
+      emit(AddPostStateError(e.toString()));
+    }
+  }
+
+  Future<void> sharedPreference() async {
+    await Preferences.instance.getUserModel();
+  }
 }

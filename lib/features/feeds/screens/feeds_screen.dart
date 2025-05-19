@@ -46,7 +46,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 20.h),
+              padding: EdgeInsets.only(top: 40.h),
               child: CustomAppBarRow(
                 colorTextFromSearchTextField:
                     AppColors.darkGray.withOpacity(0.3),
@@ -68,7 +68,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   child: CustomLoadingIndicator(),
                 ),
               ),
-            ] else if (state is FeedsStateLoaded ||
+            ] else if (
+            state is FeedsStateLoaded
+                ||
                 state is FeedsStateLoadingMore) ...[
               Expanded(
                 child: ListView.separated(

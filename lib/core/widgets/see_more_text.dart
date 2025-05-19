@@ -16,7 +16,6 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // هنا هنحسب عدد الحروف اللي تعادل سطر ونص (تقدير تقريبي)
     const int maxLengthBeforeEllipsis = 60;
 
     final String visibleText =
@@ -30,7 +29,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
         text: TextSpan(
           text: visibleText,
           style: getRegularStyle(
-            fontSize: 15.sp,
+            fontSize: 18.sp,
             color: AppColors.blackLite,
           ),
           children: <TextSpan>[
@@ -38,7 +37,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget> {
               TextSpan(
                 text: _isExpanded ? 'see_less'.tr() : 'see_more'.tr(),
                 style:TextStyle(
-                fontSize: 14.sp,
+                fontSize: 16.sp,
                 color: AppColors.gray
                 ),
                 recognizer: TapGestureRecognizer()

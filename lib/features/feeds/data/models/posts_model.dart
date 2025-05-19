@@ -37,10 +37,9 @@ class PostsModelData {
   String? body;
   int? commentCount;
   int? reactionCount;
-  bool? isLiked;
-  bool? isDisliked;
-  int? countLike;
-  int? countDislike;
+  bool? isReaction;
+  List<Media>? media;
+
 
 
   PostsModelData({
@@ -49,10 +48,9 @@ class PostsModelData {
     this.body,
     this.commentCount,
     this.reactionCount,
-    this.isLiked,
-    this.isDisliked,
-    this.countLike,
-    this.countDislike,
+    this.isReaction,
+    this.media,
+
   });
 
   factory PostsModelData.fromJson(Map<String, dynamic> json) => PostsModelData(
@@ -61,10 +59,9 @@ class PostsModelData {
     body: json["body"],
     commentCount: json["comment_count"],
     reactionCount: json["reaction_count"],
-    isLiked: json["is_liked"],
-    isDisliked: json["is_disliked"],
-    countLike: json["count_like"],
-    countDislike: json["count_dislike"]
+      isReaction: json["is_reaction"],
+      media: json["media"] == null ? [] : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
+
 
   );
 
@@ -74,13 +71,41 @@ class PostsModelData {
     "body": body,
     "comment_count": commentCount,
     "reaction_count": reactionCount,
-    "is_liked" :isLiked,
-    "is_disliked": isDisliked,
-    "count_like" : countLike,
-    "count_dislike":countDislike,
+    "is_reaction": isReaction,
+    "media": media == null ? [] : List<dynamic>.from(media!.map((x) => x.toJson())),
+
 
   };
 }
+class Media {
+  int? id;
+  String? file;
+  String? extension;
+  int? size;
+
+  Media({
+    this.id,
+    this.file,
+    this.extension,
+    this.size,
+  });
+
+  factory Media.fromJson(Map<String, dynamic> json) => Media(
+    id: json["id"],
+    file: json["file"],
+    extension: json["extension"],
+    size: json["size"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "file": file,
+    "extension": extension,
+    "size": size,
+  };
+}
+
+
 
 class User {
   int? id;

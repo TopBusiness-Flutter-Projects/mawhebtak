@@ -14,6 +14,8 @@ import 'package:mawhebtak/features/calender/data/repos/calender.repo.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/contact_us/data/repos/contact_us_repo.dart';
+import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
+import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
@@ -157,6 +159,10 @@ Future<void> setupCubit() async {
     () => TopTalentsCubit(
 
     ),
+  );serviceLocator.registerFactory(
+    () => FeedsCubit(
+
+    ),
   );
 }
 
@@ -187,6 +193,7 @@ Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => JobsRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => AssistantRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => TopTalentsRepository(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => FeedsRepository(serviceLocator()));
 }
 
 Future<void> setupSharedPreferences() async {

@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/see_more_text.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
-
 import '../../../../../core/exports.dart';
 import 'like_comment_share.dart';
 
@@ -42,12 +41,12 @@ class TimeLineList extends StatelessWidget {
                   children: [
                     AutoSizeText(
                      feeds?.user?.name??"",
-                      style: getMediumStyle(fontSize: 16.sp),
+                      style: getMediumStyle(fontSize: 18.sp),
                     ),
                     AutoSizeText(
                       feeds?.user?.headline ?? "Telent / Actor Expert",
                       style: getRegularStyle(
-                        fontSize: 14.sp,
+                        fontSize: 16.sp,
                         color: AppColors.grayLight,
                       ),
                     ),
@@ -65,25 +64,22 @@ class TimeLineList extends StatelessWidget {
         child:  ExpandableTextWidget(text:   feeds?.body ?? "",),
         ),
       SizedBox(height: 5.h,),
-      //photo
-        feeds?.user?.image == null ?
-      SizedBox(
-        width: double.infinity,
-        height: getHeightSize(context) / 3.7,
-        child: Image.asset(
-          ImageAssets.tasweerPhoto,
-          fit: BoxFit.cover,
-        ),
-      ):
-        SizedBox(
-          width: double.infinity,
-          height: getHeightSize(context) / 3.7,
-          child: Image.network(
-            feeds?.user?.image ?? "",
-            fit: BoxFit.cover,
+        if ((feeds?.media?.isNotEmpty ?? false))
+          SizedBox(
+            height: getHeightSize(context) / 3.7,
+            child: PageView.builder(
+              itemCount: feeds?.media?.length ?? 0,
+              itemBuilder: (context, index) {
+                final media = feeds!.media![index];
+                return Image.network(
+                  media.file ??"",
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                );
+              },
+            ),
           ),
-        ),
-      SizedBox(height: 5.h),
+        SizedBox(height: 5.h),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -91,12 +87,12 @@ class TimeLineList extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(AppIcons.likeIcon),
+                child: SvgPicture.asset(AppIcons.likeIcon,width: 20,),
               ),
               Text(
                feeds?.reactionCount.toString() ?? "0",
                 style: getSemiBoldStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                   color: AppColors.primary,
                 ),
               ),
@@ -107,22 +103,19 @@ class TimeLineList extends StatelessWidget {
             child: Text(
               "${feeds?.commentCount.toString()}  ${'comment'.tr()}",
               style: getRegularStyle(
-                fontSize: 14.sp,
+                fontSize: 16.sp,
                 color: AppColors.grayDate,
               ),
             ),
           ),
         ],
       ),
-      //
       SizedBox(height: 3.h),
       Container(
         height: 2.h,
         color: AppColors.grayLite,
       ),
-      //like and comment and share
        LikeCommentShare(
-
         feedsCubit: feedsCubit!,
          postId: postId,
       ),

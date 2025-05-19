@@ -51,16 +51,16 @@ class GigsWidget extends StatelessWidget {
               children: [
               Text("Get Your Digital Printing Images",style: TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 16.sp,
+                fontSize: 20.sp,
               ),),
               5.h.verticalSpace,
               Text("Hi show my latest scenes with an amazing team Let’s start our work",
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: 14.sp,
+                  fontSize: 18.sp,
                   color: AppColors.blackLite,
                 ),),
-              5.h.verticalSpace,
+              10.h.verticalSpace,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -68,14 +68,15 @@ class GigsWidget extends StatelessWidget {
                     children: [
                       SvgPicture.asset(AppIcons.locationIcon),
                       5.w.horizontalSpace,
-                      Text("Cairo, Nasr City",style: TextStyle(color: AppColors.grayDarkkk,fontSize: 14.sp,fontWeight: FontWeight.w400),)
+                      Text("Cairo, Nasr City",style: TextStyle(color: AppColors.grayDarkkk,fontSize: 18.sp,fontWeight: FontWeight.w400),)
                     ],
                   ),
+
                   Row(
                     children: [
                       SvgPicture.asset(AppIcons.dollar),
                       5.w.horizontalSpace,
-                      Text("200 L.E",style: TextStyle(color: AppColors.primary,fontSize: 14.sp,fontWeight: FontWeight.w400),)
+                      Text("200 L.E",style: TextStyle(color: AppColors.primary,fontSize: 18.sp,fontWeight: FontWeight.w400),)
                     ],
                   ),
                 ],),

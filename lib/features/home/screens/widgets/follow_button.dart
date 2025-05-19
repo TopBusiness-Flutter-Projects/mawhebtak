@@ -31,8 +31,8 @@ class CustomContainerButton extends StatelessWidget {
       onTap: onTap,
       //   borderRadius: BorderRadius.circular(getSize(context) / 12),
       child: Container(
-        height: height??30.h,
-         width: width??null,
+        height: height ?? 40.h,
+         width: width ?? null,
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 30.w),
         decoration: BoxDecoration(
@@ -46,7 +46,7 @@ class CustomContainerButton extends StatelessWidget {
               color:textColor ??AppColors.white,
               fontFamily: AppStrings.fontFamily,
               fontWeight:FontWeight.w400,
-              fontSize: 16.sp
+              fontSize: 20.sp
           ),
         ),
       ),
