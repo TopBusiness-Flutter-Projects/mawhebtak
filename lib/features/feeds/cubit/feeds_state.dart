@@ -48,3 +48,4 @@ class MediaPickErrorState extends FeedsState {
   MediaPickErrorState(this.error);
 }
 class MediaSelectionUpdated extends FeedsState {}
+class MediaPickedState extends FeedsState {}

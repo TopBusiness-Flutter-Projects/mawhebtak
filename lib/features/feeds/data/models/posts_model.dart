@@ -37,7 +37,7 @@ class PostsModelData {
   String? body;
   int? commentCount;
   int? reactionCount;
-  bool? isReaction;
+  bool? isReacted;
   List<Media>? media;
 
 
@@ -48,7 +48,7 @@ class PostsModelData {
     this.body,
     this.commentCount,
     this.reactionCount,
-    this.isReaction,
+    this.isReacted,
     this.media,
 
   });
@@ -59,8 +59,8 @@ class PostsModelData {
     body: json["body"],
     commentCount: json["comment_count"],
     reactionCount: json["reaction_count"],
-      isReaction: json["is_reaction"],
-      media: json["media"] == null ? [] : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
+    isReacted: json["is_reacted"],
+    media: json["media"] == null ? [] : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
 
 
   );
@@ -71,7 +71,7 @@ class PostsModelData {
     "body": body,
     "comment_count": commentCount,
     "reaction_count": reactionCount,
-    "is_reaction": isReaction,
+    "is_reacted": isReacted,
     "media": media == null ? [] : List<dynamic>.from(media!.map((x) => x.toJson())),
 
 

@@ -3,8 +3,8 @@ import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import '../../../core/exports.dart';
 import '../../home/screens/widgets/custom_app_bar_row.dart';
-import '../../profile/screens/widgets/time_line_widget/time_line_list.dart';
-import '../../profile/screens/widgets/time_line_widget/what_do_you_want.dart';
+import 'widgets/time_line_list.dart';
+import 'widgets/what_do_you_want.dart';
 
 class FeedsScreen extends StatefulWidget {
   const FeedsScreen({super.key});

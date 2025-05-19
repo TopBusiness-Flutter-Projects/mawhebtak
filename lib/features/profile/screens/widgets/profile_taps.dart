@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
-import 'package:mawhebtak/features/profile/screens/widgets/time_line_widget/time_line_widget.dart';
 
 import '../../../../core/exports.dart';
-import 'about_widgets/about_widget.dart';
 
 class ProfileTabs extends StatefulWidget {
   const ProfileTabs({super.key});

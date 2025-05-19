@@ -15,7 +15,7 @@ class EndPoints {
   static const String announcementsUrl = '${baseUrl}get-data';
   static const String addPostUrl = '${baseUrl}store-data';
   static const String addReactionUrl = '${baseUrl}add-reaction';
-  static const String feedsUrl = '${baseUrl}get-data?model=Post&where[0]=status,1&orderBy=desc&paginate=true&page=';
+  static const String feedsUrl = '${baseUrl}get-data';
   static const String unWantedUserUrl = '${baseUrl}un-wanted-user';
   static const String registerUrl = '${baseUrl}register';
   static const String validateDataUrl = '${baseUrl}validate-data';

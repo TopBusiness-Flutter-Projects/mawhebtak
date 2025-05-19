@@ -214,7 +214,10 @@
           "out": "Exit",
             "exit_app": "Exit Application",
   "exit_app_desc": "Are you sure you want to exit the application?",
-  "go_to_cinema":"Go to Cinema"
+  "go_to_cinema":"Go to Cinema",
+    "alert": "alert",
+    "must_login": "You must log in first.",
+    "fill_the_data": "Fill The data"
 
 
 

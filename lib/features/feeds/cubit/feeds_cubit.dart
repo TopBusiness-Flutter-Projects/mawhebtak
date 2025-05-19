@@ -17,27 +17,53 @@ class FeedsCubit extends Cubit<FeedsState> {
   List<File> selectedImages = [];
   List<File> selectedVideos = [];
 
+  bool isPickingMedia = false;
+
   Future<void> pickImages() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-      allowMultiple: true,
-    );
-    if (result != null) {
-      selectedImages = result.paths.map((path) => File(path!)).toList();
-      emit(MediaSelectionUpdated());
+    if (isPickingMedia) return;
+
+    isPickingMedia = true;
+    try {
+      final pickedImages = await FilePicker.platform.pickFiles(
+          allowMultiple: true,
+          type: FileType.image,
+          allowCompression: true,
+          compressionQuality: 25);
+      if (pickedImages != null) {
+        selectedImages.addAll(
+            pickedImages.paths.whereType<String>().map((path) => File(path)));
+        emit(MediaPickedState());
+      }
+    } catch (e) {
+      debugPrint('Error picking images: $e');
+    } finally {
+      isPickingMedia = false;
     }
   }
 
   Future<void> pickVideos() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.video,
-      allowMultiple: true,
-    );
-    if (result != null) {
-      selectedVideos = result.paths.map((path) => File(path!)).toList();
-      emit(MediaSelectionUpdated()); // نفس الحالة
+    if (isPickingMedia) return;
+
+    isPickingMedia = true;
+    try {
+      final pickedVideos = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.video,
+      );
+
+      if (pickedVideos != null) {
+        selectedVideos.addAll(
+          pickedVideos.paths.whereType<String>().map((path) => File(path)),
+        );
+        emit(MediaPickedState());
+      }
+    } catch (e) {
+      debugPrint('Error picking videos: $e');
+    } finally {
+      isPickingMedia = false;
     }
   }
+
   bool isLoadingMore = false;
   postsData({bool isGetMore = false, required String page}) async {
     if (isGetMore) {
@@ -56,11 +82,13 @@ class FeedsCubit extends Cubit<FeedsState> {
             links: r.links,
             status: r.status,
             msg: r.msg,
-            data: [...posts!.data!, ...r.data!],
+            data: [...posts!.data!, ...r.data!]
           );
           emit(FeedsStateLoaded(posts!));
         } else {
           posts = r;
+          print("hhhhhhhhhhhhhh${posts?.data?[1].isReacted}");
+
           emit(FeedsStateLoaded(r));
         }
       });
@@ -100,10 +128,12 @@ class FeedsCubit extends Cubit<FeedsState> {
       );
       res.fold((l) {
         emit(AddPostStateError(l.toString()));
-      }, (r) {
+        errorGetBar(l.toString());
+      }, (r) async {
         emit(AddPostStateLoaded());
+
+        await postsData(page: '1', isGetMore: true);
         Navigator.pop(context);
-        postsData(page: '1', isGetMore: true);
         bodyController.clear();
         selectedImages = [];
         selectedVideos = [];
@@ -112,10 +142,12 @@ class FeedsCubit extends Cubit<FeedsState> {
       emit(AddPostStateError(e.toString()));
     }
   }
+
   Future<LoginModel> getUserFromPreferences() async {
     final user = await Preferences.instance.getUserModel();
     return user;
   }
+
   LoginModel? user;
 
   Future<void> loadUserFromPreferences() async {

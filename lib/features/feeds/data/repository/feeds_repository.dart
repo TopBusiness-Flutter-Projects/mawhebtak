@@ -17,9 +17,14 @@ class FeedsRepository {
   FeedsRepository(this.dio);
   Future<Either<Failure, PostsModel>> feedsData({required String page}) async {
     try {
-      var response = await dio.get(
-        EndPoints.feedsUrl + page,
-      );
+      var response = await dio.get(EndPoints.feedsUrl ,
+          queryParameters: {
+        "model": "Post",
+        "where[0]": "status,1",
+        "paginate": "true",
+        "orderBy": "desc",
+        "page": page,
+      });
       return Right(PostsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
@@ -38,13 +43,12 @@ class FeedsRepository {
   }
 
   Future<Either<Failure, AddPostModel>> addPost(
-      {required List<File> mediaFiles,required String body,required String userId}) async {
+      {required List<File> mediaFiles,
+      required String body,
+      required String userId}) async {
     try {
-
       var response =
-          await dio.post(EndPoints.addPostUrl,
-              formDataIsEnabled: true,
-              body: {
+          await dio.post(EndPoints.addPostUrl, formDataIsEnabled: true, body: {
         "model": "Post",
         "user_id": userId,
         "body": body,
