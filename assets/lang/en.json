@@ -218,7 +218,12 @@
   "go_to_cinema":"Go to Cinema",
     "alert": "alert",
     "must_login": "You must log in first.",
-    "fill_the_data": "Fill The data"
+    "fill_the_data": "Fill The data",
+
+    "please_add_text_or_media": "Please add data",
+    "ok": "ok",
+    "enter_post_title": "Enter post title"
+
 
 
 

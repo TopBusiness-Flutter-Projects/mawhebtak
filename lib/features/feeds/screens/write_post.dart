@@ -204,6 +204,12 @@ class _WritePostState extends State<WritePost> {
                     ),
                     5.verticalSpace,
                     CustomTextField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'enter_post_title'.tr();
+                        }
+                        return null;
+                      },
                       controller: cubit.bodyController,
                       hintText: "what_do_you_want_to_write".tr(),
                       maxLines: 6,
@@ -339,8 +345,7 @@ class _WritePostState extends State<WritePost> {
                                 separatorBuilder: (_, __) =>
                                     const SizedBox(width: 10),
                                 itemBuilder: (context, index) {
-                                  if (index ==
-                                      (cubit.validVideos.length ?? 0)) {
+                                  if (index == (cubit.validVideos.length)) {
                                     return GestureDetector(
                                       onTap: () {
                                         cubit.pickMultipleVideos(context);
@@ -459,11 +464,32 @@ class _WritePostState extends State<WritePost> {
                                   ),
                                 );
                               } else {
-                                if (cubit.bodyController.text == '') {
-                                  errorGetBar("fill_the_data".tr());
-                                } else {
-                                  cubit.addPost(context: context);
+                                final hasText =
+                                    cubit.bodyController.text.trim().isNotEmpty;
+                                final hasImages = cubit.myImages != null &&
+                                    cubit.myImages!.isNotEmpty;
+                                final hasVideos = cubit.validVideos.isNotEmpty;
+
+                                if (!hasText && !hasImages && !hasVideos) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text("alert".tr()),
+                                      content:
+                                          Text("please_add_text_or_media".tr()),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: Text("ok".tr()),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                  return;
                                 }
+
+                                cubit.addPost(context: context);
                               }
                             },
                             title: "post".tr(),
