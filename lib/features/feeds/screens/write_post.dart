@@ -161,6 +161,7 @@ class _WritePostState extends State<WritePost> {
     context.read<FeedsCubit>().loadUserFromPreferences();
     super.initState();
   }
+
   VideoPlayerController? _controller;
   @override
   Widget build(BuildContext context) {
@@ -232,8 +233,7 @@ class _WritePostState extends State<WritePost> {
                                 separatorBuilder: (_, __) =>
                                     const SizedBox(width: 10),
                                 itemBuilder: (context, index) {
-                                  if (index ==
-                                      (cubit.myImages?.length ?? 0)) {
+                                  if (index == (cubit.myImages?.length ?? 0)) {
                                     // "+" Icon at the end
                                     return GestureDetector(
                                       onTap: () {
@@ -263,8 +263,7 @@ class _WritePostState extends State<WritePost> {
                                                   builder: (context) =>
                                                       ImageFileView(
                                                           image: File(cubit
-                                                              .myImages![
-                                                                  index]
+                                                              .myImages![index]
                                                               .path))));
                                         },
                                         child: ClipRRect(
@@ -284,8 +283,8 @@ class _WritePostState extends State<WritePost> {
                                         child: GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              cubit.deleteImage(File(cubit
-                                                  .myImages![index].path));
+                                              cubit.deleteImage(File(
+                                                  cubit.myImages![index].path));
                                             });
                                           },
                                           child: Container(
@@ -294,8 +293,7 @@ class _WritePostState extends State<WritePost> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: const Icon(Icons.close,
-                                                color: Colors.white,
-                                                size: 18),
+                                                color: Colors.white, size: 18),
                                           ),
                                         ),
                                       ),
@@ -320,8 +318,7 @@ class _WritePostState extends State<WritePost> {
                                 SvgPicture.asset(AppIcons.videoUploadIcon),
                                 const SizedBox(width: 10),
                                 Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("upload_video".tr(),
                                         style: getMediumStyle(fontSize: 14)),
@@ -338,7 +335,7 @@ class _WritePostState extends State<WritePost> {
                               height: 80,
                               child: ListView.separated(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: (cubit.validVideos.length)+1,
+                                itemCount: (cubit.validVideos.length) + 1,
                                 separatorBuilder: (_, __) =>
                                     const SizedBox(width: 10),
                                 itemBuilder: (context, index) {
@@ -368,13 +365,16 @@ class _WritePostState extends State<WritePost> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => VideoPlayerScreenFile(
-                                                    videoFile:File(cubit
-                                                        .validVideos[index].path),
-                                                  )));
+                                                  builder: (context) =>
+                                                      VideoPlayerScreenFile(
+                                                        videoFile: File(cubit
+                                                            .validVideos[index]
+                                                            .path),
+                                                      )));
                                         },
                                         child: AspectRatio(
-                                          aspectRatio: _controller!.value.aspectRatio,
+                                          aspectRatio:
+                                              _controller!.value.aspectRatio,
                                           child: VideoPlayer(
                                             _controller!,
                                           ),

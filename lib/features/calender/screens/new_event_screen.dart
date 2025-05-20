@@ -193,9 +193,105 @@ class _NewEventScreenState extends State<NewEventScreen> {
   Widget _buildEventInformationStep(CalenderCubit cubit) {
     return Column(
       children: [
+        //! Select Image
         CustomPickMediaWidget(
-          onTap: () {},
+          onTap: () {
+            //
+          },
         ),
+
+        CustomContainerWithShadow(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(AppIcons.photoIcon),
+                    const SizedBox(width: 10),
+                    Text("upload_photo".tr(),
+                        style: getMediumStyle(fontSize: 14)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 80,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: (cubit.myImages?.length ?? 0) + 1,
+                    separatorBuilder: (_, __) => const SizedBox(width: 10),
+                    itemBuilder: (context, index) {
+                      if (index == (cubit.myImages?.length ?? 0)) {
+                        // "+" Icon at the end
+                        return GestureDetector(
+                          onTap: () {
+                            cubit.pickMultiImage();
+                          },
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.grey[300],
+                            ),
+                            child: const Icon(Icons.add,
+                                size: 30, color: Colors.black54),
+                          ),
+                        );
+                      }
+
+                      return Stack(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ImageFileView(
+                                          image: File(
+                                              cubit.myImages![index].path))));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                File(cubit.myImages![index].path),
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  cubit.deleteImage(
+                                      File(cubit.myImages![index].path));
+                                });
+                              },
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.black45,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(Icons.close,
+                                    color: Colors.white, size: 18),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        //! is free
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Column(
