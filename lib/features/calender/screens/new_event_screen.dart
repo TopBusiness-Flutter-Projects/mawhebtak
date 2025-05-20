@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
@@ -6,8 +9,11 @@ import 'package:mawhebtak/features/calender/screens/widgets/public_and_private_w
 import 'package:mawhebtak/features/calender/screens/widgets/required_talents_selector_widget.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/stepper_widget.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
+import 'package:video_player/video_player.dart';
 import '../../../core/exports.dart';
 import '../../../core/utils/custom_pick_media.dart';
+import '../../feeds/screens/widgets/image_view_file.dart';
+import '../../feeds/screens/widgets/video_from_file_screen.dart';
 
 class NewEventScreen extends StatefulWidget {
   const NewEventScreen({super.key});
@@ -36,6 +42,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
 
     super.initState();
   }
+
+  VideoPlayerController? _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -196,101 +204,167 @@ class _NewEventScreenState extends State<NewEventScreen> {
         //! Select Image
         CustomPickMediaWidget(
           onTap: () {
-            //
+            log('00');
+            cubit.showSelectionBottomSheet(context);
           },
         ),
-
-        CustomContainerWithShadow(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(AppIcons.photoIcon),
-                    const SizedBox(width: 10),
-                    Text("upload_photo".tr(),
-                        style: getMediumStyle(fontSize: 14)),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  height: 80,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: (cubit.myImages?.length ?? 0) + 1,
-                    separatorBuilder: (_, __) => const SizedBox(width: 10),
-                    itemBuilder: (context, index) {
-                      if (index == (cubit.myImages?.length ?? 0)) {
-                        // "+" Icon at the end
-                        return GestureDetector(
-                          onTap: () {
-                            cubit.pickMultiImage();
-                          },
-                          child: Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.grey[300],
-                            ),
-                            child: const Icon(Icons.add,
-                                size: 30, color: Colors.black54),
-                          ),
-                        );
-                      }
-
-                      return Stack(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ImageFileView(
-                                          image: File(
-                                              cubit.myImages![index].path))));
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.file(
-                                File(cubit.myImages![index].path),
-                                width: 80,
-                                height: 80,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  cubit.deleteImage(
-                                      File(cubit.myImages![index].path));
-                                });
-                              },
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.black45,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(Icons.close,
-                                    color: Colors.white, size: 18),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+        SizedBox(height: 10.h),
+        SizedBox(
+          height: 80,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: (cubit.myImages?.length ?? 0) + 1,
+            separatorBuilder: (_, __) => const SizedBox(width: 10),
+            itemBuilder: (context, index) {
+              if (index == (cubit.myImages?.length ?? 0)) {
+                // "+" Icon at the end
+                return GestureDetector(
+                  onTap: () {
+                    cubit.pickMultiImage();
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey[300],
+                    ),
+                    child:
+                        const Icon(Icons.add, size: 30, color: Colors.black54),
                   ),
-                )
-              ],
-            ),
+                );
+              }
+
+              return Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ImageFileView(
+                                  image: cubit.myImages![index].path)));
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        File(cubit.myImages![index].path),
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          cubit.deleteImage(File(cubit.myImages![index].path));
+                        });
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.black45,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.close,
+                            color: Colors.white, size: 18),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
+        SizedBox(height: 10.h),
+        SizedBox(
+          height: 80,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: (cubit.validVideos.length) + 1,
+            separatorBuilder: (_, __) => const SizedBox(width: 10),
+            itemBuilder: (context, index) {
+              if (index == (cubit.validVideos.length ?? 0)) {
+                return GestureDetector(
+                  onTap: () {
+                    cubit.pickMultipleVideos(context);
+                  },
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey[300],
+                    ),
+                    child:
+                        const Icon(Icons.add, size: 30, color: Colors.black54),
+                  ),
+                );
+              }
+              return GestureDetector(
+                onTap: () {
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VideoPlayerScreenFile(
+                                    videoFile:
+                                        File(cubit.validVideos[index].path),
+                                  )));
+                    },
+                    child: AspectRatio(
+                      aspectRatio: _controller!.value.aspectRatio,
+                      child: VideoPlayer(
+                        _controller!,
+                      ),
+                    ),
+                  );
+                },
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        color: Colors.black12,
+                        child: const Center(
+                          child: Icon(Icons.play_circle_fill,
+                              size: 40, color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            cubit.deleteVideo(
+                                File(cubit.validVideos[index].path));
+                          });
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black45,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.close,
+                              color: Colors.white, size: 18),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+
         //! is free
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),

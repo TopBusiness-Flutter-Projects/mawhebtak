@@ -263,8 +263,7 @@ class _WritePostState extends State<WritePost> {
                                                   builder: (context) =>
                                                       ImageFileView(
                                                           image: cubit
-                                                              .myImages![
-                                                                  index]
+                                                              .myImages![index]
                                                               .path)));
                                         },
                                         child: ClipRRect(
