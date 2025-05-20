@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/see_more_text.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
+import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
 import '../../../../core/exports.dart';
 
@@ -22,7 +25,6 @@ class _TimeLineListState extends State<TimeLineList> {
   @override
 
   void initState() {
-    context.read<FeedsCubit>().postsData(page: '1', isGetMore: true);
     super.initState();
   }
 
@@ -93,10 +95,20 @@ class _TimeLineListState extends State<TimeLineList> {
                 if (media.extension == 'video') {
                   return VideoPlayerWidget(videoUrl: media.file ?? '');
                 } else {
-                  return Image.network(
-                    media.file ?? '',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ImageFileView(
+                                      image: File(widget.feeds!.media![index].file ?? ""))));
+                    },
+                    child: Image.network(
+                      media.file ?? '',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
                   );
                 }
               },
@@ -150,7 +162,6 @@ class _TimeLineListState extends State<TimeLineList> {
                   postId: widget.postId,
 
                 );
-                setState(() {});
               },
               child: Row(
                 children: [

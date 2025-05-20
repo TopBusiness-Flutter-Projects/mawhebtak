@@ -58,4 +58,5 @@ class AppWidgets {
           return const CustomLoadingIndicator(withLogo: true,);
         });
   }
+
 }
