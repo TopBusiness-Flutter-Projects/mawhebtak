@@ -20,9 +20,6 @@ class FeedsCubit extends Cubit<FeedsState> {
   FeedsRepository? api = FeedsRepository(serviceLocator());
   PostsModel? posts;
   TextEditingController bodyController = TextEditingController();
-
-
-
   List<File> validVideos = [];
   List<XFile>? myImages;
   List<File>? myImagesF;
@@ -88,6 +85,7 @@ class FeedsCubit extends Cubit<FeedsState> {
     }
     emit(SuccessRemoveVideoState());
   }
+
   Future<List<File>?> pickMultipleVideos(BuildContext context) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -199,6 +197,7 @@ class FeedsCubit extends Cubit<FeedsState> {
     print('thumbnailPath $thumbnailPath');
     return File(thumbnailPath!);
   }
+
   bool isLoadingMore = false;
   postsData({bool isGetMore = false, required String page}) async {
     if (isGetMore) {
@@ -221,7 +220,6 @@ class FeedsCubit extends Cubit<FeedsState> {
           emit(FeedsStateLoaded(posts!));
         } else {
           posts = r;
-          print("hhhhhhhhhhhhhh${posts?.data?[1].isReacted}");
 
           emit(FeedsStateLoaded(r));
         }
@@ -234,16 +232,24 @@ class FeedsCubit extends Cubit<FeedsState> {
   }
 
   DefaultMainModel? defaultMainModel;
-  PostsModelData? post;
-  Map<String, bool> postLikes = {};
-  addReaction({required String postId}) async {
+  addReaction({required String postId, required int index}) async {
     try {
       final res = await api!.addReaction(postId: postId);
       res.fold((l) {
         emit(AddReactionStateError(l.toString()));
       }, (r) {
-        postLikes[postId] = !(postLikes[postId] ?? false);
+        if (posts?.data?[index]?.isReacted == true) {
+          posts?.data![index]!.reactionCount =
+              (posts?.data?[index]?.reactionCount ?? 1) - 1;
+        } else {
+          posts?.data![index]!.reactionCount =
+              (posts?.data?[index]?.reactionCount ?? 0) + 1;
+        }
+        posts?.data?[index]?.isReacted =
+            !(posts?.data?[index]?.isReacted ?? false);
+
         successGetBar(r.msg);
+        emit(AddReactionStateSuccess());
       });
     } catch (e) {
       emit(AddReactionStateError(e.toString()));
@@ -266,7 +272,7 @@ class FeedsCubit extends Cubit<FeedsState> {
       }, (r) async {
         emit(AddPostStateLoaded());
 
-        await postsData(page: '1', isGetMore: true);
+        await postsData(page: '1', isGetMore: false);
         Navigator.pop(context);
         bodyController.clear();
         myImages = [];

@@ -52,3 +52,4 @@ class MediaPickedState extends FeedsState {}
 class SuccessSelectNewImageState extends FeedsState {}
 class SuccessRemoveImageState extends FeedsState {}
 class SuccessRemoveVideoState extends FeedsState {}
+class AddReactionStateSuccess extends FeedsState {}

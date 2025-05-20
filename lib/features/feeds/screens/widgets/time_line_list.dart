@@ -12,10 +12,16 @@ import '../../../../core/exports.dart';
 
 class TimeLineList extends StatefulWidget {
   const TimeLineList(
-      {super.key, this.feeds, this.feedsCubit, required this.postId});
+      {super.key, this.feeds, this.feedsCubit,
+        required this.postId,
+        required this.index,
+
+      });
   final PostsModelData? feeds;
   final FeedsCubit? feedsCubit;
   final String postId;
+  final int index;
+
 
   @override
   State<TimeLineList> createState() => _TimeLineListState();
@@ -23,7 +29,6 @@ class TimeLineList extends StatefulWidget {
 
 class _TimeLineListState extends State<TimeLineList> {
   @override
-
   void initState() {
     super.initState();
   }
@@ -100,14 +105,17 @@ class _TimeLineListState extends State<TimeLineList> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  ImageFileView(
-                                      image: File(widget.feeds!.media![index].file ?? ""))));
+                              builder: (context) => ImageFileView(
+                                  isNetwork: true,
+                                  image:
+                                      widget.feeds!.media![index].file ?? "")));
                     },
                     child: Image.network(
                       media.file ?? '',
                       fit: BoxFit.cover,
                       width: double.infinity,
+                      errorBuilder: (context, error, stackTrace) =>
+                          Image.asset(ImageAssets.appIconWhite),
                     ),
                   );
                 }
@@ -158,9 +166,9 @@ class _TimeLineListState extends State<TimeLineList> {
           children: [
             GestureDetector(
               onTap: () {
-               widget.feedsCubit?.addReaction(
+                widget.feedsCubit?.addReaction(
                   postId: widget.postId,
-
+                  index: widget.index
                 );
               },
               child: Row(
@@ -170,7 +178,7 @@ class _TimeLineListState extends State<TimeLineList> {
                     child: SvgPicture.asset(
                       AppIcons.likeIcon,
                       width: 20.sp,
-                      color: widget.feedsCubit?.post?.isReacted == true
+                      color: widget.feedsCubit?.posts?.data?[widget.index]?.isReacted == true
                           ? AppColors.primary
                           : AppColors.grayDarkkk,
                     ),

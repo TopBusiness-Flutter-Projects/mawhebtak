@@ -35,7 +35,6 @@ class _FeedsScreenState extends State<FeedsScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +69,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
                 ),
               ),
             ] else if (state is FeedsStateLoaded ||
-                state is FeedsStateLoadingMore) ...[
+                state is FeedsStateLoadingMore ||
+                feeds != null) ...[
               Expanded(
                 child: ListView.separated(
                   controller: scrollController,
@@ -79,10 +79,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   itemCount: feeds?.data?.length ?? 0,
                   itemBuilder: (BuildContext context, int index) {
                     return TimeLineList(
-                      postId: feeds!.data![index].id.toString(),
-                      feedsCubit: feedsCubit,
-                      feeds: feeds.data![index],
-                    );
+                        postId: feeds!.data![index].id.toString(),
+                        feedsCubit: feedsCubit,
+                        feeds: feeds.data![index],
+                        index: index);
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(
