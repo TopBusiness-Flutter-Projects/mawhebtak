@@ -1,59 +1,76 @@
-// import 'package:mawhebtak/core/exports.dart';
-//
-// class DropdownButtonFormFieldWidget extends StatefulWidget {
-//   const DropdownButtonFormFieldWidget(
-//       {super.key,
-//       required this.items,
-//       required this.title,
-//       this.dataType,
-//       required this.onChanged});
-//
-//   final List<String> items;
-//   final String title;
-//   final String? dataType;
-//   final void Function(String?)? onChanged;
-//   @override
-//   State<DropdownButtonFormFieldWidget> createState() =>
-//       _DropdownButtonFormFieldWidgetState();
-// }
-//
-// class _DropdownButtonFormFieldWidgetState
-//     extends State<DropdownButtonFormFieldWidget> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: EdgeInsets.symmetric(horizontal: 8.0.sp),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         mainAxisAlignment: MainAxisAlignment.start,
-//         children: [
-//           Text(
-//             widget.title,
-//             style: getBoldStyle(),
-//           ),
-//           SizedBox(
-//             height: 10.h,
-//           ),
-//           SizedBox(
-//             height: 60.h,
-//             child: DropdownButtonFormField<String>(
-//                 value: widget.dataType,
-//                 decoration: InputDecoration(
-//                   // labelText: widget.title,
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(10),
-//                   ),
-//                 ),
-//                 items: widget.items
-//                     .map((option) => DropdownMenuItem(
-//                           value: option,
-//                           child: Text(option),
-//                         ))
-//                     .toList(),
-//                 onChanged: widget.onChanged),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import '../exports.dart';
+
+typedef DropdownItemBuilder<T> = String Function(T item);
+
+class GeneralCustomDropdownButtonFormField<T> extends StatelessWidget {
+  final List<T> items;
+  final T? value;
+  final ValueChanged<T?>? onChanged;
+  final FormFieldValidator<T>? validator;
+  final DropdownItemBuilder<T> itemBuilder;
+  final InputDecoration? decoration;
+
+  const GeneralCustomDropdownButtonFormField({
+    super.key,
+    required this.items,
+    this.value,
+    this.onChanged,
+    this.validator,
+    this.decoration,
+    required this.itemBuilder,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData(),
+      child: DropdownButtonFormField<T>(
+        icon: Container(),
+        value: value,
+        decoration: InputDecoration(
+          hintText: 'choose'.tr(),
+          contentPadding: EdgeInsets.symmetric(horizontal: 5.sp, vertical: 4),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
+            borderRadius: BorderRadius.all(Radius.circular(10.r)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
+            borderRadius: BorderRadius.all(Radius.circular(10.r)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
+            borderRadius: BorderRadius.all(Radius.circular(10.r)),
+          ),
+          alignLabelWithHint: true,
+          hintStyle: TextStyle(
+            color: AppColors.grey,
+            fontSize: 18.sp,
+          ),
+          suffixIcon: Padding(
+            padding: EdgeInsets.only(right: 8.w),
+            child: Icon(Icons.arrow_drop_down, color: AppColors.black),
+          ),
+        ),
+        style: TextStyle(color: AppColors.black, fontSize: 16.sp),
+        items: items.map((T item) {
+          return DropdownMenuItem<T>(
+            value: item,
+            child: AutoSizeText(
+              itemBuilder(item),
+              maxLines: 1,
+              // Use the itemBuilder to display the item
+              style: TextStyle(
+                color: AppColors.black,
+              ),
+            ),
+          );
+        }).toList(),
+        onChanged: onChanged,
+      ),
+    );
+  }
+}

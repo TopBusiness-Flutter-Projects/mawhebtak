@@ -9,7 +9,8 @@ class ImageAssets {
   static const String onboarding1Image = '$imagePath/onboarding1.png';
   static const String onboarding2Image = '$imagePath/onboarding2.png';
   static const String onboarding3Image = '$imagePath/onboarding3.png';
-  static const String onboardingBackground = '$imagePath/onboarding_background.png';
+  static const String onboardingBackground =
+      '$imagePath/onboarding_background.png';
   static const String pinCodeImage = '$imagePath/pin_code_image.png';
   static const String logo2Image = '$imagePath/app_icon.png';
   static const String logo3Image = '$imagePath/app_icon.png';
@@ -44,7 +45,8 @@ class AppIcons {
   static const String feeds = '$iconsPath/feeds.svg';
   static const String casting = '$iconsPath/casting.svg';
   static const String calendar = '$iconsPath/calendar.svg';
-  static const String eventCalenderSecondColorIcon = '$iconsPath/event(calender_second_color).svg';
+  static const String eventCalenderSecondColorIcon =
+      '$iconsPath/event(calender_second_color).svg';
   static const String more = '$iconsPath/more.svg';
   static const String dollarSign = '$iconsPath/dollar_sign.svg';
   static const String searchIcon = '$iconsPath/search_icon.svg';
@@ -68,7 +70,8 @@ class AppIcons {
   static const String photoIcon = '$iconsPath/photo.svg';
   static const String videoUploadIcon = '$iconsPath/video_upload.svg';
   static const String addIcon = '$iconsPath/add_button.svg';
-  static const String notificationWithBlueContainer = '$iconsPath/notification_with_blue_container.svg';
+  static const String notificationWithBlueContainer =
+      '$iconsPath/notification_with_blue_container.svg';
   static const String dateIcon = '$iconsPath/date.svg';
   static const String successIcon = '$iconsPath/success.svg';
   static const String share = '$iconsPath/share.svg';
@@ -76,7 +79,7 @@ class AppIcons {
   static const String bagIcon = '$iconsPath/bag_icon.svg';
   static const String announceIcon = '$iconsPath/announce.svg';
   static const String emailIcon = '$iconsPath/email_icon.svg';
-  static const String passwordIcon = '$iconsPath/Password_icon.svg';
+  static const String passwordIcon = '$iconsPath/password_icon.svg';
   static const String appleIcon = '$iconsPath/apple.svg';
   static const String googleIcon = '$iconsPath/google.svg';
   static const String myProfileIcon = '$iconsPath/my_profile.svg';

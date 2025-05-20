@@ -182,7 +182,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-
         // ------------------------
         // الجسم الرئيسي للتقويم
         // ------------------------
@@ -203,7 +202,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           right: 20.w,
           child: GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context,Routes.newEventRoute);
+              Navigator.pushNamed(context, Routes.newEventRoute);
             },
             child: Container(
               width: 60.w,
@@ -320,9 +319,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               Row(
                 children: week.map((day) {
                   bool isCurrentMonth = day.month == currentDate.month;
-                  List<CalendarEvent> dayEvents = events.where(
-                        (event) => isSameDay(event.date, day) && event.endDate == null,
-                  ).toList();
+                  List<CalendarEvent> dayEvents = events
+                      .where(
+                        (event) =>
+                            isSameDay(event.date, day) && event.endDate == null,
+                      )
+                      .toList();
 
                   return Expanded(
                     child: _buildCalendarCell(day, isCurrentMonth, dayEvents),
@@ -342,23 +344,26 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     List<MultidayEventPosition> weekEvents = events
         .where((e) => e.endDate != null)
         .map((e) {
-      int start = -1, end = -1;
-      for (int i = 0; i < week.length; i++) {
-        if (isDateInRange(week[i], e.date, e.endDate!)) {
-          if (start == -1) start = i;
-          end = i;
-        }
-      }
-      return start != -1
-          ? MultidayEventPosition(event: e, startIndex: start, endIndex: end)
-          : null;
-    })
+          int start = -1, end = -1;
+          for (int i = 0; i < week.length; i++) {
+            if (isDateInRange(week[i], e.date, e.endDate!)) {
+              if (start == -1) start = i;
+              end = i;
+            }
+          }
+          return start != -1
+              ? MultidayEventPosition(
+                  event: e, startIndex: start, endIndex: end)
+              : null;
+        })
         .whereType<MultidayEventPosition>()
         .toList();
 
     return weekEvents.map((eventPos) {
-      double left = (eventPos.startIndex / 7) * MediaQuery.of(context).size.width;
-      double right = ((6 - eventPos.endIndex) / 7) * MediaQuery.of(context).size.width;
+      double left =
+          (eventPos.startIndex / 7) * MediaQuery.of(context).size.width;
+      double right =
+          ((6 - eventPos.endIndex) / 7) * MediaQuery.of(context).size.width;
 
       return Positioned(
         top: 30.h,
@@ -390,7 +395,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 
   // بناء خلية في التقويم
-  Widget _buildCalendarCell(DateTime day, bool isCurrentMonth, List<CalendarEvent> dayEvents) {
+  Widget _buildCalendarCell(
+      DateTime day, bool isCurrentMonth, List<CalendarEvent> dayEvents) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade200),
@@ -437,7 +443,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
   // تجهيز قائمة الأيام في الشهر الحالي + الأيام السابقة واللاحقة لتغطية الأسابيع
   List<DateTime> _getCalendarDays() {
-    final daysInMonth = DateTime(currentDate.year, currentDate.month + 1, 0).day;
+    final daysInMonth =
+        DateTime(currentDate.year, currentDate.month + 1, 0).day;
     final firstDayOfMonth = DateTime(currentDate.year, currentDate.month, 1);
     final firstWeekdayOfMonth = firstDayOfMonth.weekday % 7;
 
@@ -449,7 +456,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     List<DateTime> calendarDays = [];
 
     // أيام من الشهر السابق
-    final lastDayOfPreviousMonth = DateTime(currentDate.year, currentDate.month, 0).day;
+    final lastDayOfPreviousMonth =
+        DateTime(currentDate.year, currentDate.month, 0).day;
     for (int i = 0; i < daysFromPreviousMonth; i++) {
       final day = lastDayOfPreviousMonth - daysFromPreviousMonth + i + 1;
       calendarDays.add(DateTime(currentDate.year, currentDate.month - 1, day));

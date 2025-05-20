@@ -4,21 +4,19 @@ import '../../../../core/api/base_api_consumer.dart';
 import '../../../../core/api/end_points.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
-
+import '../../../calender/data/model/countries_model.dart';
 
 class EventRepo {
   final BaseApiConsumer dio;
   EventRepo(this.dio);
-  Future<Either<Failure, TopEventsModel>> seeAllEventData()async {
+  Future<Either<Failure, TopEventsModel>> seeAllEventData() async {
     try {
       var response = await dio.get(
-        EndPoints.topEventsUrl,
-
+        EndPoints.getDataBaseUrl,
       );
       return Right(TopEventsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
-
 }

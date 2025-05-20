@@ -1,21 +1,20 @@
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_state.dart';
 import 'package:mawhebtak/features/calender/data/repos/calender.repo.dart';
 
+import '../data/model/countries_model.dart';
 import '../screens/widgets/calender_widget.dart';
 
 class CalenderCubit extends Cubit<CalenderState> {
-  CalenderCubit(this.exRepo) : super(CalenderInitial());
-  CalenderRepo exRepo ;
-   // TextEditingController locationController = TextEditingController();
+  CalenderCubit(this.api) : super(CalenderInitial());
+  CalenderRepo api;
+  // TextEditingController locationController = TextEditingController();
   TextEditingController eventDateController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController titleOfTheEventController = TextEditingController();
   DateTime? selectedDate;
-   List<CalendarEvent> events = [];
+  List<CalendarEvent> events = [];
 
   void addEvent({
     required String title,
@@ -58,11 +57,40 @@ class CalenderCubit extends Cubit<CalenderState> {
         selectedDate = finalDateTime; // ✅ احفظ التاريخ المختار
 
         String formattedDateTime =
-        DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
+            DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
         eventDateController.text = formattedDateTime;
 
         emit(DateTimeSelected(formattedDateTime));
       }
     }
+  }
+  //!
+
+  //! get countries
+
+  GetCountriesMainModel? countriesMainModel;
+  Future<void> getAllCountries() async {
+    emit(GetGetCountriesLoadingState());
+    final result = await api.mainGetData(queryParameters: {"model": "Country"});
+    result.fold((l) {
+      emit(GetGetCountriesErrorState());
+    }, (r) {
+      countriesMainModel = r;
+      emit(GetGetCountriesSuccessState());
+    });
+  }
+
+  //!
+  GetCountriesMainModel? categoriesMainModel;
+  Future<void> getAllCategories() async {
+    emit(GetGetCategoriesLoadingState());
+    final result = await api.mainGetData(
+        queryParameters: {"model": "Category", "where[0]": "status,1"});
+    result.fold((l) {
+      emit(GetGetCategoriesErrorState());
+    }, (r) {
+      categoriesMainModel = r;
+      emit(GetGetCategoriesSuccessState());
+    });
   }
 }

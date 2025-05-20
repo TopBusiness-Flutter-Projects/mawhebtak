@@ -4,24 +4,26 @@ import 'package:mawhebtak/features/events/data/repo/event_repo_impl.dart';
 
 import '../../../core/exports.dart';
 import '../../../core/widgets/media_picker.dart';
+import '../../calender/data/model/countries_model.dart';
 
 part 'event_state.dart';
 
 class EventCubit extends Cubit<EventState> {
   EventCubit(this.api) : super(EventInitial());
   EventRepo api;
-  int selectedIndex=0;
-  void changeToggle(index){
+  int selectedIndex = 0;
+  void changeToggle(index) {
     selectedIndex = index;
     emit(ChangeToggleState());
   }
+
   String selectedCurrency = "L.E";
 
+  void changeCurrency(String currency) {
+    selectedCurrency = currency;
+    emit(ChangeCurrencyState());
+  }
 
-  void changeCurrency(String currency){
-  selectedCurrency=currency;
-  emit(ChangeCurrencyState());
-}
   File? selectedImage;
   File? selectedVideo;
 
@@ -40,8 +42,5 @@ class EventCubit extends Cubit<EventState> {
       },
     );
   }
-
-
-
 
 }

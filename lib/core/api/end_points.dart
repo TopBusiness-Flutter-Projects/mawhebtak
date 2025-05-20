@@ -9,10 +9,7 @@ class EndPoints {
 //! Authentication
   static const String loginUrl = '${baseUrl}login';
   static const String homeUrl = '${baseUrl}home';
-  static const String topEventsUrl = '${baseUrl}get-data';
-  static const String topTalentsUrl = '${baseUrl}get-data';
-  static const String requestGigsUrl = '${baseUrl}get-data';
-  static const String announcementsUrl = '${baseUrl}get-data';
+
   static const String addPostUrl = '${baseUrl}store-data';
   static const String addReactionUrl = '${baseUrl}add-reaction';
   static const String feedsUrl = '${baseUrl}get-data';
@@ -24,4 +21,8 @@ class EndPoints {
   static const String forgetPasswordUrl = '${baseUrl}forget-password';
   static const String updatePasswordUrl = '${baseUrl}update-password';
   static const String loginWithSocial = '${baseUrl}login-with-social';
+  //! add event
+  static const String getDataBaseUrl = '${baseUrl}get-data';
+
+  static const String storeEventUrl = '${baseUrl}store-event';
 }

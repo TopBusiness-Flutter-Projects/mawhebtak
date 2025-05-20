@@ -7,26 +7,22 @@ import 'package:mawhebtak/features/home/data/models/announcements_model.dart';
 import '../../../../core/api/base_api_consumer.dart';
 
 class AnnouncementsRepository {
-  final BaseApiConsumer dio ;
+  final BaseApiConsumer dio;
   AnnouncementsRepository(this.dio);
 
   String date = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
-  Future<Either<Failure, AnnouncementsModel>> announcementsData({required String page})async {
+  Future<Either<Failure, AnnouncementsModel>> announcementsData(
+      {required String page}) async {
     try {
-      var response = await dio.get(
-        EndPoints.announcementsUrl,
-          queryParameters: {
-            "model" :"Announce",
-            "where[0]":"expire_in,>=,$date",
-            "paginate":"true",
-            "page":page
-
-          }
-      );
+      var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
+        "model": "Announce",
+        "where[0]": "expire_in,>=,$date",
+        "paginate": "true",
+        "page": page
+      });
       return Right(AnnouncementsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
-
 }
