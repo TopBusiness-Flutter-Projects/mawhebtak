@@ -69,7 +69,9 @@ dependencies:
   flutter_file_downloader: ^2.1.0
   google_sign_in: ^6.2.2
   firebase_auth: ^5.5.2
-
+  video_compress: ^3.1.4
+  video_thumbnail: ^0.5.6
+  chewie: ^1.7.5
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   firebase_messaging: ^15.2.5

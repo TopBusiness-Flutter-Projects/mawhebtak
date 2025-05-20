@@ -162,7 +162,7 @@ Future<void> setupCubit() async {
   );serviceLocator.registerFactory(
     () => FeedsCubit(
 
-    )..postsData(page: '1'),
+    )
   );
 }
 
