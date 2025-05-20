@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../../config/routes/app_routes.dart';
-import '../../../../../core/exports.dart';
+import '../../../../config/routes/app_routes.dart';
+import '../../../../core/exports.dart';
 
 class WhatDoYouWant extends StatelessWidget {
   const WhatDoYouWant({super.key});

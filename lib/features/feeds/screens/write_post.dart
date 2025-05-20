@@ -130,13 +130,17 @@
 //     );
 //   }
 // }
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
+import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
 import '../../../core/exports.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
@@ -204,10 +208,10 @@ class _WritePostState extends State<WritePost> {
                     ),
                     SizedBox(height: getHeightSize(context) / 25),
                     GestureDetector(
-                      onTap: () => cubit.pickImages(),
+                      onTap: () => cubit.pickMultiImage(),
                       child: CustomContainerWithShadow(
                         child: Padding(
-                          padding: EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -220,27 +224,61 @@ class _WritePostState extends State<WritePost> {
                                 ],
                               ),
                               const SizedBox(height: 10),
-                              if (cubit.selectedImages.isNotEmpty)
+                              if (cubit.myImages != null && cubit.myImages!.isNotEmpty)
                                 SizedBox(
                                   height: 80,
                                   child: ListView.separated(
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: cubit.selectedImages.length,
-                                    separatorBuilder: (_, __) =>
-                                        const SizedBox(width: 10),
+                                    itemCount: cubit.myImages?.length ?? 0,
+                                    separatorBuilder: (_, __) => const SizedBox(width: 10),
                                     itemBuilder: (context, index) {
-                                      return ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Image.file(
-                                          cubit.selectedImages[index],
-                                          width: 80,
-                                          height: 80,
-                                          fit: BoxFit.cover,
-                                        ),
+                                      return Stack(
+                                        children: [
+                                          GestureDetector(
+                                            onTap:(){
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ImageFileView(
+                                                              image: File(
+                                                                  cubit.myImages![index].path))));
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(8),
+                                              child: Image.file(
+                                                File(cubit.myImages![index].path),
+                                                width: 80,
+                                                height: 80,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                   cubit.deleteImage(File(cubit.myImages![index].path));
+                                                });
+                                              },
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.black45,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Icon(Icons.close, color: Colors.white, size: 18),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       );
                                     },
                                   ),
-                                ),
+                                )
+
+
                             ],
                           ),
                         ),
@@ -273,31 +311,53 @@ class _WritePostState extends State<WritePost> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 10),
+                              SizedBox(height: 10.h),
                               if (cubit.selectedVideos.isNotEmpty)
                                 SizedBox(
                                   height: 80,
                                   child: ListView.separated(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: cubit.selectedVideos.length,
-                                    separatorBuilder: (_, __) =>
-                                        const SizedBox(width: 10),
+                                    separatorBuilder: (_, __) => const SizedBox(width: 10),
                                     itemBuilder: (context, index) {
-                                      return ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: Container(
-                                          width: 80,
-                                          height: 80,
-                                          color: Colors.black12,
-                                          child: Center(
-                                            child: Icon(Icons.play_circle_fill,
-                                                size: 40, color: Colors.grey),
+                                      return Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(8),
+                                            child: Container(
+                                              width: 80,
+                                              height: 80,
+                                              color: Colors.black12,
+                                              child: const Center(
+                                                child: Icon(Icons.play_circle_fill, size: 40, color: Colors.grey),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  cubit.selectedVideos.removeAt(index);
+                                                });
+                                              },
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.black45,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Icon(Icons.close, color: Colors.white, size: 18),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       );
                                     },
                                   ),
-                                ),
+                                )
+
+
                             ],
                           ),
                         ),
@@ -308,7 +368,37 @@ class _WritePostState extends State<WritePost> {
                         ? const CustomLoadingIndicator()
                         : CustomContainerButton(
                             onTap: () {
-                              cubit.addPost(context: context);
+                              if (cubit.user?.data?.token == null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("alert".tr()),
+                                    content: Text("must_login".tr()),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context)
+                                              .pushNamed(Routes.loginRoute);
+                                        },
+                                        child: Text("login".tr()),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text("cancel".tr()),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                if (cubit.bodyController.text == '') {
+                                  errorGetBar("fill_the_data".tr());
+                                } else {
+                                  cubit.addPost(context: context);
+                                }
+                              }
                             },
                             title: "post".tr(),
                             color: AppColors.primary,

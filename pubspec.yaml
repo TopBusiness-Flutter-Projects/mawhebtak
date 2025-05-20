@@ -64,6 +64,9 @@ dependencies:
   auto_size_text: ^3.0.0
   currency_code_to_currency_symbol: ^0.0.4
   carousel_slider: 4.1.1
+  flutter_image_compress: ^2.3.0
+  photo_view: ^0.15.0
+  flutter_file_downloader: ^2.1.0
   google_sign_in: ^6.2.2
   firebase_auth: ^5.5.2
 
