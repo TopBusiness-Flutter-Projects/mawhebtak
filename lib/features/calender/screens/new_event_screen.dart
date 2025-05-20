@@ -26,6 +26,18 @@ class _NewEventScreenState extends State<NewEventScreen> {
   ];
 
   @override
+  void initState() {
+    if (context.read<CalenderCubit>().categoriesMainModel == null) {
+      context.read<CalenderCubit>().getAllCategories();
+    }
+    if (context.read<CalenderCubit>().countriesMainModel == null) {
+      context.read<CalenderCubit>().getAllCountries();
+    }
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var cubit = context.read<CalenderCubit>();
     return SafeArea(
