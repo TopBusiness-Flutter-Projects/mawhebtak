@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
@@ -14,11 +17,11 @@ class FeedsCubit extends Cubit<FeedsState> {
   FeedsRepository? api = FeedsRepository(serviceLocator());
   PostsModel? posts;
   TextEditingController bodyController = TextEditingController();
+
+
   List<File> selectedImages = [];
   List<File> selectedVideos = [];
-
   bool isPickingMedia = false;
-
   Future<void> pickImages() async {
     if (isPickingMedia) return;
 
@@ -40,7 +43,6 @@ class FeedsCubit extends Cubit<FeedsState> {
       isPickingMedia = false;
     }
   }
-
   Future<void> pickVideos() async {
     if (isPickingMedia) return;
 
@@ -63,6 +65,86 @@ class FeedsCubit extends Cubit<FeedsState> {
       isPickingMedia = false;
     }
   }
+
+
+
+  List<File> validVideos = [];
+  List<XFile>? myImages;
+  List<File>? myImagesF;
+  List<File> thumbnails = [];
+
+  Future pickMultiImage() async {
+    List<XFile>? images;
+    List<File> files = [];
+
+    try {
+      images = await ImagePicker().pickMultiImage();
+      if (images == null || images.isEmpty) return;
+
+      // إنشاء قائمة المسارات الحالية لمنع التكرار
+      final existingPaths = myImages?.map((e) => e.path).toSet() ?? {};
+
+      for (var xImage in images) {
+        if (existingPaths.contains(xImage.path)) continue; // تجاهل المكرر
+
+        final file = File(xImage.path);
+        final imageBytes = await file.readAsBytes();
+
+        if (imageBytes.length > 3 * 1024 * 1024) {
+          final compressedImageBytes = await FlutterImageCompress.compressWithFile(
+            file.path,
+            quality: 75,
+          );
+          final compressedImage = File('${file.path}.compressed.jpg');
+          await compressedImage.writeAsBytes(compressedImageBytes!);
+          files.add(compressedImage);
+        } else {
+          files.add(file);
+        }
+
+        // أضف فقط الصور غير المكررة
+        myImages = [...?myImages, xImage];
+      }
+
+      myImagesF = [...?myImagesF, ...files];
+      validVideos = [];
+
+      emit(SuccessSelectNewImageState());
+    } on PlatformException catch (e) {
+      debugPrint('error$e');
+    }
+  }
+
+
+   // delete from path not index
+  void deleteImage(File image) {
+    myImagesF!.removeWhere((element) => element.path == image.path);
+    myImages!.removeWhere((element) => element.path == image.path);
+    if (myImagesF!.isEmpty) {
+      myImages = null;
+      myImagesF = null;
+    }
+    emit(SuccessRemoveImageState());
+  }
+
+  void deleteVideo(File video) {
+    validVideos.removeWhere((element) => element.path == video.path);
+    thumbnails.removeWhere((element) => element.path == video.path);
+    if (validVideos.isEmpty) {
+      validVideos = [];
+    }
+    emit(SuccessRemoveVideoState());
+  }
+
+
+
+
+
+
+
+
+
+
 
   bool isLoadingMore = false;
   postsData({bool isGetMore = false, required String page}) async {

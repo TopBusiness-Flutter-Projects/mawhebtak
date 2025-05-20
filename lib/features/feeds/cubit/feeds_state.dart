@@ -49,3 +49,6 @@ class MediaPickErrorState extends FeedsState {
 }
 class MediaSelectionUpdated extends FeedsState {}
 class MediaPickedState extends FeedsState {}
+class SuccessSelectNewImageState extends FeedsState {}
+class SuccessRemoveImageState extends FeedsState {}
+class SuccessRemoveVideoState extends FeedsState {}
