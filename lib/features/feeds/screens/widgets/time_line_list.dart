@@ -102,7 +102,8 @@ class _TimeLineListState extends State<TimeLineList> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   ImageFileView(
-                                      image: File(widget.feeds!.media![index].file ?? ""))));
+                                    isNetwork: true,
+                                      image: widget.feeds!.media![index].file ?? "")));
                     },
                     child: Image.network(
                       media.file ?? '',

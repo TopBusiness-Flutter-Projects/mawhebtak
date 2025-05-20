@@ -8,8 +8,9 @@ import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ImageFileView extends StatefulWidget {
-  ImageFileView({required this.image, super.key});
-  File? image;
+  ImageFileView({required this.image, this.isNetwork = false, super.key});
+  String? image;
+  bool isNetwork;
   @override
   State<ImageFileView> createState() => _ImageFileViewState();
 }
@@ -51,7 +52,7 @@ class _ImageFileViewState extends State<ImageFileView> {
                   child: widget.image == null
                       ? PhotoView(
                           imageProvider:
-                              const AssetImage('assets/images/profile.png'),
+                              const AssetImage('assets/images/app_icon.png'),
                           backgroundDecoration: const BoxDecoration(),
                           // enableRotation: true,
                           minScale: PhotoViewComputedScale.contained * 0.8,
@@ -59,15 +60,26 @@ class _ImageFileViewState extends State<ImageFileView> {
                           initialScale: PhotoViewComputedScale.contained,
                           basePosition: Alignment.center,
                         )
-                      : PhotoView(
-                          imageProvider: FileImage(widget.image ?? File('')),
-                          backgroundDecoration: const BoxDecoration(),
-                          // enableRotation: true,
-                          minScale: PhotoViewComputedScale.contained * 0.8,
-                          maxScale: PhotoViewComputedScale.covered * 1.8,
-                          initialScale: PhotoViewComputedScale.contained,
-                          basePosition: Alignment.center,
-                        ),
+                      : widget.isNetwork
+                          ? PhotoView(
+                              imageProvider: NetworkImage(widget.image ?? ''),
+                              backgroundDecoration: const BoxDecoration(),
+                              // enableRotation: true,
+                              minScale: PhotoViewComputedScale.contained * 0.8,
+                              maxScale: PhotoViewComputedScale.covered * 1.8,
+                              initialScale: PhotoViewComputedScale.contained,
+                              basePosition: Alignment.center,
+                            )
+                          : PhotoView(
+                              imageProvider: FileImage(
+                                  File(widget.image ?? '') ?? File('')),
+                              backgroundDecoration: const BoxDecoration(),
+                              // enableRotation: true,
+                              minScale: PhotoViewComputedScale.contained * 0.8,
+                              maxScale: PhotoViewComputedScale.covered * 1.8,
+                              initialScale: PhotoViewComputedScale.contained,
+                              basePosition: Alignment.center,
+                            ),
                 )),
           );
         },
