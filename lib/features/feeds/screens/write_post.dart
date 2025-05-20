@@ -262,10 +262,10 @@ class _WritePostState extends State<WritePost> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       ImageFileView(
-                                                          image: File(cubit
+                                                          image: cubit
                                                               .myImages![
                                                                   index]
-                                                              .path))));
+                                                              .path)));
                                         },
                                         child: ClipRRect(
                                           borderRadius:
