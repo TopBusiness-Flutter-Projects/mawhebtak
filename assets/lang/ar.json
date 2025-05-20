@@ -219,5 +219,9 @@
   "go_to_cinema": "الذهاب الى السينما",
   "alert": "تنبيه",
   "must_login": "يجب تسجيل الدخول أولاً.",
-  "fill_the_data": "املا البيانات !"
+  "fill_the_data": "املا البيانات !",
+  "please_add_text_or_media": "من فضلك اكمل البيانات",
+  "ok": "تم",
+  "enter_post_title": "ادخل عنوان البوست"
+
 }

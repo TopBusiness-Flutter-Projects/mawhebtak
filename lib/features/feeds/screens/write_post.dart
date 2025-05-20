@@ -161,6 +161,7 @@ class _WritePostState extends State<WritePost> {
     context.read<FeedsCubit>().loadUserFromPreferences();
     super.initState();
   }
+
   VideoPlayerController? _controller;
   @override
   Widget build(BuildContext context) {
@@ -203,6 +204,12 @@ class _WritePostState extends State<WritePost> {
                     ),
                     5.verticalSpace,
                     CustomTextField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'enter_post_title'.tr();
+                        }
+                        return null;
+                      },
                       controller: cubit.bodyController,
                       hintText: "what_do_you_want_to_write".tr(),
                       maxLines: 6,
@@ -232,8 +239,7 @@ class _WritePostState extends State<WritePost> {
                                 separatorBuilder: (_, __) =>
                                     const SizedBox(width: 10),
                                 itemBuilder: (context, index) {
-                                  if (index ==
-                                      (cubit.myImages?.length ?? 0)) {
+                                  if (index == (cubit.myImages?.length ?? 0)) {
                                     // "+" Icon at the end
                                     return GestureDetector(
                                       onTap: () {
@@ -263,8 +269,7 @@ class _WritePostState extends State<WritePost> {
                                                   builder: (context) =>
                                                       ImageFileView(
                                                           image: cubit
-                                                              .myImages![
-                                                                  index]
+                                                              .myImages![index]
                                                               .path)));
                                         },
                                         child: ClipRRect(
@@ -284,8 +289,8 @@ class _WritePostState extends State<WritePost> {
                                         child: GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              cubit.deleteImage(File(cubit
-                                                  .myImages![index].path));
+                                              cubit.deleteImage(File(
+                                                  cubit.myImages![index].path));
                                             });
                                           },
                                           child: Container(
@@ -294,8 +299,7 @@ class _WritePostState extends State<WritePost> {
                                               shape: BoxShape.circle,
                                             ),
                                             child: const Icon(Icons.close,
-                                                color: Colors.white,
-                                                size: 18),
+                                                color: Colors.white, size: 18),
                                           ),
                                         ),
                                       ),
@@ -320,8 +324,7 @@ class _WritePostState extends State<WritePost> {
                                 SvgPicture.asset(AppIcons.videoUploadIcon),
                                 const SizedBox(width: 10),
                                 Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("upload_video".tr(),
                                         style: getMediumStyle(fontSize: 14)),
@@ -338,12 +341,11 @@ class _WritePostState extends State<WritePost> {
                               height: 80,
                               child: ListView.separated(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: (cubit.validVideos.length)+1,
+                                itemCount: (cubit.validVideos.length) + 1,
                                 separatorBuilder: (_, __) =>
                                     const SizedBox(width: 10),
                                 itemBuilder: (context, index) {
-                                  if (index ==
-                                      (cubit.validVideos.length ?? 0)) {
+                                  if (index == (cubit.validVideos.length)) {
                                     return GestureDetector(
                                       onTap: () {
                                         cubit.pickMultipleVideos(context);
@@ -368,13 +370,16 @@ class _WritePostState extends State<WritePost> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => VideoPlayerScreenFile(
-                                                    videoFile:File(cubit
-                                                        .validVideos[index].path),
-                                                  )));
+                                                  builder: (context) =>
+                                                      VideoPlayerScreenFile(
+                                                        videoFile: File(cubit
+                                                            .validVideos[index]
+                                                            .path),
+                                                      )));
                                         },
                                         child: AspectRatio(
-                                          aspectRatio: _controller!.value.aspectRatio,
+                                          aspectRatio:
+                                              _controller!.value.aspectRatio,
                                           child: VideoPlayer(
                                             _controller!,
                                           ),
@@ -459,11 +464,32 @@ class _WritePostState extends State<WritePost> {
                                   ),
                                 );
                               } else {
-                                if (cubit.bodyController.text == '') {
-                                  errorGetBar("fill_the_data".tr());
-                                } else {
-                                  cubit.addPost(context: context);
+                                final hasText =
+                                    cubit.bodyController.text.trim().isNotEmpty;
+                                final hasImages = cubit.myImages != null &&
+                                    cubit.myImages!.isNotEmpty;
+                                final hasVideos = cubit.validVideos.isNotEmpty;
+
+                                if (!hasText && !hasImages && !hasVideos) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text("alert".tr()),
+                                      content:
+                                          Text("please_add_text_or_media".tr()),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: Text("ok".tr()),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                  return;
                                 }
+
+                                cubit.addPost(context: context);
                               }
                             },
                             title: "post".tr(),
