@@ -6,13 +6,12 @@ class CustomButton extends StatelessWidget {
     this.onTap,
     required this.title,
   });
-  final  void Function()? onTap;
+  final void Function()? onTap;
   final String title;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: 5.w, vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(8.r),

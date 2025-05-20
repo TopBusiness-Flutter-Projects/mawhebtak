@@ -85,9 +85,9 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                       style: TextStyle(
                                           color: AppColors.blackLite,
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 20.sp))),
+                                          fontSize: 18.sp))),
                               CustomTextField(
-                                hintTextSize: 20.sp,
+                                hintTextSize: 16.sp,
                                 controller: cubit.fullNameController,
                                 hintText: "ahmed ...",
                                 validator: (value) {
@@ -98,18 +98,17 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                 },
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsets.only(top: 20.h),
+                                padding: EdgeInsets.only(top: 20.h),
                                 child: Text(
                                   "email_address".tr(),
                                   style: TextStyle(
                                       color: AppColors.blackLite,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 20.sp),
+                                      fontSize: 18.sp),
                                 ),
                               ),
                               CustomTextField(
-                                hintTextSize: 20.sp,
+                                hintTextSize: 16.sp,
                                 controller: cubit.emailAddressController,
                                 hintText: "email@gmail.com",
                                 validator: (value) {
@@ -127,11 +126,11 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                   style: TextStyle(
                                       color: AppColors.blackLite,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 20.sp),
+                                      fontSize: 18.sp),
                                 ),
                               ),
                               CustomTextField(
-                                hintTextSize: 20.sp,
+                                hintTextSize: 16.sp,
                                 controller: cubit.mobileNumberController,
                                 hintText: "01xxxxxxxx",
                                 validator: (value) {
@@ -145,18 +144,16 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                 padding:
                                     EdgeInsets.only(top: 20.h, bottom: 10.h),
                                 child: Text(
-
                                   "password".tr(),
                                   style: TextStyle(
                                       color: AppColors.blackLite,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 20.sp),
+                                      fontSize: 18.sp),
                                 ),
                               ),
                               CustomTextField(
-
                                 controller: cubit.passwordController,
-                                hintTextSize: 20.sp,
+                                hintTextSize: 16.sp,
                                 hintText: "● ● ● ● ● ● ● ● ● ●",
                                 isPassword: true,
                                 validator: (value) {
@@ -204,7 +201,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                       "or_sign_up_with".tr(),
                                       style: TextStyle(
                                           color: AppColors.blackLite,
-                                          fontSize: 20.sp),
+                                          fontSize: 18.sp),
                                     ),
                                   ],
                                 ),

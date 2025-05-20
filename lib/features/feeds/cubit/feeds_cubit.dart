@@ -224,12 +224,10 @@ class FeedsCubit extends Cubit<FeedsState> {
       emit(AddPostStateError(e.toString()));
     }
   }
-
   Future<LoginModel> getUserFromPreferences() async {
     final user = await Preferences.instance.getUserModel();
     return user;
   }
-
   LoginModel? user;
 
   Future<void> loadUserFromPreferences() async {

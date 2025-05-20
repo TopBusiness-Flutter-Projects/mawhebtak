@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/notification_services/notification_service.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -19,14 +18,14 @@ class _SplashScreenState extends State<SplashScreen>
   late Timer _timer;
 
   _goNext() {
-    log('PPPPPPPP$isWithNotification${  initialMessageRcieved?.data['type']}');
+    log('PPPPPPPP$isWithNotification${initialMessageRcieved?.data['type']}');
 
-      _getStoreUser();
-    }
+    _getStoreUser();
+  }
 
   _startDelay() async {
     _timer = Timer(
-      const Duration(seconds: 8, milliseconds: 500),
+      const Duration(seconds: 3, milliseconds: 500),
       () {
         _goNext();
       },
