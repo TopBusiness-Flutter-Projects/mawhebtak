@@ -273,9 +273,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => FullScreenViewer(
-                                fileType: 'video',
-                                filePath: cubit.validVideos[index].path,
+                          builder: (context) => VideoPlayerScreenFile(
+                                videoFile: File(cubit.validVideos[index].path),
                               )));
                 },
                 child: Stack(
