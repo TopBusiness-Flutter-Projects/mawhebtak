@@ -226,15 +226,15 @@ class FeedsCubit extends Cubit<FeedsState> {
       res.fold((l) {
         emit(AddReactionStateError(l.toString()));
       }, (r) {
-        if (posts?.data?[index]?.isReacted == true) {
-          posts?.data![index]!.reactionCount =
-              (posts?.data?[index]?.reactionCount ?? 1) - 1;
+        if (posts?.data?[index].isReacted == true) {
+          posts?.data![index].reactionCount =
+              (posts?.data?[index].reactionCount ?? 1) - 1;
         } else {
-          posts?.data![index]!.reactionCount =
-              (posts?.data?[index]?.reactionCount ?? 0) + 1;
+          posts?.data![index].reactionCount =
+              (posts?.data?[index].reactionCount ?? 0) + 1;
         }
-        posts?.data?[index]?.isReacted =
-            !(posts?.data?[index]?.isReacted ?? false);
+        posts?.data?[index].isReacted =
+            !(posts?.data?[index].isReacted ?? false);
 
         successGetBar(r.msg);
         emit(AddReactionStateSuccess());
