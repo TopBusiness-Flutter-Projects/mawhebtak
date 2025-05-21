@@ -4,21 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/utils/app_colors.dart';
 import '../../core/utils/app_strings.dart';
 
-ThemeData appTheme() {
+ThemeData appThemeLight() {
   return ThemeData(
     primaryColor: AppColors.primary,
     hintColor: AppColors.grayDark,
-    //  useMaterial3: false,
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColors.white,
     fontFamily: AppStrings.fontFamily,
     textTheme: TextTheme(
       bodyMedium: TextStyle(
         height: 1.5,
-        fontFamily: 'Almarai',
+        fontFamily: AppStrings.fontFamily,
         fontSize: 18.0.sp,
       ),
     ),
+
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: AppColors.black),
       centerTitle: false,
@@ -26,9 +26,7 @@ ThemeData appTheme() {
       backgroundColor: AppColors.transparent,
       titleTextStyle: TextStyle(
         fontSize: 22.0.sp,
-        // letterSpacing: 1.5,
         fontFamily: AppStrings.fontFamily,
-        
         fontWeight: FontWeight.w500,
         color: AppColors.black,
       ),

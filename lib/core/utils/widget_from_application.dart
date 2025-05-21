@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mawhebtak/core/exports.dart';
 import '../widgets/show_loading_indicator.dart';
 import 'app_colors.dart';
 
@@ -55,8 +56,37 @@ class AppWidgets {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          return const CustomLoadingIndicator(withLogo: true,);
+          return const CustomLoadingIndicator(
+            withLogo: true,
+          );
         });
   }
 
+  static buttonSheet(BuildContext context,
+      {required String title, required List<Widget> children}) {
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        showDragHandle: true,
+        backgroundColor: AppColors.white,
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
+              ),
+              10.h.verticalSpace,
+              ...children,
+            ],
+          );
+        });
+  }
 }
