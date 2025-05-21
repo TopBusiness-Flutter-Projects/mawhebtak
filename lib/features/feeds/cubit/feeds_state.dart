@@ -29,6 +29,7 @@ final class AddReactionStateError extends FeedsState {
 
   AddReactionStateError(this.errorMessage);
 }
+
 final class AddPostStateLoading extends FeedsState {}
 
 final class AddPostStateLoaded extends FeedsState {}
@@ -38,6 +39,7 @@ final class AddPostStateError extends FeedsState {
 
   AddPostStateError(this.errorMessage);
 }
+
 class MediaPickedSuccessfullyState extends FeedsState {
   final List<File> files;
   MediaPickedSuccessfullyState(this.files);
@@ -47,9 +49,17 @@ class MediaPickErrorState extends FeedsState {
   final String error;
   MediaPickErrorState(this.error);
 }
+
 class MediaSelectionUpdated extends FeedsState {}
+
 class MediaPickedState extends FeedsState {}
+
 class SuccessSelectNewImageState extends FeedsState {}
+
 class SuccessRemoveImageState extends FeedsState {}
+
 class SuccessRemoveVideoState extends FeedsState {}
+
+class LoadedAddNewViedoState extends FeedsState {}
+
 class AddReactionStateSuccess extends FeedsState {}

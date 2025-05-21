@@ -29,7 +29,6 @@ class _VideoPlayerScreenFileState extends State<VideoPlayerScreenFile> {
                 OptionItem(
                   onTap: (context) {
                     _videoPlayerController!.seekTo(Duration.zero);
-
                   },
                   iconData: Icons.replay,
                   title: 'Replay',

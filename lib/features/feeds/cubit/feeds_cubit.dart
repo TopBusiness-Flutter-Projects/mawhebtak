@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -58,7 +59,6 @@ class FeedsCubit extends Cubit<FeedsState> {
       }
 
       myImagesF = [...?myImagesF, ...files];
-      validVideos = [];
 
       emit(SuccessSelectNewImageState());
     } on PlatformException catch (e) {
@@ -79,7 +79,7 @@ class FeedsCubit extends Cubit<FeedsState> {
 
   void deleteVideo(File video) {
     validVideos.removeWhere((element) => element.path == video.path);
-    thumbnails.removeWhere((element) => element.path == video.path);
+
     if (validVideos.isEmpty) {
       validVideos = [];
     }
@@ -91,7 +91,6 @@ class FeedsCubit extends Cubit<FeedsState> {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: false,
         type: FileType.video,
-        // allowCompression: true,
       );
       if (result != null) {
         List<File> files = result.paths.map((path) => File(path!)).toList();
@@ -100,14 +99,12 @@ class FeedsCubit extends Cubit<FeedsState> {
         for (File file in files) {
           final fileBytes = await file.readAsBytes();
           if (fileBytes.length > 2 * 1024 * 1024) {
-            AppWidgets.createProgressDialog(context: context, msg: 'loading');
+            AppWidgets.create2ProgressDialog(context);
             try {
-              final thumbnailFiles = await _generateThumbnails(File(file.path));
-              print('thummmmm : ${thumbnailFiles.path}');
-              thumbnails.add(thumbnailFiles);
               final compressedFile = await _compressVideo(File(file.path));
               // print('video Size After : ${await compressedFile.length()}');
               validVideos.add(compressedFile);
+              log('video path $compressedFile');
 
               Navigator.pop(context);
             } catch (e) {
@@ -119,27 +116,18 @@ class FeedsCubit extends Cubit<FeedsState> {
                 ),
               );
             }
-            myImages = [];
-            myImages = null;
-
-            myImagesF = [];
           } else {
-            AppWidgets.createProgressDialog(context: context, msg: 'loading');
+            AppWidgets.create2ProgressDialog(context);
+            log('video path ${file.path}');
             validVideos.add(File(file.path));
             Navigator.pop(context);
-            myImages = [];
 
-            myImages = null;
-
-            myImagesF = [];
             //////////////////////
             //!
-
-            final thumbnailFiles = await _generateThumbnails(File(file.path));
-            thumbnails.add(thumbnailFiles);
           }
         }
       }
+      emit(LoadedAddNewViedoState());
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -153,8 +141,6 @@ class FeedsCubit extends Cubit<FeedsState> {
 
 //!
   Future<File> _compressVideo(File file) async {
-    final String videoName =
-        'MyVideo-${DateTime.now().millisecondsSinceEpoch}.mp4';
     try {
       await VideoCompress.setLogLevel(0);
       MediaInfo videoDuration = await VideoCompress.getMediaInfo(file.path);
@@ -170,16 +156,19 @@ class FeedsCubit extends Cubit<FeedsState> {
             ? (videoDuration.duration! / 1000).floor() - 30
             : 0,
       );
-
+      log('LLLLLLLLLL ${compressedVideo != null && compressedVideo.path != null}');
+      log('LLLLLLLLLL ${compressedVideo?.path}');
       if (compressedVideo != null && compressedVideo.path != null) {
-        return File(compressedVideo.path!);
+        return compressedVideo.path != null
+            ? File(compressedVideo.path!)
+            : file;
       } else {
         VideoCompress.cancelCompression();
-        return File('');
+        return file;
       }
     } catch (e) {
       VideoCompress.cancelCompression();
-      return File('');
+      return file;
     }
   }
 

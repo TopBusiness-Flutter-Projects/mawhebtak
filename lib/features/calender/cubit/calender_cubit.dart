@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -139,7 +140,6 @@ class CalenderCubit extends Cubit<CalenderState> {
       }
 
       myImagesF = [...?myImagesF, ...files];
-      validVideos = [];
 
       emit(SuccessSelectNewImageState());
     } on PlatformException catch (e) {
@@ -172,7 +172,6 @@ class CalenderCubit extends Cubit<CalenderState> {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: false,
         type: FileType.video,
-
       );
       if (result != null) {
         List<File> files = result.paths.map((path) => File(path!)).toList();
@@ -181,11 +180,12 @@ class CalenderCubit extends Cubit<CalenderState> {
         for (File file in files) {
           final fileBytes = await file.readAsBytes();
           if (fileBytes.length > 2 * 1024 * 1024) {
-            AppWidgets.createProgressDialog(context: context, msg: 'loading');
+            AppWidgets.create2ProgressDialog(context);
             try {
               final compressedFile = await _compressVideo(File(file.path));
               // print('video Size After : ${await compressedFile.length()}');
               validVideos.add(compressedFile);
+              log('video path $compressedFile');
 
               Navigator.pop(context);
             } catch (e) {
@@ -197,24 +197,18 @@ class CalenderCubit extends Cubit<CalenderState> {
                 ),
               );
             }
-            myImages = [];
-            myImages = null;
-
-            myImagesF = [];
           } else {
-            AppWidgets.createProgressDialog(context: context, msg: 'loading');
+            AppWidgets.create2ProgressDialog(context);
+            log('video path ${file.path}');
             validVideos.add(File(file.path));
             Navigator.pop(context);
-            myImages = [];
 
-            myImages = null;
-
-            myImagesF = [];
             //////////////////////
             //!
           }
         }
       }
+      emit(LoadedAddNewViedoState());
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -228,8 +222,6 @@ class CalenderCubit extends Cubit<CalenderState> {
 
 //!
   Future<File> _compressVideo(File file) async {
-    final String videoName =
-        'MyVideo-${DateTime.now().millisecondsSinceEpoch}.mp4';
     try {
       await VideoCompress.setLogLevel(0);
       MediaInfo videoDuration = await VideoCompress.getMediaInfo(file.path);
@@ -245,16 +237,19 @@ class CalenderCubit extends Cubit<CalenderState> {
             ? (videoDuration.duration! / 1000).floor() - 30
             : 0,
       );
-
+      log('LLLLLLLLLL ${compressedVideo != null && compressedVideo.path != null}');
+      log('LLLLLLLLLL ${compressedVideo?.path}');
       if (compressedVideo != null && compressedVideo.path != null) {
-        return File(compressedVideo.path!);
+        return compressedVideo.path != null
+            ? File(compressedVideo.path!)
+            : file;
       } else {
         VideoCompress.cancelCompression();
-        return File('');
+        return file;
       }
     } catch (e) {
       VideoCompress.cancelCompression();
-      return File('');
+      return file;
     }
   }
 

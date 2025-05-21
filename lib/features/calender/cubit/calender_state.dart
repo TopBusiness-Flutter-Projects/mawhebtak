@@ -43,3 +43,5 @@ final class SuccessSelectNewImageState extends CalenderState {}
 final class SuccessRemoveImageState extends CalenderState {}
 
 final class SuccessRemoveVideoState extends CalenderState {}
+
+final class LoadedAddNewViedoState extends CalenderState {}

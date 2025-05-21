@@ -12,6 +12,7 @@ import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.d
 import 'package:video_player/video_player.dart';
 import '../../../core/exports.dart';
 import '../../../core/utils/custom_pick_media.dart';
+import '../../../core/widgets/full_screen_video_view.dart';
 import '../../feeds/screens/widgets/image_view_file.dart';
 import '../../feeds/screens/widgets/video_from_file_screen.dart';
 
@@ -210,31 +211,13 @@ class _NewEventScreenState extends State<NewEventScreen> {
         ),
         SizedBox(height: 10.h),
         SizedBox(
-          height: 80,
+          height:
+              (cubit.myImages?.length == 0 || cubit.myImages == null) ? 0 : 80,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: (cubit.myImages?.length ?? 0) + 1,
+            itemCount: (cubit.myImages?.length ?? 0),
             separatorBuilder: (_, __) => const SizedBox(width: 10),
             itemBuilder: (context, index) {
-              if (index == (cubit.myImages?.length ?? 0)) {
-                // "+" Icon at the end
-                return GestureDetector(
-                  onTap: () {
-                    cubit.pickMultiImage();
-                  },
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey[300],
-                    ),
-                    child:
-                        const Icon(Icons.add, size: 30, color: Colors.black54),
-                  ),
-                );
-              }
-
               return Stack(
                 children: [
                   GestureDetector(
@@ -260,9 +243,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                     right: 0,
                     child: GestureDetector(
                       onTap: () {
-                        setState(() {
-                          cubit.deleteImage(File(cubit.myImages![index].path));
-                        });
+                        cubit.deleteImage(File(cubit.myImages![index].path));
                       },
                       child: Container(
                         decoration: const BoxDecoration(
@@ -281,48 +262,21 @@ class _NewEventScreenState extends State<NewEventScreen> {
         ),
         SizedBox(height: 10.h),
         SizedBox(
-          height: 80,
+          height: cubit.validVideos.isEmpty ? 0 : 80,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: (cubit.validVideos.length) + 1,
+            itemCount: (cubit.validVideos.length),
             separatorBuilder: (_, __) => const SizedBox(width: 10),
             itemBuilder: (context, index) {
-              if (index == (cubit.validVideos.length ?? 0)) {
-                return GestureDetector(
-                  onTap: () {
-                    cubit.pickMultipleVideos(context);
-                  },
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.grey[300],
-                    ),
-                    child:
-                        const Icon(Icons.add, size: 30, color: Colors.black54),
-                  ),
-                );
-              }
               return GestureDetector(
                 onTap: () {
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => VideoPlayerScreenFile(
-                                    videoFile:
-                                        File(cubit.validVideos[index].path),
-                                  )));
-                    },
-                    child: AspectRatio(
-                      aspectRatio: _controller!.value.aspectRatio,
-                      child: VideoPlayer(
-                        _controller!,
-                      ),
-                    ),
-                  );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FullScreenViewer(
+                                fileType: 'video',
+                                filePath: cubit.validVideos[index].path,
+                              )));
                 },
                 child: Stack(
                   children: [

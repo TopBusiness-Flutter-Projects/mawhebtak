@@ -365,26 +365,15 @@ class _WritePostState extends State<WritePost> {
                                   }
                                   return GestureDetector(
                                     onTap: () {
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      VideoPlayerScreenFile(
-                                                        videoFile: File(cubit
-                                                            .validVideos[index]
-                                                            .path),
-                                                      )));
-                                        },
-                                        child: AspectRatio(
-                                          aspectRatio:
-                                              _controller!.value.aspectRatio,
-                                          child: VideoPlayer(
-                                            _controller!,
-                                          ),
-                                        ),
-                                      );
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  VideoPlayerScreenFile(
+                                                    videoFile: File(cubit
+                                                        .validVideos[index]
+                                                        .path),
+                                                  )));
                                     },
                                     child: Stack(
                                       children: [
