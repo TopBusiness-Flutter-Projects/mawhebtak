@@ -42,5 +42,4 @@ class EventCubit extends Cubit<EventState> {
       },
     );
   }
-
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:mawhebtak/features/feeds/data/models/comments_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 
 sealed class FeedsState {}
@@ -38,6 +39,18 @@ final class AddPostStateError extends FeedsState {
   final String errorMessage;
 
   AddPostStateError(this.errorMessage);
+}final class CommentsStateLoading extends FeedsState {}
+
+final class CommentsStateLoaded extends FeedsState {
+  final CommentsModel? comments;
+
+  CommentsStateLoaded(this.comments);
+}
+
+final class CommentsStateError extends FeedsState {
+  final String errorMessage;
+
+  CommentsStateError(this.errorMessage);
 }
 
 class MediaPickedSuccessfullyState extends FeedsState {
@@ -63,3 +76,33 @@ class SuccessRemoveVideoState extends FeedsState {}
 class LoadedAddNewViedoState extends FeedsState {}
 
 class AddReactionStateSuccess extends FeedsState {}
+class AddCommentStateLoading extends FeedsState {}
+
+class AddCommentStateSuccess extends FeedsState {}
+
+class AddCommentStateError extends FeedsState {
+  final String error;
+  AddCommentStateError(this.error);
+}
+class AddReplyStateLoading extends FeedsState {}
+
+class AddReplyStateLoaded extends FeedsState {}
+
+class AddReplyStateError extends FeedsState {
+  final String error;
+  AddReplyStateError(this.error);
+}
+class ReplyingToCommentState extends FeedsState {
+  final String commentId;
+  final String userName;
+
+  ReplyingToCommentState({required this.commentId, required this.userName});
+}
+
+class CancelReplyingState extends FeedsState {}
+class DeletePostStateLoading extends FeedsState {}
+class DeletePostStateSuccess extends FeedsState {}
+class DeletePostStateError extends FeedsState {
+  final String error;
+  DeletePostStateError(this.error);
+}
