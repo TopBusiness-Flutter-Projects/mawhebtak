@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.topbusiness.mawhebtak"
+    namespace  'com.topbusiness.mawhebtak'
     compileSdk = 35
     ndkVersion = "25.1.8937393"
 
@@ -31,6 +31,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled = true
     }
 
     buildTypes {

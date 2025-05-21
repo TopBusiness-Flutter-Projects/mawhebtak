@@ -240,7 +240,6 @@ class _WritePostState extends State<WritePost> {
                                     const SizedBox(width: 10),
                                 itemBuilder: (context, index) {
                                   if (index == (cubit.myImages?.length ?? 0)) {
-                                    // "+" Icon at the end
                                     return GestureDetector(
                                       onTap: () {
                                         cubit.pickMultiImage();
