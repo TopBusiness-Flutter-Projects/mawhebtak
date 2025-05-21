@@ -16,7 +16,6 @@ import 'package:video_compress/video_compress.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart' as path;
 
-
 class FeedsCubit extends Cubit<FeedsState> {
   FeedsCubit() : super(FeedsStateLoading());
   FeedsRepository? api = FeedsRepository(serviceLocator());
@@ -103,7 +102,7 @@ class FeedsCubit extends Cubit<FeedsState> {
               thumbnails.add(thumbnailFile);
               final compressedFile = await _compressVideo(file);
               validVideos.add(compressedFile);
-  
+
               Navigator.pop(context);
             } else {
               AppWidgets.create2ProgressDialog(context);
@@ -141,8 +140,6 @@ class FeedsCubit extends Cubit<FeedsState> {
 //!
   Future<File> _compressVideo(File file) async {
     try {
-
-
       await VideoCompress.setLogLevel(0);
 
       final MediaInfo mediaInfo = await VideoCompress.getMediaInfo(file.path);
@@ -166,7 +163,6 @@ class FeedsCubit extends Cubit<FeedsState> {
             ? File(compressedVideo.path!)
             : file;
       } else {
-
         VideoCompress.cancelCompression();
         return file;
       }
@@ -176,8 +172,6 @@ class FeedsCubit extends Cubit<FeedsState> {
     }
   }
 
-
-
 //? thumbnail
   Future<File> _generateThumbnails(File videoFile) async {
     print('thumbnailPath ');
@@ -185,7 +179,6 @@ class FeedsCubit extends Cubit<FeedsState> {
       video: videoFile.path,
       imageFormat: ImageFormat.PNG,
       quality: 100,
-
       timeMs: 0,
     );
 
