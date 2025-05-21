@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/core/widgets/see_more_text.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
@@ -193,24 +194,84 @@ class _TimeLineListState extends State<TimeLineList> {
                 ],
               ),
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    AppIcons.commentIcon,
-                    width: 20.sp,
-                    color: AppColors.grayDarkkk,
+            GestureDetector(
+              onTap: () {
+                AppWidgets.buttonSheet(
+                  context,
+                  title: 'comments'.tr(),
+                  children: [
+                    ListTile(
+                      leading: const CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://i.pravatar.cc/150?img=1'), // صورة رمزية وهمية
+                      ),
+                      title: const Text("Ahmed Mostafa"),
+                      subtitle: const Text("Great video! Really enjoyed the content."),
+                    ),
+                    ListTile(
+                      leading: const CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://i.pravatar.cc/150?img=2'),
+                      ),
+                      title: const Text("Fatma Ali"),
+                      subtitle: const Text("Please post more like this."),
+                    ),
+                    ListTile(
+                      leading: const CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://i.pravatar.cc/150?img=3'),
+                      ),
+                      title: const Text("Youssef Kamal"),
+                      subtitle: const Text("Thank you for sharing."),
+                    ),
+                    const Divider(),
+                    // حقل كتابة تعليق جديد
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: "Write a comment...",
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          IconButton(
+                            icon: Icon(Icons.send, color: AppColors.primary),
+                            onPressed: () {
+                              // إرسال التعليق
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+
+              },
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SvgPicture.asset(
+                      AppIcons.commentIcon,
+                      width: 20.sp,
+                      color: AppColors.grayDarkkk,
+                    ),
                   ),
-                ),
-                Text(
-                  'comment'.tr(),
-                  style: getRegularStyle(
-                    fontSize: 16.sp,
-                    color: AppColors.grayDate,
+                  Text(
+                    'comment'.tr(),
+                    style: getRegularStyle(
+                      fontSize: 16.sp,
+                      color: AppColors.grayDate,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Row(
               children: [

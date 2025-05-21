@@ -15,6 +15,7 @@ import 'package:video_compress/video_compress.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart' as path;
 
+
 class FeedsCubit extends Cubit<FeedsState> {
   FeedsCubit() : super(FeedsStateLoading());
   FeedsRepository? api = FeedsRepository(serviceLocator());
@@ -28,7 +29,6 @@ class FeedsCubit extends Cubit<FeedsState> {
   Future pickMultiImage() async {
     List<XFile>? images;
     List<File> files = [];
-
     try {
       images = await ImagePicker().pickMultiImage();
       if (images == null || images.isEmpty) return;
@@ -36,10 +36,7 @@ class FeedsCubit extends Cubit<FeedsState> {
       for (var xImage in images) {
         final file = File(xImage.path);
 
-        // ✅ Check if the image already exists in myImages
-
         final imageBytes = await file.readAsBytes();
-
         if (imageBytes.length > 3 * 1024 * 1024) {
           final compressedImageBytes =
               await FlutterImageCompress.compressWithFile(
@@ -89,56 +86,45 @@ class FeedsCubit extends Cubit<FeedsState> {
   Future<List<File>?> pickMultipleVideos(BuildContext context) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: false,
+        allowMultiple: true,
         type: FileType.video,
         // allowCompression: true,
       );
       if (result != null) {
         List<File> files = result.paths.map((path) => File(path!)).toList();
-        //! clear List before select
         validVideos.clear();
+        thumbnails.clear();
+
         for (File file in files) {
           final fileBytes = await file.readAsBytes();
-          if (fileBytes.length > 2 * 1024 * 1024) {
-            AppWidgets.createProgressDialog(context: context, msg: 'loading');
-            try {
-              final thumbnailFiles = await _generateThumbnails(File(file.path));
-              print('thummmmm : ${thumbnailFiles.path}');
-              thumbnails.add(thumbnailFiles);
-              final compressedFile = await _compressVideo(File(file.path));
-              // print('video Size After : ${await compressedFile.length()}');
+          try {
+            if (fileBytes.length > 2 * 1024 * 1024) {
+              AppWidgets.create2ProgressDialog(context);
+              final thumbnailFile = await _generateThumbnails(file);
+              thumbnails.add(thumbnailFile);
+              final compressedFile = await _compressVideo(file);
               validVideos.add(compressedFile);
-
               Navigator.pop(context);
-            } catch (e) {
+            } else {
+              AppWidgets.create2ProgressDialog(context);
+              final thumbnailFile = await _generateThumbnails(file);
+              thumbnails.add(thumbnailFile);
+              validVideos.add(file);
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                      "Failed to compress video ${path.basename(file.path)}."),
-                ),
-              );
             }
-            myImages = [];
-            myImages = null;
-
-            myImagesF = [];
-          } else {
-            AppWidgets.createProgressDialog(context: context, msg: 'loading');
-            validVideos.add(File(file.path));
+          } catch (e) {
             Navigator.pop(context);
-            myImages = [];
-
-            myImages = null;
-
-            myImagesF = [];
-            //////////////////////
-            //!
-
-            final thumbnailFiles = await _generateThumbnails(File(file.path));
-            thumbnails.add(thumbnailFiles);
+            print("Error processing video: $e");
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                    "Failed to process video: ${path.basename(file.path)}"),
+              ),
+            );
           }
         }
+
+        return validVideos;
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -153,35 +139,41 @@ class FeedsCubit extends Cubit<FeedsState> {
 
 //!
   Future<File> _compressVideo(File file) async {
-    final String videoName =
-        'MyVideo-${DateTime.now().millisecondsSinceEpoch}.mp4';
     try {
-      await VideoCompress.setLogLevel(0);
-      MediaInfo videoDuration = await VideoCompress.getMediaInfo(file.path);
+      // تحقق من صيغة الفيديو
+      if (!file.path.toLowerCase().endsWith(".mp4")) {
+        throw Exception("صيغة الفيديو غير مدعومة");
+      }
 
-      final compressedVideo = await VideoCompress.compressVideo(
+      await VideoCompress.setLogLevel(0);
+
+      final MediaInfo mediaInfo = await VideoCompress.getMediaInfo(file.path);
+      final num videoDurationMs = mediaInfo.duration ?? 0;
+      final int trimDurationInSeconds = (videoDurationMs / 1000).floor() > 30
+          ? 30
+          : (videoDurationMs / 1000).floor();
+
+      final MediaInfo? compressedVideo = await VideoCompress.compressVideo(
         file.path,
         quality: VideoQuality.MediumQuality,
-        deleteOrigin: true,
+        deleteOrigin: false,
         includeAudio: true,
-        frameRate: 15,
         startTime: 0,
-        duration: (videoDuration.duration! / 1000).round() > 30
-            ? (videoDuration.duration! / 1000).floor() - 30
-            : 0,
+        duration: trimDurationInSeconds,
       );
 
       if (compressedVideo != null && compressedVideo.path != null) {
         return File(compressedVideo.path!);
       } else {
-        VideoCompress.cancelCompression();
-        return File('');
+        throw Exception("فشل ضغط الفيديو");
       }
     } catch (e) {
-      VideoCompress.cancelCompression();
-      return File('');
+      debugPrint("خطأ أثناء ضغط الفيديو: $e");
+      return file;
     }
   }
+
+
 
 //? thumbnail
   Future<File> _generateThumbnails(File videoFile) async {
@@ -191,7 +183,7 @@ class FeedsCubit extends Cubit<FeedsState> {
       imageFormat: ImageFormat.PNG,
       quality: 100,
 
-      timeMs: 0, // Specify the time in milliseconds to get the thumbnail from
+      timeMs: 0,
     );
 
     print('thumbnailPath $thumbnailPath');
@@ -262,7 +254,7 @@ class FeedsCubit extends Cubit<FeedsState> {
       final user = await Preferences.instance.getUserModel();
       final userId = user.data?.id?.toString() ?? '';
       final res = await api!.addPost(
-        mediaFiles: myImagesF ?? [],
+        mediaFiles: [...?myImagesF, ...validVideos],
         body: bodyController.text,
         userId: userId,
       );
@@ -277,6 +269,8 @@ class FeedsCubit extends Cubit<FeedsState> {
         bodyController.clear();
         myImages = [];
         myImagesF = [];
+        validVideos = [];
+        thumbnails = [];
       });
     } catch (e) {
       emit(AddPostStateError(e.toString()));

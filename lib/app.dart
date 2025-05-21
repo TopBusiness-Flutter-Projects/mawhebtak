@@ -136,7 +136,7 @@ class _MyAppState extends State<MyApp> {
         child: GetMaterialApp(
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          theme: appTheme(),
+          theme: appThemeLight(),
           themeMode: ThemeMode.light,
           navigatorKey: notificationService?.navigatorKey,
           darkTheme: ThemeData.light(),
