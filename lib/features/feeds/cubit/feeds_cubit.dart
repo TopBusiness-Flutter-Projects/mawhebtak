@@ -121,14 +121,6 @@ class FeedsCubit extends Cubit<FeedsState> {
                     "Failed to process video: ${path.basename(file.path)}"),
               ),
             );
-          } else {
-            AppWidgets.create2ProgressDialog(context);
-            log('video path ${file.path}');
-            validVideos.add(File(file.path));
-            Navigator.pop(context);
-
-            //////////////////////
-            //!
           }
         }
 
@@ -149,10 +141,7 @@ class FeedsCubit extends Cubit<FeedsState> {
 //!
   Future<File> _compressVideo(File file) async {
     try {
-      // تحقق من صيغة الفيديو
-      if (!file.path.toLowerCase().endsWith(".mp4")) {
-        throw Exception("صيغة الفيديو غير مدعومة");
-      }
+
 
       await VideoCompress.setLogLevel(0);
 
