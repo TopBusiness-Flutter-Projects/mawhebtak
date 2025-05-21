@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -55,7 +56,6 @@ class FeedsCubit extends Cubit<FeedsState> {
       }
 
       myImagesF = [...?myImagesF, ...files];
-      validVideos = [];
 
       emit(SuccessSelectNewImageState());
     } on PlatformException catch (e) {
@@ -76,7 +76,7 @@ class FeedsCubit extends Cubit<FeedsState> {
 
   void deleteVideo(File video) {
     validVideos.removeWhere((element) => element.path == video.path);
-    thumbnails.removeWhere((element) => element.path == video.path);
+
     if (validVideos.isEmpty) {
       validVideos = [];
     }
@@ -88,7 +88,6 @@ class FeedsCubit extends Cubit<FeedsState> {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
         type: FileType.video,
-        // allowCompression: true,
       );
       if (result != null) {
         List<File> files = result.paths.map((path) => File(path!)).toList();
@@ -104,6 +103,7 @@ class FeedsCubit extends Cubit<FeedsState> {
               thumbnails.add(thumbnailFile);
               final compressedFile = await _compressVideo(file);
               validVideos.add(compressedFile);
+  
               Navigator.pop(context);
             } else {
               AppWidgets.create2ProgressDialog(context);
@@ -121,11 +121,20 @@ class FeedsCubit extends Cubit<FeedsState> {
                     "Failed to process video: ${path.basename(file.path)}"),
               ),
             );
+          } else {
+            AppWidgets.create2ProgressDialog(context);
+            log('video path ${file.path}');
+            validVideos.add(File(file.path));
+            Navigator.pop(context);
+
+            //////////////////////
+            //!
           }
         }
 
         return validVideos;
       }
+      emit(LoadedAddNewViedoState());
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -161,14 +170,19 @@ class FeedsCubit extends Cubit<FeedsState> {
         startTime: 0,
         duration: trimDurationInSeconds,
       );
-
+      log('LLLLLLLLLL ${compressedVideo != null && compressedVideo.path != null}');
+      log('LLLLLLLLLL ${compressedVideo?.path}');
       if (compressedVideo != null && compressedVideo.path != null) {
-        return File(compressedVideo.path!);
+        return compressedVideo.path != null
+            ? File(compressedVideo.path!)
+            : file;
       } else {
-        throw Exception("فشل ضغط الفيديو");
+
+        VideoCompress.cancelCompression();
+        return file;
       }
     } catch (e) {
-      debugPrint("خطأ أثناء ضغط الفيديو: $e");
+      VideoCompress.cancelCompression();
       return file;
     }
   }

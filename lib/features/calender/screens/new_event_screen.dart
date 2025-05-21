@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
@@ -6,8 +9,12 @@ import 'package:mawhebtak/features/calender/screens/widgets/public_and_private_w
 import 'package:mawhebtak/features/calender/screens/widgets/required_talents_selector_widget.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/stepper_widget.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
+import 'package:video_player/video_player.dart';
 import '../../../core/exports.dart';
 import '../../../core/utils/custom_pick_media.dart';
+import '../../../core/widgets/full_screen_video_view.dart';
+import '../../feeds/screens/widgets/image_view_file.dart';
+import '../../feeds/screens/widgets/video_from_file_screen.dart';
 
 class NewEventScreen extends StatefulWidget {
   const NewEventScreen({super.key});
@@ -36,6 +43,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
 
     super.initState();
   }
+
+  VideoPlayerController? _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -193,9 +202,124 @@ class _NewEventScreenState extends State<NewEventScreen> {
   Widget _buildEventInformationStep(CalenderCubit cubit) {
     return Column(
       children: [
+        //! Select Image
         CustomPickMediaWidget(
-          onTap: () {},
+          onTap: () {
+            log('00');
+            cubit.showSelectionBottomSheet(context);
+          },
         ),
+        SizedBox(height: 10.h),
+        SizedBox(
+          height:
+              (cubit.myImages?.length == 0 || cubit.myImages == null) ? 0 : 80,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: (cubit.myImages?.length ?? 0),
+            separatorBuilder: (_, __) => const SizedBox(width: 10),
+            itemBuilder: (context, index) {
+              return Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ImageFileView(
+                                  image: cubit.myImages![index].path)));
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        File(cubit.myImages![index].path),
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        cubit.deleteImage(File(cubit.myImages![index].path));
+                      },
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.black45,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.close,
+                            color: Colors.white, size: 18),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        SizedBox(height: 10.h),
+        SizedBox(
+          height: cubit.validVideos.isEmpty ? 0 : 80,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: (cubit.validVideos.length),
+            separatorBuilder: (_, __) => const SizedBox(width: 10),
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FullScreenViewer(
+                                fileType: 'video',
+                                filePath: cubit.validVideos[index].path,
+                              )));
+                },
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        color: Colors.black12,
+                        child: const Center(
+                          child: Icon(Icons.play_circle_fill,
+                              size: 40, color: Colors.grey),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            cubit.deleteVideo(
+                                File(cubit.validVideos[index].path));
+                          });
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black45,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.close,
+                              color: Colors.white, size: 18),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+
+        //! is free
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Column(

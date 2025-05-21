@@ -37,3 +37,11 @@ final class GetGetCategoriesErrorState extends CalenderState {}
 final class GetGetCategoriesLoadingState extends CalenderState {}
 
 final class GetGetCategoriesSuccessState extends CalenderState {}
+
+final class SuccessSelectNewImageState extends CalenderState {}
+
+final class SuccessRemoveImageState extends CalenderState {}
+
+final class SuccessRemoveVideoState extends CalenderState {}
+
+final class LoadedAddNewViedoState extends CalenderState {}
