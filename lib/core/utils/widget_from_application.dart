@@ -62,31 +62,43 @@ class AppWidgets {
         });
   }
 
-  static buttonSheet(BuildContext context,
-      {required String title, required List<Widget> children}) {
+  static buttonSheet(
+      BuildContext context, {
+        required String title,
+        required Widget child,
+      }) {
     showModalBottomSheet(
-        context: context,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        showDragHandle: true,
-        backgroundColor: AppColors.white,
-        builder: (context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      showDragHandle: true,
+      backgroundColor: AppColors.white,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.7,
+          child: SafeArea(
+            child: Column(
+              children: [
+                10.h.verticalSpace,
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
                 ),
-              ),
-              10.h.verticalSpace,
-              ...children,
-            ],
-          );
-        });
+                10.h.verticalSpace,
+                Expanded(child: child),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
+
+
 }
