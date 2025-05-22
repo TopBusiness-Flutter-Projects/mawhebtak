@@ -10,6 +10,7 @@ import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
+import 'package:mawhebtak/features/feeds/data/models/comments_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
 import 'package:video_compress/video_compress.dart';
@@ -21,6 +22,8 @@ class FeedsCubit extends Cubit<FeedsState> {
   FeedsRepository? api = FeedsRepository(serviceLocator());
   PostsModel? posts;
   TextEditingController bodyController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
+
   List<File> validVideos = [];
   List<XFile>? myImages;
   List<File>? myImagesF;
@@ -62,7 +65,6 @@ class FeedsCubit extends Cubit<FeedsState> {
     }
   }
 
-  // delete from path not index
   void deleteImage(File image) {
     myImagesF!.removeWhere((element) => element.path == image.path);
     myImages!.removeWhere((element) => element.path == image.path);
@@ -137,7 +139,6 @@ class FeedsCubit extends Cubit<FeedsState> {
     return null;
   }
 
-//!
   Future<File> _compressVideo(File file) async {
     try {
       await VideoCompress.setLogLevel(0);
@@ -172,7 +173,6 @@ class FeedsCubit extends Cubit<FeedsState> {
     }
   }
 
-//? thumbnail
   Future<File> _generateThumbnails(File videoFile) async {
     print('thumbnailPath ');
     final thumbnailPath = await VideoThumbnail.thumbnailFile(
@@ -218,6 +218,21 @@ class FeedsCubit extends Cubit<FeedsState> {
       isLoadingMore = false;
     }
   }
+  CommentsModel? comments;
+  commentsData({ required String postId}) async {
+    emit(FeedsStateLoading());
+    try {
+      final res = await api!.getComments(postId: postId);
+      res.fold((l) {
+        emit(CommentsStateError(l.toString()));
+      }, (r) {
+        comments = r;
+        emit(CommentsStateLoaded(r));
+      });
+    } catch (e) {
+      emit(CommentsStateError(e.toString()));
+    }
+  }
 
   DefaultMainModel? defaultMainModel;
   addReaction({required String postId, required int index}) async {
@@ -241,6 +256,77 @@ class FeedsCubit extends Cubit<FeedsState> {
       });
     } catch (e) {
       emit(AddReactionStateError(e.toString()));
+    }
+  }
+
+
+  deletePost({required String postId}) async {
+    emit(DeletePostStateLoading());
+    try {
+      final res = await api!.deletePost(postId: postId);
+      res.fold((l) {
+        emit(DeletePostStateError(l.toString()));
+      }, (r) {
+        postsData(page: '1');
+        successGetBar(r.msg);
+        emit(DeletePostStateSuccess());
+      });
+    } catch (e) {
+      emit(DeletePostStateError(e.toString()));
+    }
+  }
+  deleteComment({required String commentId,required String postId}) async {
+    emit(DeletePostStateLoading());
+    try {
+      final res = await api!.deleteComment( commentId: commentId);
+      res.fold((l) {
+        emit(DeletePostStateError(l.toString()));
+      }, (r) {
+        commentsData(postId: postId);
+        successGetBar(r.msg);
+        emit(DeletePostStateSuccess());
+      });
+    } catch (e) {
+      emit(DeletePostStateError(e.toString()));
+    }
+  }
+
+
+  addReply({required String postId, required String postCommentId}) async {
+    emit(AddReplyStateLoading());
+    try {
+      final res = await api!.addReply(
+          postId: postId,
+          reply: commentController.text,
+          postCommentId:postCommentId );
+      res.fold((l) {
+        emit(AddReplyStateError(l.toString()));
+      }, (r) {
+        commentsData(postId: postId);
+        successGetBar(r.msg);
+        emit(AddReplyStateLoaded());
+      });
+    } catch (e) {
+      emit(AddReplyStateError(e.toString()));
+    }
+  }
+
+  addComment({required String postId}) async {
+    emit(AddCommentStateLoading());
+    try {
+      final res = await api!
+          .addComment(postId: postId, comment: commentController.text);
+      res.fold((l) {
+        emit(AddCommentStateError(l.toString()));
+      }, (r) {
+        successGetBar(r.msg);
+
+        emit(AddCommentStateSuccess());
+        commentController.clear();
+        commentsData(postId: postId);
+      });
+    } catch (e) {
+      emit(AddCommentStateError(e.toString()));
     }
   }
 
@@ -277,10 +363,30 @@ class FeedsCubit extends Cubit<FeedsState> {
     final user = await Preferences.instance.getUserModel();
     return user;
   }
-
   LoginModel? user;
-
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
+  }
+
+
+
+  String? replyingToCommentId;
+  String? replyingToUserName;
+
+  void startReplying(String commentId, String userName) {
+    replyingToCommentId = commentId;
+    replyingToUserName = userName;
+    commentController.text = '@$userName ';
+    commentController.selection = TextSelection.fromPosition(
+      TextPosition(offset: commentController.text.length),
+    );
+    emit(ReplyingToCommentState(commentId: commentId, userName: userName));
+  }
+
+  void cancelReplying() {
+    replyingToCommentId = null;
+    replyingToUserName = null;
+    commentController.clear();
+    emit(CancelReplyingState());
   }
 }

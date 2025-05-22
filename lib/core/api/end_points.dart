@@ -21,8 +21,12 @@ class EndPoints {
   static const String forgetPasswordUrl = '${baseUrl}forget-password';
   static const String updatePasswordUrl = '${baseUrl}update-password';
   static const String loginWithSocial = '${baseUrl}login-with-social';
+  static const String addCommentUrl = '${baseUrl}add-comment';
+  static const String addCommentReply= '${baseUrl}add-comment-reply';
   //! add event
   static const String getDataBaseUrl = '${baseUrl}get-data';
+  //! delete
+  static const String deleteData = '${baseUrl}delete-data';
 
   static const String storeEventUrl = '${baseUrl}store-event';
 }

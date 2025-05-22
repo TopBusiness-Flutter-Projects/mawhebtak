@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:chewie/chewie.dart';
+import 'package:flutter/material.dart';
+import 'package:mawhebtak/core/exports.dart';
 
 import 'package:video_player/video_player.dart';
 
@@ -82,6 +84,7 @@ class _VideoPlayerScreenFileState extends State<VideoPlayerScreenFile> {
                 ? Chewie(
                     controller: _chewieController!,
                   )
+                : Image.asset(ImageAssets.appIconWhite),
                 : Image.asset(ImageAssets.appIconWhite),
           ),
         ),

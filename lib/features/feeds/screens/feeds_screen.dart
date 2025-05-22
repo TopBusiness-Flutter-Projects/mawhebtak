@@ -72,24 +72,28 @@ class _FeedsScreenState extends State<FeedsScreen> {
                 state is FeedsStateLoadingMore ||
                 feeds != null) ...[
               Expanded(
-                child: ListView.separated(
-                  controller: scrollController,
-                  shrinkWrap: true,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: feeds?.data?.length ?? 0,
-                  itemBuilder: (BuildContext context, int index) {
-                    return TimeLineList(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await feedsCubit.postsData(page: '1', isGetMore: false);
+                  },
+                  child: ListView.separated(
+                    controller: scrollController,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: feeds?.data?.length ?? 0,
+                    itemBuilder: (BuildContext context, int index) {
+                      return TimeLineList(
                         postId: feeds!.data![index].id.toString(),
                         feedsCubit: feedsCubit,
                         feeds: feeds.data![index],
-                        index: index);
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
-                      height: 15.h,
-                    );
-                  },
+                        index: index,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(height: 15.h);
+                    },
+                  ),
                 ),
+
               ),
             ] else if (state is FeedsStateError) ...[
               Expanded(
