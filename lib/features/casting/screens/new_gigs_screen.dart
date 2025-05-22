@@ -45,7 +45,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
   bool isOpen = false;
   @override
   void initState() {
-    print("idddddddd${context.read<CastingCubit>().categoryModel?.data?.length}");
+    print(
+        "idddddddd${context.read<CastingCubit>().categoryModel?.data?.length}");
     context.read<CastingCubit>().getCategory();
     context.read<CastingCubit>().getUserFromPreferences();
     context.read<CastingCubit>().loadUserFromPreferences();
@@ -117,7 +118,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               hint: Text('choose_category'.tr()),
                               value: cubit.selectedCategory,
                               items: cubit.categoryModel?.data?.map((category) {
-                                return DropdownMenuItem<GetCountriesMainModelData>(
+                                return DropdownMenuItem<
+                                    GetCountriesMainModelData>(
                                   value: category,
                                   child: Text(category.name ?? ""),
                                 );
@@ -154,7 +156,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     color: AppColors.grayLite,
                                     borderRadius: BorderRadius.circular(8.sp),
                                   ),
-                                  child: DropdownButton<GetCountriesMainModelData>(
+                                  child:
+                                      DropdownButton<GetCountriesMainModelData>(
                                     enableFeedback: true,
                                     iconSize: 25.sp,
                                     padding: EdgeInsets.only(
@@ -178,14 +181,15 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                         child: Text(subCategory.name ?? ""),
                                       );
                                     }).toList(),
-                                    onChanged: (GetCountriesMainModelData? value) {
+                                    onChanged:
+                                        (GetCountriesMainModelData? value) {
                                       final subCategory = cubit
                                           .subCategoryModel?.data
                                           ?.firstWhere(
                                         (element) => element.id == value?.id,
                                         orElse: () => value!,
                                       );
-                    
+
                                       setState(() {
                                         cubit.selectedSubCategory = subCategory;
                                       });
@@ -216,7 +220,9 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               enabled: true,
                               suffixIcon: InkWell(
                                 onTap: () {
-                                  context.read<CalenderCubit>().getAllCountries();
+                                  context
+                                      .read<CalenderCubit>()
+                                      .getAllCountries();
                                   _showCurrencyPicker(
                                       cubit.countriesMainModel?.data ?? []);
                                   setState(() {});
@@ -311,7 +317,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                                               .path)));
                                         },
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           child: Image.file(
                                             File(cubit.myImages![index].path),
                                             width: 80.w,

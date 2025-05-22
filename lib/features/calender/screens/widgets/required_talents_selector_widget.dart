@@ -195,14 +195,18 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
               ),
             ),
             child: TextField(
-              controller: TextEditingController(text: _talents[index].fee),
+              controller: cubit.feesPriceController,
               keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-                  border: InputBorder.none,
-                  isDense: true),
+                hintText: '500',
+                hintStyle: TextStyle(
+                  fontSize: 16.sp,
+                  color: AppColors.grey,
+                ),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+                border: InputBorder.none,
+              ),
               style: TextStyle(
                 fontSize: 16.sp,
                 color: Colors.black87,

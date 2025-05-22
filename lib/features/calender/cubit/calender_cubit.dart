@@ -27,6 +27,7 @@ class CalenderCubit extends Cubit<CalenderState> {
   TextEditingController titleOfTheEventController = TextEditingController();
   TextEditingController ticketPriceController = TextEditingController();
   TextEditingController locationAddressController = TextEditingController();
+  TextEditingController feesPriceController = TextEditingController();
   DateTime? selectedDate;
   List<CalendarEvent> events = [];
   List<File> validVideos = [];
@@ -151,6 +152,7 @@ class CalenderCubit extends Cubit<CalenderState> {
       emit(GetGetCategoriesErrorState());
     }, (r) {
       subCategoriesMainModel = null;
+      selectedSubCategoty = null;
       subCategoriesMainModel = r;
       emit(GetGetCategoriesSuccessState());
     });
