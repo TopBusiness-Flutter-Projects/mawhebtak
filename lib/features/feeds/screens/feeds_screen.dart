@@ -93,7 +93,6 @@ class _FeedsScreenState extends State<FeedsScreen> {
                     },
                   ),
                 ),
-
               ),
             ] else if (state is FeedsStateError) ...[
               Expanded(
