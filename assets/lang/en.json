@@ -226,5 +226,8 @@
   "ticket_price": "Ticket price",
   "enter_ticket_price": "Enter ticket price",
   "event_date_from": "Event start time",
-  "event_date_to": "Event end time"
+  "event_date_to": "Event end time",
+  "choose_category": "Choose Category",
+  "category": "Category",
+  "sub_category": "Sub category"
 }

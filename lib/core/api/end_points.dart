@@ -25,6 +25,7 @@ class EndPoints {
   static const String addCommentReply = '${baseUrl}add-comment-reply';
   //! add event
   static const String getDataBaseUrl = '${baseUrl}get-data';
+  static const String storeDataUrl = '${baseUrl}store-data';
   //! delete
   static const String deleteData = '${baseUrl}delete-data';
 

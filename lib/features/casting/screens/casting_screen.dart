@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/casting/screens/widgets/gigs_widgets.dart';
@@ -244,7 +245,12 @@ class _CastingScreenState extends State<CastingScreen> {
                     bottom: 10.h,
                     right: 20.w,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        print("Category Data Length: ${cubit.categoryModel?.data?[0].id}");
+
+                        Navigator.pushNamed(
+                            context, Routes.newGigsRoute);
+                      },
                       child: Container(
                         width: 60.w,
                         height: 60.h,

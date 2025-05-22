@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: CustomRow(
                             text: 'top_events',
                             onTap: () => Navigator.pushNamed(
-                                context, Routes.topEventsScreen),
+                                context, Routes.topEventsRoute),
                           ),
                         ),
                         SizedBox(

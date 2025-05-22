@@ -66,6 +66,9 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                         style: getRegularStyle(fontSize: 14.sp),
                       ),
                        DropdownTextFieldWidget(
+                         onChanged: (p0) {
+
+                         },
                         dataLists: const ["Photography", "Dancer", "Singer"],
                         hintText: 'Photography',
                       ),
@@ -74,6 +77,9 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                         style: getRegularStyle(fontSize: 14.sp),
                       ),
                        DropdownTextFieldWidget(
+                         onChanged: (p0) {
+
+                         },
                         dataLists: const ["100", "200", "300"],
                         hintText: '1000',
                       ),

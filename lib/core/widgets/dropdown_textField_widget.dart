@@ -1,32 +1,33 @@
 import 'package:mawhebtak/core/exports.dart';
 
-class DropdownTextFieldWidget extends StatefulWidget {
-  DropdownTextFieldWidget({
+class DropdownTextFieldWidget<T> extends StatefulWidget {
+  const DropdownTextFieldWidget({
     super.key,
     required this.dataLists,
     required this.hintText,
-    this.isWithCurrency = false,
-    this.currencyList = const ["L.E", "\$US", "€EU", "£GBP"], // عملات افتراضية
+    required this.onChanged,
+    this.displayText,
   });
 
-  final List<String> dataLists;
-  bool isWithCurrency;
+  final List<T> dataLists;
   final String hintText;
-  final List<String> currencyList;
+  final Function(T) onChanged;
+  final String Function(T)? displayText;
 
   @override
-  State<DropdownTextFieldWidget> createState() =>
-      _DropdownTextFieldWidgetState();
+  State<DropdownTextFieldWidget<T>> createState() =>
+      _DropdownTextFieldWidgetState<T>();
 }
 
-class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
+class _DropdownTextFieldWidgetState<T>
+    extends State<DropdownTextFieldWidget<T>> {
   final LayerLink _layerLink = LayerLink();
   final GlobalKey _key = GlobalKey();
   final TextEditingController _controller = TextEditingController();
   OverlayEntry? _overlayEntry;
 
   bool _isDropdownOpen = false;
-  String? selectedCurrency;
+  T? selectedItem;
 
   void _toggleDropdown() {
     if (_isDropdownOpen) {
@@ -35,11 +36,12 @@ class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _overlayEntry = _createOverlayEntry();
-        Overlay.of(context).insert(_overlayEntry!);
+        Overlay.of(context, rootOverlay: true).insert(_overlayEntry!);
         _isDropdownOpen = true;
       });
     }
   }
+
 
   OverlayEntry _createOverlayEntry() {
     RenderBox renderBox = _key.currentContext!.findRenderObject() as RenderBox;
@@ -62,10 +64,14 @@ class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               children: widget.dataLists.map((item) {
+                final itemText =
+                    widget.displayText?.call(item) ?? item.toString();
                 return ListTile(
-                  title: Text(item),
+                  title: Text(itemText),
                   onTap: () {
-                    _controller.text = item;
+                    _controller.text = itemText;
+                    selectedItem = item;
+                    widget.onChanged(item);
                     _toggleDropdown();
                     setState(() {});
                   },
@@ -78,33 +84,10 @@ class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
     );
   }
 
-  void _showCurrencyPicker() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        padding: EdgeInsets.symmetric(vertical: 20.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: widget.currencyList.map((currency) {
-            return ListTile(
-              title: Text(currency, style: getRegularStyle()),
-              onTap: () {
-                setState(() => selectedCurrency = currency);
-                // إذا عندك Cubit للعملة:
-                // context.read<CurrencyCubit>().changeCurrency(currency);
-                Navigator.pop(context);
-              },
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
   @override
   void dispose() {
     _controller.dispose();
-    // _overlayEntry?.remove();
+    _overlayEntry?.remove();
     super.dispose();
   }
 
@@ -118,22 +101,9 @@ class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
           controller: _controller,
           hintText: widget.hintText,
           hintTextSize: 18.sp,
-          enabled: true,
+          enabled: false,
           onTap: _toggleDropdown,
-          suffixIcon: InkWell(
-            onTap: widget.isWithCurrency ? _showCurrencyPicker : null,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (widget.isWithCurrency == true)
-                  Text(
-                    selectedCurrency ?? 'L.E',
-                    style: getRegularStyle(color: Colors.blue, fontSize: 14.sp),
-                  ),
-                const Icon(Icons.keyboard_arrow_down_sharp, color: Colors.blue),
-              ],
-            ),
-          ),
+          suffixIcon: const Icon(Icons.keyboard_arrow_down_sharp, color: Colors.blue),
         ),
       ),
     );

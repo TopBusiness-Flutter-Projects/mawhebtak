@@ -25,7 +25,7 @@ class CustomList extends StatelessWidget {
               cubit.items[index].label == "Jobs"
                   ? Navigator.pushNamed(context, Routes.jobsRoute)
                   : cubit.items[index].label == "Events"
-                      ? Navigator.pushNamed(context, Routes.topEventsScreen)
+                      ? Navigator.pushNamed(context, Routes.topEventsRoute)
                       : cubit.items[index].label == "Assistant"
                           ? Navigator.pushNamed(context, Routes.recordsRoute)
                           : cubit.items[index].label == "Casting"

@@ -229,9 +229,12 @@
   "comments": "الكومنتات",
   "is_free": "هل هذا الحدث مجاني؟",
   "ticket_price":"سعر التذكرة",
-  "enter_ticket_price":"ادخل سعر التذكرة"
+  "enter_ticket_price":"ادخل سعر التذكرة",
+  "choose_category": "اختر التصنيف",
+  "category": "التصنيف",
+  "sub_category": "التصنيف الفرعي"
 
-  
-  
-  
+
+
+
 }

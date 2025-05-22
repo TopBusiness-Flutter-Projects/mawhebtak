@@ -96,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
                         child: InkWell(
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, Routes.newGigsScreen);
+                                  context, Routes.newGigsRoute);
                             },
                             child: SvgPicture.asset(AppIcons.addIcon)),
                       )

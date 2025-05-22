@@ -526,6 +526,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20.h),
+
                   child: GeneralCustomDropdownButtonFormField<
                       GetCountriesMainModelData>(
                     items: cubit.categoriesMainModel?.data ?? [],
@@ -542,6 +543,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       }
                       return null;
                     },
+
                   ),
                 ),
               ],

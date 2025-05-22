@@ -105,7 +105,7 @@ class CustomTopEventList extends StatelessWidget {
                           CustomContainerButton(
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, Routes.detailsEventScreen);
+                                  context, Routes.detailsEventRoute);
                             },
                             title: "details".tr(),
                             color: AppColors.transparent,

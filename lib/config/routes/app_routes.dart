@@ -43,7 +43,7 @@ import '../../features/home/screens/notification_screen.dart';
 import '../../features/jobs/screens/add_new_job_screen.dart';
 import '../../features/profile/screens/followers_screen.dart';
 import '../../features/profile/screens/gigs_details.dart';
-import '../../features/profile/screens/new_gigs_screen.dart';
+import '../../features/casting/screens/new_gigs_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/feeds/screens/write_post.dart';
 import '../../features/referral_code/screens/referral_code_screen.dart';
@@ -64,15 +64,15 @@ class Routes {
   static const String referralCodeRoute = '/referralCode';
   static const String termsAndConditionRoute = '/termsAndCondition';
   static const String videoScreenRoute = '/videoScreenRoute';
-  static const String topEventsScreen = '/topEventScreen';
-  static const String detailsEventScreen = '/detailsEventScreen';
-  static const String notificationScreen = '/notificationScreen';
+  static const String topEventsRoute = '/topEventScreen';
+  static const String detailsEventRoute = '/detailsEventScreen';
+  static const String notificationRoute = '/notificationScreen';
   static const String secondDetailsSecond = '/secondDetailsSecond';
   static const String applyEvent = '/applyEvent';
   static const String profileScreen = '/profileScreen';
   static const String followersScreen = '/followersScreen';
   static const String writePostScreen = '/writePostScreen';
-  static const String newGigsScreen = '/newGigsScreen';
+  static const String newGigsRoute = '/newGigsRoute';
   static const String gigsDetailsScreen = '/gigsDetailsScreen';
   static const String feedsScreen = '/feedsScreen';
   static const String announcementScreen = '/announcementScreen';
@@ -124,7 +124,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      case Routes.newGigsScreen:
+      case Routes.newGigsRoute:
         return PageTransition(
           child: const NewGigsScreen(),
           type: PageTransitionType.fade,
@@ -180,14 +180,14 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      case Routes.detailsEventScreen:
+      case Routes.detailsEventRoute:
         return PageTransition(
           child: const DetailsEventScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      case Routes.topEventsScreen:
+      case Routes.topEventsRoute:
         return PageTransition(
           child: BlocProvider(
               create: (context) => TopEventsCubit()..topEventsData(page: '1'),
@@ -196,7 +196,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      case Routes.notificationScreen:
+      case Routes.notificationRoute:
         return PageTransition(
           child: const NotificationScreen(),
           type: PageTransitionType.fade,
