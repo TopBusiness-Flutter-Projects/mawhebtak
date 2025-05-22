@@ -10,6 +10,7 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_state.dart';
 import 'package:mawhebtak/features/calender/data/repos/calender.repo.dart';
 import 'package:path/path.dart' as path;
+
 import 'package:video_compress/video_compress.dart';
 
 import '../../../core/utils/widget_from_application.dart';
@@ -25,29 +26,18 @@ class CalenderCubit extends Cubit<CalenderState> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController titleOfTheEventController = TextEditingController();
   TextEditingController ticketPriceController = TextEditingController();
+  TextEditingController locationAddressController = TextEditingController();
   DateTime? selectedDate;
   List<CalendarEvent> events = [];
   List<File> validVideos = [];
   List<XFile>? myImages;
   List<File>? myImagesF;
   bool isFree = true;
+  bool isPublic = true;
+
   GetCountriesMainModelData? selectedCurrency;
-
-  void addEvent({
-    required String title,
-    required DateTime date,
-    Color color = Colors.deepPurpleAccent,
-  }) {
-    final newEvent = CalendarEvent(
-      title: title,
-      date: date,
-      color: color,
-    );
-
-    events.add(newEvent);
-    emit(CalendarUpdated(List.from(events))); // إرسال نسخة جديدة من القائمة
-  }
-
+  GetCountriesMainModelData? selectedCategoty;
+  GetCountriesMainModelData? selectedSubCategoty;
   //!
   Future<void> selectDateTime(BuildContext context,
       {bool isFrom = false}) async {
@@ -144,6 +134,24 @@ class CalenderCubit extends Cubit<CalenderState> {
       emit(GetGetCategoriesErrorState());
     }, (r) {
       categoriesMainModel = r;
+      subCategoriesMainModel = null;
+      emit(GetGetCategoriesSuccessState());
+    });
+  }
+
+  GetCountriesMainModel? subCategoriesMainModel;
+  Future<void> getAllSubCategories(String categoryId) async {
+    emit(GetGetCategoriesLoadingState());
+    final result = await api.mainGetData(queryParameters: {
+      "model": "SubCategory",
+      "where[0]": "status,1",
+      "where[1]": "category_id,$categoryId"
+    });
+    result.fold((l) {
+      emit(GetGetCategoriesErrorState());
+    }, (r) {
+      subCategoriesMainModel = null;
+      subCategoriesMainModel = r;
       emit(GetGetCategoriesSuccessState());
     });
   }

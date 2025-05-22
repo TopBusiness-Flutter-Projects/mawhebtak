@@ -72,16 +72,18 @@ class OnBoarding1 extends StatelessWidget {
                                 color: AppColors.white),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(getSize(context) / 44),
-                          child: Text(
-                            "onboarding1_description".tr(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontFamily: AppStrings.fontFamily2,
-                                color: AppColors.white,
-                                fontSize: 13.sp),
+                        Flexible(
+                          child: Container(
+                            padding: EdgeInsets.all(getSize(context) / 44),
+                            child: Text(
+                              "onboarding1_description".tr(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: AppStrings.fontFamily2,
+                                  color: AppColors.white,
+                                  fontSize: 13.sp),
+                            ),
                           ),
                         ),
                         SizedBox(height: 30.h),

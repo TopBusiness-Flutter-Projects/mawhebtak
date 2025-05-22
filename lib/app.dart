@@ -134,7 +134,8 @@ class _MyAppState extends State<MyApp> {
                 injector.serviceLocator<FeedsCubit>()..postsData(page: '1'),
           ),
           BlocProvider(
-            create: (_) => injector.serviceLocator<LocationCubit>(),
+            create: (_) => injector.serviceLocator<LocationCubit>()
+              ..checkAndRequestLocationPermission(context),
           ),
         ],
         child: GetMaterialApp(

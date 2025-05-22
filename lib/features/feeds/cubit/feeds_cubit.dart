@@ -218,8 +218,9 @@ class FeedsCubit extends Cubit<FeedsState> {
       isLoadingMore = false;
     }
   }
+
   CommentsModel? comments;
-  commentsData({ required String postId}) async {
+  commentsData({required String postId}) async {
     emit(FeedsStateLoading());
     try {
       final res = await api!.getComments(postId: postId);
@@ -259,7 +260,6 @@ class FeedsCubit extends Cubit<FeedsState> {
     }
   }
 
-
   deletePost({required String postId}) async {
     emit(DeletePostStateLoading());
     try {
@@ -275,10 +275,11 @@ class FeedsCubit extends Cubit<FeedsState> {
       emit(DeletePostStateError(e.toString()));
     }
   }
-  deleteComment({required String commentId,required String postId}) async {
+
+  deleteComment({required String commentId, required String postId}) async {
     emit(DeletePostStateLoading());
     try {
-      final res = await api!.deleteComment( commentId: commentId);
+      final res = await api!.deleteComment(commentId: commentId);
       res.fold((l) {
         emit(DeletePostStateError(l.toString()));
       }, (r) {
@@ -291,14 +292,13 @@ class FeedsCubit extends Cubit<FeedsState> {
     }
   }
 
-
   addReply({required String postId, required String postCommentId}) async {
     emit(AddReplyStateLoading());
     try {
       final res = await api!.addReply(
           postId: postId,
           reply: commentController.text,
-          postCommentId:postCommentId );
+          postCommentId: postCommentId);
       res.fold((l) {
         emit(AddReplyStateError(l.toString()));
       }, (r) {
@@ -363,12 +363,11 @@ class FeedsCubit extends Cubit<FeedsState> {
     final user = await Preferences.instance.getUserModel();
     return user;
   }
+
   LoginModel? user;
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
   }
-
-
 
   String? replyingToCommentId;
   String? replyingToUserName;
