@@ -3,7 +3,6 @@ import 'package:chewie/chewie.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:video_player/video_player.dart';
 
-
 class VideoPlayerScreenFile extends StatefulWidget {
   final File? videoFile;
   const VideoPlayerScreenFile({required this.videoFile, super.key});
