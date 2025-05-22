@@ -74,7 +74,7 @@ class OnBoarding2 extends StatelessWidget {
                                 color: AppColors.white),
                           ),
                         ),
-                        Container(
+                        Flexible(child:  Container(
                           padding: EdgeInsets.all(getSize(context) / 44),
                           child: Text(
                             textAlign: TextAlign.center,
@@ -85,7 +85,7 @@ class OnBoarding2 extends StatelessWidget {
                                 color: AppColors.white,
                                 fontSize: 13.sp),
                           ),
-                        ),
+                        )),
                         SizedBox(
                           height: 30.h,
                         ),

@@ -11,7 +11,6 @@ class GeneralCustomDropdownButtonFormField<T> extends StatelessWidget {
   final ValueChanged<T?>? onChanged;
   final FormFieldValidator<T>? validator;
   final DropdownItemBuilder<T> itemBuilder;
-  final InputDecoration? decoration;
 
   const GeneralCustomDropdownButtonFormField({
     super.key,
@@ -19,7 +18,6 @@ class GeneralCustomDropdownButtonFormField<T> extends StatelessWidget {
     this.value,
     this.onChanged,
     this.validator,
-    this.decoration,
     required this.itemBuilder,
   });
 
@@ -31,18 +29,20 @@ class GeneralCustomDropdownButtonFormField<T> extends StatelessWidget {
         icon: Container(),
         value: value,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: AppColors.grayLite,
           hintText: 'choose'.tr(),
           contentPadding: EdgeInsets.symmetric(horizontal: 5.sp, vertical: 4),
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
+            borderSide: BorderSide(color: AppColors.grayLite, width: 1.5.w),
             borderRadius: BorderRadius.all(Radius.circular(10.r)),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
+            borderSide: BorderSide(color: AppColors.grayLite, width: 1.5.w),
             borderRadius: BorderRadius.all(Radius.circular(10.r)),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primary, width: 1.5.w),
+            borderSide: BorderSide(color: AppColors.grayLite, width: 1.5.w),
             borderRadius: BorderRadius.all(Radius.circular(10.r)),
           ),
           alignLabelWithHint: true,

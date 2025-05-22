@@ -22,7 +22,7 @@ class EndPoints {
   static const String updatePasswordUrl = '${baseUrl}update-password';
   static const String loginWithSocial = '${baseUrl}login-with-social';
   static const String addCommentUrl = '${baseUrl}add-comment';
-  static const String addCommentReply= '${baseUrl}add-comment-reply';
+  static const String addCommentReply = '${baseUrl}add-comment-reply';
   //! add event
   static const String getDataBaseUrl = '${baseUrl}get-data';
   static const String storeDataUrl = '${baseUrl}store-data';

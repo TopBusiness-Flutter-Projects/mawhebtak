@@ -16,8 +16,7 @@ class FeedsRepository {
   FeedsRepository(this.dio);
   Future<Either<Failure, PostsModel>> feedsData({required String page}) async {
     try {
-      var response = await dio.get(EndPoints.feedsUrl ,
-          queryParameters: {
+      var response = await dio.get(EndPoints.feedsUrl, queryParameters: {
         "model": "Post",
         "where[0]": "status,1",
         "paginate": "true",
@@ -44,36 +43,40 @@ class FeedsRepository {
   Future<Either<Failure, DefaultMainModel>> deletePost(
       {required String postId}) async {
     try {
-      var response = await dio.post(EndPoints.deleteData,
-          body: {
-            "model": "Post",
-            "id": postId,});
+      var response = await dio.post(EndPoints.deleteData, body: {
+        "model": "Post",
+        "id": postId,
+      });
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, DefaultMainModel>> deleteComment(
       {required String commentId}) async {
     try {
-      var response = await dio.post(EndPoints.deleteData,
-          body: {
-            "model": "PostComment",
-            "id": commentId,});
+      var response = await dio.post(EndPoints.deleteData, body: {
+        "model": "PostComment",
+        "id": commentId,
+      });
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, DefaultMainModel>> addReply(
-      {required String postId,required String postCommentId,required String reply}) async {
+      {required String postId,
+      required String postCommentId,
+      required String reply}) async {
     try {
-      var response = await dio.post(EndPoints.addCommentReply,
-          body: {
-            "key": "addCommentReply",
-            "post_id": postId,
-            "post_comment_id":postCommentId,
-            "reply": reply});
+      var response = await dio.post(EndPoints.addCommentReply, body: {
+        "key": "addCommentReply",
+        "post_id": postId,
+        "post_comment_id": postCommentId,
+        "reply": reply
+      });
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
@@ -81,13 +84,10 @@ class FeedsRepository {
   }
 
   Future<Either<Failure, DefaultMainModel>> addComment(
-      {required String postId,required String comment}) async {
+      {required String postId, required String comment}) async {
     try {
       var response = await dio.post(EndPoints.addCommentUrl,
-          body: {
-            "key": "addComment",
-            "post_id": postId,
-            "comment":comment});
+          body: {"key": "addComment", "post_id": postId, "comment": comment});
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
@@ -95,13 +95,11 @@ class FeedsRepository {
   }
 
   Future<Either<Failure, CommentsModel>> getComments(
-      {required String postId}
-      ) async {
+      {required String postId}) async {
     try {
-      var response = await dio.get(EndPoints.getDataBaseUrl,
-          queryParameters: {
-            "model": "PostComment",
-            "where[0]": 'post_id,$postId',
+      var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
+        "model": "PostComment",
+        "where[0]": 'post_id,$postId'
       });
       return Right(CommentsModel.fromJson(response));
     } on ServerException {

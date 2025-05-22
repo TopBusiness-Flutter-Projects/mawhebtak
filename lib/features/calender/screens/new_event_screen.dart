@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_state.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/public_and_private_widget.dart';
@@ -15,6 +16,8 @@ import '../../../core/utils/custom_pick_media.dart';
 import '../../../core/widgets/full_screen_video_view.dart';
 import '../../feeds/screens/widgets/image_view_file.dart';
 import '../../feeds/screens/widgets/video_from_file_screen.dart';
+import '../../location/cubit/location_cubit.dart';
+import '../../location/cubit/location_state.dart';
 import '../../location/screens/full_screen_map.dart';
 import '../data/model/countries_model.dart';
 
@@ -28,9 +31,6 @@ class NewEventScreen extends StatefulWidget {
 class _NewEventScreenState extends State<NewEventScreen> {
   int currentStep = 0;
 
-  List<TalentRequirement> talentRequirements = [
-    TalentRequirement(type: 'Workshop', fee: '3000', currency: 'L.E'),
-  ];
   GlobalKey<FormState> formKeyInformation = GlobalKey<FormState>();
 
   @override
@@ -153,6 +153,11 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                       setState(() {
                                         currentStep = 1;
                                       });
+                                      
+                                      cubit.getAllSubCategories(cubit
+                                              .selectedCategoty?.id
+                                              .toString() ??
+                                          '');
                                     }
                                   } else if (currentStep == 1) {
                                     setState(() {
@@ -169,7 +174,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                     });
                                   } else {
                                     print(
-                                        'Form submitted with \${talentRequirements.length} talents');
+                                        'Form submitted with \.length} talents');
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -414,41 +419,63 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 _label("event_date_from".tr()),
                 CustomTextField(
                   controller: cubit.eventDateController,
-                  suffixIcon: Padding(
-                    padding: EdgeInsets.all(10.0.r),
-                    child: SvgPicture.asset(AppIcons.dateIcon),
+                  enabled: true,
+                  validator: (p0) {
+                    if (p0!.isEmpty) {
+                      return 'event_date_from'.tr();
+                    }
+                    return null;
+                  },
+                  suffixIcon: InkWell(
+                    onTap: () {
+                      cubit.selectDateTime(context, isFrom: false);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(10.0.r),
+                      child: SvgPicture.asset(AppIcons.dateIcon),
+                    ),
                   ),
                   onTap: () {
-                    cubit.selectDateTime(context);
+                    cubit.selectDateTime(context, isFrom: false);
                   },
                   hintTextSize: 18.sp,
+                  keyboardType: TextInputType.datetime,
                   hintText: "event_date_from".tr(),
                 ),
                 _label("event_date_to".tr()),
                 CustomTextField(
+                  enabled: true,
+                  keyboardType: TextInputType.datetime,
                   controller: cubit.eventFromDateController,
-                  suffixIcon: Padding(
-                    padding: EdgeInsets.all(10.0.r),
-                    child: SvgPicture.asset(AppIcons.dateIcon),
+                  suffixIcon: InkWell(
+                    onTap: () {
+                      cubit.selectDateTime(context, isFrom: true);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(10.0.r),
+                      child: SvgPicture.asset(AppIcons.dateIcon),
+                    ),
                   ),
-                  onTap: () {
-                    cubit.selectDateTime(context, isFrom: true);
-                  },
+                  onTap: () {},
                   hintTextSize: 18.sp,
                   hintText: "event_date_to".tr(),
                 ),
                 //! Location
                 _label("select_location".tr()),
-                CustomTextField(
-                  onTap: () {},
-                  hintTextSize: 18.sp,
-                  validator: (p0) {
-                    if (p0!.isEmpty) {
-                      return 'select_location'.tr();
-                    }
-                    return null;
+                BlocBuilder<LocationCubit, LocationState>(
+                  builder: (context, state) {
+                    return CustomTextField(
+                      hintTextSize: 18.sp,
+                      controller: cubit.locationAddressController,
+                      validator: (p0) {
+                        if (p0!.isEmpty) {
+                          return 'select_location'.tr();
+                        }
+                        return null;
+                      },
+                      hintText: "select_location".tr(),
+                    );
                   },
-                  hintText: "select_location".tr(),
                 ),
                 Align(
                   alignment: Alignment.centerRight,
@@ -457,7 +484,9 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const FullScreenMap()));
+                              builder: (context) => FullScreenMap(
+                                    type: 'event',
+                                  )));
                     },
                     child: Text(
                       "open_map".tr(),
@@ -473,14 +502,18 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 _label("description".tr()),
                 CustomTextField(
                   controller: cubit.descriptionController,
-                  onTap: () {},
                   isMessage: true,
                   hintTextSize: 18.sp,
-                  hintText: "",
+                  hintText: "description_msg".tr(),
                 ),
                 10.h.verticalSpace,
                 PublicPrivateToggle(
-                  onToggle: (isPublic) {},
+                  isPublic: cubit.isPublic,
+                  onToggle: (isPublic) {
+                    cubit.isPublic = isPublic;
+                    log("000000 $isPublic");
+                    log("111111 ${cubit.isPublic}");
+                  },
                 ),
                 20.h.verticalSpace,
                 Text(
@@ -493,18 +526,24 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20.h),
-                  child: DropdownTextFieldWidget(
-                    onChanged: (p0) {
 
+                  child: GeneralCustomDropdownButtonFormField<
+                      GetCountriesMainModelData>(
+                    items: cubit.categoriesMainModel?.data ?? [],
+                    itemBuilder: (item) {
+                      return item.name ?? '';
                     },
-                    dataLists: const [
-                      'Workshop',
-                      'Conference',
-                      'Seminar',
-                      'Webinar',
-                      'Meeting'
-                    ],
-                    hintText: 'Workshop',
+                    value: cubit.selectedCategoty,
+                    onChanged: (value) {
+                      cubit.selectedCategoty = value;
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return 'event_type'.tr();
+                      }
+                      return null;
+                    },
+
                   ),
                 ),
               ],
@@ -540,27 +579,16 @@ class _NewEventScreenState extends State<NewEventScreen> {
 
   Widget _buildRequiredTalentsStep() {
     return Padding(
-      padding: EdgeInsets.all(20.w),
-      child: RequiredTalentsSelector(
-        initialTalents: talentRequirements,
-        onTalentsChanged: (talents) {
-          talentRequirements = talents;
-        },
-      ),
-    );
+        padding: EdgeInsets.all(20.w), child: const RequiredTalentsSelector());
   }
 
   Widget _label(String text) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 8.h, top: 16.h),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: AppColors.blackLite,
-          fontWeight: FontWeight.w400,
-          fontSize: 18.sp,
-        ),
-      ),
-    );
+        padding: EdgeInsets.only(bottom: 8.h, top: 16.h),
+        child: Text(text,
+            style: TextStyle(
+                color: AppColors.blackLite,
+                fontWeight: FontWeight.w400,
+                fontSize: 18.sp)));
   }
 }

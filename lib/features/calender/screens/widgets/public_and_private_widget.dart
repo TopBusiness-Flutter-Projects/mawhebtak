@@ -28,7 +28,7 @@ class _PublicPrivateToggleState extends State<PublicPrivateToggle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.only(right: 50.w),
+      padding: EdgeInsets.only(right: 50.w),
       child: SizedBox(
         width: double.infinity,
         child: Row(
@@ -59,7 +59,6 @@ class _PublicPrivateToggleState extends State<PublicPrivateToggle> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-
         decoration: BoxDecoration(
           color: isSelected ? Colors.transparent : Colors.transparent,
           borderRadius: BorderRadius.circular(30),
@@ -72,14 +71,15 @@ class _PublicPrivateToggleState extends State<PublicPrivateToggle> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isSelected ? Colors.green : Colors.transparent,
-                border: isSelected ? null : Border.all(color: Colors.grey.shade400),
+                border:
+                    isSelected ? null : Border.all(color: Colors.grey.shade400),
               ),
               child: isSelected
                   ? Icon(
-                Icons.check,
-                color: Colors.white,
-                size: 18.sp,
-              )
+                      Icons.check,
+                      color: Colors.white,
+                      size: 18.sp,
+                    )
                   : null,
             ),
             SizedBox(width: 8.w),
@@ -105,4 +105,3 @@ class _PublicPrivateToggleState extends State<PublicPrivateToggle> {
     }
   }
 }
-
