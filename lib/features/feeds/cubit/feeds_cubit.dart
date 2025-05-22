@@ -160,10 +160,12 @@ class FeedsCubit extends Cubit<FeedsState> {
       );
       log('LLLLLLLLLL ${compressedVideo != null && compressedVideo.path != null}');
       log('LLLLLLLLLL ${compressedVideo?.path}');
+      emit(compressVideoLoaded());
       if (compressedVideo != null && compressedVideo.path != null) {
         return compressedVideo.path != null
             ? File(compressedVideo.path!)
             : file;
+
       } else {
         VideoCompress.cancelCompression();
         return file;
@@ -305,7 +307,8 @@ class FeedsCubit extends Cubit<FeedsState> {
       }, (r) {
         if (scrollController.hasClients) {
           scrollController.animateTo(
-            0,
+            scrollController.position.maxScrollExtent,
+
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           );

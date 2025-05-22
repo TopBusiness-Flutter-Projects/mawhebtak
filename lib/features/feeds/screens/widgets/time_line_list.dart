@@ -144,6 +144,7 @@ class _TimeLineListState extends State<TimeLineList> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+          if(widget.feeds?.reactionCount != 0)
             Row(
               children: [
                 Padding(
@@ -162,13 +163,19 @@ class _TimeLineListState extends State<TimeLineList> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "${widget.feeds?.commentCount.toString()}  ${'comment'.tr()}",
-                style: getRegularStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.grayDate,
+            if(widget.feeds?.commentCount != 0)
+            Expanded(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "${widget.feeds?.commentCount.toString()}  ${'comment'.tr()}",
+                    style: getRegularStyle(
+                      fontSize: 18.sp,
+                      color: AppColors.grayDark.withOpacity(0.7),
+                    ),
+                  ),
                 ),
               ),
             ),
