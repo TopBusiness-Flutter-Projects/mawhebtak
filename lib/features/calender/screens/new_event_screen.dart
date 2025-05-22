@@ -494,6 +494,9 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 20.h),
                   child: DropdownTextFieldWidget(
+                    onChanged: (p0) {
+
+                    },
                     dataLists: const [
                       'Workshop',
                       'Conference',

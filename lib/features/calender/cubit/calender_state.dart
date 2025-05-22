@@ -3,6 +3,7 @@ import 'package:mawhebtak/features/calender/screens/widgets/calender_widget.dart
 class CalenderState {}
 
 class CalenderInitial extends CalenderState {}
+class CompressedVideoState extends CalenderState {}
 
 class DateTimeSelected extends CalenderState {
   String? formattedDateTime;

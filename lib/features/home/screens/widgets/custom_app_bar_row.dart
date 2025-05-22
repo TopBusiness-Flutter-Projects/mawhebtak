@@ -88,23 +88,28 @@ class CustomAppBarRow extends StatelessWidget {
                         ),
                       ),
                     ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 1.0.w),
-                child: Container(
-                  height: 40.h,
-                  width: 40.w,
-                  decoration: BoxDecoration(
-                    color: backgroundNotification ?? AppColors.grayDark,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SvgPicture.asset(
-                        height: 21.h,
-                        width: 18.w,
-                        isMore == true
-                            ? AppIcons.notificationWithBlueContainer
-                            : AppIcons.notificationIcon),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.notificationRoute);
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 1.0.w),
+                  child: Container(
+                    height: 40.h,
+                    width: 40.w,
+                    decoration: BoxDecoration(
+                      color: backgroundNotification ?? AppColors.grayDark,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SvgPicture.asset(
+                          height: 21.h,
+                          width: 18.w,
+                          isMore == true
+                              ? AppIcons.notificationWithBlueContainer
+                              : AppIcons.notificationIcon),
+                    ),
                   ),
                 ),
               ),

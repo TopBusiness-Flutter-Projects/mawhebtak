@@ -50,8 +50,10 @@ class _ApplyForEventState extends State<ApplyForEvent> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 21.0.w),
                     child: DropdownTextFieldWidget(
-                      isWithCurrency: true,
-                      currencyList: const ["L.E", "USA"],
+                      onChanged: (p0) {
+
+                      },
+
                       dataLists: const ["Example@mail.com", "Example@mail.com"],
                       hintText: 'Example@mail.com',
                     ),
@@ -69,6 +71,9 @@ class _ApplyForEventState extends State<ApplyForEvent> {
                     padding: EdgeInsets.symmetric(
                         horizontal: 20.0.w, vertical: 10.h),
                     child: DropdownTextFieldWidget(
+                      onChanged: (p0) {
+
+                      },
                       dataLists: const ["Teacher", "Singer"],
                       hintText: '',
                     ),

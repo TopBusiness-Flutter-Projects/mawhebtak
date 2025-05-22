@@ -280,6 +280,7 @@ class CalenderCubit extends Cubit<CalenderState> {
       );
       log('LLLLLLLLLL ${compressedVideo != null && compressedVideo.path != null}');
       log('LLLLLLLLLL ${compressedVideo?.path}');
+      emit(CompressedVideoState());
       if (compressedVideo != null && compressedVideo.path != null) {
         return compressedVideo.path != null
             ? File(compressedVideo.path!)
@@ -342,4 +343,5 @@ class CalenderCubit extends Cubit<CalenderState> {
       },
     );
   }
+
 }

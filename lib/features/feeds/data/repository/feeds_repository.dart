@@ -2,12 +2,10 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:mawhebtak/core/api/end_points.dart';
 import 'package:mawhebtak/core/error/exceptions.dart';
 import 'package:mawhebtak/core/error/failures.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
-import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/feeds/data/models/add_post_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/comments_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';

@@ -321,7 +321,17 @@ class FeedsCubit extends Cubit<FeedsState> {
       emit(AddReplyStateError(e.toString()));
     }
   }
+  void addImage(File image) {
+    myImagesF ??= [];
+    myImagesF!.add(image);
+    emit(FeedsStateUpdated());
+  }
 
+  void addVideo(File video) {
+    validVideos ??= [];
+    validVideos.add(video);
+    emit(FeedsStateUpdated());
+  }
   addComment({required String postId}) async {
     emit(AddCommentStateLoading());
     try {
