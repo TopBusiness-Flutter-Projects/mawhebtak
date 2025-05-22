@@ -351,5 +351,4 @@ class CalenderCubit extends Cubit<CalenderState> {
       },
     );
   }
-
 }

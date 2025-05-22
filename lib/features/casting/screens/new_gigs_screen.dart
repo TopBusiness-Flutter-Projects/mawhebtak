@@ -7,8 +7,6 @@ import 'package:mawhebtak/features/calender/cubit/calender_state.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
-import 'package:mawhebtak/features/casting/data/model/category_model.dart';
-import 'package:mawhebtak/features/casting/data/model/sub_category_model.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
@@ -102,7 +100,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               color: AppColors.grayLite,
                               borderRadius: BorderRadius.circular(8.sp),
                             ),
-                            child: DropdownButton<CategoryModelData>(
+                            child: DropdownButton<GetCountriesMainModelData>(
                               enableFeedback: true,
                               iconSize: 25.sp,
                               padding: EdgeInsets.only(
@@ -119,12 +117,12 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               hint: Text('choose_category'.tr()),
                               value: cubit.selectedCategory,
                               items: cubit.categoryModel?.data?.map((category) {
-                                return DropdownMenuItem<CategoryModelData>(
+                                return DropdownMenuItem<GetCountriesMainModelData>(
                                   value: category,
                                   child: Text(category.name ?? ""),
                                 );
                               }).toList(),
-                              onChanged: (CategoryModelData? value) {
+                              onChanged: (GetCountriesMainModelData? value) {
                                 isOpen = !isOpen;
                                 setState(() {
                                   cubit.selectedCategory = value;
@@ -156,7 +154,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     color: AppColors.grayLite,
                                     borderRadius: BorderRadius.circular(8.sp),
                                   ),
-                                  child: DropdownButton<SubCategoryModelData>(
+                                  child: DropdownButton<GetCountriesMainModelData>(
                                     enableFeedback: true,
                                     iconSize: 25.sp,
                                     padding: EdgeInsets.only(
@@ -175,12 +173,12 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     items: cubit.subCategoryModel?.data
                                         ?.map((subCategory) {
                                       return DropdownMenuItem<
-                                          SubCategoryModelData>(
+                                          GetCountriesMainModelData>(
                                         value: subCategory,
                                         child: Text(subCategory.name ?? ""),
                                       );
                                     }).toList(),
-                                    onChanged: (SubCategoryModelData? value) {
+                                    onChanged: (GetCountriesMainModelData? value) {
                                       final subCategory = cubit
                                           .subCategoryModel?.data
                                           ?.firstWhere(

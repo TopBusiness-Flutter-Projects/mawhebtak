@@ -2,9 +2,8 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
-import 'package:mawhebtak/features/casting/data/model/category_model.dart';
-import 'package:mawhebtak/features/casting/data/model/sub_category_model.dart';
 
+import '../../calender/data/model/countries_model.dart';
 import '../data/repos/casting.repo.dart';
 import 'casting_state.dart';
 
@@ -14,10 +13,10 @@ class CastingCubit extends Cubit<CastingState> {
   TextEditingController gigTitleController = TextEditingController();
   TextEditingController priceRangeController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  CategoryModel? categoryModel;
-  CategoryModelData? selectedCategory;
+  GetCountriesMainModel? categoryModel;
+  GetCountriesMainModelData? selectedCategory;
   int? subCategoryId;
-  SubCategoryModelData? selectedSubCategory;
+  GetCountriesMainModelData? selectedSubCategory;
   getCategory() async {
     emit(CategoryStateLoading());
     try {
@@ -32,7 +31,8 @@ class CastingCubit extends Cubit<CastingState> {
       emit(CategoryStateError(e.toString()));
     }
   }
-  SubCategoryModel? subCategoryModel;
+
+  GetCountriesMainModel? subCategoryModel;
   getSubCategory({required String categoryId}) async {
     emit(SubCategoryStateLoading());
     try {
@@ -75,7 +75,7 @@ class CastingCubit extends Cubit<CastingState> {
         gigTitleController.clear();
         descriptionController.clear();
         context.read<CalenderCubit>().myImagesF = [];
-        context.read<CalenderCubit>().validVideos= [];
+        context.read<CalenderCubit>().validVideos = [];
       });
     } catch (e) {
       emit(AddNewGigStateError(e.toString()));
