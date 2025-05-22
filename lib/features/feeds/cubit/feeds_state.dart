@@ -109,6 +109,7 @@ class CancelReplyingState extends FeedsState {}
 class DeletePostStateLoading extends FeedsState {}
 
 class DeletePostStateSuccess extends FeedsState {}
+class compressVideoLoaded extends FeedsState {}
 
 class DeletePostStateError extends FeedsState {
   final String error;

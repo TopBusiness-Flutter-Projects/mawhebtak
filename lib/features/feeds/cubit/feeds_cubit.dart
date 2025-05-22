@@ -23,6 +23,7 @@ class FeedsCubit extends Cubit<FeedsState> {
   PostsModel? posts;
   TextEditingController bodyController = TextEditingController();
   TextEditingController commentController = TextEditingController();
+  ScrollController scrollController = ScrollController();
 
   List<File> validVideos = [];
   List<XFile>? myImages;
@@ -159,10 +160,12 @@ class FeedsCubit extends Cubit<FeedsState> {
       );
       log('LLLLLLLLLL ${compressedVideo != null && compressedVideo.path != null}');
       log('LLLLLLLLLL ${compressedVideo?.path}');
+      emit(compressVideoLoaded());
       if (compressedVideo != null && compressedVideo.path != null) {
         return compressedVideo.path != null
             ? File(compressedVideo.path!)
             : file;
+
       } else {
         VideoCompress.cancelCompression();
         return file;
@@ -302,6 +305,14 @@ class FeedsCubit extends Cubit<FeedsState> {
       res.fold((l) {
         emit(AddReplyStateError(l.toString()));
       }, (r) {
+        if (scrollController.hasClients) {
+          scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        }
         commentsData(postId: postId);
         successGetBar(r.msg);
         emit(AddReplyStateLoaded());

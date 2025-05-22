@@ -27,7 +27,6 @@ class TimeLineList extends StatefulWidget {
 }
 
 class _TimeLineListState extends State<TimeLineList> {
-  final ScrollController scrollController = ScrollController();
   @override
   void initState() {
     context.read<FeedsCubit>().getUserFromPreferences();
@@ -35,11 +34,6 @@ class _TimeLineListState extends State<TimeLineList> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +144,7 @@ class _TimeLineListState extends State<TimeLineList> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+          if(widget.feeds?.reactionCount != 0)
             Row(
               children: [
                 Padding(
@@ -168,13 +163,19 @@ class _TimeLineListState extends State<TimeLineList> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "${widget.feeds?.commentCount.toString()}  ${'comment'.tr()}",
-                style: getRegularStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.grayDate,
+            if(widget.feeds?.commentCount != 0)
+            Expanded(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "${widget.feeds?.commentCount.toString()}  ${'comment'.tr()}",
+                    style: getRegularStyle(
+                      fontSize: 18.sp,
+                      color: AppColors.grayDark.withOpacity(0.7),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -201,7 +202,7 @@ class _TimeLineListState extends State<TimeLineList> {
                       AppIcons.likeIcon,
                       width: 20.sp,
                       color: widget.feedsCubit?.posts?.data?[widget.index]
-                                  ?.isReacted ==
+                                  .isReacted ==
                               true
                           ? AppColors.primary
                           : AppColors.grayDarkkk,
@@ -220,17 +221,14 @@ class _TimeLineListState extends State<TimeLineList> {
             BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
               return GestureDetector(
                 onTap: () {
-                  context
-                      .read<FeedsCubit>()
-                      .commentsData(postId: widget.postId);
+                  context.read<FeedsCubit>().commentsData(postId: widget.postId);
                   showModalBottomSheet(
                     showDragHandle: true,
                     useSafeArea: true,
                     context: context,
                     isScrollControlled: true,
                     shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20)),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                     ),
                     backgroundColor: AppColors.white,
                     builder: (context) {
@@ -255,7 +253,7 @@ class _TimeLineListState extends State<TimeLineList> {
                                   10.h.verticalSpace,
                                   Expanded(
                                     child: ListView.builder(
-                                      controller: scrollController,
+                                      controller: widget.feedsCubit?.scrollController,
                                       itemCount: comments.length,
                                       itemBuilder: (context, index) {
                                         final comment = comments[index];
@@ -478,7 +476,8 @@ class _TimeLineListState extends State<TimeLineList> {
                                         return Row(
                                           children: [
                                             Expanded(
-                                              child: TextField(
+                                              child: TextFormField(
+
                                                 style:
                                                     TextStyle(fontSize: 18.sp),
                                                 controller:
