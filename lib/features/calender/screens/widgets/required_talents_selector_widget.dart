@@ -13,7 +13,8 @@ class RequiredTalentsSelector extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _RequiredTalentsSelectorState createState() => _RequiredTalentsSelectorState();
+  _RequiredTalentsSelectorState createState() =>
+      _RequiredTalentsSelectorState();
 }
 
 class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
@@ -44,11 +45,7 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
   void _addNewTalent() {
     setState(() {
       _talents.add(
-        TalentRequirement(
-            type: _talentTypes[0],
-            fee: '3000',
-            currency: 'L.E'
-        ),
+        TalentRequirement(type: _talentTypes[0], fee: '3000', currency: 'L.E'),
       );
     });
     widget.onTalentsChanged(_talents);
@@ -223,7 +220,8 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
                 border: InputBorder.none,
                 isDense: true,
               ),
@@ -254,7 +252,8 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: _talents[index].currency,
-              icon: Icon(Icons.keyboard_arrow_down, color: Colors.blue.shade700),
+              icon:
+                  Icon(Icons.keyboard_arrow_down, color: Colors.blue.shade700),
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               borderRadius: BorderRadius.circular(4.r),
               items: _currencies.map((String value) {
@@ -317,55 +316,3 @@ class TalentRequirement {
     };
   }
 }
-
-// Example usage in a screen
-// class RequiredTalentsScreen extends StatelessWidget {
-//   const RequiredTalentsScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text("Required Talents")),
-//       body: Padding(
-//         padding: EdgeInsets.all(20.0.sp),
-//         child: SingleChildScrollView(
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               RequiredTalentsSelector(
-//                 onTalentsChanged: (talents) {
-//                   print('Talents updated: ${talents.length}');
-//                   // Handle talents update
-//                 },
-//                 initialTalents: [
-//                   TalentRequirement(type: 'Workshop', fee: '3000', currency: 'L.E'),
-//                   TalentRequirement(type: 'Photographer', fee: '3000', currency: 'L.E'),
-//                 ],
-//               ),
-//               const SizedBox(height: 24),
-//               SizedBox(
-//                 width: double.infinity,
-//                 height: 48,
-//                 child: ElevatedButton(
-//                   onPressed: () {
-//                     // Handle submit
-//                   },
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: Colors.blue,
-//                   ),
-//                   child: const Text(
-//                     'Next',
-//                     style: TextStyle(
-//                       color: Colors.white,
-//                       fontSize: 16,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

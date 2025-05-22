@@ -46,6 +46,8 @@
   "type": "نوع",
   "privacy": "الخصوصيه",
   "event_date": "تاريخ الحدث",
+  "event_date_from":"وقت بداية الحدث",
+  "event_date_to":"وقت نهاية الحدث",
   "cancel_this_event": "تاريخ الحدث",
   "statistics": "إحصائيات",
   "enrolled": "مسجل",
@@ -223,6 +225,12 @@
   "please_add_text_or_media": "من فضلك اكمل البيانات",
   "ok": "تم",
   "enter_post_title": "ادخل عنوان البوست",
-  "comments": "الكومنتات"
+  "comments": "الكومنتات",
+  "is_free": "هل هذا الحدث مجاني؟",
+  "ticket_price":"سعر التذكرة",
+  "enter_ticket_price":"ادخل سعر التذكرة"
 
+  
+  
+  
 }

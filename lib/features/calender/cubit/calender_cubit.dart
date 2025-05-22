@@ -21,13 +21,17 @@ class CalenderCubit extends Cubit<CalenderState> {
   CalenderRepo api;
   // TextEditingController locationController = TextEditingController();
   TextEditingController eventDateController = TextEditingController();
+  TextEditingController eventFromDateController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController titleOfTheEventController = TextEditingController();
+  TextEditingController ticketPriceController = TextEditingController();
   DateTime? selectedDate;
   List<CalendarEvent> events = [];
   List<File> validVideos = [];
   List<XFile>? myImages;
   List<File>? myImagesF;
+  bool isFree = true;
+  GetCountriesMainModelData? selectedCurrency;
 
   void addEvent({
     required String title,
@@ -44,40 +48,77 @@ class CalenderCubit extends Cubit<CalenderState> {
     emit(CalendarUpdated(List.from(events))); // إرسال نسخة جديدة من القائمة
   }
 
-  Future<void> selectDateTime(BuildContext context) async {
-    DateTime? date = await showDatePicker(
+  //!
+  Future<void> selectDateTime(BuildContext context,
+      {bool isFrom = false}) async {
+    DateTime? initialDate;
+    TimeOfDay initialTime = TimeOfDay.now();
+
+    if (isFrom && eventDateController.text.isNotEmpty) {
+      // End date: start from selected start date
+      try {
+        final startDate = DateFormat('yyyy-MM-dd \'at\' hh:mm a')
+            .parse(eventDateController.text);
+        initialDate = startDate;
+        initialTime = TimeOfDay.fromDateTime(startDate);
+      } catch (e) {
+        initialDate = DateTime.now();
+      }
+    } else if (!isFrom && eventDateController.text.isNotEmpty) {
+      // Start date: use stored value or today
+      try {
+        final startDate = DateFormat('yyyy-MM-dd \'at\' hh:mm a')
+            .parse(eventDateController.text);
+        initialDate = startDate;
+        initialTime = TimeOfDay.fromDateTime(startDate);
+      } catch (e) {
+        initialDate = DateTime.now();
+      }
+    } else {
+      initialDate = DateTime.now();
+      initialTime = TimeOfDay.now();
+    }
+
+    DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2100),
+      initialDate: initialDate,
+      firstDate: isFrom && eventDateController.text.isNotEmpty
+          ? DateFormat('yyyy-MM-dd \'at\' hh:mm a')
+              .parse(eventDateController.text)
+          : DateTime(2020),
+      lastDate: DateTime(3100),
     );
 
-    if (date != null) {
-      TimeOfDay? time = await showTimePicker(
+    if (pickedDate != null) {
+      TimeOfDay? pickedTime = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay.now(),
+        initialTime: initialTime,
       );
 
-      if (time != null) {
+      if (pickedTime != null) {
         DateTime finalDateTime = DateTime(
-          date.year,
-          date.month,
-          date.day,
-          time.hour,
-          time.minute,
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
         );
 
-        selectedDate = finalDateTime; // ✅ احفظ التاريخ المختار
+        selectedDate = finalDateTime;
 
         String formattedDateTime =
-            DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
-        eventDateController.text = formattedDateTime;
+            DateFormat('yyyy-MM-dd \'at\' hh:mm a').format(finalDateTime);
+
+        if (isFrom) {
+          eventFromDateController.text = formattedDateTime;
+        } else {
+          eventDateController.text = formattedDateTime;
+        }
 
         emit(DateTimeSelected(formattedDateTime));
       }
     }
   }
-  //!
 
   //! get countries
 

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:chewie/chewie.dart';
-import 'package:flutter/material.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:video_player/video_player.dart';
 
@@ -76,8 +75,9 @@ class _VideoPlayerScreenFileState extends State<VideoPlayerScreenFile> {
             ],
           ),
           body: Center(
-            child: _chewieController != null &&
-                    _chewieController!.videoPlayerController.value.isInitialized
+            child: (_chewieController != null &&
+                    _chewieController!
+                        .videoPlayerController.value.isInitialized)
                 ? Chewie(
                     controller: _chewieController!,
                   )
