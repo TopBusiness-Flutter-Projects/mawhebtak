@@ -35,7 +35,7 @@ class _DropdownTextFieldWidgetState extends State<DropdownTextFieldWidget> {
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _overlayEntry = _createOverlayEntry();
-        Overlay.of(context)?.insert(_overlayEntry!);
+        Overlay.of(context).insert(_overlayEntry!);
         _isDropdownOpen = true;
       });
     }

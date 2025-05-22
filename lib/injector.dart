@@ -46,6 +46,7 @@ import 'features/about_us/data/repos/about_us_repo.dart';
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/change_langauge/data/repos/change_language_repo.dart';
 
+import 'features/location/cubit/location_cubit.dart';
 import 'features/main_screen/data/repo/main_repo_impl.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/profile/data/repo/profile_repo_impl.dart';
@@ -155,15 +156,12 @@ Future<void> setupCubit() async {
     () => AssistantCubit(
       serviceLocator(),
     ),
-  ); serviceLocator.registerFactory(
-    () => TopTalentsCubit(
-
-    ),
-  );serviceLocator.registerFactory(
-    () => FeedsCubit(
-
-    )
   );
+  serviceLocator.registerFactory(
+    () => TopTalentsCubit(),
+  );
+  serviceLocator.registerFactory(() => FeedsCubit());
+  serviceLocator.registerFactory(() => LocationCubit());
 }
 
 Future<void> setupRepo() async {
@@ -192,7 +190,8 @@ Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => CastingRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => JobsRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => AssistantRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => TopTalentsRepository(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => TopTalentsRepository(serviceLocator()));
   serviceLocator.registerLazySingleton(() => FeedsRepository(serviceLocator()));
 }
 

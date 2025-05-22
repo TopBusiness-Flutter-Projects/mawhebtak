@@ -5,6 +5,7 @@ import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/notification_services/notification_service.dart';
+import '../../../location/cubit/location_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -61,8 +62,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    // context.read<SplashCubit>().getAdsOfApp();
-
+    context.read<LocationCubit>().checkAndRequestLocationPermission(context);
     _startDelay();
   }
 

@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:chewie/chewie.dart';
-import 'package:flutter/material.dart';
+
 import 'package:video_player/video_player.dart';
+
+import '../../../../core/exports.dart';
 
 class VideoPlayerScreenFile extends StatefulWidget {
   final File? videoFile;
@@ -80,7 +82,7 @@ class _VideoPlayerScreenFileState extends State<VideoPlayerScreenFile> {
                 ? Chewie(
                     controller: _chewieController!,
                   )
-                : Image.asset('assets/images/profile.png'),
+                : Image.asset(ImageAssets.appIconWhite),
           ),
         ),
       ),

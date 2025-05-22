@@ -15,6 +15,8 @@ import '../../../core/utils/custom_pick_media.dart';
 import '../../../core/widgets/full_screen_video_view.dart';
 import '../../feeds/screens/widgets/image_view_file.dart';
 import '../../feeds/screens/widgets/video_from_file_screen.dart';
+import '../../location/screens/full_screen_map.dart';
+import '../data/model/countries_model.dart';
 
 class NewEventScreen extends StatefulWidget {
   const NewEventScreen({super.key});
@@ -25,12 +27,11 @@ class NewEventScreen extends StatefulWidget {
 
 class _NewEventScreenState extends State<NewEventScreen> {
   int currentStep = 0;
-  bool isFree = true;
-  final TextEditingController ticketPriceController = TextEditingController();
 
   List<TalentRequirement> talentRequirements = [
     TalentRequirement(type: 'Workshop', fee: '3000', currency: 'L.E'),
   ];
+  GlobalKey<FormState> formKeyInformation = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         Text(
                           'event_created'.tr(),
                           style: TextStyle(
-                            fontSize: 20.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -78,7 +79,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                           textAlign: TextAlign.center,
                           'event_created_subtext'.tr(),
                           style: TextStyle(
-                            fontSize: 20.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -137,7 +138,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                 'back'.tr(),
                                 style: TextStyle(
                                   color: AppColors.primary,
-                                  fontSize: 20.sp,
+                                  fontSize: 18.sp,
                                 ),
                               ),
                             ),
@@ -147,9 +148,12 @@ class _NewEventScreenState extends State<NewEventScreen> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (currentStep == 0) {
-                                    setState(() {
-                                      currentStep = 1;
-                                    });
+                                    if (formKeyInformation.currentState!
+                                        .validate()) {
+                                      setState(() {
+                                        currentStep = 1;
+                                      });
+                                    }
                                   } else if (currentStep == 1) {
                                     setState(() {
                                       currentStep = 2;
@@ -180,7 +184,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                       : 'create_event'.tr(),
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 20.sp,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -200,94 +204,44 @@ class _NewEventScreenState extends State<NewEventScreen> {
   }
 
   Widget _buildEventInformationStep(CalenderCubit cubit) {
-    return Column(
-      children: [
-        //! Select Image
-        CustomPickMediaWidget(
-          onTap: () {
-            log('00');
-            cubit.showSelectionBottomSheet(context);
-          },
-        ),
-        SizedBox(height: 10.h),
-        SizedBox(
-          height:
-              (cubit.myImages?.length == 0 || cubit.myImages == null) ? 0 : 80,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: (cubit.myImages?.length ?? 0),
-            separatorBuilder: (_, __) => const SizedBox(width: 10),
-            itemBuilder: (context, index) {
-              return Stack(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ImageFileView(
-                                  image: cubit.myImages![index].path)));
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.file(
-                        File(cubit.myImages![index].path),
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        cubit.deleteImage(File(cubit.myImages![index].path));
-                      },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.black45,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.close,
-                            color: Colors.white, size: 18),
-                      ),
-                    ),
-                  ),
-                ],
-              );
+    return Form(
+      key: formKeyInformation,
+      child: Column(
+        children: [
+          //! Select Image
+          CustomPickMediaWidget(
+            onTap: () {
+              log('00');
+              cubit.showSelectionBottomSheet(context);
             },
           ),
-        ),
-        SizedBox(height: 10.h),
-        SizedBox(
-          height: cubit.validVideos.isEmpty ? 0 : 80,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: (cubit.validVideos.length),
-            separatorBuilder: (_, __) => const SizedBox(width: 10),
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VideoPlayerScreenFile(
-                                videoFile: File(cubit.validVideos[index].path),
-                              )));
-                },
-                child: Stack(
+          SizedBox(height: 10.h),
+          SizedBox(
+            height: (cubit.myImages?.length == 0 || cubit.myImages == null)
+                ? 0
+                : 80.h,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: (cubit.myImages?.length ?? 0),
+              separatorBuilder: (_, __) => const SizedBox(width: 10),
+              itemBuilder: (context, index) {
+                return Stack(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Container(
-                        width: 80,
-                        height: 80,
-                        color: Colors.black12,
-                        child: const Center(
-                          child: Icon(Icons.play_circle_fill,
-                              size: 40, color: Colors.grey),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ImageFileView(
+                                    image: cubit.myImages![index].path)));
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.file(
+                          File(cubit.myImages![index].path),
+                          width: 80.w,
+                          height: 80.w,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -296,10 +250,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       right: 0,
                       child: GestureDetector(
                         onTap: () {
-                          setState(() {
-                            cubit.deleteVideo(
-                                File(cubit.validVideos[index].path));
-                          });
+                          cubit.deleteImage(File(cubit.myImages![index].path));
                         },
                         child: Container(
                           decoration: const BoxDecoration(
@@ -312,134 +263,275 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       ),
                     ),
                   ],
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
-        ),
-
-        //! is free
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.event_available, color: AppColors.primary),
-                        SizedBox(width: 10.w),
-                        Text(
-                          'Is this event free?',
-                          style: getMediumStyle(
-                              fontSize: 20.sp, color: AppColors.grayDark),
+          SizedBox(height: 10.h),
+          SizedBox(
+            height: cubit.validVideos.isEmpty ? 0 : 80,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: (cubit.validVideos.length),
+              separatorBuilder: (_, __) => const SizedBox(width: 10),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideoPlayerScreenFile(
+                                  videoFile:
+                                      File(cubit.validVideos[index].path),
+                                )));
+                  },
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          width: 80.w,
+                          height: 80.w,
+                          color: Colors.black12,
+                          child: const Center(
+                            child: Icon(Icons.play_circle_fill,
+                                size: 40, color: Colors.grey),
+                          ),
                         ),
-                      ],
-                    ),
-                    Switch(
-                      value: isFree,
-                      activeColor: AppColors.primary,
-                      onChanged: (value) {
-                        setState(() {
-                          isFree = value;
-                          if (isFree) ticketPriceController.clear();
-                        });
+                      ),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              cubit.deleteVideo(
+                                  File(cubit.validVideos[index].path));
+                            });
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.black45,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.close,
+                                color: Colors.white, size: 18),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+
+          //! is free
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.event_available, color: AppColors.primary),
+                          SizedBox(width: 10.w),
+                          Text(
+                            'is_free'.tr(),
+                            style: getMediumStyle(
+                                fontSize: 18.sp, color: AppColors.grayDark),
+                          ),
+                        ],
+                      ),
+                      Switch(
+                        value: cubit.isFree,
+                        activeColor: AppColors.primary,
+                        onChanged: (value) {
+                          setState(() {
+                            cubit.isFree = !cubit.isFree;
+                            if (cubit.isFree)
+                              cubit.ticketPriceController.clear();
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                if (!cubit.isFree)
+                  CustomTextField(
+                    keyboardType: TextInputType.number,
+                    validator: (p0) {
+                      if (p0!.isEmpty) {
+                        return 'enter_ticket_price'.tr();
+                      }
+                      return null;
+                    },
+                    controller: cubit.ticketPriceController,
+                    hintText: 'ticket_price'.tr(),
+                    hintTextSize: 18.sp,
+                    enabled: true,
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        _showCurrencyPicker(
+                            cubit.countriesMainModel?.data ?? []);
                       },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            cubit.selectedCurrency?.currency ?? 'L.E',
+                            style: getRegularStyle(
+                                color: Colors.blue, fontSize: 14.sp),
+                          ),
+                          const Icon(Icons.keyboard_arrow_down_sharp,
+                              color: Colors.blue),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
+                _label("title_of_event".tr()),
+                CustomTextField(
+                  validator: (p0) {
+                    if (p0!.isEmpty) {
+                      return 'title_of_event'.tr();
+                    }
+                    return null;
+                  },
+                  controller: cubit.titleOfTheEventController,
+                  hintText: "title_of_event".tr(),
                 ),
-              ),
-              if (!isFree)
-                DropdownTextFieldWidget(
-                  isWithCurrency: true,
-                  dataLists: const ["100", "200", "300"],
-                  hintText: '1000',
+                //! Time
+                _label("event_date_from".tr()),
+                CustomTextField(
+                  controller: cubit.eventDateController,
+                  suffixIcon: Padding(
+                    padding: EdgeInsets.all(10.0.r),
+                    child: SvgPicture.asset(AppIcons.dateIcon),
+                  ),
+                  onTap: () {
+                    cubit.selectDateTime(context);
+                  },
+                  hintTextSize: 18.sp,
+                  hintText: "event_date_from".tr(),
                 ),
-              _label("title_of_event".tr()),
-              CustomTextField(
-                controller: cubit.titleOfTheEventController,
-                hintText: "",
-              ),
-              _label("event_date".tr()),
-              CustomTextField(
-                controller: cubit.eventDateController,
-                suffixIcon: Padding(
-                  padding: EdgeInsets.all(10.0.r),
-                  child: SvgPicture.asset(AppIcons.dateIcon),
+                _label("event_date_to".tr()),
+                CustomTextField(
+                  controller: cubit.eventFromDateController,
+                  suffixIcon: Padding(
+                    padding: EdgeInsets.all(10.0.r),
+                    child: SvgPicture.asset(AppIcons.dateIcon),
+                  ),
+                  onTap: () {
+                    cubit.selectDateTime(context, isFrom: true);
+                  },
+                  hintTextSize: 18.sp,
+                  hintText: "event_date_to".tr(),
                 ),
-                onTap: () {
-                  cubit.selectDateTime(context);
-                },
-                hintTextSize: 20.sp,
-                hintText: "",
-              ),
-              _label("select_location".tr()),
-              CustomTextField(
-                onTap: () {},
-                hintTextSize: 20.sp,
-                hintText: "",
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: InkWell(
+                //! Location
+                _label("select_location".tr()),
+                CustomTextField(
                   onTap: () {},
-                  child: Text(
-                    "open_map".tr(),
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.primary,
-                      decoration: TextDecoration.underline,
+                  hintTextSize: 18.sp,
+                  validator: (p0) {
+                    if (p0!.isEmpty) {
+                      return 'select_location'.tr();
+                    }
+                    return null;
+                  },
+                  hintText: "select_location".tr(),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FullScreenMap()));
+                    },
+                    child: Text(
+                      "open_map".tr(),
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.primary,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              _label("description".tr()),
-              CustomTextField(
-                controller: cubit.descriptionController,
-                onTap: () {},
-                isMessage: true,
-                hintTextSize: 20.sp,
-                hintText: "",
-              ),
-              10.h.verticalSpace,
-              PublicPrivateToggle(
-                onToggle: (isPublic) {},
-              ),
-              20.h.verticalSpace,
-              Text(
-                'event_type'.tr(),
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87,
+                _label("description".tr()),
+                CustomTextField(
+                  controller: cubit.descriptionController,
+                  onTap: () {},
+                  isMessage: true,
+                  hintTextSize: 18.sp,
+                  hintText: "",
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.h),
-                child: DropdownTextFieldWidget(
-                  dataLists: const [
-                    'Workshop',
-                    'Conference',
-                    'Seminar',
-                    'Webinar',
-                    'Meeting'
-                  ],
-                  hintText: 'Workshop',
+                10.h.verticalSpace,
+                PublicPrivateToggle(
+                  onToggle: (isPublic) {},
                 ),
-              ),
-            ],
+                20.h.verticalSpace,
+                Text(
+                  'event_type'.tr(),
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20.h),
+                  child: DropdownTextFieldWidget(
+                    dataLists: const [
+                      'Workshop',
+                      'Conference',
+                      'Seminar',
+                      'Webinar',
+                      'Meeting'
+                    ],
+                    hintText: 'Workshop',
+                  ),
+                ),
+              ],
+            ),
           ),
+        ],
+      ),
+    );
+  }
+
+  void _showCurrencyPicker(List<GetCountriesMainModelData> currencyList) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: EdgeInsets.symmetric(vertical: 20.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: currencyList.map((currency) {
+            return ListTile(
+              title: Text(currency.currency ?? '', style: getRegularStyle()),
+              onTap: () {
+                setState(() =>
+                    context.read<CalenderCubit>().selectedCurrency = currency);
+
+                Navigator.pop(context);
+              },
+            );
+          }).toList(),
         ),
-      ],
+      ),
     );
   }
 
@@ -463,7 +555,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
         style: TextStyle(
           color: AppColors.blackLite,
           fontWeight: FontWeight.w400,
-          fontSize: 20.sp,
+          fontSize: 18.sp,
         ),
       ),
     );

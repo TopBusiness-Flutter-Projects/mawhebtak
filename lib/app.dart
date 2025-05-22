@@ -34,6 +34,7 @@ import 'features/change_langauge/cubit/change_language_cubit.dart';
 import 'features/events/cubit/event_cubit.dart';
 import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
+import 'features/location/cubit/location_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/referral_code/cubit/about_us_cubit.dart';
 import 'initialization.dart';
@@ -131,6 +132,9 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) =>
                 injector.serviceLocator<FeedsCubit>()..postsData(page: '1'),
+          ),
+          BlocProvider(
+            create: (_) => injector.serviceLocator<LocationCubit>(),
           ),
         ],
         child: GetMaterialApp(
