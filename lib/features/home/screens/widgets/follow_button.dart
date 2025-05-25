@@ -46,7 +46,7 @@ class CustomContainerButton extends StatelessWidget {
               color:textColor ??AppColors.white,
               fontFamily: AppStrings.fontFamily,
               fontWeight:FontWeight.w400,
-              fontSize: 20.sp
+              fontSize: 18.sp
           ),
         ),
       ),
