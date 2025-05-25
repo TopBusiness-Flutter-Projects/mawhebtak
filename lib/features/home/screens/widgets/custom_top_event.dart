@@ -91,7 +91,7 @@ class CustomTopEventList extends StatelessWidget {
                                 SizedBox(width: 5.w),
                                 Expanded(
                                   child: Text(
-                                    topEvent?.price ?? "",
+                                    topEvent?.from ?? "",
                                     style: getRegularStyle(
                                         fontSize: 14.sp,
                                         color: AppColors.white),
