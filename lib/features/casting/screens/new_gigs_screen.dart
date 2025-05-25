@@ -9,53 +9,29 @@ import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
+import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
+import 'package:mawhebtak/features/location/cubit/location_state.dart';
+import 'package:mawhebtak/features/location/screens/full_screen_map.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
 
 class NewGigsScreen extends StatefulWidget {
-  const NewGigsScreen({super.key});
+   NewGigsScreen({super.key});
 
   @override
   State<NewGigsScreen> createState() => _NewGigsScreenState();
 }
 
 class _NewGigsScreenState extends State<NewGigsScreen> {
-  void _showCurrencyPicker(List<GetCountriesMainModelData> currencyList) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        padding: EdgeInsets.symmetric(vertical: 20.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: currencyList.map((currency) {
-            return ListTile(
-              title: Text(currency.currency ?? '', style: getRegularStyle()),
-              onTap: () {
-                setState(() =>
-                    context.read<CalenderCubit>().selectedCurrency = currency);
-
-                Navigator.pop(context);
-              },
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
   bool isOpen = false;
-  @override
+ @override
   void initState() {
-    print("idddddddd${context.read<CastingCubit>().categoryModel?.data?.length}");
-    context.read<CastingCubit>().getCategory();
-    context.read<CastingCubit>().getUserFromPreferences();
-    context.read<CastingCubit>().loadUserFromPreferences();
+   context.read<CastingCubit>().getCategory();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CastingCubit, CastingState>(
-      builder: (BuildContext context, state) {
+      builder: (context, state) {
         var cubit = context.read<CastingCubit>();
         return Scaffold(
           body: SafeArea(
@@ -108,7 +84,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                   top: 10.h,
                                   left: 10.w,
                                   right: 10.w),
-                              underline: SizedBox(),
+                              underline: const SizedBox(),
                               onTap: () {},
                               icon: const Icon(Icons.keyboard_arrow_down),
                               iconEnabledColor: AppColors.secondPrimary,
@@ -124,12 +100,10 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               }).toList(),
                               onChanged: (GetCountriesMainModelData? value) {
                                 isOpen = !isOpen;
-                                setState(() {
-                                  cubit.selectedCategory = value;
-                                  cubit.subCategoryId = value?.id;
-                                  cubit.getSubCategory(
-                                      categoryId: value?.id.toString() ?? "");
-                                });
+                                cubit.selectedCategory = value;
+                                cubit.subCategoryId = value?.id;
+                                cubit.getSubCategory(
+                                    categoryId: value?.id.toString() ?? "");
                               },
                             ),
                           ),
@@ -168,6 +142,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     iconEnabledColor: AppColors.secondPrimary,
                                     isExpanded: true,
                                     dropdownColor: AppColors.grayLite,
+
                                     hint: Text('choose_category'.tr()),
                                     value: cubit.selectedSubCategory,
                                     items: cubit.subCategoryModel?.data
@@ -185,10 +160,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                         (element) => element.id == value?.id,
                                         orElse: () => value!,
                                       );
-                    
-                                      setState(() {
-                                        cubit.selectedSubCategory = subCategory;
-                                      });
+                                      cubit.selectedSubCategory = subCategory;
                                     },
                                   ),
                                 ),
@@ -216,10 +188,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               enabled: true,
                               suffixIcon: InkWell(
                                 onTap: () {
-                                  context.read<CalenderCubit>().getAllCountries();
-                                  _showCurrencyPicker(
-                                      cubit.countriesMainModel?.data ?? []);
-                                  setState(() {});
+                                  showCurrencyPicker(
+                                      cubit.countriesMainModel?.data ?? [],context);
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -240,22 +210,44 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                             "select_location".tr(),
                             style: getRegularStyle(fontSize: 14.sp),
                           ),
-                          CustomTextField(
-                            hintText: "".tr(),
-                            hintTextSize: 18.sp,
+                          BlocBuilder<LocationCubit, LocationState>(
+                            builder: (context, state) {
+                              return CustomTextField(
+                                hintTextSize: 18.sp,
+                                controller: cubit.locationAddressController,
+                                validator: (p0) {
+                                  if (p0!.isEmpty) {
+                                    return 'select_location'.tr();
+                                  }
+                                  return null;
+                                },
+                                hintText: "select_location".tr(),
+                              );
+                            },
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                              alignment: Alignment.centerRight,
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FullScreenMap(
+                                          type: 'add_gig',
+                                        )));
+                              },
                               child: Text(
-                                textAlign: TextAlign.end,
                                 "open_map".tr(),
-                                style: getUnderLine(
-                                    fontSize: 14.sp, color: AppColors.primary),
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.primary,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ),
                           ),
+
                           Text(
                             "description".tr(),
                             style: getRegularStyle(fontSize: 14.sp),
@@ -352,7 +344,9 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
               ],
             ),
           ),
-          bottomNavigationBar: Padding(
+          bottomNavigationBar:
+
+          Padding(
             padding: const EdgeInsets.all(20.0),
             child: CustomContainerButton(
               height: 48.h,
@@ -365,6 +359,27 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
           ),
         );
       },
+    );
+  }
+
+  void showCurrencyPicker(List<GetCountriesMainModelData> currencyList,BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: EdgeInsets.symmetric(vertical: 20.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: currencyList.map((currency) {
+            return ListTile(
+              title: Text(currency.currency ?? '', style: getRegularStyle()),
+              onTap: () {
+                context.read<CalenderCubit>().selectedCurrency = currency;
+                Navigator.pop(context);
+              },
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 }

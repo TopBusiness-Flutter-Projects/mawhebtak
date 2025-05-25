@@ -9,6 +9,7 @@ import 'package:mawhebtak/features/calender/cubit/calender_state.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/public_and_private_widget.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/required_talents_selector_widget.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/stepper_widget.dart';
+import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 import 'package:video_player/video_player.dart';
 import '../../../core/exports.dart';
@@ -387,7 +388,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
                     enabled: true,
                     suffixIcon: InkWell(
                       onTap: () {
-                        _showCurrencyPicker(
+
+                        showCurrencyPicker(
                             cubit.countriesMainModel?.data ?? []);
                       },
                       child: Row(
@@ -554,7 +556,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
     );
   }
 
-  void _showCurrencyPicker(List<GetCountriesMainModelData> currencyList) {
+  void showCurrencyPicker(List<GetCountriesMainModelData> currencyList) {
     showModalBottomSheet(
       context: context,
       builder: (context) => Container(

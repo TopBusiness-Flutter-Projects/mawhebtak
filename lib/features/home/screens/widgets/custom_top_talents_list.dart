@@ -62,48 +62,46 @@ class CustomTopTalentsList extends StatelessWidget {
                   ),
                 ),
           Positioned(
-            bottom: 10.h,
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    topTalentsData?.name ?? "",
-                    maxLines: 1,
-                    style: getSemiBoldStyle(
-                        color: AppColors.white, fontSize: 13.sp),
-                    textAlign: TextAlign.center,
+            bottom: 40.h,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  topTalentsData?.name ?? "",
+                  maxLines: 1,
+                  style: getSemiBoldStyle(
+                      color: AppColors.white, fontSize: 13.sp),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  topTalentsData?.headline ?? "Talent / Actor Expert",
+                  maxLines: 1,
+                  style: getRegularStyle(
+                      color: AppColors.grayText, fontSize: 13.sp),
+                  textAlign: TextAlign.center,
+                ),
+                5.verticalSpace,
+                Text(
+                  "${topTalentsData?.followersCount ?? 20}  followers",
+                  maxLines: 1,
+                  style: getMediumStyle(
+                      color: AppColors.grayText, fontSize: 13.sp),
+                  textAlign: TextAlign.center,
+                ),
+                5.verticalSpace,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                  child: CustomContainerButton(
+                    height: 40.h,
+                    title: "follow".tr(),
+                    color: AppColors.white,
+                    textColor: AppColors.primary,
+                    width: 129.w,
                   ),
-                  Text(
-                    topTalentsData?.headline ?? "Talent / Actor Expert",
-                    maxLines: 1,
-                    style: getRegularStyle(
-                        color: AppColors.grayText, fontSize: 13.sp),
-                    textAlign: TextAlign.center,
-                  ),
-                  5.verticalSpace,
-                  Text(
-                    "${topTalentsData?.followersCount ?? 20}  followers",
-                    maxLines: 1,
-                    style: getMediumStyle(
-                        color: AppColors.grayText, fontSize: 13.sp),
-                    textAlign: TextAlign.center,
-                  ),
-                  5.verticalSpace,
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                    child: CustomContainerButton(
-                      height: 40.h,
-                      title: "follow".tr(),
-                      color: AppColors.white,
-                      textColor: AppColors.primary,
-                      width: 129.w,
-                    ),
-                  ),
-                  10.h.verticalSpace,
-                ],
-              ),
+                ),
+                10.h.verticalSpace,
+              ],
             ),
           ),
         ],

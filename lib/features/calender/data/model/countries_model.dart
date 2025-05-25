@@ -47,8 +47,19 @@ class GetCountriesMainModelData {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "currency": currency,
-      };
+    "id": id,
+    "name": name,
+    "currency": currency,
+  };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is GetCountriesMainModelData &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
+

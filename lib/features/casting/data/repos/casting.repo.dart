@@ -6,6 +6,8 @@ import 'package:mawhebtak/core/api/base_api_consumer.dart';
 import 'package:mawhebtak/core/api/end_points.dart';
 import 'package:mawhebtak/core/error/exceptions.dart';
 import 'package:mawhebtak/core/error/failures.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/casting/data/model/add_gig_model.dart';
 
 import '../../../calender/data/model/countries_model.dart';
@@ -15,7 +17,6 @@ class CastingRepo {
   CastingRepo(this.api);
   Future<Either<Failure, AddNewGigModel>> addNewGig({
     required List<File> mediaFiles,
-    required int userId,
     required String subCategoryId,
     required String title,
     required String description,
@@ -25,10 +26,12 @@ class CastingRepo {
     required String price,
   }) async {
     try {
+      LoginModel? user;
+      user = await Preferences.instance.getUserModel();
       var response = await api
           .post(EndPoints.storeDataUrl, formDataIsEnabled: true, body: {
         "model": "Gig",
-        "user_id": userId,
+        "user_id": user.data?.id,
         "sub_category_id": subCategoryId,
         "title": title,
         "description": description,
