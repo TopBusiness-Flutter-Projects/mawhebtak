@@ -43,6 +43,7 @@ class EventAndGigsModel {
   String? description;
   String? location;
   String? price;
+  String? from;
 
   EventAndGigsModel({
     this.id,
@@ -52,6 +53,7 @@ class EventAndGigsModel {
     this.location,
     this.description,
     this.price,
+    this.from,
   });
 
   factory EventAndGigsModel.fromJson(Map<String, dynamic> json) => EventAndGigsModel(
@@ -61,7 +63,8 @@ class EventAndGigsModel {
     media: json["media"] == null ? [] : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
     description: json["description"],
     location: json["location"],
-    price: json["price"]
+    price: json["price"],
+    from:json["from"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -70,6 +73,7 @@ class EventAndGigsModel {
     "title": title,
     "media": media == null ? [] : List<dynamic>.from(media!.map((x) => x.toJson())),
     "description": description,
-    "price":price
+    "price":price,
+    "from" :from
   };
 }
