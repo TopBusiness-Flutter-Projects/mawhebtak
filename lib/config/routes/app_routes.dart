@@ -74,7 +74,8 @@ class Routes {
   static const String followersScreen = '/followersScreen';
   static const String writePostScreen = '/writePostScreen';
   static const String newGigsRoute = '/newGigsRoute';
-  static const String detailsOfMainCategoryGigsRoute = '/detailsOfMainCategoryGigsRoute';
+  static const String detailsOfMainCategoryGigsRoute =
+      '/detailsOfMainCategoryGigsRoute';
   static const String gigsDetailsScreen = '/gigsDetailsScreen';
   static const String feedsScreen = '/feedsScreen';
   static const String announcementScreen = '/announcementScreen';
@@ -128,15 +129,15 @@ class AppRoutes {
         );
       case Routes.newGigsRoute:
         return PageTransition(
-          child:  NewGigsScreen(),
+          child: NewGigsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.detailsOfMainCategoryGigsRoute:
-           String type = settings.arguments as String;
+      case Routes.detailsOfMainCategoryGigsRoute:
+        String type = settings.arguments as String;
         return PageTransition(
-          child:   DetailsOfMainCategoryGigs(
+          child: DetailsOfMainCategoryGigs(
             type: type,
           ),
           type: PageTransitionType.fade,

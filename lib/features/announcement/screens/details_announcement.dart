@@ -9,42 +9,57 @@ class DetailsAnnouncementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit=context.read<AnnouncementCubit>();
+    var cubit = context.read<AnnouncementCubit>();
     return Scaffold(
       backgroundColor: AppColors.grayLite,
-      body: BlocBuilder<AnnouncementCubit, AnnouncementState>(builder: (BuildContext context, state) { return  Scaffold(body:
-      SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          SizedBox(height: 20.h,),
-          CustomSimpleAppbar(title: "details".tr()),
-          SizedBox(height: getHeightSize(context)/22),
-          const CustomAnnouncementWidget(isAnnouncements: true,),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text("Description",style: getSemiBoldStyle(fontSize: 15.sp,color: AppColors.darkGray),),
-        ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-      
-                style: getRegularStyle(fontSize: 15.sp,color: AppColors.gray666),
-                  "Hi show my latest scenes with an amazing team Let’s start our work. Hi show my latest scenes with an amazing team Let’s start our work. Hi show my latest scenes with an amazing team Let’s start our work. Hi show my latest scenes with an amazing team Let’s start our work."),
+      body: BlocBuilder<AnnouncementCubit, AnnouncementState>(
+        builder: (BuildContext context, state) {
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  CustomSimpleAppbar(title: "details".tr()),
+                  SizedBox(height: getHeightSize(context) / 22),
+                  SizedBox(
+                      height: getHeightSize(context) / 2,
+                      child: const CustomAnnouncementWidget(
+                          isAnnouncements: true)),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Description",
+                      style: getSemiBoldStyle(
+                          fontSize: 15.sp, color: AppColors.darkGray),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                        style: getRegularStyle(
+                            fontSize: 15.sp, color: AppColors.gray666),
+                        "Hi show my latest scenes with an amazing team Let’s start our work. Hi show my latest scenes with an amazing team Let’s start our work. Hi show my latest scenes with an amazing team Let’s start our work. Hi show my latest scenes with an amazing team Let’s start our work."),
+                  ),
+                  SizedBox(
+                    height: getHeightSize(context) / 36,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: CustomContainerButton(
+                      color: AppColors.primary,
+                      title: "Request this product",
+                      height: 50.h,
+                    ),
+                  )
+                ],
+              ),
             ),
-            SizedBox(height: getHeightSize(context)/36,),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: CustomContainerButton(
-                color: AppColors.primary,
-                title: "Request this product",height: 50.h,),
-            )
-        
-        ],),
+          );
+        },
       ),
-      
-      
-      ); },),
     );
   }
 }

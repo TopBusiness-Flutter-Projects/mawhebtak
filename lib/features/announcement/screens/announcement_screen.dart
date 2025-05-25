@@ -38,9 +38,10 @@ class AnnouncementScreen extends StatelessWidget {
                   },
                 ),
               ),
-              CustomAnnouncementWidget(
-                isAnnouncements: true,
-              ),
+              SizedBox(
+                  height: 500.h,
+                  width: double.infinity,
+                  child: CustomAnnouncementWidget(isAnnouncements: true)),
             ],
           ),
           floatingActionButton: FloatingActionButton(

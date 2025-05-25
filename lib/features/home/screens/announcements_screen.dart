@@ -22,9 +22,11 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
 
   _scrollListener() {
     if (scrollController.position.maxScrollExtent == scrollController.offset) {
-      if (context.read<AnnouncementsCubit>().announcements?.links?.next != null) {
+      if (context.read<AnnouncementsCubit>().announcements?.links?.next !=
+          null) {
         Uri uri = Uri.parse(
-            context.read<AnnouncementsCubit>().announcements?.links?.next ?? "");
+            context.read<AnnouncementsCubit>().announcements?.links?.next ??
+                "");
         String? page = uri.queryParameters['page'];
         context
             .read<AnnouncementsCubit>()
@@ -32,11 +34,13 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
       }
     }
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<AnnouncementsCubit, AnnouncementsState>(
           builder: (context, state) {
-        var announcementsData = context.read<AnnouncementsCubit>().announcements;
+        var announcementsData =
+            context.read<AnnouncementsCubit>().announcements;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,12 +57,19 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
                 ),
               AnnouncementsStateError() => Expanded(
                   child: Center(child: Text(state.errorMessage.toString()))),
-              AnnouncementsStateLoaded()  || AnnouncementsStateLoadingMore()=> Expanded(
+              AnnouncementsStateLoaded() ||
+              AnnouncementsStateLoadingMore() =>
+                Expanded(
                     child: Padding(
                   padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                  child: ListView.builder(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisSpacing: 8.h,
+                        crossAxisSpacing: 8.w,
+                        childAspectRatio: 0.7),
                     controller: scrollController,
-                   shrinkWrap: true,
+                    shrinkWrap: true,
                     itemBuilder: (context, index) => CustomAnnouncementWidget(
                       announcement: announcementsData?.data?[index],
                       isLeftPadding: index == 0 ? true : false,
@@ -70,7 +81,6 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
                     itemCount: announcementsData?.data?.length ?? 0,
                   ),
                 )),
-
             },
             if (state is AnnouncementsStateLoadingMore)
               const CustomLoadingIndicator(),

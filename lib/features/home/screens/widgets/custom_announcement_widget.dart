@@ -12,7 +12,8 @@ class CustomAnnouncementWidget extends StatefulWidget {
     this.isLeftPadding,
     this.isRightPadding,
     this.isAnnouncements,
-    this.isFav, this.announcement,
+    this.isFav,
+    this.announcement,
   });
 
   final bool? isLeftPadding;
@@ -22,11 +23,12 @@ class CustomAnnouncementWidget extends StatefulWidget {
   final Announcement? announcement;
 
   @override
-  State<CustomAnnouncementWidget> createState() => _CustomAnnouncementWidgetState();
+  State<CustomAnnouncementWidget> createState() =>
+      _CustomAnnouncementWidgetState();
 }
 
 class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
-   bool? isFav=false;
+  bool? isFav = false;
 
   @override
   void initState() {
@@ -36,21 +38,30 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsetsDirectional.only(
-        start: widget.isAnnouncements ?? false ? 0.0 : widget.isLeftPadding ?? false ? 16.w : 10.w,
-        end: widget.isAnnouncements ?? false ? 0.0 : widget.isRightPadding ?? false ? 16.w : 0.0,
-      ),
-      child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, Routes.detailsAnnouncementScreen);
-        },
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, Routes.detailsAnnouncementScreen);
+      },
+      child: Padding(
+        padding: EdgeInsetsDirectional.only(
+          start: widget.isAnnouncements ?? false
+              ? 0.0
+              : widget.isLeftPadding ?? false
+                  ? 16.w
+                  : 10.w,
+          end: widget.isAnnouncements ?? false
+              ? 0.0
+              : widget.isRightPadding ?? false
+                  ? 16.w
+                  : 0.0,
+        ),
         child: CustomContainerWithShadow(
           isShadow: false,
           reduis: widget.isAnnouncements ?? false ? 0.r : 8.r,
           width: widget.isAnnouncements ?? false ? double.infinity : 299.w,
           child: Padding(
-            padding: EdgeInsets.all(widget.isAnnouncements ?? false ? 20.0 : 8.0),
+            padding:
+                EdgeInsets.all(widget.isAnnouncements ?? false ? 20.0 : 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,110 +76,134 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                     SizedBox(width: 8.w),
                     widget.isAnnouncements ?? false
                         ? Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AutoSizeText(
+                                        widget.announcement?.user?.name ??
+                                            "Ahmed Mokhtar",
+                                        style: getMediumStyle(fontSize: 16.sp)),
+                                    AutoSizeText(
+                                      widget.announcement?.user?.headline ??
+                                          "Talent / Actor Expert",
+                                      style: getRegularStyle(
+                                          fontSize: 14.sp,
+                                          color: AppColors.grayLight),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          isFav = !isFav!;
+                                        });
+                                      },
+                                      child: Icon(
+                                        isFav!
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        size: 20.sp,
+                                        color: isFav!
+                                            ? AppColors.primary
+                                            : AppColors.lbny.withOpacity(0.5),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SvgPicture.asset(
+                                          AppIcons.settingIcon),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AutoSizeText(widget.announcement?.user?.name ?? "Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
                               AutoSizeText(
-                                widget.announcement?.user?.headline ?? "Talent / Actor Expert",
-                                style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayLight),
+                                  widget.announcement?.user?.name ??
+                                      "Ahmed Mokhtar",
+                                  style: getMediumStyle(fontSize: 16.sp)),
+                              AutoSizeText(
+                                widget.announcement?.user?.headline ??
+                                    "Talent / Actor Expert",
+                                style: getRegularStyle(
+                                    fontSize: 14.sp,
+                                    color: AppColors.grayLight),
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    isFav = !isFav!;
-                                  });
-                                },
-                                child: Icon(
-                                  isFav! ? Icons.favorite : Icons.favorite_border,
-                                  size: 20.sp,
-                                  color: isFav! ? AppColors.primary : AppColors.lbny.withOpacity(0.5),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SvgPicture.asset(AppIcons.settingIcon),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                        : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AutoSizeText(widget.announcement?.user?.name ?? "Ahmed Mokhtar", style: getMediumStyle(fontSize: 16.sp)),
-                        AutoSizeText(
-                          widget.announcement?.user?.headline ?? "Talent / Actor Expert",
-                          style: getRegularStyle(fontSize: 14.sp, color: AppColors.grayLight),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
                 SizedBox(height: 10.h),
-                (widget.announcement?.image == null)?
-
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16.r),
-                  child: SizedBox(
-                    child: Image.asset(
-                      ImageAssets.tasweerPhoto,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ):
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(16.r),
-                  child: SizedBox(
-
-                    child: Image.network(
-                      widget.announcement?.image ?? "",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                Flexible(
+                  child: (widget.announcement?.image == null)
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(16.r),
+                          child: SizedBox(
+                            child: Image.asset(
+                              ImageAssets.tasweerPhoto,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(16.r),
+                          child: SizedBox(
+                            child: Image.network(
+                              widget.announcement?.image ?? "",
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                          ),
+                        ),
                 ),
                 SizedBox(height: 8.h),
-                AutoSizeText(widget.announcement?.title ?? "Offer 20% on accessories photographs", style: getSemiBoldStyle(fontSize: 14.sp, color: AppColors.grayDark)),
+                AutoSizeText(
+                    widget.announcement?.title ??
+                        "Offer 20% on accessories photographs",
+                    style: getSemiBoldStyle(
+                        fontSize: 14.sp, color: AppColors.grayDark)),
                 SizedBox(height: 5.h),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(AppIcons.locationIcon),
-                            SizedBox(width: 3.w),
-                            Expanded(
-                              child: Text(
-                                widget.announcement?.location ?? "Cairo, Nasr City",
-                                style: getRegularStyle(color: AppColors.grayLight, fontSize: 14.sp),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
                         children: [
-                          SvgPicture.asset(AppIcons.dollarSign),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: AutoSizeText(
-                              "${widget.announcement?.price} L.E",
-                              style: getRegularStyle(fontSize: 14.sp, color: AppColors.blueLight),
+                          SvgPicture.asset(AppIcons.locationIcon),
+                          SizedBox(width: 3.w),
+                          Expanded(
+                            child: Text(
+                              widget.announcement?.location ??
+                                  "Cairo, Nasr City",
+                              style: getRegularStyle(
+                                  color: AppColors.grayLight, fontSize: 14.sp),
                             ),
-                          )
+                          ),
                         ],
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SvgPicture.asset(AppIcons.dollarSign),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: AutoSizeText(
+                            "${widget.announcement?.price} L.E",
+                            style: getRegularStyle(
+                                fontSize: 14.sp, color: AppColors.blueLight),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
                 )
               ],
             ),
