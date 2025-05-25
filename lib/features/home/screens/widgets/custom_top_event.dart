@@ -56,7 +56,7 @@ class CustomTopEventList extends StatelessWidget {
                     ? getWidthSize(context) / .9
                     : 287.w, // Match image width
                 child: Padding(
-                  padding:  EdgeInsets.all(8.0.r),
+                  padding: EdgeInsets.all(8.0.r),
                   child: Column(
                     mainAxisAlignment:
                         MainAxisAlignment.end, // Center vertically
@@ -69,7 +69,6 @@ class CustomTopEventList extends StatelessWidget {
                         style: getBoldStyle(
                           color: AppColors.white,
                           fontSize: 16.sp,
-
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -92,7 +91,7 @@ class CustomTopEventList extends StatelessWidget {
                                 SizedBox(width: 5.w),
                                 Expanded(
                                   child: Text(
-                                    topEvent?.from ?? "",
+                                    topEvent?.price ?? "",
                                     style: getRegularStyle(
                                         fontSize: 14.sp,
                                         color: AppColors.white),
@@ -101,7 +100,6 @@ class CustomTopEventList extends StatelessWidget {
                               ],
                             ),
                           ),
-
                           CustomContainerButton(
                             onTap: () {
                               Navigator.pushNamed(

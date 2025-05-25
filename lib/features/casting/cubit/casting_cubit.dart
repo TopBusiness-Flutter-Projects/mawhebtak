@@ -1,8 +1,7 @@
 import 'package:mawhebtak/core/exports.dart';
-import 'package:mawhebtak/core/preferences/preferences.dart';
-import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
+import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
-
+import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import '../../calender/data/model/countries_model.dart';
 import '../data/repos/casting.repo.dart';
 import 'casting_state.dart';
@@ -13,6 +12,7 @@ class CastingCubit extends Cubit<CastingState> {
   TextEditingController gigTitleController = TextEditingController();
   TextEditingController priceRangeController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController locationAddressController = TextEditingController();
   GetCountriesMainModel? categoryModel;
   GetCountriesMainModelData? selectedCategory;
   int? subCategoryId;
@@ -49,46 +49,53 @@ class CastingCubit extends Cubit<CastingState> {
   }
 
   addNewGig({required BuildContext context}) async {
+    AppWidgets.create2ProgressDialog(context);
     emit(AddNewGigStateLoading());
+
     try {
       final res = await castingRepo.addNewGig(
         title: gigTitleController.text,
         price: context.read<CalenderCubit>().ticketPriceController.text,
         description: descriptionController.text,
-        lat: "31.14234242",
-        long: "30.2424243",
-        userId: user?.data?.id ?? 0,
+        lat: context
+                .read<LocationCubit>()
+                .selectedLocation
+                ?.latitude
+                .toString() ??
+            "0.0",
+        long: context
+                .read<LocationCubit>()
+                .selectedLocation
+                ?.longitude
+                .toString() ??
+            "0.0",
         mediaFiles: [
           ...context.read<CalenderCubit>().myImagesF ?? [],
           ...context.read<CalenderCubit>().validVideos
         ],
-        location: "عزبه كفر الحله",
+        location: locationAddressController.text,
         subCategoryId: subCategoryId.toString(),
       );
       res.fold((l) {
+        errorGetBar(l.toString());
         emit(AddNewGigStateError(l.toString()));
       }, (r) {
-        emit(AddNewGigStateLoaded());
-        successGetBar(r.msg);
-        Navigator.pop(context);
+        successGetBar(r.msg.toString());
         context.read<CalenderCubit>().ticketPriceController.clear();
         gigTitleController.clear();
         descriptionController.clear();
         context.read<CalenderCubit>().myImagesF = [];
         context.read<CalenderCubit>().validVideos = [];
+        locationAddressController.clear();
+        selectedCategory = null;
+        selectedSubCategory = null;
+        emit(AddNewGigStateLoaded());
       });
     } catch (e) {
+      successGetBar(e.toString());
+
       emit(AddNewGigStateError(e.toString()));
     }
-  }
-
-  Future<LoginModel> getUserFromPreferences() async {
-    final user = await Preferences.instance.getUserModel();
-    return user;
-  }
-
-  LoginModel? user;
-  Future<void> loadUserFromPreferences() async {
-    user = await Preferences.instance.getUserModel();
+    Navigator.pop(context);
   }
 }
