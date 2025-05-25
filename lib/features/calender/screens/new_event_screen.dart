@@ -154,7 +154,6 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                       setState(() {
                                         currentStep = 1;
                                       });
-                                      
                                       cubit.getAllSubCategories(cubit
                                               .selectedCategoty?.id
                                               .toString() ??
@@ -528,7 +527,6 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20.h),
-
                   child: GeneralCustomDropdownButtonFormField<
                       GetCountriesMainModelData>(
                     items: cubit.categoriesMainModel?.data ?? [],
@@ -545,7 +543,6 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       }
                       return null;
                     },
-
                   ),
                 ),
               ],

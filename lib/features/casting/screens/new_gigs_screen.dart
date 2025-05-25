@@ -26,6 +26,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
  @override
   void initState() {
    context.read<CastingCubit>().getCategory();
+   
     super.initState();
   }
   @override
@@ -93,7 +94,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               hint: Text('choose_category'.tr()),
                               value: cubit.selectedCategory,
                               items: cubit.categoryModel?.data?.map((category) {
-                                return DropdownMenuItem<GetCountriesMainModelData>(
+                                return DropdownMenuItem<
+                                    GetCountriesMainModelData>(
                                   value: category,
                                   child: Text(category.name ?? ""),
                                 );
@@ -128,7 +130,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     color: AppColors.grayLite,
                                     borderRadius: BorderRadius.circular(8.sp),
                                   ),
-                                  child: DropdownButton<GetCountriesMainModelData>(
+                                  child:
+                                      DropdownButton<GetCountriesMainModelData>(
                                     enableFeedback: true,
                                     iconSize: 25.sp,
                                     padding: EdgeInsets.only(
@@ -153,7 +156,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                         child: Text(subCategory.name ?? ""),
                                       );
                                     }).toList(),
-                                    onChanged: (GetCountriesMainModelData? value) {
+                                    onChanged:
+                                        (GetCountriesMainModelData? value) {
                                       final subCategory = cubit
                                           .subCategoryModel?.data
                                           ?.firstWhere(
@@ -161,6 +165,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                         orElse: () => value!,
                                       );
                                       cubit.selectedSubCategory = subCategory;
+
                                     },
                                   ),
                                 ),
@@ -190,6 +195,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                 onTap: () {
                                   showCurrencyPicker(
                                       cubit.countriesMainModel?.data ?? [],context);
+
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -303,7 +309,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                                               .path)));
                                         },
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           child: Image.file(
                                             File(cubit.myImages![index].path),
                                             width: 80.w,
