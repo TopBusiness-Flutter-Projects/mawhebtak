@@ -14,18 +14,23 @@ import 'package:path/path.dart' as path;
 import 'package:video_compress/video_compress.dart';
 
 import '../../../core/utils/widget_from_application.dart';
+import '../../location/cubit/location_cubit.dart';
 import '../data/model/countries_model.dart';
+import '../data/model/selected_talends.dart';
 import '../screens/widgets/calender_widget.dart';
 
 class CalenderCubit extends Cubit<CalenderState> {
   CalenderCubit(this.api) : super(CalenderInitial());
   CalenderRepo api;
+  int currentStep = 0;
+
   // TextEditingController locationController = TextEditingController();
   TextEditingController eventDateController = TextEditingController();
-  TextEditingController eventFromDateController = TextEditingController();
+  TextEditingController eventToDateController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController titleOfTheEventController = TextEditingController();
   TextEditingController ticketPriceController = TextEditingController();
+  TextEditingController eventLimitController = TextEditingController();
   TextEditingController locationAddressController = TextEditingController();
   TextEditingController feesPriceController = TextEditingController();
   DateTime? selectedDate;
@@ -36,6 +41,7 @@ class CalenderCubit extends Cubit<CalenderState> {
   bool isFree = true;
   bool isPublic = true;
 
+  List<SelectedTalends> selectedTalends = [];
   GetCountriesMainModelData? selectedCurrency;
   GetCountriesMainModelData? selectedCategoty;
   GetCountriesMainModelData? selectedSubCategoty;
@@ -48,8 +54,8 @@ class CalenderCubit extends Cubit<CalenderState> {
     if (isFrom && eventDateController.text.isNotEmpty) {
       // End date: start from selected start date
       try {
-        final startDate = DateFormat('yyyy-MM-dd \'at\' hh:mm a')
-            .parse(eventDateController.text);
+        final startDate =
+            DateFormat('yyyy-MM-dd HH:mm:ss').parse(eventDateController.text);
         initialDate = startDate;
         initialTime = TimeOfDay.fromDateTime(startDate);
       } catch (e) {
@@ -58,8 +64,8 @@ class CalenderCubit extends Cubit<CalenderState> {
     } else if (!isFrom && eventDateController.text.isNotEmpty) {
       // Start date: use stored value or today
       try {
-        final startDate = DateFormat('yyyy-MM-dd \'at\' hh:mm a')
-            .parse(eventDateController.text);
+        final startDate =
+            DateFormat('yyyy-MM-dd HH:mm:ss').parse(eventDateController.text);
         initialDate = startDate;
         initialTime = TimeOfDay.fromDateTime(startDate);
       } catch (e) {
@@ -74,8 +80,7 @@ class CalenderCubit extends Cubit<CalenderState> {
       context: context,
       initialDate: initialDate,
       firstDate: isFrom && eventDateController.text.isNotEmpty
-          ? DateFormat('yyyy-MM-dd \'at\' hh:mm a')
-              .parse(eventDateController.text)
+          ? DateFormat('yyyy-MM-dd HH:mm:ss').parse(eventDateController.text)
           : DateTime(2020),
       lastDate: DateTime(3100),
     );
@@ -98,10 +103,10 @@ class CalenderCubit extends Cubit<CalenderState> {
         selectedDate = finalDateTime;
 
         String formattedDateTime =
-            DateFormat('yyyy-MM-dd \'at\' hh:mm a').format(finalDateTime);
+            DateFormat('yyyy-MM-dd HH:mm:ss').format(finalDateTime);
 
         if (isFrom) {
-          eventFromDateController.text = formattedDateTime;
+          eventToDateController.text = formattedDateTime;
         } else {
           eventDateController.text = formattedDateTime;
         }
@@ -352,5 +357,75 @@ class CalenderCubit extends Cubit<CalenderState> {
         );
       },
     );
+  }
+
+  //! add to talends
+  //
+  addNewTalends() {
+    selectedTalends.add(SelectedTalends(
+      selectedSubCategoty ?? GetCountriesMainModelData(),
+      feesPriceController.text,
+      selectedCurrency ?? GetCountriesMainModelData(),
+    ));
+    // selectedSubCategoty = null;
+    // selectedCurrency = null;
+    feesPriceController.clear();
+    emit(AddNewTalendsToEventState(selectedTalends));
+  }
+
+  //! remove from talends
+  removeFromTalends(int index) {
+    selectedTalends.removeAt(index);
+    emit(RemoveNewTalendsFromEventState());
+  }
+
+  Future eventStore(BuildContext context) async {
+    AppWidgets.create2ProgressDialog(context);
+    try {
+      emit(GetAddNewEventState());
+      final result = await api.storeEvent(
+        categoryId: selectedCategoty?.id.toString() ?? '',
+        selectedTalends: selectedTalends,
+        files: [...(myImagesF ?? []), ...validVideos],
+        description: descriptionController.text,
+        title: titleOfTheEventController.text,
+        from: eventDateController.text,
+        to: eventToDateController.text,
+        location: locationAddressController.text,
+        lat: context
+                .read<LocationCubit>()
+                .selectedLocation
+                ?.latitude
+                .toString() ??
+            '0',
+        long: context
+                .read<LocationCubit>()
+                .selectedLocation
+                ?.longitude
+                .toString() ??
+            '0',
+        isPublic: isPublic == true ? '1' : '0',
+        eventPrice: isFree ? '0' : ticketPriceController.text,
+        eventLimit: eventLimitController.text,
+      );
+      result.fold((l) {
+        errorGetBar(l.toString());
+
+        emit(GetAddNewEventErrorState());
+      }, (r) {
+        if (r.status == 200) {
+          successGetBar(r.msg ?? '');
+          currentStep = 2;
+          emit(GetAddNewEventSuccessState());
+        } else {
+          errorGetBar(r.msg ?? 'Error occurred');
+          emit(GetAddNewEventErrorState());
+        }
+      });
+      Navigator.pop(context);
+    } catch (e) {
+      errorGetBar(e.toString());
+      emit(GetAddNewEventErrorState());
+    }
   }
 }

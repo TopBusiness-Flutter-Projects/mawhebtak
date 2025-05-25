@@ -46,17 +46,18 @@
   "type": "نوع",
   "privacy": "الخصوصيه",
   "event_date": "تاريخ الحدث",
-  "event_date_from":"وقت بداية الحدث",
-  "event_date_to":"وقت نهاية الحدث",
+  "event_date_from": "وقت بداية الحدث",
+  "event_date_to": "وقت نهاية الحدث",
   "cancel_this_event": "تاريخ الحدث",
-  "statistics": "إحصائيات",  "description_msg": "نبذة عن الفعالية",
-
+  "statistics": "إحصائيات",
+  "description_msg": "نبذة عن الفعالية",
   "enrolled": "مسجل",
   "revenu": "الإيرادات",
   "enrolled_users": "المستخدمون المسجلون",
   "message": "الرساله",
   "add_photo_video": "ضيف صورة او فيديو",
   "expected_fees": "الرسوم المتوقعة",
+  "Fees": "الرسوم",
   "apply": "يتقدم",
   "description_here": "اكتب وصفك هنا",
   "specify_needs": "تحديد الاحتياجات",
@@ -228,13 +229,11 @@
   "enter_post_title": "ادخل عنوان البوست",
   "comments": "الكومنتات",
   "is_free": "هل هذا الحدث مجاني؟",
-  "ticket_price":"سعر التذكرة",
-  "enter_ticket_price":"ادخل سعر التذكرة",
+  "ticket_price": "سعر التذكرة",
+  "enter_ticket_price": "ادخل سعر التذكرة",
   "choose_category": "اختر التصنيف",
   "category": "التصنيف",
-  "sub_category": "التصنيف الفرعي"
-
-
-
-
+  "sub_category": "التصنيف الفرعي",
+  "event_limit": "العدد المتوقع",
+  "please_enter_event_limit":"من فضلك ادخل العدد المتوقع"
 }

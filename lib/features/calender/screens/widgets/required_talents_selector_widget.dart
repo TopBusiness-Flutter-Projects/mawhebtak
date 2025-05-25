@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/services.dart';
+
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 
 import '../../cubit/calender_cubit.dart';
+import '../../cubit/calender_state.dart';
 import '../../data/model/countries_model.dart';
 
 class RequiredTalentsSelector extends StatefulWidget {
@@ -17,137 +18,202 @@ class RequiredTalentsSelector extends StatefulWidget {
 }
 
 class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
-  late List<TalentRequirement> _talents;
-
   @override
   void initState() {
     super.initState();
-    _talents = [
-      TalentRequirement(type: 'Workshop', fee: '3000', currency: 'L.E'),
-    ];
-  }
-
-  var _talentTypes = [];
-  void _addNewTalent() {
-    setState(() {
-      _talents.add(
-        TalentRequirement(type: _talentTypes[0], fee: '3000', currency: 'L.E'),
-      );
-    });
-    // widget.onTalentsChanged(_talents);
-  }
-
-  void _updateTalent(int index, TalentRequirement updatedTalent) {
-    setState(() {
-      _talents[index] = updatedTalent;
-    });
-    // widget.onTalentsChanged(_talents);
-  }
-
-  void _removeTalent(int index) {
-    setState(() {
-      _talents.removeAt(index);
-    });
-    // widget.onTalentsChanged(_talents);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: 16.h),
-            child: Text(
-              'select_required_talents'.tr(),
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.black87,
+    return BlocBuilder<CalenderCubit, CalenderState>(
+      builder: (context, state) {
+        var cubit = context.read<CalenderCubit>();
+
+        return SizedBox(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: 16.h),
+                child: Text(
+                  'select_required_talents'.tr(),
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black87,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            height: 200,
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _talents.length,
-              itemBuilder: (context, index) {
-                return SizedBox(
-                  // height: 150.h,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 16.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            'select_type'.tr(),
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ),
-                        _buildTalentTypeDropdown(index),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            'Fees',
-                            maxLines: 1,
-                            style: TextStyle(
-                                fontSize: 18.sp, color: Colors.black87),
-                          ),
-                        ),
-                        _buildFeeInput(index),
-                        if (_talents.length > 1)
-                          Padding(
-                            padding: EdgeInsets.only(top: 24.h, left: 8.w),
-                            child: InkWell(
-                              onTap: () => _removeTalent(index),
-                              child: Icon(
-                                Icons.close,
-                                color: Colors.red,
-                                size: 18.w,
+              if (cubit.selectedTalends.length != 0)
+                SizedBox(
+                  // height: 300.h,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: cubit.selectedTalends.length,
+                    itemBuilder: (context, index) {
+                      return Stack(
+                        children: [
+                          IntrinsicHeight(
+                            child: Container(
+                              padding: EdgeInsets.all(8.w),
+                              margin: EdgeInsets.all(2.w),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.1),
+                                      spreadRadius: 1,
+                                      blurRadius: 5,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ]),
+                              // height: 150.h,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: Text(
+                                            'select_type'.tr(),
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontSize: 18.sp,
+                                              color: Colors.black87,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(cubit.selectedTalends[index]
+                                                .subCategoryIds.name ??
+                                            ''),
+                                      ],
+                                    ),
+                                  ),
+                                  VerticalDivider(
+                                    width:
+                                        32.w, // Total width including margins
+                                    thickness: 1.7,
+                                    color: Colors.grey.shade300,
+                                    indent: 8,
+                                    endIndent: 8,
+                                  ),
+                                  Expanded(
+                                      child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8.0),
+                                        child: Text(
+                                          'Fees'.tr(),
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontSize: 18.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black87),
+                                        ),
+                                      ),
+                                      Text(
+                                          '${cubit.selectedTalends[index].prices} ${cubit.selectedTalends[index].countryCurrencies.currency ?? ''}'),
+                                    ],
+                                  ))
+                                ],
                               ),
                             ),
                           ),
-                      ],
-                    ),
+                          Positioned(
+                            top: 2,
+                            right: 2,
+                            child: InkWell(
+                              onTap: () {
+                                cubit.removeFromTalends(index);
+                              },
+                              child: Icon(Icons.close,
+                                  color: Colors.red, size: 18.w),
+                            ),
+                          )
+                        ],
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: InkWell(
-              onTap: _addNewTalent,
-              child: Container(
-                width: 40.w,
-                height: 40.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4.r),
-                  border: Border.all(color: AppColors.primary),
                 ),
-                child: Icon(
-                  Icons.add,
-                  color: AppColors.primary,
-                  size: 24.w,
+              SizedBox(
+                // height: 150.h,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 16.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'select_type'.tr(),
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+                      _buildTalentTypeDropdown(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'Fees'.tr(),
+                          maxLines: 1,
+                          style:
+                              TextStyle(fontSize: 18.sp, color: Colors.black87),
+                        ),
+                      ),
+                      _buildFeeInput(),
+                    ],
+                  ),
                 ),
               ),
-            ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: () {
+                    ///! here i want duplicate the last item
+                    if (cubit.feesPriceController.text.isEmpty ||
+                        cubit.selectedSubCategoty == null ||
+                        cubit.selectedCurrency == null) {
+                      errorGetBar('please_fill_all_fields'.tr());
+                      return;
+                    }
+                    cubit.addNewTalends();
+                  },
+                  child: Container(
+                    width: 40.w,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.r),
+                      border: Border.all(color: AppColors.primary),
+                    ),
+                    child: Icon(
+                      Icons.add,
+                      color: AppColors.primary,
+                      size: 24.w,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildTalentTypeDropdown(int index) {
+  Widget _buildTalentTypeDropdown() {
     var cubit = context.read<CalenderCubit>();
     return Container(
         decoration: BoxDecoration(
@@ -180,7 +246,7 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
         ));
   }
 
-  Widget _buildFeeInput(int index) {
+  Widget _buildFeeInput() {
     var cubit = context.read<CalenderCubit>();
     return Row(
       children: [
@@ -211,12 +277,7 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
                 fontSize: 16.sp,
                 color: Colors.black87,
               ),
-              onChanged: (value) {
-                _updateTalent(
-                  index,
-                  _talents[index].copyWith(fee: value),
-                );
-              },
+              onChanged: (value) {},
             ),
           ),
         ),
@@ -267,22 +328,14 @@ class TalentRequirement {
   final String fee;
   final String currency;
 
-  TalentRequirement({
-    required this.type,
-    required this.fee,
-    required this.currency,
-  });
+  TalentRequirement(
+      {required this.type, required this.fee, required this.currency});
 
-  TalentRequirement copyWith({
-    String? type,
-    String? fee,
-    String? currency,
-  }) {
+  TalentRequirement copyWith({String? type, String? fee, String? currency}) {
     return TalentRequirement(
-      type: type ?? this.type,
-      fee: fee ?? this.fee,
-      currency: currency ?? this.currency,
-    );
+        type: type ?? this.type,
+        fee: fee ?? this.fee,
+        currency: currency ?? this.currency);
   }
 
   Map<String, dynamic> toJson() {

@@ -56,17 +56,15 @@ class AppWidgets {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          return const CustomLoadingIndicator(
-            withLogo: true,
-          );
+          return const CustomLoadingIndicator(withLogo: true);
         });
   }
 
   static buttonSheet(
-      BuildContext context, {
-        required String title,
-        required Widget child,
-      }) {
+    BuildContext context, {
+    required String title,
+    required Widget child,
+  }) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -99,6 +97,4 @@ class AppWidgets {
       },
     );
   }
-
-
 }

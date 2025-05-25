@@ -1,8 +1,11 @@
 import 'package:mawhebtak/features/calender/screens/widgets/calender_widget.dart';
 
+import '../data/model/selected_talends.dart';
+
 class CalenderState {}
 
 class CalenderInitial extends CalenderState {}
+
 class CompressedVideoState extends CalenderState {}
 
 class DateTimeSelected extends CalenderState {
@@ -46,3 +49,14 @@ final class SuccessRemoveImageState extends CalenderState {}
 final class SuccessRemoveVideoState extends CalenderState {}
 
 final class LoadedAddNewViedoState extends CalenderState {}
+
+final class AddNewTalendsToEventState extends CalenderState {
+  final List<SelectedTalends> selectedTalends;
+  AddNewTalendsToEventState(this.selectedTalends);
+}
+
+final class RemoveNewTalendsFromEventState extends CalenderState {}
+
+final class GetAddNewEventState extends CalenderState {}
+final class GetAddNewEventSuccessState extends CalenderState {}
+final class GetAddNewEventErrorState extends CalenderState {}

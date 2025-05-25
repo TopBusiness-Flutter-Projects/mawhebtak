@@ -13,7 +13,7 @@ import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.d
 import 'package:video_player/video_player.dart';
 import '../../../core/exports.dart';
 import '../../../core/utils/custom_pick_media.dart';
-import '../../../core/widgets/full_screen_video_view.dart';
+
 import '../../feeds/screens/widgets/image_view_file.dart';
 import '../../feeds/screens/widgets/video_from_file_screen.dart';
 import '../../location/cubit/location_cubit.dart';
@@ -29,12 +29,11 @@ class NewEventScreen extends StatefulWidget {
 }
 
 class _NewEventScreenState extends State<NewEventScreen> {
-  int currentStep = 0;
-
   GlobalKey<FormState> formKeyInformation = GlobalKey<FormState>();
 
   @override
   void initState() {
+    context.read<CalenderCubit>().currentStep = 0;
     if (context.read<CalenderCubit>().categoriesMainModel == null) {
       context.read<CalenderCubit>().getAllCategories();
     }
@@ -45,165 +44,168 @@ class _NewEventScreenState extends State<NewEventScreen> {
     super.initState();
   }
 
-  VideoPlayerController? _controller;
-
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<CalenderCubit>();
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomAppBarWithClearWidget(title: "new_event".tr()),
-            if (currentStep == 2)
-              BlocBuilder<CalenderCubit, CalenderState>(
-                  builder: (context, state) {
-                return Expanded(
-                  child: Center(
+    return BlocBuilder<CalenderCubit, CalenderState>(
+      builder: (context, state) {
+        var cubit = context.read<CalenderCubit>();
+
+        return SafeArea(
+          child: Scaffold(
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomAppBarWithClearWidget(title: "new_event".tr()),
+                if (cubit.currentStep == 2)
+                  Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(AppIcons.successIcon),
+                          SizedBox(height: 16.h),
+                          Text(
+                            'event_created'.tr(),
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          20.h.verticalSpace,
+                          Text(
+                            textAlign: TextAlign.center,
+                            'event_created_subtext'.tr(),
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          20.h.verticalSpace,
+                          InkWell(
+                              onTap: () {
+                                //! TODO
+                                successGetBar('TODO SHARE NOW');
+                              },
+                              child: SvgPicture.asset(AppIcons.share)),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(AppIcons.successIcon),
-                        SizedBox(height: 16.h),
-                        Text(
-                          'event_created'.tr(),
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
+                        StepIndicator(
+                          currentStep: cubit.currentStep + 1,
+                          steps: [
+                            'event_information'.tr(),
+                            'required_talents'.tr()
+                          ],
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: BlocBuilder<CalenderCubit, CalenderState>(
+                              builder: (context, state) {
+                                return cubit.currentStep == 0
+                                    ? _buildEventInformationStep(cubit)
+                                    : _buildRequiredTalentsStep();
+                              },
+                            ),
                           ),
                         ),
-                        20.h.verticalSpace,
-                        Text(
-                          textAlign: TextAlign.center,
-                          'event_created_subtext'.tr(),
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w400,
+                        Container(
+                          padding: EdgeInsets.all(20.w),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 4,
+                                offset: const Offset(0, -2),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              if (cubit.currentStep > 0)
+                                TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      cubit.currentStep = 0;
+                                    });
+                                  },
+                                  child: Text(
+                                    'back'.tr(),
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontSize: 18.sp,
+                                    ),
+                                  ),
+                                ),
+                              Expanded(
+                                child: SizedBox(
+                                  height: 48.h,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (cubit.currentStep == 0) {
+                                        if (formKeyInformation.currentState!
+                                            .validate()) {
+                                          setState(() {
+                                            cubit.currentStep = 1;
+                                          });
+                                          cubit.getAllSubCategories(cubit
+                                                  .selectedCategoty?.id
+                                                  .toString() ??
+                                              '');
+                                        }
+                                      } else if (cubit.currentStep == 1) {
+                                        cubit.eventStore(context);
+                                        // cubit.addEvent(
+                                        //   title: cubit
+                                        //       .titleOfTheEventController.text,
+                                        //   date: cubit.selectedDate ??
+                                        //       DateTime.now(),
+                                        // );
+
+                                        // Navigator.pop(context);
+                                      } else {
+                                        print(
+                                            'Form submitted with \.length} talents');
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.primary,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      cubit.currentStep == 0
+                                          ? 'next'.tr()
+                                          : 'create_event'.tr(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        20.h.verticalSpace,
-                        SvgPicture.asset(AppIcons.share),
                       ],
                     ),
                   ),
-                );
-              })
-            else
-              Expanded(
-                child: Column(
-                  children: [
-                    StepIndicator(
-                      currentStep: currentStep + 1,
-                      steps: [
-                        'event_information'.tr(),
-                        'required_talents'.tr()
-                      ],
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: BlocBuilder<CalenderCubit, CalenderState>(
-                          builder: (context, state) {
-                            return currentStep == 0
-                                ? _buildEventInformationStep(cubit)
-                                : _buildRequiredTalentsStep();
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(20.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 4,
-                            offset: const Offset(0, -2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          if (currentStep > 0)
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  currentStep = 0;
-                                });
-                              },
-                              child: Text(
-                                'back'.tr(),
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontSize: 18.sp,
-                                ),
-                              ),
-                            ),
-                          Expanded(
-                            child: SizedBox(
-                              height: 48.h,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (currentStep == 0) {
-                                    if (formKeyInformation.currentState!
-                                        .validate()) {
-                                      setState(() {
-                                        currentStep = 1;
-                                      });
-                                      cubit.getAllSubCategories(cubit
-                                              .selectedCategoty?.id
-                                              .toString() ??
-                                          '');
-                                    }
-                                  } else if (currentStep == 1) {
-                                    setState(() {
-                                      currentStep = 2;
-
-                                      // cubit.addEvent(
-                                      //   title: cubit
-                                      //       .titleOfTheEventController.text,
-                                      //   date: cubit.selectedDate ??
-                                      //       DateTime.now(),
-                                      // );
-
-                                      // Navigator.pop(context);
-                                    });
-                                  } else {
-                                    print(
-                                        'Form submitted with \.length} talents');
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primary,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
-                                ),
-                                child: Text(
-                                  currentStep == 0
-                                      ? 'next'.tr()
-                                      : 'create_event'.tr(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
-      ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -363,14 +365,16 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         onChanged: (value) {
                           setState(() {
                             cubit.isFree = !cubit.isFree;
-                            if (cubit.isFree)
+                            if (cubit.isFree) {
                               cubit.ticketPriceController.clear();
+                            }
                           });
                         },
                       ),
                     ],
                   ),
                 ),
+
                 if (!cubit.isFree)
                   CustomTextField(
                     keyboardType: TextInputType.number,
@@ -403,6 +407,22 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       ),
                     ),
                   ),
+                _label("event_limit".tr()),
+
+                CustomTextField(
+                  keyboardType: TextInputType.number,
+                  validator: (p0) {
+                    if (p0!.isEmpty) {
+                      return 'please_enter_event_limit'.tr();
+                    }
+                    return null;
+                  },
+                  controller: cubit.eventLimitController,
+                  hintText: '150',
+                  hintTextSize: 18.sp,
+                  enabled: true,
+                ),
+
                 _label("title_of_event".tr()),
                 CustomTextField(
                   validator: (p0) {
@@ -445,7 +465,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 CustomTextField(
                   enabled: true,
                   keyboardType: TextInputType.datetime,
-                  controller: cubit.eventFromDateController,
+                  controller: cubit.eventToDateController,
                   suffixIcon: InkWell(
                     onTap: () {
                       cubit.selectDateTime(context, isFrom: true);
@@ -455,7 +475,9 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       child: SvgPicture.asset(AppIcons.dateIcon),
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    cubit.selectDateTime(context, isFrom: true);
+                  },
                   hintTextSize: 18.sp,
                   hintText: "event_date_to".tr(),
                 ),

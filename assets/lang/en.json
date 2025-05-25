@@ -52,6 +52,7 @@
   "add_photo_video": "Add photos, videos",
   "expected_fees": "Expected fees",
   "apply": "Apply",
+  "Fees": "Fees",
   "description_here": "Description here",
   "specify_needs": "Specify needs",
   "apply_for_event": "Apply for event",
@@ -141,7 +142,8 @@
   "select_location": "Select Location",
   "open_map": "Open Map",
   "description": "Description",
-"description_msg": "About the event",  "event_created": "Event Created Successfully",
+  "description_msg": "About the event",
+  "event_created": "Event Created Successfully",
   "event_created_subtext": "Your event added to your events list, you can share it now",
   "back": "Back",
   "create_event": "Create Event",
@@ -229,5 +231,8 @@
   "event_date_to": "Event end time",
   "choose_category": "Choose Category",
   "category": "Category",
-  "sub_category": "Sub category"
+  "sub_category": "Sub category",
+  "event_limit": "Event limit",
+    "please_enter_event_limit":"Please enter event limit"
+
 }
