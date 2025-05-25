@@ -24,7 +24,7 @@ class CustomRequestGigsList extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, Routes.gigsDetailsScreen);
+          Navigator.pushNamed(context, Routes.detailsOfMainCategoryGigsRoute,arguments: 'gigs');
         },
         child: Container(
           decoration: BoxDecoration(

@@ -1,10 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/casting/screens/widgets/gigs_widgets.dart';
-import 'package:mawhebtak/features/casting/screens/widgets/talents_widget.dart';
+import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
+import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
 import '../../../core/exports.dart';
 import '../../home/screens/widgets/custom_request_gigs.dart';
 
@@ -19,6 +22,12 @@ class _CastingScreenState extends State<CastingScreen> {
   int selectedIndex = 0;
 
   final List<String> roles = ["talents".tr(), "gigs".tr()];
+  @override
+  void initState() {
+    context.read<RequestGigsCubit>().requestGigsData(page: '1');
+    context.read<TopTalentsCubit>().topTalentsData(page: '1');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +51,8 @@ class _CastingScreenState extends State<CastingScreen> {
             ),
           ),
           SizedBox(height: 5.h),
-          BlocBuilder<CastingCubit, CastingState>(builder: (context, state) {
+          BlocBuilder<CastingCubit, CastingState>
+            (builder: (context, state) {
             return Expanded(
               child: Stack(
                 children: [
@@ -137,24 +147,7 @@ class _CastingScreenState extends State<CastingScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    SizedBox(
-                                      height: 145.w, // Match image width
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        physics:
-                                            const AlwaysScrollableScrollPhysics(),
-                                        itemCount: 5,
-                                        shrinkWrap: true,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return CustomRequestGigsList(
-                                            isLeftPadding:
-                                                index == 0 ? true : false,
-                                            isRightPadding: false,
-                                          );
-                                        },
-                                      ),
-                                    ),
+
                                     if (selectedIndex == 0)
                                       Column(
                                         mainAxisAlignment:
@@ -162,10 +155,122 @@ class _CastingScreenState extends State<CastingScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          SizedBox(
+                                            height: 145.w,
+                                            child: (state
+                                            is RequestGigsStateLoading)
+                                                ? const CustomLoadingIndicator()
+                                                :ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              physics:
+                                              const AlwaysScrollableScrollPhysics(),
+                                              itemCount: context
+                                                  .read<TopTalentsCubit>()
+                                                  .topTalents
+                                                  ?.data
+                                                  ?.length ??
+                                                  0,
+                                              shrinkWrap: true,
+                                              itemBuilder:
+                                                  (BuildContext context, int index) {
+                                                var cubit = context.read<TopTalentsCubit>();
+                                                return BlocBuilder<TopTalentsCubit,TopTalentsState>(
+                                                    builder: (context, state) {
+                                                      return GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.pushNamed(context, Routes.detailsOfMainCategoryGigsRoute,arguments: 'talents');
+
+                                                        },
+                                                        child: Padding(
+                                                          padding: EdgeInsetsDirectional.only(
+                                                            start:  10.w,
+                                                            end:  10.0.w,
+                                                          ),
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              // Navigator.pushNamed(context, Routes.detailsOfMainCategoryGigsRoute);
+                                                            },
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(16.r),
+                                                                image: DecorationImage(
+                                                                  image: cubit.topTalents?.data?[index].image != null &&
+                                                                      cubit.topTalents!.data![index].image!.isNotEmpty
+                                                                      ? NetworkImage(cubit.topTalents!.data![index].image!)
+                                                                      : const AssetImage(ImageAssets.tasweerPhoto) as ImageProvider,
+                                                                  fit: BoxFit.cover,
+                                                                ),
+                                                              ),
+                                                              child: Container(
+                                                                padding:  EdgeInsets.all(8.0.r),
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(16.r),
+                                                                  gradient: LinearGradient(
+                                                                    colors: [
+                                                                      Colors.black.withOpacity(0.6),
+                                                                      Colors.transparent,
+                                                                    ],
+                                                                    begin: Alignment.bottomCenter,
+                                                                    end: Alignment.topCenter,
+                                                                  ),
+                                                                ),
+                                                                child: Align(
+                                                                  alignment: Alignment.bottomLeft,
+                                                                  child: SizedBox(
+                                                                    width: 130.w,
+                                                                    child: Padding(
+                                                                        padding:  EdgeInsets.only(bottom: 10.h,left: 10.w,right: 10.w),
+                                                                        child: Text.rich(
+
+                                                                          TextSpan(
+                                                                            children: [
+                                                                              WidgetSpan(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(
+                                                                                    color:AppColors.secondPrimary,
+                                                                                  ),
+                                                                                  child: Text(
+                                                                                    (cubit.topTalents!.data![index].name ?? "").substring(0,
+                                                                                        (cubit.topTalents!.data![index].name?.length ?? 0) >= 5 ? 5 :
+                                                                                        (cubit.topTalents!.data![index].name?.length ?? 0)
+                                                                                    ),
+                                                                                    style: getMediumStyle(
+                                                                                      color: Colors.white,
+                                                                                      fontSize: 16.sp,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              TextSpan(
+                                                                                text: (cubit.topTalents!.data![index].name?.length ?? 0) > 5
+                                                                                    ? (cubit.topTalents!.data![index].name ?? "").substring(5)
+                                                                                    : "",
+                                                                                style: getMediumStyle(
+                                                                                  color: AppColors.white,
+                                                                                  fontSize: 16.sp,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          maxLines: 1,
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                        )
+
+
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    });
+                                              },
+                                            ),
+                                          ),
                                           Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 20.w,
-                                                vertical: 10.h),
+                                            padding: EdgeInsets.only(top: 10.h,right: 20.w,left: 20.w),
                                             child: Text(
                                               "talents".tr(),
                                               style: TextStyle(
@@ -173,30 +278,55 @@ class _CastingScreenState extends State<CastingScreen> {
                                                   fontSize: 16.sp),
                                             ),
                                           ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 10.w, right: 10.w),
-                                            child: GridView.builder(
-                                              gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                mainAxisSpacing: 16.h,
-                                                crossAxisSpacing: 16.w,
-                                                childAspectRatio:
-                                                    0.75, // Adjust this ratio to control card proportions
-                                              ),
-                                              scrollDirection: Axis.vertical,
-                                              physics:
-                                                  const BouncingScrollPhysics(),
-                                              itemCount: 5,
-                                              shrinkWrap: true,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return TalentList(index: index);
-                                              },
-                                            ),
-                                          ),
+                                          BlocBuilder<TopTalentsCubit,
+                                                  TopTalentsState>(
+                                              builder: (context, state) {
+                                            return Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 10.w, right: 10.w),
+                                              child: (state
+                                                      is TopTalentsStateLoading)
+                                                  ? const Center(
+                                                      child:
+                                                          CustomLoadingIndicator())
+                                                  : GridView.builder(
+                                                      gridDelegate:
+                                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 2,
+                                                        mainAxisSpacing: 4.h,
+                                                        crossAxisSpacing: 16.w,
+                                                        childAspectRatio:
+                                                            0.95,
+                                                      ),
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      physics:
+                                                          const BouncingScrollPhysics(),
+                                                      itemCount: context
+                                                              .read<
+                                                                  TopTalentsCubit>()
+                                                              .topTalents
+                                                              ?.data
+                                                              ?.length ??
+                                                          0,
+                                                      shrinkWrap: true,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return CustomTopTalentsList(
+                                                          topTalentsCubit:
+                                                              context.read<
+                                                                  TopTalentsCubit>(),
+                                                          topTalentsData: context
+                                                              .read<
+                                                                  TopTalentsCubit>()
+                                                              .topTalents
+                                                              ?.data?[index],
+                                                        );
+                                                      },
+                                                    ),
+                                            );
+                                          }),
                                         ],
                                       )
                                     else
@@ -206,6 +336,41 @@ class _CastingScreenState extends State<CastingScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          SizedBox(
+                                            height: 145.w,
+                                            child: (state
+                                            is RequestGigsStateLoading)
+                                                ? const CustomLoadingIndicator()
+                                                :ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              physics:
+                                              const AlwaysScrollableScrollPhysics(),
+                                              itemCount: context
+                                                  .read<RequestGigsCubit>()
+                                                  .requestGigs
+                                                  ?.data
+                                                  ?.length ??
+                                                  0,
+                                              shrinkWrap: true,
+                                              itemBuilder:
+                                                  (BuildContext context, int index) {
+                                                return BlocBuilder<RequestGigsCubit,RequestGigsState>(
+                                                    builder: (context, state) {
+                                                      return  CustomRequestGigsList(
+                                                        requestGigs: context
+                                                            .read<
+                                                            RequestGigsCubit>()
+                                                            .requestGigs
+                                                            ?.data?[index],
+                                                        isLeftPadding: index == 0
+                                                            ? true
+                                                            : false,
+                                                        isRightPadding: false,
+                                                      );
+                                                    });
+                                              },
+                                            ),
+                                          ),
                                           Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 20.w,
@@ -217,20 +382,31 @@ class _CastingScreenState extends State<CastingScreen> {
                                                   fontSize: 16.sp),
                                             ),
                                           ),
-                                          ListView.builder(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 12.w),
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemCount:
-                                                5, // Replace with your actual item count
-                                            shrinkWrap: true,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              return GigsWidget(
-                                                isWithButton: true,
+                                          BlocBuilder<RequestGigsCubit,RequestGigsState>(
+                                            builder: (context,state) {
+                                              return ListView.builder(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 12.w),
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                itemCount: context
+                                                    .read<RequestGigsCubit>()
+                                                    .requestGigs
+                                                    ?.data
+                                                    ?.length, // Replace with your actual item count
+                                                shrinkWrap: true,
+                                                itemBuilder: (BuildContext context,
+                                                    int index) {
+                                                  return GigsWidget(
+                                                    eventAndGigsModel: context
+                                                        .read<RequestGigsCubit>()
+                                                        .requestGigs
+                                                        ?.data?[index],
+                                                    isWithButton: true,
+                                                  );
+                                                },
                                               );
-                                            },
+                                            }
                                           ),
                                         ],
                                       )
@@ -247,9 +423,7 @@ class _CastingScreenState extends State<CastingScreen> {
                     child: GestureDetector(
                       onTap: () {
                         print("Category Data Length: ${cubit.categoryModel?.data?[0].id}");
-
-                        Navigator.pushNamed(
-                            context, Routes.newGigsRoute);
+                        Navigator.pushNamed(context, Routes.newGigsRoute);
                       },
                       child: Container(
                         width: 60.w,

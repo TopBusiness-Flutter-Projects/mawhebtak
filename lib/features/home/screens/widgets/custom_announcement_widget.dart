@@ -138,35 +138,37 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                 SizedBox(height: 8.h),
                 AutoSizeText(widget.announcement?.title ?? "Offer 20% on accessories photographs", style: getSemiBoldStyle(fontSize: 14.sp, color: AppColors.grayDark)),
                 SizedBox(height: 5.h),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(AppIcons.locationIcon),
-                          SizedBox(width: 3.w),
-                          Expanded(
-                            child: Text(
-                              widget.announcement?.location ?? "Cairo, Nasr City",
-                              style: getRegularStyle(color: AppColors.grayLight, fontSize: 14.sp),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(AppIcons.locationIcon),
+                            SizedBox(width: 3.w),
+                            Expanded(
+                              child: Text(
+                                widget.announcement?.location ?? "Cairo, Nasr City",
+                                style: getRegularStyle(color: AppColors.grayLight, fontSize: 14.sp),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(AppIcons.dollarSign),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: AutoSizeText(
-                            "${widget.announcement?.price} L.E",
-                            style: getRegularStyle(fontSize: 14.sp, color: AppColors.blueLight),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+                      Row(
+                        children: [
+                          SvgPicture.asset(AppIcons.dollarSign),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: AutoSizeText(
+                              "${widget.announcement?.price} L.E",
+                              style: getRegularStyle(fontSize: 14.sp, color: AppColors.blueLight),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

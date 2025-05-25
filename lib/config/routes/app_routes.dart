@@ -13,6 +13,7 @@ import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dar
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
 import 'package:mawhebtak/features/casting/screens/casting_screen.dart';
+import 'package:mawhebtak/features/casting/screens/details_of_main_category_gigs.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
 import 'package:mawhebtak/features/contact_us/screens/contact_us_screen.dart';
 import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
@@ -73,6 +74,7 @@ class Routes {
   static const String followersScreen = '/followersScreen';
   static const String writePostScreen = '/writePostScreen';
   static const String newGigsRoute = '/newGigsRoute';
+  static const String detailsOfMainCategoryGigsRoute = '/detailsOfMainCategoryGigsRoute';
   static const String gigsDetailsScreen = '/gigsDetailsScreen';
   static const String feedsScreen = '/feedsScreen';
   static const String announcementScreen = '/announcementScreen';
@@ -126,7 +128,17 @@ class AppRoutes {
         );
       case Routes.newGigsRoute:
         return PageTransition(
-          child: const NewGigsScreen(),
+          child:  NewGigsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.detailsOfMainCategoryGigsRoute:
+           String type = settings.arguments as String;
+        return PageTransition(
+          child:   DetailsOfMainCategoryGigs(
+            type: type,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

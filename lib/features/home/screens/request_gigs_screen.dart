@@ -73,7 +73,8 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
                                   : false,
                             ),
                         itemCount: requestGigs?.data?.length ?? 0,
-                      )),
+                      )
+                      ),
 
                 }  ,if (state is RequestGigsStateLoadingMore)
                   const CustomLoadingIndicator(),

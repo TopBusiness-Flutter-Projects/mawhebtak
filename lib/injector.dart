@@ -17,8 +17,10 @@ import 'package:mawhebtak/features/contact_us/data/repos/contact_us_repo.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
+import 'package:mawhebtak/features/home/data/repositories/request_gigs_repository.dart';
 import 'package:mawhebtak/features/home/data/repositories/top_talents_repository.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/data/repos/jobs.repo.dart';
@@ -45,7 +47,6 @@ import 'features/about_us/cubit/about_us_cubit.dart';
 import 'features/about_us/data/repos/about_us_repo.dart';
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/change_langauge/data/repos/change_language_repo.dart';
-
 import 'features/location/cubit/location_cubit.dart';
 import 'features/main_screen/data/repo/main_repo_impl.dart';
 import 'features/profile/cubit/profile_cubit.dart';
@@ -162,6 +163,7 @@ Future<void> setupCubit() async {
   );
   serviceLocator.registerFactory(() => FeedsCubit());
   serviceLocator.registerFactory(() => LocationCubit());
+  serviceLocator.registerFactory(() => RequestGigsCubit());
 }
 
 Future<void> setupRepo() async {
@@ -193,6 +195,8 @@ Future<void> setupRepo() async {
   serviceLocator
       .registerLazySingleton(() => TopTalentsRepository(serviceLocator()));
   serviceLocator.registerLazySingleton(() => FeedsRepository(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => RequestGigsRepository(serviceLocator()));
 }
 
 Future<void> setupSharedPreferences() async {
