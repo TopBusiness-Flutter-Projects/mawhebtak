@@ -159,6 +159,11 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                           child: SizedBox(
                             child: Image.network(
                               widget.announcement?.image ?? "",
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(
+                                ImageAssets.imagePicked,
+                                fit: BoxFit.contain,
+                              ),
                               fit: BoxFit.cover,
                               width: double.infinity,
                             ),

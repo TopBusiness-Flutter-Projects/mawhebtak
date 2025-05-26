@@ -15,4 +15,8 @@ final class ImagePickedState extends EventState {}
 
 final class VideoPickedState extends EventState {}
 
+final class GetEventDetailsLoadingState extends EventState {}
 
+final class GetEventDetailsLoadedState extends EventState {}
+
+final class GetEventDetailsErrorState extends EventState {}

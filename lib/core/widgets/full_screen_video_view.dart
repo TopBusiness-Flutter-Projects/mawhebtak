@@ -6,7 +6,6 @@ import '../exports.dart';
 class FullScreenViewer extends StatefulWidget {
   final String filePath;
   final String fileType;
-
   const FullScreenViewer({
     super.key,
     required this.filePath,

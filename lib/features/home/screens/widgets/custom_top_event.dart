@@ -31,10 +31,13 @@ class CustomTopEventList extends StatelessWidget {
                   child: SizedBox(
                     height: 200.h,
                     width: isAll ?? false ? getWidthSize(context) / .9 : 287.w,
-                    child: Image.network(
-                      topEvent?.image ?? "",
-                      fit: BoxFit.cover,
-                    ),
+                    child: Image.network(topEvent?.image ?? "",
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                              ImageAssets.imagePicked,
+                              fit: BoxFit.contain,
+                            )),
                   ),
                 )
               : ClipRRect(
@@ -103,7 +106,8 @@ class CustomTopEventList extends StatelessWidget {
                           CustomContainerButton(
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, Routes.detailsEventRoute);
+                                  context, Routes.detailsEventRoute,
+                                  arguments: topEvent?.id.toString());
                             },
                             title: "details".tr(),
                             color: AppColors.transparent,

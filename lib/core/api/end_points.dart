@@ -30,4 +30,5 @@ class EndPoints {
   static const String deleteData = '${baseUrl}delete-data';
 
   static const String storeEventUrl = '${baseUrl}store-event';
+  static const String getDetailsDataUrl = '${baseUrl}get-details-data';
 }

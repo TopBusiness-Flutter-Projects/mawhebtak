@@ -5,6 +5,7 @@ import '../../../../core/api/end_points.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../calender/data/model/countries_model.dart';
+import '../model/event_details_model.dart';
 
 class EventRepo {
   final BaseApiConsumer dio;
@@ -15,6 +16,20 @@ class EventRepo {
         EndPoints.getDataBaseUrl,
       );
       return Right(TopEventsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, GetMainEvenDetailsModel>> getEventDetailsById(
+      String id) async {
+    try {
+      var response =
+          await dio.get(EndPoints.getDetailsDataUrl, queryParameters: {
+        "model": "Event",
+        "id": id,
+      });
+      return Right(GetMainEvenDetailsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

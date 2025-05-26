@@ -58,5 +58,11 @@ final class AddNewTalendsToEventState extends CalenderState {
 final class RemoveNewTalendsFromEventState extends CalenderState {}
 
 final class GetAddNewEventState extends CalenderState {}
+
 final class GetAddNewEventSuccessState extends CalenderState {}
+
 final class GetAddNewEventErrorState extends CalenderState {}
+
+final class GetMyEventErrorState extends CalenderState {}
+final class GetMyEventSuccessState extends CalenderState {}
+final class GetMyEventLoadingState extends CalenderState {}

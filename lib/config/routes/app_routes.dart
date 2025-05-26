@@ -38,7 +38,7 @@ import '../../features/auth/login/screens/login_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
 import '../../features/home/screens/top_events_screen.dart';
-import '../../features/events/screens/second_details_screen.dart';
+
 import '../../features/feeds/screens/feeds_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
 import '../../features/jobs/screens/add_new_job_screen.dart';
@@ -186,16 +186,21 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      case Routes.secondDetailsSecond:
-        return PageTransition(
-          child: const SecondDetailsEventScreen(),
-          type: PageTransitionType.fade,
-          alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
-        );
+      // case Routes.secondDetailsSecond:
+      //   String? eventId = settings.arguments as String?;
+
+      //   return PageTransition(
+      //     child: SecondDetailsEventScreen(
+      //       eventId: eventId,
+      //     ),
+      //     type: PageTransitionType.fade,
+      //     alignment: Alignment.center,
+      //     duration: const Duration(milliseconds: 800),
+      //   );
       case Routes.detailsEventRoute:
+        String? eventId = settings.arguments as String?;
         return PageTransition(
-          child: const DetailsEventScreen(),
+          child: DetailsEventScreen(eventId: eventId),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

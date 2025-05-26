@@ -235,5 +235,8 @@
   "category": "التصنيف",
   "sub_category": "التصنيف الفرعي",
   "event_limit": "العدد المتوقع",
-  "please_enter_event_limit":"من فضلك ادخل العدد المتوقع"
+  "please_enter_event_limit":"من فضلك ادخل العدد المتوقع",
+  "retry":"إعادة المحاولة",
+  "my_event_list":"قائمة الأحداث الخاصة بي",
+   "event_requests":"طلبات الحدث"
 }

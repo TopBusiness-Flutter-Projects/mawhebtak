@@ -83,8 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
                               return Image.asset(
-                                ImageAssets.homeTestImage,
-                                fit: BoxFit.cover,
+                                ImageAssets.imagePicked,
+                                fit: BoxFit.contain,
                               );
                             }),
                             Container(

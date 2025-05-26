@@ -17,6 +17,7 @@ import '../../../core/utils/widget_from_application.dart';
 import '../../location/cubit/location_cubit.dart';
 import '../data/model/countries_model.dart';
 import '../data/model/selected_talends.dart';
+import '../data/repos/model/event_model.dart';
 import '../screens/widgets/calender_widget.dart';
 
 class CalenderCubit extends Cubit<CalenderState> {
@@ -426,6 +427,29 @@ class CalenderCubit extends Cubit<CalenderState> {
     } catch (e) {
       errorGetBar(e.toString());
       emit(GetAddNewEventErrorState());
+    }
+  }
+
+  GetMainEventModel? myEventsModel;
+  getMyEvents() async {
+    try {
+      emit(GetMyEventLoadingState());
+      final result = await api.getmyEvents();
+      result.fold((l) {
+        errorGetBar(l.toString());
+        emit(GetMyEventErrorState());
+      }, (r) {
+        if (r.status == 200) {
+          myEventsModel = r;
+          emit(GetMyEventSuccessState());
+        } else {
+          errorGetBar(r.msg ?? 'Error occurred');
+          emit(GetMyEventErrorState());
+        }
+      });
+    } catch (e) {
+      errorGetBar(e.toString());
+      emit(GetMyEventErrorState());
     }
   }
 }

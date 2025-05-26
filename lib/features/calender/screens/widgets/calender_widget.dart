@@ -175,7 +175,13 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   @override
   void initState() {
     super.initState();
-    events = [];
+    events = [
+      CalendarEvent(
+          title: "title",
+          date: DateTime.now(),
+          endDate: DateTime.now().add(const Duration(days: 2)),
+          color: Colors.red)
+    ];
   }
 
   @override
@@ -191,6 +197,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             10.h.verticalSpace,
             _buildWeekdayHeader(),
             Expanded(child: _buildCalendarBody()),
+            50.h.verticalSpace,
           ],
         ),
 

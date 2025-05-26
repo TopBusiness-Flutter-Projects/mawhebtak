@@ -1,7 +1,5 @@
-
 import 'package:mawhebtak/core/models/pagenation_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
-
 
 class RequestGigsModel {
   List<EventAndGigsModel>? data;
@@ -18,21 +16,31 @@ class RequestGigsModel {
     this.status,
   });
 
-  factory RequestGigsModel.fromJson(Map<String, dynamic> json) => RequestGigsModel(
-    data: json["data"] == null ? [] : List<EventAndGigsModel>.from(json["data"]!.map((x) => EventAndGigsModel.fromJson(x))),
-    links: json["links"] == null ? null : PaginationModel.fromJson(json["links"]),
-    meta: json["meta"] == null ? null : PaginationModel.fromJson(json["meta"]),
-    msg: json["msg"],
-    status: json["status"],
-  );
+  factory RequestGigsModel.fromJson(Map<String, dynamic> json) =>
+      RequestGigsModel(
+        data: json["data"] == null
+            ? []
+            : List<EventAndGigsModel>.from(
+                json["data"]!.map((x) => EventAndGigsModel.fromJson(x))),
+        links: json["links"] == null
+            ? null
+            : PaginationModel.fromJson(json["links"]),
+        meta: json["meta"] == null
+            ? null
+            : PaginationModel.fromJson(json["meta"]),
+        msg: json["msg"],
+        status: json["status"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "links": links?.toJson(),
-    "meta": meta?.toJson(),
-    "msg": msg,
-    "status": status,
-  };
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "links": links?.toJson(),
+        "meta": meta?.toJson(),
+        "msg": msg,
+        "status": status,
+      };
 }
 
 class EventAndGigsModel {
@@ -56,24 +64,28 @@ class EventAndGigsModel {
     this.from,
   });
 
-  factory EventAndGigsModel.fromJson(Map<String, dynamic> json) => EventAndGigsModel(
-    id: json["id"],
-    image: json["image"],
-    title: json["title"],
-    media: json["media"] == null ? [] : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
-    description: json["description"],
-    location: json["location"],
-    price: json["price"],
-    from:json["from"]
-  );
+  factory EventAndGigsModel.fromJson(Map<String, dynamic> json) =>
+      EventAndGigsModel(
+          id: json["id"],
+          image: json["image"],
+          title: json["title"],
+          media: json["media"] == null
+              ? []
+              : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
+          description: json["description"],
+          location: json["location"],
+          price: json["price"],
+          from: json["from"]);
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "image": image,
-    "title": title,
-    "media": media == null ? [] : List<dynamic>.from(media!.map((x) => x.toJson())),
-    "description": description,
-    "price":price,
-    "from" :from
-  };
+        "id": id,
+        "image": image,
+        "title": title,
+        "media": media == null
+            ? []
+            : List<dynamic>.from(media!.map((x) => x.toJson())),
+        "description": description,
+        "price": price,
+        "from": from
+      };
 }

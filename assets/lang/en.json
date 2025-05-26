@@ -233,6 +233,9 @@
   "category": "Category",
   "sub_category": "Sub category",
   "event_limit": "Event limit",
-    "please_enter_event_limit":"Please enter event limit"
+  "please_enter_event_limit": "Please enter event limit",
+  "retry": "Retry",
+    "my_event_list":"My Events List",
+    "event_requests":"Event Requests"
 
 }

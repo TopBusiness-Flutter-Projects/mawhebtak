@@ -2,55 +2,98 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
 
 import '../../../../core/exports.dart';
+import '../../data/model/event_details_model.dart';
 import 'custom_apply_button.dart';
 import 'custom_row_event.dart';
 
 class EventDetailsBody extends StatelessWidget {
-  const EventDetailsBody({super.key});
-
+  const EventDetailsBody({super.key, this.item});
+  final GetMainEvenDetailsModelData? item;
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 16.h),
-          child: Text('events_details'.tr(),style: getMediumStyle(fontSize: 14.sp,color: AppColors.darkGray),),
+          padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 16.h),
+          child: Text(
+            'events_details'.tr(),
+            style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
+          ),
         ),
-        const CustomRowEvent(text: 'location', text2: 'Egypt, Cairo',),
-        const CustomRowEvent(text: 'type', text2: 'Egypt, Cairo',isSecound: true,),
-        const CustomRowEvent(text: 'privacy', text2: 'Egypt, Cairo',),
-        const CustomRowEvent(text: 'event_date', text2: 'Egypt, Cairo',isSecound: true,),
-        const CustomRowEvent(text: 'Description', text2: '',),
+        CustomRowEvent(
+          text: 'location',
+          text2: item?.location ?? '',
+        ),
+        CustomRowEvent(
+          text: 'type',
+          text2: item?.category ?? '',
+          isSecond: true,
+        ),
+        CustomRowEvent(
+          text: 'privacy',
+          text2: item?.isPublic == 1 ? 'public'.tr() : 'private'.tr(),
+        ),
+        CustomRowEvent(
+          text: 'event_date',
+          text2: "${item?.from ?? ''} : ${item?.to ?? ''}",
+          isSecond: true,
+        ),
+        const CustomRowEvent(
+          text: 'Description',
+          text2: '',
+        ),
         Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 10.h),
-          child: Text('Mawahbtak big platform connects all artists in all fields to make large community bettwen artists in Egypt.'.tr(),style: getRegularStyle(fontSize: 13.sp,color: AppColors.darkGray),),
+          padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 10.h),
+          child: Text(
+            item?.description ?? '',
+            style: getRegularStyle(fontSize: 13.sp, color: AppColors.darkGray),
+          ),
         ),
-        const CustomRowEvent(text: '', text2: '',isSecound: true,),
+
+        ((item?.enrolled == null && item?.revenu == null) ||
+                (item?.enrolled == 0 && item?.revenu == 0))
+            ? Container()
+            : Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 10.h),
+                child: Text(
+                  'statistics'.tr(),
+                  style: getMediumStyle(
+                      fontSize: 14.sp, color: AppColors.darkGray),
+                ),
+              ),
+        StaticsCards(item: item),
+        SizedBox(height: 10.h),
+
         Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 10.h),
-          child: Text('statistics'.tr(),style: getMediumStyle(fontSize: 14.sp,color: AppColors.darkGray),),
+          padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 16.h),
+          child: Text(
+            'Required Talents'.tr(),
+            style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
+          ),
         ),
-        StaticsCards(),
-        SizedBox(height: 10.h,),
 
-        const CustomRowEvent(text: '', text2: '',isSecound: true,),
-
-        Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 16.h),
-          child: Text('Required Talents'.tr(),style: getMediumStyle(fontSize: 14.sp,color: AppColors.darkGray),),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: item?.requirements?.length ?? 0,
+          itemBuilder: (context, index) {
+            var itemRequired = item?.requirements?[index];
+            return CustomRowEvent(
+              text: itemRequired?.subCategory ?? '',
+              text2:
+                  '${itemRequired?.price ?? ''} ${itemRequired?.countryCurrency ?? ''}',
+              isSecond: true,
+              isRequiredTalent: true,
+            );
+          },
         ),
-        const CustomRowEvent(text: 'location', text2: '3000 L.E',isRequiredTalent: true,),
-        const CustomRowEvent(text: 'type', text2: '3000 L.E',isSecound: true,isRequiredTalent: true,),
-        const CustomRowEvent(text: 'location', text2: '3000 L.E',isRequiredTalent: true),
-        const CustomRowEvent(text: 'location', text2: '3000 L.E',isSecound: true,isRequiredTalent: true),
-        const CustomRowEvent(text: 'location', text2: '3000 L.E',isRequiredTalent: true),
-        SizedBox(height: 5.h,),
-        //
-        CustomApplyButton(),
-
-        SizedBox(height: 20.h,)
+        20.h.verticalSpace,
+        //TODO: need pass id and apply request
+        const CustomApplyButton(),
+        10.h.verticalSpace
       ],
     );
   }

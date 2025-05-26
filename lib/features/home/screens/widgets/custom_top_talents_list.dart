@@ -37,12 +37,17 @@ class CustomTopTalentsList extends StatelessWidget {
                       SizedBox(
                         height: 200.h,
                         width: 198.w,
-                        child: Image.network(
-                          topTalentsData?.image ?? "",
-                          fit: BoxFit.cover,
-                          height: 200.h,
-                          width: 198.w,
-                        ),
+                        child: Image.network(topTalentsData?.image ?? "",
+                            fit: BoxFit.cover,
+                            height: 200.h,
+                            width: 198.w,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Image.asset(
+                                  ImageAssets.imagePicked,
+                                  fit: BoxFit.contain,
+                                  height: 200.h,
+                                  width: 198.w,
+                                )),
                       ),
                       // Now inside the image container
                       Positioned(
@@ -63,7 +68,7 @@ class CustomTopTalentsList extends StatelessWidget {
           Positioned(
             bottom: 40.h,
             child: Padding(
-              padding:  EdgeInsets.only(left: 10.w,right: 10.w),
+              padding: EdgeInsets.only(left: 10.w, right: 10.w),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
