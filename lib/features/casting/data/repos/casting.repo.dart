@@ -9,6 +9,8 @@ import 'package:mawhebtak/core/error/failures.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/casting/data/model/add_gig_model.dart';
+import 'package:mawhebtak/features/casting/data/model/get_datails_gigs_model.dart';
+import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
 
 import '../../../calender/data/model/countries_model.dart';
 
@@ -50,14 +52,42 @@ class CastingRepo {
   }
 
   // categories data
-  Future<Either<Failure, GetCountriesMainModel>> getCategory() async {
+  Future<Either<Failure, GetCountriesMainModel>> getCategoryFromGigs() async {
     try {
       var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Category",
         "where[0]": "status,1",
-        "orderBy": "asc",
+        "where[2]": "type,0",
+
       });
       return Right(GetCountriesMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory({required String id}) async {
+    try {
+      var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
+        "model": "Gig",
+        "where[1]": "sub_category_id,$id",
+
+      });
+      return Right(GetGigsFromSubCategoryModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, GetDetailsGigsModel>> getDetailsGigs({required String id}) async {
+    try {
+      var response = await api.get(EndPoints.getDetailsDataUrl,
+          queryParameters: {
+        "model": "Gig",
+        "id": id,
+
+      });
+      return Right(GetDetailsGigsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

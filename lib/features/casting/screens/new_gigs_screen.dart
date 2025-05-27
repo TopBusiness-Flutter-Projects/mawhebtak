@@ -25,7 +25,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
   bool isOpen = false;
  @override
   void initState() {
-   context.read<CastingCubit>().getCategory();
+   context.read<CastingCubit>().getCategoryFromGigs();
    
     super.initState();
   }

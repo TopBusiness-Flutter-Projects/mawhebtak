@@ -1,12 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 
 import '../../../../../core/exports.dart';
 import '../../../../home/screens/widgets/follow_button.dart';
 
-class RequstGigsRequest extends StatelessWidget {
-  const RequstGigsRequest({super.key});
-
+class GigsRequest extends StatelessWidget {
+  const GigsRequest({super.key,required this.gigsRequestList});
+  final GigsRequestList? gigsRequestList;
   @override
   Widget build(BuildContext context) {
     return  Container(
@@ -33,9 +34,9 @@ class RequstGigsRequest extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 18.sp)),
+                          AutoSizeText(gigsRequestList?.user?.name ?? "", style: getMediumStyle(fontSize: 18.sp)),
                           AutoSizeText(
-                            "Talent / Actor Expert",
+                            gigsRequestList?.user?.headline ?? "",
                             style: getRegularStyle(fontSize: 16.sp, color: AppColors.grayLight),
                           ),
                         ],

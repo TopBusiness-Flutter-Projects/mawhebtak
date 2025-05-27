@@ -52,6 +52,9 @@ class EventAndGigsModel {
   String? location;
   String? price;
   String? from;
+  bool? isRequested;
+  bool? isMine;
+  List<GigsRequestList>? gigsRequests;
 
   EventAndGigsModel({
     this.id,
@@ -62,6 +65,9 @@ class EventAndGigsModel {
     this.description,
     this.price,
     this.from,
+    this.isRequested,
+    this.isMine,
+    this.gigsRequests,
   });
 
   factory EventAndGigsModel.fromJson(Map<String, dynamic> json) =>
@@ -75,7 +81,12 @@ class EventAndGigsModel {
           description: json["description"],
           location: json["location"],
           price: json["price"],
-          from: json["from"]);
+          from: json["from"],
+        isRequested: json["is_requested"],
+        isMine: json["is_mine"],
+        gigsRequests: json["gigs_requests"] == null ? [] : List<GigsRequestList>.from(json["gigs_requests"]!.map((x) => GigsRequestList.fromJson(x))),
+
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -88,4 +99,63 @@ class EventAndGigsModel {
         "price": price,
         "from": from
       };
+}
+class GigsRequestList {
+  int? id;
+  User? user;
+  String? status;
+  DateTime? createdAt;
+
+  GigsRequestList({
+    this.id,
+    this.user,
+    this.status,
+    this.createdAt,
+  });
+
+  factory GigsRequestList.fromJson(Map<String, dynamic> json) => GigsRequestList(
+    id: json["id"],
+    user: json["user"] == null ? null : User.fromJson(json["user"]),
+    status: json["status"],
+    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "user": user?.toJson(),
+    "status": status,
+    "created_at": createdAt?.toIso8601String(),
+  };
+}
+
+class User {
+  int? id;
+  String? name;
+  String? image;
+  dynamic headline;
+  int? followersCount;
+
+  User({
+    this.id,
+    this.name,
+    this.image,
+    this.headline,
+    this.followersCount,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json["id"],
+    name: json["name"],
+    image: json["image"],
+    headline: json["headline"],
+    followersCount: json["followers_count"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "image": image,
+    "headline": headline,
+    "followers_count": followersCount,
+  };
 }
