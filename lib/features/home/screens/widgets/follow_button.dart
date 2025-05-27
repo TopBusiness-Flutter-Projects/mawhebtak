@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_strings.dart';
-import '../../../../../core/utils/get_size.dart';
 
 class CustomContainerButton extends StatelessWidget {
   const CustomContainerButton({
@@ -18,13 +17,13 @@ class CustomContainerButton extends StatelessWidget {
     this.borderColor,
     this.textColor,
   });
-  final  void Function()? onTap;
+  final void Function()? onTap;
   final String title;
-  final Color ?textColor;
-  final Color ?borderColor;
-  final double ?height;
-  final double ?width;
-  final Color ?color;
+  final Color? textColor;
+  final Color? borderColor;
+  final double? height;
+  final double? width;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -32,22 +31,21 @@ class CustomContainerButton extends StatelessWidget {
       //   borderRadius: BorderRadius.circular(getSize(context) / 12),
       child: Container(
         height: height ?? 40.h,
-         width: width ?? null,
+        width: width ?? null,
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(horizontal: 30.w),
         decoration: BoxDecoration(
-            color: color??AppColors.transparent,
+            color: color ?? AppColors.transparent,
             borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(width: 1.0,color: borderColor??AppColors.white)
-        ),
+            border:
+                Border.all(width: 1.0, color: borderColor ?? AppColors.white)),
         child: AutoSizeText(
           title.tr(),
           style: TextStyle(
-              color:textColor ??AppColors.white,
+              color: textColor ?? AppColors.white,
               fontFamily: AppStrings.fontFamily,
-              fontWeight:FontWeight.w400,
-              fontSize: 18.sp
-          ),
+              fontWeight: FontWeight.w400,
+              fontSize: 18.sp),
         ),
       ),
     );

@@ -82,30 +82,31 @@ class _ToggleTabsState extends State<ToggleTabs> {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        cubit.changeToggle(2);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        decoration: BoxDecoration(
-                          color: cubit.selectedIndex == 2
-                              ? Colors.lightBlue
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text('event_requests'.tr(),
-                              style: getRegularStyle(
-                                color: cubit.selectedIndex == 2
-                                    ? Colors.white
-                                    : Colors.grey,
-                              )),
+                    if (cubit.eventDetails?.data?.isMine == true)
+                      GestureDetector(
+                        onTap: () {
+                          cubit.changeToggle(2);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          decoration: BoxDecoration(
+                            color: cubit.selectedIndex == 2
+                                ? Colors.lightBlue
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('event_requests'.tr(),
+                                style: getRegularStyle(
+                                  color: cubit.selectedIndex == 2
+                                      ? Colors.white
+                                      : Colors.grey,
+                                )),
+                          ),
                         ),
                       ),
-                    ),
                     //! WE NEED ADD NEW TAB
                   ],
                 ),

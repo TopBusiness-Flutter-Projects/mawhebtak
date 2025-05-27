@@ -40,9 +40,10 @@ class CustomEventDetailsWidget extends StatelessWidget {
           right: 0,
           child: CustomSimpleAppbar(
             titleColor: AppColors.white,
-            colorButton: AppColors.whiteSecond,
+            colorButton: AppColors.black.withOpacity(0.2),
             title: 'events_details'.tr(),
             color: AppColors.transparent,
+            arrowColor: AppColors.white,
           ),
         ),
         Positioned(
@@ -65,6 +66,7 @@ class CustomEventDetailsWidget extends StatelessWidget {
                     style: getMediumStyle(
                       color: AppColors.white,
                       fontSize: 16.sp,
+                      isShadow: true,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -84,7 +86,9 @@ class CustomEventDetailsWidget extends StatelessWidget {
                                 child: Text(
                                   item?.from ?? '',
                                   style: getRegularStyle(
-                                      fontSize: 14.sp, color: AppColors.white),
+                                      isShadow: true,
+                                      fontSize: 14.sp,
+                                      color: AppColors.white),
                                 ),
                               ),
                             ],
@@ -99,46 +103,45 @@ class CustomEventDetailsWidget extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 5.h),
-                  if (isFollowed ?? false) ...[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Flexible(
-                            child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 7.0.w),
-                          child: CustomContainerButton(
-                            title: isFollowed ?? false
-                                ? "cancel_this_event".tr()
-                                : "follow_event".tr(),
-                            onTap: onTap,
-                            borderColor: isFollowed ?? false
-                                ? AppColors.red
-                                : AppColors.white,
-                            textColor: isFollowed ?? false
-                                ? AppColors.red
-                                : AppColors.white,
-                          ),
-                        )),
-                        SizedBox(width: getWidthSize(context) / 50),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: SvgPicture.asset(AppIcons.settingIcon),
-                        )
-                      ],
-                    ),
-                  ] else ...[
-                    CustomContainerButton(
-                      title: isFollowed ?? false
-                          ? "cancel_this_event".tr()
-                          : "follow_event".tr(),
-                      onTap: onTap,
-                      borderColor:
-                          isFollowed ?? false ? AppColors.red : AppColors.white,
-                      textColor:
-                          isFollowed ?? false ? AppColors.red : AppColors.white,
-                    ),
-                  ]
+                  if (item?.isMine == false)
+                    if (isFollowed ?? false) ...[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Flexible(
+                              child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 7.0.w),
+                            child: CustomContainerButton(
+                              title: isFollowed ?? false
+                                  ? "cancel_this_event".tr()
+                                  : "follow_event".tr(),
+                              onTap: onTap,
+                              borderColor: isFollowed ?? false
+                                  ? AppColors.red
+                                  : AppColors.white,
+                              textColor: isFollowed ?? false
+                                  ? AppColors.red
+                                  : AppColors.white,
+                            ),
+                          )),
+                          SizedBox(width: getWidthSize(context) / 50),
+                        ],
+                      ),
+                    ] else ...[
+                      CustomContainerButton(
+                        title: isFollowed ?? false
+                            ? "cancel_this_event".tr()
+                            : "follow_event".tr(),
+                        onTap: onTap,
+                        borderColor: isFollowed ?? false
+                            ? AppColors.red
+                            : AppColors.white,
+                        textColor: isFollowed ?? false
+                            ? AppColors.red
+                            : AppColors.white,
+                      ),
+                    ]
                 ],
               ),
             ),

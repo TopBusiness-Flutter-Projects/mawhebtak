@@ -391,7 +391,6 @@ class _NewEventScreenState extends State<NewEventScreen> {
                     enabled: true,
                     suffixIcon: InkWell(
                       onTap: () {
-
                         showCurrencyPicker(
                             cubit.countriesMainModel?.data ?? []);
                       },

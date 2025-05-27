@@ -6,8 +6,8 @@ class AppColors {
   static Color primary = const Color(0xff3761EA);
   static Color secondPrimary = HexColor('#48B6F0');
   static Color grayLite = const Color(0xffF7F7F7);
-  static Color grayLite2 =  HexColor("#F7F7F7");
-  static Color whiteSecond =  HexColor('#8C7B95');
+  static Color grayLite2 = HexColor("#F7F7F7");
+  static Color whiteSecond = HexColor('#8C7B95');
   static Color darkGray = const Color(0xff464545);
   static Color gray = const Color(0xffC0C0C0);
   static Color grayMedium = HexColor('#ADADAD');
@@ -41,7 +41,6 @@ class AppColors {
 
   Color darken(Color color, [double amount = .1]) {
     assert(amount >= 0 && amount <= 1);
-
 
     final hsl = HSLColor.fromColor(color);
     final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));

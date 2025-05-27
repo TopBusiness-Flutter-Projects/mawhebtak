@@ -9,10 +9,9 @@ class RequstGigsRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       color: AppColors.white,
-      child:
-      Column(
+      child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -25,7 +24,7 @@ class RequstGigsRequest extends StatelessWidget {
                   child: Image.asset(ImageAssets.profileImage),
                 ),
                 SizedBox(width: 8.w),
-                Expanded  (
+                Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,18 +32,23 @@ class RequstGigsRequest extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AutoSizeText("Ahmed Mokhtar", style: getMediumStyle(fontSize: 18.sp)),
+                          AutoSizeText("Ahmed Mokhtar",
+                              style: getMediumStyle(fontSize: 18.sp)),
                           AutoSizeText(
                             "Talent / Actor Expert",
-                            style: getRegularStyle(fontSize: 16.sp, color: AppColors.grayLight),
+                            style: getRegularStyle(
+                                fontSize: 16.sp, color: AppColors.grayLight),
                           ),
                         ],
                       ),
                       Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Text("new".tr(),style: getRegularStyle(fontSize: 18.sp,color: AppColors.red),),
+                        child: Text(
+                          "new".tr(),
+                          style: getRegularStyle(
+                              fontSize: 18.sp, color: AppColors.red),
+                        ),
                       ),
-
                     ],
                   ),
                 ),
@@ -59,24 +63,23 @@ class RequstGigsRequest extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: CustomContainerButton(title: 'accept'.tr(),
+                  child: CustomContainerButton(
+                    title: 'accept'.tr(),
                     color: AppColors.primary,
-
                   ),
-                ), Padding(
+                ),
+                Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: CustomContainerButton(title: 'reject'.tr(),
+                  child: CustomContainerButton(
+                    title: 'reject'.tr(),
                     color: AppColors.transparent,
                     borderColor: AppColors.red,
                     textColor: AppColors.red,
                   ),
                 ),
-
-
               ],
             ),
           )
-
         ],
       ),
     );

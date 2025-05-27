@@ -316,6 +316,7 @@ class CalenderCubit extends Cubit<CalenderState> {
   void showSelectionBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      showDragHandle: true,
       backgroundColor: Colors.white,
       builder: (context) {
         return Column(
@@ -324,7 +325,7 @@ class CalenderCubit extends Cubit<CalenderState> {
             ListTile(
               leading: const Icon(Icons.photo_library),
               title: Text(
-                'pick image',
+                'pick_image'.tr(),
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: MediaQuery.of(context).size.width / 20),
@@ -340,7 +341,7 @@ class CalenderCubit extends Cubit<CalenderState> {
             ListTile(
               leading: const Icon(Icons.video_library),
               title: Text(
-                'pick video',
+                'pick_video'.tr(),
                 style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: MediaQuery.of(context).size.width / 20),

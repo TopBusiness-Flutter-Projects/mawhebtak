@@ -34,7 +34,6 @@ class _TimeLineListState extends State<TimeLineList> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,7 +78,8 @@ class _TimeLineListState extends State<TimeLineList> {
                 ],
               ),
               if (widget.feedsCubit?.user?.data?.id.toString() ==
-                  widget.feedsCubit?.posts?.data?[widget.index].user?.id.toString())
+                  widget.feedsCubit?.posts?.data?[widget.index].user?.id
+                      .toString())
                 PopupMenuButton<String>(
                   icon: SvgPicture.asset(AppIcons.settingIcon),
                   onSelected: (value) {
@@ -144,41 +144,41 @@ class _TimeLineListState extends State<TimeLineList> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-          if(widget.feeds?.reactionCount != 0)
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    AppIcons.likeIcon,
-                    width: 20,
+            if (widget.feeds?.reactionCount != 0)
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SvgPicture.asset(
+                      AppIcons.likeIcon,
+                      width: 20,
+                    ),
                   ),
-                ),
-                Text(
-                  widget.feeds?.reactionCount.toString() ?? "0",
-                  style: getSemiBoldStyle(
-                    fontSize: 16.sp,
-                    color: AppColors.primary,
+                  Text(
+                    widget.feeds?.reactionCount.toString() ?? "0",
+                    style: getSemiBoldStyle(
+                      fontSize: 16.sp,
+                      color: AppColors.primary,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            if(widget.feeds?.commentCount != 0)
-            Expanded(
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "${widget.feeds?.commentCount.toString()}  ${'comment'.tr()}",
-                    style: getRegularStyle(
-                      fontSize: 18.sp,
-                      color: AppColors.grayDark.withOpacity(0.7),
+                ],
+              ),
+            if (widget.feeds?.commentCount != 0)
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "${widget.feeds?.commentCount.toString()}  ${'comment'.tr()}",
+                      style: getRegularStyle(
+                        fontSize: 18.sp,
+                        color: AppColors.grayDark.withOpacity(0.7),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
         SizedBox(height: 3.h),
@@ -221,14 +221,17 @@ class _TimeLineListState extends State<TimeLineList> {
             BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
               return GestureDetector(
                 onTap: () {
-                  context.read<FeedsCubit>().commentsData(postId: widget.postId);
+                  context
+                      .read<FeedsCubit>()
+                      .commentsData(postId: widget.postId);
                   showModalBottomSheet(
                     showDragHandle: true,
                     useSafeArea: true,
                     context: context,
                     isScrollControlled: true,
                     shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20)),
                     ),
                     backgroundColor: AppColors.white,
                     builder: (context) {
@@ -253,7 +256,8 @@ class _TimeLineListState extends State<TimeLineList> {
                                   10.h.verticalSpace,
                                   Expanded(
                                     child: ListView.builder(
-                                      controller: widget.feedsCubit?.scrollController,
+                                      controller:
+                                          widget.feedsCubit?.scrollController,
                                       itemCount: comments.length,
                                       itemBuilder: (context, index) {
                                         final comment = comments[index];
@@ -477,7 +481,6 @@ class _TimeLineListState extends State<TimeLineList> {
                                           children: [
                                             Expanded(
                                               child: TextFormField(
-
                                                 style:
                                                     TextStyle(fontSize: 18.sp),
                                                 controller:

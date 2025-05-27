@@ -235,8 +235,18 @@
   "category": "التصنيف",
   "sub_category": "التصنيف الفرعي",
   "event_limit": "العدد المتوقع",
-  "please_enter_event_limit":"من فضلك ادخل العدد المتوقع",
-  "retry":"إعادة المحاولة",
-  "my_event_list":"قائمة الأحداث الخاصة بي",
-   "event_requests":"طلبات الحدث"
+  "please_enter_event_limit": "من فضلك ادخل العدد المتوقع",
+  "retry": "إعادة المحاولة",
+  "my_event_list": "قائمة الأحداث الخاصة بي",
+  "event_requests": "طلبات الحدث",
+  "note": "ملاحظة",
+  "event_requirement": "متطلبات الحدث",
+  "status": "الحالة",
+  "media": "الوسائط",
+  "no_users": "لا يوجد مستخدمون مسجلون",
+  "no_requsts": "لا توجد طلبات",
+
+  "created_by":"تم الإنشاء بواسطة",
+  "pick_image":"اختر صورة",
+  "pick_video":"اختر فيديو"
 }

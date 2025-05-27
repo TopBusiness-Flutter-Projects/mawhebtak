@@ -72,6 +72,7 @@ class CustomTopEventList extends StatelessWidget {
                         style: getBoldStyle(
                           color: AppColors.white,
                           fontSize: 16.sp,
+                          isShadow: true,
                         ),
                         textAlign: TextAlign.left,
                       ),
@@ -79,10 +80,12 @@ class CustomTopEventList extends StatelessWidget {
                         topEvent?.description ?? "",
                         maxLines: 2,
                         style: getRegularStyle(
-                            color: AppColors.grayText, fontSize: 14.sp),
+                            isShadow: true,
+                            color: AppColors.grayText,
+                            fontSize: 14.sp),
                         textAlign: TextAlign.left,
                       ),
-                      10.h.verticalSpace,
+                      5.h.verticalSpace,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -97,6 +100,7 @@ class CustomTopEventList extends StatelessWidget {
                                     topEvent?.from ?? "",
                                     style: getRegularStyle(
                                         fontSize: 14.sp,
+                                        isShadow: true,
                                         color: AppColors.white),
                                   ),
                                 ),

@@ -32,7 +32,7 @@ class GeneralCustomDropdownButtonFormField<T> extends StatelessWidget {
           filled: true,
           fillColor: AppColors.grayLite,
           hintText: 'choose'.tr(),
-          contentPadding: EdgeInsets.symmetric(horizontal: 5.sp, vertical: 4),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
           border: OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.grayLite, width: 1.5.w),
             borderRadius: BorderRadius.all(Radius.circular(10.r)),
@@ -41,6 +41,9 @@ class GeneralCustomDropdownButtonFormField<T> extends StatelessWidget {
             borderSide: BorderSide(color: AppColors.grayLite, width: 1.5.w),
             borderRadius: BorderRadius.all(Radius.circular(10.r)),
           ),
+          errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.red, width: 1.5),
+              borderRadius: BorderRadius.all(Radius.circular(10.r))),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.grayLite, width: 1.5.w),
             borderRadius: BorderRadius.all(Radius.circular(10.r)),
@@ -55,6 +58,7 @@ class GeneralCustomDropdownButtonFormField<T> extends StatelessWidget {
             child: Icon(Icons.arrow_drop_down, color: AppColors.black),
           ),
         ),
+        validator: validator,
         style: TextStyle(color: AppColors.black, fontSize: 16.sp),
         items: items.map((T item) {
           return DropdownMenuItem<T>(

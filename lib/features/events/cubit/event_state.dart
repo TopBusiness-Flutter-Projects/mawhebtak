@@ -20,3 +20,9 @@ final class GetEventDetailsLoadingState extends EventState {}
 final class GetEventDetailsLoadedState extends EventState {}
 
 final class GetEventDetailsErrorState extends EventState {}
+
+final class FollowUnFollowEventLoadingState extends EventState {}
+
+final class FollowUnFollowEventLoadedState extends EventState {}
+
+final class FollowUnFollowEventErrorState extends EventState {}
