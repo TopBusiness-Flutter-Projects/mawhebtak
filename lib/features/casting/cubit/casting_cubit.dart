@@ -1,6 +1,8 @@
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
+import 'package:mawhebtak/features/casting/data/model/get_datails_gigs_model.dart';
+import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import '../../calender/data/model/countries_model.dart';
 import '../data/repos/casting.repo.dart';
@@ -17,18 +19,50 @@ class CastingCubit extends Cubit<CastingState> {
   GetCountriesMainModelData? selectedCategory;
   int? subCategoryId;
   GetCountriesMainModelData? selectedSubCategory;
-  getCategory() async {
-    emit(CategoryStateLoading());
+
+  getCategoryFromGigs() async {
+    emit(CategoryFromGigsStateLoading());
     try {
-      final res = await castingRepo.getCategory();
+      final res = await castingRepo.getCategoryFromGigs();
       res.fold((l) {
-        emit(CategoryStateError(l.toString()));
+        emit(CategoryFromGigsStateError(l.toString()));
       }, (r) {
         categoryModel = r;
-        emit(CategoryStateLoaded());
+        emit(CategoryFromGigsStateLoaded(r));
       });
     } catch (e) {
-      emit(CategoryStateError(e.toString()));
+      emit(CategoryFromGigsStateError(e.toString()));
+    }
+  }
+
+  GetGigsFromSubCategoryModel? getGigsFromSubCategoryModel;
+  getGigsFromSubCategory({required String id}) async {
+    emit(GigsFromCategoryStateLoading());
+    try {
+      final res = await castingRepo.getGigsFromSubCategory(id: id);
+      res.fold((l) {
+        emit(GigsFromCategoryStateError(l.toString()));
+      }, (r) {
+        getGigsFromSubCategoryModel = r;
+        emit(GigsFromCategoryStateLoaded(r));
+      });
+    } catch (e) {
+      emit(CategoryFromGigsStateError(e.toString()));
+    }
+  }
+  GetDetailsGigsModel? getDetailsGigsModel;
+  getDetailsGigs({required String id}) async {
+    emit(DetailsGigsStateLoading());
+    try {
+      final res = await castingRepo.getDetailsGigs(id: id);
+      res.fold((l) {
+        emit(DetailsGigsStateError(l.toString()));
+      }, (r) {
+        getDetailsGigsModel = r;
+        emit(DetailsGigsStateLoaded(r));
+      });
+    } catch (e) {
+      emit(CategoryFromGigsStateError(e.toString()));
     }
   }
 
@@ -40,8 +74,9 @@ class CastingCubit extends Cubit<CastingState> {
       res.fold((l) {
         emit(SubCategoryStateError(l.toString()));
       }, (r) {
+        getGigsFromSubCategoryModel =null;
         subCategoryModel = r;
-        emit(SubCategoryStateLoaded());
+        emit(SubCategoryStateLoaded(r));
       });
     } catch (e) {
       emit(SubCategoryStateError(e.toString()));

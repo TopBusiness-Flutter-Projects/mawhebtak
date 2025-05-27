@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
 import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
-
-import '../../../../config/routes/app_routes.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_button.dart';
 
-class GigsWidget extends StatelessWidget {
+class GigsWidget extends StatefulWidget {
   GigsWidget({
     super.key,
     this.isWithButton,
@@ -18,92 +18,131 @@ class GigsWidget extends StatelessWidget {
   final EventAndGigsModel? eventAndGigsModel;
 
   @override
+  State<GigsWidget> createState() => _GigsWidgetState();
+}
+
+class _GigsWidgetState extends State<GigsWidget> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  @override
+  initState() {
+    super.initState();
+    _pageController.addListener(() {
+      setState(() {
+        _currentPage = _pageController.page?.round() ?? 0;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, Routes.gigsDetailsScreen);
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.gigsDetailsScreen);
-                },
-                child: ((eventAndGigsModel?.media?.isNotEmpty ?? false))
-                    ? SizedBox(
-                        height: getHeightSize(context) / 3.7,
-                        child: PageView.builder(
-                          itemCount: eventAndGigsModel?.media?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            final media = eventAndGigsModel?.media?[index];
-                            if (media?.extension == 'video') {
-                              return VideoPlayerWidget(
-                                  videoUrl: media?.file ?? "");
-                            } else {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ImageFileView(
-                                              isNetwork: true,
-                                              image: eventAndGigsModel
-                                                      ?.media?[index].file ??
-                                                  "")));
-                                },
-                                child: Image.network(
-                                  eventAndGigsModel?.media?[index].file ?? '',
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Image.asset(ImageAssets.appIconWhite),
+    final mediaList = widget.eventAndGigsModel?.media;
+    final mediaCount = mediaList?.length ?? 0;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Stack(
+          children: [
+            (mediaCount > 0)
+                ? SizedBox(
+                    height: getHeightSize(context) / 3.7,
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: mediaCount,
+                      itemBuilder: (context, index) {
+                        final media = mediaList?[index];
+                        if (media?.extension == 'video') {
+                          return VideoPlayerWidget(
+                              videoUrl: media?.file ?? "");
+                        } else {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ImageFileView(
+                                    isNetwork: true,
+                                    image: media?.file ?? "",
+                                  ),
                                 ),
                               );
-                            }
-                          },
-                        ),
-                      )
-                    : const SizedBox(),
-              )
-            ],
-          ),
-          5.h.verticalSpace,
-          Padding(
-            padding: EdgeInsets.only(left: 15.0.w, right: 15.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  eventAndGigsModel?.title ?? "",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20.sp,
+                            },
+                            child: Image.network(
+                              media?.file ?? '',
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(ImageAssets.appIconWhite),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  )
+                : const SizedBox(),
+
+            // Show the indicator only if there are multiple items
+            if (mediaCount > 1)
+              Positioned(
+                bottom: 10,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: AnimatedSmoothIndicator(
+                    activeIndex: _currentPage,
+                    count: mediaCount,
+                    effect: const WormEffect(
+                      dotHeight: 8,
+                      dotWidth: 8,
+                      activeDotColor: Colors.white,
+                      dotColor: Colors.white60,
+                    ),
                   ),
                 ),
-                5.h.verticalSpace,
-                Text(
-                  eventAndGigsModel?.description ?? "",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18.sp,
-                    color: AppColors.blackLite,
-                  ),
+              ),
+          ],
+        ),
+        30.h.verticalSpace,
+        Padding(
+          padding: EdgeInsets.only(left: 15.0.w, right: 15.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                widget.eventAndGigsModel?.title ?? "",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20.sp,
                 ),
-                10.h.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+              ),
+              5.h.verticalSpace,
+              Text(
+                widget.eventAndGigsModel?.description ?? "",
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 18.sp,
+                  color: AppColors.blackLite,
+                ),
+              ),
+              20.h.verticalSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Row(
                       children: [
                         SvgPicture.asset(AppIcons.locationIcon),
                         5.w.horizontalSpace,
                         Text(
-                          eventAndGigsModel?.location ?? "",
+                          widget.eventAndGigsModel?.location ?? "",
                           style: TextStyle(
                               color: AppColors.grayDarkkk,
                               fontSize: 18.sp,
@@ -111,33 +150,42 @@ class GigsWidget extends StatelessWidget {
                         )
                       ],
                     ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(AppIcons.dollar),
-                        5.w.horizontalSpace,
-                        Text(
-                          eventAndGigsModel?.price.toString() ?? "",
-                          style: TextStyle(
-                              color: AppColors.primary,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w400),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(AppIcons.dollar),
+                      5.w.horizontalSpace,
+                      Text(
+                        widget.eventAndGigsModel?.price.toString() ?? "",
+                        style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w400),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
-          10.verticalSpace,
-          if (isWithButton ?? false)
-            Padding(
-                padding: EdgeInsets.only(bottom: 10.h),
-                child: CustomButton(
-                  title: "request_this_gigs".tr(),
-                )),
-        ],
-      ),
+        ),
+        10.verticalSpace,
+        if (widget.isWithButton ?? false)
+          Padding(
+              padding: EdgeInsets.only(bottom: 10.h),
+              child: CustomButton(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GigsDetailsScreen(
+                          id: widget.eventAndGigsModel?.id.toString() ?? "",
+                        ),
+                      ));
+                },
+                title: "request_this_gigs".tr(),
+              )),
+      ],
     );
   }
 }

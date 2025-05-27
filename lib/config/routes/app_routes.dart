@@ -14,6 +14,8 @@ import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
 import 'package:mawhebtak/features/casting/screens/casting_screen.dart';
 import 'package:mawhebtak/features/casting/screens/details_of_main_category_gigs.dart';
+import 'package:mawhebtak/features/casting/screens/details_of_main_category_top_talents.dart';
+import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
 import 'package:mawhebtak/features/contact_us/screens/contact_us_screen.dart';
 import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
@@ -38,12 +40,10 @@ import '../../features/auth/login/screens/login_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
 import '../../features/home/screens/top_events_screen.dart';
-
 import '../../features/feeds/screens/feeds_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
 import '../../features/jobs/screens/add_new_job_screen.dart';
 import '../../features/profile/screens/followers_screen.dart';
-import '../../features/profile/screens/gigs_details.dart';
 import '../../features/casting/screens/new_gigs_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/feeds/screens/write_post.dart';
@@ -74,8 +74,6 @@ class Routes {
   static const String followersScreen = '/followersScreen';
   static const String writePostScreen = '/writePostScreen';
   static const String newGigsRoute = '/newGigsRoute';
-  static const String detailsOfMainCategoryGigsRoute =
-      '/detailsOfMainCategoryGigsRoute';
   static const String gigsDetailsScreen = '/gigsDetailsScreen';
   static const String feedsScreen = '/feedsScreen';
   static const String announcementScreen = '/announcementScreen';
@@ -94,6 +92,8 @@ class Routes {
   static const String addAssistantRoute = '/addAssistant';
   static const String topTalentsRoute = '/topTalentsRoute';
   static const String requestGigsRoute = '/requestGigsRoute';
+  static const String detailsOfMainCategoryFromGigsRoute = '/detailsOfMainCategoryFromGigs';
+  static const String detailsOfMainCategoryFromTopTalentsRoute = '/detailsOfMainCategoryFromTopTalents';
 }
 
 class AppRoutes {
@@ -114,8 +114,9 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.gigsDetailsScreen:
+        String id = settings.arguments as String;
         return PageTransition(
-          child: const GigsDetailsScreen(),
+          child:  GigsDetailsScreen(id: id,),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
@@ -134,11 +135,11 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      case Routes.detailsOfMainCategoryGigsRoute:
-        String type = settings.arguments as String;
+      case Routes.detailsOfMainCategoryFromGigsRoute:
+        String? categoryId = settings.arguments as String;
         return PageTransition(
-          child: DetailsOfMainCategoryGigs(
-            type: type,
+          child:  DetailsOfMainCategoryGigs(
+            categoryId: categoryId,
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
@@ -402,6 +403,13 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
+        case Routes.detailsOfMainCategoryFromTopTalentsRoute:
+        return PageTransition(
+          child: const DetailsOfMainCategoryTopTalents(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
       case Routes.topTalentsRoute:
         return PageTransition(
           child: BlocProvider(
@@ -421,6 +429,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
+
       case Routes.addAssistantRoute:
         final args = settings.arguments as Map<String, dynamic>;
         WorkModel work = args['work'] as WorkModel;

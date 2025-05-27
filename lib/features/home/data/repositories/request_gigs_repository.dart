@@ -16,6 +16,7 @@ class RequestGigsRepository {
         "model": "Gig",
         "where[0]": "status,1",
         "paginate": "true",
+        "orderBy":"desc",
         "page": page
       });
 
