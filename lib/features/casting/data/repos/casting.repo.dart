@@ -6,6 +6,7 @@ import 'package:mawhebtak/core/api/base_api_consumer.dart';
 import 'package:mawhebtak/core/api/end_points.dart';
 import 'package:mawhebtak/core/error/exceptions.dart';
 import 'package:mawhebtak/core/error/failures.dart';
+import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/casting/data/model/add_gig_model.dart';
@@ -58,7 +59,6 @@ class CastingRepo {
         "model": "Category",
         "where[0]": "status,1",
         "where[2]": "type,0",
-
       });
       return Right(GetCountriesMainModel.fromJson(response));
     } on ServerException {
@@ -66,12 +66,12 @@ class CastingRepo {
     }
   }
 
-  Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory({required String id}) async {
+  Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory(
+      {required String id}) async {
     try {
       var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Gig",
         "where[1]": "sub_category_id,$id",
-
       });
       return Right(GetGigsFromSubCategoryModel.fromJson(response));
     } on ServerException {
@@ -79,13 +79,13 @@ class CastingRepo {
     }
   }
 
-  Future<Either<Failure, GetDetailsGigsModel>> getDetailsGigs({required String id}) async {
+  Future<Either<Failure, GetDetailsGigsModel>> getDetailsGigs(
+      {required String id}) async {
     try {
-      var response = await api.get(EndPoints.getDetailsDataUrl,
-          queryParameters: {
+      var response =
+          await api.get(EndPoints.getDetailsDataUrl, queryParameters: {
         "model": "Gig",
         "id": id,
-
       });
       return Right(GetDetailsGigsModel.fromJson(response));
     } on ServerException {
@@ -101,6 +101,19 @@ class CastingRepo {
         "where[0]": "category_id,$categoryId",
       });
       return Right(GetCountriesMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, DefaultMainModel>> actionGig(
+      {required String gigId, required String status}) async {
+    try {
+      var response = await api.post(EndPoints.actionGigsUrl+gigId, body: {
+        "key": "ActionGig",
+        "status": status,
+      }, );
+      return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
