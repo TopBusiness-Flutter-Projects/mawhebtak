@@ -48,6 +48,12 @@ class CastingState {}
   GigsFromCategoryStateError(this.errorMessage);
  }
  class DetailsGigsStateLoading extends CastingState {}
+ class ActionGigStateLoading extends CastingState {}
+ class ActionGigStateLoaded extends CastingState {}
+ class ActionGigStateError extends CastingState {
+ final String errorMessage;
+  ActionGigStateError(this.errorMessage);
+ }
  class DetailsGigsStateLoaded extends CastingState {
   final GetDetailsGigsModel? getDetailsGigsModel;
   DetailsGigsStateLoaded(this.getDetailsGigsModel);

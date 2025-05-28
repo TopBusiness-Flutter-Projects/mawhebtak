@@ -1,4 +1,5 @@
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/casting/data/model/get_datails_gigs_model.dart';
@@ -82,6 +83,27 @@ class CastingCubit extends Cubit<CastingState> {
       emit(SubCategoryStateError(e.toString()));
     }
   }
+  DefaultMainModel? defaultMainModel;
+
+
+  actionGig({required String status,required String gigId}) async {
+    emit(ActionGigStateLoading());
+    try {
+      final res = await castingRepo.actionGig(
+        status:status ,
+        gigId: gigId,
+      );
+      res.fold((l) {
+        emit(ActionGigStateError(l.toString()));
+      }, (r) {
+        successGetBar(r.msg);
+        getDetailsGigs(id: gigId);
+        emit(ActionGigStateLoaded());
+      });
+    } catch (e) {
+      emit(ActionGigStateError(e.toString()));
+    }
+  }
 
   addNewGig({required BuildContext context}) async {
     AppWidgets.create2ProgressDialog(context);
@@ -133,4 +155,6 @@ class CastingCubit extends Cubit<CastingState> {
     }
     Navigator.pop(context);
   }
+
+
 }
