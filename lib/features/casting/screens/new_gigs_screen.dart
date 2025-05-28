@@ -158,13 +158,13 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                   showCurrencyPicker(
                                       cubit2.countriesMainModel?.data ?? [],
                                       context);
-
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      cubit2.selectedCurrency?.currency ?? 'L.E',
+                                      cubit2.selectedCurrency?.currency ??
+                                          'L.E',
                                       style: getRegularStyle(
                                           color: Colors.blue, fontSize: 14.sp),
                                     ),
@@ -343,7 +343,6 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
               onTap: () {
                 setState(() {
                   context.read<CalenderCubit>().selectedCurrency = currency;
-
                 });
                 Navigator.pop(context);
               },
