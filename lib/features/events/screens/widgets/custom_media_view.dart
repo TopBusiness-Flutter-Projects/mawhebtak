@@ -34,7 +34,7 @@ class MediaCarousel extends StatelessWidget {
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: media.extension == 'video'
-                    ? const AssetImage(ImageAssets.appIcon) as ImageProvider
+                    ? const AssetImage(ImageAssets.videoImage) as ImageProvider
                     : NetworkImage(media.file ?? ''),
               ),
             ),

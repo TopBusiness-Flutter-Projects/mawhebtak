@@ -31,5 +31,8 @@ class EndPoints {
 
   static const String storeEventUrl = '${baseUrl}store-event';
   static const String getDetailsDataUrl = '${baseUrl}get-details-data';
-  static const String actionGigsUrl = '${baseUrl}action-gigs/';
+  static const String followUnfollowEventUrl =
+      '${baseUrl}follow-unfollow-event';
+  static const String applyToEventUrl = '${baseUrl}apply-to-event';
+
 }

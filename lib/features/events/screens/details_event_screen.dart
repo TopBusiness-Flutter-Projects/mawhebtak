@@ -1,16 +1,16 @@
+import 'dart:developer';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
+import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
-import 'package:mawhebtak/features/events/screens/widgets/custom_apply_button.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_event_details_widget.dart';
-import 'package:mawhebtak/features/events/screens/widgets/custom_row_event.dart';
-import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../../core/widgets/custom_container_with_shadow.dart';
 import '../../home/screens/widgets/follow_button.dart';
 import '../cubit/event_cubit.dart';
 import 'widgets/event_details_body.dart';
+import 'widgets/requires_event_user.dart';
 import 'widgets/toggle_tabs.dart';
 
 class DetailsEventScreen extends StatefulWidget {
@@ -57,10 +57,19 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                           child: Text("retry".tr()),
                         ))
                       : SingleChildScrollView(
-                          child: cubit.eventDetails?.data?.isFollowed == true
+                          child: (cubit.eventDetails?.data?.isFollowed ==
+                                      false &&
+                                  cubit.eventDetails?.data?.isMine == false)
                               ? Column(
                                   children: [
                                     CustomEventDetailsWidget(
+                                      onTap: () {
+                                        cubit.followUnfollowEvent(
+                                            cubit.eventDetails?.data?.id
+                                                    ?.toString() ??
+                                                '',
+                                            context);
+                                      },
                                       item: cubit.eventDetails?.data,
                                       isFollowed:
                                           cubit.eventDetails?.data?.isFollowed,
@@ -68,8 +77,7 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                           cubit.eventDetails?.data?.media ?? [],
                                     ),
                                     EventDetailsBody(
-                                      item: cubit.eventDetails?.data,
-                                    ),
+                                        item: cubit.eventDetails?.data),
                                   ],
                                 )
                               : Column(
@@ -77,6 +85,13 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     CustomEventDetailsWidget(
+                                      onTap: () {
+                                        cubit.followUnfollowEvent(
+                                            cubit.eventDetails?.data?.id
+                                                    ?.toString() ??
+                                                '',
+                                            context);
+                                      },
                                       item: cubit.eventDetails?.data,
                                       isFollowed:
                                           cubit.eventDetails?.data?.isFollowed,
@@ -93,84 +108,153 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                         item: cubit.eventDetails?.data,
                                       ),
                                     ] else if (cubit.selectedIndex == 1) ...[
-                                      ListView.separated(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount: 10,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Padding(
-                                            padding: EdgeInsets.all(10.0.w),
-                                            child: CustomContainerWithShadow(
-                                              reduis: 8.r,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        SizedBox(
-                                                          height: 40.h,
-                                                          width: 40.w,
-                                                          child: Image.asset(
-                                                              ImageAssets
-                                                                  .profileImage),
-                                                        ),
-                                                        SizedBox(width: 8.w),
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            AutoSizeText(
-                                                                "Ahmed Mokhtar",
-                                                                style: getMediumStyle(
-                                                                    fontSize:
-                                                                        16.sp)),
-                                                            AutoSizeText(
-                                                              "Talent / Actor Expert",
-                                                              style: getRegularStyle(
-                                                                  fontSize:
-                                                                      14.sp,
-                                                                  color: AppColors
-                                                                      .grayLight),
+                                      cubit.eventDetails?.data?.enrolledUsers
+                                                  ?.length ==
+                                              0
+                                          ? Center(
+                                              child: Text('no_users'.tr()),
+                                            )
+                                          : ListView.separated(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount: cubit
+                                                      .eventDetails
+                                                      ?.data
+                                                      ?.enrolledUsers
+                                                      ?.length ??
+                                                  0,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                var enrolledUser = cubit
+                                                    .eventDetails
+                                                    ?.data
+                                                    ?.enrolledUsers?[index];
+                                                return Padding(
+                                                  padding:
+                                                      EdgeInsets.all(10.0.w),
+                                                  child:
+                                                      CustomContainerWithShadow(
+                                                    reduis: 8.r,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            child: Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 40.h,
+                                                                  width: 40.w,
+                                                                  child:
+                                                                      CircleAvatar(
+                                                                    backgroundImage:
+                                                                        NetworkImage(
+                                                                      enrolledUser
+                                                                              ?.image ??
+                                                                          '',
+                                                                    ),
+                                                                    backgroundColor:
+                                                                        AppColors
+                                                                            .primary,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    width: 8.w),
+                                                                Flexible(
+                                                                  child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      AutoSizeText(
+                                                                          enrolledUser?.name ??
+                                                                              "",
+                                                                          style:
+                                                                              getMediumStyle(fontSize: 16.sp)),
+                                                                      if (enrolledUser
+                                                                              ?.headline !=
+                                                                          null)
+                                                                        AutoSizeText(
+                                                                          enrolledUser?.headline.toString() ??
+                                                                              "",
+                                                                          style: getRegularStyle(
+                                                                              fontSize: 14.sp,
+                                                                              color: AppColors.grayLight),
+                                                                        ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                          ],
-                                                        ),
-                                                      ],
+                                                          ),
+                                                          CustomContainerButton(
+                                                            title: "message",
+                                                            onTap: () {
+                                                              log('Message Button Nav To > Chat Screen');
+                                                            },
+                                                            borderColor:
+                                                                AppColors
+                                                                    .primary,
+                                                            textColor: AppColors
+                                                                .primary,
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
-                                                    CustomContainerButton(
-                                                      title: "message",
-                                                      borderColor:
-                                                          AppColors.primary,
-                                                      textColor:
-                                                          AppColors.primary,
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        separatorBuilder:
-                                            (BuildContext context, int index) {
-                                          return SizedBox(
-                                            height: 10.h,
-                                          );
-                                        },
-                                      )
+                                                  ),
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return SizedBox(
+                                                  height: 10.h,
+                                                );
+                                              },
+                                            )
+                                    ] else if (cubit
+                                            .eventDetails?.data?.isMine ==
+                                        true) ...[
+                                      cubit.eventDetails?.data?.eventRequests
+                                                  ?.length ==
+                                              0
+                                          ? Center(
+                                              child: Text('no_requsts'.tr()),
+                                            )
+                                          : ListView.separated(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemBuilder: (context, index) {
+                                                return RequireEventUser(
+                                                  user: cubit.eventDetails?.data
+                                                      ?.eventRequests?[index],
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (context, index) =>
+                                                      SizedBox(height: 10.h),
+                                              itemCount: cubit
+                                                      .eventDetails
+                                                      ?.data
+                                                      ?.eventRequests
+                                                      ?.length ??
+                                                  0)
                                     ] else
-                                      ...[]
+                                      SizedBox(),
                                   ],
                                 ),
                         ),

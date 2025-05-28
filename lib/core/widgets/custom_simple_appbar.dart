@@ -13,6 +13,7 @@ class CustomSimpleAppbar extends StatelessWidget {
       required this.title,
       this.isActionButton,
       this.colorButton,
+      this.arrowColor,
       this.color,
       this.titleColor});
   final String title;
@@ -21,6 +22,7 @@ class CustomSimpleAppbar extends StatelessWidget {
   final Color? color;
   final Color? titleColor;
   final Color? colorButton;
+  final Color? arrowColor;
   final String? actionIcon;
   @override
   Widget build(BuildContext context) {
@@ -59,7 +61,7 @@ class CustomSimpleAppbar extends StatelessWidget {
                         padding: EdgeInsets.all(6.r),
                         child: Icon(
                           Icons.arrow_back,
-                          color: AppColors.darkGray,
+                          color: arrowColor ?? AppColors.darkGray,
                           size: 20.sp,
                         ),
                       ),
@@ -68,11 +70,16 @@ class CustomSimpleAppbar extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    textAlign: TextAlign.center,
                     title,
+                    textAlign: TextAlign.center,
                     maxLines: 1,
                     style: TextStyle(
-                        fontSize: 20.sp, color: titleColor ?? AppColors.black),
+                      shadows: [
+                      Shadow(
+                          offset: Offset(1, 1), // Shadow position
+                          blurRadius: 3, // How soft the shadow should be
+                          color: Colors.black.withOpacity(0.7)), // Shadow color
+                    ], fontSize: 20.sp, color: titleColor ?? AppColors.black),
                   ),
                 ),
                 if (isActionButton ?? false)

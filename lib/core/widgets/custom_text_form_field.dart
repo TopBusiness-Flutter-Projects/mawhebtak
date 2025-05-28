@@ -36,7 +36,10 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.onSubmitted,
     this.borderRadius,
-    this.enabled = true, this.hintText, this.hintTextSize, this.maxLines,
+    this.enabled = true,
+    this.hintText,
+    this.hintTextSize,
+    this.maxLines,
   });
 
   @override
@@ -65,7 +68,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox(
       height: widget.isMessage ? 150.h : null,
       child: Padding(
@@ -75,13 +77,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
             controller: widget.controller,
             expands: false,
             onTap: widget.onTap,
-            onTapOutside: (event) {FocusManager.instance.primaryFocus?.unfocus();},
+            onTapOutside: (event) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
             focusNode: myFocusNode,
             style: getRegularStyle(),
             onChanged: widget.onChanged,
             validator: widget.validator,
             keyboardType: widget.keyboardType,
-            maxLines: widget.isMessage ? (widget.maxLines?? 4) : 1,
+            maxLines: widget.isMessage ? (widget.maxLines ?? 4) : 1,
             minLines: widget.isMessage ? 4 : 1,
             onFieldSubmitted: widget.onSubmitted,
             initialValue: widget.initialValue,
@@ -97,13 +101,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         : AppColors.gray),
                 prefixIcon: widget.prefixIcon,
                 prefixIconColor:
-                    myFocusNode.hasFocus ?
-                    AppColors.primary :
-                    AppColors.gray,
+                    myFocusNode.hasFocus ? AppColors.primary : AppColors.gray,
                 suffixIconColor:
-                    myFocusNode.hasFocus ?
-                    AppColors.primary :
-                    AppColors.gray,
+                    myFocusNode.hasFocus ? AppColors.primary : AppColors.gray,
                 suffixIcon: widget.isPassword
                     ? showPassword
                         ? IconButton(
@@ -123,11 +123,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             })
                     : widget.suffixIcon,
                 contentPadding:
-                    EdgeInsets.only(left: 20.w,right: 20.w,top: 20.h,bottom: 20.h),
-                hintText: widget.hintText ,
-                hintStyle: getRegularStyle(color: AppColors.gray,
-                    fontSize:  widget.hintTextSize ?? 14.sp),
-                errorStyle: getRegularStyle(color: AppColors.red,fontSize: 14.sp),
+                    EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                hintText: widget.hintText,
+                hintStyle: getRegularStyle(
+                    color: AppColors.gray,
+                    fontSize: widget.hintTextSize ?? 14.sp),
+                errorStyle:
+                    getRegularStyle(color: AppColors.red, fontSize: 14.sp),
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.white, width: 1.5),
                     borderRadius: BorderRadius.all(
@@ -137,8 +139,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     borderRadius: BorderRadius.all(
                         Radius.circular(widget.borderRadius ?? 10.r))),
                 focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppColors.white, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.white, width: 1.5),
                     borderRadius: BorderRadius.all(
                         Radius.circular(widget.borderRadius ?? 10.r))),
 

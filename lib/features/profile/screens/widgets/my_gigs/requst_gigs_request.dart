@@ -12,10 +12,9 @@ class GigsRequest extends StatelessWidget {
   final GigsRequestList? gigsRequestList;
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       color: AppColors.white,
-      child:
-      Column(
+      child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -28,7 +27,7 @@ class GigsRequest extends StatelessWidget {
                   child: Image.asset(ImageAssets.profileImage),
                 ),
                 SizedBox(width: 8.w),
-                Expanded  (
+                Expanded(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,9 +44,12 @@ class GigsRequest extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(2.0),
-                        child: Text("new".tr(),style: getRegularStyle(fontSize: 18.sp,color: AppColors.red),),
+                        child: Text(
+                          "new".tr(),
+                          style: getRegularStyle(
+                              fontSize: 18.sp, color: AppColors.red),
+                        ),
                       ),
-
                     ],
                   ),
                 ),
@@ -98,8 +100,8 @@ class GigsRequest extends StatelessWidget {
                 ),
               );
             }
-          )
 
+          )
         ],
       ),
     );

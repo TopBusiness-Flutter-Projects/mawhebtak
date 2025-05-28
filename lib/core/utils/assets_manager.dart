@@ -33,6 +33,7 @@ class ImageAssets {
   static const String experience = '$imagePath/experience.png';
   static const String imageOrVideo = '$imagePath/image_or_video.png';
   static const String testBallImage = '$imagePath/test_image.png';
+  static const String videoImage = '$imagePath/video_icon.png';
 
   //Lottie
 

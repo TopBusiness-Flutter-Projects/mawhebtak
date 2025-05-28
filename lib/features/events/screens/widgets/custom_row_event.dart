@@ -32,12 +32,15 @@ class CustomRowEvent extends StatelessWidget {
                       ? AppColors.primary
                       : AppColors.grayText2),
             ),
-            Text(text2,
-                style: getRegularStyle(
-                    fontSize: 13.sp,
-                    color: isRequiredTalent ?? false
-                        ? AppColors.green
-                        : AppColors.black))
+            5.w.horizontalSpace,
+            Flexible(
+              child: Text(text2,
+                  style: getRegularStyle(
+                      fontSize: 13.sp,
+                      color: isRequiredTalent ?? false
+                          ? AppColors.green
+                          : AppColors.black)),
+            )
           ],
         ),
       ),

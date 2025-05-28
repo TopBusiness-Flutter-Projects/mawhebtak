@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:mawhebtak/features/home/data/models/top_events_model.dart';
 import '../../../../core/api/base_api_consumer.dart';
 import '../../../../core/api/end_points.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/models/default_model.dart';
 import '../../../calender/data/model/countries_model.dart';
 import '../model/event_details_model.dart';
 
@@ -30,6 +34,39 @@ class EventRepo {
         "id": id,
       });
       return Right(GetMainEvenDetailsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, DefaultMainModel>> followUnfollowEvent(
+      String eventId) async {
+    try {
+      var response = await dio.post(EndPoints.followUnfollowEventUrl, body: {
+        "event_id": eventId,
+      });
+      return Right(DefaultMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, DefaultMainModel>> applyToEvent(
+      String eventId, String price, String eventRequirementId, String note,
+      {required List<File> files}) async {
+    try {
+      var response = await dio
+          .post(EndPoints.applyToEventUrl, formDataIsEnabled: true, body: {
+        "key": "applyToEvent",
+        "event_id": eventId,
+        "price": price,
+        "event_requirement_id": eventRequirementId,
+        "note": note,
+        for (int i = 0; i < files.length; i++)
+          "media[$i]": MultipartFile.fromFileSync(files[i].path,
+              filename: files[i].path.split('/').last)
+      });
+      return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

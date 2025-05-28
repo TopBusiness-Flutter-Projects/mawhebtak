@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
 
 import '../../../../core/exports.dart';
+import '../../../../core/widgets/custom_button.dart';
 import '../../data/model/event_details_model.dart';
 import 'custom_apply_button.dart';
 import 'custom_row_event.dart';
@@ -15,6 +17,49 @@ class EventDetailsBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        10.h.verticalSpace,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 16.h),
+          child: Text(
+            'created_by'.tr(),
+            style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 40.h,
+                width: 40.w,
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    item?.eventOwner?.image ?? '',
+                  ),
+                  backgroundColor: AppColors.primary,
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AutoSizeText(item?.eventOwner?.name ?? '',
+                        style: getMediumStyle(fontSize: 16.sp)),
+                    if (item?.eventOwner?.headline != null)
+                      AutoSizeText(
+                        item?.eventOwner?.headline.toString() ?? "",
+                        style: getRegularStyle(
+                            fontSize: 14.sp, color: AppColors.grayLight),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        10.h.verticalSpace,
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 16.h),
           child: Text(
@@ -22,6 +67,8 @@ class EventDetailsBody extends StatelessWidget {
             style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
           ),
         ),
+        10.h.verticalSpace,
+
         CustomRowEvent(
           text: 'location',
           text2: item?.location ?? '',
@@ -92,7 +139,16 @@ class EventDetailsBody extends StatelessWidget {
         ),
         20.h.verticalSpace,
         //TODO: need pass id and apply request
-        const CustomApplyButton(),
+
+        if (item?.isMine == false) const CustomApplyButton(),
+
+        if (item?.isMine == true)
+          Padding(
+              padding: const EdgeInsets.all(8),
+              child: CustomButton(
+                title: 'delete'.tr(),
+                onTap: () {},
+              )),
         10.h.verticalSpace
       ],
     );

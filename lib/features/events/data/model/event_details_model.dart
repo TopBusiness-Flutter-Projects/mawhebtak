@@ -31,6 +31,7 @@ class GetMainEvenDetailsModelData {
   String? description;
   String? from;
   String? to;
+  EventOwner? eventOwner;
   String? location;
   String? lat;
   String? long;
@@ -43,9 +44,10 @@ class GetMainEvenDetailsModelData {
   int? revenu;
   bool? isFollowed;
   bool? isRequested;
+  bool? isMine;
   List<Media>? media;
   List<Requirement>? requirements;
-  List<EnrolledUser>? enrolledUsers;
+  List<EventOwner>? enrolledUsers;
   List<EventRequest>? eventRequests;
 
   GetMainEvenDetailsModelData({
@@ -54,6 +56,7 @@ class GetMainEvenDetailsModelData {
     this.description,
     this.from,
     this.to,
+    this.eventOwner,
     this.location,
     this.lat,
     this.long,
@@ -66,6 +69,7 @@ class GetMainEvenDetailsModelData {
     this.revenu,
     this.isFollowed,
     this.isRequested,
+    this.isMine,
     this.media,
     this.requirements,
     this.enrolledUsers,
@@ -79,6 +83,9 @@ class GetMainEvenDetailsModelData {
         description: json["description"],
         from: json["from"],
         to: json["to"],
+        eventOwner: json["event_owner"] == null
+            ? null
+            : EventOwner.fromJson(json["event_owner"]),
         location: json["location"],
         lat: json["lat"],
         long: json["long"],
@@ -91,6 +98,7 @@ class GetMainEvenDetailsModelData {
         revenu: json["revenu"],
         isFollowed: json["is_followed"],
         isRequested: json["is_requested"],
+        isMine: json["is_mine"],
         media: json["media"] == null
             ? []
             : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
@@ -100,8 +108,8 @@ class GetMainEvenDetailsModelData {
                 json["requirements"]!.map((x) => Requirement.fromJson(x))),
         enrolledUsers: json["enrolled_users"] == null
             ? []
-            : List<EnrolledUser>.from(
-                json["enrolled_users"]!.map((x) => EnrolledUser.fromJson(x))),
+            : List<EventOwner>.from(
+                json["enrolled_users"]!.map((x) => EventOwner.fromJson(x))),
         eventRequests: json["event_requests"] == null
             ? []
             : List<EventRequest>.from(
@@ -114,6 +122,7 @@ class GetMainEvenDetailsModelData {
         "description": description,
         "from": from,
         "to": to,
+        "event_owner": eventOwner?.toJson(),
         "location": location,
         "lat": lat,
         "long": long,
@@ -126,6 +135,7 @@ class GetMainEvenDetailsModelData {
         "revenu": revenu,
         "is_followed": isFollowed,
         "is_requested": isRequested,
+        "is_mine": isMine,
         "media": media == null
             ? []
             : List<dynamic>.from(media!.map((x) => x.toJson())),
@@ -141,24 +151,27 @@ class GetMainEvenDetailsModelData {
       };
 }
 
-class EnrolledUser {
+class EventOwner {
   int? id;
   String? name;
   String? image;
   dynamic headline;
+  int? followersCount;
 
-  EnrolledUser({
+  EventOwner({
     this.id,
     this.name,
     this.image,
     this.headline,
+    this.followersCount,
   });
 
-  factory EnrolledUser.fromJson(Map<String, dynamic> json) => EnrolledUser(
+  factory EventOwner.fromJson(Map<String, dynamic> json) => EventOwner(
         id: json["id"],
         name: json["name"],
         image: json["image"],
         headline: json["headline"],
+        followersCount: json["followers_count"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -166,6 +179,7 @@ class EnrolledUser {
         "name": name,
         "image": image,
         "headline": headline,
+        "followers_count": followersCount,
       };
 }
 
@@ -175,6 +189,8 @@ class EventRequest {
   String? price;
   String? note;
   String? status;
+  EventOwner? user;
+  List<Media>? media;
 
   EventRequest({
     this.id,
@@ -182,6 +198,8 @@ class EventRequest {
     this.price,
     this.note,
     this.status,
+    this.user,
+    this.media,
   });
 
   factory EventRequest.fromJson(Map<String, dynamic> json) => EventRequest(
@@ -190,6 +208,10 @@ class EventRequest {
         price: json["price"],
         note: json["note"],
         status: json["status"],
+        user: json["user"] == null ? null : EventOwner.fromJson(json["user"]),
+        media: json["media"] == null
+            ? []
+            : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -198,6 +220,10 @@ class EventRequest {
         "price": price,
         "note": note,
         "status": status,
+        "user": user?.toJson(),
+        "media": media == null
+            ? []
+            : List<dynamic>.from(media!.map((x) => x.toJson())),
       };
 }
 
