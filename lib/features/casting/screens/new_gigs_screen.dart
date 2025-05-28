@@ -26,7 +26,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
  @override
   void initState() {
    context.read<CastingCubit>().getCategoryFromGigs();
-   
+   context.read<CastingCubit>().selectedCategory=null;
+   context.read<CastingCubit>().selectedSubCategory=null;
     super.initState();
   }
   @override
