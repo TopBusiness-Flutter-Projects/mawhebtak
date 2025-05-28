@@ -95,9 +95,9 @@ class Routes {
   static const String requestGigsRoute = '/requestGigsRoute';
   static const String chatRoute = '/chatRoute';
   static const String detailsOfMainCategoryFromGigsRoute = '/detailsOfMainCategoryFromGigs';
-  static const String detailsOfMainCategoryFromTopTalentsRoute = '/detailsOfMainCategoryFromTopTalents';
-  static const String detailsOfMainCategoryFromGigsRoute =
-      '/detailsOfMainCategoryFromGigs';
+
+  
+  
   static const String detailsOfMainCategoryFromTopTalentsRoute =
       '/detailsOfMainCategoryFromTopTalents';
 }
