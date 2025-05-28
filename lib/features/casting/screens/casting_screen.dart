@@ -306,9 +306,6 @@ class _CastingScreenState extends State<CastingScreen> {
   // Gigs Content UI
   Widget _buildGigsContent(BuildContext context,
       {required CastingCubit castingCubit}) {
-    final cubit = context.read<RequestGigsCubit>();
-    final gigs = cubit.requestGigs?.data ?? [];
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -322,28 +319,29 @@ class _CastingScreenState extends State<CastingScreen> {
         ),
         BlocBuilder<RequestGigsCubit, RequestGigsState>(
           builder: (context, state) {
-            if (state is RequestGigsStateLoading) {
-              return const Center(child: CustomLoadingIndicator());
-            }
-            return Expanded(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  await cubit.requestGigsData(page: '1');
-                },
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: gigs.length,
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  itemBuilder: (context, index) => GigsWidget(isDetails: true,
+            final cubit = context.read<RequestGigsCubit>();
 
-                    castingCubit: castingCubit,
-                    eventAndGigsModel: gigs[index],
-                    isWithButton: true,
-                  ),
-                ),
-              ),
-            );
+            return (state is RequestGigsStateLoading)
+                ? const Center(child: CustomLoadingIndicator())
+                : Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        cubit.requestGigsData(page: '1');
+                      },
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: cubit.requestGigs?.data?.length,
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        itemBuilder: (context, index) => GigsWidget(
+                          isDetails: true,
+                          castingCubit: castingCubit,
+                          eventAndGigsModel: cubit.requestGigs?.data?[index],
+                          isWithButton: true,
+                        ),
+                      ),
+                    ),
+                  );
           },
         ),
       ],

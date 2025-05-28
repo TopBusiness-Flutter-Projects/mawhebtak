@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_state.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
@@ -15,21 +16,24 @@ import 'package:mawhebtak/features/location/screens/full_screen_map.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
 
 class NewGigsScreen extends StatefulWidget {
-   NewGigsScreen({super.key});
+  NewGigsScreen({super.key});
 
   @override
   State<NewGigsScreen> createState() => _NewGigsScreenState();
 }
 
 class _NewGigsScreenState extends State<NewGigsScreen> {
-  bool isOpen = false;
- @override
+  @override
   void initState() {
-   context.read<CastingCubit>().getCategoryFromGigs();
-   context.read<CastingCubit>().selectedCategory=null;
-   context.read<CastingCubit>().selectedSubCategory=null;
+    context.read<CastingCubit>().getCategoryFromGigs();
+    context.read<CastingCubit>().selectedCategory = null;
+    context.read<CastingCubit>().selectedSubCategory = null;
+    if (context.read<CalenderCubit>().countriesMainModel == null) {
+      context.read<CalenderCubit>().getAllCountries();
+    }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CastingCubit, CastingState>(
@@ -78,44 +82,28 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               color: AppColors.grayLite,
                               borderRadius: BorderRadius.circular(8.sp),
                             ),
-                            child: DropdownButton<GetCountriesMainModelData>(
-                              enableFeedback: true,
-                              iconSize: 25.sp,
-                              padding: EdgeInsets.only(
-                                  bottom: 10.h,
-                                  top: 10.h,
-                                  left: 10.w,
-                                  right: 10.w),
-                              underline: const SizedBox(),
-                              onTap: () {},
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              iconEnabledColor: AppColors.secondPrimary,
-                              isExpanded: true,
-                              dropdownColor: AppColors.grayLite,
-                              hint: Text('choose_category'.tr()),
+                            child: GeneralCustomDropdownButtonFormField(
+                              itemBuilder: (item) {
+                                return item?.name ?? '';
+                              },
                               value: cubit.selectedCategory,
-                              items: cubit.categoryModel?.data?.map((category) {
-                                return DropdownMenuItem<
-                                    GetCountriesMainModelData>(
-                                  value: category,
-                                  child: Text(category.name ?? ""),
-                                );
-                              }).toList(),
-                              onChanged: (GetCountriesMainModelData? value) {
-                                isOpen = !isOpen;
+                              items: cubit.categoryModel?.data ?? [],
+                              onChanged: (value) {
                                 cubit.selectedCategory = value;
                                 cubit.subCategoryId = value?.id;
+                                cubit.subCategoryModel?.data = [];
+                                cubit.selectedSubCategory = null;
                                 cubit.getSubCategory(
                                     categoryId: value?.id.toString() ?? "");
                               },
                             ),
                           ),
                           10.h.verticalSpace,
-                          if (isOpen == true)
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              if (cubit.subCategoryModel?.data?.length != 0)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(top: 10.h, bottom: 10.h),
@@ -124,6 +112,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     style: getRegularStyle(fontSize: 18.sp),
                                   ),
                                 ),
+                              if (cubit.subCategoryModel?.data?.length != 0)
                                 Container(
                                   height: 60.h,
                                   width: double.infinity,
@@ -131,47 +120,19 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     color: AppColors.grayLite,
                                     borderRadius: BorderRadius.circular(8.sp),
                                   ),
-                                  child:
-                                      DropdownButton<GetCountriesMainModelData>(
-                                    enableFeedback: true,
-                                    iconSize: 25.sp,
-                                    padding: EdgeInsets.only(
-                                        bottom: 10.h,
-                                        top: 10.h,
-                                        left: 10.w,
-                                        right: 10.w),
-                                    underline: SizedBox(),
-                                    onTap: () {},
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    iconEnabledColor: AppColors.secondPrimary,
-                                    isExpanded: true,
-                                    dropdownColor: AppColors.grayLite,
-
-                                    hint: Text('choose_category'.tr()),
+                                  child: GeneralCustomDropdownButtonFormField(
+                                    itemBuilder: (item) {
+                                      return item?.name ?? '';
+                                    },
                                     value: cubit.selectedSubCategory,
-                                    items: cubit.subCategoryModel?.data
-                                        ?.map((subCategory) {
-                                      return DropdownMenuItem<
-                                          GetCountriesMainModelData>(
-                                        value: subCategory,
-                                        child: Text(subCategory.name ?? ""),
-                                      );
-                                    }).toList(),
-                                    onChanged:
-                                        (GetCountriesMainModelData? value) {
-                                      final subCategory = cubit
-                                          .subCategoryModel?.data
-                                          ?.firstWhere(
-                                        (element) => element.id == value?.id,
-                                        orElse: () => value!,
-                                      );
-                                      cubit.selectedSubCategory = subCategory;
-
+                                    items: cubit.subCategoryModel?.data ?? [],
+                                    onChanged: (value) {
+                                      cubit.selectedSubCategory = value;
                                     },
                                   ),
                                 ),
-                              ],
-                            ),
+                            ],
+                          ),
                           10.h.verticalSpace,
                           Text(
                             "price_range".tr(),
@@ -179,7 +140,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                           ),
                           BlocBuilder<CalenderCubit, CalenderState>(
                               builder: (context, state) {
-                            var cubit = context.read<CalenderCubit>();
+                            var cubit2 = context.read<CalenderCubit>();
                             return CustomTextField(
                               keyboardType: TextInputType.number,
                               validator: (p0) {
@@ -188,21 +149,22 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                 }
                                 return null;
                               },
-                              controller: cubit.ticketPriceController,
+                              controller: cubit.priceRangeController,
                               hintText: 'ticket_price'.tr(),
                               hintTextSize: 18.sp,
                               enabled: true,
                               suffixIcon: InkWell(
                                 onTap: () {
                                   showCurrencyPicker(
-                                      cubit.countriesMainModel?.data ?? [],context);
+                                      cubit2.countriesMainModel?.data ?? [],
+                                      context);
 
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      cubit.selectedCurrency?.currency ?? 'L.E',
+                                      cubit2.selectedCurrency?.currency ?? 'L.E',
                                       style: getRegularStyle(
                                           color: Colors.blue, fontSize: 14.sp),
                                     ),
@@ -240,8 +202,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => FullScreenMap(
-                                          type: 'add_gig',
-                                        )));
+                                              type: 'add_gig',
+                                            )));
                               },
                               child: Text(
                                 "open_map".tr(),
@@ -254,7 +216,6 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               ),
                             ),
                           ),
-
                           Text(
                             "description".tr(),
                             style: getRegularStyle(fontSize: 14.sp),
@@ -352,9 +313,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
               ],
             ),
           ),
-          bottomNavigationBar:
-
-          Padding(
+          bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(20.0),
             child: CustomContainerButton(
               height: 48.h,
@@ -370,7 +329,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
     );
   }
 
-  void showCurrencyPicker(List<GetCountriesMainModelData> currencyList,BuildContext context) {
+  void showCurrencyPicker(
+      List<GetCountriesMainModelData> currencyList, BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (context) => Container(
@@ -381,7 +341,10 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
             return ListTile(
               title: Text(currency.currency ?? '', style: getRegularStyle()),
               onTap: () {
-                context.read<CalenderCubit>().selectedCurrency = currency;
+                setState(() {
+                  context.read<CalenderCubit>().selectedCurrency = currency;
+
+                });
                 Navigator.pop(context);
               },
             );

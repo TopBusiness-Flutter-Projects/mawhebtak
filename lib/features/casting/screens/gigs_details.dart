@@ -71,6 +71,7 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
                               itemCount: cubit.getDetailsGigsModel?.data?.gigsRequests?.length ?? 0,
                               itemBuilder: (BuildContext context, int index) {
                                 return  GigsRequest(
+
                                   gigsRequestList:cubit.getDetailsGigsModel?.data?.gigsRequests?[index] ,
                                 );
                               },
