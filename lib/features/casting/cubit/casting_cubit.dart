@@ -88,12 +88,16 @@ class CastingCubit extends Cubit<CastingState> {
 
   DefaultMainModel? defaultMainModel;
 
-  actionGig({required String status, required String gigId}) async {
+  actionGig({required String status,
+    required String gigId,
+    required String requestId,
+
+  }) async {
     emit(ActionGigStateLoading());
     try {
       final res = await castingRepo.actionGig(
         status: status,
-        gigId: gigId,
+        gigId: requestId,
       );
       res.fold((l) {
         errorGetBar(l.toString());
@@ -146,7 +150,7 @@ class CastingCubit extends Cubit<CastingState> {
       final res = await castingRepo.addNewGig(
         categoryId: selectedCategory?.id.toString() ?? "",
         title: gigTitleController.text,
-        price: context.read<CalenderCubit>().ticketPriceController.text,
+        price: priceRangeController.text,
         description: descriptionController.text,
         lat: context
                 .read<LocationCubit>()
@@ -172,7 +176,7 @@ class CastingCubit extends Cubit<CastingState> {
         emit(AddNewGigStateError(l.toString()));
       }, (r) {
         successGetBar(r.msg.toString());
-        context.read<CalenderCubit>().ticketPriceController.clear();
+        priceRangeController.clear();
         gigTitleController.clear();
         descriptionController.clear();
         context.read<CalenderCubit>().myImagesF = [];

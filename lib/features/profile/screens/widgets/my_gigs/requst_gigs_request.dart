@@ -8,7 +8,7 @@ import '../../../../../core/exports.dart';
 import '../../../../home/screens/widgets/follow_button.dart';
 
 class GigsRequest extends StatelessWidget {
-  const GigsRequest({super.key,required this.gigsRequestList});
+  const GigsRequest({super.key, required this.gigsRequestList});
   final GigsRequestList? gigsRequestList;
   @override
   Widget build(BuildContext context) {
@@ -35,17 +35,19 @@ class GigsRequest extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AutoSizeText(gigsRequestList?.user?.name ?? "", style: getMediumStyle(fontSize: 18.sp)),
+                          AutoSizeText(gigsRequestList?.user?.name ?? "",
+                              style: getMediumStyle(fontSize: 18.sp)),
                           AutoSizeText(
                             gigsRequestList?.user?.headline ?? "",
-                            style: getRegularStyle(fontSize: 16.sp, color: AppColors.grayLight),
+                            style: getRegularStyle(
+                                fontSize: 16.sp, color: AppColors.grayLight),
                           ),
                         ],
                       ),
                       Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Text(
-                          "new".tr(),
+                          gigsRequestList?.status ?? "",
                           style: getRegularStyle(
                               fontSize: 18.sp, color: AppColors.red),
                         ),
@@ -56,52 +58,63 @@ class GigsRequest extends StatelessWidget {
               ],
             ),
           ),
-          BlocBuilder<CastingCubit,CastingState>(
-            builder: (context,state) {
-              var cubit = context.read<CastingCubit>();
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                (state is ActionGigStateLoading)?
-                    const Center(child: CustomLoadingIndicator(),)
-                    :
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap:(){
-                        cubit.actionGig(status: "accepted", gigId: gigsRequestList?.id.toString() ?? "");
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomContainerButton(title: 'accept'.tr(),
-                          color: AppColors.primary,
+          BlocBuilder<CastingCubit, CastingState>(builder: (context, state) {
+            var cubit = context.read<CastingCubit>();
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: (state is ActionGigStateLoading)
+                  ? const Center(
+                      child: CustomLoadingIndicator(),
+                    )
+                  :
 
+            (gigsRequestList?.status=='new')?
+              Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            cubit.actionGig(
+                                status: "accepted",
+                                gigId: cubit.getDetailsGigsModel?.data?.id
+                                        .toString() ??
+                                    '',
+                                requestId:
+                                    gigsRequestList?.id.toString() ?? "");
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomContainerButton(
+                              title: 'accept'.tr(),
+                              color: AppColors.primary,
+                            ),
+                          ),
                         ),
-                      ),
-                    ), GestureDetector(
-                      onTap:(){
-                        cubit.actionGig(status: "rejected", gigId: gigsRequestList?.id.toString() ?? "");
-
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomContainerButton(title: 'reject'.tr(),
-                          color: AppColors.transparent,
-                          borderColor: AppColors.red,
-                          textColor: AppColors.red,
+                        GestureDetector(
+                          onTap: () {
+                            cubit.actionGig(
+                                status: "rejected",
+                                gigId: cubit.getDetailsGigsModel?.data?.id
+                                        .toString() ??
+                                    '',
+                                requestId:
+                                    gigsRequestList?.id.toString() ?? "");
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomContainerButton(
+                              title: 'reject'.tr(),
+                              color: AppColors.transparent,
+                              borderColor: AppColors.red,
+                              textColor: AppColors.red,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-
-
-                  ],
-                ),
-              );
-            }
-
-          )
+                      ],
+                    ):Container(),
+            );
+          })
         ],
       ),
     );
