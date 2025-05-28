@@ -50,18 +50,18 @@ class _GigsWidgetState extends State<GigsWidget> {
     final mediaList = widget.eventAndGigsModel?.media;
     final mediaCount = mediaList?.length ?? 0;
     return Padding(
-      padding:  EdgeInsets.only(bottom: 20.h),
+      padding: EdgeInsets.only(bottom: 20.h),
       child: GestureDetector(
         onTap: () {
           if (widget.eventAndGigsModel?.isMine == true) {
-           if (widget.isDetails == true)
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GigsDetailsScreen(
-                    id: widget.eventAndGigsModel?.id.toString() ?? "",
-                  ),
-                ));
+            if (widget.isDetails == true)
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GigsDetailsScreen(
+                      id: widget.eventAndGigsModel?.id.toString() ?? "",
+                    ),
+                  ));
           }
         },
         child: Container(
@@ -100,7 +100,8 @@ class _GigsWidgetState extends State<GigsWidget> {
                                     media?.file ?? '',
                                     fit: BoxFit.cover,
                                     width: double.infinity,
-                                    errorBuilder: (context, error, stackTrace) =>
+                                    errorBuilder: (context, error,
+                                            stackTrace) =>
                                         Image.asset(ImageAssets.appIconWhite),
                                   ),
                                 );
@@ -161,12 +162,14 @@ class _GigsWidgetState extends State<GigsWidget> {
                             children: [
                               SvgPicture.asset(AppIcons.locationIcon),
                               5.w.horizontalSpace,
-                              Text(
-                                widget.eventAndGigsModel?.location ?? "",
-                                style: TextStyle(
-                                    color: AppColors.grayDarkkk,
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w400),
+                              Flexible(
+                                child: Text(
+                                  widget.eventAndGigsModel?.location ?? "",
+                                  style: TextStyle(
+                                      color: AppColors.grayDarkkk,
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w400),
+                                ),
                               )
                             ],
                           ),
@@ -192,14 +195,14 @@ class _GigsWidgetState extends State<GigsWidget> {
               10.verticalSpace,
               if (widget.isWithButton ?? false)
                 if (widget.eventAndGigsModel?.isMine == false)
-                    Padding(
+                  Padding(
                       padding: EdgeInsets.only(bottom: 10.h),
                       child: CustomButton(
                         onTap: () async {
-                        await   widget.castingCubit?.requestGigs(
-                             context: context,
-                              gigId: widget.eventAndGigsModel?.id.toString() ?? "");
-
+                          await widget.castingCubit?.requestGigs(
+                              context: context,
+                              gigId: widget.eventAndGigsModel?.id.toString() ??
+                                  "");
                         },
                         title: "request_this_gigs".tr(),
                       )),
