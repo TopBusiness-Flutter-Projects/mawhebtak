@@ -77,14 +77,18 @@ class ProfileScreen extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: 5,
                           itemBuilder: (BuildContext context, int index) {
-                            return GigsWidget();
+                            return GigsWidget(
+                              isDetails: false,
+                            );
                           },
                           separatorBuilder: (BuildContext context, int index) {
                             return SizedBox(height: 5.h);
                           },
                         )
                       ] else if (cubit.selectedIndex == 3) ...[
-                        GigsWidget()
+                        GigsWidget(
+                          isDetails: false,
+                        )
                       ]
                     ],
                   ),

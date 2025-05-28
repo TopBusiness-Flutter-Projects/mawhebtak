@@ -30,10 +30,8 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 20.h, bottom: 15.h),
-              child: CustomSimpleAppbar(title: "gig_details".tr()),
-            ),
+            CustomSimpleAppbar(title: "gig_details".tr()),
+            10.h.verticalSpace,
             BlocBuilder<CastingCubit, CastingState>(builder: (context, state) {
               var cubit = context.read<CastingCubit>();
               return (state is DetailsGigsStateLoading)
@@ -43,6 +41,7 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
                         Container(
                           color:AppColors.white,
                           child: GigsWidget(
+                            isDetails: false,
                             eventAndGigsModel: cubit.getDetailsGigsModel?.data,
                             isWithButton: false,
                           ),

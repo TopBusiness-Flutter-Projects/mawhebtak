@@ -1,3 +1,4 @@
+import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
@@ -51,6 +52,7 @@ class CastingCubit extends Cubit<CastingState> {
       emit(CategoryFromGigsStateError(e.toString()));
     }
   }
+
   GetDetailsGigsModel? getDetailsGigsModel;
   getDetailsGigs({required String id}) async {
     emit(DetailsGigsStateLoading());
@@ -75,7 +77,7 @@ class CastingCubit extends Cubit<CastingState> {
       res.fold((l) {
         emit(SubCategoryStateError(l.toString()));
       }, (r) {
-        getGigsFromSubCategoryModel =null;
+        getGigsFromSubCategoryModel = null;
         subCategoryModel = r;
         emit(SubCategoryStateLoaded(r));
       });
@@ -83,17 +85,18 @@ class CastingCubit extends Cubit<CastingState> {
       emit(SubCategoryStateError(e.toString()));
     }
   }
+
   DefaultMainModel? defaultMainModel;
 
-
-  actionGig({required String status,required String gigId}) async {
+  actionGig({required String status, required String gigId}) async {
     emit(ActionGigStateLoading());
     try {
       final res = await castingRepo.actionGig(
-        status:status ,
+        status: status,
         gigId: gigId,
       );
       res.fold((l) {
+        errorGetBar(l.toString());
         emit(ActionGigStateError(l.toString()));
       }, (r) {
         successGetBar(r.msg);
@@ -105,12 +108,43 @@ class CastingCubit extends Cubit<CastingState> {
     }
   }
 
+  requestGigs({required String gigId, required BuildContext context}) async {
+    AppWidgets.create2ProgressDialog(context);
+    emit(RequestGigStateLoading());
+    try {
+      final res = await castingRepo.requestGig(
+        gigId: gigId,
+      );
+      res.fold((l) {
+        errorGetBar(l.toString());
+        emit(RequestGigStateError(l.toString()));
+      }, (r) {
+        if (r.status == 200) {
+          Navigator.pop(context);
+
+          Navigator.pushNamed(context, Routes.chatRoute);
+          successGetBar(r.msg);
+          getDetailsGigs(id: gigId);
+          emit(RequestGigStateLoaded());
+        } else {
+          errorGetBar(r.msg.toString());
+          emit(RequestGigStateError(r.msg.toString()));
+          Navigator.pop(context);
+        }
+      });
+    } catch (e) {
+      errorGetBar(e.toString());
+      emit(RequestGigStateError(e.toString()));
+    }
+  }
+
   addNewGig({required BuildContext context}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(AddNewGigStateLoading());
 
     try {
       final res = await castingRepo.addNewGig(
+        categoryId: selectedCategory?.id.toString() ?? "",
         title: gigTitleController.text,
         price: context.read<CalenderCubit>().ticketPriceController.text,
         description: descriptionController.text,
@@ -142,10 +176,12 @@ class CastingCubit extends Cubit<CastingState> {
         gigTitleController.clear();
         descriptionController.clear();
         context.read<CalenderCubit>().myImagesF = [];
+        context.read<CalenderCubit>().myImages = [];
         context.read<CalenderCubit>().validVideos = [];
         locationAddressController.clear();
         selectedCategory = null;
         selectedSubCategory = null;
+        Navigator.pop(context);
         emit(AddNewGigStateLoaded());
       });
     } catch (e) {
@@ -155,6 +191,4 @@ class CastingCubit extends Cubit<CastingState> {
     }
     Navigator.pop(context);
   }
-
-
 }

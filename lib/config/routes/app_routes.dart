@@ -13,6 +13,7 @@ import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dar
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
 import 'package:mawhebtak/features/casting/screens/casting_screen.dart';
+import 'package:mawhebtak/features/casting/screens/chat_screen.dart';
 import 'package:mawhebtak/features/casting/screens/details_of_main_category_gigs.dart';
 import 'package:mawhebtak/features/casting/screens/details_of_main_category_top_talents.dart';
 import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
@@ -92,6 +93,9 @@ class Routes {
   static const String addAssistantRoute = '/addAssistant';
   static const String topTalentsRoute = '/topTalentsRoute';
   static const String requestGigsRoute = '/requestGigsRoute';
+  static const String chatRoute = '/chatRoute';
+  static const String detailsOfMainCategoryFromGigsRoute = '/detailsOfMainCategoryFromGigs';
+  static const String detailsOfMainCategoryFromTopTalentsRoute = '/detailsOfMainCategoryFromTopTalents';
   static const String detailsOfMainCategoryFromGigsRoute =
       '/detailsOfMainCategoryFromGigs';
   static const String detailsOfMainCategoryFromTopTalentsRoute =
@@ -396,6 +400,13 @@ class AppRoutes {
       case Routes.recordsRoute:
         return PageTransition(
           child: const AssistantScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+        case Routes.chatRoute:
+        return PageTransition(
+          child: const ChatScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

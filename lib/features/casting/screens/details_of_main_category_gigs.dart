@@ -56,27 +56,35 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
                                 _buildSubCategoryDropdown(context, cubit),
                                 const SizedBox(height: 16),
                                 Flexible(
-                                    child: (cubit.getGigsFromSubCategoryModel
-                                                    ?.data?.length ==
-                                                0 ||
-                                            cubit.getGigsFromSubCategoryModel ==
-                                                null)
-                                        ? Center(
-                                            child: Text('no_data'.tr()),
-                                          )
-                                        : ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: const AlwaysScrollableScrollPhysics(),
-                                      itemCount: cubit.getGigsFromSubCategoryModel
-                                          ?.data?.length,
-                                      padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                      itemBuilder: (context, index) => GigsWidget(
-
-                                        eventAndGigsModel: cubit.getGigsFromSubCategoryModel
-                                            ?.data?[index],
-                                        isWithButton: true,
-                                      ),
-                                    ),)
+                                  child: (cubit.getGigsFromSubCategoryModel
+                                                  ?.data?.length ==
+                                              0 ||
+                                          cubit.getGigsFromSubCategoryModel ==
+                                              null)
+                                      ? Center(
+                                          child: Text('no_data'.tr()),
+                                        )
+                                      : ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const AlwaysScrollableScrollPhysics(),
+                                          itemCount: cubit
+                                              .getGigsFromSubCategoryModel
+                                              ?.data
+                                              ?.length,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 12.w),
+                                          itemBuilder: (context, index) =>
+                                              GigsWidget(
+                                                isDetails: false,
+                                            castingCubit: cubit,
+                                            eventAndGigsModel: cubit
+                                                .getGigsFromSubCategoryModel
+                                                ?.data?[index],
+                                            isWithButton: true,
+                                          ),
+                                        ),
+                                )
                               ],
                             );
                 },

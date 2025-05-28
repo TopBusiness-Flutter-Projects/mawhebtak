@@ -21,6 +21,7 @@ class CastingRepo {
   Future<Either<Failure, AddNewGigModel>> addNewGig({
     required List<File> mediaFiles,
     required String subCategoryId,
+    required String categoryId,
     required String title,
     required String description,
     required String location,
@@ -42,6 +43,7 @@ class CastingRepo {
         "lat": lat,
         "long": long,
         "price": price,
+        "category_id":categoryId,
         for (int i = 0; i < mediaFiles.length; i++)
           "media[$i]": MultipartFile.fromFileSync(mediaFiles[i].path,
               filename: mediaFiles[i].path.split('/').last)
@@ -109,6 +111,8 @@ class CastingRepo {
   Future<Either<Failure, DefaultMainModel>> actionGig(
       {required String gigId, required String status}) async {
     try {
+
+
       var response = await api.post(
         EndPoints.actionGigsUrl + gigId,
         body: {
@@ -116,9 +120,26 @@ class CastingRepo {
           "status": status,
         },
       );
+
+
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, DefaultMainModel>> requestGig(
+      {required String gigId}) async {
+    try {
+      var response = await api.post(EndPoints.requestGigs,
+        body: {
+        "key": "RequestGig",
+        "gig_id": gigId,
+      }, );
+      return Right(DefaultMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+
 }
