@@ -34,4 +34,5 @@ class EndPoints {
   static const String followUnfollowEventUrl =
       '${baseUrl}follow-unfollow-event';
   static const String applyToEventUrl = '${baseUrl}apply-to-event';
+
 }

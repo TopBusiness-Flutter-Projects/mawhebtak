@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
+import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
+import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
-
 import '../../../../../core/exports.dart';
 import '../../../../home/screens/widgets/follow_button.dart';
 
@@ -54,30 +56,51 @@ class GigsRequest extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomContainerButton(
-                    title: 'accept'.tr(),
-                    color: AppColors.primary,
-                  ),
+          BlocBuilder<CastingCubit,CastingState>(
+            builder: (context,state) {
+              var cubit = context.read<CastingCubit>();
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child:
+                (state is ActionGigStateLoading)?
+                    const Center(child: CustomLoadingIndicator(),)
+                    :
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap:(){
+                        cubit.actionGig(status: "accepted", gigId: gigsRequestList?.id.toString() ?? "");
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomContainerButton(title: 'accept'.tr(),
+                          color: AppColors.primary,
+
+                        ),
+                      ),
+                    ), GestureDetector(
+                      onTap:(){
+                        cubit.actionGig(status: "rejected", gigId: gigsRequestList?.id.toString() ?? "");
+
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomContainerButton(title: 'reject'.tr(),
+                          color: AppColors.transparent,
+                          borderColor: AppColors.red,
+                          textColor: AppColors.red,
+                        ),
+                      ),
+                    ),
+
+
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomContainerButton(
-                    title: 'reject'.tr(),
-                    color: AppColors.transparent,
-                    borderColor: AppColors.red,
-                    textColor: AppColors.red,
-                  ),
-                ),
-              ],
-            ),
+              );
+            }
+
           )
         ],
       ),
