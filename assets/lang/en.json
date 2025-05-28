@@ -244,5 +244,7 @@
    "no_users": "No enrolled users",
    "no_requsts": "No requests",
    "created_by":" Created by",  "pick_image":"Pick Image",
-  "pick_video":"Pick Video"
+  "pick_video":"Pick Video",
+  "chat": "Chat"
+
 }

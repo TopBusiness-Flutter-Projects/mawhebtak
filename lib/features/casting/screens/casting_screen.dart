@@ -66,7 +66,8 @@ class _CastingScreenState extends State<CastingScreen> {
                         Expanded(
                           child: selectedIndex == 0
                               ? _buildTalentsContent(context)
-                              : _buildGigsContent(context),
+                              : _buildGigsContent(context,
+                                  castingCubit: context.read<CastingCubit>()),
                         ),
                       ],
                     ),
@@ -153,7 +154,7 @@ class _CastingScreenState extends State<CastingScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTopTalentsHorizontalList(context),
+        //_buildTopTalentsHorizontalList(context),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           child: Text(
@@ -303,7 +304,8 @@ class _CastingScreenState extends State<CastingScreen> {
   }
 
   // Gigs Content UI
-  Widget _buildGigsContent(BuildContext context) {
+  Widget _buildGigsContent(BuildContext context,
+      {required CastingCubit castingCubit}) {
     final cubit = context.read<RequestGigsCubit>();
     final gigs = cubit.requestGigs?.data ?? [];
 
@@ -333,7 +335,9 @@ class _CastingScreenState extends State<CastingScreen> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: gigs.length,
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  itemBuilder: (context, index) => GigsWidget(
+                  itemBuilder: (context, index) => GigsWidget(isDetails: true,
+
+                    castingCubit: castingCubit,
                     eventAndGigsModel: gigs[index],
                     isWithButton: true,
                   ),

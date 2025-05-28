@@ -31,6 +31,8 @@ class Data {
   String? description;
   String? location;
   String? price;
+  bool? isMine;
+  bool? isRequested;
 
   Data({
     this.id,
@@ -40,6 +42,8 @@ class Data {
     this.description,
     this.location,
     this.price,
+    this.isMine,
+    this.isRequested,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -50,6 +54,9 @@ class Data {
     description: json["description"],
     location: json["location"],
     price: json["price"],
+    isMine: json["is_mine"],
+    isRequested: json["is_requested"],
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -60,6 +67,8 @@ class Data {
     "description": description,
     "location": location,
     "price": price,
+    "is_mine": isMine,
+    "is_requested": isRequested,
   };
 }
 
