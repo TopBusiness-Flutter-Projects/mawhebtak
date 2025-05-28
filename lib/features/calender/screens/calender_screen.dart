@@ -22,6 +22,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   void initState() {
     context.read<CalenderCubit>().getMyEvents();
+    context.read<CalenderCubit>().getCalendarEvent();
     super.initState();
   }
 
@@ -115,8 +116,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
                   10.h.verticalSpace,
                   selectedIndex == 0
-                      ? const Expanded(
-                          child: CalendarWidget(),
+                      ? Expanded(
+                          child: (state is GetMyCalenderEventLoadingState)
+                              ? const Center(
+                                  child: CustomLoadingIndicator(),
+                                )
+                              : const CalendarWidget(),
                         )
                       : Expanded(
                           child: (state is GetMyEventLoadingState)
@@ -126,11 +131,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
                               : (state is GetMyEventErrorState ||
                                       cubit.myEventsModel?.data?.length == 0)
                                   ? Center(
-                                      child: CustomButton(
-                                          title: "retry".tr(),
-                                          onTap: () {
-                                            cubit.getMyEvents();
-                                          }),
+                                      child: TextButton(
+                                        child: Text(
+                                          "retry".tr(),
+                                        ),
+                                        onPressed: () {
+                                          cubit.getMyEvents();
+                                        },
+                                      ),
                                     )
                                   : RefreshIndicator(
                                       onRefresh: () async {

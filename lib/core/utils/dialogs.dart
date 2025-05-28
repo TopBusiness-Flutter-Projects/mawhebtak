@@ -264,3 +264,25 @@ deleteAccountDialog(BuildContext context, {void Function()? onPressed}) async {
     btnCancelText: "cancel".tr(),
   ).show();
 }
+
+mainAppAwsomeDialog(BuildContext context,
+    {void Function()? onPressed, String? title, String? btnOkText}) async {
+  await AwesomeDialog(
+    context: context,
+    customHeader: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Image.asset(
+        ImageAssets.logoImage,
+      ),
+    ),
+    animType: AnimType.topSlide,
+    showCloseIcon: true,
+    padding: EdgeInsets.all(10.w),
+    title: title,
+    titleTextStyle: getRegularStyle(fontSize: 16.sp),
+    btnOkText: btnOkText ?? "delete".tr(),
+    btnOkOnPress: onPressed,
+    btnCancelOnPress: () {},
+    btnCancelText: "cancel".tr(),
+  ).show();
+}

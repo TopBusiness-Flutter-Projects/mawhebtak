@@ -109,10 +109,13 @@ class CastingRepo {
   Future<Either<Failure, DefaultMainModel>> actionGig(
       {required String gigId, required String status}) async {
     try {
-      var response = await api.post(EndPoints.actionGigsUrl+gigId, body: {
-        "key": "ActionGig",
-        "status": status,
-      }, );
+      var response = await api.post(
+        EndPoints.actionGigsUrl + gigId,
+        body: {
+          "key": "ActionGig",
+          "status": status,
+        },
+      );
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());

@@ -3,11 +3,8 @@ import 'dart:io';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/events/data/repo/event_repo_impl.dart';
-
-import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../../core/widgets/media_picker.dart';
-import '../../calender/data/model/countries_model.dart';
 import '../data/model/event_details_model.dart';
 
 part 'event_state.dart';
@@ -26,25 +23,6 @@ class EventCubit extends Cubit<EventState> {
   void changeCurrency(String currency) {
     selectedCurrency = currency;
     emit(ChangeCurrencyState());
-  }
-
-  File? selectedImage;
-  File? selectedVideo;
-
-  Future<void> pickMedia(BuildContext context) async {
-    MediaPickerHelper.pickMedia(
-      context: context,
-      onImagePicked: (image) {
-        selectedImage = image;
-        selectedVideo = null;
-        emit(ImagePickedState());
-      },
-      onVideoPicked: (video) {
-        selectedVideo = video;
-        selectedImage = null;
-        emit(VideoPickedState());
-      },
-    );
   }
 
   GetMainEvenDetailsModel? eventDetails;
@@ -142,6 +120,33 @@ class EventCubit extends Cubit<EventState> {
     } catch (e) {
       errorGetBar(e.toString());
       emit(FollowUnFollowEventErrorState());
+    }
+  }
+
+  Future deleteEvent(String id, BuildContext context) async {
+    try {
+      AppWidgets.create2ProgressDialog(context);
+      emit(DeleteEventLoadingState());
+      final res = await api.deleteEvent(id);
+      res.fold((l) {
+        errorGetBar(l.toString());
+        Navigator.pop(context);
+        emit(DeleteEventErrorState());
+      }, (r) {
+        if (r.status == 200) {
+          successGetBar(r.msg ?? 'Success');
+          context.read<CalenderCubit>().getMyEvents();
+          emit(DeleteEventLoadedState());
+        } else {
+          errorGetBar(r.msg ?? 'Error occurred');
+          emit(DeleteEventErrorState());
+        }
+        Navigator.pop(context);
+        Navigator.pop(context);
+      });
+    } catch (e) {
+      errorGetBar(e.toString());
+      emit(DeleteEventErrorState());
     }
   }
 }

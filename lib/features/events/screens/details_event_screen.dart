@@ -54,7 +54,9 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                             cubit.getEventDetailsById(
                                 widget.eventId.toString(), context);
                           },
-                          child: Text("retry".tr()),
+                          child: Text(
+                            "retry".tr(),
+                          ),
                         ))
                       : SingleChildScrollView(
                           child: (cubit.eventDetails?.data?.isFollowed ==

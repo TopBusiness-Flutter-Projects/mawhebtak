@@ -15,10 +15,12 @@ class EventRequirementTypeDropdown extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _EventRequirementTypeDropdownState createState() => _EventRequirementTypeDropdownState();
+  _EventRequirementTypeDropdownState createState() =>
+      _EventRequirementTypeDropdownState();
 }
 
-class _EventRequirementTypeDropdownState extends State<EventRequirementTypeDropdown> {
+class _EventRequirementTypeDropdownState
+    extends State<EventRequirementTypeDropdown> {
   late String _selectedValue;
 
   @override
@@ -50,7 +52,8 @@ class _EventRequirementTypeDropdownState extends State<EventRequirementTypeDropd
             child: DropdownButton<String>(
               value: _selectedValue,
               isExpanded: true,
-              icon: Icon(Icons.keyboard_arrow_down, color: Colors.blue.shade700),
+              icon:
+                  Icon(Icons.keyboard_arrow_down, color: Colors.blue.shade700),
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
               borderRadius: BorderRadius.circular(8),
               items: widget.eventTypes.map((String value) {

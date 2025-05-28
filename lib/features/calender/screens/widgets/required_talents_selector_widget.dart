@@ -251,7 +251,7 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
     return Row(
       children: [
         Expanded(
-          flex: 2,
+          flex: 1,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.grey.shade100,

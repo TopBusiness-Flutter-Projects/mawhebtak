@@ -59,8 +59,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                       itemBuilder: (context, index) {
                         final media = mediaList?[index];
                         if (media?.extension == 'video') {
-                          return VideoPlayerWidget(
-                              videoUrl: media?.file ?? "");
+                          return VideoPlayerWidget(videoUrl: media?.file ?? "");
                         } else {
                           return GestureDetector(
                             onTap: () {
@@ -136,17 +135,19 @@ class _GigsWidgetState extends State<GigsWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
+                  Flexible(
                     child: Row(
                       children: [
                         SvgPicture.asset(AppIcons.locationIcon),
                         5.w.horizontalSpace,
-                        Text(
-                          widget.eventAndGigsModel?.location ?? "",
-                          style: TextStyle(
-                              color: AppColors.grayDarkkk,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w400),
+                        Flexible(
+                          child: Text(
+                            widget.eventAndGigsModel?.location ?? "",
+                            style: TextStyle(
+                                color: AppColors.grayDarkkk,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400),
+                          ),
                         )
                       ],
                     ),

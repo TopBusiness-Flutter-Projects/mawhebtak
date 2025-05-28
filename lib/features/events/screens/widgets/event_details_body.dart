@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
 
 import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_button.dart';
+import '../../cubit/event_cubit.dart';
 import '../../data/model/event_details_model.dart';
 import 'custom_apply_button.dart';
 import 'custom_row_event.dart';
@@ -147,7 +149,17 @@ class EventDetailsBody extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               child: CustomButton(
                 title: 'delete'.tr(),
-                onTap: () {},
+                onTap: () {
+                  mainAppAwsomeDialog(
+                    context,
+                    onPressed: () {
+                      context
+                          .read<EventCubit>()
+                          .deleteEvent(item?.id.toString() ?? '', context);
+                    },
+                    title: 'delete_event'.tr(),
+                  );
+                },
               )),
         10.h.verticalSpace
       ],

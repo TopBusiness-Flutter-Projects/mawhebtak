@@ -12,6 +12,7 @@ import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../model/countries_model.dart';
 import '../model/selected_talends.dart';
+import 'model/calender_model.dart';
 import 'model/event_model.dart';
 
 class CalenderRepo {
@@ -24,6 +25,15 @@ class CalenderRepo {
       var response = await dio.get(EndPoints.getDataBaseUrl,
           queryParameters: queryParameters);
       return Right(GetCountriesMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, MainCalendarEvent>> eventCalendar() async {
+    try {
+      var response = await dio.get(EndPoints.eventCalendarUrl);
+      return Right(MainCalendarEvent.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

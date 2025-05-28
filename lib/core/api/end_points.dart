@@ -28,11 +28,12 @@ class EndPoints {
   static const String storeDataUrl = '${baseUrl}store-data';
   //! delete
   static const String deleteData = '${baseUrl}delete-data';
+  static const String eventCalendarUrl = '${baseUrl}calendar';
 
   static const String storeEventUrl = '${baseUrl}store-event';
   static const String getDetailsDataUrl = '${baseUrl}get-details-data';
   static const String followUnfollowEventUrl =
       '${baseUrl}follow-unfollow-event';
   static const String applyToEventUrl = '${baseUrl}apply-to-event';
-
+  static const String actionGigsUrl = '${baseUrl}action-gigs/';
 }

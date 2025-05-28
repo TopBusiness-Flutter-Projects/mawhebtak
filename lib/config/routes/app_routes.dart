@@ -92,8 +92,10 @@ class Routes {
   static const String addAssistantRoute = '/addAssistant';
   static const String topTalentsRoute = '/topTalentsRoute';
   static const String requestGigsRoute = '/requestGigsRoute';
-  static const String detailsOfMainCategoryFromGigsRoute = '/detailsOfMainCategoryFromGigs';
-  static const String detailsOfMainCategoryFromTopTalentsRoute = '/detailsOfMainCategoryFromTopTalents';
+  static const String detailsOfMainCategoryFromGigsRoute =
+      '/detailsOfMainCategoryFromGigs';
+  static const String detailsOfMainCategoryFromTopTalentsRoute =
+      '/detailsOfMainCategoryFromTopTalents';
 }
 
 class AppRoutes {
@@ -116,7 +118,9 @@ class AppRoutes {
       case Routes.gigsDetailsScreen:
         String id = settings.arguments as String;
         return PageTransition(
-          child:  GigsDetailsScreen(id: id,),
+          child: GigsDetailsScreen(
+            id: id,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
@@ -138,7 +142,7 @@ class AppRoutes {
       case Routes.detailsOfMainCategoryFromGigsRoute:
         String? categoryId = settings.arguments as String;
         return PageTransition(
-          child:  DetailsOfMainCategoryGigs(
+          child: DetailsOfMainCategoryGigs(
             categoryId: categoryId,
           ),
           type: PageTransitionType.fade,
@@ -403,7 +407,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.detailsOfMainCategoryFromTopTalentsRoute:
+      case Routes.detailsOfMainCategoryFromTopTalentsRoute:
         return PageTransition(
           child: const DetailsOfMainCategoryTopTalents(),
           type: PageTransitionType.fade,

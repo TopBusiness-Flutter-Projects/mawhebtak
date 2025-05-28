@@ -17,6 +17,7 @@ import '../../../core/utils/widget_from_application.dart';
 import '../../location/cubit/location_cubit.dart';
 import '../data/model/countries_model.dart';
 import '../data/model/selected_talends.dart';
+import '../data/repos/model/calender_model.dart';
 import '../data/repos/model/event_model.dart';
 import '../screens/widgets/calender_widget.dart';
 
@@ -35,7 +36,7 @@ class CalenderCubit extends Cubit<CalenderState> {
   TextEditingController locationAddressController = TextEditingController();
   TextEditingController feesPriceController = TextEditingController();
   DateTime? selectedDate;
-  List<CalendarEvent> events = [];
+  List<MainCalendarEventData> events = [];
   List<File> validVideos = [];
   List<XFile>? myImages;
   List<File>? myImagesF;
@@ -419,6 +420,8 @@ class CalenderCubit extends Cubit<CalenderState> {
           successGetBar(r.msg ?? '');
           currentStep = 2;
           emit(GetAddNewEventSuccessState());
+          clearData();
+          getCalendarEvent();
         } else {
           errorGetBar(r.msg ?? 'Error occurred');
           emit(GetAddNewEventErrorState());
@@ -429,6 +432,22 @@ class CalenderCubit extends Cubit<CalenderState> {
       errorGetBar(e.toString());
       emit(GetAddNewEventErrorState());
     }
+  }
+
+  clearData() {
+    eventLimitController.clear();
+    ticketPriceController.clear();
+    eventToDateController.clear();
+    eventToDateController.clear();
+    eventDateController.clear();
+    locationAddressController.clear();
+    titleOfTheEventController.clear();
+    descriptionController.clear();
+    selectedCategoty = null;
+    selectedTalends = [];
+    myImagesF = null;
+    myImages = null;
+    validVideos = [];
   }
 
   GetMainEventModel? myEventsModel;
@@ -451,6 +470,31 @@ class CalenderCubit extends Cubit<CalenderState> {
     } catch (e) {
       errorGetBar(e.toString());
       emit(GetMyEventErrorState());
+    }
+  }
+
+  MainCalendarEvent? mainCalendarEvent;
+  getCalendarEvent() async {
+    try {
+      emit(GetMyCalenderEventLoadingState());
+      final result = await api.eventCalendar();
+      result.fold((l) {
+        errorGetBar(l.toString());
+        emit(GetMyCalenderEventErrorState());
+      }, (r) {
+        if (r.status == 200) {
+          mainCalendarEvent = r;
+          events = r.data ?? [];
+
+          emit(GetMyCalenderEventLoadedState());
+        } else {
+          errorGetBar(r.msg ?? 'Error occurred');
+          emit(GetMyCalenderEventErrorState());
+        }
+      });
+    } catch (e) {
+      errorGetBar(e.toString());
+      emit(GetMyCalenderEventErrorState());
     }
   }
 }

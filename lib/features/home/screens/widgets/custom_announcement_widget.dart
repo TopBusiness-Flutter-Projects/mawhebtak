@@ -143,6 +143,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                 ),
                 SizedBox(height: 10.h),
                 Flexible(
+                  fit: FlexFit.tight,
                   child: (widget.announcement?.image == null)
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(16.r),

@@ -71,4 +71,17 @@ class EventRepo {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, DefaultMainModel>> deleteEvent(String eventId) async {
+    try {
+      var response =
+          await dio.post(EndPoints.deleteData, formDataIsEnabled: true, body: {
+        "model": "Event",
+        "id": eventId,
+      });
+      return Right(DefaultMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

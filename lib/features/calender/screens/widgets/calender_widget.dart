@@ -1,6 +1,12 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/core/utils/hex_color.dart';
+import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import '../../../../core/exports.dart';
+import '../../cubit/calender_state.dart';
+import '../../data/repos/model/calender_model.dart';
 
 class CalendarWidget extends StatefulWidget {
   const CalendarWidget({Key? key}) : super(key: key);
@@ -11,7 +17,7 @@ class CalendarWidget extends StatefulWidget {
 
 class _CalendarWidgetState extends State<CalendarWidget> {
   DateTime currentDate = DateTime.now();
-  late List<CalendarEvent> events;
+  late List<MainCalendarEventData> events;
 
   // // ----------------------------
   // // عرض مودال إضافة حدث جديد
@@ -175,56 +181,54 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   @override
   void initState() {
     super.initState();
-    events = [
-      CalendarEvent(
-          title: "title",
-          date: DateTime.now(),
-          endDate: DateTime.now().add(const Duration(days: 2)),
-          color: Colors.red)
-    ];
+    events = context.read<CalenderCubit>().events;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // ------------------------
-        // الجسم الرئيسي للتقويم
-        // ------------------------
-        Column(
+    return BlocBuilder<CalenderCubit, CalenderState>(
+      builder: (context, state) {
+        return Stack(
           children: [
-            _buildMonthNavigator(),
-            10.h.verticalSpace,
-            _buildWeekdayHeader(),
-            Expanded(child: _buildCalendarBody()),
-            50.h.verticalSpace,
-          ],
-        ),
+            // ------------------------
+            // الجسم الرئيسي للتقويم
+            // ------------------------
+            Column(
+              children: [
+                _buildMonthNavigator(),
+                10.h.verticalSpace,
+                _buildWeekdayHeader(),
+                Expanded(child: _buildCalendarBody()),
+                50.h.verticalSpace,
+              ],
+            ),
 
-        // ------------------------
-        // زر عائم لإضافة حدث
-        // ------------------------
-        Positioned(
-          bottom: 80.h,
-          right: 20.w,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, Routes.newEventRoute);
-            },
-            child: Container(
-              width: 60.w,
-              height: 60.h,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-              ),
-              child: const Center(
-                child: Icon(Icons.add, color: Colors.white),
+            // ------------------------
+            // زر عائم لإضافة حدث
+            // ------------------------
+            Positioned(
+              bottom: 80.h,
+              right: 20.w,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.newEventRoute);
+                },
+                child: Container(
+                  width: 60.w,
+                  height: 60.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.add, color: Colors.white),
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 
@@ -326,10 +330,11 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               Row(
                 children: week.map((day) {
                   bool isCurrentMonth = day.month == currentDate.month;
-                  List<CalendarEvent> dayEvents = events
+                  List<MainCalendarEventData> dayEvents = events
                       .where(
                         (event) =>
-                            isSameDay(event.date, day) && event.endDate == null,
+                            isSameDay(event.start ?? DateTime.now(), day) &&
+                            event.end == null,
                       )
                       .toList();
 
@@ -349,11 +354,11 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   // الأحداث متعددة الأيام
   List<Widget> _buildMultidayEventRow(List<DateTime> week) {
     List<MultidayEventPosition> weekEvents = events
-        .where((e) => e.endDate != null)
+        .where((e) => e.end != null)
         .map((e) {
           int start = -1, end = -1;
           for (int i = 0; i < week.length; i++) {
-            if (isDateInRange(week[i], e.date, e.endDate!)) {
+            if (isDateInRange(week[i], e.start ?? DateTime.now(), e.end!)) {
               if (start == -1) start = i;
               end = i;
             }
@@ -376,24 +381,34 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         top: 30.h,
         left: left,
         right: right,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.w),
-          child: Container(
-            height: 50.h,
-            decoration: BoxDecoration(
-              color: AppColors.secondPrimary,
-              borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(20.r),
-                right: Radius.circular(20.r),
+        child: InkWell(
+          onTap: () {
+            mainAppAwsomeDialog(context, onPressed: () {
+              Navigator.pushNamed(context, Routes.detailsEventRoute,
+                  arguments: eventPos.event.id?.toString());
+            }, title: 'do_you_want_nav_to_details'.tr(), btnOkText: 'go'.tr());
+
+            log('event start ${eventPos.event.start} end ${eventPos.event.end}');
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            child: Container(
+              height: 50.h,
+              decoration: BoxDecoration(
+                color: AppColors.secondPrimary,
+                borderRadius: BorderRadius.horizontal(
+                  left: Radius.circular(20.r),
+                  right: Radius.circular(20.r),
+                ),
               ),
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              eventPos.event.title,
-              style: TextStyle(color: Colors.white, fontSize: 10.sp),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
+              padding: EdgeInsets.symmetric(horizontal: 6.w),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                eventPos.event.title ?? '',
+                style: TextStyle(color: Colors.white, fontSize: 10.sp),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
             ),
           ),
         ),
@@ -402,8 +417,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 
   // بناء خلية في التقويم
-  Widget _buildCalendarCell(
-      DateTime day, bool isCurrentMonth, List<CalendarEvent> dayEvents) {
+  Widget _buildCalendarCell(DateTime day, bool isCurrentMonth,
+      List<MainCalendarEventData> dayEvents) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade200),
@@ -426,19 +441,31 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
           // الأحداث اليومية
           ...dayEvents.map((event) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: event.color,
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-                child: Text(
-                  event.title,
-                  style: TextStyle(color: Colors.white, fontSize: 10.sp),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
+            return InkWell(
+              onTap: () {
+                mainAppAwsomeDialog(context, onPressed: () {
+                  Navigator.pushNamed(context, Routes.detailsEventRoute,
+                      arguments: event.id?.toString());
+                },
+                    title: 'do_you_want_nav_to_details'.tr(),
+                    btnOkText: 'go'.tr());
+
+                log('event start ${event.start} end ${event.end}');
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: HexColor(event.color ?? '#000000'),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+                  child: Text(
+                    event.title ?? '',
+                    style: TextStyle(color: Colors.white, fontSize: 10.sp),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 4,
+                  ),
                 ),
               ),
             );
@@ -496,24 +523,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 }
 
-// كائن الحدث
-class CalendarEvent {
-  final String title;
-  final DateTime date;
-  final DateTime? endDate;
-  final Color color;
-
-  CalendarEvent({
-    required this.title,
-    required this.date,
-    this.endDate,
-    required this.color,
-  });
-}
-
 // مساعد لتحديد موقع الأحداث متعددة الأيام
 class MultidayEventPosition {
-  final CalendarEvent event;
+  final MainCalendarEventData event;
   final int startIndex;
   final int endIndex;
 

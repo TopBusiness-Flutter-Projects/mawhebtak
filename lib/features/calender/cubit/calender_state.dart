@@ -1,6 +1,5 @@
-import 'package:mawhebtak/features/calender/screens/widgets/calender_widget.dart';
-
 import '../data/model/selected_talends.dart';
+import '../data/repos/model/calender_model.dart';
 
 class CalenderState {}
 
@@ -26,7 +25,7 @@ class LocationError extends CalenderState {
 }
 
 class CalendarUpdated extends CalenderState {
-  late List<CalendarEvent> events;
+  late List<MainCalendarEventData> events;
   CalendarUpdated(this.events);
 }
 
@@ -64,5 +63,13 @@ final class GetAddNewEventSuccessState extends CalenderState {}
 final class GetAddNewEventErrorState extends CalenderState {}
 
 final class GetMyEventErrorState extends CalenderState {}
+
 final class GetMyEventSuccessState extends CalenderState {}
+
 final class GetMyEventLoadingState extends CalenderState {}
+
+final class GetMyCalenderEventLoadingState extends CalenderState {}
+
+final class GetMyCalenderEventLoadedState extends CalenderState {}
+
+final class GetMyCalenderEventErrorState extends CalenderState {}

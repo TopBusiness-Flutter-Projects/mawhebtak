@@ -43,9 +43,10 @@ class CustomTopEventList extends StatelessWidget {
               : ClipRRect(
                   borderRadius: BorderRadius.circular(8.r),
                   child: SizedBox(
+                    height: 200.h,
                     width: isAll ?? false ? getWidthSize(context) / .9 : 287.w,
                     child: Image.asset(
-                      ImageAssets.homeTestImage,
+                      ImageAssets.imagePicked,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -78,7 +79,7 @@ class CustomTopEventList extends StatelessWidget {
                       ),
                       Text(
                         topEvent?.description ?? "",
-                        maxLines: 2,
+                        maxLines: 1,
                         style: getRegularStyle(
                             isShadow: true,
                             color: AppColors.grayText,
