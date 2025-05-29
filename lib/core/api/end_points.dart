@@ -37,8 +37,7 @@ class EndPoints {
   static const String actionGigsUrl = '${baseUrl}action-gigs/';
 
   static const String notificationUrl = '${baseUrl}get-notifications';
-  static const String requestGigs = '${baseUrl}request-gigs';
+
   static const String actionEventRequestUrl = '${baseUrl}action-event-request/';
   static const String requestGigs = '${baseUrl}request-cancel-gigs';
-
 }
