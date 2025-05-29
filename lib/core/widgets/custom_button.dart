@@ -1,9 +1,10 @@
 import 'package:mawhebtak/core/exports.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, this.onTap, required this.title});
+  const CustomButton({super.key, this.onTap, required this.title,  this.color});
   final void Function()? onTap;
   final String title;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,7 +17,7 @@ class CustomButton extends StatelessWidget {
           alignment: Alignment.center,
           padding: EdgeInsets.all(12.r),
           decoration: BoxDecoration(
-            color: AppColors.primary,
+            color: color ?? AppColors.primary,
             borderRadius: BorderRadius.circular(8.sp),
           ),
           child: Text(
