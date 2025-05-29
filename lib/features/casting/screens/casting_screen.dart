@@ -8,7 +8,6 @@ import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_c
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
-import 'package:mawhebtak/features/profile/screens/widgets/my_gigs/requst_gigs_request.dart';
 import '../../../core/exports.dart';
 
 class CastingScreen extends StatefulWidget {
@@ -246,110 +245,6 @@ class _CastingScreenState extends State<CastingScreen> {
     );
   }
 
-  Widget _buildTopTalentsHorizontalList(BuildContext context) {
-    final castingCubit = context.read<CastingCubit>();
-    final categoryTopTalent = castingCubit.categoryModel?.data ?? [];
-
-    return BlocBuilder<CastingCubit, CastingState>(
-      builder: (context, state) {
-        if (state is CategoryFromGigsStateLoading) {
-          return const Center(child: CustomLoadingIndicator());
-        } else if (state is CategoryFromGigsStateLoaded) {
-          return SizedBox(
-            height: 145.w,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: categoryTopTalent.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                var talent = categoryTopTalent[index];
-                return Padding(
-                  padding: EdgeInsetsDirectional.only(start: 10.w, end: 10.w),
-                  child: GestureDetector(
-                    onTap: () {
-                      print('sadasd');
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.r),
-                        image: const DecorationImage(
-                          image: AssetImage(ImageAssets.tasweerPhoto),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(8.r),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.r),
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.black.withOpacity(0.6),
-                              Colors.transparent
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
-                        ),
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: SizedBox(
-                            width: 130.w,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 10.h, left: 10.w, right: 10.w),
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    WidgetSpan(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: AppColors.secondPrimary,
-                                        ),
-                                        child: Text(
-                                          (talent.name ?? "").substring(
-                                              0,
-                                              (talent.name?.length ?? 0) >= 5
-                                                  ? 5
-                                                  : (talent.name?.length ?? 0)),
-                                          style: getMediumStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.sp,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: (talent.name?.length ?? 0) > 5
-                                          ? (talent.name ?? "").substring(5)
-                                          : "",
-                                      style: getMediumStyle(
-                                        color: AppColors.white,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        } else if (state is TopTalentsStateError) {
-          return Center(child: Text("error_loading_data".tr()));
-        }
-        return const SizedBox.shrink();
-      },
-    );
-  }
 
   // Gigs Content UI
   Widget _buildGigsContent(BuildContext context,
@@ -367,35 +262,32 @@ class _CastingScreenState extends State<CastingScreen> {
         ),
         BlocBuilder<RequestGigsCubit, RequestGigsState>(
           builder: (context, state) {
-            final requestGigsCubit = context.read<RequestGigsCubit>();
-            if (state is RequestGigsStateLoading &&
-                requestGigsCubit.requestGigs == null) {
+            if (state is RequestGigsStateLoading ) {
               return const Center(child: CustomLoadingIndicator());
             }
 
             return Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
-                  await requestGigsCubit.requestGigsData(
+                  context.read<RequestGigsCubit>().requestGigsData(
                       page: '1', isGetMore: false);
                 },
                 child: ListView.builder(
                   controller: scrollGigsController,
-                  itemCount: (requestGigsCubit.requestGigs?.data?.length ?? 0) +
-                      (state is RequestGigsStateLoadingMore ? 1 : 0),
+                  itemCount: context.read<RequestGigsCubit>().requestGigs?.data?.length ?? 0,
                   physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
                   itemBuilder: (context, index) {
-                    final gigsList = requestGigsCubit.requestGigs?.data;
 
-                    if (index == gigsList?.length &&
+                    if (index == context.read<RequestGigsCubit>().requestGigs?.data?.length &&
                         state is RequestGigsStateLoadingMore) {
                       return const CustomLoadingIndicator();
                     }
                     return GigsWidget(
                       isDetails: true,
                       castingCubit: castingCubit,
-                      eventAndGigsModel: gigsList?[index],
+                      eventAndGigsModel: context.read<RequestGigsCubit>().requestGigs?.data?[index],
                       isWithButton: true,
                     );
                   },
@@ -504,7 +396,6 @@ class _CastingScreenState extends State<CastingScreen> {
       ),
     );
   }
-
   // Floating Action Button
   Widget _buildAddButton(BuildContext context) {
     return GestureDetector(
@@ -520,4 +411,110 @@ class _CastingScreenState extends State<CastingScreen> {
       ),
     );
   }
+  Widget _buildTopTalentsHorizontalList(BuildContext context) {
+    final castingCubit = context.read<CastingCubit>();
+    final categoryTopTalent = castingCubit.categoryModel?.data ?? [];
+
+    return BlocBuilder<CastingCubit, CastingState>(
+      builder: (context, state) {
+        if (state is CategoryFromGigsStateLoading) {
+          return const Center(child: CustomLoadingIndicator());
+        } else if (state is CategoryFromGigsStateLoaded) {
+          return SizedBox(
+            height: 145.w,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: categoryTopTalent.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                var talent = categoryTopTalent[index];
+                return Padding(
+                  padding: EdgeInsetsDirectional.only(start: 10.w, end: 10.w),
+                  child: GestureDetector(
+                    onTap: () {
+                      print('sadasd');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.r),
+                        image: const DecorationImage(
+                          image: AssetImage(ImageAssets.tasweerPhoto),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(8.r),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.r),
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.black.withOpacity(0.6),
+                              Colors.transparent
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                        ),
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: SizedBox(
+                            width: 130.w,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: 10.h, left: 10.w, right: 10.w),
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.secondPrimary,
+                                        ),
+                                        child: Text(
+                                          (talent.name ?? "").substring(
+                                              0,
+                                              (talent.name?.length ?? 0) >= 5
+                                                  ? 5
+                                                  : (talent.name?.length ?? 0)),
+                                          style: getMediumStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: (talent.name?.length ?? 0) > 5
+                                          ? (talent.name ?? "").substring(5)
+                                          : "",
+                                      style: getMediumStyle(
+                                        color: AppColors.white,
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        } else if (state is TopTalentsStateError) {
+          return Center(child: Text("error_loading_data".tr()));
+        }
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+
 }
