@@ -8,6 +8,7 @@ import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_c
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
+import 'package:mawhebtak/features/profile/screens/widgets/my_gigs/requst_gigs_request.dart';
 import '../../../core/exports.dart';
 
 class CastingScreen extends StatefulWidget {
@@ -21,15 +22,50 @@ class CastingScreen extends StatefulWidget {
 class _CastingScreenState extends State<CastingScreen> {
   int selectedIndex = 0;
   late List<String> tabs;
-
+  late final ScrollController scrollTopTalentController = ScrollController();
+  late final ScrollController scrollGigsController = ScrollController();
   @override
   void initState() {
     super.initState();
+    context.read<TopTalentsCubit>().topTalentsData(page: '1', isGetMore: false);
+    context.read<RequestGigsCubit>().requestGigsData(page: '1', isGetMore: false);
+    context
+        .read<RequestGigsCubit>()
+        .requestGigsData(page: '1', isGetMore: false);
     tabs = ["talents".tr(), "gigs".tr()];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CastingCubit>().getCategoryFromGigs();
     });
-    context.read<RequestGigsCubit>().requestGigsData(page: '1');
+    scrollTopTalentController.addListener(_scrollTopTalentListener);
+    scrollGigsController.addListener(_scrollRequestGigsListener);
+  }
+
+  _scrollTopTalentListener() {
+    if (scrollTopTalentController.position.maxScrollExtent ==
+        scrollTopTalentController.offset) {
+      if (context.read<TopTalentsCubit>().topTalents?.links?.next != null) {
+        Uri uri = Uri.parse(
+            context.read<TopTalentsCubit>().topTalents?.links?.next ?? "");
+        String? page = uri.queryParameters['page'];
+        context
+            .read<TopTalentsCubit>()
+            .topTalentsData(page: page ?? '1', isGetMore: true);
+      }
+    }
+  }
+
+  _scrollRequestGigsListener() {
+    if (scrollGigsController.position.maxScrollExtent ==
+        scrollGigsController.offset) {
+      if (context.read<RequestGigsCubit>().requestGigs?.links?.next != null) {
+        Uri uri = Uri.parse(
+            context.read<RequestGigsCubit>().requestGigs?.links?.next ?? "");
+        String? page = uri.queryParameters['page'];
+        context
+            .read<RequestGigsCubit>()
+            .requestGigsData(page: page ?? '1', isGetMore: true);
+      }
+    }
   }
 
   @override
@@ -150,7 +186,6 @@ class _CastingScreenState extends State<CastingScreen> {
 
   // Talent Content UI
   Widget _buildTalentsContent(BuildContext context) {
-    final cubit = context.read<TopTalentsCubit>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -164,34 +199,50 @@ class _CastingScreenState extends State<CastingScreen> {
         ),
         BlocBuilder<TopTalentsCubit, TopTalentsState>(
           builder: (context, state) {
-            if (state is TopTalentsStateLoading) {
+            final cubit = context.read<TopTalentsCubit>();
+            if (state is TopTalentsStateLoading && cubit.topTalents == null) {
               return const Center(child: CustomLoadingIndicator());
-            } else if (state is TopTalentsStateLoaded) {
-              final talents = state.topTalents?.data ?? [];
-              return Expanded(
-                child: SafeArea(
-                  bottom: true,
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 4.h,
-                      crossAxisSpacing: 16.w,
-                      childAspectRatio: 0.95,
-                    ),
-                    itemCount: talents.length,
-                    itemBuilder: (context, index) => CustomTopTalentsList(
-                      topTalentsCubit: cubit,
-                      topTalentsData: talents[index],
-                    ),
-                  ),
-                ),
-              );
-            } else if (state is TopTalentsStateError) {
-              return Center(child: Text("error_loading_data".tr()));
             }
-            return const SizedBox.shrink();
+
+            return Expanded(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  context.read<TopTalentsCubit>().topTalentsData(page: "1");
+                },
+                child: cubit.topTalents?.data?.length == 0
+                    ? Center(
+                        child: TextButton(
+                            onPressed: () {
+                              cubit.topTalentsData(page: '1');
+                            },
+                            child: Text('retry'.tr())),
+                      )
+                    : GridView.builder(
+                        controller: scrollTopTalentController,
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 0.h,
+                          mainAxisExtent: 210.w,
+                          crossAxisSpacing: 0.w,
+                          childAspectRatio: 0.999,
+                        ),
+                        itemCount: cubit.topTalents?.data?.length,
+                        itemBuilder: (context, index) {
+                          if (index == cubit.topTalents?.data?.length &&
+                              state is TopTalentsStateLoadingMore) {
+                            return const CustomLoadingIndicator();
+                          }
+                          return CustomTopTalentsList(
+                            index: index,
+                            topTalentsCubit: cubit,
+                            topTalentsData: cubit.topTalents?.data?[index],
+                          );
+                        }),
+              ),
+            );
           },
         ),
       ],
@@ -319,31 +370,46 @@ class _CastingScreenState extends State<CastingScreen> {
         ),
         BlocBuilder<RequestGigsCubit, RequestGigsState>(
           builder: (context, state) {
-            final cubit = context.read<RequestGigsCubit>();
+            final requestGigsCubit = context.read<RequestGigsCubit>();
+            if (state is RequestGigsStateLoading &&
+                requestGigsCubit.requestGigs == null) {
+              return const Center(child: CustomLoadingIndicator());
+            }
 
-            return (state is RequestGigsStateLoading)
-                ? const Center(child: CustomLoadingIndicator())
-                : Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: () async {
-                        cubit.requestGigsData(page: '1');
-                      },
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemCount: cubit.requestGigs?.data?.length,
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        itemBuilder: (context, index) => GigsWidget(
-                          isDetails: true,
-                          castingCubit: castingCubit,
-                          eventAndGigsModel: cubit.requestGigs?.data?[index],
-                          isWithButton: true,
-                        ),
-                      ),
-                    ),
-                  );
+            return Expanded(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await requestGigsCubit.requestGigsData(
+                      page: '1', isGetMore: false);
+                },
+                child: ListView.builder(
+                  controller: scrollGigsController,
+                  itemCount: requestGigsCubit.requestGigs?.data?.length ?? 0,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  itemBuilder: (context, index) {
+                    final gigsList = requestGigsCubit.requestGigs?.data;
+
+                    if (index == gigsList?.length &&
+                        state is RequestGigsStateLoadingMore) {
+                      return const CustomLoadingIndicator();
+                    }else if (gigsList?.length == 0 ) {
+                      Center(
+                        child: Text("no_data".tr(),style: TextStyle(color: AppColors.black),),
+                      );
+                    }
+                    return GigsWidget(
+                      isDetails: true,
+                      castingCubit: castingCubit,
+                      eventAndGigsModel: gigsList?[index],
+                      isWithButton: true,
+                    );
+                  },
+                ),
+              ),
+            );
           },
-        ),
+        )
       ],
     );
   }

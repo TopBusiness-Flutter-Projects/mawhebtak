@@ -71,6 +71,7 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
                     ),
                     itemBuilder: (context, index) => CustomTopTalentsList(
                       //topTalentsCubit:context.read<TopTalentsCubit>(),
+                      index: index,
                       topTalentsData: topTalentData?.data?[index],
                     ),
                     itemCount: topTalentData?.data?.length ?? 0

@@ -14,7 +14,6 @@ class RequestGigsRepository {
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Gig",
-        "where[0]": "status,1",
         "paginate": "true",
         "orderBy":"desc",
         "page": page

@@ -276,8 +276,9 @@ class _TimeLineListState extends State<TimeLineList> {
                                           child: Padding(
                                             padding: EdgeInsets.all(10.w),
                                             child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Row(
                                                   mainAxisAlignment:
@@ -301,78 +302,77 @@ class _TimeLineListState extends State<TimeLineList> {
                                                                 'https://i.pravatar.cc/150?img=1',
                                                           ),
                                                         ),
-                                                        10.w.horizontalSpace,
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Column(
+                                                        SizedBox(
+                                                          width: 350.w,
+                                                          child: Padding(
+                                                            padding:  EdgeInsets.only(left: 10.w),
+                                                            child: Column(
+                                                              mainAxisAlignment: MainAxisAlignment.start,
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
                                                                 Text(
                                                                     user?.name ??
                                                                         "",
                                                                     style: TextStyle(
                                                                         fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
+                                                                        FontWeight
+                                                                            .bold,
                                                                         fontSize:
-                                                                            18.sp)),
+                                                                        18.sp)),
                                                                 Text(
                                                                     comment.comment ??
                                                                         "",
+                                                                    maxLines: 2,
+                                                                    overflow:TextOverflow.ellipsis,
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            16.sp)),
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              children: [
-                                                                TextButton(
-                                                                  onPressed:
-                                                                      () {},
-                                                                  child: Text(
-                                                                    '${replies.length} replies',
-                                                                    style:
+                                                                        14.sp)),
+                                                                 Row(
+                                                                  children: [
+                                                                    TextButton(
+                                                                      onPressed:
+                                                                          () {},
+                                                                      child: Text(
+                                                                        '${replies.length} replies',
+                                                                        style:
                                                                         TextStyle(
-                                                                      fontSize:
+                                                                          fontSize:
                                                                           18.sp,
-                                                                      color: AppColors
-                                                                          .primary,
+                                                                          color: AppColors
+                                                                              .primary,
+                                                                        ),
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    context
-                                                                        .read<
+                                                                    TextButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        context
+                                                                            .read<
                                                                             FeedsCubit>()
-                                                                        .startReplying(
+                                                                            .startReplying(
                                                                           comment
                                                                               .id
                                                                               .toString(),
                                                                           user?.name ??
                                                                               '',
                                                                         );
-                                                                  },
-                                                                  child: Text(
-                                                                    'reply',
-                                                                    style:
+                                                                      },
+                                                                      child: Text(
+                                                                        'reply',
+                                                                        style:
                                                                         TextStyle(
-                                                                      fontSize:
+                                                                          fontSize:
                                                                           16.sp,
-                                                                      color: AppColors
-                                                                          .primary,
+                                                                          color: AppColors
+                                                                              .primary,
+                                                                        ),
+                                                                      ),
                                                                     ),
-                                                                  ),
+                                                                  ],
                                                                 ),
                                                               ],
                                                             ),
-                                                          ],
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
