@@ -30,60 +30,79 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            10.h.verticalSpace,
             CustomSimpleAppbar(title: "gig_details".tr()),
             10.h.verticalSpace,
             BlocBuilder<CastingCubit, CastingState>(builder: (context, state) {
-              var cubit = context.read<CastingCubit>();
               return (state is DetailsGigsStateLoading)
                   ? const Center(child: CustomLoadingIndicator())
                   : Column(
                       children: [
                         Container(
-                          color:AppColors.white,
+                          color: AppColors.white,
                           child: GigsWidget(
-                            isDetails: false,
-                            eventAndGigsModel: cubit.getDetailsGigsModel?.data,
+                            isDetails: true,
+                            eventAndGigsModel: context
+                                .read<CastingCubit>()
+                                .getDetailsGigsModel
+                                ?.data,
                             isWithButton: false,
                           ),
                         ),
                         SizedBox(
                           height: 20.h,
                         ),
-                        if(cubit.getDetailsGigsModel?.data?.gigsRequests?.length != 0)
+                        if (context
+                                .read<CastingCubit>()
+                                .getDetailsGigsModel
+                                ?.data
+                                ?.gigsRequests
+                                ?.length !=
+                            0)
                           Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 20.0.w),
-                              child: Text(
-                                "gig_requests".tr(),
-                                style: getMediumStyle(
-                                    fontSize: 20.sp, color: AppColors.darkGray),
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 20.0.w),
+                                child: Text(
+                                  "gig_requests".tr(),
+                                  style: getMediumStyle(
+                                      fontSize: 20.sp,
+                                      color: AppColors.darkGray),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            //list of requests
-                            ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: cubit.getDetailsGigsModel?.data?.gigsRequests?.length ?? 0,
-                              itemBuilder: (BuildContext context, int index) {
-                                return  GigsRequest(
-
-                                  gigsRequestList:cubit.getDetailsGigsModel?.data?.gigsRequests?[index] ,
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 10.h,
-                                );
-                              },
-                            )
-                          ],
-                        ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              //list of requests
+                              ListView.separated(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: context
+                                        .read<CastingCubit>()
+                                        .getDetailsGigsModel
+                                        ?.data
+                                        ?.gigsRequests
+                                        ?.length ??
+                                    0,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GigsRequest(
+                                    gigsRequestList: context
+                                        .read<CastingCubit>()
+                                        .getDetailsGigsModel
+                                        ?.data
+                                        ?.gigsRequests?[index],
+                                  );
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return SizedBox(
+                                    height: 10.h,
+                                  );
+                                },
+                              )
+                            ],
+                          ),
                       ],
                     );
             })
