@@ -437,8 +437,7 @@ class AppRoutes {
       case Routes.requestGigsRoute:
         return PageTransition(
           child: BlocProvider(
-              create: (context) =>
-                  RequestGigsCubit()..requestGigsData(page: '1'),
+              create: (context) => RequestGigsCubit(),
               child: const RequestGigsScreen()),
           type: PageTransitionType.fade,
           alignment: Alignment.center,

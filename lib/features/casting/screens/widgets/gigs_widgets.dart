@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
@@ -195,21 +196,24 @@ class _GigsWidgetState extends State<GigsWidget> {
               ),
               10.verticalSpace,
               if (widget.isWithButton ?? false)
-                if (widget.eventAndGigsModel?.isMine == false)
+                if (widget.eventAndGigsModel?.isMine == false || (widget.eventAndGigsModel?.isRequested == "accept"))
+
                   Padding(
                       padding: EdgeInsets.only(bottom: 10.h),
                       child: CustomButton(
+                        color: widget.eventAndGigsModel?.isRequested == "pending" ? AppColors.red :AppColors.primary,
                         onTap: () async {
                           await widget.castingCubit?.requestGigs(
-                             isCancel: widget.eventAndGigsModel?.isRequested.toString() ?? "",
+                             type: widget.eventAndGigsModel?.isRequested.toString() ?? "",
                               context: context,
-                              gigId: widget.eventAndGigsModel?.id.toString() ??
-                                  "");
-                          print("xsssssssssss${widget.eventAndGigsModel?.isRequested}");
+                              gigId: widget.eventAndGigsModel?.id.toString() ?? "");
+                         if (widget.eventAndGigsModel?.isRequested == "rejected" || widget.eventAndGigsModel?.isRequested == null)
+                            Navigator.pushNamed(context, Routes.chatRoute);
                         },
-                        title: widget.eventAndGigsModel?.isRequested == "true" ?
+                        title: (widget.eventAndGigsModel?.isRequested == "pending" ) ?
                         "cancel".tr():
                         "request_this_gigs".tr(),
+
                       )),
             ],
           ),

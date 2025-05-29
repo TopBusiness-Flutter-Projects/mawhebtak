@@ -43,7 +43,7 @@ class CastingRepo {
         "lat": lat,
         "long": long,
         "price": price,
-        "category_id":categoryId,
+        "category_id": categoryId,
         for (int i = 0; i < mediaFiles.length; i++)
           "media[$i]": MultipartFile.fromFileSync(mediaFiles[i].path,
               filename: mediaFiles[i].path.split('/').last)
@@ -111,8 +111,6 @@ class CastingRepo {
   Future<Either<Failure, DefaultMainModel>> actionGig(
       {required String gigId, required String status}) async {
     try {
-
-
       var response = await api.post(
         EndPoints.actionGigsUrl + gigId,
         body: {
@@ -121,25 +119,25 @@ class CastingRepo {
         },
       );
 
-
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, DefaultMainModel>> requestGig(
       {required String gigId}) async {
     try {
-      var response = await api.post(EndPoints.requestGigs,
+      var response = await api.post(
+        EndPoints.requestGigs,
         body: {
-        "key": "RequestCancelGig",
-        "gig_id": gigId,
-      }, );
+          "key": "RequestCancelGig",
+          "gig_id": gigId,
+        },
+      );
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
-
-
 }

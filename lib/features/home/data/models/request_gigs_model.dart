@@ -52,7 +52,7 @@ class EventAndGigsModel {
   String? location;
   String? price;
   String? from;
-  bool? isRequested;
+  String? isRequested;
   bool? isMine;
   List<GigsRequestList>? gigsRequests;
 

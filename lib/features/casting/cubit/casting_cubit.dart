@@ -1,4 +1,3 @@
-import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
@@ -112,7 +111,7 @@ class CastingCubit extends Cubit<CastingState> {
     }
   }
 
-  requestGigs({required String gigId, required BuildContext context,required String isCancel}) async {
+  requestGigs({required String gigId, required BuildContext context,required String type}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(RequestGigStateLoading());
     try {
@@ -125,12 +124,9 @@ class CastingCubit extends Cubit<CastingState> {
       }, (r) {
         if (r.status == 200) {
           Navigator.pop(context);
-          if(isCancel == "false") {
-            Navigator.pushNamed(context, Routes.chatRoute);
-            successGetBar(r.msg);
-            getDetailsGigs(id: gigId);
-            isCancel == "true";
-          }
+          successGetBar(r.msg);
+          getDetailsGigs(id: gigId);
+
           emit(RequestGigStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
