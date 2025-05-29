@@ -13,9 +13,12 @@ class CustomContainerButton extends StatelessWidget {
     required this.title,
     this.color,
     this.height,
+    this.fontSize,
+    this.fontWeight,
     this.width,
     this.borderColor,
     this.textColor,
+    this.padding,
   });
   final void Function()? onTap;
   final String title;
@@ -23,7 +26,10 @@ class CustomContainerButton extends StatelessWidget {
   final Color? borderColor;
   final double? height;
   final double? width;
+  final double? fontSize;
   final Color? color;
+  final EdgeInsetsGeometry? padding;
+  final FontWeight? fontWeight;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -31,9 +37,9 @@ class CustomContainerButton extends StatelessWidget {
       //   borderRadius: BorderRadius.circular(getSize(context) / 12),
       child: Container(
         height: height ?? 40.h,
-        width: width ?? null,
+        width: width,
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(horizontal: 30.w),
+        padding: padding ?? EdgeInsets.symmetric(horizontal: 30.w),
         decoration: BoxDecoration(
             color: color ?? AppColors.transparent,
             borderRadius: BorderRadius.circular(8.r),
@@ -44,8 +50,8 @@ class CustomContainerButton extends StatelessWidget {
           style: TextStyle(
               color: textColor ?? AppColors.white,
               fontFamily: AppStrings.fontFamily,
-              fontWeight: FontWeight.w400,
-              fontSize: 18.sp),
+              fontWeight: fontWeight ?? FontWeight.w400,
+              fontSize: fontSize ?? 18.sp),
         ),
       ),
     );

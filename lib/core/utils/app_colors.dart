@@ -15,6 +15,7 @@ class AppColors {
   static Color grey = HexColor('#8EA3AC');
 
   static Color red = HexColor('#FF0000');
+  static Color redLight2 = Colors.red.shade700;
   static Color redLight = HexColor('#C598C2');
   static Color green = HexColor('#48D6A4');
   static Color black = Colors.black;

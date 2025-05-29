@@ -84,4 +84,16 @@ class EventRepo {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, DefaultMainModel>> actionEventRequest(
+      {required String eventId, required String status}) async {
+    try {
+      var response = await dio.post(EndPoints.actionEventRequestUrl + eventId,
+          formDataIsEnabled: true,
+          body: {"key": "actionEvent", "status": status});
+      return Right(DefaultMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

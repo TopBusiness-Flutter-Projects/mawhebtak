@@ -149,6 +149,7 @@ class EventDetailsBody extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               child: CustomButton(
                 title: 'delete'.tr(),
+                color: AppColors.red,
                 onTap: () {
                   mainAppAwsomeDialog(
                     context,

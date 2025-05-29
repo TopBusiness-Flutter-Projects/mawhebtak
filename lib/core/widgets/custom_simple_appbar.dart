@@ -15,6 +15,7 @@ class CustomSimpleAppbar extends StatelessWidget {
       this.colorButton,
       this.arrowColor,
       this.color,
+      this.isWithShadow = false,
       this.titleColor});
   final String title;
   final bool? isActionButton;
@@ -24,6 +25,7 @@ class CustomSimpleAppbar extends StatelessWidget {
   final Color? colorButton;
   final Color? arrowColor;
   final String? actionIcon;
+  final bool? isWithShadow;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,7 +41,7 @@ class CustomSimpleAppbar extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 20.h),
+              padding: EdgeInsets.only(top: 0.h),
               child: Row(
                 children: [
                   GestureDetector(
@@ -75,13 +77,20 @@ class CustomSimpleAppbar extends StatelessWidget {
                       title,
                       textAlign: TextAlign.center,
                       maxLines: 1,
-                      style: TextStyle(shadows: [
-                        Shadow(
-                            offset: const Offset(1, 1), // Shadow position
-                            blurRadius: 3, // How soft the shadow should be
-                            color:
-                                Colors.black.withOpacity(0.7)), // Shadow color
-                      ], fontSize: 20.sp, color: titleColor ?? AppColors.black),
+                      style: TextStyle(
+                          shadows: isWithShadow == true
+                              ? [
+                                  Shadow(
+                                      offset:
+                                          const Offset(1, 1), // Shadow position
+                                      blurRadius:
+                                          3, // How soft the shadow should be
+                                      color: Colors.black
+                                          .withOpacity(0.7)), // Shadow color
+                                ]
+                              : [],
+                          fontSize: 20.sp,
+                          color: titleColor ?? AppColors.black),
                     ),
                   ),
                   if (isActionButton ?? false)
