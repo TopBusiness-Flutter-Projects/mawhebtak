@@ -200,6 +200,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                   Padding(
                       padding: EdgeInsets.only(bottom: 10.h),
                       child: CustomButton(
+                        color: widget.eventAndGigsModel?.isRequested == "pending" ? AppColors.red :AppColors.primary,
                         onTap: () async {
                           await widget.castingCubit?.requestGigs(
                              type: widget.eventAndGigsModel?.isRequested.toString() ?? "",
