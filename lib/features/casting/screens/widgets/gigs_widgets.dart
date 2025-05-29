@@ -195,7 +195,8 @@ class _GigsWidgetState extends State<GigsWidget> {
               ),
               10.verticalSpace,
               if (widget.isWithButton ?? false)
-                if (widget.eventAndGigsModel?.isMine == false)
+                if (widget.eventAndGigsModel?.isMine == false || (widget.eventAndGigsModel?.isRequested == "accept"))
+
                   Padding(
                       padding: EdgeInsets.only(bottom: 10.h),
                       child: CustomButton(
@@ -205,9 +206,10 @@ class _GigsWidgetState extends State<GigsWidget> {
                               context: context,
                               gigId: widget.eventAndGigsModel?.id.toString() ?? "");
                         },
-                        title: (widget.eventAndGigsModel?.isRequested == null || widget.eventAndGigsModel?.isRequested == "rejected") ?
-                        "request_this_gigs".tr()
-                        :"cancel".tr(),
+                        title: (widget.eventAndGigsModel?.isRequested == "pending" ) ?
+                        "cancel".tr():
+                        "request_this_gigs".tr(),
+
                       )),
             ],
           ),
