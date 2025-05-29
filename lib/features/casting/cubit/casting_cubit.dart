@@ -125,12 +125,9 @@ class CastingCubit extends Cubit<CastingState> {
       }, (r) {
         if (r.status == 200) {
           Navigator.pop(context);
-            if(type == "rejected" || type == null)
-           {
-             Navigator.pushNamed(context, Routes.chatRoute);
-           }
-            successGetBar(r.msg);
-            getDetailsGigs(id: gigId);
+          successGetBar(r.msg);
+          getDetailsGigs(id: gigId);
+
           emit(RequestGigStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
