@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
@@ -206,6 +207,8 @@ class _GigsWidgetState extends State<GigsWidget> {
                              type: widget.eventAndGigsModel?.isRequested.toString() ?? "",
                               context: context,
                               gigId: widget.eventAndGigsModel?.id.toString() ?? "");
+                         if (widget.eventAndGigsModel?.isRequested == "rejected" || widget.eventAndGigsModel?.isRequested == null)
+                            Navigator.pushNamed(context, Routes.chatRoute);
                         },
                         title: (widget.eventAndGigsModel?.isRequested == "pending" ) ?
                         "cancel".tr():
