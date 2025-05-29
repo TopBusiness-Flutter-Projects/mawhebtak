@@ -73,15 +73,14 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                           Text("assistant_title".tr(),
                               style: TextStyle(fontSize: 14.sp)),
                           CustomTextField(
-                            controller: cubit.assistantTitleController,
-                            hintText: "task title",
-                          ),
+                              controller: cubit.assistantTitleController,
+                              hintText: "assistant_title".tr()),
                           Text("assistant_description".tr(),
                               style: TextStyle(fontSize: 14.sp)),
                           CustomTextField(
                             controller: cubit.assistantDescriptionController,
                             isMessage: true,
-                            hintText: "task details",
+                            hintText: "assistant_description".tr(),
                           ),
                           GestureDetector(
                             onTap: () async {
@@ -90,7 +89,7 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                                 initialDate: cubit.selectedReminderDate ??
                                     DateTime.now(),
                                 firstDate: DateTime.now(),
-                                lastDate: DateTime(2100),
+                                lastDate: DateTime(5100),
                               );
 
                               if (pickedDate != null) {

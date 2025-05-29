@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -35,7 +36,7 @@ class MediaPickerHelper {
             children: [
               ListTile(
                 leading: const Icon(Icons.photo),
-                title: const Text("Choose Image"),
+                title: Text("pick_image".tr()),
                 onTap: () {
                   Navigator.pop(context);
                   pickImage(onPicked: onImagePicked);
@@ -43,7 +44,7 @@ class MediaPickerHelper {
               ),
               ListTile(
                 leading: const Icon(Icons.videocam),
-                title: const Text("Choose Video"),
+                title: Text("pick_video".tr()),
                 onTap: () {
                   Navigator.pop(context);
                   pickVideo(onPicked: onVideoPicked);

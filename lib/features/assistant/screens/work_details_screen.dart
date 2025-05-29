@@ -350,13 +350,13 @@ class TimelineAssistantItem extends StatelessWidget {
                                   }
                                 },
                                 itemBuilder: (context) => [
-                                  const PopupMenuItem(
+                                  PopupMenuItem(
                                     value: 'edit',
-                                    child: Text('Edit'),
+                                    child: Text('modify'.tr()),
                                   ),
-                                  const PopupMenuItem(
+                                  PopupMenuItem(
                                     value: 'delete',
-                                    child: Text('Delete'),
+                                    child: Text('delete'.tr()),
                                   ),
                                 ],
                                 icon: const Icon(Icons.more_vert, size: 18),

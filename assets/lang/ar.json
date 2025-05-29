@@ -54,8 +54,8 @@
   "enrolled": "مسجل",
   "revenu": "الإيرادات",
   "enrolled_users": "المستخدمون المسجلون",
-  "message": "الرساله",
-  "add_photo_video": "ضيف صورة او فيديو",
+  "message": "مراسلة",
+  "add_photo_video": "اختر صورة او فيديو",
   "expected_fees": "الرسوم المتوقعة",
   "Fees": "الرسوم",
   "apply": "يتقدم",
@@ -251,5 +251,6 @@
   "delete_event": "هل تريد حذف الحدث",
   "go": "الذهاب",
   "do_you_want_nav_to_details": "هل تريد الذهاب الى تفاصيل الحدث؟",
-  "chat": "الدردشة"
+  "chat": "الدردشة",
+  "assistant_title_required": "من فضلك ادخل عنوان المساعدة"
 }
