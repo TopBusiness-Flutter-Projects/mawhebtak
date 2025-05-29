@@ -204,6 +204,15 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                           ),
                                                           CustomContainerButton(
                                                             title: "message",
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 18.sp,
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        15.w,
+                                                                    vertical:
+                                                                        5.h),
                                                             onTap: () {
                                                               log('Message Button Nav To > Chat Screen');
                                                             },

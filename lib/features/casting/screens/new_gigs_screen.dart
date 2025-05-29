@@ -47,9 +47,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(bottom: 10.h),
-                  child: CustomAppBarWithClearWidget(
-                    title: "new_gig".tr(),
-                  ),
+                  child: CustomAppBarWithClearWidget(title: "new_gig".tr()),
                 ),
                 Expanded(
                   child: SingleChildScrollView(

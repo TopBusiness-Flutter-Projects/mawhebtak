@@ -260,6 +260,7 @@ deleteAccountDialog(BuildContext context, {void Function()? onPressed}) async {
     titleTextStyle: getRegularStyle(fontSize: 16.sp),
     btnOkText: "delete".tr(),
     btnOkOnPress: onPressed,
+    btnOkColor: AppColors.primary,
     btnCancelOnPress: () {},
     btnCancelText: "cancel".tr(),
   ).show();
@@ -282,6 +283,7 @@ mainAppAwsomeDialog(BuildContext context,
     titleTextStyle: getRegularStyle(fontSize: 16.sp),
     btnOkText: btnOkText ?? "delete".tr(),
     btnOkOnPress: onPressed,
+    btnOkColor: AppColors.primary,
     btnCancelOnPress: () {},
     btnCancelText: "cancel".tr(),
   ).show();
