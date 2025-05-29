@@ -112,7 +112,7 @@ class CastingCubit extends Cubit<CastingState> {
     }
   }
 
-  requestGigs({required String gigId, required BuildContext context,required String isCancel}) async {
+  requestGigs({required String gigId, required BuildContext context,required String type}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(RequestGigStateLoading());
     try {
@@ -125,12 +125,11 @@ class CastingCubit extends Cubit<CastingState> {
       }, (r) {
         if (r.status == 200) {
           Navigator.pop(context);
-          if(isCancel == "false") {
+
             Navigator.pushNamed(context, Routes.chatRoute);
             successGetBar(r.msg);
             getDetailsGigs(id: gigId);
-            isCancel == "true";
-          }
+
           emit(RequestGigStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
