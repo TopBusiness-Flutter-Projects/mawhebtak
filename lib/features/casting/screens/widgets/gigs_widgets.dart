@@ -54,7 +54,7 @@ class _GigsWidgetState extends State<GigsWidget> {
       child: GestureDetector(
         onTap: () {
           if (widget.eventAndGigsModel?.isMine == true) {
-            if (widget.isDetails == true)
+            if (widget.isDetails == true) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -62,6 +62,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                       id: widget.eventAndGigsModel?.id.toString() ?? "",
                     ),
                   ));
+            }
           }
         },
         child: Container(
@@ -200,11 +201,15 @@ class _GigsWidgetState extends State<GigsWidget> {
                       child: CustomButton(
                         onTap: () async {
                           await widget.castingCubit?.requestGigs(
+                             isCancel: widget.eventAndGigsModel?.isRequested.toString() ?? "",
                               context: context,
                               gigId: widget.eventAndGigsModel?.id.toString() ??
                                   "");
+                          print("xsssssssssss${widget.eventAndGigsModel?.isRequested}");
                         },
-                        title: "request_this_gigs".tr(),
+                        title: widget.eventAndGigsModel?.isRequested == "true" ?
+                        "cancel".tr():
+                        "request_this_gigs".tr(),
                       )),
             ],
           ),

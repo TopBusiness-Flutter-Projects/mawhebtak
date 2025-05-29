@@ -158,6 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemCount: homeData?.topTalents?.length ?? 0,
                             itemBuilder: (context, index) {
                               return CustomTopTalentsList(
+                                index: index,
                                 topTalentsCubit:
                                     context.read<TopTalentsCubit>(),
                                 topTalentsData: homeData?.topTalents?[index],

@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<TopTalentsCubit>()
-              ..topTalentsData(page: '1'),
+             ,
           ),
           BlocProvider(
             create: (_) =>

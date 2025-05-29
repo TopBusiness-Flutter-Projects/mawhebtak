@@ -132,7 +132,7 @@ class CastingRepo {
     try {
       var response = await api.post(EndPoints.requestGigs,
         body: {
-        "key": "RequestGig",
+        "key": "RequestCancelGig",
         "gig_id": gigId,
       }, );
       return Right(DefaultMainModel.fromJson(response));

@@ -7,10 +7,11 @@ import 'follow_button.dart';
 
 class CustomTopTalentsList extends StatelessWidget {
   const CustomTopTalentsList(
-      {super.key, required this.topTalentsData, this.topTalentsCubit});
+      {super.key, required this.topTalentsData, this.topTalentsCubit, required this.index});
 
   final TopTalent? topTalentsData;
   final TopTalentsCubit? topTalentsCubit;
+final  int index;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,7 +46,8 @@ class CustomTopTalentsList extends StatelessWidget {
                         right: 8.w,
                         child: GestureDetector(
                           onTap: () async {
-                            await topTalentsCubit?.hideTopTalent(
+                             topTalentsCubit?.hideTopTalent(
+                               index: index,
                                 unwantedUserId:
                                     topTalentsData?.id.toString() ?? "0");
                           },
@@ -56,7 +58,7 @@ class CustomTopTalentsList extends StatelessWidget {
                   ),
                 ),
           Positioned(
-            bottom: 40.h,
+            bottom: 20.h,
             child: Padding(
               padding: EdgeInsets.only(left: 10.w, right: 10.w),
               child: Column(
