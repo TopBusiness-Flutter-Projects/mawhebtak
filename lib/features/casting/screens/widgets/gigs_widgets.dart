@@ -195,21 +195,21 @@ class _GigsWidgetState extends State<GigsWidget> {
               ),
               10.verticalSpace,
               if (widget.isWithButton ?? false)
-                if (widget.eventAndGigsModel?.isMine == false)
+                if (widget.eventAndGigsModel?.isMine == false || (widget.eventAndGigsModel?.isRequested == "accept"))
+
                   Padding(
                       padding: EdgeInsets.only(bottom: 10.h),
                       child: CustomButton(
                         onTap: () async {
                           await widget.castingCubit?.requestGigs(
-                             isCancel: widget.eventAndGigsModel?.isRequested.toString() ?? "",
+                             type: widget.eventAndGigsModel?.isRequested.toString() ?? "",
                               context: context,
-                              gigId: widget.eventAndGigsModel?.id.toString() ??
-                                  "");
-                          print("xsssssssssss${widget.eventAndGigsModel?.isRequested}");
+                              gigId: widget.eventAndGigsModel?.id.toString() ?? "");
                         },
-                        title: widget.eventAndGigsModel?.isRequested == "true" ?
+                        title: (widget.eventAndGigsModel?.isRequested == "pending" ) ?
                         "cancel".tr():
                         "request_this_gigs".tr(),
+
                       )),
             ],
           ),

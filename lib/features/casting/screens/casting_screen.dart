@@ -29,9 +29,6 @@ class _CastingScreenState extends State<CastingScreen> {
     super.initState();
     context.read<TopTalentsCubit>().topTalentsData(page: '1', isGetMore: false);
     context.read<RequestGigsCubit>().requestGigsData(page: '1', isGetMore: false);
-    context
-        .read<RequestGigsCubit>()
-        .requestGigsData(page: '1', isGetMore: false);
     tabs = ["talents".tr(), "gigs".tr()];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CastingCubit>().getCategoryFromGigs();
@@ -384,7 +381,8 @@ class _CastingScreenState extends State<CastingScreen> {
                 },
                 child: ListView.builder(
                   controller: scrollGigsController,
-                  itemCount: requestGigsCubit.requestGigs?.data?.length ?? 0,
+                  itemCount: (requestGigsCubit.requestGigs?.data?.length ?? 0) +
+                      (state is RequestGigsStateLoadingMore ? 1 : 0),
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
                   itemBuilder: (context, index) {
@@ -393,10 +391,6 @@ class _CastingScreenState extends State<CastingScreen> {
                     if (index == gigsList?.length &&
                         state is RequestGigsStateLoadingMore) {
                       return const CustomLoadingIndicator();
-                    }else if (gigsList?.length == 0 ) {
-                      Center(
-                        child: Text("no_data".tr(),style: TextStyle(color: AppColors.black),),
-                      );
                     }
                     return GigsWidget(
                       isDetails: true,
