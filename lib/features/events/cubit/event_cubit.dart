@@ -149,4 +149,31 @@ class EventCubit extends Cubit<EventState> {
       emit(DeleteEventErrorState());
     }
   }
+
+  Future actionEventRequest(
+      String eventId, String status, String id, BuildContext context) async {
+    try {
+      AppWidgets.create2ProgressDialog(context);
+      emit(ActionRequestEventLoadingState());
+      final res = await api.actionEventRequest(eventId: id, status: status);
+      res.fold((l) {
+        errorGetBar(l.toString());
+        Navigator.pop(context);
+        emit(ActionRequestEventErrorState());
+      }, (r) {
+        if (r.status == 200) {
+          successGetBar(r.msg ?? 'Success');
+          getEventDetailsById(eventId, context);
+          emit(ActionRequestEventLoadedState());
+        } else {
+          errorGetBar(r.msg ?? 'Error occurred');
+          emit(ActionRequestEventErrorState());
+        }
+        Navigator.pop(context);
+      });
+    } catch (e) {
+      errorGetBar(e.toString());
+      emit(ActionRequestEventErrorState());
+    }
+  }
 }

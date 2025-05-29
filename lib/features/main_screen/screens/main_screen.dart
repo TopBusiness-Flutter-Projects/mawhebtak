@@ -20,7 +20,9 @@ class _MainScreenState extends State<MainScreen> {
     bool exitConfirmed = false;
     await AwesomeDialog(
       context: context,
+      btnOkColor: AppColors.primary,
       animType: AnimType.bottomSlide,
+      btnCancelColor: AppColors.grey,
       customHeader: Padding(
         padding: const EdgeInsets.all(20),
         child: Image.asset(
@@ -56,12 +58,16 @@ class _MainScreenState extends State<MainScreen> {
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.redLight,
+                      // backgroundColor: AppColors.gray,
                       shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: AppColors.primary,
+                          ),
                           borderRadius: BorderRadius.circular(8)),
                     ),
                     child: Text("cancel".tr(),
-                        style: const TextStyle(color: Colors.white)),
+                        style: TextStyle(color: AppColors.black)),
                   ),
                 ),
                 const SizedBox(width: 10),

@@ -393,7 +393,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w),
             child: Container(
-              height: 50.h,
+              height: 30.h,
               decoration: BoxDecoration(
                 color: AppColors.secondPrimary,
                 borderRadius: BorderRadius.horizontal(
