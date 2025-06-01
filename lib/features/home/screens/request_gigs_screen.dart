@@ -33,9 +33,6 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
         context
             .read<RequestGigsCubit>()
             .requestGigsData(page: page ?? '1', isGetMore: true);
-        context
-            .read<RequestGigsCubit>()
-            .requestGigsData(page: page ?? '1', isGetMore: true);
       }
     }
   }

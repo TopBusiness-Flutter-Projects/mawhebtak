@@ -438,7 +438,9 @@ class _WritePostState extends State<WritePost> {
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                           Navigator.of(context)
-                                              .pushNamed(Routes.loginRoute);
+                                              .pushNamedAndRemoveUntil(
+                                                  Routes.loginRoute,
+                                                  (route) => false);
                                         },
                                         child: Text("login".tr()),
                                       ),
