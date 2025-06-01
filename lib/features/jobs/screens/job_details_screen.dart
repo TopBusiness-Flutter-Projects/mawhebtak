@@ -235,26 +235,17 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               fontSize: 14.sp,
               color: AppColors.blackLite,
             ),
-          ),
-          Row(
-            children: [
-              Padding(
-                padding:  EdgeInsets.only(top: 10.h),
-                child: SizedBox(
-                  width: 350.w,
-                  child: Text(
-                    job.userJopDetailsModel?.data?.description ?? "",
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
-                    style: getMediumStyle(
-                      fontSize: 13.sp,
-                      color: AppColors.blackLite.withOpacity(0.7),
-                    ),
-                  ),
-                ),
+          ), Padding(
+            padding:  EdgeInsets.only(top: 10.h),
+            child: Text(
+              job.userJopDetailsModel?.data?.description ?? "",
+              style: getMediumStyle(
+                fontSize: 13.sp,
+                color: AppColors.blackLite.withOpacity(0.7),
               ),
-            ],
+            ),
           ),
+
         ],
       ),
     );
@@ -264,6 +255,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(10.r),
