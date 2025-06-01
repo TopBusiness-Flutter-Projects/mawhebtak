@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_request_gigs.dart';
-
 import '../../../core/widgets/show_loading_indicator.dart';
 
 class RequestGigsScreen extends StatefulWidget {
@@ -25,18 +24,24 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
     super.initState();
   }
 
+
   _scrollListener() {
     if (scrollController.position.maxScrollExtent == scrollController.offset) {
       if (context.read<RequestGigsCubit>().requestGigs?.links?.next != null) {
         Uri uri = Uri.parse(
             context.read<RequestGigsCubit>().requestGigs?.links?.next ?? "");
+            context.read<RequestGigsCubit>().requestGigs?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
+        context
+            .read<RequestGigsCubit>()
+            .requestGigsData(page: page ?? '1', isGetMore: true);
         context
             .read<RequestGigsCubit>()
             .requestGigsData(page: page ?? '1', isGetMore: true);
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,3 +92,4 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
     );
   }
 }
+

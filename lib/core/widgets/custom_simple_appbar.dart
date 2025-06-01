@@ -57,7 +57,7 @@ class CustomSimpleAppbar extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                      padding: EdgeInsets.only(left: 10.w, right: 10.w,top: 10.h,bottom: 5.h),
                       child: Container(
                         decoration: BoxDecoration(
                             color: colorButton ?? AppColors.grayLite,

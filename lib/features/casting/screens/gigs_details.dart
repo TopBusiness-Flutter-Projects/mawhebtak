@@ -33,7 +33,9 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
             10.h.verticalSpace,
             CustomSimpleAppbar(title: "gig_details".tr()),
             10.h.verticalSpace,
-            BlocBuilder<CastingCubit, CastingState>(builder: (context, state) {
+            BlocBuilder<CastingCubit, CastingState>(
+                builder: (context, state) {
+                  var castingCubit = context.read<CastingCubit>();
               return (state is DetailsGigsStateLoading)
                   ? const Center(child: CustomLoadingIndicator())
                   : Column(
@@ -41,12 +43,13 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
                         Container(
                           color: AppColors.white,
                           child: GigsWidget(
-                            isDetails: true,
+                            isFromDetails: true,
+                            index: 1,
+                            castingCubit: castingCubit,
                             eventAndGigsModel: context
                                 .read<CastingCubit>()
                                 .getDetailsGigsModel
                                 ?.data,
-                            isWithButton: false,
                           ),
                         ),
                         SizedBox(
@@ -59,50 +62,58 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
                                 ?.gigsRequests
                                 ?.length !=
                             0)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 20.0.w),
-                                child: Text(
-                                  "gig_requests".tr(),
-                                  style: getMediumStyle(
-                                      fontSize: 20.sp,
-                                      color: AppColors.darkGray),
+                          if (context
+                                  .read<CastingCubit>()
+                                  .getDetailsGigsModel
+                                  ?.data
+                                  ?.isMine ==
+                              true)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 20.0.w),
+                                  child: Text(
+                                    "gig_requests".tr(),
+                                    style: getMediumStyle(
+                                        fontSize: 20.sp,
+                                        color: AppColors.darkGray),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 1.h,
-                              ),
-                              //list of requests
-                              ListView.separated(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: context
-                                        .read<CastingCubit>()
-                                        .getDetailsGigsModel
-                                        ?.data
-                                        ?.gigsRequests
-                                        ?.length ??
-                                    0,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GigsRequest(
-                                    gigsRequestList: context
-                                        .read<CastingCubit>()
-                                        .getDetailsGigsModel
-                                        ?.data
-                                        ?.gigsRequests?[index],
-                                  );
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return SizedBox(
-                                    height: 10.h,
-                                  );
-                                },
-                              )
-                            ],
-                          ),
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                //list of requests
+
+                                ListView.separated(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: context
+                                          .read<CastingCubit>()
+                                          .getDetailsGigsModel
+                                          ?.data
+                                          ?.gigsRequests
+                                          ?.length ??
+                                      0,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return GigsRequest(
+                                      gigsRequestList: context
+                                          .read<CastingCubit>()
+                                          .getDetailsGigsModel
+                                          ?.data
+                                          ?.gigsRequests?[index],
+                                    );
+                                  },
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return SizedBox(
+                                      height: 10.h,
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
                       ],
                     );
             })

@@ -1,12 +1,13 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 
 class JobWidget extends StatefulWidget {
   const JobWidget({
-    super.key,
+    super.key, this.userJop,
   });
-
+  final UserJopData? userJop;
   @override
   State<JobWidget> createState() => _JobWidgetState();
 }
@@ -17,7 +18,7 @@ class _JobWidgetState extends State<JobWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.jobDetailsRoute);
+        Navigator.pushNamed(context, Routes.jobDetailsRoute,arguments: widget.userJop?.id.toString() ?? 0);
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 10.h),
@@ -56,17 +57,22 @@ class _JobWidgetState extends State<JobWidget> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Senior Actor 2 years experiences",
-                                    style: getMediumStyle(fontSize: 14.sp),
+                                  SizedBox(
+                                    width:250.w,
+                                    child: Text(
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      widget.userJop?.title?? "",
+                                      style: getMediumStyle(fontSize: 14.sp),
+                                    ),
                                   ),
                                   10.h.verticalSpace,
-                                  Text(
-                                    "Senuregy",
-                                    style: getMediumStyle(
-                                        fontSize: 13.sp,
-                                        color: AppColors.secondPrimary),
-                                  ),
+                                  // Text(
+                                  //   widget.userJop?.,
+                                  //   style: getMediumStyle(
+                                  //       fontSize: 13.sp,
+                                  //       color: AppColors.secondPrimary),
+                                  // ),
                                 ],
                               ),
                             ],
@@ -91,13 +97,16 @@ class _JobWidgetState extends State<JobWidget> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Egypt, Cairo",
-                            style: getMediumStyle(
-                                fontSize: 13.sp, color: AppColors.grayDate),
+                          Expanded(
+                            child: Text(
+                              maxLines: 1,
+                              widget.userJop?.location??"",
+                              style: getMediumStyle(
+                                  fontSize: 13.sp, color: AppColors.grayDate),
+                            ),
                           ),
                           Text(
-                            "16 june 2022",
+                            widget.userJop?.deadline ?? "",
                             style: getMediumStyle(
                                 fontSize: 13.sp, color: AppColors.grayDate),
                           ),

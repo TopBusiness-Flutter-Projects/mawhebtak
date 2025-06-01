@@ -388,8 +388,11 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.jobDetailsRoute:
+        String userJopId = settings.arguments as String;
         return PageTransition(
-          child: const JobDetailsScreen(),
+          child:  JobDetailsScreen(
+            userJopId: userJopId.toString(),
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

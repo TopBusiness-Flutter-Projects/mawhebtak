@@ -78,7 +78,6 @@ class ProfileScreen extends StatelessWidget {
                           itemCount: 5,
                           itemBuilder: (BuildContext context, int index) {
                             return GigsWidget(
-                              isDetails: false,
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
@@ -87,7 +86,7 @@ class ProfileScreen extends StatelessWidget {
                         )
                       ] else if (cubit.selectedIndex == 3) ...[
                         GigsWidget(
-                          isDetails: false,
+
                         )
                       ]
                     ],
