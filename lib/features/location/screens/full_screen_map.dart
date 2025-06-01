@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
+import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 
 import '../../../core/widgets/show_loading_indicator.dart';
 import '../../calender/cubit/calender_cubit.dart';
@@ -42,6 +43,13 @@ class _FullScreenMapState extends State<FullScreenMap> {
           context.read<CalenderCubit>().locationAddressController.text =
               cubit.address2;
         }
+        else if(widget.type == "add_gig"){
+          context.read<CastingCubit>().locationAddressController.text =
+              cubit.address2;
+        }
+        else if (widget.type == "job"){
+          context.read<JobsCubit>().locationController.text = cubit.address2;
+        }
 
         return Future.value(false);
       },
@@ -59,6 +67,9 @@ class _FullScreenMapState extends State<FullScreenMap> {
                 else if(widget.type == "add_gig"){
                   context.read<CastingCubit>().locationAddressController.text =
                       cubit.address2;
+                }
+                else if (widget.type == "job"){
+                  context.read<JobsCubit>().locationController.text = cubit.address2;
                 }
               }),
         ),
