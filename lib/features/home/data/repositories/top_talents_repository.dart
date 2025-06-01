@@ -39,4 +39,18 @@ class TopTalentsRepository {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, DefaultMainModel>> followAndUnFollow(
+      {required String followedId}) async {
+    try {
+      var response = await dio.post(
+        EndPoints.followAndUnFollow,
+        body: {
+          "followed_id": followedId,
+        },
+      );
+      return Right(DefaultMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

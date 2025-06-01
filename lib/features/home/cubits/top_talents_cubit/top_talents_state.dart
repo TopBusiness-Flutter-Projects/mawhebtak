@@ -42,3 +42,20 @@ final class HideTopTalentStateLoading extends TopTalentsState {
   @override
   List<Object?> get props => [];
 }
+class FollowAndUnFollowStateError extends TopTalentsState {
+  final String errorMessage;
+  FollowAndUnFollowStateError(this.errorMessage);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError(); }
+class FollowAndUnFollowStateLoaded extends TopTalentsState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
+class FollowAndUnFollowStateLoading extends TopTalentsState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
