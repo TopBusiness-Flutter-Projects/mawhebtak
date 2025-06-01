@@ -11,7 +11,11 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
   TopTalentsModel? topTalents;
   bool isLoadingMore = false;
 
-  topTalentsData({bool isGetMore = false, required String page}) async {
+  topTalentsData({
+    bool isGetMore = false,
+    required String page,
+    String? orderBy,
+  }) async {
     if (isGetMore) {
       isLoadingMore = true;
       emit(TopTalentsStateLoadingMore());
@@ -19,7 +23,11 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       emit(TopTalentsStateLoading());
     }
     try {
-      final res = await api!.topTalentsData(page: page);
+      final res = await api!.topTalentsData(
+        page: page,
+      
+      orderBy:orderBy
+      );
 
       res.fold((l) {
         emit(TopTalentsStateError(l.toString()));

@@ -12,7 +12,6 @@ class AnnouncementsScreen extends StatefulWidget {
 }
 
 class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
-  @override
   late final ScrollController scrollController = ScrollController();
   @override
   void initState() {
@@ -35,6 +34,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<AnnouncementsCubit, AnnouncementsState>(
@@ -48,6 +48,7 @@ class _AnnouncementsScreenState extends State<AnnouncementsScreen> {
             CustomSimpleAppbar(
               title: 'announcement'.tr(),
               isActionButton: true,
+              filterType: 'announcement',
             ),
             switch (state) {
               AnnouncementsStateLoading() => const Expanded(

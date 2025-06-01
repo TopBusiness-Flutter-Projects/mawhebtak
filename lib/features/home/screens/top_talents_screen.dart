@@ -16,6 +16,7 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
 
   @override
   void initState() {
+    context.read<TopTalentsCubit>().topTalentsData(page: '1', isGetMore: false);
     scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -44,6 +45,7 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
               CustomSimpleAppbar(
                 title: 'top_talents'.tr(),
                 isActionButton: true,
+                filterType: 'top_talents',
               ),
               if (state is TopTalentsStateLoading)
                 const Expanded(
@@ -61,24 +63,23 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
                   state is TopTalentsStateLoadingMore)
                 Expanded(
                   child: GridView.builder(
-                    controller: scrollController,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio:1,
-                      mainAxisSpacing: 1,
-                      crossAxisSpacing: 1,
-                    ),
-                    itemBuilder: (context, index) => CustomTopTalentsList(
-                      //topTalentsCubit:context.read<TopTalentsCubit>(),
-                      index: index,
-                      topTalentsData: topTalentData?.data?[index],
-                    ),
-                    itemCount: topTalentData?.data?.length ?? 0
-                  ),
+                      controller: scrollController,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 1,
+                        mainAxisSpacing: 1,
+                        crossAxisSpacing: 1,
+                      ),
+                      itemBuilder: (context, index) => CustomTopTalentsList(
+                            //topTalentsCubit:context.read<TopTalentsCubit>(),
+                            index: index,
+                            topTalentsData: topTalentData?.data?[index],
+                          ),
+                      itemCount: topTalentData?.data?.length ?? 0),
                 ),
               if (state is TopTalentsStateLoadingMore)
-               const  CustomLoadingIndicator(),
+                const CustomLoadingIndicator(),
             ],
           );
         },

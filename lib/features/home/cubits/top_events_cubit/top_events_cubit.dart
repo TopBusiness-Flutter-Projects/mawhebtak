@@ -12,7 +12,11 @@ class TopEventsCubit extends Cubit<TopEventsState> {
   );
   TopEventsModel? topEvents;
   bool isLoadingMore = false;
-  topEventsData({bool isGetMore = false, required String page}) async {
+  topEventsData({
+    bool isGetMore = false,
+    required String page,
+    String? orderBy,
+  }) async {
     if (isGetMore) {
       isLoadingMore = true;
       emit(SeeAllEventStateLoadingMore());
@@ -20,7 +24,8 @@ class TopEventsCubit extends Cubit<TopEventsState> {
       emit(SeeAllEventStateLoading());
     }
     try {
-      final res = await topEventsRepository!.topEventsData(page: page);
+      final res = await topEventsRepository!
+          .topEventsData(page: page, orderBy: orderBy);
 
       res.fold((l) {
         emit(TopEventsStateError(l.toString()));

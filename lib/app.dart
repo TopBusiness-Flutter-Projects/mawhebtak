@@ -35,6 +35,7 @@ import 'features/change_langauge/cubit/change_language_cubit.dart';
 import 'features/events/cubit/event_cubit.dart';
 import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
+import 'features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import 'features/location/cubit/location_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/referral_code/cubit/about_us_cubit.dart';
@@ -130,8 +131,7 @@ class _MyAppState extends State<MyApp> {
             create: (_) => injector.serviceLocator<RequestGigsCubit>(),
           ),
           BlocProvider(
-            create: (_) => injector.serviceLocator<TopTalentsCubit>()
-             ,
+            create: (_) => injector.serviceLocator<TopTalentsCubit>(),
           ),
           BlocProvider(
             create: (_) =>
@@ -141,6 +141,8 @@ class _MyAppState extends State<MyApp> {
             create: (_) => injector.serviceLocator<LocationCubit>()
               ..checkAndRequestLocationPermission(context),
           ),
+          BlocProvider(
+              create: (_) => injector.serviceLocator<TopEventsCubit>()),
         ],
         child: GetMaterialApp(
           supportedLocales: context.supportedLocales,

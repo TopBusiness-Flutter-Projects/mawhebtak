@@ -27,7 +27,9 @@ class _CastingScreenState extends State<CastingScreen> {
   void initState() {
     super.initState();
     context.read<TopTalentsCubit>().topTalentsData(page: '1', isGetMore: false);
-    context.read<RequestGigsCubit>().requestGigsData(page: '1', isGetMore: false);
+    context
+        .read<RequestGigsCubit>()
+        .requestGigsData(page: '1', isGetMore: false);
     tabs = ["talents".tr(), "gigs".tr()];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CastingCubit>().getCategoryFromGigs();
@@ -73,6 +75,7 @@ class _CastingScreenState extends State<CastingScreen> {
             CustomSimpleAppbar(
               title: 'casting'.tr(),
               isActionButton: true,
+              filterType: 'casting',
             ),
           Padding(
             padding: EdgeInsets.only(top: 40.h),
@@ -245,7 +248,6 @@ class _CastingScreenState extends State<CastingScreen> {
     );
   }
 
-
   // Gigs Content UI
   Widget _buildGigsContent(BuildContext context,
       {required CastingCubit castingCubit}) {
@@ -262,32 +264,45 @@ class _CastingScreenState extends State<CastingScreen> {
         ),
         BlocBuilder<RequestGigsCubit, RequestGigsState>(
           builder: (context, state) {
-            if (state is RequestGigsStateLoading ) {
+            if (state is RequestGigsStateLoading) {
               return const Center(child: CustomLoadingIndicator());
             }
 
             return Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
-                  context.read<RequestGigsCubit>().requestGigsData(
-                      page: '1', isGetMore: false);
+                  context
+                      .read<RequestGigsCubit>()
+                      .requestGigsData(page: '1', isGetMore: false);
                 },
                 child: ListView.builder(
                   controller: scrollGigsController,
-                  itemCount: context.read<RequestGigsCubit>().requestGigs?.data?.length ?? 0,
+                  itemCount: context
+                          .read<RequestGigsCubit>()
+                          .requestGigs
+                          ?.data
+                          ?.length ??
+                      0,
                   physics: const AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true,
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
                   itemBuilder: (context, index) {
-
-                    if (index == context.read<RequestGigsCubit>().requestGigs?.data?.length &&
+                    if (index ==
+                            context
+                                .read<RequestGigsCubit>()
+                                .requestGigs
+                                ?.data
+                                ?.length &&
                         state is RequestGigsStateLoadingMore) {
                       return const CustomLoadingIndicator();
                     }
                     return GigsWidget(
                       isDetails: true,
                       castingCubit: castingCubit,
-                      eventAndGigsModel: context.read<RequestGigsCubit>().requestGigs?.data?[index],
+                      eventAndGigsModel: context
+                          .read<RequestGigsCubit>()
+                          .requestGigs
+                          ?.data?[index],
                       isWithButton: true,
                     );
                   },
@@ -396,6 +411,7 @@ class _CastingScreenState extends State<CastingScreen> {
       ),
     );
   }
+
   // Floating Action Button
   Widget _buildAddButton(BuildContext context) {
     return GestureDetector(
@@ -411,6 +427,7 @@ class _CastingScreenState extends State<CastingScreen> {
       ),
     );
   }
+
   Widget _buildTopTalentsHorizontalList(BuildContext context) {
     final castingCubit = context.read<CastingCubit>();
     final categoryTopTalent = castingCubit.categoryModel?.data ?? [];
@@ -515,6 +532,4 @@ class _CastingScreenState extends State<CastingScreen> {
       },
     );
   }
-
-
 }

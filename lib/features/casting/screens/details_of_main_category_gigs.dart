@@ -36,6 +36,7 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
           CustomSimpleAppbar(
             title: 'request_gigs'.tr(),
             isActionButton: true,
+            filterType: 'casting',
           ),
           Flexible(
             child: Padding(
@@ -76,7 +77,7 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
                                               horizontal: 12.w),
                                           itemBuilder: (context, index) =>
                                               GigsWidget(
-                                                isDetails: false,
+                                            isDetails: false,
                                             castingCubit: cubit,
                                             eventAndGigsModel: cubit
                                                 .getGigsFromSubCategoryModel

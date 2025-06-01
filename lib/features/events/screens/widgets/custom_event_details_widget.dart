@@ -44,6 +44,7 @@ class CustomEventDetailsWidget extends StatelessWidget {
               titleColor: AppColors.white,
               colorButton: AppColors.black.withOpacity(0.2),
               title: 'events_details'.tr(),
+              filterType: 'event',
               color: AppColors.transparent,
               arrowColor: AppColors.white,
             ),

@@ -94,10 +94,9 @@ class Routes {
   static const String topTalentsRoute = '/topTalentsRoute';
   static const String requestGigsRoute = '/requestGigsRoute';
   static const String chatRoute = '/chatRoute';
-  static const String detailsOfMainCategoryFromGigsRoute = '/detailsOfMainCategoryFromGigs';
+  static const String detailsOfMainCategoryFromGigsRoute =
+      '/detailsOfMainCategoryFromGigs';
 
-  
-  
   static const String detailsOfMainCategoryFromTopTalentsRoute =
       '/detailsOfMainCategoryFromTopTalents';
 }
@@ -216,9 +215,7 @@ class AppRoutes {
         );
       case Routes.topEventsRoute:
         return PageTransition(
-          child: BlocProvider(
-              create: (context) => TopEventsCubit()..topEventsData(page: '1'),
-              child: const TopEventsScreen()),
+          child: const TopEventsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
@@ -404,7 +401,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.chatRoute:
+      case Routes.chatRoute:
         return PageTransition(
           child: const ChatScreen(),
           type: PageTransitionType.fade,

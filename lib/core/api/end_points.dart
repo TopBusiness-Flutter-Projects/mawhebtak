@@ -11,7 +11,6 @@ class EndPoints {
   static const String homeUrl = '${baseUrl}home';
   static const String addPostUrl = '${baseUrl}store-data';
   static const String addReactionUrl = '${baseUrl}add-reaction';
-  static const String feedsUrl = '${baseUrl}get-data';
   static const String unWantedUserUrl = '${baseUrl}un-wanted-user';
   static const String registerUrl = '${baseUrl}register';
   static const String validateDataUrl = '${baseUrl}validate-data';

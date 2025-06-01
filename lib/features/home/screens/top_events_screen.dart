@@ -16,6 +16,7 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
   @override
   void initState() {
     scrollController.addListener(_scrollListener);
+    context.read<TopEventsCubit>().topEventsData(page: '1', isGetMore: false);
     super.initState();
   }
 
@@ -45,6 +46,7 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
               CustomSimpleAppbar(
                 title: 'events'.tr(),
                 isActionButton: true,
+                filterType: 'event',
               ),
               switch (state) {
                 TopEventsStateError() => Expanded(

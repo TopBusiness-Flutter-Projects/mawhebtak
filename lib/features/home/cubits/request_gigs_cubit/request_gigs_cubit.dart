@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 import 'package:mawhebtak/features/home/data/repositories/request_gigs_repository.dart';
@@ -11,7 +10,12 @@ class RequestGigsCubit extends Cubit<RequestGigsState> {
   RequestGigsRepository? api = RequestGigsRepository(serviceLocator());
   RequestGigsModel? requestGigs;
   bool isLoadingMore = false;
-  requestGigsData({bool isGetMore = false, required String page}) async {
+  requestGigsData({
+    bool isGetMore = false,
+    required String page,
+    
+     String? orderBy,
+  }) async {
     if (isGetMore) {
       isLoadingMore = true;
       emit(RequestGigsStateLoadingMore());
@@ -19,7 +23,7 @@ class RequestGigsCubit extends Cubit<RequestGigsState> {
       emit(RequestGigsStateLoading());
     }
     try {
-      final res = await api!.requestGigsData(page: page);
+      final res = await api!.requestGigsData(page: page, orderBy: orderBy);
 
       res.fold((l) {
         emit(RequestGigsStateError(l.toString()));
@@ -44,5 +48,4 @@ class RequestGigsCubit extends Cubit<RequestGigsState> {
       isLoadingMore = false;
     }
   }
-
 }

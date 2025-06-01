@@ -10,13 +10,16 @@ class TopTalentsRepository {
   final BaseApiConsumer dio;
   TopTalentsRepository(this.dio);
 
-  Future<Either<Failure, TopTalentsModel>> topTalentsData(
-      {required String page}) async {
+  Future<Either<Failure, TopTalentsModel>> topTalentsData({
+    required String page,
+    String? orderBy,
+  }) async {
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "User",
         "where[0]": "status,1",
         "paginate": "true",
+        "orderBy": orderBy,
         "page": page
       });
       return Right(TopTalentsModel.fromJson(response));

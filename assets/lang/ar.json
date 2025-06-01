@@ -252,5 +252,7 @@
   "go": "الذهاب",
   "do_you_want_nav_to_details": "هل تريد الذهاب الى تفاصيل الحدث؟",
   "chat": "الدردشة",
-  "assistant_title_required": "من فضلك ادخل عنوان المساعدة"
+  "assistant_title_required": "من فضلك ادخل عنوان المساعدة",
+  "asc": "تصاعدي",
+  "desc": "تنازلي"
 }

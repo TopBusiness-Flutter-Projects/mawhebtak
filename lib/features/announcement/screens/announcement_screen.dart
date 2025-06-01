@@ -21,7 +21,9 @@ class AnnouncementScreen extends StatelessWidget {
                 height: 20.h,
               ),
               CustomSimpleAppbar(
-                  title: "announcments".tr(), isSearchWidget: true),
+                  filterType: 'announcments',
+                  title: "announcments".tr(),
+                  isSearchWidget: true),
               SizedBox(height: 4.h),
               SizedBox(
                 height: 145.w, // Match image width

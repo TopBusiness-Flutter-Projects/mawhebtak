@@ -16,7 +16,7 @@ class FeedsRepository {
   FeedsRepository(this.dio);
   Future<Either<Failure, PostsModel>> feedsData({required String page}) async {
     try {
-      var response = await dio.get(EndPoints.feedsUrl, queryParameters: {
+      var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Post",
         "where[0]": "status,1",
         "paginate": "true",

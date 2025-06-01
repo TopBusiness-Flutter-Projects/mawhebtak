@@ -9,13 +9,15 @@ class RequestGigsRepository {
   final BaseApiConsumer dio;
   RequestGigsRepository(this.dio);
 
-  Future<Either<Failure, RequestGigsModel>> requestGigsData(
-      {required String page}) async {
+  Future<Either<Failure, RequestGigsModel>> requestGigsData({
+    required String page,
+    String? orderBy,
+  }) async {
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Gig",
         "paginate": "true",
-        "orderBy":"desc",
+        "orderBy": orderBy,
         "page": page
       });
 

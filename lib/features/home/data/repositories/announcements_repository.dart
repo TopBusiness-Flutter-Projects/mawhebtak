@@ -10,15 +10,19 @@ class AnnouncementsRepository {
   final BaseApiConsumer dio;
   AnnouncementsRepository(this.dio);
 
-  String date = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
-  Future<Either<Failure, AnnouncementsModel>> announcementsData(
-      {required String page}) async {
+  Future<Either<Failure, AnnouncementsModel>> announcementsData({
+    required String page,
+    String? orderBy,
+  }) async {
+    String date = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Announce",
         "where[0]": "expire_in,>=,$date",
         "paginate": "true",
-        "page": page
+        "orderBy": orderBy,
+        "page": page,
       });
       return Right(AnnouncementsModel.fromJson(response));
     } on ServerException {

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/core/utils/filter.dart';
 
 import '../../config/routes/app_routes.dart';
 import '../exports.dart';
@@ -15,6 +16,7 @@ class CustomSimpleAppbar extends StatelessWidget {
       this.colorButton,
       this.arrowColor,
       this.color,
+      this.filterType,
       this.isWithShadow = false,
       this.titleColor});
   final String title;
@@ -26,6 +28,7 @@ class CustomSimpleAppbar extends StatelessWidget {
   final Color? arrowColor;
   final String? actionIcon;
   final bool? isWithShadow;
+  final String? filterType;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -94,9 +97,15 @@ class CustomSimpleAppbar extends StatelessWidget {
                     ),
                   ),
                   if (isActionButton ?? false)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SvgPicture.asset(actionIcon ?? AppIcons.eventIcon),
+                    InkWell(
+                      onTap: () {
+                        showSortOptions(context, filterType ?? '');
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child:
+                            SvgPicture.asset(actionIcon ?? AppIcons.eventIcon),
+                      ),
                     ),
                 ],
               ),

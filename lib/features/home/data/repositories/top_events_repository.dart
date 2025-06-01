@@ -8,14 +8,17 @@ import '../../../../core/api/base_api_consumer.dart';
 class TopEventsRepository {
   final BaseApiConsumer dio;
   TopEventsRepository(this.dio);
-  Future<Either<Failure, TopEventsModel>> topEventsData(
-      {required String page}) async {
+  Future<Either<Failure, TopEventsModel>> topEventsData({
+    required String page,
+    String? orderBy,
+  }) async {
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Event",
         "where[0]": "status,1",
         "where[1]": "is_end,0",
         "paginate": "true",
+        "orderBy": orderBy,
         "page": page
       });
       return Right(TopEventsModel.fromJson(response));

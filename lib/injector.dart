@@ -47,6 +47,8 @@ import 'features/about_us/cubit/about_us_cubit.dart';
 import 'features/about_us/data/repos/about_us_repo.dart';
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/change_langauge/data/repos/change_language_repo.dart';
+import 'features/home/cubits/top_events_cubit/top_events_cubit.dart';
+import 'features/home/data/repositories/top_events_repository.dart';
 import 'features/location/cubit/location_cubit.dart';
 import 'features/main_screen/data/repo/main_repo_impl.dart';
 import 'features/profile/cubit/profile_cubit.dart';
@@ -161,6 +163,9 @@ Future<void> setupCubit() async {
   serviceLocator.registerFactory(
     () => TopTalentsCubit(),
   );
+  serviceLocator.registerFactory(
+    () => TopEventsCubit(),
+  );
   serviceLocator.registerFactory(() => FeedsCubit());
   serviceLocator.registerFactory(() => LocationCubit());
   serviceLocator.registerFactory(() => RequestGigsCubit());
@@ -197,6 +202,8 @@ Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => FeedsRepository(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => RequestGigsRepository(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => TopEventsRepository(serviceLocator()));
 }
 
 Future<void> setupSharedPreferences() async {
