@@ -24,12 +24,10 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
     super.initState();
   }
 
-
   _scrollListener() {
     if (scrollController.position.maxScrollExtent == scrollController.offset) {
       if (context.read<RequestGigsCubit>().requestGigs?.links?.next != null) {
         Uri uri = Uri.parse(
-            context.read<RequestGigsCubit>().requestGigs?.links?.next ?? "");
             context.read<RequestGigsCubit>().requestGigs?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
         context
@@ -41,7 +39,6 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -92,4 +89,3 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
     );
   }
 }
-
