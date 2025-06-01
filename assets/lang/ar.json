@@ -259,5 +259,7 @@
   "price_end_at": "نهاية السعر",
   "enter_title": "ادخل العنوان",
   "select_date": "اختر الوقت",
-  "enter_description" : "ادخل الوصف"
+  "enter_description" : "ادخل الوصف",
+  "please_enter_valid_price": "من فضلك ادخل سعر صحيح",
+  "enter_end_price_must_greater_than_start_price": "يجب ان يكون السعر النهائي اكبر من السعر الابتدائي"
 }
