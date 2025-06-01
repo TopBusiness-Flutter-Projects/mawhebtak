@@ -256,5 +256,8 @@
   "asc": "تصاعدي",
   "desc": "تنازلي",
   "price_start_at": "بداية السعر",
-  "price_end_at": "نهاية السعر"
+  "price_end_at": "نهاية السعر",
+  "enter_title": "ادخل العنوان",
+  "select_date": "اختر الوقت",
+  "enter_description" : "ادخل الوصف"
 }

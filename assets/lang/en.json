@@ -254,5 +254,8 @@
   "asc": "Ascending",
   "desc": "Descending",
   "price_start_at": "price start at",
-  "price_end_at": "price end at"
+  "price_end_at": "price end at",
+  "enter_title": "Enter title",
+  "select_date": "Select Date",
+  "enter_description" : "Enter Description"
 }
