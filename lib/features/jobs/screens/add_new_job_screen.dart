@@ -279,12 +279,32 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                             ),
                           ),
                           CustomButton(
-                              onTap: () {
-                                if (formKey.currentState!.validate()) {
-                                  jopCubit.addJopUser(context: context);
+                            onTap: () {
+                              final jopCubit = context.read<JobsCubit>();
+                              final start = double.tryParse(jopCubit.priceStartAt.text);
+                              final end = double.tryParse(jopCubit.priceEndAt.text);
+
+                              if (formKey.currentState!.validate()) {
+                                if (start == null || end == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('please_enter_valid_price'.tr())),
+                                  );
+                                  return;
                                 }
-                              },
-                              title: "create_jop".tr()),
+
+                                if (start >= end) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('enter_end_price_must_greater_than_start_price'.tr())),
+                                  );
+                                  return;
+                                }
+
+                                jopCubit.addJopUser(context: context);
+                              }
+                            },
+                            title: "create_jop".tr(),
+                          ),
+
                         ],
                       ),
                     ),
