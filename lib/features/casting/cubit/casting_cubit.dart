@@ -229,21 +229,5 @@ class CastingCubit extends Cubit<CastingState> {
     Navigator.pop(context);
   }
 
-  followAndUnFollow({required String followedId}) async {
-    emit(FollowAndUnFollowStateLoading());
-    try {
-      final res = await castingRepo.followAndUnFollow(
-         followedId: followedId);
 
-      res.fold((l) {
-        emit(FollowAndUnFollowStateError(l.toString()));
-      }, (r) {
-
-        successGetBar(r.msg ?? "");
-        emit(FollowAndUnFollowStateLoaded());
-      });
-    } catch (e) {
-      emit(FollowAndUnFollowStateError(e.toString()));
-    }
-  }
 }

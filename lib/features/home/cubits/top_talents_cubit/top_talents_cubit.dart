@@ -52,7 +52,23 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       isLoadingMore = false;
     }
   }
+  followAndUnFollow({required String followedId}) async {
+    emit(FollowAndUnFollowStateLoading());
+    try {
+      final res = await api!.followAndUnFollow(
+          followedId: followedId);
 
+      res.fold((l) {
+        emit(FollowAndUnFollowStateError(l.toString()));
+      }, (r) {
+
+        successGetBar(r.msg ?? "");
+        emit(FollowAndUnFollowStateLoaded());
+      });
+    } catch (e) {
+      emit(FollowAndUnFollowStateError(e.toString()));
+    }
+  }
   Future<void> hideTopTalent(
       {required String unwantedUserId, required int index}) async {
     emit(HideTopTalentStateLoading());
