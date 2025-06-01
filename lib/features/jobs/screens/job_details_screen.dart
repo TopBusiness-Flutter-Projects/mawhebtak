@@ -235,8 +235,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               fontSize: 14.sp,
               color: AppColors.blackLite,
             ),
-          ), Padding(
-            padding:  EdgeInsets.only(top: 10.h),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10.h),
             child: Text(
               job.userJopDetailsModel?.data?.description ?? "",
               style: getMediumStyle(
@@ -245,7 +246,6 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               ),
             ),
           ),
-
         ],
       ),
     );
