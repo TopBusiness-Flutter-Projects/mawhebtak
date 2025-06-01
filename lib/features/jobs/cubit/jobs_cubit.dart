@@ -5,21 +5,25 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/utils/widget_from_application.dart';
+import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
+import 'package:mawhebtak/features/jobs/data/model/user_jop_details_model.dart';
+import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 import 'package:mawhebtak/features/jobs/data/repos/jobs.repo.dart';
+import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'jobs_state.dart';
 
 class JobsCubit extends Cubit<JobsState> {
-  JobsCubit(this.exRepo) : super(JobsInitial());
-  JobsRepo exRepo ;
+  JobsCubit(this.jobsRepo) : super(JobsInitial());
+  JobsRepo jobsRepo ;
   DateTime? selectedDate;
+  TextEditingController jopUserTitleController = TextEditingController();
   final List<File> uploadedImages = [];
-  /// إزالة صورة من القائمة
   void removeImage(File file) {
     uploadedImages.remove(file);
     emit(FileRemovedSuccessfully());
   }
 
-  /// اختيار صورة واحدة من المعرض أو الكاميرا
   Future<void> pickImage(BuildContext context, bool isGallery) async {
     try {
       final picker = ImagePicker();
@@ -43,7 +47,6 @@ class JobsCubit extends Cubit<JobsState> {
     }
   }
 
-  /// اختيار عدة صور من المعرض
   Future<void> pickImages(BuildContext context) async {
     try {
       final picker = ImagePicker();
@@ -69,7 +72,6 @@ class JobsCubit extends Cubit<JobsState> {
     }
   }
 
-  /// مسح جميع الصور المختارة
   void clearUploadedImages() {
     uploadedImages.clear();
     emit(AllFilesCleared());
@@ -80,7 +82,7 @@ class JobsCubit extends Cubit<JobsState> {
   TextEditingController fromController = TextEditingController();
   TextEditingController toController = TextEditingController();
 
-  Future<void> selectDateTime(BuildContext context) async {
+  Future<void> selectDateTime( BuildContext context) async {
     DateTime? date = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -112,6 +114,110 @@ class JobsCubit extends Cubit<JobsState> {
         emit(DateTimeSelected(formattedDateTime));
       }
     }
+  }
+  UserJopModel? userJopModel;
+  bool isLoadingMore = false;
+  getUserJopData({bool isGetMore = false,required String page}) async {
+    if (isGetMore) {
+      isLoadingMore = true;
+      emit(GetUserJopStateLoadingMore());
+    } else {
+      emit(GetUserJopStateLoading());
+    }
+    try {
+      final res = await jobsRepo.getUserJopData(page: page);
+
+      res.fold((l) {
+        emit(GetUserJopStateError(l.toString()));
+      }, (r) {
+        if (isGetMore) {
+          userJopModel = UserJopModel(
+            links: r.links,
+            status: r.status,
+            msg: r.msg,
+            data: [...userJopModel!.data!, ...r.data!],
+          );
+          emit(GetUserJopStateLoaded());
+        } else {
+          userJopModel = r;
+          emit(GetUserJopStateLoaded());
+        }
+        emit(GetUserJopStateLoaded());
+      });
+    } catch (e) {
+      emit(GetUserJopStateError(e.toString()));
+    }
+    finally {
+      isLoadingMore = false;
+    }
+  }
+  UserJopDetailsModel? userJopDetailsModel;
+  getUserJopDetailsData({required String userJopId}) async {
+    emit(GetUserJopDetailsStateLoaded());
+
+    try {
+      final res = await jobsRepo.getUserJopDetailsData(userJopId:userJopId);
+
+      res.fold((l) {
+        emit(GetUserJopDetailsStateError(l.toString()));
+      }, (r) {
+        userJopDetailsModel = r;
+        emit(GetUserJopStateLoaded());
+      });
+    } catch (e) {
+      emit(GetUserJopDetailsStateError(e.toString()));
+    }
+
+  }
+
+
+  addJopUser({required BuildContext context}) async {
+    AppWidgets.create2ProgressDialog(context);
+    emit(AddUserJopStateLoading());
+
+    try {
+      final res = await jobsRepo.addJopUser(
+        title: jopUserTitleController.text,
+        deadLine: "2026-04-12",
+        priceEndAt: "5000",
+        priceStartAt: "2000",
+        description: descriptionController.text,
+        lat: context
+            .read<LocationCubit>()
+            .selectedLocation
+            ?.latitude
+            .toString() ??
+            "0.0",
+        long: context
+            .read<LocationCubit>()
+            .selectedLocation
+            ?.longitude
+            .toString() ??
+            "0.0",
+        mediaFiles: [
+          ...context.read<CalenderCubit>().myImagesF ?? [],
+          ...context.read<CalenderCubit>().validVideos
+        ],
+        location: locationController.text,
+      );
+      res.fold((l) {
+        errorGetBar(l.toString());
+        emit(AddUserJopStateError(l.toString()));
+      }, (r) {
+        successGetBar(r.msg.toString());
+        descriptionController.clear();
+        context.read<CalenderCubit>().myImagesF = [];
+        context.read<CalenderCubit>().myImages = [];
+        context.read<CalenderCubit>().validVideos = [];
+        Navigator.pop(context);
+        emit(AddUserJopStateLoaded());
+      });
+    } catch (e) {
+      successGetBar(e.toString());
+
+      emit(AddUserJopStateError(e.toString()));
+    }
+    Navigator.pop(context);
   }
 
 }

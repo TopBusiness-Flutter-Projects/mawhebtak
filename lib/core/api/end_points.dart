@@ -40,4 +40,5 @@ class EndPoints {
 
   static const String actionEventRequestUrl = '${baseUrl}action-event-request/';
   static const String requestGigs = '${baseUrl}request-cancel-gigs';
+  static const String followAndUnFollow = '${baseUrl}follow-unfollow-user';
 }

@@ -285,10 +285,9 @@ class _CastingScreenState extends State<CastingScreen> {
                       return const CustomLoadingIndicator();
                     }
                     return GigsWidget(
-                      isDetails: true,
+                      index: index,
                       castingCubit: castingCubit,
                       eventAndGigsModel: context.read<RequestGigsCubit>().requestGigs?.data?[index],
-                      isWithButton: true,
                     );
                   },
                 ),
