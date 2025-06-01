@@ -33,10 +33,12 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
             child: ListView(
               children: [
                 CustomSimpleAppbar(
+
                   title: 'job_details'.tr(),
-                  isActionButton: true,
+                  isActionButton: false,
                 ),
-                BlocBuilder<JobsCubit, JobsState>(builder: (context, state) {
+                BlocBuilder<JobsCubit, JobsState>
+                  (builder: (context, state) {
                   var jobDetailsCubit = context.read<JobsCubit>();
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
