@@ -161,7 +161,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => FullScreenMap(
-                                              type: 'add_gig',
+                                              type: 'job',
                                             )));
                               },
                               child: Text(
@@ -192,10 +192,11 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                               jopCubit.selectDateTime(context);
                             },
                             hintTextSize: 14.sp,
-                            hintText: "",
+                            hintText: "select_date".tr(),
                           ),
                           _label("description".tr()),
                           CustomTextField(
+                            hintText: "enter_description".tr(),
                             validator: (p0) {
                               if (p0!.isEmpty) {
                                 return 'enter_description'.tr();
