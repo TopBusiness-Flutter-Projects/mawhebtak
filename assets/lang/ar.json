@@ -261,5 +261,6 @@
   "select_date": "اختر الوقت",
   "enter_description" : "ادخل الوصف",
   "please_enter_valid_price": "من فضلك ادخل سعر صحيح",
+  "enter_date": "ادخل التاريخ",
   "enter_end_price_must_greater_than_start_price": "يجب ان يكون السعر النهائي اكبر من السعر الابتدائي"
 }

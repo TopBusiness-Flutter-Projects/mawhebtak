@@ -104,6 +104,9 @@ class CustomTopTalentsList extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                       child: CustomContainerButton(
+                        onTap: () {
+                          topTalentsCubit?.followAndUnFollow(followedId: topTalentsData?.id.toString() ?? "");
+                        },
                         height: 35.h,
                         title: "follow".tr(),
                         color: AppColors.white,
