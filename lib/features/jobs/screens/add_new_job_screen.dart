@@ -26,8 +26,10 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
   void initState() {
     if (context.read<CalenderCubit>().countriesMainModel == null) {
       context.read<CalenderCubit>().getAllCountries();
-    }    super.initState();
+    }
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,222 +45,268 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                 var calenderCubit = context.read<CalenderCubit>();
                 return BlocBuilder<JobsCubit, JobsState>(
                     builder: (context, state) {
-                  var cubit = context.read<JobsCubit>();
+                  var jopCubit = context.read<JobsCubit>();
+                  final formKey = GlobalKey<FormState>();
                   return Padding(
                     padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _label("needed_talent".tr()),
-                        CustomTextField(
-                          controller: cubit.jopUserTitleController,
-                          hintText: "John doe",
-                        ),
-                        Text(
-                          'price_range'.tr(),
-                          style: getMediumStyle(
-                              fontSize: 14.sp, color: AppColors.blackLite),
-                        ),
-                        CustomTextField(
-                          keyboardType: TextInputType.number,
-                          validator: (p0) {
-                            if (p0!.isEmpty) {
-                              return 'price_start_at'.tr();
-                            }
-                            return null;
-                          },
-                          controller: cubit.priceStartAt,
-                          hintText: 'price_start_at'.tr(),
-                          hintTextSize: 18.sp,
-                          enabled: true,
-                          suffixIcon: InkWell(
-                            onTap: () {
-                              showCurrencyPicker(
-                                  calenderCubit.countriesMainModel?.data ?? []);
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _label("needed_talent".tr()),
+                          CustomTextField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'enter_title'.tr();
+                              }
+                              return null;
                             },
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  calenderCubit.selectedCurrency?.currency ??
-                                      'L.E',
-                                  style: getRegularStyle(
-                                      color: Colors.blue, fontSize: 14.sp),
-                                ),
-                                const Icon(Icons.keyboard_arrow_down_sharp,
-                                    color: Colors.blue),
-                              ],
-                            ),
+                            controller: jopCubit.jopUserTitleController,
+                            hintText: "John doe",
                           ),
-                        ),
-                        CustomTextField(
-                          keyboardType: TextInputType.number,
-                          validator: (p0) {
-                            if (p0!.isEmpty) {
-                              return 'price_end_at'.tr();
-                            }
-                            return null;
-                          },
-                          controller: cubit.priceEndAt,
-                          hintText: 'price_end_at'.tr(),
-                          hintTextSize: 18.sp,
-                          enabled: true,
-                          suffixIcon: InkWell(
-                            onTap: () {
-                              showCurrencyPicker(
-                                  calenderCubit.countriesMainModel?.data ?? []);
+                          Text(
+                            'price_range'.tr(),
+                            style: getMediumStyle(
+                                fontSize: 14.sp, color: AppColors.blackLite),
+                          ),
+                          CustomTextField(
+                            keyboardType: TextInputType.number,
+                            validator: (p0) {
+                              if (p0!.isEmpty) {
+                                return 'price_start_at'.tr();
+                              }
+                              return null;
                             },
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  calenderCubit.selectedCurrency?.currency ??
-                                      'L.E',
-                                  style: getRegularStyle(
-                                      color: Colors.blue, fontSize: 14.sp),
-                                ),
-                                const Icon(Icons.keyboard_arrow_down_sharp,
-                                    color: Colors.blue),
-                              ],
-                            ),
-                          ),
-                        ),
-                        _label("select_location".tr()),
-                        BlocBuilder<LocationCubit, LocationState>(
-                          builder: (context, state) {
-                            return CustomTextField(
-                              hintTextSize: 18.sp,
-                              controller: cubit.locationController,
-                              validator: (p0) {
-                                if (p0!.isEmpty) {
-                                  return 'select_location'.tr();
-                                }
-                                return null;
+                            controller: jopCubit.priceStartAt,
+                            hintText: 'price_start_at'.tr(),
+                            hintTextSize: 18.sp,
+                            enabled: true,
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                showCurrencyPicker(
+                                    calenderCubit.countriesMainModel?.data ??
+                                        []);
                               },
-                              hintText: "select_location".tr(),
-                            );
-                          },
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FullScreenMap(
-                                            type: 'add_gig',
-                                          )));
-                            },
-                            child: Text(
-                              "open_map".tr(),
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.primary,
-                                decoration: TextDecoration.underline,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    calenderCubit.selectedCurrency?.currency ??
+                                        'L.E',
+                                    style: getRegularStyle(
+                                        color: Colors.blue, fontSize: 14.sp),
+                                  ),
+                                  const Icon(Icons.keyboard_arrow_down_sharp,
+                                      color: Colors.blue),
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                        _label("to".tr()),
-                        CustomTextField(
-                          controller: cubit.eventDateController,
-                          suffixIcon: Padding(
-                            padding: EdgeInsets.all(10.0.r),
-                            child: SvgPicture.asset(AppIcons.dateIcon),
-                          ),
-                          onTap: () {
-                            cubit.selectDateTime(context);
-                          },
-                          hintTextSize: 14.sp,
-                          hintText: "",
-                        ),
-                        _label("description".tr()),
-                        CustomTextField(
-                          controller: cubit.descriptionController,
-                          isMessage: true,
-                        ),
-                        Text(
-                          "image_or_video".tr(),
-                          style: getRegularStyle(fontSize: 14.sp),
-                        ),
-                        10.verticalSpace,
-                        InkWell(
-                            onTap: () {
-                              calenderCubit.showSelectionBottomSheet(context);
+                          CustomTextField(
+                            keyboardType: TextInputType.number,
+                            validator: (p0) {
+                              if (p0!.isEmpty) {
+                                return 'price_end_at'.tr();
+                              }
+                              return null;
                             },
-                            child: Image.asset(
-                              ImageAssets.imageOrVideo,
-                              height: 88.h,
-                            )),
-                        SizedBox(height: 20.h),
-                        SizedBox(
-                          height: (calenderCubit.myImages?.length == 0 ||
-                                  calenderCubit.myImages == null)
-                              ? 0
-                              : 80.h,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: (calenderCubit.myImages?.length ?? 0),
-                            separatorBuilder: (_, __) =>
-                                const SizedBox(width: 10),
-                            itemBuilder: (context, index) {
-                              return Stack(
+                            controller: jopCubit.priceEndAt,
+                            hintText: 'price_end_at'.tr(),
+                            hintTextSize: 18.sp,
+                            enabled: true,
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                showCurrencyPicker(
+                                    calenderCubit.countriesMainModel?.data ??
+                                        []);
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ImageFileView(
-                                                      image: calenderCubit
-                                                          .myImages![index]
-                                                          .path)));
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.file(
-                                        File(calenderCubit
-                                            .myImages![index].path),
-                                        width: 80.w,
-                                        height: 80.w,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+                                  Text(
+                                    calenderCubit.selectedCurrency?.currency ??
+                                        'L.E',
+                                    style: getRegularStyle(
+                                        color: Colors.blue, fontSize: 14.sp),
                                   ),
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        calenderCubit.deleteImage(File(
-                                            calenderCubit
-                                                .myImages![index].path));
-                                      },
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          color: Colors.black45,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: const Icon(Icons.close,
-                                            color: Colors.white, size: 18),
-                                      ),
-                                    ),
-                                  ),
+                                  const Icon(Icons.keyboard_arrow_down_sharp,
+                                      color: Colors.blue),
                                 ],
+                              ),
+                            ),
+                          ),
+                          _label("select_location".tr()),
+                          BlocBuilder<LocationCubit, LocationState>(
+                            builder: (context, state) {
+                              return CustomTextField(
+                                hintTextSize: 18.sp,
+                                controller: jopCubit.locationController,
+                                validator: (p0) {
+                                  if (p0!.isEmpty) {
+                                    return 'select_location'.tr();
+                                  }
+                                  return null;
+                                },
+                                hintText: "select_location".tr(),
                               );
                             },
                           ),
-                        ),
-                        CustomButton(
-                            onTap: () {
-                              cubit.addJopUser(context: context);
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FullScreenMap(
+                                              type: 'add_gig',
+                                            )));
+                              },
+                              child: Text(
+                                "open_map".tr(),
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.primary,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ),
+                          _label("to".tr()),
+                          CustomTextField(
+                            validator: (p0) {
+                              if (p0!.isEmpty) {
+                                return 'select_date'.tr();
+                              }
+                              return null;
                             },
-                            title: "create_jop".tr()),
-                      ],
+                            controller: jopCubit.eventDateController,
+                            suffixIcon: Padding(
+                              padding: EdgeInsets.all(10.0.r),
+                              child: SvgPicture.asset(AppIcons.dateIcon),
+                            ),
+                            onTap: () {
+                              jopCubit.selectDateTime(context);
+                            },
+                            hintTextSize: 14.sp,
+                            hintText: "",
+                          ),
+                          _label("description".tr()),
+                          CustomTextField(
+                            validator: (p0) {
+                              if (p0!.isEmpty) {
+                                return 'enter_description'.tr();
+                              }
+                              return null;
+                            },
+                            controller: jopCubit.descriptionController,
+                            isMessage: true,
+                          ),
+                          Text(
+                            "image_or_video".tr(),
+                            style: getRegularStyle(fontSize: 14.sp),
+                          ),
+                          10.verticalSpace,
+                          InkWell(
+                              onTap: () {
+                                calenderCubit.showSelectionBottomSheet(context);
+                              },
+                              child: Image.asset(
+                                ImageAssets.imageOrVideo,
+                                height: 88.h,
+                              )),
+                          SizedBox(height: 20.h),
+                          SizedBox(
+                            height: (calenderCubit.myImages?.length == 0 ||
+                                    calenderCubit.myImages == null)
+                                ? 0
+                                : 80.h,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: (calenderCubit.myImages?.length ?? 0),
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(width: 10),
+                              itemBuilder: (context, index) {
+                                return Stack(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ImageFileView(
+                                                        image: calenderCubit
+                                                            .myImages![index]
+                                                            .path)));
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.file(
+                                          File(calenderCubit
+                                              .myImages![index].path),
+                                          width: 80.w,
+                                          height: 80.w,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          calenderCubit.deleteImage(File(
+                                              calenderCubit
+                                                  .myImages![index].path));
+                                        },
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            color: Colors.black45,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(Icons.close,
+                                              color: Colors.white, size: 18),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                          CustomButton(
+                            onTap: () {
+                              final jopCubit = context.read<JobsCubit>();
+                              final start = double.tryParse(jopCubit.priceStartAt.text);
+                              final end = double.tryParse(jopCubit.priceEndAt.text);
+
+                              if (formKey.currentState!.validate()) {
+                                if (start == null || end == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('please_enter_valid_price'.tr())),
+                                  );
+                                  return;
+                                }
+
+                                if (start >= end) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('enter_end_price_must_greater_than_start_price'.tr())),
+                                  );
+                                  return;
+                                }
+
+                                jopCubit.addJopUser(context: context);
+                              }
+                            },
+                            title: "create_jop".tr(),
+                          ),
+
+                        ],
+                      ),
                     ),
                   );
                 });
@@ -269,6 +317,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
       ),
     );
   }
+
   void showCurrencyPicker(List<GetCountriesMainModelData> currencyList) {
     showModalBottomSheet(
       context: context,
@@ -281,7 +330,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
               title: Text(currency.currency ?? '', style: getRegularStyle()),
               onTap: () {
                 setState(() =>
-                context.read<CalenderCubit>().selectedCurrency = currency);
+                    context.read<CalenderCubit>().selectedCurrency = currency);
 
                 Navigator.pop(context);
               },
@@ -291,7 +340,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
       ),
     );
   }
-
 }
 
 Widget _label(String text) {
