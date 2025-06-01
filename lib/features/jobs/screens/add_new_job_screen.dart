@@ -23,6 +23,12 @@ class AddNewJobScreen extends StatefulWidget {
 
 class _AddNewJobScreenState extends State<AddNewJobScreen> {
   @override
+  void initState() {
+    if (context.read<CalenderCubit>().countriesMainModel == null) {
+      context.read<CalenderCubit>().getAllCountries();
+    }    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
