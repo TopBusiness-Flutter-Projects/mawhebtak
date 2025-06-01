@@ -64,13 +64,11 @@ class CastingState {}
 
   DetailsGigsStateError(this.errorMessage);
  }
- class RequestGigStateError extends CastingState {
+ class RequestGigStateError extends CastingState {final String errorMessage;RequestGigStateError(this.errorMessage); }
+ class RequestGigStateLoaded extends CastingState {}
+ class RequestGigStateLoading extends CastingState {}
+ class FollowAndUnFollowStateError extends CastingState {
  final String errorMessage;
- RequestGigStateError(this.errorMessage);
- }
- class RequestGigStateLoaded extends CastingState {
-
- }
- class RequestGigStateLoading extends CastingState {
-
- }
+ FollowAndUnFollowStateError(this.errorMessage); }
+ class FollowAndUnFollowStateLoaded extends CastingState {}
+ class FollowAndUnFollowStateLoading extends CastingState {}

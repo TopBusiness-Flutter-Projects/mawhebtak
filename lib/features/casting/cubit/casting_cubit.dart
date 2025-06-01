@@ -1,9 +1,11 @@
+import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/casting/data/model/get_datails_gigs_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
+import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import '../../calender/data/model/countries_model.dart';
 import '../data/repos/casting.repo.dart';
@@ -61,6 +63,7 @@ class CastingCubit extends Cubit<CastingState> {
         emit(DetailsGigsStateError(l.toString()));
       }, (r) {
         getDetailsGigsModel = r;
+
         emit(DetailsGigsStateLoaded(r));
       });
     } catch (e) {
@@ -87,10 +90,10 @@ class CastingCubit extends Cubit<CastingState> {
 
   DefaultMainModel? defaultMainModel;
 
-  actionGig({required String status,
+  actionGig({
+    required String status,
     required String gigId,
     required String requestId,
-
   }) async {
     emit(ActionGigStateLoading());
     try {
@@ -111,12 +114,16 @@ class CastingCubit extends Cubit<CastingState> {
     }
   }
 
-  requestGigs({required String gigId, required BuildContext context,required String type}) async {
+  requestGigs(
+      {required String gigId,
+      required BuildContext context,
+      required String type,
+      required int index}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(RequestGigStateLoading());
     try {
       final res = await castingRepo.requestGig(
-        gigId: gigId,
+        gigId: gigId
       );
       res.fold((l) {
         errorGetBar(l.toString());
@@ -125,8 +132,36 @@ class CastingCubit extends Cubit<CastingState> {
         if (r.status == 200) {
           Navigator.pop(context);
           successGetBar(r.msg);
-          getDetailsGigs(id: gigId);
+          if (context.read<RequestGigsCubit>().requestGigs?.data?[index].isRequested == "pending" || getDetailsGigsModel?.data?.isRequested == "pending") {
+            context
+                .read<RequestGigsCubit>()
+                .requestGigs
+                ?.data?[index]
+                .isRequested = "null";
+            getDetailsGigsModel?.data?.isRequested == "null";
 
+            emit(RequestGigStateLoaded());
+          } else if (context.read<RequestGigsCubit>().requestGigs?.data?[index].isRequested == "null" || context.read<RequestGigsCubit>().requestGigs?.data?[index].isRequested == "rejected" || getDetailsGigsModel?.data?.isRequested == "null" || getDetailsGigsModel?.data?.isRequested == "rejected") {
+            Navigator.pushNamed(
+                context, Routes.chatRoute);
+            context
+                .read<RequestGigsCubit>()
+                .requestGigs
+                ?.data?[index]
+                .isRequested = "pending";
+            getDetailsGigsModel?.data?.isRequested == "pending";
+
+            emit(RequestGigStateLoaded());
+          } else {
+            context
+                .read<RequestGigsCubit>()
+                .requestGigs
+                ?.data?[index]
+                .isRequested = "accepted";
+            getDetailsGigsModel?.data?.isRequested == "accepted";
+            emit(RequestGigStateLoaded());
+          }
+          getDetailsGigs(id: gigId);
           emit(RequestGigStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
@@ -192,5 +227,23 @@ class CastingCubit extends Cubit<CastingState> {
       emit(AddNewGigStateError(e.toString()));
     }
     Navigator.pop(context);
+  }
+
+  followAndUnFollow({required String followedId}) async {
+    emit(FollowAndUnFollowStateLoading());
+    try {
+      final res = await castingRepo.followAndUnFollow(
+         followedId: followedId);
+
+      res.fold((l) {
+        emit(FollowAndUnFollowStateError(l.toString()));
+      }, (r) {
+
+        successGetBar(r.msg ?? "");
+        emit(FollowAndUnFollowStateLoaded());
+      });
+    } catch (e) {
+      emit(FollowAndUnFollowStateError(e.toString()));
+    }
   }
 }

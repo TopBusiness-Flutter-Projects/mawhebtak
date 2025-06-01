@@ -140,4 +140,18 @@ class CastingRepo {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, DefaultMainModel>> followAndUnFollow(
+      {required String followedId}) async {
+    try {
+      var response = await api.post(
+        EndPoints.followAndUnFollow,
+        body: {
+          "followed_id": followedId,
+        },
+      );
+      return Right(DefaultMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

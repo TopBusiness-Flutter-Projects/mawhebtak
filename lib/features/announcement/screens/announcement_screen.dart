@@ -2,6 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
+import '../../casting/cubit/casting_cubit.dart';
+import '../../casting/screens/widgets/gigs_widgets.dart';
+import '../../home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import '../../home/screens/widgets/custom_announcement_widget.dart';
 import '../../home/screens/widgets/custom_request_gigs.dart';
 import '../cubit/announcement_cubit.dart';
@@ -31,9 +34,10 @@ class AnnouncementScreen extends StatelessWidget {
                   itemCount: 5,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
-                    return CustomRequestGigsList(
-                      isLeftPadding: index == 0 ? true : false,
-                      isRightPadding: false,
+                  return  GigsWidget(
+                      index: index,
+                      castingCubit: context.read<CastingCubit>(),
+                      eventAndGigsModel: context.read<RequestGigsCubit>().requestGigs?.data?[index],
                     );
                   },
                 ),
