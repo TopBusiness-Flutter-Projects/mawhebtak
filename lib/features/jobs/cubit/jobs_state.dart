@@ -48,3 +48,10 @@ class GetUserJopDetailsStateLoading extends JobsState {}
 class AddUserJopStateLoading extends JobsState {}
 
 class AddUserJopStateLoaded extends JobsState {}
+class ToggleFavoriteStateLoaded extends JobsState {}
+class ToggleFavoriteStateError extends JobsState {
+  final String errorMessage;
+
+  ToggleFavoriteStateError(this.errorMessage);
+}
+class ToggleFavoriteStateLoading extends JobsState {}

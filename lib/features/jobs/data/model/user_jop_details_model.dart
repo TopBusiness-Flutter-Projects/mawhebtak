@@ -33,6 +33,7 @@ class UserJopDetailsData {
   String? priceEndAt;
   Poster? poster;
   bool? isMine;
+  bool? isFav;
 
   UserJopDetailsData({
     this.id,
@@ -44,6 +45,7 @@ class UserJopDetailsData {
     this.priceEndAt,
     this.poster,
     this.isMine,
+    this.isFav,
   });
 
   factory UserJopDetailsData.fromJson(Map<String, dynamic> json) => UserJopDetailsData(
@@ -56,6 +58,7 @@ class UserJopDetailsData {
     priceEndAt: json["price_end_at"],
     poster: json["poster"] == null ? null : Poster.fromJson(json["poster"]),
     isMine: json["is_mine"],
+    isFav: json["is_fav"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -68,6 +71,7 @@ class UserJopDetailsData {
     "price_end_at": priceEndAt,
     "poster": poster?.toJson(),
     "is_mine": isMine,
+    "is_fav": isFav,
   };
 }
 

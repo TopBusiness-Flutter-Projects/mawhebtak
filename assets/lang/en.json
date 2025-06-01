@@ -252,5 +252,7 @@
   "assistant_title_required": "the assistant title required",
   "do_you_want_nav_to_details": "Do you want to navigate to the event details?",
   "asc": "Ascending",
-  "desc": "Descending"
+  "desc": "Descending",
+  "price_start_at": "price start at",
+  "price_end_at": "price end at"
 }

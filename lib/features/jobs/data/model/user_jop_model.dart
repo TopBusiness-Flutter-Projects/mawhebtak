@@ -40,6 +40,7 @@ class UserJopData {
   String? location;
   String? deadline;
   bool? isMine;
+  bool? isFav;
 
   UserJopData({
     this.id,
@@ -48,6 +49,7 @@ class UserJopData {
     this.location,
     this.deadline,
     this.isMine,
+    this.isFav,
   });
 
   factory UserJopData.fromJson(Map<String, dynamic> json) => UserJopData(
@@ -57,6 +59,7 @@ class UserJopData {
     location: json["location"],
     deadline: json["deadline"],
     isMine: json["is_mine"],
+    isFav: json["is_fav"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -66,6 +69,7 @@ class UserJopData {
     "location": location,
     "deadline": deadline,
     "is_mine": isMine,
+    "is_fav": isFav,
   };
 }
 

@@ -1,24 +1,31 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 
 class JobWidget extends StatefulWidget {
   const JobWidget({
-    super.key, this.userJop,
+    super.key, this.userJop, required this.jobsCubit, required this.index,
   });
   final UserJopData? userJop;
+  final JobsCubit jobsCubit;
+  final int index;
   @override
   State<JobWidget> createState() => _JobWidgetState();
 }
 
 class _JobWidgetState extends State<JobWidget> {
-  bool isFav = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.jobDetailsRoute,arguments: widget.userJop?.id.toString() ?? 0);
+        Navigator.pushNamed(context, Routes.jobDetailsRoute,
+            arguments: {
+              'userJopId':widget.userJop?.id.toString() ?? 0,
+              'index':widget.index,
+            });
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 10.h),
@@ -79,18 +86,16 @@ class _JobWidgetState extends State<JobWidget> {
                           ),
                           InkWell(
                               onTap: () {
-                                setState(() {
-                                  isFav =
-                                  !isFav; // 👈 This toggles the value correctly
-                                  print(isFav);
-                                });
+                                widget.jobsCubit.toggleFavorite(
+                                    index: widget.index,
+                                    userJopId: widget.userJop?.id.toString() ?? "");
                               },
                               child: Icon(
-                                isFav == true
+                                widget.userJop?.isFav == true
                                     ? Icons.favorite
                                     : Icons.favorite_border,
                                 size: 20.sp,
-                                color: isFav ? AppColors.primary : AppColors.darkGray.withOpacity(0.5),
+                                color: widget.userJop?.isFav == true ? AppColors.primary : AppColors.darkGray.withOpacity(0.5),
                               )),
                         ],
                       ),
