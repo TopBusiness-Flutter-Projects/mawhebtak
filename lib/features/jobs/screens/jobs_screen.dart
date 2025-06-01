@@ -59,10 +59,13 @@ class _JobsScreenState extends State<JobsScreen> {
                   color: AppColors.grayLite,
                 ),
                 (state is GetUserJopStateLoading)
-                    ? const Expanded(
+
+                    ? const  Expanded(
                         child: Center(
                         child: CustomLoadingIndicator(),
                       ))
+                    :(jopUserData?.length == 0)?
+                     const Expanded(child: Center(child: Text("no_data")))
                     : Expanded(
                         child: RefreshIndicator(
                           onRefresh: () async{
@@ -76,6 +79,8 @@ class _JobsScreenState extends State<JobsScreen> {
                                 Padding(
                                   padding: EdgeInsets.only(bottom: 10.h),
                                   child: JobWidget(
+                                    index: index,
+                                    jobsCubit: context.read<JobsCubit>(),
                                     userJop: context.read<JobsCubit>().userJopModel?.data?[index],
                                   ),
                                 ),

@@ -254,5 +254,7 @@
   "chat": "الدردشة",
   "assistant_title_required": "من فضلك ادخل عنوان المساعدة",
   "asc": "تصاعدي",
-  "desc": "تنازلي"
+  "desc": "تنازلي",
+  "price_start_at": "بداية السعر",
+  "price_end_at": "نهاية السعر"
 }

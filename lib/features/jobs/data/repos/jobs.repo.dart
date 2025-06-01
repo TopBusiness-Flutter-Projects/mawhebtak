@@ -46,6 +46,26 @@ class JobsRepo {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, DefaultMainModel>> toggleFavorite({required String userJopId}) async {
+    try {
+      var response = await api.post(
+        EndPoints.toggleFavorite,
+       body: {
+          "favouriteable_type":"UserJob",
+          "favouriteable_id":userJopId
+        },
+      );
+      return Right(
+
+          DefaultMainModel.fromJson(response),
+
+      );
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
   Future<Either<Failure, DefaultMainModel>> addJopUser({
     required List<File> mediaFiles,
     required String title,
@@ -55,7 +75,7 @@ class JobsRepo {
     required String long,
     required String priceEndAt,
     required String priceStartAt,
-    required String deadLine,
+    required DateTime deadLine,
   }) async {
     try {
       LoginModel? user;

@@ -1,9 +1,5 @@
 
 
-import 'dart:io';
-
-import 'package:easy_localization/easy_localization.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
@@ -18,69 +14,11 @@ class JobsCubit extends Cubit<JobsState> {
   JobsRepo jobsRepo ;
   DateTime? selectedDate;
   TextEditingController jopUserTitleController = TextEditingController();
-  final List<File> uploadedImages = [];
-  void removeImage(File file) {
-    uploadedImages.remove(file);
-    emit(FileRemovedSuccessfully());
-  }
-
-  Future<void> pickImage(BuildContext context, bool isGallery) async {
-    try {
-      final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(
-        source: isGallery ? ImageSource.gallery : ImageSource.camera,
-      );
-
-      if (pickedFile != null) {
-        File file = File(pickedFile.path);
-        if (!uploadedImages.contains(file)) {
-          uploadedImages.add(file);
-          emit(FilePickedSuccessfully());
-        } else {
-          emit(FileAlreadyExists()); // الصورة مكررة
-        }
-      } else {
-        emit(FileNotPicked());
-      }
-    } catch (e) {
-      emit(FileNotPicked()); // التعامل مع أي خطأ أثناء اختيار الصورة
-    }
-  }
-
-  Future<void> pickImages(BuildContext context) async {
-    try {
-      final picker = ImagePicker();
-      final pickedFiles = await picker.pickMultiImage(
-        maxHeight: 500,
-        maxWidth: 500,
-        imageQuality: 100,
-      );
-
-      if (pickedFiles.isNotEmpty) {
-        for (final file in pickedFiles) {
-          File imageFile = File(file.path);
-          if (!uploadedImages.contains(imageFile)) {
-            uploadedImages.add(imageFile);
-          }
-        }
-        emit(FilePickedSuccessfully());
-      } else {
-        emit(FileNotPicked());
-      }
-    } catch (e) {
-      emit(FileNotPicked()); // التعامل مع أي خطأ أثناء اختيار الصور
-    }
-  }
-
-  void clearUploadedImages() {
-    uploadedImages.clear();
-    emit(AllFilesCleared());
-  }
+  TextEditingController priceStartAt = TextEditingController();
+  TextEditingController priceEndAt = TextEditingController();
   TextEditingController eventDateController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController fromController = TextEditingController();
-  TextEditingController toController = TextEditingController();
 
   Future<void> selectDateTime( BuildContext context) async {
     DateTime? date = await showDatePicker(
@@ -161,6 +99,7 @@ class JobsCubit extends Cubit<JobsState> {
       res.fold((l) {
         emit(GetUserJopDetailsStateError(l.toString()));
       }, (r) {
+
         userJopDetailsModel = r;
         emit(GetUserJopStateLoaded());
       });
@@ -170,7 +109,30 @@ class JobsCubit extends Cubit<JobsState> {
 
   }
 
+  toggleFavorite({required String userJopId,required int index}) async {
+    emit(ToggleFavoriteStateLoading());
+    try {
+      final res = await jobsRepo.toggleFavorite(userJopId:userJopId);
 
+      res.fold((l) {
+        emit(ToggleFavoriteStateError(l.toString()));
+      }, (r) {
+        successGetBar(r.msg.toString());
+        if(userJopModel?.data?[index].isFav == true || userJopDetailsModel?.data?.isFav == true) {
+          userJopModel?.data?[index].isFav = false;
+          userJopDetailsModel?.data?.isFav = false;
+        }
+        else{
+          userJopModel?.data?[index].isFav = true;
+          userJopDetailsModel?.data?.isFav = true;
+        }
+        emit(ToggleFavoriteStateLoaded());
+      });
+    } catch (e) {
+      emit(ToggleFavoriteStateError(e.toString()));
+    }
+
+  }
   addJopUser({required BuildContext context}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(AddUserJopStateLoading());
@@ -178,9 +140,9 @@ class JobsCubit extends Cubit<JobsState> {
     try {
       final res = await jobsRepo.addJopUser(
         title: jopUserTitleController.text,
-        deadLine: "2026-04-12",
-        priceEndAt: "5000",
-        priceStartAt: "2000",
+        deadLine: selectedDate ?? DateTime.now(),
+        priceEndAt:priceStartAt.text,
+        priceStartAt: priceEndAt.text,
         description: descriptionController.text,
         lat: context
             .read<LocationCubit>()
@@ -206,10 +168,15 @@ class JobsCubit extends Cubit<JobsState> {
       }, (r) {
         successGetBar(r.msg.toString());
         descriptionController.clear();
+        jopUserTitleController.clear();
+        selectedDate = null;
+        priceStartAt.clear();
+        priceEndAt.clear();
         context.read<CalenderCubit>().myImagesF = [];
         context.read<CalenderCubit>().myImages = [];
         context.read<CalenderCubit>().validVideos = [];
         Navigator.pop(context);
+        getUserJopData(page: '1');
         emit(AddUserJopStateLoaded());
       });
     } catch (e) {
