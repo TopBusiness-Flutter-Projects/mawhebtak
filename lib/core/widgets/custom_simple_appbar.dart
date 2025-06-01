@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/utils/filter.dart';
 

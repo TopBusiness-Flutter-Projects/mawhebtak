@@ -5,6 +5,8 @@ import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/utils/hex_color.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import '../../../../core/exports.dart';
+import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/check_login.dart';
 import '../../cubit/calender_state.dart';
 import '../../data/repos/model/calender_model.dart';
 
@@ -210,8 +212,13 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               bottom: 80.h,
               right: 20.w,
               child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.newEventRoute);
+                onTap: () async {
+                  final user = await Preferences.instance.getUserModel();
+                  if (user.data?.token == null) {
+                    checkLogin(context);
+                  } else {
+                    Navigator.pushNamed(context, Routes.newEventRoute);
+                  }
                 },
                 child: Container(
                   width: 60.w,

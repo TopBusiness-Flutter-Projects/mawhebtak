@@ -4,6 +4,8 @@ import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
 
 import '../../../../core/exports.dart';
+import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/check_login.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../cubit/event_cubit.dart';
 import '../../data/model/event_details_model.dart';
@@ -150,16 +152,21 @@ class EventDetailsBody extends StatelessWidget {
               child: CustomButton(
                 title: 'delete'.tr(),
                 color: AppColors.red,
-                onTap: () {
-                  mainAppAwsomeDialog(
-                    context,
-                    onPressed: () {
-                      context
-                          .read<EventCubit>()
-                          .deleteEvent(item?.id.toString() ?? '', context);
-                    },
-                    title: 'delete_event'.tr(),
-                  );
+                onTap: () async {
+                  final user = await Preferences.instance.getUserModel();
+                  if (user.data?.token == null) {
+                    checkLogin(context);
+                  } else {
+                    mainAppAwsomeDialog(
+                      context,
+                      onPressed: () {
+                        context
+                            .read<EventCubit>()
+                            .deleteEvent(item?.id.toString() ?? '', context);
+                      },
+                      title: 'delete_event'.tr(),
+                    );
+                  }
                 },
               )),
         10.h.verticalSpace

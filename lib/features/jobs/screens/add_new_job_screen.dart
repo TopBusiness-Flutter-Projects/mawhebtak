@@ -281,20 +281,27 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                           CustomButton(
                             onTap: () {
                               final jopCubit = context.read<JobsCubit>();
-                              final start = double.tryParse(jopCubit.priceStartAt.text);
-                              final end = double.tryParse(jopCubit.priceEndAt.text);
+                              final start =
+                                  double.tryParse(jopCubit.priceStartAt.text);
+                              final end =
+                                  double.tryParse(jopCubit.priceEndAt.text);
 
                               if (formKey.currentState!.validate()) {
                                 if (start == null || end == null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('please_enter_valid_price'.tr())),
+                                    SnackBar(
+                                        content: Text(
+                                            'please_enter_valid_price'.tr())),
                                   );
                                   return;
                                 }
 
                                 if (start >= end) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('enter_end_price_must_greater_than_start_price'.tr())),
+                                    SnackBar(
+                                        content: Text(
+                                            'enter_end_price_must_greater_than_start_price'
+                                                .tr())),
                                   );
                                   return;
                                 }
@@ -304,7 +311,6 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                             },
                             title: "create_jop".tr(),
                           ),
-
                         ],
                       ),
                     ),

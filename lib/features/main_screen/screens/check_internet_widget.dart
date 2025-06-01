@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import '../../../core/exports.dart';
 
-
-
 class CheckInternetWidget extends StatefulWidget {
   const CheckInternetWidget({super.key, this.whenResumed, required this.child});
   final void Function()? whenResumed;
@@ -24,8 +22,10 @@ class _CheckInternetWidgetState extends State<CheckInternetWidget> {
   void initState() {
     initConnectivity();
 
-    _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus as void Function(List<ConnectivityResult> event)?) as StreamSubscription<ConnectivityResult>;
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(
+            _updateConnectionStatus as void Function(
+                List<ConnectivityResult> event)?)
+        as StreamSubscription<ConnectivityResult>;
 
     super.initState();
   }
@@ -96,7 +96,7 @@ class _CheckInternetWidgetState extends State<CheckInternetWidget> {
               10.h.verticalSpace,
               InkWell(
                 onTap: () {
-                //  context.read<HomeCubit>().getHomeData();
+                  //  context.read<HomeCubit>().getHomeData();
                 },
                 child: Icon(
                   // Icons.error,

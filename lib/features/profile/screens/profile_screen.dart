@@ -8,6 +8,8 @@ import 'package:mawhebtak/features/profile/screens/widgets/profile_taps.dart';
 
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
 import '../../casting/screens/widgets/gigs_widgets.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -77,17 +79,14 @@ class ProfileScreen extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: 5,
                           itemBuilder: (BuildContext context, int index) {
-                            return GigsWidget(
-                            );
+                            return GigsWidget();
                           },
                           separatorBuilder: (BuildContext context, int index) {
                             return SizedBox(height: 5.h);
                           },
                         )
                       ] else if (cubit.selectedIndex == 3) ...[
-                        GigsWidget(
-
-                        )
+                        GigsWidget()
                       ]
                     ],
                   ),
@@ -97,9 +96,15 @@ class ProfileScreen extends StatelessWidget {
                         bottom: 20.h,
                         right: 16.w,
                         child: InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.newGigsRoute);
+                            onTap: () async {
+                              final user =
+                                  await Preferences.instance.getUserModel();
+                              if (user.data?.token == null) {
+                                checkLogin(context);
+                              } else {
+                                Navigator.pushNamed(
+                                    context, Routes.newGigsRoute);
+                              }
                             },
                             child: SvgPicture.asset(AppIcons.addIcon)),
                       )

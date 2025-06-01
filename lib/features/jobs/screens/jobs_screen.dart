@@ -5,6 +5,8 @@ import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_state.dart';
 import 'package:mawhebtak/features/jobs/screens/widgets/jop_widget.dart';
 import '../../../core/exports.dart';
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
 
 class JobsScreen extends StatefulWidget {
   const JobsScreen({super.key});
@@ -44,8 +46,7 @@ class _JobsScreenState extends State<JobsScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          BlocBuilder<JobsCubit, JobsState>(
-              builder: (context, state) {
+          BlocBuilder<JobsCubit, JobsState>(builder: (context, state) {
             var jopUserData = context.read<JobsCubit>().userJopModel?.data;
             return Column(
               children: [
@@ -59,36 +60,40 @@ class _JobsScreenState extends State<JobsScreen> {
                   color: AppColors.grayLite,
                 ),
                 (state is GetUserJopStateLoading)
-
-                    ? const  Expanded(
+                    ? const Expanded(
                         child: Center(
                         child: CustomLoadingIndicator(),
                       ))
-                    :(jopUserData?.length == 0)?
-                     const Expanded(child: Center(child: Text("no_data")))
-                    : Expanded(
-                        child: RefreshIndicator(
-                          onRefresh: () async{
-                            context.read<JobsCubit>().getUserJopData(page: '1');
-                          },
-                          child: ListView.builder(
-                            controller: scrollController,
-                            itemCount: jopUserData?.length ??0,
-                            itemBuilder: (context, index) => Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 10.h),
-                                  child: JobWidget(
-                                    index: index,
-                                    jobsCubit: context.read<JobsCubit>(),
-                                    userJop: context.read<JobsCubit>().userJopModel?.data?[index],
-                                  ),
+                    : (jopUserData?.length == 0)
+                        ? const Expanded(child: Center(child: Text("no_data")))
+                        : Expanded(
+                            child: RefreshIndicator(
+                              onRefresh: () async {
+                                context
+                                    .read<JobsCubit>()
+                                    .getUserJopData(page: '1');
+                              },
+                              child: ListView.builder(
+                                controller: scrollController,
+                                itemCount: jopUserData?.length ?? 0,
+                                itemBuilder: (context, index) => Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 10.h),
+                                      child: JobWidget(
+                                        index: index,
+                                        jobsCubit: context.read<JobsCubit>(),
+                                        userJop: context
+                                            .read<JobsCubit>()
+                                            .userJopModel
+                                            ?.data?[index],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
                 if (state is GetUserJopStateLoadingMore)
                   const CustomLoadingIndicator(),
               ],
@@ -98,8 +103,13 @@ class _JobsScreenState extends State<JobsScreen> {
             bottom: 50.h,
             right: 20.w,
             child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, Routes.addNewJobRoute);
+              onTap: () async {
+                final user = await Preferences.instance.getUserModel();
+                if (user.data?.token == null) {
+                  checkLogin(context);
+                } else {
+                  Navigator.pushNamed(context, Routes.addNewJobRoute);
+                }
               },
               child: Container(
                 width: 60.w,

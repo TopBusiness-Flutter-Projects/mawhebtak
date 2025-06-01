@@ -5,6 +5,8 @@ import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 import '../../../../../core/exports.dart';
+import '../../../../../core/preferences/preferences.dart';
+import '../../../../../core/utils/check_login.dart';
 import '../../../../home/screens/widgets/follow_button.dart';
 
 class GigsRequest extends StatelessWidget {
@@ -66,53 +68,64 @@ class GigsRequest extends StatelessWidget {
                   ? const Center(
                       child: CustomLoadingIndicator(),
                     )
-                  :
-
-            (gigsRequestList?.status=='new')?
-              Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            cubit.actionGig(
-                                status: "accepted",
-                                gigId: cubit.getDetailsGigsModel?.data?.id
-                                        .toString() ??
-                                    '',
-                                requestId:
-                                    gigsRequestList?.id.toString() ?? "");
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomContainerButton(
-                              title: 'accept'.tr(),
-                              color: AppColors.primary,
+                  : (gigsRequestList?.status == 'new')
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                final user =
+                                    await Preferences.instance.getUserModel();
+                                if (user.data?.token == null) {
+                                  checkLogin(context);
+                                } else {
+                                  cubit.actionGig(
+                                      status: "accepted",
+                                      gigId: cubit.getDetailsGigsModel?.data?.id
+                                              .toString() ??
+                                          '',
+                                      requestId:
+                                          gigsRequestList?.id.toString() ?? "");
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomContainerButton(
+                                  title: 'accept'.tr(),
+                                  color: AppColors.primary,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            cubit.actionGig(
-                                status: "rejected",
-                                gigId: cubit.getDetailsGigsModel?.data?.id
-                                        .toString() ??
-                                    '',
-                                requestId:
-                                    gigsRequestList?.id.toString() ?? "");
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CustomContainerButton(
-                              title: 'reject'.tr(),
-                              color: AppColors.transparent,
-                              borderColor: AppColors.red,
-                              textColor: AppColors.red,
+                            GestureDetector(
+                              onTap: () async {
+                                final user =
+                                    await Preferences.instance.getUserModel();
+                                if (user.data?.token == null) {
+                                  checkLogin(context);
+                                } else {
+                                  cubit.actionGig(
+                                      status: "rejected",
+                                      gigId: cubit.getDetailsGigsModel?.data?.id
+                                              .toString() ??
+                                          '',
+                                      requestId:
+                                          gigsRequestList?.id.toString() ?? "");
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomContainerButton(
+                                  title: 'reject'.tr(),
+                                  color: AppColors.transparent,
+                                  borderColor: AppColors.red,
+                                  textColor: AppColors.red,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ):Container(),
+                          ],
+                        )
+                      : Container(),
             );
           })
         ],

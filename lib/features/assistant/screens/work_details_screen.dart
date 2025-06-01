@@ -8,6 +8,9 @@ import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
+
 class WorkDetailsScreen extends StatefulWidget {
   const WorkDetailsScreen({super.key, this.work});
   final WorkModel? work;
@@ -125,18 +128,23 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
               right: 20.w,
               child: GestureDetector(
                 onTap: () async {
-                  final result = await Navigator.pushNamed(
-                    context,
-                    Routes.addAssistantRoute,
-                    arguments: {
-                      'work': widget.work,
-                    },
-                  );
+                  final user = await Preferences.instance.getUserModel();
+                  if (user.data?.token == null) {
+                    checkLogin(context);
+                  } else {
+                    final result = await Navigator.pushNamed(
+                      context,
+                      Routes.addAssistantRoute,
+                      arguments: {
+                        'work': widget.work,
+                      },
+                    );
 
-                  if (result != null) {
-                    context
-                        .read<AssistantCubit>()
-                        .getAssistants(widget.work?.id ?? 0);
+                    if (result != null) {
+                      context
+                          .read<AssistantCubit>()
+                          .getAssistants(widget.work?.id ?? 0);
+                    }
                   }
                 },
                 child: Container(

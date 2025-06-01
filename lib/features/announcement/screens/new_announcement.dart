@@ -65,10 +65,8 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                         "select_category".tr(),
                         style: getRegularStyle(fontSize: 14.sp),
                       ),
-                       DropdownTextFieldWidget(
-                         onChanged: (p0) {
-
-                         },
+                      DropdownTextFieldWidget(
+                        onChanged: (p0) {},
                         dataLists: const ["Photography", "Dancer", "Singer"],
                         hintText: 'Photography',
                       ),
@@ -76,10 +74,8 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                         "price_range".tr(),
                         style: getRegularStyle(fontSize: 14.sp),
                       ),
-                       DropdownTextFieldWidget(
-                         onChanged: (p0) {
-
-                         },
+                      DropdownTextFieldWidget(
+                        onChanged: (p0) {},
                         dataLists: const ["100", "200", "300"],
                         hintText: '1000',
                       ),
@@ -134,7 +130,12 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                       5.verticalSpace,
                       InkWell(
                           onTap: () {
-                            // cubit.pickMedia(context);
+                            //
+                            //  final user = await Preferences.instance.getUserModel();
+                            // if (user.data?.token == null) {
+                            //   checkLogin(context);
+                            // } else {
+                            // cubit.add(context);}
                           },
                           child: Image.asset(
                             ImageAssets.imageOrVideo,

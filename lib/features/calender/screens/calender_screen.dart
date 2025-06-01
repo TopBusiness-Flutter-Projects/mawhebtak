@@ -5,6 +5,8 @@ import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/calender_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import '../../../core/exports.dart';
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
 import '../../home/screens/widgets/custom_app_bar_row.dart';
 import '../cubit/calender_state.dart';
 
@@ -21,8 +23,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   void initState() {
-    context.read<CalenderCubit>().getMyEvents();
-    context.read<CalenderCubit>().getCalendarEvent();
+    Preferences.instance.getUserModel().then((user) {
+      if (user.data?.token == null) {
+        checkLogin(context);
+      } else {
+        context.read<CalenderCubit>().getMyEvents();
+        context.read<CalenderCubit>().getCalendarEvent();
+      }
+    });
+
     super.initState();
   }
 

@@ -1,4 +1,3 @@
-
 import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
@@ -24,21 +23,21 @@ class CustomRequestGigsList extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-     //     Navigator.pushNamed(context, Routes.detailsOfMainCategoryFromGigsRoute,arguments: subCategory);
+          //     Navigator.pushNamed(context, Routes.detailsOfMainCategoryFromGigsRoute,arguments: subCategory);
         },
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.r),
             image: DecorationImage(
               image: requestGigs?.image != null &&
-                  requestGigs!.image!.isNotEmpty
+                      requestGigs!.image!.isNotEmpty
                   ? NetworkImage(requestGigs!.image!)
                   : const AssetImage(ImageAssets.tasweerPhoto) as ImageProvider,
               fit: BoxFit.cover,
             ),
           ),
           child: Container(
-            padding:  EdgeInsets.all(8.0.r),
+            padding: EdgeInsets.all(8.0.r),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.r),
               gradient: LinearGradient(
@@ -55,45 +54,43 @@ class CustomRequestGigsList extends StatelessWidget {
               child: SizedBox(
                 width: 130.w,
                 child: Padding(
-                  padding:  EdgeInsets.only(bottom: 10.h,left: 10.w,right: 10.w),
-                  child: Text.rich(
-
-                    TextSpan(
-                      children: [
-                        WidgetSpan(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color:AppColors.secondPrimary,
-                            ),
-                            child: Text(
-                              (requestGigs?.title ?? "").substring(0,
-                                  (requestGigs?.title?.length ?? 0) >= 5 ? 5 :
-                                  (requestGigs?.title?.length ?? 0)
+                    padding:
+                        EdgeInsets.only(bottom: 10.h, left: 10.w, right: 10.w),
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          WidgetSpan(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.secondPrimary,
                               ),
-                              style: getMediumStyle(
-                                color: Colors.white,
-                                fontSize: 16.sp,
+                              child: Text(
+                                (requestGigs?.title ?? "").substring(
+                                    0,
+                                    (requestGigs?.title?.length ?? 0) >= 5
+                                        ? 5
+                                        : (requestGigs?.title?.length ?? 0)),
+                                style: getMediumStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.sp,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        TextSpan(
-                          text: (requestGigs?.title?.length ?? 0) > 5
-                              ? (requestGigs?.title ?? "").substring(5)
-                              : "",
-                          style: getMediumStyle(
-                            color: AppColors.white,
-                            fontSize: 16.sp,
+                          TextSpan(
+                            text: (requestGigs?.title?.length ?? 0) > 5
+                                ? (requestGigs?.title ?? "").substring(5)
+                                : "",
+                            style: getMediumStyle(
+                              color: AppColors.white,
+                              fontSize: 16.sp,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  )
-
-
-                ),
+                        ],
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )),
               ),
             ),
           ),

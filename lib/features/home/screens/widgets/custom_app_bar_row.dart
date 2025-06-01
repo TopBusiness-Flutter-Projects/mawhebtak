@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
+import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/check_login.dart';
 
 class CustomAppBarRow extends StatelessWidget {
   CustomAppBarRow(
@@ -89,8 +91,13 @@ class CustomAppBarRow extends StatelessWidget {
                       ),
                     ),
               GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.notificationRoute);
+                onTap: () async {
+                  final user = await Preferences.instance.getUserModel();
+                  if (user.data?.token == null) {
+                    checkLogin(context);
+                  } else {
+                    Navigator.pushNamed(context, Routes.notificationRoute);
+                  }
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 1.0.w),

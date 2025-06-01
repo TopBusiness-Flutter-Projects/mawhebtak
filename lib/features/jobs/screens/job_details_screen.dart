@@ -5,8 +5,12 @@ import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_state.dart';
 
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
+
 class JobDetailsScreen extends StatefulWidget {
-  const JobDetailsScreen({super.key, required this.userJopId, required this.index});
+  const JobDetailsScreen(
+      {super.key, required this.userJopId, required this.index});
   final String userJopId;
   final int index;
 
@@ -33,12 +37,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
             child: ListView(
               children: [
                 CustomSimpleAppbar(
-
                   title: 'job_details'.tr(),
                   isActionButton: false,
                 ),
-                BlocBuilder<JobsCubit, JobsState>
-                  (builder: (context, state) {
+                BlocBuilder<JobsCubit, JobsState>(builder: (context, state) {
                   var jobDetailsCubit = context.read<JobsCubit>();
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,8 +61,13 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
           ),
           // Button fixed at the bottom
           CustomButton(
-              onTap: () {
-                Navigator.pushNamed(context, Routes.chatRoute);
+              onTap: () async {
+                final user = await Preferences.instance.getUserModel();
+                if (user.data?.token == null) {
+                  checkLogin(context);
+                } else {
+                  Navigator.pushNamed(context, Routes.chatRoute);
+                }
               },
               title: "apply_for_this_job".tr()),
         ],
@@ -70,122 +77,129 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
 
   Widget _buildJobInfoCard({required JobsCubit job}) {
     return _buildWhiteCard(
-      child: BlocBuilder<JobsCubit,JobsState>(
-        builder: (context,state) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Icon alone on the left
-              SvgPicture.asset(
-                AppIcons.bagIcon,
-                width: 40.w,
-                height: 40.h,
-              ),
-              10.w.horizontalSpace,
+      child: BlocBuilder<JobsCubit, JobsState>(builder: (context, state) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Icon alone on the left
+            SvgPicture.asset(
+              AppIcons.bagIcon,
+              width: 40.w,
+              height: 40.h,
+            ),
+            10.w.horizontalSpace,
 
-              // Everything else in one column
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Job title and fav icon
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            job.userJopDetailsModel?.data?.title ?? "",
-                            style: getMediumStyle(fontSize: 14.sp),
-                            overflow: TextOverflow.ellipsis,
-                          ),
+            // Everything else in one column
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Job title and fav icon
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          job.userJopDetailsModel?.data?.title ?? "",
+                          style: getMediumStyle(fontSize: 14.sp),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        InkWell(
-                            onTap: () {
-                              print("the is fav ${job.userJopDetailsModel?.data?.isFav}");
+                      ),
+                      InkWell(
+                          onTap: () async {
+                            final user =
+                                await Preferences.instance.getUserModel();
+                            if (user.data?.token == null) {
+                              checkLogin(context);
+                            } else {
+                              print(
+                                  "the is fav ${job.userJopDetailsModel?.data?.isFav}");
                               job.toggleFavorite(
                                   index: widget.index,
                                   userJopId: widget.userJopId.toString() ?? "");
-                            },
-                            child: Icon(
-                              job.userJopDetailsModel?.data?.isFav == true
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              size: 20.sp,
-                              color: job.userJopDetailsModel?.data?.isFav == true ? AppColors.primary : AppColors.darkGray.withOpacity(0.5),
-                            )),
-                      ],
-                    ),
-                    6.h.verticalSpace,
+                            }
+                          },
+                          child: Icon(
+                            job.userJopDetailsModel?.data?.isFav == true
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            size: 20.sp,
+                            color: job.userJopDetailsModel?.data?.isFav == true
+                                ? AppColors.primary
+                                : AppColors.darkGray.withOpacity(0.5),
+                          )),
+                    ],
+                  ),
+                  6.h.verticalSpace,
 
-                    // Company name
-                    // Text(
-                    //   "job_company_sample".tr(),
-                    //   style: getMediumStyle(
-                    //     fontSize: 13.sp,
-                    //     color: AppColors.secondPrimary,
-                    //   ),
-                    // ),
-                    // 10.h.verticalSpace,
+                  // Company name
+                  // Text(
+                  //   "job_company_sample".tr(),
+                  //   style: getMediumStyle(
+                  //     fontSize: 13.sp,
+                  //     color: AppColors.secondPrimary,
+                  //   ),
+                  // ),
+                  // 10.h.verticalSpace,
 
-                    // Location and date
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          job.userJopDetailsModel?.data?.location ?? "",
-                          style: getMediumStyle(
-                            fontSize: 13.sp,
-                            color: AppColors.grayDate,
-                          ),
+                  // Location and date
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        job.userJopDetailsModel?.data?.location ?? "",
+                        style: getMediumStyle(
+                          fontSize: 13.sp,
+                          color: AppColors.grayDate,
                         ),
-                        Text(
-                          job.userJopDetailsModel?.data?.deadline ?? "",
-                          style: getMediumStyle(
-                            fontSize: 13.sp,
-                            color: AppColors.grayDate,
-                          ),
+                      ),
+                      Text(
+                        job.userJopDetailsModel?.data?.deadline ?? "",
+                        style: getMediumStyle(
+                          fontSize: 13.sp,
+                          color: AppColors.grayDate,
                         ),
-                      ],
-                    ),
-                    10.h.verticalSpace,
+                      ),
+                    ],
+                  ),
+                  10.h.verticalSpace,
 
-                    // Price range title
-                    Text(
-                      "price_range".tr(),
-                      style: getMediumStyle(fontSize: 14.sp),
-                    ),
-                    8.h.verticalSpace,
+                  // Price range title
+                  Text(
+                    "price_range".tr(),
+                    style: getMediumStyle(fontSize: 14.sp),
+                  ),
+                  8.h.verticalSpace,
 
-                    // Price range values
-                    Row(
-                      children: [
-                        Text(
-                          job.userJopDetailsModel?.data?.priceStartAt ?? "",
-                          style: getMediumStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.secondPrimary,
-                          ),
+                  // Price range values
+                  Row(
+                    children: [
+                      Text(
+                        job.userJopDetailsModel?.data?.priceStartAt ?? "",
+                        style: getMediumStyle(
+                          fontSize: 14.sp,
+                          color: AppColors.secondPrimary,
                         ),
-                        5.w.horizontalSpace,
-                        Icon(Icons.arrow_forward,
-                            size: 20.sp, color: AppColors.blackLite),
-                        5.w.horizontalSpace,
-                        Text(
-                          job.userJopDetailsModel?.data?.priceEndAt ?? "",
-                          style: getMediumStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.secondPrimary,
-                          ),
+                      ),
+                      5.w.horizontalSpace,
+                      Icon(Icons.arrow_forward,
+                          size: 20.sp, color: AppColors.blackLite),
+                      5.w.horizontalSpace,
+                      Text(
+                        job.userJopDetailsModel?.data?.priceEndAt ?? "",
+                        style: getMediumStyle(
+                          fontSize: 14.sp,
+                          color: AppColors.secondPrimary,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          );
-        }
-      ),
+            ),
+          ],
+        );
+      }),
     );
   }
 

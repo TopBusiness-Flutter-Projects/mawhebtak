@@ -9,6 +9,8 @@ import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cub
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
 import '../../../core/exports.dart';
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
 
 class CastingScreen extends StatefulWidget {
   const CastingScreen({super.key, required this.isFromHome});
@@ -299,7 +301,10 @@ class _CastingScreenState extends State<CastingScreen> {
                     return GigsWidget(
                       index: index,
                       castingCubit: castingCubit,
-                      eventAndGigsModel: context.read<RequestGigsCubit>().requestGigs?.data?[index],
+                      eventAndGigsModel: context
+                          .read<RequestGigsCubit>()
+                          .requestGigs
+                          ?.data?[index],
                     );
                   },
                 ),
@@ -411,7 +416,14 @@ class _CastingScreenState extends State<CastingScreen> {
   // Floating Action Button
   Widget _buildAddButton(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, Routes.newGigsRoute),
+      onTap: () async {
+        final user = await Preferences.instance.getUserModel();
+        if (user.data?.token == null) {
+          checkLogin(context);
+        } else {
+          Navigator.pushNamed(context, Routes.newGigsRoute);
+        }
+      },
       child: Container(
         width: 60.w,
         height: 60.h,

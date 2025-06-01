@@ -165,7 +165,6 @@ class FeedsCubit extends Cubit<FeedsState> {
         return compressedVideo.path != null
             ? File(compressedVideo.path!)
             : file;
-
       } else {
         VideoCompress.cancelCompression();
         return file;
@@ -308,7 +307,6 @@ class FeedsCubit extends Cubit<FeedsState> {
         if (scrollController.hasClients) {
           scrollController.animateTo(
             scrollController.position.maxScrollExtent,
-
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           );
@@ -321,6 +319,7 @@ class FeedsCubit extends Cubit<FeedsState> {
       emit(AddReplyStateError(e.toString()));
     }
   }
+
   void addImage(File image) {
     myImagesF ??= [];
     myImagesF!.add(image);
@@ -332,6 +331,7 @@ class FeedsCubit extends Cubit<FeedsState> {
     validVideos.add(video);
     emit(FeedsStateUpdated());
   }
+
   addComment({required String postId}) async {
     emit(AddCommentStateLoading());
     try {

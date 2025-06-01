@@ -6,6 +6,8 @@ import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_event_details_widget.dart';
 import '../../../core/exports.dart';
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
 import '../../../core/widgets/custom_container_with_shadow.dart';
 import '../../home/screens/widgets/follow_button.dart';
 import '../cubit/event_cubit.dart';
@@ -65,12 +67,18 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                               ? Column(
                                   children: [
                                     CustomEventDetailsWidget(
-                                      onTap: () {
-                                        cubit.followUnfollowEvent(
-                                            cubit.eventDetails?.data?.id
-                                                    ?.toString() ??
-                                                '',
-                                            context);
+                                      onTap: () async {
+                                        final user = await Preferences.instance
+                                            .getUserModel();
+                                        if (user.data?.token == null) {
+                                          checkLogin(context);
+                                        } else {
+                                          cubit.followUnfollowEvent(
+                                              cubit.eventDetails?.data?.id
+                                                      ?.toString() ??
+                                                  '',
+                                              context);
+                                        }
                                       },
                                       item: cubit.eventDetails?.data,
                                       isFollowed:
@@ -87,12 +95,18 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     CustomEventDetailsWidget(
-                                      onTap: () {
-                                        cubit.followUnfollowEvent(
-                                            cubit.eventDetails?.data?.id
-                                                    ?.toString() ??
-                                                '',
-                                            context);
+                                      onTap: () async {
+                                        final user = await Preferences.instance
+                                            .getUserModel();
+                                        if (user.data?.token == null) {
+                                          checkLogin(context);
+                                        } else {
+                                          cubit.followUnfollowEvent(
+                                              cubit.eventDetails?.data?.id
+                                                      ?.toString() ??
+                                                  '',
+                                              context);
+                                        }
                                       },
                                       item: cubit.eventDetails?.data,
                                       isFollowed:

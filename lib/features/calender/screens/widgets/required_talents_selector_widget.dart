@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 
+import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/check_login.dart';
 import '../../cubit/calender_cubit.dart';
 import '../../cubit/calender_state.dart';
 import '../../data/model/countries_model.dart';
@@ -133,8 +135,14 @@ class _RequiredTalentsSelectorState extends State<RequiredTalentsSelector> {
                             top: 2,
                             right: 2,
                             child: InkWell(
-                              onTap: () {
-                                cubit.removeFromTalends(index);
+                              onTap: () async {
+                                final user =
+                                    await Preferences.instance.getUserModel();
+                                if (user.data?.token == null) {
+                                  checkLogin(context);
+                                } else {
+                                  cubit.removeFromTalends(index);
+                                }
                               },
                               child: Icon(Icons.close,
                                   color: Colors.red, size: 18.w),

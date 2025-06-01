@@ -8,6 +8,8 @@ import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dar
 import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/exports.dart';
+import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/check_login.dart';
 import '../../../../core/widgets/custom_button.dart';
 
 class GigsWidget extends StatefulWidget {
@@ -16,12 +18,12 @@ class GigsWidget extends StatefulWidget {
     this.eventAndGigsModel,
     this.castingCubit,
     this.index,
-    this.isFromDetails= false,
+    this.isFromDetails = false,
   });
   final EventAndGigsModel? eventAndGigsModel;
   final CastingCubit? castingCubit;
   final int? index;
-  final bool? isFromDetails ;
+  final bool? isFromDetails;
 
   @override
   State<GigsWidget> createState() => _GigsWidgetState();
@@ -56,7 +58,7 @@ class _GigsWidgetState extends State<GigsWidget> {
           padding: EdgeInsets.only(bottom: 20.h),
           child: GestureDetector(
             onTap: () {
-                if(widget.isFromDetails == false)
+              if (widget.isFromDetails == false)
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -196,34 +198,38 @@ class _GigsWidgetState extends State<GigsWidget> {
                     ),
                   ),
                   10.verticalSpace,
-
-                    if (widget.eventAndGigsModel?.isMine == false ||
-                        (widget.eventAndGigsModel?.isRequested == "accept"))
-                      Padding(
-                          padding: EdgeInsets.only(bottom: 10.h),
-                          child: CustomButton(
-                              color: widget.eventAndGigsModel?.isRequested ==
-                                      "pending"
-                                  ? AppColors.red
-                                  : AppColors.primary,
-                              onTap: () async {
+                  if (widget.eventAndGigsModel?.isMine == false ||
+                      (widget.eventAndGigsModel?.isRequested == "accept"))
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 10.h),
+                        child: CustomButton(
+                            color: widget.eventAndGigsModel?.isRequested ==
+                                    "pending"
+                                ? AppColors.red
+                                : AppColors.primary,
+                            onTap: () async {
+                              final user =
+                                  await Preferences.instance.getUserModel();
+                              if (user.data?.token == null) {
+                                checkLogin(context);
+                              } else {
                                 print("hhhhhhhhhhhhhh");
-                               await  widget.castingCubit?.requestGigs(
-                                    index: widget.index!,
-                                    type: widget.eventAndGigsModel?.isRequested
-                                            .toString() ??
-                                        "",
-                                    context: context,
-                                    gigId: widget.eventAndGigsModel?.id
-                                            .toString() ??
-                                        ""
-                               ,
-                               );
-                              },
-                              title: (widget.eventAndGigsModel?.isRequested ==
-                                      "pending")
-                                  ? "cancel".tr()
-                                  : "request_this_gigs".tr())),
+                                await widget.castingCubit?.requestGigs(
+                                  index: widget.index!,
+                                  type: widget.eventAndGigsModel?.isRequested
+                                          .toString() ??
+                                      "",
+                                  context: context,
+                                  gigId:
+                                      widget.eventAndGigsModel?.id.toString() ??
+                                          "",
+                                );
+                              }
+                            },
+                            title: (widget.eventAndGigsModel?.isRequested ==
+                                    "pending")
+                                ? "cancel".tr()
+                                : "request_this_gigs".tr())),
                 ],
               ),
             ),

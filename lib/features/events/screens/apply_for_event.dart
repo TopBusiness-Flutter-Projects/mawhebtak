@@ -6,6 +6,8 @@ import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 import 'package:mawhebtak/core/utils/custom_pick_media.dart';
 import '../../../core/exports.dart';
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
 import '../../calender/cubit/calender_cubit.dart';
 import '../../calender/cubit/calender_state.dart';
 import '../../feeds/screens/widgets/image_view_file.dart';
@@ -260,12 +262,18 @@ class _ApplyForEventState extends State<ApplyForEvent> {
                         Center(
                           child: CustomContainerButton(
                             title: "apply".tr(),
-                            onTap: () {
+                            onTap: () async {
                               if (key.currentState!.validate()) {
-                                cubit.applyToEvent(
-                                    cubit.eventDetails?.data?.id.toString() ??
-                                        '',
-                                    context);
+                                final user =
+                                    await Preferences.instance.getUserModel();
+                                if (user.data?.token == null) {
+                                  checkLogin(context);
+                                } else {
+                                  cubit.applyToEvent(
+                                      cubit.eventDetails?.data?.id.toString() ??
+                                          '',
+                                      context);
+                                }
                               }
                             },
                             color: AppColors.primary,

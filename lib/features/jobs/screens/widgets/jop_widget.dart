@@ -4,9 +4,15 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 
+import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/check_login.dart';
+
 class JobWidget extends StatefulWidget {
   const JobWidget({
-    super.key, this.userJop, required this.jobsCubit, required this.index,
+    super.key,
+    this.userJop,
+    required this.jobsCubit,
+    required this.index,
   });
   final UserJopData? userJop;
   final JobsCubit jobsCubit;
@@ -16,16 +22,14 @@ class JobWidget extends StatefulWidget {
 }
 
 class _JobWidgetState extends State<JobWidget> {
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.jobDetailsRoute,
-            arguments: {
-              'userJopId':widget.userJop?.id.toString() ?? 0,
-              'index':widget.index,
-            });
+        Navigator.pushNamed(context, Routes.jobDetailsRoute, arguments: {
+          'userJopId': widget.userJop?.id.toString() ?? 0,
+          'index': widget.index,
+        });
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 10.h),
@@ -48,28 +52,25 @@ class _JobWidgetState extends State<JobWidget> {
                 10.w.horizontalSpace,
                 Expanded(
                   child: Column(
-
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    width:250.w,
+                                    width: 250.w,
                                     child: Text(
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      widget.userJop?.title?? "",
+                                      widget.userJop?.title ?? "",
                                       style: getMediumStyle(fontSize: 14.sp),
                                     ),
                                   ),
@@ -85,17 +86,26 @@ class _JobWidgetState extends State<JobWidget> {
                             ],
                           ),
                           InkWell(
-                              onTap: () {
-                                widget.jobsCubit.toggleFavorite(
-                                    index: widget.index,
-                                    userJopId: widget.userJop?.id.toString() ?? "");
+                              onTap: () async {
+                                final user =
+                                    await Preferences.instance.getUserModel();
+                                if (user.data?.token == null) {
+                                  checkLogin(context);
+                                } else {
+                                  widget.jobsCubit.toggleFavorite(
+                                      index: widget.index,
+                                      userJopId:
+                                          widget.userJop?.id.toString() ?? "");
+                                }
                               },
                               child: Icon(
                                 widget.userJop?.isFav == true
                                     ? Icons.favorite
                                     : Icons.favorite_border,
                                 size: 20.sp,
-                                color: widget.userJop?.isFav == true ? AppColors.primary : AppColors.darkGray.withOpacity(0.5),
+                                color: widget.userJop?.isFav == true
+                                    ? AppColors.primary
+                                    : AppColors.darkGray.withOpacity(0.5),
                               )),
                         ],
                       ),
@@ -105,7 +115,7 @@ class _JobWidgetState extends State<JobWidget> {
                           Expanded(
                             child: Text(
                               maxLines: 1,
-                              widget.userJop?.location??"",
+                              widget.userJop?.location ?? "",
                               style: getMediumStyle(
                                   fontSize: 13.sp, color: AppColors.grayDate),
                             ),
@@ -117,11 +127,9 @@ class _JobWidgetState extends State<JobWidget> {
                           ),
                         ],
                       )
-
                     ],
                   ),
                 ),
-
               ],
             ),
           ),

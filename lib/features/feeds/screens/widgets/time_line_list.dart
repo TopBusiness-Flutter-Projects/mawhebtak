@@ -8,6 +8,8 @@ import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
 import '../../../../core/exports.dart';
+import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/check_login.dart';
 
 class TimeLineList extends StatefulWidget {
   const TimeLineList({
@@ -190,9 +192,14 @@ class _TimeLineListState extends State<TimeLineList> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GestureDetector(
-              onTap: () {
-                widget.feedsCubit
-                    ?.addReaction(postId: widget.postId, index: widget.index);
+              onTap: () async {
+                final user = await Preferences.instance.getUserModel();
+                if (user.data?.token == null) {
+                  checkLogin(context);
+                } else {
+                  widget.feedsCubit
+                      ?.addReaction(postId: widget.postId, index: widget.index);
+                }
               },
               child: Row(
                 children: [
@@ -220,339 +227,362 @@ class _TimeLineListState extends State<TimeLineList> {
             ),
             BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
               return GestureDetector(
-                onTap: () {
-                  context
-                      .read<FeedsCubit>()
-                      .commentsData(postId: widget.postId);
-                  showModalBottomSheet(
-                    showDragHandle: true,
-                    useSafeArea: true,
-                    context: context,
-                    isScrollControlled: true,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20)),
-                    ),
-                    backgroundColor: AppColors.white,
-                    builder: (context) {
-                      return FractionallySizedBox(
-                        heightFactor: 0.7,
-                        child: BlocBuilder<FeedsCubit, FeedsState>(
-                          builder: (context, state) {
-                            final comments =
-                                widget.feedsCubit?.comments?.data ?? [];
-                            return SafeArea(
-                              child: Column(
-                                children: [
-                                  10.h.verticalSpace,
-                                  Text(
-                                    'comments'.tr(),
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.primary,
+                onTap: () async {
+                  final user = await Preferences.instance.getUserModel();
+                  if (user.data?.token == null) {
+                    checkLogin(context);
+                  } else {
+                    context
+                        .read<FeedsCubit>()
+                        .commentsData(postId: widget.postId);
+                    showModalBottomSheet(
+                      showDragHandle: true,
+                      useSafeArea: true,
+                      context: context,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20)),
+                      ),
+                      backgroundColor: AppColors.white,
+                      builder: (context) {
+                        return FractionallySizedBox(
+                          heightFactor: 0.7,
+                          child: BlocBuilder<FeedsCubit, FeedsState>(
+                            builder: (context, state) {
+                              final comments =
+                                  widget.feedsCubit?.comments?.data ?? [];
+                              return SafeArea(
+                                child: Column(
+                                  children: [
+                                    10.h.verticalSpace,
+                                    Text(
+                                      'comments'.tr(),
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primary,
+                                      ),
                                     ),
-                                  ),
-                                  10.h.verticalSpace,
-                                  Expanded(
-                                    child: ListView.builder(
-                                      controller:
-                                          widget.feedsCubit?.scrollController,
-                                      itemCount: comments.length,
-                                      itemBuilder: (context, index) {
-                                        final comment = comments[index];
-                                        final user = comment.user;
-                                        final replies = comment.reply ?? [];
+                                    10.h.verticalSpace,
+                                    Expanded(
+                                      child: ListView.builder(
+                                        controller:
+                                            widget.feedsCubit?.scrollController,
+                                        itemCount: comments.length,
+                                        itemBuilder: (context, index) {
+                                          final comment = comments[index];
+                                          final user = comment.user;
+                                          final replies = comment.reply ?? [];
 
-                                        return Card(
-                                          color: AppColors.white,
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: 12.w, vertical: 6.h),
-                                          elevation: 1,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12.r),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(10.w),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        CircleAvatar(
-                                                          backgroundImage:
-                                                              NetworkImage(
-                                                            user?.image ??
-                                                                'https://i.pravatar.cc/150?img=1',
+                                          return Card(
+                                            color: AppColors.white,
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 12.w,
+                                                vertical: 6.h),
+                                            elevation: 1,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12.r),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(10.w),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          CircleAvatar(
+                                                            backgroundImage:
+                                                                NetworkImage(
+                                                              user?.image ??
+                                                                  'https://i.pravatar.cc/150?img=1',
+                                                            ),
                                                           ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 350.w,
-                                                          child: Padding(
-                                                            padding:  EdgeInsets.only(left: 10.w),
+                                                          SizedBox(
+                                                            width: 350.w,
+                                                            child: Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      left:
+                                                                          10.w),
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .start,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                      user?.name ??
+                                                                          "",
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          fontSize:
+                                                                              18.sp)),
+                                                                  Text(
+                                                                      comment.comment ??
+                                                                          "",
+                                                                      maxLines:
+                                                                          2,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14.sp)),
+                                                                  Row(
+                                                                    children: [
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () {},
+                                                                        child:
+                                                                            Text(
+                                                                          '${replies.length} replies',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                18.sp,
+                                                                            color:
+                                                                                AppColors.primary,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          context
+                                                                              .read<FeedsCubit>()
+                                                                              .startReplying(
+                                                                                comment.id.toString(),
+                                                                                user?.name ?? '',
+                                                                              );
+                                                                        },
+                                                                        child:
+                                                                            Text(
+                                                                          'reply',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                16.sp,
+                                                                            color:
+                                                                                AppColors.primary,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      if (widget
+                                                              .feedsCubit
+                                                              ?.user
+                                                              ?.data
+                                                              ?.id ==
+                                                          comment.user?.id)
+                                                        PopupMenuButton<String>(
+                                                          icon: SvgPicture
+                                                              .asset(AppIcons
+                                                                  .settingIcon),
+                                                          onSelected: (value) {
+                                                            if (value ==
+                                                                'delete') {
+                                                              widget.feedsCubit?.deleteComment(
+                                                                  commentId: comment
+                                                                      .id
+                                                                      .toString(),
+                                                                  postId: widget
+                                                                      .postId);
+                                                            }
+                                                          },
+                                                          itemBuilder:
+                                                              (BuildContext
+                                                                      context) =>
+                                                                  <PopupMenuEntry<
+                                                                      String>>[
+                                                            const PopupMenuItem<
+                                                                String>(
+                                                              value: 'delete',
+                                                              child: Text(
+                                                                  'Delete Post'),
+                                                            ),
+                                                          ],
+                                                        )
+                                                    ],
+                                                  ),
+                                                  ...replies.map((reply) {
+                                                    final replyUser =
+                                                        reply.user;
+                                                    return Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 20.w, top: 6.h),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          CircleAvatar(
+                                                            radius: 16.r,
+                                                            backgroundImage:
+                                                                NetworkImage(
+                                                              replyUser
+                                                                      ?.image ??
+                                                                  'https://i.pravatar.cc/150?img=2',
+                                                            ),
+                                                          ),
+                                                          10.w.horizontalSpace,
+                                                          Expanded(
                                                             child: Column(
-                                                              mainAxisAlignment: MainAxisAlignment.start,
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 Text(
-                                                                    user?.name ??
+                                                                    replyUser
+                                                                            ?.name ??
                                                                         "",
                                                                     style: TextStyle(
                                                                         fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
+                                                                            FontWeight
+                                                                                .bold,
                                                                         fontSize:
-                                                                        18.sp)),
+                                                                            16.sp)),
                                                                 Text(
-                                                                    comment.comment ??
+                                                                    reply.reply ??
                                                                         "",
-                                                                    maxLines: 2,
-                                                                    overflow:TextOverflow.ellipsis,
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                        14.sp)),
-                                                                 Row(
-                                                                  children: [
-                                                                    TextButton(
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child: Text(
-                                                                        '${replies.length} replies',
-                                                                        style:
-                                                                        TextStyle(
-                                                                          fontSize:
-                                                                          18.sp,
-                                                                          color: AppColors
-                                                                              .primary,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    TextButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        context
-                                                                            .read<
-                                                                            FeedsCubit>()
-                                                                            .startReplying(
-                                                                          comment
-                                                                              .id
-                                                                              .toString(),
-                                                                          user?.name ??
-                                                                              '',
-                                                                        );
-                                                                      },
-                                                                      child: Text(
-                                                                        'reply',
-                                                                        style:
-                                                                        TextStyle(
-                                                                          fontSize:
-                                                                          16.sp,
-                                                                          color: AppColors
-                                                                              .primary,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
+                                                                            14.sp)),
                                                               ],
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    if (widget.feedsCubit?.user
-                                                            ?.data?.id ==
-                                                        comment.user?.id)
-                                                      PopupMenuButton<String>(
-                                                        icon: SvgPicture.asset(
-                                                            AppIcons
-                                                                .settingIcon),
-                                                        onSelected: (value) {
-                                                          if (value ==
-                                                              'delete') {
-                                                            widget.feedsCubit
-                                                                ?.deleteComment(
-                                                                    commentId:
-                                                                        comment
-                                                                            .id
-                                                                            .toString(),
-                                                                    postId: widget
-                                                                        .postId);
-                                                          }
-                                                        },
-                                                        itemBuilder:
-                                                            (BuildContext
-                                                                    context) =>
-                                                                <PopupMenuEntry<
-                                                                    String>>[
-                                                          const PopupMenuItem<
-                                                              String>(
-                                                            value: 'delete',
-                                                            child: Text(
-                                                                'Delete Post'),
-                                                          ),
                                                         ],
-                                                      )
-                                                  ],
-                                                ),
-                                                ...replies.map((reply) {
-                                                  final replyUser = reply.user;
-                                                  return Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 20.w, top: 6.h),
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        CircleAvatar(
-                                                          radius: 16.r,
-                                                          backgroundImage:
-                                                              NetworkImage(
-                                                            replyUser?.image ??
-                                                                'https://i.pravatar.cc/150?img=2',
-                                                          ),
-                                                        ),
-                                                        10.w.horizontalSpace,
-                                                        Expanded(
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                  replyUser
-                                                                          ?.name ??
-                                                                      "",
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          16.sp)),
-                                                              Text(
-                                                                  reply.reply ??
-                                                                      "",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14.sp)),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                }).toList(),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  const Divider(),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 12.w, vertical: 8.h),
-                                    child: BlocBuilder<FeedsCubit, FeedsState>(
-                                      builder: (context, state) {
-                                        final cubit =
-                                            context.read<FeedsCubit>();
-                                        final isReplying =
-                                            cubit.replyingToCommentId != null;
-
-                                        return Row(
-                                          children: [
-                                            Expanded(
-                                              child: TextFormField(
-                                                style:
-                                                    TextStyle(fontSize: 18.sp),
-                                                controller:
-                                                    cubit.commentController,
-                                                decoration: InputDecoration(
-                                                  hintText: isReplying
-                                                      ? "Replying to @${cubit.replyingToUserName}"
-                                                      : "Write a comment...",
-                                                  filled: true,
-                                                  fillColor: AppColors.grayLight
-                                                      .withOpacity(0.5),
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.r),
-                                                    borderSide: BorderSide.none,
-                                                  ),
-                                                  suffixIcon: isReplying
-                                                      ? IconButton(
-                                                          icon: const Icon(
-                                                              Icons.close),
-                                                          onPressed: cubit
-                                                              .cancelReplying,
-                                                        )
-                                                      : null,
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          horizontal: 16.w,
-                                                          vertical: 10.h),
-                                                ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ],
                                               ),
                                             ),
-                                            6.w.horizontalSpace,
-                                            IconButton(
-                                              icon: Icon(Icons.send,
-                                                  color: AppColors.primary),
-                                              onPressed: () {
-                                                if (widget
-                                                        .feedsCubit
-                                                        ?.commentController
-                                                        .text
-                                                        .isEmpty ??
-                                                    false) {
-                                                  errorGetBar("enter_comment");
-                                                } else {
-                                                  if (isReplying) {
-                                                    cubit.addReply(
-                                                      postId: widget.postId,
-                                                      postCommentId: cubit
-                                                          .replyingToCommentId!,
-                                                    );
-                                                    cubit.cancelReplying();
-                                                  } else {
-                                                    cubit.addComment(
-                                                        postId: widget.postId);
-                                                  }
-                                                }
-                                              },
-                                            )
-                                          ],
-                                        );
-                                      },
+                                          );
+                                        },
+                                      ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
+                                    const Divider(),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 12.w, vertical: 8.h),
+                                      child:
+                                          BlocBuilder<FeedsCubit, FeedsState>(
+                                        builder: (context, state) {
+                                          final cubit =
+                                              context.read<FeedsCubit>();
+                                          final isReplying =
+                                              cubit.replyingToCommentId != null;
+
+                                          return Row(
+                                            children: [
+                                              Expanded(
+                                                child: TextFormField(
+                                                  style: TextStyle(
+                                                      fontSize: 18.sp),
+                                                  controller:
+                                                      cubit.commentController,
+                                                  decoration: InputDecoration(
+                                                    hintText: isReplying
+                                                        ? "Replying to @${cubit.replyingToUserName}"
+                                                        : "Write a comment...",
+                                                    filled: true,
+                                                    fillColor: AppColors
+                                                        .grayLight
+                                                        .withOpacity(0.5),
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.r),
+                                                      borderSide:
+                                                          BorderSide.none,
+                                                    ),
+                                                    suffixIcon: isReplying
+                                                        ? IconButton(
+                                                            icon: const Icon(
+                                                                Icons.close),
+                                                            onPressed: cubit
+                                                                .cancelReplying,
+                                                          )
+                                                        : null,
+                                                    contentPadding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 16.w,
+                                                            vertical: 10.h),
+                                                  ),
+                                                ),
+                                              ),
+                                              6.w.horizontalSpace,
+                                              IconButton(
+                                                icon: Icon(Icons.send,
+                                                    color: AppColors.primary),
+                                                onPressed: () {
+                                                  if (widget
+                                                          .feedsCubit
+                                                          ?.commentController
+                                                          .text
+                                                          .isEmpty ??
+                                                      false) {
+                                                    errorGetBar(
+                                                        "enter_comment");
+                                                  } else {
+                                                    if (isReplying) {
+                                                      cubit.addReply(
+                                                        postId: widget.postId,
+                                                        postCommentId: cubit
+                                                            .replyingToCommentId!,
+                                                      );
+                                                      cubit.cancelReplying();
+                                                    } else {
+                                                      cubit.addComment(
+                                                          postId:
+                                                              widget.postId);
+                                                    }
+                                                  }
+                                                },
+                                              )
+                                            ],
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }
                 },
                 child: Row(
                   children: [

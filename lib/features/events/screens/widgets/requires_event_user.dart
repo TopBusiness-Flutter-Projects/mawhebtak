@@ -6,6 +6,8 @@ import 'package:mawhebtak/features/events/cubit/event_cubit.dart';
 
 import '../../../../../core/exports.dart';
 
+import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/check_login.dart';
 import '../../../../core/widgets/custom_container_with_shadow.dart';
 import '../../../../core/widgets/full_screen_video_view.dart';
 import '../../../home/screens/widgets/follow_button.dart';
@@ -254,14 +256,20 @@ class RequireEventUser extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: CustomContainerButton(
                                   title: 'accept'.tr(),
-                                  onTap: () {
-                                    cubit.actionEventRequest(
-                                        cubit.eventDetails?.data?.id
-                                                ?.toString() ??
-                                            '',
-                                        'accepted',
-                                        user?.id?.toString() ?? '',
-                                        context);
+                                  onTap: () async {
+                                    final user2 = await Preferences.instance
+                                        .getUserModel();
+                                    if (user2.data?.token == null) {
+                                      checkLogin(context);
+                                    } else {
+                                      cubit.actionEventRequest(
+                                          cubit.eventDetails?.data?.id
+                                                  ?.toString() ??
+                                              '',
+                                          'accepted',
+                                          user?.id?.toString() ?? '',
+                                          context);
+                                    }
                                     // Handle accept action
                                   },
                                   color: AppColors.primary,
@@ -271,14 +279,20 @@ class RequireEventUser extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: CustomContainerButton(
                                   title: 'reject'.tr(),
-                                  onTap: () {
-                                    cubit.actionEventRequest(
-                                        cubit.eventDetails?.data?.id
-                                                ?.toString() ??
-                                            '',
-                                        'rejected',
-                                        user?.id?.toString() ?? '',
-                                        context);
+                                  onTap: () async {
+                                    final user2 = await Preferences.instance
+                                        .getUserModel();
+                                    if (user2.data?.token == null) {
+                                      checkLogin(context);
+                                    } else {
+                                      cubit.actionEventRequest(
+                                          cubit.eventDetails?.data?.id
+                                                  ?.toString() ??
+                                              '',
+                                          'rejected',
+                                          user?.id?.toString() ?? '',
+                                          context);
+                                    }
                                     // Handle reject action
                                   },
                                   color: AppColors.transparent,

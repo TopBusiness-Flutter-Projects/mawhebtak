@@ -7,6 +7,9 @@ import 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_state.dart';
 
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
+
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key, required this.type});
   final String type;
@@ -61,7 +64,15 @@ class ContactUsScreen extends StatelessWidget {
                         ),
                         CustomButton(
                           title: 'send'.tr(),
-                          onTap: () {},
+                          onTap: () async {
+                            final user =
+                                await Preferences.instance.getUserModel();
+                            if (user.data?.token == null) {
+                              checkLogin(context);
+                            } else {
+                              //! add method here
+                            }
+                          },
                         ),
                       ],
                     ),

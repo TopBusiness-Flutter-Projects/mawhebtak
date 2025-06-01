@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';

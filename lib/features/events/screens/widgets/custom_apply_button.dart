@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
+import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/check_login.dart';
 
 class CustomApplyButton extends StatelessWidget {
   const CustomApplyButton({super.key});
@@ -9,8 +11,13 @@ class CustomApplyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, Routes.applyEvent);
+      onTap: () async {
+        final user = await Preferences.instance.getUserModel();
+        if (user.data?.token == null) {
+          checkLogin(context);
+        } else {
+          Navigator.pushNamed(context, Routes.applyEvent);
+        }
       },
       child: Container(
         color: AppColors.primary,
