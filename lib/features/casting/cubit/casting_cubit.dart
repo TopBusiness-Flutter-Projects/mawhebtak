@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
@@ -22,16 +24,37 @@ class CastingCubit extends Cubit<CastingState> {
   GetCountriesMainModelData? selectedCategory;
   int? subCategoryId;
   GetCountriesMainModelData? selectedSubCategory;
-
-  getCategoryFromGigs() async {
-    emit(CategoryFromGigsStateLoading());
+  bool isLoadingMore = false;
+  getCategoryFromGigs({
+    bool isGetMore = false,
+    String? page,
+    String? orderBy,
+  }) async {
+    if (isGetMore) {
+      isLoadingMore = true;
+      emit(CategoryFromGigsStateLoadingMore());
+    } else {
+      emit(CategoryFromGigsStateLoading());
+    }
     try {
-      final res = await castingRepo.getCategoryFromGigs();
+      final res =
+          await castingRepo.getCategoryFromGigs(page: page, orderBy: orderBy);
       res.fold((l) {
         emit(CategoryFromGigsStateError(l.toString()));
       }, (r) {
-        categoryModel = r;
-        emit(CategoryFromGigsStateLoaded(r));
+        log('0000000000 ${categoryModel?.data?.length}');
+        if (isGetMore) {
+          categoryModel = GetCountriesMainModel(
+            links: r.links,
+            status: r.status,
+            msg: r.msg,
+            data: [...categoryModel!.data!, ...r.data!],
+          );
+          emit(CategoryFromGigsStateLoaded(r));
+        } else {
+          categoryModel = r;
+          emit(CategoryFromGigsStateLoaded(r));
+        }
       });
     } catch (e) {
       emit(CategoryFromGigsStateError(e.toString()));

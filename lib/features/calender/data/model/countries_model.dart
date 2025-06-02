@@ -1,10 +1,16 @@
+import 'package:mawhebtak/core/models/pagenation_model.dart';
+
 class GetCountriesMainModel {
   List<GetCountriesMainModelData>? data;
+  PaginationModel? links;
+  PaginationModel? meta;
   String? msg;
   int? status;
 
   GetCountriesMainModel({
     this.data,
+    this.links,
+    this.meta,
     this.msg,
     this.status,
   });
@@ -15,6 +21,8 @@ class GetCountriesMainModel {
             ? []
             : List<GetCountriesMainModelData>.from(json["data"]!
                 .map((x) => GetCountriesMainModelData.fromJson(x))),
+        links: json["links"] == null ? null : PaginationModel.fromJson(json["links"]),
+        meta: json["meta"] == null ? null : PaginationModel.fromJson(json["meta"]),
         msg: json["msg"],
         status: json["status"],
       );
@@ -23,7 +31,9 @@ class GetCountriesMainModel {
         "data": data == null
             ? []
             : List<dynamic>.from(data!.map((x) => x.toJson())),
-        "msg": msg,
+    "links": links?.toJson(),
+    "meta": meta?.toJson(),
+    "msg": msg,
         "status": status,
       };
 }

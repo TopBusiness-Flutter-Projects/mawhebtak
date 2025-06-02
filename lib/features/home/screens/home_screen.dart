@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/home/cubits/announcements_cubit/announcements_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
@@ -7,7 +6,6 @@ import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cub
 import 'package:mawhebtak/features/home/screens/announcements_screen.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_announcement_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
-import 'package:mawhebtak/features/home/screens/widgets/custom_request_gigs.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
@@ -46,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     userController = PageController();
-    context.read<HomeCubit>().homeData();
+    context.read<HomeCubit>().homeData(
+    );
   }
 
   @override
@@ -218,16 +217,116 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 150.w,
+                              height: 145.w,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: homeData?.topGigs?.length ?? 0,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemCount: homeData?.topGigs?.length,
+                                shrinkWrap: true,
                                 itemBuilder: (context, index) {
-                                  return CustomRequestGigsList(
-                                    requestGigs: homeData?.topGigs?[index],
-                                    isLeftPadding: index == 0,
-                                    isRightPadding: index ==
-                                        (homeData?.topGigs?.length ?? 1) - 1,
+                                  var gigs = homeData?.topGigs?[index];
+                                  return Padding(
+                                    padding: EdgeInsetsDirectional.only(
+                                        start: 10.w, end: 10.w),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context,
+                                            Routes
+                                                .detailsOfMainCategoryFromGigsRoute,
+                                            arguments: gigs?.id.toString());
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(16.r),
+                                          image: const DecorationImage(
+                                            image: AssetImage(
+                                                ImageAssets.tasweerPhoto),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        child: Container(
+                                          padding: EdgeInsets.all(8.r),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16.r),
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Colors.black.withOpacity(0.6),
+                                                Colors.transparent
+                                              ],
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                            ),
+                                          ),
+                                          child: Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: SizedBox(
+                                              width: 130.w,
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 10.h,
+                                                    left: 10.w,
+                                                    right: 10.w),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    children: [
+                                                      WidgetSpan(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: AppColors
+                                                                .secondPrimary,
+                                                          ),
+                                                          child: Text(
+                                                            (gigs?.name ?? "").substring(
+                                                                0,
+                                                                (gigs?.name?.length ??
+                                                                            0) >=
+                                                                        5
+                                                                    ? 5
+                                                                    : (gigs?.name
+                                                                            ?.length ??
+                                                                        0)),
+                                                            style:
+                                                                getMediumStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16.sp,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            (gigs?.name?.length ??
+                                                                        0) >
+                                                                    5
+                                                                ? (gigs?.name ??
+                                                                        "")
+                                                                    .substring(
+                                                                        5)
+                                                                : "",
+                                                        style: getMediumStyle(
+                                                          color:
+                                                              AppColors.white,
+                                                          fontSize: 16.sp,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   );
                                 },
                               ),

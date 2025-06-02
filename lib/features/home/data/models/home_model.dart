@@ -26,7 +26,7 @@ class HomeData {
   List<TopTalent>? userSliders;
   List<TopTalent>? topTalents;
   List<EventAndGigsModel>? topEvents;
-  List<EventAndGigsModel>? topGigs;
+  List<GigCategory>? topGigs;
   List<Announcement>? announcements;
 
   HomeData(
@@ -56,10 +56,10 @@ class HomeData {
             ? []
             : List<EventAndGigsModel>.from(
                 json["top_events"]!.map((x) => EventAndGigsModel.fromJson(x))),
-        topGigs: (json["top_gigs"] == null || json["top_gigs"] == [])
+        topGigs: (json["gig_category"] == null || json["gig_category"] == [])
             ? []
-            : List<EventAndGigsModel>.from(
-                json["top_gigs"]!.map((x) => EventAndGigsModel.fromJson(x))),
+            : List<GigCategory>.from(
+                json["gig_category"]!.map((x) => GigCategory.fromJson(x))),
         announcements: (json["announcements"] == null ||
                 json["announcements"] == [])
             ? []
@@ -78,7 +78,7 @@ class HomeData {
         "top_events": topEvents == null
             ? []
             : List<dynamic>.from(topEvents!.map((x) => x.toJson())),
-        "top_gigs": topGigs == null
+        "gig_category": topGigs == null
             ? []
             : List<dynamic>.from(topGigs!.map((x) => x.toJson())),
         "announcements": announcements == null
@@ -133,6 +133,7 @@ class TopTalent {
   String? image;
   dynamic headline;
   int? followersCount;
+  bool? isIFollow;
 
   TopTalent({
     this.id,
@@ -140,6 +141,7 @@ class TopTalent {
     this.image,
     this.headline,
     this.followersCount,
+    this.isIFollow,
   });
 
   factory TopTalent.fromJson(Map<String, dynamic> json) => TopTalent(
@@ -148,6 +150,7 @@ class TopTalent {
         image: json["image"],
         headline: json["headline"],
         followersCount: json["followers_count"],
+    isIFollow: json["is_i_follow"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -156,6 +159,7 @@ class TopTalent {
         "image": image,
         "headline": headline,
         "followers_count": followersCount,
+        "is_i_follow": isIFollow,
       };
 }
 
@@ -189,4 +193,23 @@ class Slider {
         "url": url,
         "url_type": urlType,
       };
+}
+class GigCategory {
+  int? id;
+  String? name;
+
+  GigCategory({
+    this.id,
+    this.name,
+  });
+
+  factory GigCategory.fromJson(Map<String, dynamic> json) => GigCategory(
+    id: json["id"],
+    name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+  };
 }

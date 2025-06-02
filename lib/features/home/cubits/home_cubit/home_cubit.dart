@@ -45,11 +45,35 @@ class HomeCubit extends Cubit<HomeState> {
         emit(HomeStateError(l.toString()));
       }, (r) {
         homeModel = r;
+        // if(r.data?.topTalents?[index].isIFollow == true){
+        //   r.data?.topTalents?[index].isIFollow == true
+        // }
+        // else{
+        //   r.data?.topTalents?[index].isIFollow == true
+        // }
         emit(HomeStateLoaded(r));
       });
     } catch (e) {
       emit(HomeStateError(e.toString()));
       return null;
+    }
+  }
+
+  updateTopTalentHomeFollow(TopTalent? item) {
+    if (homeModel?.data?.topTalents != null) {
+      for (int i = 0; i < (homeModel?.data?.topTalents?.length ?? 0); i++) {
+        if (item?.id == homeModel?.data?.topTalents?[i].id) {
+          if (item?.isIFollow == true) {
+            homeModel?.data?.topTalents?[i].followersCount =
+                (item?.followersCount ?? 0) + 1;
+          } else {
+            homeModel?.data?.topTalents?[i].followersCount =
+                (item?.followersCount ?? 0) - 1;
+          }
+          homeModel?.data?.topTalents?[i].isIFollow = item?.isIFollow;
+        }
+      }
+      emit(UpdateIsFollowState());
     }
   }
 }

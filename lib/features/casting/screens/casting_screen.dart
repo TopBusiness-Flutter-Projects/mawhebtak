@@ -214,7 +214,9 @@ class _CastingScreenState extends State<CastingScreen> {
                     ? Center(
                         child: TextButton(
                             onPressed: () {
-                              cubit.topTalentsData(page: '1');
+                              cubit.topTalentsData(
+
+                                  page: '1');
                             },
                             child: Text('retry'.tr())),
                       )
