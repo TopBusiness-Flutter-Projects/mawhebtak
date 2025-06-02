@@ -72,3 +72,4 @@ class CastingState {}
  FollowAndUnFollowStateError(this.errorMessage); }
  class FollowAndUnFollowStateLoaded extends CastingState {}
  class FollowAndUnFollowStateLoading extends CastingState {}
+ class CategoryFromGigsStateLoadingMore extends CastingState {}

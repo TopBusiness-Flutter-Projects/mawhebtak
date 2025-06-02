@@ -80,10 +80,9 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
                                               GigsWidget(
                                                 index: index,
                                             castingCubit: cubit,
-                                                eventAndGigsModel: context.read<RequestGigsCubit>().requestGigs?.data?[index],
-                                            // eventAndGigsModel: cubit
-                                            //     .getGigsFromSubCategoryModel
-                                            //     ?.data?[index],
+                                            eventAndGigsModel: cubit
+                                                .getGigsFromSubCategoryModel
+                                                ?.data?[index],
                                           ),
                                         ),
                                 )

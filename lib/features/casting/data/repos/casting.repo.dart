@@ -55,12 +55,18 @@ class CastingRepo {
   }
 
   // categories data
-  Future<Either<Failure, GetCountriesMainModel>> getCategoryFromGigs() async {
+  Future<Either<Failure, GetCountriesMainModel>> getCategoryFromGigs(
+      {
+        String ?page,
+        String ?orderBy,
+      }) async {
     try {
       var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Category",
-        "where[0]": "status,1",
-        "where[2]": "type,0",
+        "paginate":true,
+        "page":page,
+        "orderBy":orderBy
+
       });
       return Right(GetCountriesMainModel.fromJson(response));
     } on ServerException {
@@ -71,7 +77,8 @@ class CastingRepo {
   Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory(
       {required String id}) async {
     try {
-      var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
+      var response = await api.get(EndPoints.getDataBaseUrl,
+          queryParameters: {
         "model": "Gig",
         "where[1]": "sub_category_id,$id",
       });
@@ -140,6 +147,7 @@ class CastingRepo {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, DefaultMainModel>> followAndUnFollow(
       {required String followedId}) async {
     try {

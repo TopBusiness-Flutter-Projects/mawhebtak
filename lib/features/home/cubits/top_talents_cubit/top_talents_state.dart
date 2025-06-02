@@ -59,3 +59,8 @@ class FollowAndUnFollowStateLoading extends TopTalentsState {
   // TODO: implement props
   List<Object?> get props => [];
 }
+class UpdateIsFollowState extends TopTalentsState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}

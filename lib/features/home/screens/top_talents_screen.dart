@@ -16,7 +16,8 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
 
   @override
   void initState() {
-    context.read<TopTalentsCubit>().topTalentsData(page: '1', isGetMore: false);
+    context.read<TopTalentsCubit>().topTalentsData(
+        page: '1', isGetMore: false);
     scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -47,20 +48,12 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
                 isActionButton: true,
                 filterType: 'top_talents',
               ),
-              if (state is TopTalentsStateLoading)
+               (state is TopTalentsStateLoading)?
                 const Expanded(
                   child: Center(
                     child: CustomLoadingIndicator(),
                   ),
-                )
-              else if (state is TopTalentsStateError)
-                Expanded(
-                  child: Center(
-                    child: Text(state.errorMessage.toString()),
-                  ),
-                )
-              else if (state is TopTalentsStateLoaded ||
-                  state is TopTalentsStateLoadingMore)
+                ):
                 Expanded(
                   child: GridView.builder(
                       controller: scrollController,
@@ -72,7 +65,7 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
                         crossAxisSpacing: 1,
                       ),
                       itemBuilder: (context, index) => CustomTopTalentsList(
-                            //topTalentsCubit:context.read<TopTalentsCubit>(),
+                            topTalentsCubit:context.read<TopTalentsCubit>(),
                             index: index,
                             topTalentsData: topTalentData?.data?[index],
                           ),

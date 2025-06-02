@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
@@ -22,16 +24,37 @@ class CastingCubit extends Cubit<CastingState> {
   GetCountriesMainModelData? selectedCategory;
   int? subCategoryId;
   GetCountriesMainModelData? selectedSubCategory;
-
-  getCategoryFromGigs() async {
-    emit(CategoryFromGigsStateLoading());
+  bool isLoadingMore = false;
+  getCategoryFromGigs({
+    bool isGetMore = false,
+    String? page,
+    String? orderBy,
+  }) async {
+    if (isGetMore) {
+      isLoadingMore = true;
+      emit(CategoryFromGigsStateLoadingMore());
+    } else {
+      emit(CategoryFromGigsStateLoading());
+    }
     try {
-      final res = await castingRepo.getCategoryFromGigs();
+      final res =
+          await castingRepo.getCategoryFromGigs(page: page, orderBy: orderBy);
       res.fold((l) {
         emit(CategoryFromGigsStateError(l.toString()));
       }, (r) {
-        categoryModel = r;
-        emit(CategoryFromGigsStateLoaded(r));
+        log('0000000000 ${categoryModel?.data?.length}');
+        if (isGetMore) {
+          categoryModel = GetCountriesMainModel(
+            links: r.links,
+            status: r.status,
+            msg: r.msg,
+            data: [...categoryModel!.data!, ...r.data!],
+          );
+          emit(CategoryFromGigsStateLoaded(r));
+        } else {
+          categoryModel = r;
+          emit(CategoryFromGigsStateLoaded(r));
+        }
       });
     } catch (e) {
       emit(CategoryFromGigsStateError(e.toString()));
@@ -122,9 +145,7 @@ class CastingCubit extends Cubit<CastingState> {
     AppWidgets.create2ProgressDialog(context);
     emit(RequestGigStateLoading());
     try {
-      final res = await castingRepo.requestGig(
-        gigId: gigId
-      );
+      final res = await castingRepo.requestGig(gigId: gigId);
       res.fold((l) {
         errorGetBar(l.toString());
         emit(RequestGigStateError(l.toString()));
@@ -132,7 +153,13 @@ class CastingCubit extends Cubit<CastingState> {
         if (r.status == 200) {
           Navigator.pop(context);
           successGetBar(r.msg);
-          if (context.read<RequestGigsCubit>().requestGigs?.data?[index].isRequested == "pending" || getDetailsGigsModel?.data?.isRequested == "pending") {
+          if (context
+                      .read<RequestGigsCubit>()
+                      .requestGigs
+                      ?.data?[index]
+                      .isRequested ==
+                  "pending" ||
+              getDetailsGigsModel?.data?.isRequested == "pending") {
             context
                 .read<RequestGigsCubit>()
                 .requestGigs
@@ -141,9 +168,21 @@ class CastingCubit extends Cubit<CastingState> {
             getDetailsGigsModel?.data?.isRequested == "null";
 
             emit(RequestGigStateLoaded());
-          } else if (context.read<RequestGigsCubit>().requestGigs?.data?[index].isRequested == "null" || context.read<RequestGigsCubit>().requestGigs?.data?[index].isRequested == "rejected" || getDetailsGigsModel?.data?.isRequested == "null" || getDetailsGigsModel?.data?.isRequested == "rejected") {
-            Navigator.pushNamed(
-                context, Routes.chatRoute);
+          } else if (context
+                      .read<RequestGigsCubit>()
+                      .requestGigs
+                      ?.data?[index]
+                      .isRequested ==
+                  "null" ||
+              context
+                      .read<RequestGigsCubit>()
+                      .requestGigs
+                      ?.data?[index]
+                      .isRequested ==
+                  "rejected" ||
+              getDetailsGigsModel?.data?.isRequested == "null" ||
+              getDetailsGigsModel?.data?.isRequested == "rejected") {
+            Navigator.pushNamed(context, Routes.chatRoute);
             context
                 .read<RequestGigsCubit>()
                 .requestGigs
@@ -228,6 +267,4 @@ class CastingCubit extends Cubit<CastingState> {
     }
     Navigator.pop(context);
   }
-
-
 }
