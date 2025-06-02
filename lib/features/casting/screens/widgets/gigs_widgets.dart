@@ -58,7 +58,7 @@ class _GigsWidgetState extends State<GigsWidget> {
           padding: EdgeInsets.only(bottom: 20.h),
           child: GestureDetector(
             onTap: () {
-              if (widget.isFromDetails == false)
+              if (widget.isFromDetails == false) {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -66,6 +66,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                         id: widget.eventAndGigsModel?.id.toString() ?? "",
                       ),
                     ));
+              }
             },
             child: Container(
               color: AppColors.white,
@@ -151,6 +152,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                         5.h.verticalSpace,
                         Text(
                           widget.eventAndGigsModel?.description ?? "",
+                          maxLines: widget.eventAndGigsModel?.image != null ? 2 : null,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 18.sp,

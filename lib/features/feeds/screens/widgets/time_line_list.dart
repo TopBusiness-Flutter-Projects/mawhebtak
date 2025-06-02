@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/see_more_text.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
@@ -38,6 +37,8 @@ class _TimeLineListState extends State<TimeLineList> {
 
   @override
   Widget build(BuildContext context) {
+    bool isOpenReply = false;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -225,7 +226,8 @@ class _TimeLineListState extends State<TimeLineList> {
                 ],
               ),
             ),
-            BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
+            BlocBuilder<FeedsCubit, FeedsState>
+              (builder: (context, state) {
               return GestureDetector(
                 onTap: () async {
                   final user = await Preferences.instance.getUserModel();
@@ -301,28 +303,29 @@ class _TimeLineListState extends State<TimeLineList> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          CircleAvatar(
-                                                            backgroundImage:
-                                                                NetworkImage(
-                                                              user?.image ??
-                                                                  'https://i.pravatar.cc/150?img=1',
+                                                      Flexible(
+                                                        child: Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child:
+                                                                  CircleAvatar(
+                                                                backgroundImage:
+                                                                    NetworkImage(
+                                                                  user?.image ??
+                                                                      'https://i.pravatar.cc/150?img=1',
+                                                                ),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 350.w,
-                                                            child: Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      left:
-                                                                          10.w),
+                                                            Flexible(
                                                               child: Column(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -354,7 +357,9 @@ class _TimeLineListState extends State<TimeLineList> {
                                                                     children: [
                                                                       TextButton(
                                                                         onPressed:
-                                                                            () {},
+                                                                            () async{
+                                                                        context.read<FeedsCubit>().isOpen();
+                                                                        },
                                                                         child:
                                                                             Text(
                                                                           '${replies.length} replies',
@@ -394,8 +399,8 @@ class _TimeLineListState extends State<TimeLineList> {
                                                                 ],
                                                               ),
                                                             ),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
                                                       if (widget
                                                               .feedsCubit
@@ -433,56 +438,58 @@ class _TimeLineListState extends State<TimeLineList> {
                                                         )
                                                     ],
                                                   ),
-                                                  ...replies.map((reply) {
-                                                    final replyUser =
-                                                        reply.user;
-                                                    return Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 20.w, top: 6.h),
-                                                      child: Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          CircleAvatar(
-                                                            radius: 16.r,
-                                                            backgroundImage:
-                                                                NetworkImage(
-                                                              replyUser
-                                                                      ?.image ??
-                                                                  'https://i.pravatar.cc/150?img=2',
+                                                  if (widget.feedsCubit?.showReplies == true)
+                                                    ...replies.map((reply) {
+                                                      final replyUser =
+                                                          reply.user;
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 20.w,
+                                                                top: 6.h),
+                                                        child: Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            CircleAvatar(
+                                                              radius: 16.r,
+                                                              backgroundImage:
+                                                                  NetworkImage(
+                                                                replyUser
+                                                                        ?.image ??
+                                                                    'https://i.pravatar.cc/150?img=2',
+                                                              ),
                                                             ),
-                                                          ),
-                                                          10.w.horizontalSpace,
-                                                          Expanded(
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Text(
-                                                                    replyUser
-                                                                            ?.name ??
-                                                                        "",
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            16.sp)),
-                                                                Text(
-                                                                    reply.reply ??
-                                                                        "",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            14.sp)),
-                                                              ],
+                                                            10.w.horizontalSpace,
+                                                            Expanded(
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                      replyUser
+                                                                              ?.name ??
+                                                                          "",
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          fontSize:
+                                                                              16.sp)),
+                                                                  Text(
+                                                                      reply.reply ??
+                                                                          "",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14.sp)),
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  }).toList(),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    }).toList(),
                                                 ],
                                               ),
                                             ),

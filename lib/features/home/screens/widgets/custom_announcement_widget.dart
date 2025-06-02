@@ -175,6 +175,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                 AutoSizeText(
                     widget.announcement?.title ??
                         "Offer 20% on accessories photographs",
+                    maxLines: 1,
                     style: getSemiBoldStyle(
                         fontSize: 14.sp, color: AppColors.grayDark)),
                 SizedBox(height: 5.h),
@@ -189,6 +190,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                             child: Text(
                               widget.announcement?.location ??
                                   "Cairo, Nasr City",
+
                               style: getRegularStyle(
                                   color: AppColors.grayLight, fontSize: 14.sp),
                             ),
