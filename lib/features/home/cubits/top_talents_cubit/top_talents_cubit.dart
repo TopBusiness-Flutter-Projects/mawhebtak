@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/data/models/top_talents_model.dart';
 import 'package:mawhebtak/features/home/data/repositories/top_talents_repository.dart';
 import 'package:mawhebtak/injector.dart';
 import '../../../../core/exports.dart';
+import '../../data/models/home_model.dart';
 part 'top_talents_state.dart';
 
 class TopTalentsCubit extends Cubit<TopTalentsState> {
@@ -23,11 +25,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       emit(TopTalentsStateLoading());
     }
     try {
-      final res = await api!.topTalentsData(
-        page: page,
-      
-      orderBy:orderBy
-      );
+      final res = await api!.topTalentsData(page: page, orderBy: orderBy);
 
       res.fold((l) {
         emit(TopTalentsStateError(l.toString()));
@@ -39,6 +37,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
             msg: r.msg,
             data: [...topTalents!.data!, ...r.data!],
           );
+
           emit(TopTalentsStateLoaded(topTalents!));
         } else {
           topTalents = r;
@@ -52,23 +51,45 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       isLoadingMore = false;
     }
   }
-  followAndUnFollow({required String followedId}) async {
+
+  updateTopTalentCastingFollow(TopTalent? item) {
+    if (topTalents != null) {
+      for (int i = 0; i < (topTalents?.data?.length ?? 0); i++) {
+        if (item?.id == topTalents?.data?[i].id) {
+          if (item?.isIFollow == true) {
+            topTalents?.data?[i].followersCount =
+                (item?.followersCount ?? 0) + 1;
+          } else {
+            topTalents?.data?[i].followersCount =
+                (item?.followersCount ?? 0) - 1;
+          }
+          topTalents?.data?[i].isIFollow = item?.isIFollow;
+        }
+      }
+      emit(UpdateIsFollowState());
+    }
+  }
+
+  followAndUnFollow(BuildContext context,
+      {required String followedId, TopTalent? item}) async {
     emit(FollowAndUnFollowStateLoading());
     try {
-      final res = await api!.followAndUnFollow(
-          followedId: followedId);
+      final res = await api!.followAndUnFollow(followedId: followedId);
 
       res.fold((l) {
         emit(FollowAndUnFollowStateError(l.toString()));
       }, (r) {
-
+        item?.isIFollow = !(item?.isIFollow ?? false);
         successGetBar(r.msg ?? "");
+        updateTopTalentCastingFollow(item);
+        context.read<HomeCubit>().updateTopTalentHomeFollow(item);
         emit(FollowAndUnFollowStateLoaded());
       });
     } catch (e) {
       emit(FollowAndUnFollowStateError(e.toString()));
     }
   }
+
   Future<void> hideTopTalent(
       {required String unwantedUserId, required int index}) async {
     emit(HideTopTalentStateLoading());
@@ -79,7 +100,6 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
         emit(HideTopTalentStateError(l.toString()));
       }, (r) {
         topTalents?.data?.removeAt(index);
-
         successGetBar(r.msg ?? "");
         emit(HideTopTalentStateLoaded());
       });
