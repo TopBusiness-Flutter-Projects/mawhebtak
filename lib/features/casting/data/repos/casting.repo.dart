@@ -65,7 +65,8 @@ class CastingRepo {
         "model": "Category",
         "paginate":true,
         "page":page,
-        "orderBy":orderBy
+        "orderBy":orderBy,
+        "where[2]":"type,0"
 
       });
       return Right(GetCountriesMainModel.fromJson(response));
@@ -81,6 +82,7 @@ class CastingRepo {
           queryParameters: {
         "model": "Gig",
         "where[1]": "sub_category_id,$id",
+            "where[2]":"type,0"
       });
       return Right(GetGigsFromSubCategoryModel.fromJson(response));
     } on ServerException {

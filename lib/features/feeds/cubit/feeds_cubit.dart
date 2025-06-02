@@ -402,6 +402,12 @@ class FeedsCubit extends Cubit<FeedsState> {
     );
     emit(ReplyingToCommentState(commentId: commentId, userName: userName));
   }
+  bool showReplies = false;
+  void isOpen(){
+    print("11111111111111${showReplies}");
+    showReplies = !showReplies;
+    emit(ShowReplies());
+  }
 
   void cancelReplying() {
     replyingToCommentId = null;

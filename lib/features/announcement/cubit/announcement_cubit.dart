@@ -1,4 +1,6 @@
 
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
+
 import '../../../core/exports.dart';
 import '../data/repo/announcement_repo_impl.dart';
 part 'announcement_state.dart';
@@ -32,7 +34,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
           time.minute,
         );
 
-        selectedDate = finalDateTime; // ✅ احفظ التاريخ المختار
+        selectedDate = finalDateTime;
 
         String formattedDateTime =
             DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
@@ -42,4 +44,42 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       }
     }
   }
+  GetCountriesMainModel? announcementCategoryModel;
+  bool isLoadingMore = false;
+  getCategoryFromAnnouncment({
+    bool isGetMore = false,
+    String? page,
+    String? orderBy,
+  }) async {
+    if (isGetMore) {
+      isLoadingMore = true;
+      emit(CategoryFromAnnouncementStateLoadingMore());
+    } else {
+      emit(CategoryFromAnnouncementStateLoading());
+    }
+    try {
+      final res =
+      await api.getCategoryFromAnnouncement(page: page, orderBy: orderBy);
+      res.fold((l) {
+        emit(CategoryFromAnnouncementStateError(l.toString()));
+      }, (r) {
+        if (isGetMore) {
+          announcementCategoryModel = GetCountriesMainModel(
+            links: r.links,
+            status: r.status,
+            msg: r.msg,
+            data: [...announcementCategoryModel!.data!, ...r.data!],
+          );
+          emit(CategoryFromAnnouncementStateLoaded());
+        } else {
+          announcementCategoryModel = r;
+          emit(CategoryFromAnnouncementStateLoaded());
+        }
+      });
+    } catch (e) {
+      emit(CategoryFromAnnouncementStateError(e.toString()));
+    }
+  }
+
+
 }
