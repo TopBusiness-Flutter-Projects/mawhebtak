@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
@@ -22,8 +21,8 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
   void initState() {
     var cubit = context.read<CastingCubit>();
     cubit.selectedSubCategory = null;
-
     cubit.getSubCategory(categoryId: widget.categoryId);
+    cubit.getGigsFromCategory(id: widget.categoryId);
     super.initState();
   }
 
@@ -36,8 +35,7 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
           10.h.verticalSpace,
           CustomSimpleAppbar(
             title: 'request_gigs'.tr(),
-            isActionButton: true,
-            filterType: 'casting',
+            isActionButton: false,
           ),
           Flexible(
             child: Padding(
@@ -78,7 +76,7 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
                                               horizontal: 12.w),
                                           itemBuilder: (context, index) =>
                                               GigsWidget(
-                                                index: index,
+                                            index: index,
                                             castingCubit: cubit,
                                             eventAndGigsModel: cubit
                                                 .getGigsFromSubCategoryModel
@@ -112,7 +110,7 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
           cubit.selectedSubCategory = value;
 
           cubit.getGigsFromSubCategory(
-              id: cubit.selectedSubCategory?.id.toString() ?? '');
+              cubit.selectedSubCategory?.id.toString() ?? '');
         },
         items: cubit.subCategoryModel?.data ?? [],
         itemBuilder: (item) => item.name ?? '',

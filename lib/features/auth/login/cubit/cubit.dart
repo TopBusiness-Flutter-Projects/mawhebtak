@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../data/repos/login_repo.dart';
 import 'state.dart';
@@ -14,10 +15,7 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.api) : super(LoginStateInitial());
   LoginRepo api;
 
-  login(
-    String email,
-    String password,
-  ) async {
+  login(String email, String password, BuildContext context) async {
     emit(LoginStateLoading());
     try {
       final res = await api.login(email, password);
@@ -27,6 +25,7 @@ class LoginCubit extends Cubit<LoginState> {
       }, (r) {
         if (r.status == 200) {
           Preferences.instance.setUser(r);
+          Navigator.pushNamed(context, Routes.mainRoute);
           successGetBar(r.msg ?? '');
           emit(LoginStateLoaded());
         } else {

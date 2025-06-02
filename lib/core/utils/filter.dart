@@ -1,3 +1,5 @@
+import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
+
 import '../../features/home/cubits/announcements_cubit/announcements_cubit.dart';
 import '../../features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import '../../features/home/cubits/top_events_cubit/top_events_cubit.dart';
@@ -6,17 +8,20 @@ import '../exports.dart';
 
 class SortOption {
   String? name;
+  String? categoryId;
   String key;
 
   SortOption({
     this.name,
+    this.categoryId,
     required this.key,
   });
 }
 
 SortOption? selctedFilterOption;
 
-void showSortOptions(BuildContext context, String filterType) async {
+void showSortOptions(BuildContext context, String filterType,
+    {String? categoryId}) async {
   List<SortOption> options = [
     SortOption(name: 'asc'.tr(), key: 'asc'),
     SortOption(name: 'desc'.tr(), key: 'desc'),
@@ -71,6 +76,9 @@ void showSortOptions(BuildContext context, String filterType) async {
           page: '1',
           isGetMore: false,
           orderBy: selctedFilterOption?.key ?? 'desc');
+    } else if (filterType == 'casting_home') {
+      context.read<CastingCubit>().getGigsFromCategory(
+          id: categoryId, orderBy: selctedFilterOption?.key ?? 'desc');
     } else {}
   }
 }

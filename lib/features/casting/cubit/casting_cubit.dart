@@ -62,10 +62,27 @@ class CastingCubit extends Cubit<CastingState> {
   }
 
   GetGigsFromSubCategoryModel? getGigsFromSubCategoryModel;
-  getGigsFromSubCategory({required String id}) async {
+  getGigsFromSubCategory(String? id) async {
     emit(GigsFromCategoryStateLoading());
     try {
-      final res = await castingRepo.getGigsFromSubCategory(id: id);
+      final res =
+          await castingRepo.getGigsFromSubCategory(id: id, categoryId: null);
+      res.fold((l) {
+        emit(GigsFromCategoryStateError(l.toString()));
+      }, (r) {
+        getGigsFromSubCategoryModel = r;
+        emit(GigsFromCategoryStateLoaded(r));
+      });
+    } catch (e) {
+      emit(CategoryFromGigsStateError(e.toString()));
+    }
+  }
+
+  getGigsFromCategory({String? id, String? orderBy}) async {
+    emit(GigsFromCategoryStateLoading());
+    try {
+      final res = await castingRepo.getGigsFromSubCategory(
+          categoryId: id, id: null, orderBy: orderBy);
       res.fold((l) {
         emit(GigsFromCategoryStateError(l.toString()));
       }, (r) {
