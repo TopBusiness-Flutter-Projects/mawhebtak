@@ -84,7 +84,7 @@ class CustomTopTalentsList extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    topTalentsData?.headline ?? "Talent / Actor Expert",
+                    topTalentsData?.headline ?? "-",
                     maxLines: 1,
                     style: getRegularStyle(
                         color: AppColors.grayText, fontSize: 13.sp),
@@ -92,7 +92,7 @@ class CustomTopTalentsList extends StatelessWidget {
                   ),
                   10.verticalSpace,
                   Text(
-                    "${topTalentsData?.followersCount ?? 20}  followers",
+                    "${topTalentsData?.followersCount ?? 0} followers",
                     maxLines: 1,
                     style: getMediumStyle(
                         color: AppColors.grayText, fontSize: 13.sp),
@@ -104,8 +104,16 @@ class CustomTopTalentsList extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                       child: CustomContainerButton(
-                        onTap: () {
-                          topTalentsCubit?.followAndUnFollow(followedId: topTalentsData?.id.toString() ?? "");
+                        onTap: () async {
+                          final user =
+                              await Preferences.instance.getUserModel();
+                          if (user.data?.token == null) {
+                            checkLogin(context);
+                          } else {
+                            topTalentsCubit?.followAndUnFollow(
+                                followedId:
+                                    topTalentsData?.id.toString() ?? "");
+                          }
                         },
                         height: 35.h,
                         title: "follow".tr(),

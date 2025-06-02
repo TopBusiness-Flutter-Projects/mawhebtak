@@ -39,10 +39,27 @@ class CastingCubit extends Cubit<CastingState> {
   }
 
   GetGigsFromSubCategoryModel? getGigsFromSubCategoryModel;
-  getGigsFromSubCategory({required String id}) async {
+  getGigsFromSubCategory(String? id) async {
     emit(GigsFromCategoryStateLoading());
     try {
-      final res = await castingRepo.getGigsFromSubCategory(id: id);
+      final res =
+          await castingRepo.getGigsFromSubCategory(id: id, categoryId: null);
+      res.fold((l) {
+        emit(GigsFromCategoryStateError(l.toString()));
+      }, (r) {
+        getGigsFromSubCategoryModel = r;
+        emit(GigsFromCategoryStateLoaded(r));
+      });
+    } catch (e) {
+      emit(CategoryFromGigsStateError(e.toString()));
+    }
+  }
+
+  getGigsFromCategory({String? id, String? orderBy}) async {
+    emit(GigsFromCategoryStateLoading());
+    try {
+      final res = await castingRepo.getGigsFromSubCategory(
+          categoryId: id, id: null, orderBy: orderBy);
       res.fold((l) {
         emit(GigsFromCategoryStateError(l.toString()));
       }, (r) {
@@ -122,9 +139,7 @@ class CastingCubit extends Cubit<CastingState> {
     AppWidgets.create2ProgressDialog(context);
     emit(RequestGigStateLoading());
     try {
-      final res = await castingRepo.requestGig(
-        gigId: gigId
-      );
+      final res = await castingRepo.requestGig(gigId: gigId);
       res.fold((l) {
         errorGetBar(l.toString());
         emit(RequestGigStateError(l.toString()));
@@ -132,7 +147,13 @@ class CastingCubit extends Cubit<CastingState> {
         if (r.status == 200) {
           Navigator.pop(context);
           successGetBar(r.msg);
-          if (context.read<RequestGigsCubit>().requestGigs?.data?[index].isRequested == "pending" || getDetailsGigsModel?.data?.isRequested == "pending") {
+          if (context
+                      .read<RequestGigsCubit>()
+                      .requestGigs
+                      ?.data?[index]
+                      .isRequested ==
+                  "pending" ||
+              getDetailsGigsModel?.data?.isRequested == "pending") {
             context
                 .read<RequestGigsCubit>()
                 .requestGigs
@@ -141,9 +162,21 @@ class CastingCubit extends Cubit<CastingState> {
             getDetailsGigsModel?.data?.isRequested == "null";
 
             emit(RequestGigStateLoaded());
-          } else if (context.read<RequestGigsCubit>().requestGigs?.data?[index].isRequested == "null" || context.read<RequestGigsCubit>().requestGigs?.data?[index].isRequested == "rejected" || getDetailsGigsModel?.data?.isRequested == "null" || getDetailsGigsModel?.data?.isRequested == "rejected") {
-            Navigator.pushNamed(
-                context, Routes.chatRoute);
+          } else if (context
+                      .read<RequestGigsCubit>()
+                      .requestGigs
+                      ?.data?[index]
+                      .isRequested ==
+                  "null" ||
+              context
+                      .read<RequestGigsCubit>()
+                      .requestGigs
+                      ?.data?[index]
+                      .isRequested ==
+                  "rejected" ||
+              getDetailsGigsModel?.data?.isRequested == "null" ||
+              getDetailsGigsModel?.data?.isRequested == "rejected") {
+            Navigator.pushNamed(context, Routes.chatRoute);
             context
                 .read<RequestGigsCubit>()
                 .requestGigs
@@ -228,6 +261,4 @@ class CastingCubit extends Cubit<CastingState> {
     }
     Navigator.pop(context);
   }
-
-
 }

@@ -132,10 +132,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: CustomButton(
                                   onTap: () async {
                                     if (formKey.currentState!.validate()) {
-                                      cubit.login(emailController.text,
-                                          passwordController.text);
-                                      Navigator.pushNamed(
-                                          context, Routes.mainRoute);
+                                      cubit.login(
+                                        emailController.text,
+                                        passwordController.text,
+                                        context,
+                                      );
                                     }
                                   },
                                   title: 'login'.tr()),

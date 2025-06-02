@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.homeColor,
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    homeDataCubit.homeData();
+                    await homeDataCubit.homeData();
                   },
                   child: ListView(
                     children: [

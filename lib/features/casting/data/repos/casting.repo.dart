@@ -68,12 +68,17 @@ class CastingRepo {
     }
   }
 
-  Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory(
-      {required String id}) async {
+  Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory({
+    String? id,
+    String? categoryId,
+    String? orderBy,
+  }) async {
     try {
       var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Gig",
         "where[1]": "sub_category_id,$id",
+        "where[0]": "category_id,$categoryId",
+        "orderBy": orderBy
       });
       return Right(GetGigsFromSubCategoryModel.fromJson(response));
     } on ServerException {
@@ -140,6 +145,7 @@ class CastingRepo {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, DefaultMainModel>> followAndUnFollow(
       {required String followedId}) async {
     try {
