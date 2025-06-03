@@ -66,7 +66,7 @@ class CastingCubit extends Cubit<CastingState> {
     emit(GigsFromCategoryStateLoading());
     try {
       final res = await castingRepo.getGigsFromSubCategory(
-          subCategoryId: id, categoryId: null);
+         id: id.toString(),);
       res.fold((l) {
         emit(GigsFromCategoryStateError(l.toString()));
       }, (r) {
@@ -82,7 +82,7 @@ class CastingCubit extends Cubit<CastingState> {
     emit(GigsFromCategoryStateLoading());
     try {
       final res = await castingRepo.getGigsFromSubCategory(
-          categoryId: id, subCategoryId: null, orderBy: orderBy);
+        id: id.toString());
       res.fold((l) {
         emit(GigsFromCategoryStateError(l.toString()));
       }, (r) {
