@@ -10,7 +10,8 @@ import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_c
 import '../../../core/exports.dart';
 
 class DetailsOfMainCategoryAnnouncement extends StatefulWidget {
-  const DetailsOfMainCategoryAnnouncement({super.key, required this.categoryId});
+  const DetailsOfMainCategoryAnnouncement(
+      {super.key, required this.categoryId});
   final String categoryId;
 
   @override
@@ -18,7 +19,8 @@ class DetailsOfMainCategoryAnnouncement extends StatefulWidget {
       _DetailsOfMainCategoryAnnouncementState();
 }
 
-class _DetailsOfMainCategoryAnnouncementState extends State<DetailsOfMainCategoryAnnouncement> {
+class _DetailsOfMainCategoryAnnouncementState
+    extends State<DetailsOfMainCategoryAnnouncement> {
   @override
   void initState() {
     var cubit = context.read<CastingCubit>();
@@ -78,7 +80,7 @@ class _DetailsOfMainCategoryAnnouncementState extends State<DetailsOfMainCategor
                                               horizontal: 12.w),
                                           itemBuilder: (context, index) =>
                                               GigsWidget(
-                                                index: index,
+                                            index: index,
                                             castingCubit: cubit,
                                             eventAndGigsModel: cubit
                                                 .getGigsFromSubCategoryModel

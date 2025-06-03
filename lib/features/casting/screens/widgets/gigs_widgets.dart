@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'dart:developer';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
@@ -152,7 +152,9 @@ class _GigsWidgetState extends State<GigsWidget> {
                         5.h.verticalSpace,
                         Text(
                           widget.eventAndGigsModel?.description ?? "",
-                          maxLines: widget.eventAndGigsModel?.image != null ? 2 : null,
+                          maxLines: widget.eventAndGigsModel?.image != null
+                              ? 2
+                              : null,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 18.sp,
@@ -215,13 +217,13 @@ class _GigsWidgetState extends State<GigsWidget> {
                               if (user.data?.token == null) {
                                 checkLogin(context);
                               } else {
-                                print("hhhhhhhhhhhhhh");
-                                await widget.castingCubit?.requestGigs(
+                                log('sssss ${widget.eventAndGigsModel?.isRequested}');
+                                widget.castingCubit?.requestGigs(
+                                  context: context,
                                   index: widget.index!,
                                   type: widget.eventAndGigsModel?.isRequested
                                           .toString() ??
                                       "",
-                                  context: context,
                                   gigId:
                                       widget.eventAndGigsModel?.id.toString() ??
                                           "",

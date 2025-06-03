@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -65,7 +64,7 @@ class CastingRepo {
         "model": "Category",
         "paginate": true,
         "page": page,
-        "orderBy": orderBy,
+        "orderBy": orderBy ?? 'desc',
       });
       return Right(GetCountriesMainModel.fromJson(response));
     } on ServerException {
@@ -76,10 +75,10 @@ class CastingRepo {
   Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory(
       {required String subCategoryId}) async {
     try {
-
       var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Gig",
         "where[1]": "sub_category_id,$subCategoryId",
+        "orderBy": 'desc',
       });
       return Right(GetGigsFromSubCategoryModel.fromJson(response));
     } on ServerException {

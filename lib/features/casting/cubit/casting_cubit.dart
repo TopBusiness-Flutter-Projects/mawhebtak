@@ -166,7 +166,7 @@ class CastingCubit extends Cubit<CastingState> {
                 .requestGigs
                 ?.data?[index]
                 .isRequested = "null";
-            getDetailsGigsModel?.data?.isRequested == "null";
+            getDetailsGigsModel?.data?.isRequested = "null";
 
             emit(RequestGigStateLoaded());
           } else if (context
@@ -189,7 +189,7 @@ class CastingCubit extends Cubit<CastingState> {
                 .requestGigs
                 ?.data?[index]
                 .isRequested = "pending";
-            getDetailsGigsModel?.data?.isRequested == "pending";
+            getDetailsGigsModel?.data?.isRequested = "pending";
 
             emit(RequestGigStateLoaded());
           } else {
@@ -198,10 +198,10 @@ class CastingCubit extends Cubit<CastingState> {
                 .requestGigs
                 ?.data?[index]
                 .isRequested = "accepted";
-            getDetailsGigsModel?.data?.isRequested == "accepted";
+            getDetailsGigsModel?.data?.isRequested = "accepted";
             emit(RequestGigStateLoaded());
           }
-          getDetailsGigs(id: gigId);
+
           emit(RequestGigStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
