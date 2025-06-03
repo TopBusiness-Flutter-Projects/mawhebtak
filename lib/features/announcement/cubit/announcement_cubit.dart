@@ -44,8 +44,11 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       }
     }
   }
+
+
   GetCountriesMainModel? announcementCategoryModel;
   bool isLoadingMore = false;
+  // category from announcementttttttttttttttttt
   getCategoryFromAnnouncment({
     bool isGetMore = false,
     String? page,
@@ -80,6 +83,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       emit(CategoryFromAnnouncementStateError(e.toString()));
     }
   }
+
   AnnouncementsModel? announcements;
   announcementsData({
     bool isGetMore = false,
@@ -116,5 +120,6 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       isLoadingMore = false;
     }
   }
+
 
 }

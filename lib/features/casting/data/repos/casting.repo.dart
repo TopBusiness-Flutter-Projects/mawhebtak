@@ -86,6 +86,22 @@ class CastingRepo {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, GetCountriesMainModel>> subCategoryFromCategoryGigs(
+      {required String categoryId}) async {
+    try {
+      var response = await api.get(EndPoints.getDataBaseUrl,
+          queryParameters: {
+            "model": "SubCategory",
+            "where[0]": "category_id,$categoryId",
+          });
+      return Right(GetCountriesMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+
+
 
   Future<Either<Failure, GetDetailsGigsModel>> getDetailsGigs(
       {required String id}) async {
@@ -101,18 +117,8 @@ class CastingRepo {
     }
   }
 
-  Future<Either<Failure, GetCountriesMainModel>> subCetCategory(
-      {required String categoryId}) async {
-    try {
-      var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
-        "model": "SubCategory",
-        "where[0]": "category_id,$categoryId",
-      });
-      return Right(GetCountriesMainModel.fromJson(response));
-    } on ServerException {
-      return Left(ServerFailure());
-    }
-  }
+
+
 
   Future<Either<Failure, DefaultMainModel>> actionGig(
       {required String gigId, required String status}) async {
