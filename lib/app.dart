@@ -14,7 +14,6 @@ import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
-import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/notification_screen.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
@@ -129,9 +128,6 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<AnnouncementCubit>(),
-          ),
-          BlocProvider(
-            create: (_) => injector.serviceLocator<RequestGigsCubit>(),
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<TopTalentsCubit>(),

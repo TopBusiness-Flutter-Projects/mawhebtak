@@ -88,9 +88,9 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               items: cubit.categoryModel?.data ?? [],
                               onChanged: (value) {
                                 cubit.selectedCategory = value;
-                                cubit.subCategoryId = value?.id;
                                 cubit.subCategoryFromCategoryGigsModel?.data = [];
                                 cubit.selectedSubCategory = null;
+                                print('id from sub ${value?.id}');
                                 cubit.subCategoryFromCategoryGigs(
                                     categoryId: value?.id.toString() ?? "");
                               },
@@ -125,6 +125,12 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     value: cubit.selectedSubCategory,
                                     items: cubit.subCategoryFromCategoryGigsModel?.data ?? [],
                                     onChanged: (value) {
+                                      // cubit.selectedCategory = value;
+                                      // cubit.subCategoryFromCategoryGigsModel?.data = [];
+                                      // cubit.selectedSubCategory = null;
+                                      // print('id from sub ${value?.id}');
+                                      // cubit.subCategoryFromCategoryGigs(
+                                      //     categoryId: value?.id.toString() ?? "");
                                       cubit.selectedSubCategory = value;
                                     },
                                   ),

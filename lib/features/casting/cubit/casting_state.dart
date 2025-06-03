@@ -1,6 +1,7 @@
  import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_datails_gigs_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 
 class CastingState {}
 
@@ -73,3 +74,14 @@ class CastingState {}
  class FollowAndUnFollowStateLoaded extends CastingState {}
  class FollowAndUnFollowStateLoading extends CastingState {}
  class CategoryFromGigsStateLoadingMore extends CastingState {}
+ final class RequestGigsStateLoadingMore extends CastingState {}
+ final class RequestGigsStateLoading extends CastingState {}
+
+ final class RequestGigsStateError extends CastingState {
+  final String? errorMessage;
+  RequestGigsStateError(this.errorMessage);
+ }
+ final class RequestGigsStateLoaded extends CastingState {
+  final RequestGigsModel? requestGigs;
+  RequestGigsStateLoaded(this.requestGigs);
+ }

@@ -1,4 +1,4 @@
-import '../../../../home/data/models/request_gigs_model.dart';
+import '../../../../casting/data/model/request_gigs_model.dart';
 
 class GetMainEventModel {
   List<EventAndGigsModel>? data;

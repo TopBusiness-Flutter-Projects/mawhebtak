@@ -1,4 +1,4 @@
-import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 
 class HomeModel {
   HomeData? data;
