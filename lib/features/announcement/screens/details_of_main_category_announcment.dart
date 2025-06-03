@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
+import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
@@ -54,7 +55,7 @@ class _DetailsOfMainCategoryAnnouncementState extends State<DetailsOfMainCategor
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildSubCategoryDropdown(context, cubit),
+                                //_buildSubCategoryDropdown(context, cubit),
                                 const SizedBox(height: 16),
                                 Flexible(
                                   child: (cubit.getGigsFromSubCategoryModel
@@ -97,27 +98,27 @@ class _DetailsOfMainCategoryAnnouncementState extends State<DetailsOfMainCategor
   }
 
   // Dropdown UI
-  Widget _buildSubCategoryDropdown(BuildContext context, CastingCubit cubit) {
-    return Container(
-      height: 70.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.grayLite,
-        borderRadius: BorderRadius.circular(8.sp),
-      ),
-      child: GeneralCustomDropdownButtonFormField<GetCountriesMainModelData>(
-        value: cubit.selectedSubCategory,
-        onChanged: (value) {
-          cubit.selectedSubCategory = value;
-
-          cubit.getGigsFromSubCategory(
-              id: cubit.selectedSubCategory?.id.toString() ?? '');
-        },
-        items: cubit.subCategoryModel?.data ?? [],
-        itemBuilder: (item) => item.name ?? '',
-      ),
-    );
-  }
+  // Widget _buildSubCategoryDropdown(BuildContext context, AnnouncementCubit cubit) {
+  //   return Container(
+  //     height: 70.h,
+  //     width: double.infinity,
+  //     decoration: BoxDecoration(
+  //       color: AppColors.grayLite,
+  //       borderRadius: BorderRadius.circular(8.sp),
+  //     ),
+  //     child: GeneralCustomDropdownButtonFormField<GetCountriesMainModelData>(
+  //       value: cubit.selectedSubCategory,
+  //       onChanged: (value) {
+  //         cubit.selectedSubCategory = value;
+  //
+  //         cubit.getGigsFromSubCategory(
+  //             id: cubit.selectedSubCategory?.id.toString() ?? '');
+  //       },
+  //       items: cubit.subCategoryModel?.data ?? [],
+  //       itemBuilder: (item) => item.name ?? '',
+  //     ),
+  //   );
+  // }
 
   // // Grid View for Gigs
   // Widget _buildGigsGridView(BuildContext context) {
