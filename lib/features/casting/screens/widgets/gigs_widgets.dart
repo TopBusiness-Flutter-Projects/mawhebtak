@@ -215,12 +215,9 @@ class _GigsWidgetState extends State<GigsWidget> {
                               if (user.data?.token == null) {
                                 checkLogin(context);
                               } else {
-                                print("hhhhhhhhhhhhhh");
                                 await widget.castingCubit?.requestGigs(
                                   index: widget.index!,
-                                  type: widget.eventAndGigsModel?.isRequested
-                                          .toString() ??
-                                      "",
+                                  type: widget.eventAndGigsModel?.isRequested.toString() ?? "",
                                   context: context,
                                   gigId:
                                       widget.eventAndGigsModel?.id.toString() ??

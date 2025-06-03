@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/casting/screens/widgets/gigs_widgets.dart';
-
+import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import '../../../core/exports.dart';
 
 class DetailsOfMainCategoryGigs extends StatefulWidget {
@@ -21,8 +22,8 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
   void initState() {
     var cubit = context.read<CastingCubit>();
     cubit.selectedSubCategory = null;
-    cubit.getSubCategory(categoryId: widget.categoryId);
-    // cubit.getGigsFromCategory(id: widget.categoryId);
+
+    cubit.subCategoryFromCategoryGigs(categoryId: widget.categoryId);
     super.initState();
   }
 
@@ -35,7 +36,8 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
           10.h.verticalSpace,
           CustomSimpleAppbar(
             title: 'request_gigs'.tr(),
-            isActionButton: false,
+            isActionButton: true,
+            filterType: 'casting',
           ),
           Flexible(
             child: Padding(
@@ -46,7 +48,7 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
 
                   return (state is SubCategoryStateLoading)
                       ? Center(child: const CustomLoadingIndicator())
-                      : (cubit.subCategoryModel?.data?.length == 0)
+                      : (cubit.subCategoryFromCategoryGigsModel?.data?.length == 0)
                           ? Center(
                               child: Text('no_data'.tr()),
                             )
@@ -105,14 +107,14 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
         borderRadius: BorderRadius.circular(8.sp),
       ),
       child: GeneralCustomDropdownButtonFormField<GetCountriesMainModelData>(
-        value: cubit.selectedSubCategory,
+
         onChanged: (value) {
           cubit.selectedSubCategory = value;
 
           cubit.getGigsFromSubCategory(
-              cubit.selectedSubCategory?.id.toString() ?? '');
+              id: cubit.selectedSubCategory?.id.toString() ?? '');
         },
-        items: cubit.subCategoryModel?.data ?? [],
+        items: cubit.subCategoryFromCategoryGigsModel?.data ?? [],
         itemBuilder: (item) => item.name ?? '',
       ),
     );

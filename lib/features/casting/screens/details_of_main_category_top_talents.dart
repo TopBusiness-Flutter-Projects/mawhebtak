@@ -72,7 +72,7 @@ class _DetailsOfMainCategoryTopTalentsState
                         onChanged: (GetCountriesMainModelData? value) {
                           subCategory.selectedCategory = value;
                           subCategory.subCategoryId = value?.id;
-                          subCategory.getSubCategory(
+                          subCategory.subCategoryFromCategoryGigs(
                               categoryId: value?.id.toString() ?? "");
                         },
                       ),

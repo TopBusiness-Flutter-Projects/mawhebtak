@@ -53,5 +53,17 @@ class AnnouncementRepo {
     }
   }
 
-
+  Future<Either<Failure, GetCountriesMainModel>> dataFromSubCategoryAnnouncement(
+      {required String categoryId}) async {
+    try {
+      var response = await dio.get(EndPoints.getDataBaseUrl,
+          queryParameters: {
+            "model": "SubCategory",
+            "where[0]": "category_id,$categoryId",
+          });
+      return Right(GetCountriesMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }
