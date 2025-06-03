@@ -41,8 +41,9 @@ class CustomContainerButton extends StatelessWidget {
         alignment: Alignment.center,
         padding: padding ?? EdgeInsets.symmetric(horizontal: 30.w),
         decoration: BoxDecoration(
-            color: color ?? AppColors.transparent,
-            borderRadius: BorderRadius.circular(8.r),
+          border: Border.all(color: borderColor ?? AppColors.transparent),
+          color: color ?? AppColors.transparent,
+          borderRadius: BorderRadius.circular(8.r),
         ),
         child: AutoSizeText(
           title.tr(),

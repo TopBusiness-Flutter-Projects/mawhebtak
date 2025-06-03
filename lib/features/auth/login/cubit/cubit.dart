@@ -21,12 +21,16 @@ class LoginCubit extends Cubit<LoginState> {
       final res = await api.login(email, password);
 
       res.fold((l) {
+        errorGetBar(l.toString());
         emit(LoginStateError());
       }, (r) {
         if (r.status == 200) {
           Preferences.instance.setUser(r);
-          Navigator.pushNamed(context, Routes.mainRoute);
           successGetBar(r.msg ?? '');
+          Navigator.pushNamed(
+            context,
+            Routes.mainRoute,
+          );
           emit(LoginStateLoaded());
         } else {
           errorGetBar(r.msg ?? '');
@@ -34,6 +38,8 @@ class LoginCubit extends Cubit<LoginState> {
         }
       });
     } catch (e) {
+      errorGetBar(e.toString());
+
       emit(LoginStateError());
       return null;
     }
