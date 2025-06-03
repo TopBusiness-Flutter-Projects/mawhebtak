@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -55,19 +56,16 @@ class CastingRepo {
   }
 
   // categories data
-  Future<Either<Failure, GetCountriesMainModel>> getCategoryFromGigs(
-      {
-        String ?page,
-        String ?orderBy,
-      }) async {
+  Future<Either<Failure, GetCountriesMainModel>> getCategoryFromGigs({
+    String? page,
+    String? orderBy,
+  }) async {
     try {
       var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Category",
-        "paginate":true,
-        "page":page,
-        "orderBy":orderBy,
-        "where[2]":"type,0"
-
+        "paginate": true,
+        "page": page,
+        "orderBy": orderBy,
       });
       return Right(GetCountriesMainModel.fromJson(response));
     } on ServerException {
@@ -76,17 +74,16 @@ class CastingRepo {
   }
 
   Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory({
-    String? id,
+    String? subCategoryId,
     String? categoryId,
     String? orderBy,
   }) async {
     try {
-      var response = await api.get(EndPoints.getDataBaseUrl,
-          queryParameters: {
+      log('00000 $subCategoryId');
+      var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Gig",
-        "where[1]": "sub_category_id,$id",
-            "where[2]":"type,0"
-
+        "where[0]": "sub_category_id,$subCategoryId",
+        // "where[2]": "type,0"
       });
       return Right(GetGigsFromSubCategoryModel.fromJson(response));
     } on ServerException {

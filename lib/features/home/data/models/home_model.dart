@@ -132,7 +132,7 @@ class TopTalent {
   String? name;
   String? image;
   dynamic headline;
-  int? followersCount;
+  dynamic followersCount;
   bool? isIFollow;
 
   TopTalent({
@@ -150,7 +150,7 @@ class TopTalent {
         image: json["image"],
         headline: json["headline"],
         followersCount: json["followers_count"],
-    isIFollow: json["is_i_follow"],
+        isIFollow: json["is_i_follow"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -194,6 +194,7 @@ class Slider {
         "url_type": urlType,
       };
 }
+
 class GigCategory {
   int? id;
   String? name;
@@ -204,12 +205,12 @@ class GigCategory {
   });
 
   factory GigCategory.fromJson(Map<String, dynamic> json) => GigCategory(
-    id: json["id"],
-    name: json["name"],
-  );
+        id: json["id"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
+        "id": id,
+        "name": name,
+      };
 }

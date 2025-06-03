@@ -4,7 +4,7 @@ import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/casting/screens/widgets/gigs_widgets.dart';
-import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
+
 import '../../../core/exports.dart';
 
 class DetailsOfMainCategoryGigs extends StatefulWidget {
@@ -21,8 +21,8 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
   void initState() {
     var cubit = context.read<CastingCubit>();
     cubit.selectedSubCategory = null;
+    // cubit.getGigsFromCategory(id: widget.categoryId);
     cubit.getSubCategory(categoryId: widget.categoryId);
-    cubit.getGigsFromCategory(id: widget.categoryId);
     super.initState();
   }
 
