@@ -1,9 +1,9 @@
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
-import 'package:mawhebtak/features/home/cubits/announcements_cubit/announcements_cubit.dart';
+import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
-import 'package:mawhebtak/features/home/screens/announcements_screen.dart';
+import 'package:mawhebtak/features/announcement/screens/all_announcements_screen.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_announcement_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_row.dart';
@@ -341,17 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: CustomRow(
                                 text: 'announcements'.tr(),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => BlocProvider(
-                                        create: (context) =>
-                                            AnnouncementsCubit()
-                                              ..announcementsData(page: '1'),
-                                        child: const AnnouncementsScreen(),
-                                      ),
-                                    ),
-                                  );
+                                 Navigator.pushNamed(context, Routes.allAnnouncementsRoute);
                                 },
                               ),
                             ),

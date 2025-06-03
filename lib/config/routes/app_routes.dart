@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/about_us/screens/about_us_screen.dart';
+import 'package:mawhebtak/features/announcement/screens/all_announcements_screen.dart';
+import 'package:mawhebtak/features/announcement/screens/details_of_main_category_announcment.dart';
 import 'package:mawhebtak/features/assistant/screens/add_assistant_screen.dart';
 import 'package:mawhebtak/features/assistant/screens/add_new_work_screen.dart';
 import 'package:mawhebtak/features/assistant/screens/work_details_screen.dart';
@@ -93,9 +95,10 @@ class Routes {
   static const String addAssistantRoute = '/addAssistant';
   static const String topTalentsRoute = '/topTalentsRoute';
   static const String requestGigsRoute = '/requestGigsRoute';
+  static const String allAnnouncementsRoute = '/allAnnouncementsRoute';
   static const String chatRoute = '/chatRoute';
-  static const String detailsOfMainCategoryFromGigsRoute =
-      '/detailsOfMainCategoryFromGigs';
+  static const String detailsOfMainCategoryFromGigsRoute = '/detailsOfMainCategoryFromGigs';
+  static const String detailsOfMainCategoryAnnouncementRoute = '/detailsOfMainCategoryAnnouncementRoute';
 
   static const String detailsOfMainCategoryFromTopTalentsRoute =
       '/detailsOfMainCategoryFromTopTalents';
@@ -187,6 +190,14 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
+        case Routes.detailsOfMainCategoryAnnouncementRoute:
+           String categoryId = settings.arguments as String;
+        return PageTransition(
+          child:  DetailsOfMainCategoryAnnouncement(categoryId: categoryId,),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
       case Routes.followersScreen:
         return PageTransition(
           child: const FollowersScreen(),
@@ -223,6 +234,12 @@ class AppRoutes {
       case Routes.notificationRoute:
         return PageTransition(
           child: const NotificationScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );case Routes.allAnnouncementsRoute:
+        return PageTransition(
+          child: const AllAnnouncementsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

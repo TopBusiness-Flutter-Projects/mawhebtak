@@ -1,6 +1,6 @@
 
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
-
+import 'package:mawhebtak/features/announcement/data/models/announcements_model.dart';
 import '../../../core/exports.dart';
 import '../data/repo/announcement_repo_impl.dart';
 part 'announcement_state.dart';
@@ -80,6 +80,41 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       emit(CategoryFromAnnouncementStateError(e.toString()));
     }
   }
-
+  AnnouncementsModel? announcements;
+  announcementsData({
+    bool isGetMore = false,
+    required String page,
+    String? orderBy,
+  }) async {
+    if (isGetMore) {
+      isLoadingMore = true;
+      emit(AnnouncementsStateLoadingMore());
+    } else {
+      emit(AnnouncementsStateLoading());
+    }
+    try {
+      final res = await api!.announcementsData(page: page, orderBy: orderBy);
+      res.fold((l) {
+        emit(AnnouncementsStateError(l.toString()));
+      }, (r) {
+        if (isGetMore) {
+          announcements = AnnouncementsModel(
+            links: r.links,
+            status: r.status,
+            msg: r.msg,
+            data: [...announcements!.data!, ...r.data!],
+          );
+          emit(AnnouncementsStateLoaded(announcements!));
+        } else {
+          announcements = r;
+          emit(AnnouncementsStateLoaded(r));
+        }
+      });
+    } catch (e) {
+      emit(AnnouncementsStateError(e.toString()));
+    } finally {
+      isLoadingMore = false;
+    }
+  }
 
 }

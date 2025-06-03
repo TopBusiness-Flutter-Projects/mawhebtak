@@ -258,6 +258,7 @@
   "enter_title": "Enter title",
   "select_date": "Select Date",
   "enter_description" : "Enter Description",
+  "request_announcement": "Request Announcement",
   "please_enter_valid_price": "please Enter valid price",
   "enter_end_price_must_greater_than_start_price": "must enter end price greater than start price"
 }

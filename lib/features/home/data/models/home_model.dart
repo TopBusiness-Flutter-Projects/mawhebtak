@@ -95,6 +95,7 @@ class Announcement {
   String? description;
   String? location;
   String? price;
+  bool? isFav;
 
   Announcement({
     this.id,
@@ -104,6 +105,7 @@ class Announcement {
     this.description,
     this.location,
     this.price,
+    this.isFav,
   });
 
   factory Announcement.fromJson(Map<String, dynamic> json) => Announcement(
@@ -114,6 +116,7 @@ class Announcement {
         description: json["description"],
         location: json["location"],
         price: json["price"],
+        isFav: json["is_fav"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -124,6 +127,7 @@ class Announcement {
         "description": description,
         "location": location,
         "price": price,
+        "is_fav": isFav,
       };
 }
 
@@ -132,7 +136,7 @@ class TopTalent {
   String? name;
   String? image;
   dynamic headline;
-  int? followersCount;
+  dynamic followersCount;
   bool? isIFollow;
 
   TopTalent({
@@ -150,7 +154,7 @@ class TopTalent {
         image: json["image"],
         headline: json["headline"],
         followersCount: json["followers_count"],
-    isIFollow: json["is_i_follow"],
+        isIFollow: json["is_i_follow"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -194,6 +198,7 @@ class Slider {
         "url_type": urlType,
       };
 }
+
 class GigCategory {
   int? id;
   String? name;
@@ -204,12 +209,12 @@ class GigCategory {
   });
 
   factory GigCategory.fromJson(Map<String, dynamic> json) => GigCategory(
-    id: json["id"],
-    name: json["name"],
-  );
+        id: json["id"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
+        "id": id,
+        "name": name,
+      };
 }
