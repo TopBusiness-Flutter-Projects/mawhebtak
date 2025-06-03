@@ -62,24 +62,27 @@ class _JobWidgetState extends State<JobWidget> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.userJop?.title ?? "",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: getMediumStyle(fontSize: 14.sp),
-                                    ),
-                                    10.h.verticalSpace,
-                                    // Text(
-                                    //   widget.userJop?.,
-                                    //   style: getMediumStyle(
-                                    //       fontSize: 13.sp,
-                                    //       color: AppColors.secondPrimary),
-                                    // ),
-                                  ],
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.userJop?.title ?? "",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: getMediumStyle(fontSize: 14.sp),
+                                      ),
+                                      10.h.verticalSpace,
+                                      // Text(
+                                      //   widget.userJop?.,
+                                      //   style: getMediumStyle(
+                                      //       fontSize: 13.sp,
+                                      //       color: AppColors.secondPrimary),
+                                      // ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

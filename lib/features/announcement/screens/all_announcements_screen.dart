@@ -55,7 +55,7 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
             CustomSimpleAppbar(
               title: 'announcement'.tr(),
               isActionButton: true,
-              filterType: 'announcement',
+              filterType: 'announcements',
             ),
             Expanded(
               child: Column(

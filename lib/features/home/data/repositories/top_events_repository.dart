@@ -9,7 +9,7 @@ class TopEventsRepository {
   final BaseApiConsumer dio;
   TopEventsRepository(this.dio);
   Future<Either<Failure, TopEventsModel>> topEventsData({
-    required String page,
+    String? page,
     String? orderBy,
   }) async {
     try {

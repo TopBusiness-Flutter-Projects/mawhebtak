@@ -47,10 +47,9 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CustomSimpleAppbar(
-              title: 'request_gigs'.tr(),
-              isActionButton: true,
-              filterType: 'casting',
-            ),
+                title: 'request_gigs'.tr(),
+                isActionButton: true,
+                filterType: "get_category_gigs"),
             (state is CategoryFromGigsStateLoading)
                 ? const Expanded(
                     child: Center(

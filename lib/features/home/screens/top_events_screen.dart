@@ -16,7 +16,8 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
   @override
   void initState() {
     scrollController.addListener(_scrollListener);
-    context.read<TopEventsCubit>().topEventsData(page: '1', isGetMore: false);
+    context.read<TopEventsCubit>().topEventsData(
+        page: '1', orderBy: selctedFilterOption?.key, isGetMore: false);
     super.initState();
   }
 
@@ -60,7 +61,10 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
                       child: Center(
                         child: RefreshIndicator(
                           onRefresh: () async {
-                            cubit.topEventsData(page: '1', isGetMore: false);
+                            cubit.topEventsData(
+                                page: '1',
+                                isGetMore: false,
+                                orderBy: selctedFilterOption?.key);
                           },
                           child: ListView.separated(
                             controller: scrollController,

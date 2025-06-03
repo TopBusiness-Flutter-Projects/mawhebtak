@@ -49,13 +49,15 @@ void showSortOptions(BuildContext context, String filterType,
 
     print('Selected Name: ${selectedOption.name}');
     print('Selected Key: ${selectedOption.key}');
+    print('Selected filterType:$filterType');
+    print('Selected filterType:${filterType == 'get_category_gigs'}');
 
     if (filterType == 'event') {
       context.read<TopEventsCubit>().topEventsData(
           orderBy: selctedFilterOption?.key ?? 'desc',
           page: '1',
           isGetMore: false);
-    } else if (filterType == 'announcement') {
+    } else if (filterType == 'announcements') {
       context.read<AnnouncementCubit>().announcementsData(
           page: '1',
           isGetMore: false,
@@ -65,7 +67,11 @@ void showSortOptions(BuildContext context, String filterType,
           page: '1',
           isGetMore: false,
           orderBy: selctedFilterOption?.key ?? 'desc');
-    }
+    } else if (filterType == 'get_category_gigs') {
+      context.read<CastingCubit>().getCategoryFromGigs(
+          page: '1',
+          isGetMore: false,
+          orderBy: selctedFilterOption?.key ?? 'desc');
     } else if (filterType == 'top_talents') {
       context.read<TopTalentsCubit>().topTalentsData(
           page: '1',
@@ -73,7 +79,9 @@ void showSortOptions(BuildContext context, String filterType,
           orderBy: selctedFilterOption?.key ?? 'desc');
     } else if (filterType == 'job') {
       context.read<JobsCubit>().getUserJobData(
-          page: '1', orderBy: selctedFilterOption?.key ?? 'desc');
+          page: '1',
+          isGetMore: false,
+          orderBy: selctedFilterOption?.key ?? 'desc');
     } else {}
-  }
-
+  } else {}
+}

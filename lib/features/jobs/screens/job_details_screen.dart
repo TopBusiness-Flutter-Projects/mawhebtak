@@ -105,7 +105,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
             ),
             10.w.horizontalSpace,
             // Everything else in one column
-            Expanded(
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -113,11 +113,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
+                      Flexible(
                         child: Text(
                           cubit.userJobDetailsModel?.data?.title ?? "",
                           style: getMediumStyle(fontSize: 14.sp),
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       InkWell(

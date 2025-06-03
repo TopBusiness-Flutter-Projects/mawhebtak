@@ -51,7 +51,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
             height: 20.h,
           ),
           CustomSimpleAppbar(
-              filterType: 'announcments',
+              filterType: 'announcements',
               title: "announcments".tr(),
               isSearchWidget: true),
           SizedBox(height: 4.h),

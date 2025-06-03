@@ -33,7 +33,7 @@ class _DetailsOfMainCategoryAnnouncementState
           CustomSimpleAppbar(
             title: 'request_announcement'.tr(),
             isActionButton: true,
-            filterType: 'announcement',
+            filterType: 'announcements',
           ),
           // Flexible(
           //   child: Padding(
@@ -203,7 +203,7 @@ class _DetailsOfMainCategoryAnnouncementState
 //       );
 //     },
 //   );
-  }
+}
 
   // Dropdown UI
   // Widget _buildSubCategoryDropdown(BuildContext context, AnnouncementCubit cubit) {
