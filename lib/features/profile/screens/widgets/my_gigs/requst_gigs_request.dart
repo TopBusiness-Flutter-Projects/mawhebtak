@@ -68,7 +68,8 @@ class GigsRequest extends StatelessWidget {
                   ? const Center(
                       child: CustomLoadingIndicator(),
                     )
-                  : (gigsRequestList?.status == 'new')
+                  : (gigsRequestList?.status == 'new' ||
+                          gigsRequestList?.status == 'pending')
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
