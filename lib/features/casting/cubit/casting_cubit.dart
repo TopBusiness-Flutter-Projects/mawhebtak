@@ -6,7 +6,7 @@ import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/casting/data/model/get_datails_gigs_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
-import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import '../../calender/data/model/countries_model.dart';
 import '../data/repos/casting.repo.dart';
@@ -61,6 +61,7 @@ class CastingCubit extends Cubit<CastingState> {
       emit(CategoryFromGigsStateError(e.toString()));
     }
   }
+
   // gigs from sub
   GetGigsFromSubCategoryModel? getGigsFromSubCategoryModel;
   getGigsFromSubCategory({required String? id}) async {
@@ -85,7 +86,8 @@ class CastingCubit extends Cubit<CastingState> {
   subCategoryFromCategoryGigs({required String categoryId}) async {
     emit(SubCategoryStateLoading());
     try {
-      final res = await castingRepo.subCategoryFromCategoryGigs(categoryId: categoryId);
+      final res =
+          await castingRepo.subCategoryFromCategoryGigs(categoryId: categoryId);
       res.fold((l) {
         emit(SubCategoryStateError(l.toString()));
       }, (r) {
@@ -98,6 +100,45 @@ class CastingCubit extends Cubit<CastingState> {
     }
   }
 
+  RequestGigsModel? allGigsModel;
+  allGigsData({
+    bool isGetMore = false,
+    required String page,
+    String? orderBy,
+  }) async {
+    if (isGetMore) {
+      isLoadingMore = true;
+      emit(RequestGigsStateLoadingMore());
+    } else {
+      emit(RequestGigsStateLoading());
+    }
+    try {
+      final res =
+          await castingRepo.requestGigsData(page: page, orderBy: orderBy);
+
+      res.fold((l) {
+        emit(RequestGigsStateError(l.toString()));
+      }, (r) {
+        if (isGetMore) {
+          allGigsModel = RequestGigsModel(
+            links: r.links,
+            status: r.status,
+            msg: r.msg,
+            data: [...allGigsModel!.data!, ...r.data!],
+          );
+          emit(RequestGigsStateLoaded(allGigsModel!));
+        } else {
+          allGigsModel = r;
+          emit(RequestGigsStateLoaded(allGigsModel!));
+        }
+        emit(RequestGigsStateLoaded(r));
+      });
+    } catch (e) {
+      emit(RequestGigsStateError(e.toString()));
+    } finally {
+      isLoadingMore = false;
+    }
+  }
 
   GetDetailsGigsModel? getDetailsGigsModel;
   getDetailsGigs({required String id}) async {
@@ -115,7 +156,6 @@ class CastingCubit extends Cubit<CastingState> {
       emit(CategoryFromGigsStateError(e.toString()));
     }
   }
-
 
   DefaultMainModel? defaultMainModel;
   actionGig({
@@ -158,55 +198,27 @@ class CastingCubit extends Cubit<CastingState> {
         if (r.status == 200) {
           Navigator.pop(context);
           successGetBar(r.msg);
-          if (context
-                      .read<RequestGigsCubit>()
-                      .requestGigs
-                      ?.data?[index]
-                      .isRequested ==
-                  "pending" ||
-              getDetailsGigsModel?.data?.isRequested == "pending") {
-            context
-                .read<RequestGigsCubit>()
-                .requestGigs
-                ?.data?[index]
-                .isRequested = "null";
+          if (allGigsModel?.data?[index].isRequested.toString() == "pending" ||
+              getDetailsGigsModel?.data?.isRequested.toString() == "pending") {
+            allGigsModel?.data?[index].isRequested = "null";
             getDetailsGigsModel?.data?.isRequested = "null";
-
+            print("getDetailsGigsModel?.data?.isRequested = null    ${getDetailsGigsModel?.data?.isRequested}");
+            print("model${getDetailsGigsModel?.data}");
             emit(RequestGigStateLoaded());
-          } else if (context
-                      .read<RequestGigsCubit>()
-                      .requestGigs
-                      ?.data?[index]
-                      .isRequested ==
-                  "null" ||
-              context
-                      .read<RequestGigsCubit>()
-                      .requestGigs
-                      ?.data?[index]
-                      .isRequested ==
-                  "rejected" ||
-              getDetailsGigsModel?.data?.isRequested == "null" ||
-              getDetailsGigsModel?.data?.isRequested == "rejected") {
+          } else if (allGigsModel?.data?[index].isRequested.toString() == "null" ||
+              allGigsModel?.data?[index].isRequested.toString() == "rejected" ||
+              getDetailsGigsModel?.data?.isRequested.toString() == "null" ||
+              getDetailsGigsModel?.data?.isRequested.toString() == "rejected") {
             Navigator.pushNamed(context, Routes.chatRoute);
-            context
-                .read<RequestGigsCubit>()
-                .requestGigs
-                ?.data?[index]
-                .isRequested = "pending";
+            allGigsModel?.data?[index].isRequested = "pending";
             getDetailsGigsModel?.data?.isRequested = "pending";
-
-            emit(RequestGigStateLoaded());
-          } else {
-            context
-                .read<RequestGigsCubit>()
-                .requestGigs
-                ?.data?[index]
-                .isRequested = "accepted";
-            getDetailsGigsModel?.data?.isRequested = "accepted";
+            print(
+                "getDetailsGigsModel?.data?.isRequested = pending    ${getDetailsGigsModel?.data?.isRequested}");
+            print("model${getDetailsGigsModel?.data}");
             emit(RequestGigStateLoaded());
           }
 
-          emit(RequestGigStateLoaded());
+
         } else {
           errorGetBar(r.msg.toString());
           emit(RequestGigStateError(r.msg.toString()));
@@ -246,7 +258,7 @@ class CastingCubit extends Cubit<CastingState> {
           ...context.read<CalenderCubit>().validVideos
         ],
         location: locationAddressController.text,
-        subCategoryId: subCategoryId.toString(),
+        subCategoryId: selectedSubCategory?.id.toString() ?? "",
       );
       res.fold((l) {
         errorGetBar(l.toString());

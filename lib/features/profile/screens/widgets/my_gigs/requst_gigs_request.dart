@@ -1,8 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
-import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import '../../../../../core/exports.dart';
 import '../../../../../core/preferences/preferences.dart';
 import '../../../../../core/utils/check_login.dart';
@@ -67,8 +68,7 @@ class GigsRequest extends StatelessWidget {
                   ? const Center(
                       child: CustomLoadingIndicator(),
                     )
-                  : (gigsRequestList?.status == 'pending' ||
-                          gigsRequestList?.status == 'new')
+                  : (gigsRequestList?.status == 'new')
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,10 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/casting/screens/widgets/gigs_widgets.dart';
-import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
@@ -29,9 +27,7 @@ class _CastingScreenState extends State<CastingScreen> {
   void initState() {
     super.initState();
     context.read<TopTalentsCubit>().topTalentsData(page: '1', isGetMore: false);
-    context
-        .read<RequestGigsCubit>()
-        .requestGigsData(page: '1', isGetMore: false);
+    context.read<CastingCubit>().allGigsData(page: '1', isGetMore: false);
     tabs = ["talents".tr(), "gigs".tr()];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CastingCubit>().getCategoryFromGigs();
@@ -57,13 +53,13 @@ class _CastingScreenState extends State<CastingScreen> {
   _scrollRequestGigsListener() {
     if (scrollGigsController.position.maxScrollExtent ==
         scrollGigsController.offset) {
-      if (context.read<RequestGigsCubit>().requestGigs?.links?.next != null) {
+      if (context.read<CastingCubit>().allGigsModel?.links?.next != null) {
         Uri uri = Uri.parse(
-            context.read<RequestGigsCubit>().requestGigs?.links?.next ?? "");
+            context.read<CastingCubit>().allGigsModel?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
         context
-            .read<RequestGigsCubit>()
-            .requestGigsData(page: page ?? '1', isGetMore: true);
+            .read<CastingCubit>()
+            .allGigsData(page: page ?? '1', isGetMore: true);
       }
     }
   }
@@ -264,53 +260,35 @@ class _CastingScreenState extends State<CastingScreen> {
             style: TextStyle(color: AppColors.blackLite, fontSize: 16.sp),
           ),
         ),
-        BlocBuilder<RequestGigsCubit, RequestGigsState>(
-          builder: (context, state) {
-            if (state is RequestGigsStateLoading) {
-              return const Center(child: CustomLoadingIndicator());
-            }
-            return Expanded(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  context
-                      .read<RequestGigsCubit>()
-                      .requestGigsData(page: '1', isGetMore: false);
-                },
-                child: ListView.builder(
-                  controller: scrollGigsController,
-                  itemCount: context
-                          .read<RequestGigsCubit>()
-                          .requestGigs
-                          ?.data
-                          ?.length ??
-                      0,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  itemBuilder: (context, index) {
-                    if (index ==
-                            context
-                                .read<RequestGigsCubit>()
-                                .requestGigs
-                                ?.data
-                                ?.length &&
-                        state is RequestGigsStateLoadingMore) {
-                      return const CustomLoadingIndicator();
-                    }
-                    return GigsWidget(
-                      index: index,
-                      castingCubit: castingCubit,
-                      eventAndGigsModel: context
-                          .read<RequestGigsCubit>()
-                          .requestGigs
-                          ?.data?[index],
-                    );
-                  },
-                ),
-              ),
-            );
-          },
-        )
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              context
+                  .read<CastingCubit>()
+                  .allGigsData(page: '1', isGetMore: false);
+            },
+            child: ListView.builder(
+              controller: scrollGigsController,
+              itemCount:
+                  context.read<CastingCubit>().allGigsModel?.data?.length ?? 0,
+              physics: const AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
+              itemBuilder: (context, index) {
+                if (index ==
+                    context.read<CastingCubit>().allGigsModel?.data?.length) {
+                  return const CustomLoadingIndicator();
+                }
+                return GigsWidget(
+                  index: index,
+                  castingCubit: castingCubit,
+                  eventAndGigsModel:
+                      context.read<CastingCubit>().allGigsModel?.data?[index],
+                );
+              },
+            ),
+          ),
+        ),
       ],
     );
   }

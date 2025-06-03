@@ -21,8 +21,6 @@ import 'package:mawhebtak/features/casting/screens/details_of_main_category_top_
 import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
 import 'package:mawhebtak/features/contact_us/screens/contact_us_screen.dart';
-import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
-import 'package:mawhebtak/features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/request_gigs_screen.dart';
 import 'package:mawhebtak/features/home/screens/top_talents_screen.dart';
@@ -455,9 +453,7 @@ class AppRoutes {
         );
       case Routes.requestGigsRoute:
         return PageTransition(
-          child: BlocProvider(
-              create: (context) => RequestGigsCubit(),
-              child: const RequestGigsScreen()),
+          child: const RequestGigsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

@@ -5,7 +5,7 @@ import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
-import 'package:mawhebtak/features/home/data/models/request_gigs_model.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
@@ -203,22 +203,29 @@ class _GigsWidgetState extends State<GigsWidget> {
                   ),
                   10.verticalSpace,
                   if (widget.eventAndGigsModel?.isMine == false ||
-                      (widget.eventAndGigsModel?.isRequested == "accept"))
+                      (widget.eventAndGigsModel?.isRequested == "accepted"))
                     Padding(
                         padding: EdgeInsets.only(bottom: 10.h),
                         child: CustomButton(
-                            color: widget.eventAndGigsModel?.isRequested ==
-                                    "pending"
-                                ? AppColors.red
-                                : AppColors.primary,
-                            onTap: () async {
-                              final user =
-                                  await Preferences.instance.getUserModel();
-                              if (user.data?.token == null) {
-                                checkLogin(context);
-                              } else {
-                                log('sssss ${widget.eventAndGigsModel?.isRequested}');
-                                widget.castingCubit?.requestGigs(
+                          color: (widget.eventAndGigsModel?.isRequested ==
+                                  "pending")
+                              ? AppColors.red
+                              : (widget.eventAndGigsModel?.isRequested ==
+                                      "accepted")
+                                  ? AppColors.blueLight
+                                  : AppColors.primary,
+                          onTap: () async {
+                            final user =
+                                await Preferences.instance.getUserModel();
+                            if (user.data?.token == null) {
+                              checkLogin(context);
+                            } else {
+                              if (widget.eventAndGigsModel?.isRequested ==
+                                      "pending" ||
+                                  widget.eventAndGigsModel?.isRequested ==
+                                      "rejected" ||
+                                  widget.eventAndGigsModel?.isRequested == null) {
+                                widget.castingCubit!.requestGigs(
                                   context: context,
                                   index: widget.index!,
                                   type: widget.eventAndGigsModel?.isRequested
@@ -229,11 +236,18 @@ class _GigsWidgetState extends State<GigsWidget> {
                                           "",
                                 );
                               }
-                            },
-                            title: (widget.eventAndGigsModel?.isRequested ==
-                                    "pending")
-                                ? "cancel".tr()
-                                : "request_this_gigs".tr())),
+
+
+                            }
+                          },
+                          title: (widget.eventAndGigsModel?.isRequested ==
+                                  "pending")
+                              ? "cancel".tr()
+                              : (widget.eventAndGigsModel?.isRequested ==
+                                      "accepted")
+                                  ? "accept".tr()
+                                  : "request_this_gigs".tr(),
+                        )),
                 ],
               ),
             ),

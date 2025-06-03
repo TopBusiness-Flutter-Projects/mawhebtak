@@ -12,6 +12,7 @@ import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/casting/data/model/add_gig_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_datails_gigs_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 
 import '../../../calender/data/model/countries_model.dart';
 
@@ -101,7 +102,23 @@ class CastingRepo {
 
 
 
+  Future<Either<Failure, RequestGigsModel>> requestGigsData({
+    required String page,
+    String? orderBy,
+  }) async {
+    try {
+      var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
+        "model": "Gig",
+        "paginate": "true",
+        "orderBy": orderBy ?? 'desc',
+        "page": page
+      });
 
+      return Right(RequestGigsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
   Future<Either<Failure, GetDetailsGigsModel>> getDetailsGigs(
       {required String id}) async {
     try {
