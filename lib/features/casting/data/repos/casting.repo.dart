@@ -76,7 +76,7 @@ class CastingRepo {
   Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory(
       {required String subCategoryId}) async {
     try {
-      log('00000 $subCategoryId');
+
       var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Gig",
         "where[1]": "sub_category_id,$subCategoryId",
