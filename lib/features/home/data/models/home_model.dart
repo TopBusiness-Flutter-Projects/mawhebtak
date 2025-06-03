@@ -95,6 +95,7 @@ class Announcement {
   String? description;
   String? location;
   String? price;
+  bool? isFav;
 
   Announcement({
     this.id,
@@ -104,6 +105,7 @@ class Announcement {
     this.description,
     this.location,
     this.price,
+    this.isFav,
   });
 
   factory Announcement.fromJson(Map<String, dynamic> json) => Announcement(
@@ -114,6 +116,7 @@ class Announcement {
         description: json["description"],
         location: json["location"],
         price: json["price"],
+        isFav: json["is_fav"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -124,6 +127,7 @@ class Announcement {
         "description": description,
         "location": location,
         "price": price,
+        "is_fav": isFav,
       };
 }
 

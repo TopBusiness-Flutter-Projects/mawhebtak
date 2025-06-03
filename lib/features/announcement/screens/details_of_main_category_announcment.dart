@@ -1,23 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
+import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/casting/screens/widgets/gigs_widgets.dart';
-
+import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import '../../../core/exports.dart';
 
-class DetailsOfMainCategoryGigs extends StatefulWidget {
-  const DetailsOfMainCategoryGigs({super.key, required this.categoryId});
+class DetailsOfMainCategoryAnnouncement extends StatefulWidget {
+  const DetailsOfMainCategoryAnnouncement({super.key, required this.categoryId});
   final String categoryId;
 
   @override
-  State<DetailsOfMainCategoryGigs> createState() =>
-      _DetailsOfMainCategoryGigsState();
+  State<DetailsOfMainCategoryAnnouncement> createState() =>
+      _DetailsOfMainCategoryAnnouncementState();
 }
 
-class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
+class _DetailsOfMainCategoryAnnouncementState extends State<DetailsOfMainCategoryAnnouncement> {
   @override
   void initState() {
     var cubit = context.read<CastingCubit>();
@@ -34,9 +35,9 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
         children: [
           10.h.verticalSpace,
           CustomSimpleAppbar(
-            title: 'request_gigs'.tr(),
+            title: 'request_announcement'.tr(),
             isActionButton: true,
-            filterType: 'casting',
+            filterType: 'announcement',
           ),
           Flexible(
             child: Padding(
@@ -54,7 +55,7 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildSubCategoryDropdown(context, cubit),
+                                //_buildSubCategoryDropdown(context, cubit),
                                 const SizedBox(height: 16),
                                 Flexible(
                                   child: (cubit.getGigsFromSubCategoryModel
@@ -97,27 +98,27 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
   }
 
   // Dropdown UI
-  Widget _buildSubCategoryDropdown(BuildContext context, CastingCubit cubit) {
-    return Container(
-      height: 70.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.grayLite,
-        borderRadius: BorderRadius.circular(8.sp),
-      ),
-      child: GeneralCustomDropdownButtonFormField<GetCountriesMainModelData>(
-        value: cubit.selectedSubCategory,
-        onChanged: (value) {
-          cubit.selectedSubCategory = value;
-
-          cubit.getGigsFromSubCategory(
-              id: cubit.selectedSubCategory?.id.toString() ?? '');
-        },
-        items: cubit.subCategoryModel?.data ?? [],
-        itemBuilder: (item) => item.name ?? '',
-      ),
-    );
-  }
+  // Widget _buildSubCategoryDropdown(BuildContext context, AnnouncementCubit cubit) {
+  //   return Container(
+  //     height: 70.h,
+  //     width: double.infinity,
+  //     decoration: BoxDecoration(
+  //       color: AppColors.grayLite,
+  //       borderRadius: BorderRadius.circular(8.sp),
+  //     ),
+  //     child: GeneralCustomDropdownButtonFormField<GetCountriesMainModelData>(
+  //       value: cubit.selectedSubCategory,
+  //       onChanged: (value) {
+  //         cubit.selectedSubCategory = value;
+  //
+  //         cubit.getGigsFromSubCategory(
+  //             id: cubit.selectedSubCategory?.id.toString() ?? '');
+  //       },
+  //       items: cubit.subCategoryModel?.data ?? [],
+  //       itemBuilder: (item) => item.name ?? '',
+  //     ),
+  //   );
+  // }
 
   // // Grid View for Gigs
   // Widget _buildGigsGridView(BuildContext context) {

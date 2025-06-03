@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
-
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 
@@ -84,11 +83,11 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                                   children: [
                                     AutoSizeText(
                                         widget.announcement?.user?.name ??
-                                            "Ahmed Mokhtar",
+                                            "",
                                         style: getMediumStyle(fontSize: 16.sp)),
                                     AutoSizeText(
                                       widget.announcement?.user?.headline ??
-                                          "Talent / Actor Expert",
+                                          "",
                                       style: getRegularStyle(
                                           fontSize: 14.sp,
                                           color: AppColors.grayLight),
@@ -174,7 +173,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                 SizedBox(height: 8.h),
                 AutoSizeText(
                     widget.announcement?.title ??
-                        "Offer 20% on accessories photographs",
+                        "",
                     maxLines: 1,
                     style: getSemiBoldStyle(
                         fontSize: 14.sp, color: AppColors.grayDark)),
@@ -189,7 +188,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                           Expanded(
                             child: Text(
                               widget.announcement?.location ??
-                                  "Cairo, Nasr City",
+                                  "",
 
                               style: getRegularStyle(
                                   color: AppColors.grayLight, fontSize: 14.sp),

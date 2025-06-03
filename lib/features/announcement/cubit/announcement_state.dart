@@ -18,3 +18,16 @@ final class DateTimeSelected extends AnnouncementState {
   String? formattedDateTime;
   DateTimeSelected(this.formattedDateTime);
 }
+final class AnnouncementsStateLoadingMore extends AnnouncementState {}
+final class AnnouncementsStateLoading extends AnnouncementState {}
+
+final class AnnouncementsStateError extends AnnouncementState {
+  final String? errorMessage;
+  AnnouncementsStateError(this.errorMessage);
+}
+
+final class AnnouncementsStateLoaded extends AnnouncementState {
+  final AnnouncementsModel? announcementsModel;
+  AnnouncementsStateLoaded(this.announcementsModel);
+}
+

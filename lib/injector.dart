@@ -16,11 +16,9 @@ import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/contact_us/data/repos/contact_us_repo.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
-import 'package:mawhebtak/features/home/cubits/announcements_cubit/announcements_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
-import 'package:mawhebtak/features/home/data/repositories/announcements_repository.dart';
 import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
 import 'package:mawhebtak/features/home/data/repositories/request_gigs_repository.dart';
 import 'package:mawhebtak/features/home/data/repositories/top_talents_repository.dart';
@@ -80,7 +78,7 @@ Future<void> setupCubit() async {
   );
   serviceLocator.registerFactory(
     () => AnnouncementCubit(
-      serviceLocator(),
+serviceLocator()
     ),
   );
   serviceLocator.registerFactory(
@@ -171,7 +169,6 @@ Future<void> setupCubit() async {
   serviceLocator.registerFactory(() => FeedsCubit());
   serviceLocator.registerFactory(() => LocationCubit());
   serviceLocator.registerFactory(() => RequestGigsCubit());
-  serviceLocator.registerFactory(() => AnnouncementsCubit());
 }
 
 Future<void> setupRepo() async {
@@ -199,7 +196,6 @@ Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => CalenderRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => CastingRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => JobsRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => AnnouncementsRepository(serviceLocator()));
   serviceLocator.registerLazySingleton(() => AssistantRepo(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => TopTalentsRepository(serviceLocator()));

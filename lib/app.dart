@@ -13,7 +13,6 @@ import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
-import 'package:mawhebtak/features/home/cubits/announcements_cubit/announcements_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
@@ -69,7 +68,7 @@ class _MyAppState extends State<MyApp> {
             create: (_) => injector.serviceLocator<SplashCubit>(),
           ),
           BlocProvider(
-            create: (_) => injector.serviceLocator<AnnouncementsCubit>(),
+            create: (_) => injector.serviceLocator<AnnouncementCubit>(),
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<EventCubit>(),

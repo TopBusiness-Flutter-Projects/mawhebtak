@@ -73,17 +73,16 @@ class CastingRepo {
     }
   }
 
-  Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory({
-    String? subCategoryId,
-    String? categoryId,
-    String? orderBy,
-  }) async {
+  Future<Either<Failure, GetGigsFromSubCategoryModel>> getGigsFromSubCategory(
+      {required String id}) async {
+
     try {
       log('00000 $subCategoryId');
       var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Gig",
-        "where[0]": "sub_category_id,$subCategoryId",
-        // "where[2]": "type,0"
+        "where[1]": "sub_category_id,$id",
+        "where[2]":"type,0"
+
       });
       return Right(GetGigsFromSubCategoryModel.fromJson(response));
     } on ServerException {

@@ -1,6 +1,5 @@
+import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
-
-import '../../features/home/cubits/announcements_cubit/announcements_cubit.dart';
 import '../../features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import '../../features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import '../../features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
@@ -57,7 +56,7 @@ void showSortOptions(BuildContext context, String filterType,
           page: '1',
           isGetMore: false);
     } else if (filterType == 'announcement') {
-      context.read<AnnouncementsCubit>().announcementsData(
+      context.read<AnnouncementCubit>().announcementsData(
           page: '1',
           isGetMore: false,
           orderBy: selctedFilterOption?.key ?? 'desc');
