@@ -136,6 +136,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
@@ -145,6 +146,7 @@ import 'package:mawhebtak/features/feeds/screens/widgets/video_from_file_screen.
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
 import 'package:video_player/video_player.dart';
 import '../../../core/exports.dart';
+import '../../auth/login/data/models/login_model.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
 
 class WritePost extends StatefulWidget {
@@ -155,8 +157,14 @@ class WritePost extends StatefulWidget {
 }
 
 class _WritePostState extends State<WritePost> {
+  LoginModel? loginModel;
   @override
   void initState() {
+    Preferences.instance.getUserModel().then((value) {
+      setState(() {
+        loginModel = value;
+      });
+    });
     context.read<FeedsCubit>().getUserFromPreferences();
     context.read<FeedsCubit>().loadUserFromPreferences();
     super.initState();
@@ -187,7 +195,12 @@ class _WritePostState extends State<WritePost> {
                         SizedBox(
                           height: 40.h,
                           width: 40.w,
-                          child: Image.asset(ImageAssets.profileImage),
+                          child: loginModel?.data?.image == null
+                              ? Image.asset(ImageAssets.profileImage)
+                              : CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      loginModel?.data?.image ?? ""),
+                                ),
                         ),
                         SizedBox(width: 8.w),
                         Column(

@@ -30,7 +30,7 @@ class UserModel {
   int? isRegister;
   String? email;
   String? phone;
-  int? wallet;
+  dynamic wallet;
   String? socialType;
   String? token;
 

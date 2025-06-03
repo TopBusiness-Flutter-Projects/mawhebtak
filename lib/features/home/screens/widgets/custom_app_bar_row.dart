@@ -1,12 +1,13 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
+import '../../../auth/login/data/models/login_model.dart';
 
-class CustomAppBarRow extends StatelessWidget {
+class CustomAppBarRow extends StatefulWidget {
   CustomAppBarRow(
       {super.key,
       this.color,
@@ -21,11 +22,30 @@ class CustomAppBarRow extends StatelessWidget {
   Color? colorTextFromSearchTextField;
   Color? backgroundNotification;
   Color? color;
+
+  @override
+  State<CustomAppBarRow> createState() => _CustomAppBarRowState();
+}
+
+class _CustomAppBarRowState extends State<CustomAppBarRow> {
+  LoginModel? loginModel;
+  @override
+  void initState() {
+    super.initState();
+    if (loginModel == null) {
+      Preferences.instance.getUserModel().then((value) {
+        // setState(() {
+        loginModel = value;
+        // });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: color ?? AppColors.white,
+      color: widget.color ?? AppColors.white,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -33,18 +53,28 @@ class CustomAppBarRow extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                  height: 40.h,
-                  width: 40.w,
-                  child: Image.asset(
-                    ImageAssets.profileImage,
-                  )),
+                height: 40.h,
+                width: 40.w,
+                child: loginModel?.data?.image == null
+                    ? Image.asset(ImageAssets.profileImage)
+                    : ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: loginModel!.data!.image!,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(strokeWidth: 2),
+                          errorWidget: (context, url, error) =>
+                              Image.asset(ImageAssets.profileImage),
+                        ),
+                      ),
+              ),
               Expanded(
                 child: Container(
                     height: 40.h,
                     width: 171.w,
                     decoration: BoxDecoration(
-                      color:
-                          backgroundColorTextFieldSearch ?? AppColors.blackLite,
+                      color: widget.backgroundColorTextFieldSearch ??
+                          AppColors.blackLite,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     margin: const EdgeInsets.only(left: 10),
@@ -56,19 +86,19 @@ class CustomAppBarRow extends StatelessWidget {
                           Text("search".tr(),
                               style: getRegularStyle(
                                   fontSize: 13.sp,
-                                  color: colorTextFromSearchTextField ??
+                                  color: widget.colorTextFromSearchTextField ??
                                       AppColors.white)),
                           const Spacer(),
                           SvgPicture.asset(
                             AppIcons.searchIcon,
-                            color: colorSearchIcon ?? AppColors.white,
+                            color: widget.colorSearchIcon ?? AppColors.white,
                           ),
                         ],
                       ),
                     )),
               ),
               10.w.horizontalSpace,
-              isMore == true
+              widget.isMore == true
                   ? Container()
                   : Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.0.w),
@@ -105,7 +135,8 @@ class CustomAppBarRow extends StatelessWidget {
                     height: 40.h,
                     width: 40.w,
                     decoration: BoxDecoration(
-                      color: backgroundNotification ?? AppColors.grayDark,
+                      color:
+                          widget.backgroundNotification ?? AppColors.grayDark,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: Padding(
@@ -113,7 +144,7 @@ class CustomAppBarRow extends StatelessWidget {
                       child: SvgPicture.asset(
                           height: 21.h,
                           width: 18.w,
-                          isMore == true
+                          widget.isMore == true
                               ? AppIcons.notificationWithBlueContainer
                               : AppIcons.notificationIcon),
                     ),
