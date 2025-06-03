@@ -1,11 +1,6 @@
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
-import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
-import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
-import 'package:mawhebtak/features/casting/screens/widgets/gigs_widgets.dart';
-import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
-import 'package:mawhebtak/features/home/screens/widgets/custom_announcement_widget.dart';
 import '../../../core/exports.dart';
 
 class DetailsOfMainCategoryAnnouncement extends StatefulWidget {
@@ -36,9 +31,9 @@ class _DetailsOfMainCategoryAnnouncementState
         children: [
           10.h.verticalSpace,
           CustomSimpleAppbar(
-            title: 'request_gigs'.tr(),
+            title: 'request_announcement'.tr(),
             isActionButton: true,
-            filterType: 'casting',
+            filterType: 'announcement',
           ),
           // Flexible(
           //   child: Padding(

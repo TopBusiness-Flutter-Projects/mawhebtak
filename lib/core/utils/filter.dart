@@ -1,6 +1,5 @@
 import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
-import '../../features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import '../../features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import '../../features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import '../../features/jobs/cubit/jobs_cubit.dart';
@@ -62,15 +61,11 @@ void showSortOptions(BuildContext context, String filterType,
           isGetMore: false,
           orderBy: selctedFilterOption?.key ?? 'desc');
     } else if (filterType == 'gigs') {
-      context.read<RequestGigsCubit>().requestGigsData(
+      context.read<CastingCubit>().allGigsData(
           page: '1',
           isGetMore: false,
           orderBy: selctedFilterOption?.key ?? 'desc');
-    } else if (filterType == 'casting') {
-      context.read<RequestGigsCubit>().requestGigsData(
-          page: '1',
-          isGetMore: false,
-          orderBy: selctedFilterOption?.key ?? 'desc');
+    }
     } else if (filterType == 'top_talents') {
       context.read<TopTalentsCubit>().topTalentsData(
           page: '1',
@@ -81,4 +76,4 @@ void showSortOptions(BuildContext context, String filterType,
           page: '1', orderBy: selctedFilterOption?.key ?? 'desc');
     } else {}
   }
-}
+

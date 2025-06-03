@@ -17,10 +17,8 @@ import 'package:mawhebtak/features/contact_us/data/repos/contact_us_repo.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
-import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
-import 'package:mawhebtak/features/home/data/repositories/request_gigs_repository.dart';
 import 'package:mawhebtak/features/home/data/repositories/top_talents_repository.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/data/repos/jobs.repo.dart';
@@ -168,7 +166,6 @@ serviceLocator()
   );
   serviceLocator.registerFactory(() => FeedsCubit());
   serviceLocator.registerFactory(() => LocationCubit());
-  serviceLocator.registerFactory(() => RequestGigsCubit());
 }
 
 Future<void> setupRepo() async {
@@ -200,8 +197,6 @@ Future<void> setupRepo() async {
   serviceLocator
       .registerLazySingleton(() => TopTalentsRepository(serviceLocator()));
   serviceLocator.registerLazySingleton(() => FeedsRepository(serviceLocator()));
-  serviceLocator
-      .registerLazySingleton(() => RequestGigsRepository(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => TopEventsRepository(serviceLocator()));
 }
