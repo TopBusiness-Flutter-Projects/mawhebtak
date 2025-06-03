@@ -30,4 +30,38 @@ final class AnnouncementsStateLoaded extends AnnouncementState {
   final AnnouncementsModel? announcementsModel;
   AnnouncementsStateLoaded(this.announcementsModel);
 }
+class SubCategoryStateError extends AnnouncementState {
+  final String errorMessage;
+
+  SubCategoryStateError(this.errorMessage);
+}
+class SubCategoryStateLoading extends AnnouncementState {}
+class SubCategoryStateLoaded extends AnnouncementState {
+  final GetCountriesMainModel? getCountriesMainModel;
+
+  SubCategoryStateLoaded(this.getCountriesMainModel);
+
+}
+class AnnouncementsFromCategoryStateLoading extends AnnouncementState {}
+class AnnouncementsDetailsStateLoading extends AnnouncementState {}
+class AnnouncementsDetailsStateLoaded extends AnnouncementState {}
+class AnnouncementsDetailsStateError extends AnnouncementState {
+  final String errorMessage;
+
+  AnnouncementsDetailsStateError(this.errorMessage);
+
+}
+class AnnouncementsFromCategoryStateLoaded extends AnnouncementState {
+
+
+}
+class AnnouncementsFromCategoryStateError extends AnnouncementState {
+  final String errorMessage;
+
+  AnnouncementsFromCategoryStateError(this.errorMessage);
+}class CategoryFromAnnouncementsStateError extends AnnouncementState {
+  final String errorMessage;
+
+  CategoryFromAnnouncementsStateError(this.errorMessage);
+}
 
