@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
@@ -66,23 +65,8 @@ class CastingCubit extends Cubit<CastingState> {
     emit(GigsFromCategoryStateLoading());
     try {
       final res = await castingRepo.getGigsFromSubCategory(
-          subCategoryId: id, categoryId: null);
-      res.fold((l) {
-        emit(GigsFromCategoryStateError(l.toString()));
-      }, (r) {
-        getGigsFromSubCategoryModel = r;
-        emit(GigsFromCategoryStateLoaded(r));
-      });
-    } catch (e) {
-      emit(CategoryFromGigsStateError(e.toString()));
-    }
-  }
-
-  getGigsFromCategory({String? id, String? orderBy}) async {
-    emit(GigsFromCategoryStateLoading());
-    try {
-      final res = await castingRepo.getGigsFromSubCategory(
-          categoryId: id, subCategoryId: null, orderBy: orderBy);
+        subCategoryId: id ?? '',
+      );
       res.fold((l) {
         emit(GigsFromCategoryStateError(l.toString()));
       }, (r) {

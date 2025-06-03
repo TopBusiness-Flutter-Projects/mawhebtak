@@ -75,9 +75,6 @@ void showSortOptions(BuildContext context, String filterType,
           page: '1',
           isGetMore: false,
           orderBy: selctedFilterOption?.key ?? 'desc');
-    } else if (filterType == 'casting_home') {
-      context.read<CastingCubit>().getGigsFromCategory(
-          id: categoryId, orderBy: selctedFilterOption?.key ?? 'desc');
     } else {}
   }
 }

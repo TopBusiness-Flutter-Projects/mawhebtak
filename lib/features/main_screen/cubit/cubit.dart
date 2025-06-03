@@ -2,6 +2,8 @@ import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 
 import '../../../core/exports.dart';
+import '../../../core/preferences/preferences.dart';
+import '../../auth/login/data/models/login_model.dart';
 import '../../calender/screens/calender_screen.dart';
 import '../../casting/screens/casting_screen.dart';
 import '../../feeds/screens/feeds_screen.dart';
@@ -10,7 +12,9 @@ import '../data/repo/main_repo_impl.dart';
 import 'state.dart';
 
 class MainCubit extends Cubit<MainState> {
-  MainCubit(this.api) : super(MainInitial());
+  MainCubit(this.api) : super(MainInitial()) {
+    getUserData();
+  }
   MainRepo api;
   List<Widget> screens = [
     const HomeScreen(),
@@ -24,5 +28,16 @@ class MainCubit extends Cubit<MainState> {
   changePage(int index) {
     currentpage = index;
     emit(ChangepageIndexx());
+  }
+
+  LoginModel? loginModel;
+
+  void getUserData() {
+    if (loginModel == null) {
+      Preferences.instance.getUserModel().then((value) {
+        loginModel = value;
+        // });
+      });
+    }
   }
 }

@@ -22,7 +22,7 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
     var cubit = context.read<CastingCubit>();
     cubit.selectedSubCategory = null;
     cubit.getSubCategory(categoryId: widget.categoryId);
-    cubit.getGigsFromCategory(id: widget.categoryId);
+    // cubit.getGigsFromCategory(id: widget.categoryId);
     super.initState();
   }
 

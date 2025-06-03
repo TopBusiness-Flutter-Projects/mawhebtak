@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
@@ -28,19 +29,6 @@ class CustomAppBarRow extends StatefulWidget {
 }
 
 class _CustomAppBarRowState extends State<CustomAppBarRow> {
-  LoginModel? loginModel;
-  @override
-  void initState() {
-    super.initState();
-    if (loginModel == null) {
-      Preferences.instance.getUserModel().then((value) {
-        // setState(() {
-        loginModel = value;
-        // });
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,11 +43,15 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
               SizedBox(
                 height: 40.h,
                 width: 40.w,
-                child: loginModel?.data?.image == null
+                child: context.read<MainCubit>().loginModel?.data?.image == null
                     ? Image.asset(ImageAssets.profileImage)
                     : ClipOval(
                         child: CachedNetworkImage(
-                          imageUrl: loginModel!.data!.image!,
+                          imageUrl: context
+                              .read<MainCubit>()
+                              .loginModel!
+                              .data!
+                              .image!,
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
                               const CircularProgressIndicator(strokeWidth: 2),
