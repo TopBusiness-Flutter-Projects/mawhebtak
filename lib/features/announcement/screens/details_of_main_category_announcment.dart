@@ -1,6 +1,8 @@
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
+import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
+import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
-import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
+import 'package:mawhebtak/features/home/screens/widgets/custom_announcement_widget.dart';
 import '../../../core/exports.dart';
 
 class DetailsOfMainCategoryAnnouncement extends StatefulWidget {
@@ -17,9 +19,8 @@ class _DetailsOfMainCategoryAnnouncementState
     extends State<DetailsOfMainCategoryAnnouncement> {
   @override
   void initState() {
-    var cubit = context.read<CastingCubit>();
-    cubit.selectedSubCategory = null;
-    cubit.subCategoryFromCategoryGigs(categoryId: widget.categoryId);
+    var cubit = context.read<AnnouncementCubit>();
+    cubit.subCategoryFromCategoryAnnouncement(categoryId: widget.categoryId);
     super.initState();
   }
 
@@ -35,67 +36,71 @@ class _DetailsOfMainCategoryAnnouncementState
             isActionButton: true,
             filterType: 'announcement',
           ),
-          // Flexible(
-          //   child: Padding(
-          //     padding: EdgeInsets.only(top: 20.h, right: 10.w, left: 10.w),
-          //     child: BlocBuilder<CastingCubit, CastingState>(
-          //       builder: (context, state) {
-          //         var cubit = context.read<CastingCubit>();
-          //
-          //         return (state is SubCategoryStateLoading)
-          //             ? Center(child: const CustomLoadingIndicator())
-          //             : (cubit.subCategoryModel?.data?.length == 0)
-          //             ? Center(
-          //           child: Text('no_data'.tr()),
-          //         )
-          //             : Column(
-          //           crossAxisAlignment: CrossAxisAlignment.start,
-          //           children: [
-          //             _buildSubCategoryDropdown(context, cubit),
-          //             const SizedBox(height: 16),
-          //             Flexible(
-          //               child: (cubit.getGigsFromSubCategoryModel
-          //                   ?.data?.length ==
-          //                   0 ||
-          //                   cubit.getGigsFromSubCategoryModel ==
-          //                       null)
-          //                   ? Center(
-          //                 child: Text('no_data'.tr()),
-          //               )
-          //                   : ListView.builder(
-          //                 shrinkWrap: true,
-          //                 physics:
-          //                 const AlwaysScrollableScrollPhysics(),
-          //                 itemCount: cubit
-          //                     .getGigsFromSubCategoryModel
-          //                     ?.data
-          //                     ?.length,
-          //                 padding: EdgeInsets.symmetric(
-          //                     horizontal: 12.w),
-          //                 itemBuilder: (context, index) =>
-          //                     CustomAnnouncementWidget(
-          //                       announcement: announcementsData?.data?[index],
-          //                       isLeftPadding: index == 0 ? true : false,
-          //                       isRightPadding: index ==
-          //                           (announcementsData?.data?.length ?? 1) - 1
-          //                           ? true
-          //                           : false,
-          //                     ),
-          //               ),
-          //             )
-          //           ],
-          //         );
-          //       },
-          //     ),
-          //   ),
-          // ),
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.only(top: 20.h, right: 10.w, left: 10.w),
+              child: BlocBuilder<AnnouncementCubit, AnnouncementState>(
+                builder: (context, state) {
+                  var cubit = context.read<AnnouncementCubit>();
+                  return (state is SubCategoryStateLoading)
+                      ? const Center(child: CustomLoadingIndicator())
+                      : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildSubCategoryDropdown(context, cubit),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            (state is AnnouncementsStateLoading)
+                                ? const Expanded(
+                              child: Center(
+                                child: CustomLoadingIndicator(),
+                              ),
+                            )
+                                : Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8.w, right: 8.w),
+                                  child: GridView.builder(
+                                    shrinkWrap: true,
+                                    gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 1,
+                                        mainAxisSpacing: 8.h,
+                                        crossAxisSpacing: 8.w,
+                                        childAspectRatio: 0.7),
+                                    itemBuilder: (context, index) =>
+                                        CustomAnnouncementWidget(
+                                          announcement: cubit.announcements?.data?[index],
+                                          isLeftPadding: index == 0 ? true : false,
+                                          isRightPadding: index ==
+                                              ( cubit.announcements?.data?.length ?? 1) - 1
+                                              ? true
+                                              : false,
+                                        ),
+                                    itemCount:  cubit.announcements?.data?.length ?? 0,
+                                  ),
+                                )),
+                            if (state is AnnouncementsStateLoadingMore)
+                              const CustomLoadingIndicator(),
+                          ],
+                        ),
+                      )
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
   // Dropdown UI
-  Widget _buildSubCategoryDropdown(BuildContext context, CastingCubit cubit) {
+  Widget _buildSubCategoryDropdown(BuildContext context, AnnouncementCubit cubit) {
     return Container(
       height: 70.h,
       width: double.infinity,
@@ -108,10 +113,10 @@ class _DetailsOfMainCategoryAnnouncementState
         onChanged: (value) {
           cubit.selectedSubCategory = value;
 
-          cubit.getGigsFromSubCategory(
+          cubit.getAnnouncementsFromSubCategory(
               id: cubit.selectedSubCategory?.id.toString() ?? '');
         },
-        items: cubit.subCategoryFromCategoryGigsModel?.data ?? [],
+        items: cubit.subCategoryFromCategoryAnnouncementsModel?.data ?? [],
         itemBuilder: (item) => item.name ?? '',
       ),
     );
