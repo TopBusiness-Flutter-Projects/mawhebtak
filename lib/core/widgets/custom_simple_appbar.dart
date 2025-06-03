@@ -1,4 +1,3 @@
-
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/utils/filter.dart';
 
@@ -17,6 +16,7 @@ class CustomSimpleAppbar extends StatelessWidget {
       this.arrowColor,
       this.color,
       this.filterType,
+      this.categoryId,
       this.isWithShadow = false,
       this.titleColor});
   final String title;
@@ -29,6 +29,7 @@ class CustomSimpleAppbar extends StatelessWidget {
   final String? actionIcon;
   final bool? isWithShadow;
   final String? filterType;
+  final String? categoryId;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,7 +58,8 @@ class CustomSimpleAppbar extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10.w, right: 10.w,top: 10.h,bottom: 5.h),
+                      padding: EdgeInsets.only(
+                          left: 10.w, right: 10.w, top: 10.h, bottom: 5.h),
                       child: Container(
                         decoration: BoxDecoration(
                             color: colorButton ?? AppColors.grayLite,
@@ -75,7 +77,8 @@ class CustomSimpleAppbar extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
+                  Flexible(
+                    fit: FlexFit.tight,
                     child: Text(
                       title,
                       textAlign: TextAlign.center,
@@ -99,7 +102,8 @@ class CustomSimpleAppbar extends StatelessWidget {
                   if (isActionButton ?? false)
                     InkWell(
                       onTap: () {
-                        showSortOptions(context, filterType ?? '');
+                        showSortOptions(context, filterType ?? '',
+                            categoryId: categoryId);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -110,9 +114,7 @@ class CustomSimpleAppbar extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 5.h,
-            ),
+            SizedBox(height: 5.h),
             if (isSearchWidget ?? false)
               Padding(
                 padding: const EdgeInsets.all(15.0),

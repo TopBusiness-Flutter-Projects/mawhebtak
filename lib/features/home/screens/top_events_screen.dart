@@ -1,6 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
-import 'package:mawhebtak/features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import '../../../core/exports.dart';
@@ -38,7 +36,7 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<TopEventsCubit, TopEventsState>(
       builder: (BuildContext context, state) {
-        var topEvents = context.read<TopEventsCubit>().topEvents;
+        var cubit = context.read<TopEventsCubit>();
         return Scaffold(
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,22 +56,36 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                       child: Center(
-                        child: ListView.separated(
-                          controller: scrollController,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: topEvents?.data?.length ?? 0,
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) {
-                            return CustomTopEventList(
-                              topEvent: topEvents?.data?[index],
-                              isAll: true,
-                            );
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            cubit.topEventsData(page: '1', isGetMore: false);
                           },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return SizedBox(
-                              height: 10.h,
-                            );
-                          },
+                          child: ListView.separated(
+                            controller: scrollController,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: context
+                                    .read<TopEventsCubit>()
+                                    .topEvents
+                                    ?.data
+                                    ?.length ??
+                                0,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CustomTopEventList(
+                                topEvent: context
+                                    .read<TopEventsCubit>()
+                                    .topEvents
+                                    ?.data?[index],
+                                isAll: true,
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(
+                                height: 10.h,
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
