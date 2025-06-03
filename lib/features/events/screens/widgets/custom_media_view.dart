@@ -15,7 +15,6 @@ class MediaCarousel extends StatelessWidget {
       itemCount: mediaList.length,
       itemBuilder: (context, index, realIndex) {
         final media = mediaList[index];
-
         return GestureDetector(
           onTap: () {
             Navigator.push(

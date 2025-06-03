@@ -14,7 +14,7 @@ class JobWidget extends StatefulWidget {
     required this.jobsCubit,
     required this.index,
   });
-  final UserJopData? userJop;
+  final UserJobModelData? userJop;
   final JobsCubit jobsCubit;
   final int index;
   @override
@@ -57,33 +57,32 @@ class _JobWidgetState extends State<JobWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 250.w,
-                                    child: Text(
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
+                          Flexible(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
                                       widget.userJop?.title ?? "",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                       style: getMediumStyle(fontSize: 14.sp),
                                     ),
-                                  ),
-                                  10.h.verticalSpace,
-                                  // Text(
-                                  //   widget.userJop?.,
-                                  //   style: getMediumStyle(
-                                  //       fontSize: 13.sp,
-                                  //       color: AppColors.secondPrimary),
-                                  // ),
-                                ],
-                              ),
-                            ],
+                                    10.h.verticalSpace,
+                                    // Text(
+                                    //   widget.userJop?.,
+                                    //   style: getMediumStyle(
+                                    //       fontSize: 13.sp,
+                                    //       color: AppColors.secondPrimary),
+                                    // ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                           InkWell(
                               onTap: () async {
@@ -112,10 +111,10 @@ class _JobWidgetState extends State<JobWidget> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
+                          Flexible(
                             child: Text(
-                              maxLines: 1,
                               widget.userJop?.location ?? "",
+                              maxLines: 1,
                               style: getMediumStyle(
                                   fontSize: 13.sp, color: AppColors.grayDate),
                             ),

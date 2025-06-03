@@ -3,6 +3,7 @@ import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import '../../features/home/cubits/request_gigs_cubit/request_gigs_cubit.dart';
 import '../../features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import '../../features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
+import '../../features/jobs/cubit/jobs_cubit.dart';
 import '../exports.dart';
 
 class SortOption {
@@ -75,6 +76,9 @@ void showSortOptions(BuildContext context, String filterType,
           page: '1',
           isGetMore: false,
           orderBy: selctedFilterOption?.key ?? 'desc');
+    } else if (filterType == 'job') {
+      context.read<JobsCubit>().getUserJobData(
+          page: '1', orderBy: selctedFilterOption?.key ?? 'desc');
     } else {}
   }
 }

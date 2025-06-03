@@ -3,6 +3,7 @@ import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
+import '../../../core/utils/filter.dart';
 import '../../home/screens/widgets/custom_announcement_widget.dart';
 
 class AnnouncementScreen extends StatefulWidget {
@@ -17,8 +18,11 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   late final ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    context.read<AnnouncementCubit>().announcementsData(page: '1',isGetMore: false);
-    context.read<AnnouncementCubit>().getCategoryFromAnnouncment(page: '1',isGetMore: false,orderBy: "desc");
+    context
+        .read<AnnouncementCubit>()
+        .announcementsData(page: '1', isGetMore: false);
+    context.read<AnnouncementCubit>().getCategoryFromAnnouncment(
+        page: '1', isGetMore: false, orderBy: "desc");
     scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -28,12 +32,12 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
       if (context.read<AnnouncementCubit>().announcements?.links?.next !=
           null) {
         Uri uri = Uri.parse(
-            context.read<AnnouncementCubit>().announcements?.links?.next ??
-                "");
+            context.read<AnnouncementCubit>().announcements?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
-        context
-            .read<AnnouncementCubit>()
-            .announcementsData(page: page ?? '1', isGetMore: true);
+        context.read<AnnouncementCubit>().announcementsData(
+            page: page ?? '1',
+            isGetMore: true,
+            orderBy: selctedFilterOption?.key);
       }
     }
   }
@@ -51,13 +55,12 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
               title: "announcments".tr(),
               isSearchWidget: true),
           SizedBox(height: 4.h),
-
           Flexible(
             child: BlocBuilder<AnnouncementCubit, AnnouncementState>(
                 builder: (context, state) {
-                  var cubit = context.read<AnnouncementCubit>();
-                  var announcementsData = cubit.announcements;
-                  var announcementsCategoryData = cubit.announcementCategoryModel;
+              var cubit = context.read<AnnouncementCubit>();
+              var announcementsData = cubit.announcements;
+              var announcementsCategoryData = cubit.announcementCategoryModel;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -70,14 +73,16 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       itemCount: announcementsCategoryData?.data?.length ?? 0,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-
                         return Padding(
-                          padding: EdgeInsetsDirectional.only(start: 10.w, end: 10.w),
+                          padding: EdgeInsetsDirectional.only(
+                              start: 10.w, end: 10.w),
                           child: InkWell(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.detailsOfMainCategoryFromGigsRoute,
-                                  arguments: announcementsCategoryData?.data?[index].id.toString());
+                              Navigator.pushNamed(context,
+                                  Routes.detailsOfMainCategoryFromGigsRoute,
+                                  arguments: announcementsCategoryData
+                                      ?.data?[index].id
+                                      .toString());
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -107,21 +112,39 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                                     width: 130.w,
                                     child: Padding(
                                       padding: EdgeInsets.only(
-                                          bottom: 10.h, left: 10.w, right: 10.w),
+                                          bottom: 10.h,
+                                          left: 10.w,
+                                          right: 10.w),
                                       child: Text.rich(
                                         TextSpan(
                                           children: [
                                             WidgetSpan(
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                  color: AppColors.secondPrimary,
+                                                  color:
+                                                      AppColors.secondPrimary,
                                                 ),
                                                 child: Text(
-                                                  (announcementsCategoryData?.data![index].name ?? "").substring(
-                                                      0,
-                                                      (announcementsCategoryData?.data![index].name?.length ?? 0) >= 5
-                                                          ? 5
-                                                          : (announcementsCategoryData?.data![index].name?.length ?? 0)),
+                                                  (announcementsCategoryData
+                                                              ?.data![index]
+                                                              .name ??
+                                                          "")
+                                                      .substring(
+                                                          0,
+                                                          (announcementsCategoryData
+                                                                          ?.data![
+                                                                              index]
+                                                                          .name
+                                                                          ?.length ??
+                                                                      0) >=
+                                                                  5
+                                                              ? 5
+                                                              : (announcementsCategoryData
+                                                                      ?.data![
+                                                                          index]
+                                                                      .name
+                                                                      ?.length ??
+                                                                  0)),
                                                   style: getMediumStyle(
                                                     color: Colors.white,
                                                     fontSize: 16.sp,
@@ -130,8 +153,17 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                                               ),
                                             ),
                                             TextSpan(
-                                              text: (announcementsCategoryData?.data![index].name?.length ?? 0) > 5
-                                                  ? (announcementsCategoryData?.data![index].name ?? "").substring(5)
+                                              text: (announcementsCategoryData
+                                                              ?.data![index]
+                                                              .name
+                                                              ?.length ??
+                                                          0) >
+                                                      5
+                                                  ? (announcementsCategoryData
+                                                              ?.data![index]
+                                                              .name ??
+                                                          "")
+                                                      .substring(5)
                                                   : "",
                                               style: getMediumStyle(
                                                 color: AppColors.white,

@@ -3,6 +3,8 @@ import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_announcement_widget.dart';
 
+import '../../../core/utils/filter.dart';
+
 class AllAnnouncementsScreen extends StatefulWidget {
   const AllAnnouncementsScreen({super.key});
 
@@ -32,9 +34,10 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
         Uri uri = Uri.parse(
             context.read<AnnouncementCubit>().announcements?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
-        context
-            .read<AnnouncementCubit>()
-            .announcementsData(page: page ?? '1', isGetMore: true);
+        context.read<AnnouncementCubit>().announcementsData(
+            page: page ?? '1',
+            isGetMore: true,
+            orderBy: selctedFilterOption?.key);
       }
     }
   }
@@ -54,7 +57,6 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
               isActionButton: true,
               filterType: 'announcement',
             ),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -205,6 +205,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                             },
                             controller: jopCubit.descriptionController,
                             isMessage: true,
+                            keyboardType: TextInputType.multiline,
                           ),
                           Text(
                             "image_or_video".tr(),

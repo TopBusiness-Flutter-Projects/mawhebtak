@@ -1,5 +1,3 @@
-
-
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
@@ -11,7 +9,7 @@ import 'jobs_state.dart';
 
 class JobsCubit extends Cubit<JobsState> {
   JobsCubit(this.jobsRepo) : super(JobsInitial());
-  JobsRepo jobsRepo ;
+  JobsRepo jobsRepo;
   DateTime? selectedDate;
   TextEditingController jopUserTitleController = TextEditingController();
   TextEditingController priceStartAt = TextEditingController();
@@ -20,7 +18,7 @@ class JobsCubit extends Cubit<JobsState> {
   TextEditingController locationController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  Future<void> selectDateTime( BuildContext context) async {
+  Future<void> selectDateTime(BuildContext context) async {
     DateTime? date = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -46,16 +44,18 @@ class JobsCubit extends Cubit<JobsState> {
         selectedDate = finalDateTime; // ✅ احفظ التاريخ المختار
 
         String formattedDateTime =
-        DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
+            DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
         eventDateController.text = formattedDateTime;
 
         emit(DateTimeSelected(formattedDateTime));
       }
     }
   }
-  UserJopModel? userJopModel;
+
+  UserJobModel? userJopModel;
   bool isLoadingMore = false;
-  getUserJopData({bool isGetMore = false,required String page}) async {
+  getUserJobData(
+      {bool isGetMore = false, required String page, String? orderBy}) async {
     if (isGetMore) {
       isLoadingMore = true;
       emit(GetUserJopStateLoadingMore());
@@ -63,13 +63,13 @@ class JobsCubit extends Cubit<JobsState> {
       emit(GetUserJopStateLoading());
     }
     try {
-      final res = await jobsRepo.getUserJopData(page: page);
+      final res = await jobsRepo.getUserJopData(page: page, orderBy: orderBy);
 
       res.fold((l) {
         emit(GetUserJopStateError(l.toString()));
       }, (r) {
         if (isGetMore) {
-          userJopModel = UserJopModel(
+          userJopModel = UserJobModel(
             links: r.links,
             status: r.status,
             msg: r.msg,
@@ -84,55 +84,53 @@ class JobsCubit extends Cubit<JobsState> {
       });
     } catch (e) {
       emit(GetUserJopStateError(e.toString()));
-    }
-    finally {
+    } finally {
       isLoadingMore = false;
     }
   }
-  UserJopDetailsModel? userJopDetailsModel;
+
+  UserJobDetailsModel? userJobDetailsModel;
   getUserJopDetailsData({required String userJopId}) async {
     emit(GetUserJopDetailsStateLoaded());
 
     try {
-      final res = await jobsRepo.getUserJopDetailsData(userJopId:userJopId);
+      final res = await jobsRepo.getUserJopDetailsData(userJopId: userJopId);
 
       res.fold((l) {
         emit(GetUserJopDetailsStateError(l.toString()));
       }, (r) {
-
-        userJopDetailsModel = r;
+        userJobDetailsModel = r;
         emit(GetUserJopStateLoaded());
       });
     } catch (e) {
       emit(GetUserJopDetailsStateError(e.toString()));
     }
-
   }
 
-  toggleFavorite({required String userJopId,required int index}) async {
+  toggleFavorite({required String userJopId, required int index}) async {
     emit(ToggleFavoriteStateLoading());
     try {
-      final res = await jobsRepo.toggleFavorite(userJopId:userJopId);
+      final res = await jobsRepo.toggleFavorite(userJopId: userJopId);
 
       res.fold((l) {
         emit(ToggleFavoriteStateError(l.toString()));
       }, (r) {
         successGetBar(r.msg.toString());
-        if(userJopModel?.data?[index].isFav == true || userJopDetailsModel?.data?.isFav == true) {
+        if (userJopModel?.data?[index].isFav == true ||
+            userJobDetailsModel?.data?.isFav == true) {
           userJopModel?.data?[index].isFav = false;
-          userJopDetailsModel?.data?.isFav = false;
-        }
-        else{
+          userJobDetailsModel?.data?.isFav = false;
+        } else {
           userJopModel?.data?[index].isFav = true;
-          userJopDetailsModel?.data?.isFav = true;
+          userJobDetailsModel?.data?.isFav = true;
         }
         emit(ToggleFavoriteStateLoaded());
       });
     } catch (e) {
       emit(ToggleFavoriteStateError(e.toString()));
     }
-
   }
+
   addJopUser({required BuildContext context}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(AddUserJopStateLoading());
@@ -141,20 +139,20 @@ class JobsCubit extends Cubit<JobsState> {
       final res = await jobsRepo.addJopUser(
         title: jopUserTitleController.text,
         deadLine: selectedDate ?? DateTime.now(),
-        priceEndAt:priceStartAt.text,
+        priceEndAt: priceStartAt.text,
         priceStartAt: priceEndAt.text,
         description: descriptionController.text,
         lat: context
-            .read<LocationCubit>()
-            .selectedLocation
-            ?.latitude
-            .toString() ??
+                .read<LocationCubit>()
+                .selectedLocation
+                ?.latitude
+                .toString() ??
             "0.0",
         long: context
-            .read<LocationCubit>()
-            .selectedLocation
-            ?.longitude
-            .toString() ??
+                .read<LocationCubit>()
+                .selectedLocation
+                ?.longitude
+                .toString() ??
             "0.0",
         mediaFiles: [
           ...context.read<CalenderCubit>().myImagesF ?? [],
@@ -176,7 +174,7 @@ class JobsCubit extends Cubit<JobsState> {
         context.read<CalenderCubit>().myImages = [];
         context.read<CalenderCubit>().validVideos = [];
         Navigator.pop(context);
-        getUserJopData(page: '1');
+        getUserJobData(page: '1', isGetMore: false);
         emit(AddUserJopStateLoaded());
       });
     } catch (e) {
@@ -186,5 +184,4 @@ class JobsCubit extends Cubit<JobsState> {
     }
     Navigator.pop(context);
   }
-
 }

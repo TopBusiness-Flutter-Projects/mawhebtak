@@ -2,6 +2,7 @@ import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import '../../../core/exports.dart';
+import '../../../core/utils/filter.dart';
 
 class TopEventsScreen extends StatefulWidget {
   const TopEventsScreen({super.key});
@@ -25,9 +26,10 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
         Uri uri = Uri.parse(
             context.read<TopEventsCubit>().topEvents?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
-        context
-            .read<TopEventsCubit>()
-            .topEventsData(page: page ?? '1', isGetMore: true);
+        context.read<TopEventsCubit>().topEventsData(
+            page: page ?? '1',
+            isGetMore: true,
+            orderBy: selctedFilterOption?.key);
       }
     }
   }

@@ -28,9 +28,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
         Uri uri =
             Uri.parse(context.read<FeedsCubit>().posts?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
-        context
-            .read<FeedsCubit>()
-            .postsData(page: page ?? '1', isGetMore: true);
+        context.read<FeedsCubit>().postsData(
+              page: page ?? '1',
+              isGetMore: true,
+            );
       }
     }
   }

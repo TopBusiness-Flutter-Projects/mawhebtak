@@ -7,6 +7,7 @@ import 'package:mawhebtak/features/jobs/cubit/jobs_state.dart';
 
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
+import '../../events/screens/widgets/custom_media_view.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   const JobDetailsScreen(
@@ -29,55 +30,70 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.grayLite,
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              children: [
-                CustomSimpleAppbar(
-                  title: 'job_details'.tr(),
-                  isActionButton: false,
+    var jobDetailsCubit = context.read<JobsCubit>();
+
+    return BlocBuilder<JobsCubit, JobsState>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: AppColors.grayLite,
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    CustomSimpleAppbar(
+                      title: 'job_details'.tr(),
+                      isActionButton: false,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        (jobDetailsCubit.userJobDetailsModel?.data?.media ==
+                                    null ||
+                                jobDetailsCubit
+                                    .userJobDetailsModel!.data!.media!.isEmpty)
+                            ? Container()
+                            : MediaCarousel(
+                                mediaList: jobDetailsCubit
+                                        .userJobDetailsModel?.data?.media ??
+                                    []),
+                        20.h.verticalSpace,
+                        _buildJobInfoCard(),
+                        20.h.verticalSpace,
+                        _buildPostedByCard(cubit: jobDetailsCubit),
+                        20.h.verticalSpace,
+                        _buildJobDescriptionCard(cubit: jobDetailsCubit),
+                        30.h.verticalSpace,
+                      ],
+                    ), // Extra space before button
+                  ],
                 ),
-                BlocBuilder<JobsCubit, JobsState>(builder: (context, state) {
-                  var jobDetailsCubit = context.read<JobsCubit>();
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      20.h.verticalSpace,
-                      _buildJobInfoCard(job: jobDetailsCubit),
-                      20.h.verticalSpace,
-                      _buildPostedByCard(job: jobDetailsCubit),
-                      20.h.verticalSpace,
-                      _buildJobDescriptionCard(job: jobDetailsCubit),
-                      30.h.verticalSpace,
-                    ],
-                  );
-                }), // Extra space before button
-              ],
-            ),
+              ),
+              // Button fixed at the bottom
+              jobDetailsCubit.userJobDetailsModel?.data?.isMine == true
+                  ? Container()
+                  : CustomButton(
+                      onTap: () async {
+                        final user = await Preferences.instance.getUserModel();
+                        if (user.data?.token == null) {
+                          checkLogin(context);
+                        } else {
+                          Navigator.pushNamed(context, Routes.chatRoute);
+                        }
+                      },
+                      title: "apply_for_this_job".tr()),
+            ],
           ),
-          // Button fixed at the bottom
-          CustomButton(
-              onTap: () async {
-                final user = await Preferences.instance.getUserModel();
-                if (user.data?.token == null) {
-                  checkLogin(context);
-                } else {
-                  Navigator.pushNamed(context, Routes.chatRoute);
-                }
-              },
-              title: "apply_for_this_job".tr()),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildJobInfoCard({required JobsCubit job}) {
+  Widget _buildJobInfoCard() {
     return _buildWhiteCard(
       child: BlocBuilder<JobsCubit, JobsState>(builder: (context, state) {
+        var cubit = context.read<JobsCubit>();
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -88,7 +104,6 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               height: 40.h,
             ),
             10.w.horizontalSpace,
-
             // Everything else in one column
             Expanded(
               child: Column(
@@ -100,7 +115,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          job.userJopDetailsModel?.data?.title ?? "",
+                          cubit.userJobDetailsModel?.data?.title ?? "",
                           style: getMediumStyle(fontSize: 14.sp),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -113,48 +128,41 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                               checkLogin(context);
                             } else {
                               print(
-                                  "the is fav ${job.userJopDetailsModel?.data?.isFav}");
-                              job.toggleFavorite(
+                                  "the is fav ${cubit.userJobDetailsModel?.data?.isFav}");
+                              cubit.toggleFavorite(
                                   index: widget.index,
                                   userJopId: widget.userJopId.toString() ?? "");
                             }
                           },
                           child: Icon(
-                            job.userJopDetailsModel?.data?.isFav == true
+                            cubit.userJobDetailsModel?.data?.isFav == true
                                 ? Icons.favorite
                                 : Icons.favorite_border,
                             size: 20.sp,
-                            color: job.userJopDetailsModel?.data?.isFav == true
-                                ? AppColors.primary
-                                : AppColors.darkGray.withOpacity(0.5),
+                            color:
+                                cubit.userJobDetailsModel?.data?.isFav == true
+                                    ? AppColors.primary
+                                    : AppColors.darkGray.withOpacity(0.5),
                           )),
                     ],
                   ),
                   6.h.verticalSpace,
 
-                  // Company name
-                  // Text(
-                  //   "job_company_sample".tr(),
-                  //   style: getMediumStyle(
-                  //     fontSize: 13.sp,
-                  //     color: AppColors.secondPrimary,
-                  //   ),
-                  // ),
-                  // 10.h.verticalSpace,
-
-                  // Location and date
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        job.userJopDetailsModel?.data?.location ?? "",
-                        style: getMediumStyle(
-                          fontSize: 13.sp,
-                          color: AppColors.grayDate,
+                      Flexible(
+                        child: Text(
+                          cubit.userJobDetailsModel?.data?.location ?? "",
+                          style: getMediumStyle(
+                            fontSize: 13.sp,
+                            color: AppColors.grayDate,
+                          ),
                         ),
                       ),
                       Text(
-                        job.userJopDetailsModel?.data?.deadline ?? "",
+                        cubit.userJobDetailsModel?.data?.deadline ?? "",
                         style: getMediumStyle(
                           fontSize: 13.sp,
                           color: AppColors.grayDate,
@@ -175,7 +183,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   Row(
                     children: [
                       Text(
-                        job.userJopDetailsModel?.data?.priceStartAt ?? "",
+                        cubit.userJobDetailsModel?.data?.priceStartAt ?? "",
                         style: getMediumStyle(
                           fontSize: 14.sp,
                           color: AppColors.secondPrimary,
@@ -186,7 +194,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                           size: 20.sp, color: AppColors.blackLite),
                       5.w.horizontalSpace,
                       Text(
-                        job.userJopDetailsModel?.data?.priceEndAt ?? "",
+                        cubit.userJobDetailsModel?.data?.priceEndAt ?? "",
                         style: getMediumStyle(
                           fontSize: 14.sp,
                           color: AppColors.secondPrimary,
@@ -203,7 +211,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
     );
   }
 
-  Widget _buildPostedByCard({required JobsCubit job}) {
+  Widget _buildPostedByCard({required JobsCubit cubit}) {
     return _buildWhiteCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,8 +225,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
           ),
           10.h.verticalSpace,
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              (job.userJopDetailsModel?.data?.poster?.image == null)
+              (cubit.userJobDetailsModel?.data?.poster?.image == null)
                   ? CircleAvatar(
                       radius: 25.r,
                       backgroundImage:
@@ -226,25 +235,28 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   : CircleAvatar(
                       radius: 25.r,
                       backgroundImage: NetworkImage(
-                        job.userJopDetailsModel?.data?.poster?.image ?? "",
+                        cubit.userJobDetailsModel?.data?.poster?.image ?? "",
                       )),
               10.w.horizontalSpace,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    job.userJopDetailsModel?.data?.poster?.name ?? "",
-                    style: getMediumStyle(fontSize: 14.sp),
-                  ),
-                  5.h.verticalSpace,
-                  Text(
-                    job.userJopDetailsModel?.data?.poster?.headline ?? "",
-                    style: getMediumStyle(
-                      fontSize: 13.sp,
-                      color: AppColors.grayDate,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      cubit.userJobDetailsModel?.data?.poster?.name ?? "",
+                      style: getMediumStyle(fontSize: 14.sp),
                     ),
-                  ),
-                ],
+                    5.h.verticalSpace,
+                    Text(
+                      cubit.userJobDetailsModel?.data?.poster?.headline ?? "-",
+                      maxLines: 1,
+                      style: getMediumStyle(
+                        fontSize: 13.sp,
+                        color: AppColors.grayDate,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -253,7 +265,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
     );
   }
 
-  Widget _buildJobDescriptionCard({required JobsCubit job}) {
+  Widget _buildJobDescriptionCard({required JobsCubit cubit}) {
     return _buildWhiteCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,7 +280,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
           Padding(
             padding: EdgeInsets.only(top: 10.h),
             child: Text(
-              job.userJopDetailsModel?.data?.description ?? "",
+              cubit.userJobDetailsModel?.data?.description ?? "",
               style: getMediumStyle(
                 fontSize: 13.sp,
                 color: AppColors.blackLite.withOpacity(0.7),

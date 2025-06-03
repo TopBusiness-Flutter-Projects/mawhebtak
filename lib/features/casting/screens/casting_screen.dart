@@ -11,6 +11,7 @@ import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
+import '../../../core/utils/filter.dart';
 
 class CastingScreen extends StatefulWidget {
   const CastingScreen({super.key, required this.isFromHome});
@@ -47,9 +48,10 @@ class _CastingScreenState extends State<CastingScreen> {
         Uri uri = Uri.parse(
             context.read<TopTalentsCubit>().topTalents?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
-        context
-            .read<TopTalentsCubit>()
-            .topTalentsData(page: page ?? '1', isGetMore: true);
+        context.read<TopTalentsCubit>().topTalentsData(
+            page: page ?? '1',
+            isGetMore: true,
+            orderBy: selctedFilterOption?.key);
       }
     }
   }
@@ -61,9 +63,10 @@ class _CastingScreenState extends State<CastingScreen> {
         Uri uri = Uri.parse(
             context.read<RequestGigsCubit>().requestGigs?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
-        context
-            .read<RequestGigsCubit>()
-            .requestGigsData(page: page ?? '1', isGetMore: true);
+        context.read<RequestGigsCubit>().requestGigsData(
+            page: page ?? '1',
+            isGetMore: true,
+            orderBy: selctedFilterOption?.key);
       }
     }
   }

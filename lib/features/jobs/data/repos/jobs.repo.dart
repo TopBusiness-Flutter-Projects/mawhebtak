@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -16,50 +15,43 @@ import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 class JobsRepo {
   BaseApiConsumer api;
   JobsRepo(this.api);
-  Future<Either<Failure, UserJopModel>> getUserJopData({required String page}) async {
+  Future<Either<Failure, UserJobModel>> getUserJopData(
+      {required String page, String? orderBy}) async {
     try {
-      var response = await api.get(
-        EndPoints.getDataBaseUrl,
-       queryParameters: {
-          "model":"UserJob",
-          "paginate":"true",
-          "orderBy":"desc",
-         "page":page,
-       }
-      );
-      return Right(UserJopModel.fromJson(response));
+      var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
+        "model": "UserJob",
+        "paginate": "true",
+        "orderBy": orderBy ?? 'desc',
+        "page": page,
+      });
+      return Right(UserJobModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
-  Future<Either<Failure, UserJopDetailsModel>> getUserJopDetailsData({required String userJopId}) async {
+
+  Future<Either<Failure, UserJobDetailsModel>> getUserJopDetailsData(
+      {required String userJopId}) async {
     try {
       var response = await api.get(
         EndPoints.getDetailsDataUrl,
-       queryParameters: {
-          "model":"UserJob",
-          "id":userJopId
-        },
+        queryParameters: {"model": "UserJob", "id": userJopId},
       );
-      return Right(UserJopDetailsModel.fromJson(response));
+      return Right(UserJobDetailsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
 
-  Future<Either<Failure, DefaultMainModel>> toggleFavorite({required String userJopId}) async {
+  Future<Either<Failure, DefaultMainModel>> toggleFavorite(
+      {required String userJopId}) async {
     try {
       var response = await api.post(
         EndPoints.toggleFavorite,
-       body: {
-          "favouriteable_type":"UserJob",
-          "favouriteable_id":userJopId
-        },
+        body: {"favouriteable_type": "UserJob", "favouriteable_id": userJopId},
       );
       return Right(
-
-          DefaultMainModel.fromJson(response),
-
+        DefaultMainModel.fromJson(response),
       );
     } on ServerException {
       return Left(ServerFailure());
@@ -81,8 +73,7 @@ class JobsRepo {
       LoginModel? user;
       user = await Preferences.instance.getUserModel();
       var response = await api
-          .post(EndPoints.storeDataUrl,
-          formDataIsEnabled: true, body: {
+          .post(EndPoints.storeDataUrl, formDataIsEnabled: true, body: {
         "model": "UserJob",
         "user_id": user.data?.id,
         "title": title,
@@ -92,7 +83,7 @@ class JobsRepo {
         "long": long,
         "price_end_at": priceEndAt,
         "price_start_at": priceStartAt,
-         "deadline":deadLine,
+        "deadline": deadLine,
         for (int i = 0; i < mediaFiles.length; i++)
           "media[$i]": MultipartFile.fromFileSync(mediaFiles[i].path,
               filename: mediaFiles[i].path.split('/').last)

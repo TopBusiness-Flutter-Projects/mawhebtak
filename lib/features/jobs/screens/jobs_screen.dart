@@ -7,6 +7,7 @@ import 'package:mawhebtak/features/jobs/screens/widgets/jop_widget.dart';
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
+import '../../../core/utils/filter.dart';
 
 class JobsScreen extends StatefulWidget {
   const JobsScreen({super.key});
@@ -23,7 +24,7 @@ class _JobsScreenState extends State<JobsScreen> {
     // if (context.read<JobsCubit>().userJopModel == null) {
     //   context.read<JobsCubit>().getUserJopData(page: '1');
     // }
-    context.read<JobsCubit>().getUserJopData(page: '1');
+    context.read<JobsCubit>().getUserJobData(page: '1');
     scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -34,9 +35,10 @@ class _JobsScreenState extends State<JobsScreen> {
         Uri uri = Uri.parse(
             context.read<JobsCubit>().userJopModel?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
-        context
-            .read<JobsCubit>()
-            .getUserJopData(page: page ?? '1', isGetMore: true);
+        context.read<JobsCubit>().getUserJobData(
+            page: page ?? '1',
+            isGetMore: true,
+            orderBy: selctedFilterOption?.key);
       }
     }
   }
@@ -54,6 +56,7 @@ class _JobsScreenState extends State<JobsScreen> {
                 CustomSimpleAppbar(
                   title: 'jobs'.tr(),
                   isActionButton: true,
+                  filterType: 'job',
                 ),
                 Container(
                   height: 10.h,
@@ -71,7 +74,7 @@ class _JobsScreenState extends State<JobsScreen> {
                               onRefresh: () async {
                                 context
                                     .read<JobsCubit>()
-                                    .getUserJopData(page: '1');
+                                    .getUserJobData(page: '1');
                               },
                               child: ListView.builder(
                                 controller: scrollController,

@@ -2,6 +2,7 @@ import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
+import '../../../core/utils/filter.dart';
 import '../../../core/widgets/show_loading_indicator.dart';
 
 class RequestGigsScreen extends StatefulWidget {
@@ -28,9 +29,10 @@ class _RequestGigsScreenState extends State<RequestGigsScreen> {
         Uri uri = Uri.parse(
             context.read<CastingCubit>().categoryModel?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
-        context
-            .read<CastingCubit>()
-            .getCategoryFromGigs(page: page ?? '1', isGetMore: true);
+        context.read<CastingCubit>().getCategoryFromGigs(
+            page: page ?? '1',
+            isGetMore: true,
+            orderBy: selctedFilterOption?.key);
       }
     }
   }
