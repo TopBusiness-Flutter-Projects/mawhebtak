@@ -89,9 +89,9 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               onChanged: (value) {
                                 cubit.selectedCategory = value;
                                 cubit.subCategoryId = value?.id;
-                                cubit.subCategoryModel?.data = [];
+                                cubit.subCategoryFromCategoryGigsModel?.data = [];
                                 cubit.selectedSubCategory = null;
-                                cubit.getSubCategory(
+                                cubit.subCategoryFromCategoryGigs(
                                     categoryId: value?.id.toString() ?? "");
                               },
                             ),
@@ -101,7 +101,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              if (cubit.subCategoryModel?.data?.length != 0)
+                              if (cubit.subCategoryFromCategoryGigsModel?.data?.length != 0)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(top: 10.h, bottom: 10.h),
@@ -110,7 +110,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     style: getRegularStyle(fontSize: 18.sp),
                                   ),
                                 ),
-                              if (cubit.subCategoryModel?.data?.length != 0)
+                              if (cubit.subCategoryFromCategoryGigsModel?.data?.length != 0)
                                 Container(
                                   height: 60.h,
                                   width: double.infinity,
@@ -123,7 +123,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                       return item?.name ?? '';
                                     },
                                     value: cubit.selectedSubCategory,
-                                    items: cubit.subCategoryModel?.data ?? [],
+                                    items: cubit.subCategoryFromCategoryGigsModel?.data ?? [],
                                     onChanged: (value) {
                                       cubit.selectedSubCategory = value;
                                     },

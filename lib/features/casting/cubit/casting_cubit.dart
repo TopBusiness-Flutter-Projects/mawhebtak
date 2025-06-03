@@ -19,11 +19,13 @@ class CastingCubit extends Cubit<CastingState> {
   TextEditingController priceRangeController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController locationAddressController = TextEditingController();
-  GetCountriesMainModel? categoryModel;
   GetCountriesMainModelData? selectedCategory;
   int? subCategoryId;
   GetCountriesMainModelData? selectedSubCategory;
   bool isLoadingMore = false;
+
+  //category الاساسية
+  GetCountriesMainModel? categoryModel;
   getCategoryFromGigs({
     bool isGetMore = false,
     String? page,
@@ -59,9 +61,9 @@ class CastingCubit extends Cubit<CastingState> {
       emit(CategoryFromGigsStateError(e.toString()));
     }
   }
-
+  // gigs from sub
   GetGigsFromSubCategoryModel? getGigsFromSubCategoryModel;
-  getGigsFromSubCategory(String? id) async {
+  getGigsFromSubCategory({required String? id}) async {
     emit(GigsFromCategoryStateLoading());
     try {
       final res = await castingRepo.getGigsFromSubCategory(
@@ -77,6 +79,25 @@ class CastingCubit extends Cubit<CastingState> {
       emit(CategoryFromGigsStateError(e.toString()));
     }
   }
+
+  // sub from category
+  GetCountriesMainModel? subCategoryFromCategoryGigsModel;
+  subCategoryFromCategoryGigs({required String categoryId}) async {
+    emit(SubCategoryStateLoading());
+    try {
+      final res = await castingRepo.subCategoryFromCategoryGigs(categoryId: categoryId);
+      res.fold((l) {
+        emit(SubCategoryStateError(l.toString()));
+      }, (r) {
+        getGigsFromSubCategoryModel = null;
+        subCategoryFromCategoryGigsModel = r;
+        emit(SubCategoryStateLoaded(r));
+      });
+    } catch (e) {
+      emit(SubCategoryStateError(e.toString()));
+    }
+  }
+
 
   GetDetailsGigsModel? getDetailsGigsModel;
   getDetailsGigs({required String id}) async {
@@ -95,25 +116,8 @@ class CastingCubit extends Cubit<CastingState> {
     }
   }
 
-  GetCountriesMainModel? subCategoryModel;
-  getSubCategory({required String categoryId}) async {
-    emit(SubCategoryStateLoading());
-    try {
-      final res = await castingRepo.subCetCategory(categoryId: categoryId);
-      res.fold((l) {
-        emit(SubCategoryStateError(l.toString()));
-      }, (r) {
-        getGigsFromSubCategoryModel = null;
-        subCategoryModel = r;
-        emit(SubCategoryStateLoaded(r));
-      });
-    } catch (e) {
-      emit(SubCategoryStateError(e.toString()));
-    }
-  }
 
   DefaultMainModel? defaultMainModel;
-
   actionGig({
     required String status,
     required String gigId,
