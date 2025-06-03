@@ -220,11 +220,11 @@ class _GigsWidgetState extends State<GigsWidget> {
                             if (user.data?.token == null) {
                               checkLogin(context);
                             } else {
-                              if (widget.eventAndGigsModel?.isRequested ==
+                              if (widget.eventAndGigsModel?.isRequested.toString() ==
                                       "pending" ||
-                                  widget.eventAndGigsModel?.isRequested ==
+                                  widget.eventAndGigsModel?.isRequested.toString() ==
                                       "rejected" ||
-                                  widget.eventAndGigsModel?.isRequested == null) {
+                                  widget.eventAndGigsModel?.isRequested.toString() == "null") {
                                 widget.castingCubit!.requestGigs(
                                   context: context,
                                   index: widget.index!,
