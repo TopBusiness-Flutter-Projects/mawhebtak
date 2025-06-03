@@ -70,7 +70,6 @@ class GigsRequest extends StatelessWidget {
                     )
                   : (gigsRequestList?.status == 'new' ||
                           gigsRequestList?.status == 'pending')
-                  : (gigsRequestList?.status == 'new' || gigsRequestList?.status == 'pending')
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
