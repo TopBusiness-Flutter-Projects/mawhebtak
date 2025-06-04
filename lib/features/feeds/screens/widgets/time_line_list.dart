@@ -54,11 +54,14 @@ class _TimeLineListState extends State<TimeLineList> {
                 children: [
                   Column(
                     children: [
+
                       SizedBox(
                         height: 40.h,
                         width: 40.w,
                         child: Image.asset(ImageAssets.profileImage),
                       ),
+
+
                     ],
                   ),
                   SizedBox(width: 8.w),
@@ -70,7 +73,7 @@ class _TimeLineListState extends State<TimeLineList> {
                         style: getMediumStyle(fontSize: 18.sp),
                       ),
                       AutoSizeText(
-                        widget.feeds?.user?.headline ?? "Telent / Actor Expert",
+                        widget.feeds?.user?.headline ?? "",
                         style: getRegularStyle(
                           fontSize: 16.sp,
                           color: AppColors.grayLight,

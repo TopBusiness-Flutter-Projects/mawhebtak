@@ -1,8 +1,11 @@
 
+import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcement_details_model.dart';
+import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcements_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
+import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import '../../../core/exports.dart';
 import '../data/repo/announcement_repo_impl.dart';
 part 'announcement_state.dart';
@@ -11,8 +14,14 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
   AnnouncementCubit(this.api) : super(AnnouncementInitial());
   AnnouncementRepo api;
   DateTime? selectedDate;
-  TextEditingController eventDateController = TextEditingController();
+  TextEditingController announcementDateController = TextEditingController();
   GetCountriesMainModelData? selectedSubCategory;
+  GetCountriesMainModelData? selectedCategory;
+  int? subCategoryId;
+  TextEditingController locationController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController announcementTitleController = TextEditingController();
+  TextEditingController announcementDescriptionController = TextEditingController();
   Future<void> selectDateTime(BuildContext context) async {
     DateTime? date = await showDatePicker(
       context: context,
@@ -40,7 +49,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
 
         String formattedDateTime =
             DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
-        eventDateController.text = formattedDateTime;
+        announcementDateController.text = formattedDateTime;
 
         emit(DateTimeSelected(formattedDateTime));
       }
@@ -122,6 +131,8 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       isLoadingMore = false;
     }
   }
+
+
   // gigs from sub
   GetGigsFromSubCategoryModel? getAnnouncementsFromSubCategoryModel;
   getAnnouncementsFromSubCategory({required String? id}) async {
@@ -140,6 +151,8 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       emit(AnnouncementsFromCategoryStateError(e.toString()));
     }
   }
+
+
   // details from announcement
   AnnouncementDetailsModel? announcementDetailsModel;
   getDetailsAnnouncements({required String? announcementId}) async {
@@ -178,5 +191,60 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     }
   }
 
+
+  // add announcement
+
+  addAnnouncement({required BuildContext context}) async {
+    AppWidgets.create2ProgressDialog(context);
+    emit(AddAnnouncementStateLoading());
+    try {
+      final res = await api.addAnnouncement(
+        expireIn: selectedDate!,
+        price: priceController.text,
+        subCategoryId: selectedSubCategory?.id.toString() ?? "",
+        title: announcementTitleController.text,
+        description: announcementDescriptionController.text,
+        lat: context
+            .read<LocationCubit>()
+            .selectedLocation
+            ?.latitude
+            .toString() ??
+            "0.0",
+        long: context
+            .read<LocationCubit>()
+            .selectedLocation
+            ?.longitude
+            .toString() ??
+            "0.0",
+        mediaFiles: [
+          ...context.read<CalenderCubit>().myImagesF ?? [],
+          ...context.read<CalenderCubit>().validVideos
+        ],
+        location: locationController.text,
+      );
+      res.fold((l) {
+        errorGetBar(l.toString());
+        emit(AddAnnouncementStateError(l.toString()));
+      }, (r) {
+        selectedDate = null;
+        context.read<CalenderCubit>().myImagesF = [];
+        context.read<CalenderCubit>().myImages = [];
+        context.read<CalenderCubit>().validVideos = [];
+        Navigator.pop(context);
+        successGetBar(r.msg.toString());
+        announcementTitleController.clear();
+        announcementDescriptionController.clear();
+        selectedCategory = null;
+        selectedSubCategory =null;
+        locationController.clear();
+        priceController.clear();
+        announcementsData(page: '1');
+        emit(AddAnnouncementStateLoaded());
+      });
+    } catch (e) {
+      emit(AddAnnouncementStateError(e.toString()));
+    }
+    Navigator.pop(context);
+  }
 
 }

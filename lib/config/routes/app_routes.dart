@@ -47,7 +47,6 @@ import '../../features/jobs/screens/add_new_job_screen.dart';
 import '../../features/profile/screens/followers_screen.dart';
 import '../../features/casting/screens/new_gigs_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
-import '../../features/feeds/screens/write_post.dart';
 import '../../features/referral_code/screens/referral_code_screen.dart';
 
 class Routes {
@@ -130,8 +129,11 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.detailsAnnouncementScreen:
+         String announcementId = settings.arguments as String;
         return PageTransition(
-          child: const DetailsAnnouncementScreen(),
+          child:  DetailsAnnouncementScreen(
+            announcementId: announcementId,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
@@ -153,13 +155,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      case Routes.writePostScreen:
-        return PageTransition(
-          child: const WritePost(),
-          type: PageTransitionType.fade,
-          alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
-        );
+
       case Routes.announcementScreen:
         return PageTransition(
           child: const AnnouncementScreen(),
