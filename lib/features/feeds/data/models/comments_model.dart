@@ -4,12 +4,13 @@
 
 import 'dart:convert';
 
-CommentsModel commentsModelFromJson(String str) => CommentsModel.fromJson(json.decode(str));
+CommentsModel commentsModelFromJson(String str) =>
+    CommentsModel.fromJson(json.decode(str));
 
 String commentsModelToJson(CommentsModel data) => json.encode(data.toJson());
 
 class CommentsModel {
-  List<Datum>? data;
+  List<CommentModelData>? data;
   String? msg;
   int? status;
 
@@ -20,44 +21,56 @@ class CommentsModel {
   });
 
   factory CommentsModel.fromJson(Map<String, dynamic> json) => CommentsModel(
-    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
-    msg: json["msg"],
-    status: json["status"],
-  );
+        data: json["data"] == null
+            ? []
+            : List<CommentModelData>.from(
+                json["data"]!.map((x) => CommentModelData.fromJson(x))),
+        msg: json["msg"],
+        status: json["status"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "msg": msg,
-    "status": status,
-  };
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "msg": msg,
+        "status": status,
+      };
 }
 
-class Datum {
+class CommentModelData {
   int? id;
   String? comment;
   User? user;
+  bool? showReplies;
   List<Reply>? reply;
 
-  Datum({
+  CommentModelData({
     this.id,
     this.comment,
     this.user,
     this.reply,
+    this.showReplies = false,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    comment: json["comment"],
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
-    reply: json["reply"] == null ? [] : List<Reply>.from(json["reply"]!.map((x) => Reply.fromJson(x))),
-  );
+  factory CommentModelData.fromJson(Map<String, dynamic> json) =>
+      CommentModelData(
+        id: json["id"],
+        comment: json["comment"],
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+        reply: json["reply"] == null
+            ? []
+            : List<Reply>.from(json["reply"]!.map((x) => Reply.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "comment": comment,
-    "user": user?.toJson(),
-    "reply": reply == null ? [] : List<dynamic>.from(reply!.map((x) => x.toJson())),
-  };
+        "id": id,
+        "comment": comment,
+        "user": user?.toJson(),
+        "reply": reply == null
+            ? []
+            : List<dynamic>.from(reply!.map((x) => x.toJson())),
+      };
 }
 
 class Reply {
@@ -72,16 +85,16 @@ class Reply {
   });
 
   factory Reply.fromJson(Map<String, dynamic> json) => Reply(
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
-    postReplyId: json["post_reply_id"],
-    reply: json["reply"],
-  );
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+        postReplyId: json["post_reply_id"],
+        reply: json["reply"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "user": user?.toJson(),
-    "post_reply_id": postReplyId,
-    "reply": reply,
-  };
+        "user": user?.toJson(),
+        "post_reply_id": postReplyId,
+        "reply": reply,
+      };
 }
 
 class User {
@@ -100,18 +113,18 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    name: json["name"],
-    image: json["image"],
-    headline: json["headline"],
-    followersCount: json["followers_count"],
-  );
+        id: json["id"],
+        name: json["name"],
+        image: json["image"],
+        headline: json["headline"],
+        followersCount: json["followers_count"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "image": image,
-    "headline": headline,
-    "followers_count": followersCount,
-  };
+        "id": id,
+        "name": name,
+        "image": image,
+        "headline": headline,
+        "followers_count": followersCount,
+      };
 }

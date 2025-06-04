@@ -44,8 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     userController = PageController();
-    context.read<HomeCubit>().homeData(
-    );
+    context.read<HomeCubit>().homeData();
   }
 
   @override
@@ -341,7 +340,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: CustomRow(
                                 text: 'announcements'.tr(),
                                 onTap: () {
-                                 Navigator.pushNamed(context, Routes.allAnnouncementsRoute);
+                                  Navigator.pushNamed(
+                                      context, Routes.allAnnouncementsRoute);
                                 },
                               ),
                             ),

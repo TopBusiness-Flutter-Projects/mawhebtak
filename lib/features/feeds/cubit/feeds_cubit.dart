@@ -254,7 +254,7 @@ class FeedsCubit extends Cubit<FeedsState> {
         posts?.data?[index].isReacted =
             !(posts?.data?[index].isReacted ?? false);
 
-        successGetBar(r.msg);
+        // successGetBar(r.msg);
         emit(AddReactionStateSuccess());
       });
     } catch (e) {
@@ -402,10 +402,11 @@ class FeedsCubit extends Cubit<FeedsState> {
     );
     emit(ReplyingToCommentState(commentId: commentId, userName: userName));
   }
-  bool showReplies = false;
-  void isOpen(){
-    print("11111111111111${showReplies}");
-    showReplies = !showReplies;
+
+  // bool showReplies = false;
+  isOpen(CommentModelData comment) {
+    print("11111111111111${comment.showReplies}");
+    comment.showReplies = !(comment.showReplies ?? false);
     emit(ShowReplies());
   }
 

@@ -42,8 +42,8 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
         var cubit = context.read<TopEventsCubit>();
         return Scaffold(
           body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CustomSimpleAppbar(
                 title: 'events'.tr(),
@@ -58,40 +58,37 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                      child: Center(
-                        child: RefreshIndicator(
-                          onRefresh: () async {
-                            cubit.topEventsData(
-                                page: '1',
-                                isGetMore: false,
-                                orderBy: selctedFilterOption?.key);
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          cubit.topEventsData(
+                              page: '1',
+                              isGetMore: false,
+                              orderBy: selctedFilterOption?.key);
+                        },
+                        child: ListView.separated(
+                          controller: scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: context
+                                  .read<TopEventsCubit>()
+                                  .topEvents
+                                  ?.data
+                                  ?.length ??
+                              0,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CustomTopEventList(
+                              topEvent: context
+                                  .read<TopEventsCubit>()
+                                  .topEvents
+                                  ?.data?[index],
+                              isAll: true,
+                            );
                           },
-                          child: ListView.separated(
-                            controller: scrollController,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: context
-                                    .read<TopEventsCubit>()
-                                    .topEvents
-                                    ?.data
-                                    ?.length ??
-                                0,
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CustomTopEventList(
-                                topEvent: context
-                                    .read<TopEventsCubit>()
-                                    .topEvents
-                                    ?.data?[index],
-                                isAll: true,
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                height: 10.h,
-                              );
-                            },
-                          ),
+                          separatorBuilder: (BuildContext context, int index) {
+                            return SizedBox(
+                              height: 10.h,
+                            );
+                          },
                         ),
                       ),
                     ),

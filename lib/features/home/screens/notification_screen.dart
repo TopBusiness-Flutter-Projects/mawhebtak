@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/screens/widgets/notification_widget.dart';

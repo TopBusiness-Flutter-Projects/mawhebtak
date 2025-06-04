@@ -65,7 +65,7 @@
   "change_cover": "تغير الغلاف",
   "followers": "المتابعون",
   "following": "الذي تتابعهم",
-  "post": "بريد",
+  "post": "نشر",
   "about": "عن",
   "timeline": "الجدول الزمني",
   "my_gigs": "عروضي",
@@ -259,9 +259,15 @@
   "price_end_at": "نهاية السعر",
   "enter_title": "ادخل العنوان",
   "select_date": "اختر الوقت",
-  "enter_description" : "ادخل الوصف",
+  "enter_description": "ادخل الوصف",
   "please_enter_valid_price": "من فضلك ادخل سعر صحيح",
   "enter_date": "ادخل التاريخ",
   "request_announcement": "طلبات الاعلانات",
-  "enter_end_price_must_greater_than_start_price": "يجب ان يكون السعر النهائي اكبر من السعر الابتدائي"
+  "enter_end_price_must_greater_than_start_price": "يجب ان يكون السعر النهائي اكبر من السعر الابتدائي",
+  "delete_post": "حذف المنشور",
+  "delete_comment": "حذف التعليق",
+  "write_comment": "اكتب تعليقًا...",
+  "reply": "رد",
+  "replies": "الردود",
+  "repling_to": "ردًا على"
 }

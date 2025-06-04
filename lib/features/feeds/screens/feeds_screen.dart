@@ -39,10 +39,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
-        var feeds = context.read<FeedsCubit>().posts;
-        var feedsCubit = context.read<FeedsCubit>();
-        return Column(
+        body: BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
+      var feeds = context.read<FeedsCubit>().posts;
+      var feedsCubit = context.read<FeedsCubit>();
+      return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -73,38 +73,31 @@ class _FeedsScreenState extends State<FeedsScreen> {
                 state is FeedsStateLoadingMore ||
                 feeds != null) ...[
               Expanded(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    await feedsCubit.postsData(page: '1', isGetMore: false);
-                  },
-                  child: ListView.separated(
-                    controller: scrollController,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: feeds?.data?.length ?? 0,
-                    itemBuilder: (BuildContext context, int index) {
-                      return TimeLineList(
-                        postId: feeds!.data![index].id.toString(),
-                        feedsCubit: feedsCubit,
-                        feeds: feeds.data![index],
-                        index: index,
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(height: 15.h);
-                    },
-                  ),
-                ),
-              ),
+                  child: RefreshIndicator(
+                      onRefresh: () async {
+                        await feedsCubit.postsData(page: '1', isGetMore: false);
+                      },
+                      child: ListView.separated(
+                        padding: const EdgeInsets.only(
+                            bottom: kBottomNavigationBarHeight),
+                        controller: scrollController,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: feeds?.data?.length ?? 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          return TimeLineList(
+                              postId: feeds!.data![index].id.toString(),
+                              feedsCubit: feedsCubit,
+                              feeds: feeds.data![index],
+                              index: index);
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(height: 15.h);
+                        },
+                      )))
             ] else if (state is FeedsStateError) ...[
-              Expanded(
-                child: Center(
-                  child: Text(state.errorMessage),
-                ),
-              ),
-            ],
-          ],
-        );
-      }),
-    );
+              Expanded(child: Center(child: Text(state.errorMessage)))
+            ]
+          ]);
+    }));
   }
 }
