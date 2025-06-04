@@ -74,11 +74,7 @@ class _DetailsOfMainCategoryAnnouncementState
                                     itemBuilder: (context, index) =>
                                         CustomAnnouncementWidget(
                                           announcement: cubit.announcements?.data?[index],
-                                          isLeftPadding: index == 0 ? true : false,
-                                          isRightPadding: index ==
-                                              ( cubit.announcements?.data?.length ?? 1) - 1
-                                              ? true
-                                              : false,
+
                                         ),
                                     itemCount:  cubit.announcements?.data?.length ?? 0,
                                   ),

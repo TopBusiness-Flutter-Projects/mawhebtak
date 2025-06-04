@@ -1,4 +1,5 @@
 import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
+import 'package:mawhebtak/features/events/data/model/event_details_model.dart';
 
 class HomeModel {
   HomeData? data;
@@ -96,6 +97,7 @@ class Announcement {
   String? location;
   String? price;
   bool? isFav;
+  List<Media>? media;
 
   Announcement({
     this.id,
@@ -106,6 +108,7 @@ class Announcement {
     this.location,
     this.price,
     this.isFav,
+    this.media,
   });
 
   factory Announcement.fromJson(Map<String, dynamic> json) => Announcement(
@@ -117,6 +120,9 @@ class Announcement {
         location: json["location"],
         price: json["price"],
         isFav: json["is_fav"],
+        media: json["media"] == null
+            ? []
+            : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -128,6 +134,9 @@ class Announcement {
         "location": location,
         "price": price,
         "is_fav": isFav,
+        "media": media == null
+            ? []
+            : List<dynamic>.from(media!.map((x) => x.toJson())),
       };
 }
 

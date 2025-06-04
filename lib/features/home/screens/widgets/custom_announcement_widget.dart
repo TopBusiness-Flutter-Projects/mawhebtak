@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
+import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
+import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
@@ -8,17 +10,8 @@ import '../../../../core/exports.dart';
 class CustomAnnouncementWidget extends StatefulWidget {
   const CustomAnnouncementWidget({
     super.key,
-    this.isLeftPadding,
-    this.isRightPadding,
-    this.isAnnouncements,
-    this.isFav,
     this.announcement,
   });
-
-  final bool? isLeftPadding;
-  final bool? isRightPadding;
-  final bool? isAnnouncements;
-  final bool? isFav;
   final Announcement? announcement;
 
   @override
@@ -27,54 +20,47 @@ class CustomAnnouncementWidget extends StatefulWidget {
 }
 
 class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
-  bool? isFav = false;
 
   @override
   void initState() {
     super.initState();
-    isFav = widget.isFav ?? false;
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.detailsAnnouncementScreen);
+        Navigator.pushNamed(context, Routes.detailsAnnouncementScreen,arguments:widget.announcement?.id.toString());
       },
       child: Padding(
         padding: EdgeInsetsDirectional.only(
-          start: widget.isAnnouncements ?? false
-              ? 0.0
-              : widget.isLeftPadding ?? false
-                  ? 16.w
-                  : 10.w,
-          end: widget.isAnnouncements ?? false
-              ? 0.0
-              : widget.isRightPadding ?? false
-                  ? 16.w
-                  : 0.0,
+          start: 10.w,
+          end:  0.0,
         ),
         child: CustomContainerWithShadow(
           isShadow: false,
-          reduis: widget.isAnnouncements ?? false ? 0.r : 8.r,
-          width: widget.isAnnouncements ?? false ? double.infinity : 299.w,
+          reduis:  8.r,
+          width: 299.w,
           child: Padding(
             padding:
-                EdgeInsets.all(widget.isAnnouncements ?? false ? 20.0 : 8.0),
+                EdgeInsets.all( 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    (widget.announcement?.user?.image == null)?
                     SizedBox(
                       height: 40.h,
                       width: 40.w,
                       child: Image.asset(ImageAssets.profileImage),
+                    ):
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(widget.announcement?.user?.image ?? ""),
                     ),
                     SizedBox(width: 8.w),
-                    widget.isAnnouncements ?? false
-                        ? Expanded(
+                    Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -99,15 +85,15 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                                     InkWell(
                                       onTap: () {
                                         setState(() {
-                                          isFav = !isFav!;
+                                          widget.announcement?.isFav = !(widget.announcement?.isFav )!;
                                         });
                                       },
                                       child: Icon(
-                                        isFav!
+                                       ( widget.announcement?.isFav)!
                                             ? Icons.favorite
                                             : Icons.favorite_border,
                                         size: 20.sp,
-                                        color: isFav!
+                                        color:  ( widget.announcement?.isFav)!
                                             ? AppColors.primary
                                             : AppColors.lbny.withOpacity(0.5),
                                       ),
@@ -122,54 +108,43 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                               ],
                             ),
                           )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              AutoSizeText(
-                                  widget.announcement?.user?.name ??
-                                      "Ahmed Mokhtar",
-                                  style: getMediumStyle(fontSize: 16.sp)),
-                              AutoSizeText(
-                                widget.announcement?.user?.headline ??
-                                    "Talent / Actor Expert",
-                                style: getRegularStyle(
-                                    fontSize: 14.sp,
-                                    color: AppColors.grayLight),
-                              ),
-                            ],
-                          ),
+
                   ],
                 ),
-                SizedBox(height: 10.h),
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: (widget.announcement?.image == null)
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(16.r),
-                          child: SizedBox(
-                            child: Image.asset(
-                              ImageAssets.tasweerPhoto,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                            ),
-                          ),
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(16.r),
-                          child: SizedBox(
+
+                if ((widget.announcement?.media?.isNotEmpty ?? false || widget.announcement?.media == []))
+                  SizedBox(
+                    height: getHeightSize(context) / 3.7,
+                    child: PageView.builder(
+                      itemCount: widget.announcement?.media?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        final media = widget.announcement!.media![index];
+                        if (media.extension == 'video') {
+                          return VideoPlayerWidget(videoUrl: media.file!);
+                        } else {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ImageFileView(
+                                          isNetwork: true,
+                                          image:
+                                          widget.announcement?.media?[index].file ?? "")));
+                            },
                             child: Image.network(
-                              widget.announcement?.image ?? "",
-                              errorBuilder: (context, error, stackTrace) =>
-                                  Image.asset(
-                                ImageAssets.imagePicked,
-                                fit: BoxFit.contain,
-                              ),
+                              media.file ?? '',
                               fit: BoxFit.cover,
                               width: double.infinity,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(ImageAssets.appIconWhite),
                             ),
-                          ),
-                        ),
-                ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+
                 SizedBox(height: 8.h),
                 AutoSizeText(
                     widget.announcement?.title ??

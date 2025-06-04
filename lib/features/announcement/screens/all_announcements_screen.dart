@@ -71,25 +71,18 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
                       : Expanded(
                           child: Padding(
                           padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            controller: scrollController,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 1,
-                                    mainAxisSpacing: 8.h,
-                                    crossAxisSpacing: 8.w,
-                                    childAspectRatio: 0.7),
-                            itemBuilder: (context, index) =>
-                                CustomAnnouncementWidget(
-                              announcement: announcementsData?.data?[index],
-                              isLeftPadding: index == 0 ? true : false,
-                              isRightPadding: index ==
-                                      (announcementsData?.data?.length ?? 1) - 1
-                                  ? true
-                                  : false,
+                          child: SafeArea(
+                            bottom: true,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              controller: scrollController,
+                              itemBuilder: (context, index) =>
+                                  CustomAnnouncementWidget(
+                                announcement: announcementsData?.data?[index],
+
+                              ),
+                              itemCount: announcementsData?.data?.length ?? 0,
                             ),
-                            itemCount: announcementsData?.data?.length ?? 0,
                           ),
                         )),
                   if (state is AnnouncementsStateLoadingMore)
