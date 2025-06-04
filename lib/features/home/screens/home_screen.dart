@@ -352,13 +352,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: homeData?.announcements?.length ?? 0,
                                 itemBuilder: (context, index) {
                                   return CustomAnnouncementWidget(
-                                    announcement:
-                                        homeData?.announcements?[index],
-                                    isLeftPadding: index == 0,
-                                    isRightPadding: index ==
-                                        (homeData?.announcements?.length ?? 1) -
-                                            1,
-                                  );
+                                    announcement: homeData?.announcements?[index],
+                                   );
                                 },
                               ),
                             ),

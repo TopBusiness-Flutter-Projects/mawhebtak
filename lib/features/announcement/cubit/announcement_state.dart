@@ -45,6 +45,13 @@ class SubCategoryStateLoaded extends AnnouncementState {
 class AnnouncementsFromCategoryStateLoading extends AnnouncementState {}
 class AnnouncementsDetailsStateLoading extends AnnouncementState {}
 class AnnouncementsDetailsStateLoaded extends AnnouncementState {}
+class AddAnnouncementStateLoaded extends AnnouncementState {}
+class AddAnnouncementStateError extends AnnouncementState {
+  final String errorMessage;
+
+  AddAnnouncementStateError(this.errorMessage);
+}
+class AddAnnouncementStateLoading extends AnnouncementState {}
 class AnnouncementsDetailsStateError extends AnnouncementState {
   final String errorMessage;
 

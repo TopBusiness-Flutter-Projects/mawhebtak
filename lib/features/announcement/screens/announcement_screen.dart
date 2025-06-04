@@ -18,11 +18,8 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   late final ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    context
-        .read<AnnouncementCubit>()
-        .announcementsData(page: '1', isGetMore: false);
-    context.read<AnnouncementCubit>().getCategoryFromAnnouncment(
-        page: '1', isGetMore: false, orderBy: "desc");
+    context.read<AnnouncementCubit>().announcementsData(page: '1', isGetMore: false);
+    context.read<AnnouncementCubit>().getCategoryFromAnnouncment(page: '1', isGetMore: false, orderBy: "desc");
     scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -191,30 +188,33 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                             child: CustomLoadingIndicator(),
                           ),
                         )
-                      : Expanded(
-                          child: Padding(
-                          padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                          child: GridView.builder(
-                            controller: scrollController,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 1,
-                                    mainAxisSpacing: 8.h,
-                                    crossAxisSpacing: 8.w,
-                                    childAspectRatio: 0.7),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) =>
-                                CustomAnnouncementWidget(
-                              announcement: announcementsData?.data?[index],
-                              isLeftPadding: index == 0 ? true : false,
-                              isRightPadding: index ==
-                                      (announcementsData?.data?.length ?? 1) - 1
-                                  ? true
-                                  : false,
-                            ),
-                            itemCount: announcementsData?.data?.length ?? 0,
-                          ),
-                        )),
+                      : (announcementsData?.data == [] || announcementsData?.data?.length == 0)
+                          ? Expanded(
+                              child: Center(
+                                  child: Text(
+                              "no_data".tr(),
+                              style: TextStyle(color: AppColors.black),
+                            )))
+                          : Expanded(
+                              child: Padding(
+                              padding: EdgeInsets.only(left: 8.w, right: 8.w),
+                              child: RefreshIndicator(
+                                onRefresh:()async{
+                                  context.read<AnnouncementCubit>().announcementsData(page: '1');
+                                },
+                                child: ListView.builder(
+                                  physics: const AlwaysScrollableScrollPhysics(),
+                                  controller: scrollController,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) =>
+                                      CustomAnnouncementWidget(
+                                    announcement: announcementsData?.data?[index],
+
+                                  ),
+                                  itemCount: announcementsData?.data?.length ?? 0,
+                                ),
+                              ),
+                            )),
                   if (state is AnnouncementsStateLoadingMore)
                     const CustomLoadingIndicator(),
                 ],
