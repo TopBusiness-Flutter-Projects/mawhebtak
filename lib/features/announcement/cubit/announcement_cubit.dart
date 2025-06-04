@@ -1,6 +1,8 @@
 
+import 'package:mawhebtak/features/announcement/data/models/announcement_details_model.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcements_model.dart';
+import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
 import '../../../core/exports.dart';
 import '../data/repo/announcement_repo_impl.dart';
 part 'announcement_state.dart';
@@ -10,7 +12,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
   AnnouncementRepo api;
   DateTime? selectedDate;
   TextEditingController eventDateController = TextEditingController();
-
+  GetCountriesMainModelData? selectedSubCategory;
   Future<void> selectDateTime(BuildContext context) async {
     DateTime? date = await showDatePicker(
       context: context,
@@ -97,7 +99,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       emit(AnnouncementsStateLoading());
     }
     try {
-      final res = await api!.announcementsData(page: page, orderBy: orderBy);
+      final res = await api.announcementsData(page: page, orderBy: orderBy);
       res.fold((l) {
         emit(AnnouncementsStateError(l.toString()));
       }, (r) {
@@ -118,6 +120,61 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       emit(AnnouncementsStateError(e.toString()));
     } finally {
       isLoadingMore = false;
+    }
+  }
+  // gigs from sub
+  GetGigsFromSubCategoryModel? getAnnouncementsFromSubCategoryModel;
+  getAnnouncementsFromSubCategory({required String? id}) async {
+    emit(AnnouncementsFromCategoryStateLoading());
+    try {
+      final res = await api.getAnnouncementsFromSubCategory(
+        subCategoryId: id ?? '',
+      );
+      res.fold((l) {
+        emit(AnnouncementsFromCategoryStateError(l.toString()));
+      }, (r) {
+        getAnnouncementsFromSubCategoryModel = r;
+        emit(AnnouncementsFromCategoryStateLoaded());
+      });
+    } catch (e) {
+      emit(AnnouncementsFromCategoryStateError(e.toString()));
+    }
+  }
+  // details from announcement
+  AnnouncementDetailsModel? announcementDetailsModel;
+  getDetailsAnnouncements({required String? announcementId}) async {
+    emit(AnnouncementsDetailsStateLoading());
+    try {
+      final res = await api.announcementDetails(
+        announcementId:announcementId.toString(),
+      );
+      res.fold((l) {
+        emit(AnnouncementsDetailsStateError(l.toString()));
+      }, (r) {
+        announcementDetailsModel = r;
+        emit(AnnouncementsDetailsStateLoaded());
+      });
+    } catch (e) {
+      emit(AnnouncementsDetailsStateError(e.toString()));
+    }
+  }
+
+  // sub from category
+  GetCountriesMainModel? subCategoryFromCategoryAnnouncementsModel;
+  subCategoryFromCategoryAnnouncement({required String categoryId}) async {
+    emit(SubCategoryStateLoading());
+    try {
+      final res =
+      await api.subCategoryFromCategoryAnnouncement(categoryId: categoryId);
+      res.fold((l) {
+        emit(SubCategoryStateError(l.toString()));
+      }, (r) {
+        getAnnouncementsFromSubCategoryModel = null;
+        subCategoryFromCategoryAnnouncementsModel = r;
+        emit(SubCategoryStateLoaded(r));
+      });
+    } catch (e) {
+      emit(SubCategoryStateError(e.toString()));
     }
   }
 

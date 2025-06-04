@@ -119,6 +119,7 @@ class CastingRepo {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, GetDetailsGigsModel>> getDetailsGigs(
       {required String id}) async {
     try {
@@ -132,9 +133,6 @@ class CastingRepo {
       return Left(ServerFailure());
     }
   }
-
-
-
 
   Future<Either<Failure, DefaultMainModel>> actionGig(
       {required String gigId, required String status}) async {
