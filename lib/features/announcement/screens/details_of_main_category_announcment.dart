@@ -73,6 +73,7 @@ class _DetailsOfMainCategoryAnnouncementState
                                         childAspectRatio: 0.7),
                                     itemBuilder: (context, index) =>
                                         CustomAnnouncementWidget(
+                                          isMainWidget: true,
                                           announcement: cubit.announcements?.data?[index],
 
                                         ),

@@ -16,13 +16,7 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
   late final ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    context
-        .read<AnnouncementCubit>()
-        .announcementsData(page: '1', isGetMore: false, orderBy: "desc");
-    final announcement = context.read<AnnouncementCubit>().announcements;
-    if (announcement?.data != null) {
-      print("Data length: ${announcement!.data!.length}");
-    }
+    context.read<AnnouncementCubit>().announcementsData(page: '1');
     scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -49,47 +43,36 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
           builder: (context, state) {
         var announcementsData = context.read<AnnouncementCubit>().announcements;
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             CustomSimpleAppbar(
               title: 'announcement'.tr(),
               isActionButton: true,
               filterType: 'announcements',
             ),
+            (state is AnnouncementsStateLoading)?
+             const Expanded(child: CustomLoadingIndicator()):
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  (state is AnnouncementsStateLoading)
-                      ? const Expanded(
-                          child: Center(
-                            child: CustomLoadingIndicator(),
+              child: ListView.builder(
+                controller: scrollController,
+                shrinkWrap: true,
+                itemCount: announcementsData?.data?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return (announcementsData?.data?[index] == 0 || announcementsData?.data?.length ==[])
+                      ? Expanded(child: Text("no_data".tr()))
+                      : SizedBox(
+                        height: getSize(context)/1,
+                        child: CustomAnnouncementWidget(
+                            isMainWidget: true,
+                            announcement: announcementsData?.data?[index],
                           ),
-                        )
-                      : Expanded(
-                          child: Padding(
-                          padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                          child: SafeArea(
-                            bottom: true,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              controller: scrollController,
-                              itemBuilder: (context, index) =>
-                                  CustomAnnouncementWidget(
-                                announcement: announcementsData?.data?[index],
-
-                              ),
-                              itemCount: announcementsData?.data?.length ?? 0,
-                            ),
-                          ),
-                        )),
-                  if (state is AnnouncementsStateLoadingMore)
-                    const CustomLoadingIndicator(),
-                ],
+                      );
+                },
               ),
-            )
+            ),
+            if (state is AnnouncementsStateLoadingMore)
+            const Expanded(child: CustomLoadingIndicator())
           ],
         );
       }),
