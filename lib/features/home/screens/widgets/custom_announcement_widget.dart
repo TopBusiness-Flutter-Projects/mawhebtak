@@ -11,8 +11,10 @@ class CustomAnnouncementWidget extends StatefulWidget {
   const CustomAnnouncementWidget({
     super.key,
     this.announcement,
+    required this.isMainWidget,
   });
   final Announcement? announcement;
+  final bool isMainWidget;
 
   @override
   State<CustomAnnouncementWidget> createState() =>
@@ -20,135 +22,136 @@ class CustomAnnouncementWidget extends StatefulWidget {
 }
 
 class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.detailsAnnouncementScreen,arguments:widget.announcement?.id.toString());
+        Navigator.pushNamed(context, Routes.detailsAnnouncementScreen,
+            arguments: widget.announcement?.id.toString());
       },
       child: Padding(
         padding: EdgeInsetsDirectional.only(
           start: 10.w,
-          end:  0.0,
+          end: 10.0.w,
         ),
         child: CustomContainerWithShadow(
           isShadow: false,
-          reduis:  8.r,
+          reduis: 8.r,
           width: 299.w,
           child: Padding(
-            padding:
-                EdgeInsets.all( 8.0),
+            padding: EdgeInsets.only(bottom: 20.h,top: 10.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    (widget.announcement?.user?.image == null)?
-                    SizedBox(
-                      height: 40.h,
-                      width: 40.w,
-                      child: Image.asset(ImageAssets.profileImage),
-                    ):
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(widget.announcement?.user?.image ?? ""),
-                    ),
+                    (widget.announcement?.user?.image == null)
+                        ? SizedBox(
+                            height: 40.h,
+                            width: 40.w,
+                            child: Image.asset(ImageAssets.profileImage),
+                          )
+                        : CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                widget.announcement?.user?.image ?? ""),
+                          ),
                     SizedBox(width: 8.w),
                     Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AutoSizeText(
+                                  widget.announcement?.user?.name ?? "",
+                                  style: getMediumStyle(fontSize: 16.sp)),
+                              AutoSizeText(
+                                widget.announcement?.user?.headline ?? "",
+                                style: getRegularStyle(
+                                    fontSize: 14.sp,
+                                    color: AppColors.grayLight),
+                              ),
+                            ],
+                          ),
+                          if (widget.isMainWidget == true)
+                            Row(
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    AutoSizeText(
-                                        widget.announcement?.user?.name ??
-                                            "",
-                                        style: getMediumStyle(fontSize: 16.sp)),
-                                    AutoSizeText(
-                                      widget.announcement?.user?.headline ??
-                                          "",
-                                      style: getRegularStyle(
-                                          fontSize: 14.sp,
-                                          color: AppColors.grayLight),
-                                    ),
-                                  ],
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      widget.announcement?.isFav =
+                                          !(widget.announcement?.isFav)!;
+                                    });
+                                  },
+                                  child: Icon(
+                                    (widget.announcement?.isFav)!
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    size: 20.sp,
+                                    color: (widget.announcement?.isFav)!
+                                        ? AppColors.primary
+                                        : AppColors.lbny.withOpacity(0.5),
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          widget.announcement?.isFav = !(widget.announcement?.isFav )!;
-                                        });
-                                      },
-                                      child: Icon(
-                                       ( widget.announcement?.isFav)!
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        size: 20.sp,
-                                        color:  ( widget.announcement?.isFav)!
-                                            ? AppColors.primary
-                                            : AppColors.lbny.withOpacity(0.5),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SvgPicture.asset(
-                                          AppIcons.settingIcon),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          )
+                                InkWell(
+                                  onTap: () {
 
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SvgPicture.asset(AppIcons.settingIcon),
+                                  ),
+                                ),
+                              ],
+                            )
+                        ],
+                      ),
+                    )
                   ],
                 ),
-
-                if ((widget.announcement?.media?.isNotEmpty ?? false || widget.announcement?.media == []))
-                  SizedBox(
-                    height: getHeightSize(context) / 3.7,
-                    child: PageView.builder(
-                      itemCount: widget.announcement?.media?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        final media = widget.announcement!.media![index];
-                        if (media.extension == 'video') {
-                          return VideoPlayerWidget(videoUrl: media.file!);
-                        } else {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ImageFileView(
-                                          isNetwork: true,
-                                          image:
-                                          widget.announcement?.media?[index].file ?? "")));
+                ((widget.announcement?.media?.isNotEmpty ??
+                        false || widget.announcement?.media == []))
+                    ? Expanded(
+                        child: SizedBox(
+                          height: getHeightSize(context) / 3.7,
+                          child: PageView.builder(
+                            itemCount: widget.announcement?.media?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              final media = widget.announcement!.media![index];
+                              if (media.extension == 'video') {
+                                return VideoPlayerWidget(videoUrl: media.file!);
+                              } else {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ImageFileView(
+                                                isNetwork: true,
+                                                image: widget.announcement
+                                                        ?.media?[index].file ??
+                                                    "")));
+                                  },
+                                  child: Image.network(
+                                    media.file ?? '',
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    errorBuilder: (context, error,
+                                            stackTrace) =>
+                                        Image.asset(ImageAssets.appIconWhite),
+                                  ),
+                                );
+                              }
                             },
-                            child: Image.network(
-                              media.file ?? '',
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  Image.asset(ImageAssets.appIconWhite),
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-
+                          ),
+                        ),
+                      )
+                    : Expanded(child: Image.asset(ImageAssets.appIconWhite)),
                 SizedBox(height: 8.h),
-                AutoSizeText(
-                    widget.announcement?.title ??
-                        "",
+                AutoSizeText(widget.announcement?.title ?? "",
                     maxLines: 1,
                     style: getSemiBoldStyle(
                         fontSize: 14.sp, color: AppColors.grayDark)),
@@ -162,9 +165,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                           SizedBox(width: 3.w),
                           Expanded(
                             child: Text(
-                              widget.announcement?.location ??
-                                  "",
-
+                              widget.announcement?.location ?? "",
                               style: getRegularStyle(
                                   color: AppColors.grayLight, fontSize: 14.sp),
                             ),
