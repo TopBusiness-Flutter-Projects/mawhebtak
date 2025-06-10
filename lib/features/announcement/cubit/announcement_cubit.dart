@@ -132,6 +132,29 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     }
   }
 
+  toggleFavoriteAnnounce({required String userAnnounceId, required int index}) async {
+    emit(ToggleFavoriteAnnounceStateLoading());
+    try {
+      final res = await api.toggleFavoriteAnnounce(userAnnounceId: userAnnounceId);
+
+      res.fold((l) {
+        emit(ToggleFavoriteAnnounceStateError(l.toString()));
+      }, (r) {
+        successGetBar(r.msg.toString());
+        if (announcements?.data?[index].isFav == true ||
+            announcementDetailsModel?.data?.isFav == true) {
+          announcements?.data?[index].isFav = false;
+          announcementDetailsModel?.data?.isFav = false;
+        } else {
+          announcements?.data?[index].isFav = true;
+          announcementDetailsModel?.data?.isFav = true;
+        }
+        emit(ToggleFavoriteAnnounceStateLoaded());
+      });
+    } catch (e) {
+      emit(ToggleFavoriteAnnounceStateError(e.toString()));
+    }
+  }
 
   // gigs from sub
   GetGigsFromSubCategoryModel? getAnnouncementsFromSubCategoryModel;

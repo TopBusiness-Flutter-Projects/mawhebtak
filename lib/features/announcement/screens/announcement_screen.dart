@@ -210,6 +210,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                                 SizedBox(
                                   height: getSize(context)/1,
                                   child: CustomAnnouncementWidget(
+                                    index: index,
                                     isMainWidget: true,
                                     announcement: announcementsData?.data?[index],
 

@@ -51,33 +51,29 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
               isActionButton: true,
               filterType: 'announcements',
             ),
-            (state is AnnouncementsStateLoading)
-                ? const Expanded(child: Center(child: CustomLoadingIndicator()))
-                : Expanded(
-                    child: ListView.builder(
-                      controller: scrollController,
-                      shrinkWrap: true,
-                      itemCount: announcementsData?.data?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return (announcementsData?.data?[index] == 0 ||
-                                announcementsData?.data?.length == [])
-                            ? Expanded(
-                                child: Text(
-                                "no_data".tr(),
-                                style: TextStyle(
-                                  color: AppColors.black,
-                                ),
-                              ))
-                            : SizedBox(
-                                height: getSize(context) / 1,
-                                child: CustomAnnouncementWidget(
-                                  isMainWidget: true,
-                                  announcement: announcementsData?.data?[index],
-                                ),
-                              );
-                      },
-                    ),
-                  ),
+            (state is AnnouncementsStateLoading)?
+             const Expanded(child: Center(child: CustomLoadingIndicator())):
+            Expanded(
+              child: ListView.builder(
+                controller: scrollController,
+                shrinkWrap: true,
+                itemCount: announcementsData?.data?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return (announcementsData?.data?[index] == 0 || announcementsData?.data?.length ==[])
+                      ? Expanded(child: Text("no_data".tr(),style: TextStyle(
+                    color: AppColors.black,
+                  ),))
+                      : SizedBox(
+                        height: getSize(context)/1,
+                        child: CustomAnnouncementWidget(
+                          index: index,
+                            isMainWidget: true,
+                            announcement: announcementsData?.data?[index],
+                          ),
+                      );
+                },
+              ),
+            ),
             if (state is AnnouncementsStateLoadingMore)
               const Expanded(child: CustomLoadingIndicator())
           ],

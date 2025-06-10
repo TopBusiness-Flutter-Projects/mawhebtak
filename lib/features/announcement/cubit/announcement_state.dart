@@ -71,4 +71,17 @@ class AnnouncementsFromCategoryStateError extends AnnouncementState {
 
   CategoryFromAnnouncementsStateError(this.errorMessage);
 }
+class ToggleFavoriteAnnounceStateLoaded extends AnnouncementState {
+
+
+}class ToggleFavoriteAnnounceStateLoading extends AnnouncementState {
+
+
+}
+class ToggleFavoriteAnnounceStateError extends AnnouncementState {
+  final String errorMessage;
+
+  ToggleFavoriteAnnounceStateError(this.errorMessage);
+}
+
 
