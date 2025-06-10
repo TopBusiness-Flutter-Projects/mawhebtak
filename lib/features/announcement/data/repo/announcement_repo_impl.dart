@@ -45,12 +45,12 @@ class AnnouncementRepo {
     final userModel = await Preferences.instance.getUserModel();
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
-         "model": "Announce",
-         "where[0]": "expire_in,>=,$date",
-         "where[1]": "user_id,${userModel.data?.id?.toString()}",
-         "paginate": "true",
-         "orderBy": orderBy,
-         "page": page,
+        "model": "Announce",
+        "where[0]": "expire_in,>=,$date",
+        "where[1]": "user_id,${userModel.data?.id?.toString()}",
+        "paginate": "true",
+        "orderBy": orderBy,
+        "page": page,
       });
       return Right(AnnouncementsModel.fromJson(response));
     } on ServerException {
@@ -112,7 +112,6 @@ class AnnouncementRepo {
     }
   }
 
-
   Future<Either<Failure, DefaultMainModel>> addAnnouncement({
     required List<File> mediaFiles,
     required String title,
@@ -127,7 +126,8 @@ class AnnouncementRepo {
     try {
       LoginModel? user;
       user = await Preferences.instance.getUserModel();
-      var response = await dio.post(EndPoints.storeDataUrl, formDataIsEnabled: true, body: {
+      var response = await dio
+          .post(EndPoints.storeDataUrl, formDataIsEnabled: true, body: {
         "model": "Announce",
         "user_id": user.data?.id,
         "title": title,
