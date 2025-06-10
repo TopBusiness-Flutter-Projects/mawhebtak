@@ -18,7 +18,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   late final ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    context.read<AnnouncementCubit>().announcementsData(page: '1', isGetMore: false);
+    context.read<AnnouncementCubit>().announcementsData(page: '1', isGetMore: false,orderBy: "desc");
     context.read<AnnouncementCubit>().getCategoryFromAnnouncment(page: '1', isGetMore: false, orderBy: "desc");
     scrollController.addListener(_scrollListener);
     super.initState();
@@ -59,8 +59,8 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
               var announcementsData = cubit.announcements;
               var announcementsCategoryData = cubit.announcementCategoryModel;
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 145.w,
@@ -184,39 +184,44 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                   ),
                   (state is AnnouncementsStateLoading)
                       ? const Expanded(
-                          child: Center(
-                            child: CustomLoadingIndicator(),
-                          ),
-                        )
+                    child: Center(
+                      child: CustomLoadingIndicator(),
+                    ),
+                  )
                       : (announcementsData?.data == [] || announcementsData?.data?.length == 0)
-                          ? Expanded(
-                              child: Center(
-                                  child: Text(
-                              "no_data".tr(),
-                              style: TextStyle(color: AppColors.black),
-                            )))
-                          : Expanded(
-                              child: Padding(
-                              padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                              child: RefreshIndicator(
-                                onRefresh:()async{
-                                  context.read<AnnouncementCubit>().announcementsData(page: '1');
-                                },
-                                child: ListView.builder(
-                                  physics: const AlwaysScrollableScrollPhysics(),
-                                  controller: scrollController,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) =>
-                                      CustomAnnouncementWidget(
+                      ? Expanded(
+                      child: Center(
+                          child: Text(
+                            "no_data".tr(),
+                            style: TextStyle(color: AppColors.black),
+                          )))
+                      : Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 8.w, right: 8.w),
+                        child: RefreshIndicator(
+                          onRefresh:()async{
+                            context.read<AnnouncementCubit>().announcementsData(page: '1');
+                          },
+                          child: ListView.builder(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            controller: scrollController,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) =>
+                                SizedBox(
+                                  height: getSize(context)/1,
+                                  child: CustomAnnouncementWidget(
+                                    isMainWidget: true,
                                     announcement: announcementsData?.data?[index],
 
                                   ),
-                                  itemCount: announcementsData?.data?.length ?? 0,
                                 ),
-                              ),
-                            )),
+                            itemCount: announcementsData?.data?.length ?? 0,
+                          ),
+                        ),
+                      )),
                   if (state is AnnouncementsStateLoadingMore)
                     const CustomLoadingIndicator(),
+
                 ],
               );
             }),

@@ -43,16 +43,14 @@ class AnnouncementRepo {
   }) async {
     String date = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     final userModel = await Preferences.instance.getUserModel();
-    print("userid ${userModel.data?.id?.toString()}");
-    print("userid ${date}");
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
-        "model": "Announce",
+         "model": "Announce",
          "where[0]": "expire_in,>=,$date",
-       "where[1]": "user_id,${userModel.data?.id?.toString()}",
-        "paginate": "true",
-        "orderBy": orderBy,
-        "page": page,
+         "where[1]": "user_id,${userModel.data?.id?.toString()}",
+         "paginate": "true",
+         "orderBy": orderBy,
+         "page": page,
       });
       return Right(AnnouncementsModel.fromJson(response));
     } on ServerException {
