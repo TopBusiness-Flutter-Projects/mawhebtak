@@ -39,7 +39,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
           reduis: 8.r,
           width: 299.w,
           child: Padding(
-            padding: EdgeInsets.only(bottom: 20.h,top: 10.h),
+            padding: EdgeInsets.only(bottom: 20.h,top: 10.h,left: 10.w,right: 10.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

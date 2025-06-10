@@ -52,7 +52,7 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
               filterType: 'announcements',
             ),
             (state is AnnouncementsStateLoading)?
-             const Expanded(child: CustomLoadingIndicator()):
+             const Expanded(child: Center(child: CustomLoadingIndicator())):
             Expanded(
               child: ListView.builder(
                 controller: scrollController,
@@ -60,7 +60,9 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
                 itemCount: announcementsData?.data?.length ?? 0,
                 itemBuilder: (context, index) {
                   return (announcementsData?.data?[index] == 0 || announcementsData?.data?.length ==[])
-                      ? Expanded(child: Text("no_data".tr()))
+                      ? Expanded(child: Text("no_data".tr(),style: TextStyle(
+                    color: AppColors.black,
+                  ),))
                       : SizedBox(
                         height: getSize(context)/1,
                         child: CustomAnnouncementWidget(
