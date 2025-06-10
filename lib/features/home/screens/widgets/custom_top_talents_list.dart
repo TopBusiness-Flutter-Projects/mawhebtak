@@ -91,17 +91,18 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
                           color: AppColors.white, fontSize: 12.sp),
                       textAlign: TextAlign.center,
                     ),
+                    if (widget.topTalentsData?.headline != null)
+                      Text(
+                        widget.topTalentsData?.headline ?? "-",
+                        maxLines: 1,
+                        style: getRegularStyle(
+                            color: AppColors.grayText, fontSize: 13.sp),
+                        textAlign: TextAlign.center,
+                      ),
+                    if (widget.topTalentsData?.headline != null)
+                      5.verticalSpace,
                     Text(
-                      widget.topTalentsData?.headline ??
-                          "Talent / Actor Expert",
-                      maxLines: 1,
-                      style: getRegularStyle(
-                          color: AppColors.grayText, fontSize: 13.sp),
-                      textAlign: TextAlign.center,
-                    ),
-                    10.verticalSpace,
-                    Text(
-                      "${widget.topTalentsData?.followersCount ?? 20}  followers",
+                      "${widget.topTalentsData?.followersCount ?? 0}  ${'followers'.tr()}",
                       maxLines: 1,
                       style: getMediumStyle(
                           color: AppColors.grayText, fontSize: 13.sp),

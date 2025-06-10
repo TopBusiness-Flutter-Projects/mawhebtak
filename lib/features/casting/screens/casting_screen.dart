@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
@@ -108,17 +109,27 @@ class _CastingScreenState extends State<CastingScreen> {
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 10.h,
-                  right: 20.w,
-                  child: _buildAddButton(context),
-                ),
+                // Positioned(
+                //   bottom: 10.h,
+                //   right: 20.w,
+                //   child:
+                // ),
               ],
             ),
           ),
-          if (widget.isFromHome) 100.h.verticalSpace,
+          kBottomNavigationBarHeight.verticalSpace,
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: (selectedIndex == 0)
+          ? Container()
+          : Padding(
+              padding:
+                  const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+              child: _buildAddButton(context),
+            ),
+
+      //
     );
   }
 
@@ -208,7 +219,8 @@ class _CastingScreenState extends State<CastingScreen> {
                 onRefresh: () async {
                   context.read<TopTalentsCubit>().topTalentsData(page: "1");
                 },
-                child: cubit.topTalents?.data?.length == 0
+                child: (cubit.topTalents?.data?.length == 0 &&
+                        cubit.topTalents == null)
                     ? Center(
                         child: TextButton(
                             onPressed: () {

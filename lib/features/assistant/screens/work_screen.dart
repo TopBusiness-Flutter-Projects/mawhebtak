@@ -8,6 +8,9 @@ import 'package:mawhebtak/features/assistant/screens/add_new_work_screen.dart';
 import '../../../core/exports.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
+
 class AssistantScreen extends StatefulWidget {
   const AssistantScreen({super.key});
 
@@ -100,27 +103,34 @@ class _AssistantScreenState extends State<AssistantScreen> {
               ),
             ],
           ),
-          Positioned(
-            bottom: 50.h,
-            right: 20.w,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, Routes.addNewWorkRoute);
-              },
-              child: Container(
-                width: 60.w,
-                height: 60.h,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
-                ),
-                child: const Center(
-                  child: Icon(Icons.add, color: Colors.white),
-                ),
-              ),
-            ),
-          ),
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+        child: _buildAddButton(context),
+      ),
+    );
+  }
+
+  Widget _buildAddButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        final user = await Preferences.instance.getUserModel();
+        if (user.data?.token == null) {
+          checkLogin(context);
+        } else {
+          Navigator.pushNamed(context, Routes.addNewWorkRoute);
+        }
+      },
+      child: Container(
+        width: 60.w,
+        height: 60.h,
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          shape: BoxShape.circle,
+        ),
+        child: const Center(child: Icon(Icons.add, color: Colors.white)),
       ),
     );
   }

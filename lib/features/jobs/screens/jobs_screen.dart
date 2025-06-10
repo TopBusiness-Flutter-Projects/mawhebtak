@@ -102,32 +102,34 @@ class _JobsScreenState extends State<JobsScreen> {
               ],
             );
           }),
-          Positioned(
-            bottom: 50.h,
-            right: 20.w,
-            child: GestureDetector(
-              onTap: () async {
-                final user = await Preferences.instance.getUserModel();
-                if (user.data?.token == null) {
-                  checkLogin(context);
-                } else {
-                  Navigator.pushNamed(context, Routes.addNewJobRoute);
-                }
-              },
-              child: Container(
-                width: 60.w,
-                height: 60.h,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
-                ),
-                child: const Center(
-                  child: Icon(Icons.add, color: Colors.white),
-                ),
-              ),
-            ),
-          ),
         ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+        child: _buildAddButton(context),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
+
+  Widget _buildAddButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        final user = await Preferences.instance.getUserModel();
+        if (user.data?.token == null) {
+          checkLogin(context);
+        } else {
+          Navigator.pushNamed(context, Routes.addNewJobRoute);
+        }
+      },
+      child: Container(
+        width: 60.w,
+        height: 60.h,
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          shape: BoxShape.circle,
+        ),
+        child: const Center(child: Icon(Icons.add, color: Colors.white)),
       ),
     );
   }

@@ -27,6 +27,38 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
     context.read<AssistantCubit>().getWorks();
   }
 
+  Widget _buildAddButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        final user = await Preferences.instance.getUserModel();
+        if (user.data?.token == null) {
+          checkLogin(context);
+        } else {
+          final result = await Navigator.pushNamed(
+            context,
+            Routes.addAssistantRoute,
+            arguments: {
+              'work': widget.work,
+            },
+          );
+
+          if (result != null) {
+            context.read<AssistantCubit>().getAssistants(widget.work?.id ?? 0);
+          }
+        }
+      },
+      child: Container(
+        width: 60.w,
+        height: 60.h,
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          shape: BoxShape.circle,
+        ),
+        child: const Center(child: Icon(Icons.add, color: Colors.white)),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -34,6 +66,11 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light),
       child: Scaffold(
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+          child: _buildAddButton(context),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         body: Stack(
           children: [
             Column(
@@ -122,43 +159,6 @@ class _WorkDetailsScreenState extends State<WorkDetailsScreen> {
                   },
                 ),
               ],
-            ),
-            Positioned(
-              bottom: 50.h,
-              right: 20.w,
-              child: GestureDetector(
-                onTap: () async {
-                  final user = await Preferences.instance.getUserModel();
-                  if (user.data?.token == null) {
-                    checkLogin(context);
-                  } else {
-                    final result = await Navigator.pushNamed(
-                      context,
-                      Routes.addAssistantRoute,
-                      arguments: {
-                        'work': widget.work,
-                      },
-                    );
-
-                    if (result != null) {
-                      context
-                          .read<AssistantCubit>()
-                          .getAssistants(widget.work?.id ?? 0);
-                    }
-                  }
-                },
-                child: Container(
-                  width: 60.w,
-                  height: 60.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Center(
-                    child: Icon(Icons.add, color: Colors.white),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

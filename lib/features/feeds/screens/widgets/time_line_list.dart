@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/see_more_text.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
-import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';

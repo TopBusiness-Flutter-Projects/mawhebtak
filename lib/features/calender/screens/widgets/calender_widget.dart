@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/utils/hex_color.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
@@ -208,31 +207,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             // ------------------------
             // زر عائم لإضافة حدث
             // ------------------------
-            Positioned(
-              bottom: 80.h,
-              right: 20.w,
-              child: GestureDetector(
-                onTap: () async {
-                  final user = await Preferences.instance.getUserModel();
-                  if (user.data?.token == null) {
-                    checkLogin(context);
-                  } else {
-                    Navigator.pushNamed(context, Routes.newEventRoute);
-                  }
-                },
-                child: Container(
-                  width: 60.w,
-                  height: 60.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Center(
-                    child: Icon(Icons.add, color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
           ],
         );
       },
