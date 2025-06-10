@@ -129,10 +129,11 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.detailsAnnouncementScreen:
-         String announcementId = settings.arguments as String;
+        final args = settings.arguments as Map<String, dynamic>;
         return PageTransition(
           child:  DetailsAnnouncementScreen(
-            announcementId: announcementId,
+            index: args['index'] as int,
+            announcementId: args['announcementId'] as String,
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,

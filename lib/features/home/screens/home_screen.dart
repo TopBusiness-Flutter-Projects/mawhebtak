@@ -1,9 +1,7 @@
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
-import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
-import 'package:mawhebtak/features/announcement/screens/all_announcements_screen.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_announcement_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_row.dart';
@@ -352,6 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: homeData?.announcements?.length ?? 0,
                                 itemBuilder: (context, index) {
                                   return CustomAnnouncementWidget(
+                                    index: index,
                                     isMainWidget: false,
                                     announcement: homeData?.announcements?[index],
                                    );

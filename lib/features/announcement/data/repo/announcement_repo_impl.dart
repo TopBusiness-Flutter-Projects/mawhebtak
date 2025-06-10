@@ -8,6 +8,7 @@ import 'package:mawhebtak/core/error/failures.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcement_details_model.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcements_model.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
@@ -57,7 +58,21 @@ class AnnouncementRepo {
       return Left(ServerFailure());
     }
   }
-
+  Future<Either<Failure, DefaultMainModel>> toggleFavoriteAnnounce(
+      {required String userAnnounceId}) async {
+    try {
+      var response = await dio.post(
+        EndPoints.toggleFavorite,
+        body: {"favouriteable_type": "Announce",
+          "favouriteable_id": userAnnounceId},
+      );
+      return Right(
+        DefaultMainModel.fromJson(response),
+      );
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
   Future<Either<Failure, GetCountriesMainModel>>
       dataFromSubCategoryAnnouncement({required String categoryId}) async {
     try {
@@ -84,6 +99,7 @@ class AnnouncementRepo {
       return Left(ServerFailure());
     }
   }
+
 
   Future<Either<Failure, GetCountriesMainModel>>
       subCategoryFromCategoryAnnouncement({required String categoryId}) async {
