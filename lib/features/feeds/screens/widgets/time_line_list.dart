@@ -267,10 +267,7 @@ class _TimeLineListState extends State<TimeLineList> {
             ),
           ],
         ),
-        Container(
-          color: AppColors.grayLite,
-          height: 10.h,
-        )
+        Container(color: AppColors.grayLite, height: 10.h)
       ],
     );
   }

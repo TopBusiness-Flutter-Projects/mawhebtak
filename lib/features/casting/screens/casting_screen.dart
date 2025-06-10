@@ -23,8 +23,8 @@ class CastingScreen extends StatefulWidget {
 class _CastingScreenState extends State<CastingScreen> {
   int selectedIndex = 0;
   late List<String> tabs;
-  late final ScrollController scrollTopTalentController = ScrollController();
-  late final ScrollController scrollGigsController = ScrollController();
+  late ScrollController scrollTopTalentController = ScrollController();
+  late ScrollController scrollGigsController = ScrollController();
   @override
   void initState() {
     super.initState();
@@ -102,18 +102,12 @@ class _CastingScreenState extends State<CastingScreen> {
                         Expanded(
                           child: selectedIndex == 0
                               ? _buildTalentsContent(context)
-                              : _buildGigsContent(context,
-                                  castingCubit: context.read<CastingCubit>()),
+                              : _buildGigsContent(context),
                         ),
                       ],
                     ),
                   ),
                 ),
-                // Positioned(
-                //   bottom: 10.h,
-                //   right: 20.w,
-                //   child:
-                // ),
               ],
             ),
           ),
@@ -217,7 +211,7 @@ class _CastingScreenState extends State<CastingScreen> {
             return Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
-                  context.read<TopTalentsCubit>().topTalentsData(page: "1");
+                  cubit.topTalentsData(page: "1");
                 },
                 child: (cubit.topTalents?.data?.length == 0 &&
                         cubit.topTalents == null)
@@ -261,49 +255,48 @@ class _CastingScreenState extends State<CastingScreen> {
   }
 
   // Gigs Content UI
-  Widget _buildGigsContent(BuildContext context,
-      {required CastingCubit castingCubit}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildGigsHorizontalList(context),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-          child: Text(
-            "gigs_list".tr(),
-            style: TextStyle(color: AppColors.blackLite, fontSize: 16.sp),
-          ),
-        ),
-        Expanded(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              context
-                  .read<CastingCubit>()
-                  .allGigsData(page: '1', isGetMore: false);
-            },
-            child: ListView.builder(
-              controller: scrollGigsController,
-              itemCount:
-                  context.read<CastingCubit>().allGigsModel?.data?.length ?? 0,
-              physics: const AlwaysScrollableScrollPhysics(),
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
-              itemBuilder: (context, index) {
-                if (index ==
-                    context.read<CastingCubit>().allGigsModel?.data?.length) {
-                  return const CustomLoadingIndicator();
-                }
-                return GigsWidget(
-                  index: index,
-                  castingCubit: castingCubit,
-                  eventAndGigsModel:
-                      context.read<CastingCubit>().allGigsModel?.data?[index],
-                );
-              },
+  Widget _buildGigsContent(BuildContext context) {
+    return BlocBuilder<CastingCubit, CastingState>(
+      builder: (context, state) {
+        var cubit = context.read<CastingCubit>();
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildGigsHorizontalList(context),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+              child: Text(
+                "gigs_list".tr(),
+                style: TextStyle(color: AppColors.blackLite, fontSize: 16.sp),
+              ),
             ),
-          ),
-        ),
-      ],
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  cubit.allGigsData(page: '1', isGetMore: false);
+                },
+                child: ListView.builder(
+                  controller: scrollGigsController,
+                  itemCount: cubit.allGigsModel?.data?.length ?? 0,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  itemBuilder: (context, index) {
+                    if (index == cubit.allGigsModel?.data?.length) {
+                      return const CustomLoadingIndicator();
+                    }
+                    return GigsWidget(
+                      index: index,
+                      castingCubit: cubit,
+                      eventAndGigsModel: cubit.allGigsModel?.data?[index],
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

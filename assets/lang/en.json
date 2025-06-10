@@ -141,7 +141,7 @@
   "event_req": "Event Requirement",
   "title_of_event": "Title of the event",
   "select_location": "Select Location",
-  "request_this_product":"Request this Product",
+  "request_this_product": "Request this Product",
   "open_map": "Open Map",
   "description": "Description",
   "description_msg": "About the event",
@@ -267,5 +267,6 @@
   "write_comment": "Write a comment...",
   "reply": "reply",
   "replies": "replies",
+  "free": "Free",
   "repling_to": "Replying to"
 }

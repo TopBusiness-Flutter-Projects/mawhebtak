@@ -202,10 +202,12 @@ class CastingCubit extends Cubit<CastingState> {
               getDetailsGigsModel?.data?.isRequested.toString() == "pending") {
             allGigsModel?.data?[index].isRequested = "null";
             getDetailsGigsModel?.data?.isRequested = "null";
-            print("getDetailsGigsModel?.data?.isRequested = null    ${getDetailsGigsModel?.data?.isRequested}");
+            print(
+                "getDetailsGigsModel?.data?.isRequested = null    ${getDetailsGigsModel?.data?.isRequested}");
             print("model${getDetailsGigsModel?.data}");
             emit(RequestGigStateLoaded());
-          } else if (allGigsModel?.data?[index].isRequested.toString() == "null" ||
+          } else if (allGigsModel?.data?[index].isRequested.toString() ==
+                  "null" ||
               allGigsModel?.data?[index].isRequested.toString() == "rejected" ||
               getDetailsGigsModel?.data?.isRequested.toString() == "null" ||
               getDetailsGigsModel?.data?.isRequested.toString() == "rejected") {
@@ -217,8 +219,6 @@ class CastingCubit extends Cubit<CastingState> {
             print("model${getDetailsGigsModel?.data}");
             emit(RequestGigStateLoaded());
           }
-
-
         } else {
           errorGetBar(r.msg.toString());
           emit(RequestGigStateError(r.msg.toString()));
@@ -264,18 +264,23 @@ class CastingCubit extends Cubit<CastingState> {
         errorGetBar(l.toString());
         emit(AddNewGigStateError(l.toString()));
       }, (r) {
-        successGetBar(r.msg.toString());
-        priceRangeController.clear();
-        gigTitleController.clear();
-        descriptionController.clear();
-        context.read<CalenderCubit>().myImagesF = [];
-        context.read<CalenderCubit>().myImages = [];
-        context.read<CalenderCubit>().validVideos = [];
-        locationAddressController.clear();
-        selectedCategory = null;
-        selectedSubCategory = null;
-        Navigator.pop(context);
-        emit(AddNewGigStateLoaded());
+        if (r.status == 200) {
+          successGetBar(r.msg.toString());
+          priceRangeController.clear();
+          gigTitleController.clear();
+          descriptionController.clear();
+          context.read<CalenderCubit>().myImagesF = [];
+          context.read<CalenderCubit>().myImages = [];
+          context.read<CalenderCubit>().validVideos = [];
+          locationAddressController.clear();
+          selectedCategory = null;
+          selectedSubCategory = null;
+          Navigator.pop(context);
+          emit(AddNewGigStateLoaded());
+        } else {
+          errorGetBar(r.msg.toString());
+          emit(AddNewGigStateError(r.msg.toString()));
+        }
       });
     } catch (e) {
       successGetBar(e.toString());
@@ -283,5 +288,36 @@ class CastingCubit extends Cubit<CastingState> {
       emit(AddNewGigStateError(e.toString()));
     }
     Navigator.pop(context);
+  }
+
+  deleteGigs(String gigId, BuildContext context) async {
+    emit(DeleteGigsStateLoading());
+    AppWidgets.create2ProgressDialog(context);
+    try {
+      final res = await castingRepo.deleteGigs(gigId);
+      res.fold((l) {
+        Navigator.pop(context);
+
+        errorGetBar(l.toString());
+        emit(DeleteGigsStateError());
+      }, (r) {
+        if (r.status == 200) {
+          successGetBar(r.msg.toString());
+          Navigator.pop(context);
+          allGigsData(page: '1', isGetMore: false);
+          //!
+          emit(DeleteGigsStateLoaded());
+        } else {
+          errorGetBar(r.msg.toString());
+          emit(DeleteGigsStateError());
+        }
+        Navigator.pop(context);
+      });
+    } catch (e) {
+      Navigator.pop(context);
+
+      errorGetBar(e.toString());
+      emit(DeleteGigsStateError());
+    }
   }
 }

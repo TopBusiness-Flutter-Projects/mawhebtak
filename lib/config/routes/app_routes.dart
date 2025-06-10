@@ -40,6 +40,7 @@ import '../../features/announcement/screens/new_announcement.dart';
 import '../../features/auth/login/screens/login_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
+import '../../features/feeds/screens/write_post.dart';
 import '../../features/home/screens/top_events_screen.dart';
 import '../../features/feeds/screens/feeds_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
@@ -94,8 +95,10 @@ class Routes {
   static const String requestGigsRoute = '/requestGigsRoute';
   static const String allAnnouncementsRoute = '/allAnnouncementsRoute';
   static const String chatRoute = '/chatRoute';
-  static const String detailsOfMainCategoryFromGigsRoute = '/detailsOfMainCategoryFromGigs';
-  static const String detailsOfMainCategoryAnnouncementRoute = '/detailsOfMainCategoryAnnouncementRoute';
+  static const String detailsOfMainCategoryFromGigsRoute =
+      '/detailsOfMainCategoryFromGigs';
+  static const String detailsOfMainCategoryAnnouncementRoute =
+      '/detailsOfMainCategoryAnnouncementRoute';
 
   static const String detailsOfMainCategoryFromTopTalentsRoute =
       '/detailsOfMainCategoryFromTopTalents';
@@ -129,9 +132,9 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.detailsAnnouncementScreen:
-         String announcementId = settings.arguments as String;
+        String announcementId = settings.arguments as String;
         return PageTransition(
-          child:  DetailsAnnouncementScreen(
+          child: DetailsAnnouncementScreen(
             announcementId: announcementId,
           ),
           type: PageTransitionType.fade,
@@ -184,10 +187,12 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-        case Routes.detailsOfMainCategoryAnnouncementRoute:
-           String categoryId = settings.arguments as String;
+      case Routes.detailsOfMainCategoryAnnouncementRoute:
+        String categoryId = settings.arguments as String;
         return PageTransition(
-          child:  DetailsOfMainCategoryAnnouncement(categoryId: categoryId,),
+          child: DetailsOfMainCategoryAnnouncement(
+            categoryId: categoryId,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
@@ -231,7 +236,8 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
-        );case Routes.allAnnouncementsRoute:
+        );
+      case Routes.allAnnouncementsRoute:
         return PageTransition(
           child: const AllAnnouncementsScreen(),
           type: PageTransitionType.fade,
@@ -471,10 +477,19 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
+
+      case Routes.writePostScreen:
+        return PageTransition(
+          child: const WritePost(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
       default:
         return undefinedRoute();
     }
   }
+
 
   static Route<dynamic> undefinedRoute() {
     return MaterialPageRoute(

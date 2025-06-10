@@ -144,6 +144,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                       children: [
                         Text(
                           widget.eventAndGigsModel?.title ?? "",
+                          maxLines: (widget.isFromDetails == true) ? null : 3,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 20.sp,
@@ -152,9 +153,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                         5.h.verticalSpace,
                         Text(
                           widget.eventAndGigsModel?.description ?? "",
-                          maxLines: widget.eventAndGigsModel?.image != null
-                              ? 2
-                              : null,
+                          maxLines: (widget.isFromDetails == true) ? null : 2,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 18.sp,
@@ -163,16 +162,21 @@ class _GigsWidgetState extends State<GigsWidget> {
                         ),
                         20.h.verticalSpace,
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SvgPicture.asset(AppIcons.locationIcon),
                                   5.w.horizontalSpace,
                                   Flexible(
                                     child: Text(
                                       widget.eventAndGigsModel?.location ?? "",
+                                      maxLines: (widget.isFromDetails == true)
+                                          ? null
+                                          : 1,
                                       style: TextStyle(
                                           color: AppColors.grayDarkkk,
                                           fontSize: 18.sp,
@@ -220,11 +224,15 @@ class _GigsWidgetState extends State<GigsWidget> {
                             if (user.data?.token == null) {
                               checkLogin(context);
                             } else {
-                              if (widget.eventAndGigsModel?.isRequested.toString() ==
+                              if (widget.eventAndGigsModel?.isRequested
+                                          .toString() ==
                                       "pending" ||
-                                  widget.eventAndGigsModel?.isRequested.toString() ==
+                                  widget.eventAndGigsModel?.isRequested
+                                          .toString() ==
                                       "rejected" ||
-                                  widget.eventAndGigsModel?.isRequested.toString() == "null") {
+                                  widget.eventAndGigsModel?.isRequested
+                                          .toString() ==
+                                      "null") {
                                 widget.castingCubit!.requestGigs(
                                   context: context,
                                   index: widget.index!,
@@ -236,8 +244,6 @@ class _GigsWidgetState extends State<GigsWidget> {
                                           "",
                                 );
                               }
-
-
                             }
                           },
                           title: (widget.eventAndGigsModel?.isRequested ==

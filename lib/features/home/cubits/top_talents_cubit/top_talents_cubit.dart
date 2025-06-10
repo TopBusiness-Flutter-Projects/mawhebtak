@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/data/models/top_talents_model.dart';
 import 'package:mawhebtak/features/home/data/repositories/top_talents_repository.dart';
-import 'package:mawhebtak/injector.dart';
+
 import '../../../../core/exports.dart';
 import '../../data/models/home_model.dart';
 part 'top_talents_state.dart';

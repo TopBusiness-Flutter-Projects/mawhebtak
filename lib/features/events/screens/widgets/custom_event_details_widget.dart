@@ -98,7 +98,9 @@ class CustomEventDetailsWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            item?.eventPrice ?? '',
+                            item?.eventPrice == "0"
+                                ? 'free'.tr()
+                                : item?.eventPrice ?? '',
                             style: getSemiBoldStyle(
                                 fontSize: 17.sp, color: AppColors.green),
                           ),

@@ -86,21 +86,19 @@ class CastingRepo {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, GetCountriesMainModel>> subCategoryFromCategoryGigs(
       {required String categoryId}) async {
     try {
-      var response = await api.get(EndPoints.getDataBaseUrl,
-          queryParameters: {
-            "model": "SubCategory",
-            "where[0]": "category_id,$categoryId",
-          });
+      var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
+        "model": "SubCategory",
+        "where[0]": "category_id,$categoryId",
+      });
       return Right(GetCountriesMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
-
-
 
   Future<Either<Failure, RequestGigsModel>> requestGigsData({
     required String page,
@@ -176,6 +174,19 @@ class CastingRepo {
           "followed_id": followedId,
         },
       );
+      return Right(DefaultMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, DefaultMainModel>> deleteGigs(String gigId) async {
+    try {
+      var response =
+          await api.post(EndPoints.deleteData, formDataIsEnabled: true, body: {
+        "model": "Gig",
+        "id": gigId,
+      });
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());

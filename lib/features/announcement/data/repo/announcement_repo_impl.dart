@@ -47,7 +47,7 @@ class AnnouncementRepo {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Announce",
         "where[0]": "expire_in,>=,$date",
-        "where[1]": "user_id,${userModel.data?.id?.toString()}",
+        // "where[1]": "user_id,${userModel.data?.id?.toString()}",
         "paginate": "true",
         "orderBy": orderBy,
         "page": page,

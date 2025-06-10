@@ -111,6 +111,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                 children: [
                   // Job title and fav icon
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Flexible(
