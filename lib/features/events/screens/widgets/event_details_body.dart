@@ -2,6 +2,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';

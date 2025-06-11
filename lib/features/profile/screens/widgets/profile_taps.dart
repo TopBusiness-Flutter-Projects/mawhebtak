@@ -51,9 +51,8 @@ class _ProfileTabsState extends State<ProfileTabs> {
                       Container(
                         height: 2.h,
                         width: 72.w,
-                        color: isSelected
-                            ? AppColors.primary
-                            : Colors.transparent,
+                        color:
+                            isSelected ? AppColors.primary : Colors.transparent,
                       )
                     ],
                   ),

@@ -22,10 +22,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ChangeFollowersState());
   }
 
-  Future<LoginModel> getUserFromPreferences() async {
-    final user = await Preferences.instance.getUserModel();
-    return user;
-  }
+
 
   LoginModel? user;
   Future<void> loadUserFromPreferences() async {
