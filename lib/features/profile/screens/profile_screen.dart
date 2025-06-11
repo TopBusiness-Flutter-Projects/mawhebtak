@@ -42,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.light,
           ),
+
           child: Scaffold(
             body: (state is GetProfileStateLoading || cubit.profileModel == null)
                 ? const Expanded(
