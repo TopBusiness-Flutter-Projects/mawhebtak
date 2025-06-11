@@ -100,7 +100,8 @@ class _TimeLineListState extends State<TimeLineList> {
                       icon: SvgPicture.asset(AppIcons.settingIcon),
                       onSelected: (value) {
                         if (value == 'delete') {
-                          widget.feedsCubit?.deletePost(postId: widget.postId);
+                          widget.feedsCubit
+                              ?.deletePost(context, postId: widget.postId);
                         }
                       },
                       color: AppColors.white,
