@@ -16,10 +16,11 @@ import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
 import '../../casting/screens/widgets/gigs_widgets.dart';
+import '../../events/screens/details_event_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key, required this.id});
-  final String id;
+  const ProfileScreen({super.key, required this.model});
+  final DeepLinkDataModel model;
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -27,7 +28,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    context.read<ProfileCubit>().getProfileData(id: widget.id);
+    context.read<ProfileCubit>().getProfileData(id: widget.model.id);
     super.initState();
   }
 
@@ -53,6 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ProfileAppBar(
+                            id: cubit.profileModel?.data?.id.toString() ?? "",
                             avatar: cubit.profileModel?.data?.avatar ?? "",
                             byCaver: cubit.profileModel?.data?.bgCover ?? "",
                           ),
@@ -129,16 +131,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: 5.h),
                           Container(height: 8.h, color: AppColors.grayLite),
                           Container(height: 20.h, color: AppColors.white),
-                           ProfileTabs(
-                            id: widget.id,
-                          ),
+                          ProfileTabs(id: widget.model.id),
                           SizedBox(height: 5.h),
                           if (cubit.selectedIndex == 0) ...[
                             AboutWidget(
                               profileModel: cubit.profileModel!,
                             )
-                          ]
-                          else if (cubit.selectedIndex == 1) ...[
+                          ] else if (cubit.selectedIndex == 1) ...[
                             BlocBuilder<FeedsCubit, FeedsState>(
                                 builder: (context, state) {
                               var feedsCubit = context.read<FeedsCubit>();
@@ -169,8 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               );
                             })
-                          ]
-                          else if (cubit.selectedIndex == 2) ...[
+                          ] else if (cubit.selectedIndex == 2) ...[
                             BlocBuilder<CastingCubit, CastingState>(
                                 builder: (context, state) {
                               var castingCubit = context.read<CastingCubit>();
@@ -197,9 +195,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               );
                             })
-                          ] else if (cubit.selectedIndex == 3) ...[
-
-                          ]
+                          ] else if (cubit.selectedIndex == 3)
+                            ...[]
                         ],
                       ),
                       cubit.selectedIndex == 2

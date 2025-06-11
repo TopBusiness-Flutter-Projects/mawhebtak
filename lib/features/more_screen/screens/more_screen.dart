@@ -5,6 +5,7 @@ import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:mawhebtak/features/more_screen/screens/widget/custom_logout_dialog.dart';
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
+import '../../events/screens/details_event_screen.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -52,11 +53,16 @@ class MoreScreen extends StatelessWidget {
                             imageUrl: AppIcons.myProfileIcon,
                             onTap: () {
                               Navigator.pushNamed(
-                                context, Routes.profileScreen,
-                                arguments:  context
-                                    .read<MainCubit>()
-                                    .loginModel!
-                                    .data!.id.toString() ,
+                                context,
+                                Routes.profileScreen,
+                                arguments: DeepLinkDataModel(
+                                    id: context
+                                        .read<MainCubit>()
+                                        .loginModel!
+                                        .data!
+                                        .id
+                                        .toString(),
+                                    isDeepLink: false),
                               );
                             }),
                         moreContainer(

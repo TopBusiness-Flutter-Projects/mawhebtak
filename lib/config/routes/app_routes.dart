@@ -200,10 +200,10 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.profileScreen:
-        String id = settings.arguments as String;
+        DeepLinkDataModel? model = settings.arguments as DeepLinkDataModel;
         return PageTransition(
-          child:  ProfileScreen(
-            id: id,
+          child: ProfileScreen(
+            model: model,
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
@@ -525,13 +525,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-      case Routes.profiledeepLinkRoute:
-        return PageTransition(
-          child: const ProfileScreen(),
-          type: PageTransitionType.fade,
-          alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
-        );
+
       case Routes.eventsdeepLinkRoute:
         log('PPPPPPPP ${DeepLinkDataModel(id: idLink, isDeepLink: true).isDeepLink}');
         log('PPPPPPPP ${DeepLinkDataModel(id: idLink, isDeepLink: true).id}');
@@ -543,7 +537,14 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-
+      case Routes.profiledeepLinkRoute:
+        return PageTransition(
+          child: ProfileScreen(
+              model: DeepLinkDataModel(id: idLink, isDeepLink: true)),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
       default:
         return undefinedRoute();
     }

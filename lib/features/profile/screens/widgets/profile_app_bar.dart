@@ -1,13 +1,19 @@
-import 'package:easy_localization/easy_localization.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/exports.dart';
-import '../../../../core/widgets/custom_simple_appbar.dart';
 
 class ProfileAppBar extends StatelessWidget {
-  const ProfileAppBar({super.key, required this.avatar,required this.byCaver});
- final String avatar;
- final String byCaver;
+  const ProfileAppBar({
+    Key? key,
+    required this.avatar,
+    required this.id,
+    required this.byCaver,
+  }) : super(key: key);
+  final String avatar;
+  final String byCaver;
+  final String id;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -16,15 +22,17 @@ class ProfileAppBar extends StatelessWidget {
       children: [
         // خلفية الصورة
 
-
         SizedBox(
           height: getHeightSize(context) / 4.9,
-          width:double.infinity,
-          child: (byCaver != null)?
-          Image.network(byCaver,fit: BoxFit.cover,):
-          Image.asset(
-            ImageAssets.profileAppBar,
-          ),
+          width: double.infinity,
+          child: (byCaver != null)
+              ? Image.network(
+                  byCaver,
+                  fit: BoxFit.cover,
+                )
+              : Image.asset(
+                  ImageAssets.profileAppBar,
+                ),
         ),
 
         // AppBar
@@ -35,13 +43,12 @@ class ProfileAppBar extends StatelessWidget {
           child: CustomSimpleAppbar(
             isActionButton: true,
             actionIcon: AppIcons.shareIcon,
-            // onShareTap: () async {
-            //   await SharePlus.instance.share(ShareParams(
-            //     text: AppStrings.profilesShareLink +
-            //         (cubit.evntStore?.data.toString() ?? ''),
-            //     title: AppStrings.appName,
-            //   ));
-            // },
+            onShareTap: () async {
+              await SharePlus.instance.share(ShareParams(
+                text: AppStrings.profilesShareLink + (id.toString() ?? ''),
+                title: AppStrings.appName,
+              ));
+            },
             titleColor: AppColors.white,
             colorButton: AppColors.whiteSecond,
             title: ''.tr(),
@@ -71,14 +78,16 @@ class ProfileAppBar extends StatelessWidget {
         // صورة البروفايل في الأسفل بالشمال نصها طالع ونصها نازل
         Positioned(
           bottom: -24.h, // نصف الارتفاع عشان تنزل نص الصورة
-          left: 16.w,    // على الشمال
-          child: (avatar != null) ?
-          CircleAvatar(backgroundImage: NetworkImage(avatar),):
-          SizedBox(
-            height: 48.h,
-            width: 48.h,
-            child: Image.asset(ImageAssets.profileImage),
-          ),
+          left: 16.w, // على الشمال
+          child: (avatar != null)
+              ? CircleAvatar(
+                  backgroundImage: NetworkImage(avatar),
+                )
+              : SizedBox(
+                  height: 48.h,
+                  width: 48.h,
+                  child: Image.asset(ImageAssets.profileImage),
+                ),
         ),
       ],
     );
