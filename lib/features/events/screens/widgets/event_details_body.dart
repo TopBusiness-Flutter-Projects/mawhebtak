@@ -1,8 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/core/utils/widget_from_application.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
 import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
-
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
@@ -34,14 +33,23 @@ class EventDetailsBody extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 40.h,
-                width: 40.w,
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    item?.eventOwner?.image ?? '',
+              GestureDetector(
+                onTap:(){
+                  Navigator.pushNamed(context, Routes.profileScreen,
+                    arguments: DeepLinkDataModel(
+                    id: item?.eventOwner?.id.toString() ??
+                      '',
+                  isDeepLink: false), );
+                },
+                child: SizedBox(
+                  height: 40.h,
+                  width: 40.w,
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      item?.eventOwner?.image ?? '',
+                    ),
+                    backgroundColor: AppColors.primary,
                   ),
-                  backgroundColor: AppColors.primary,
                 ),
               ),
               SizedBox(width: 8.w),
