@@ -59,12 +59,7 @@ class MoreScreen extends StatelessWidget {
                                 context,
                                 Routes.profileScreen,
                                 arguments: DeepLinkDataModel(
-                                    id: context
-                                        .read<MainCubit>()
-                                        .loginModel!
-                                        .data!
-                                        .id
-                                        .toString(),
+                                    id: context.read<MainCubit>().loginModel?.data?.id?.toString() ?? "",
                                     isDeepLink: false),
                               );
                             }),

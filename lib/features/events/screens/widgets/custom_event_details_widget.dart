@@ -2,7 +2,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/exports.dart';
-
 import '../../../home/screens/widgets/follow_button.dart';
 import '../../data/model/event_details_model.dart';
 import 'custom_media_view.dart';
