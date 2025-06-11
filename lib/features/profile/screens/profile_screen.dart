@@ -7,6 +7,7 @@ import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/time_line_list.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
+import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/about_widgets/about_widget.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/info_for_followers.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_app_bar.dart';
@@ -43,18 +44,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             statusBarIconBrightness: Brightness.light,
           ),
           child: Scaffold(
-            body: (state is GetProfileStateLoading)
-                ? const Expanded(
-                    child: Center(
+            body: (state is GetProfileStateLoading &&
+                    cubit.profileModel == null)
+                ? const Center(
                     child: CustomLoadingIndicator(),
-                  ))
+                  )
                 : Stack(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ProfileAppBar(
-                            id: cubit.profileModel?.data?.id.toString() ?? "",
+                            deepLinkData: widget.model,
                             avatar: cubit.profileModel?.data?.avatar ?? "",
                             byCaver: cubit.profileModel?.data?.bgCover ?? "",
                           ),
@@ -135,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: 5.h),
                           if (cubit.selectedIndex == 0) ...[
                             AboutWidget(
-                              profileModel: cubit.profileModel!,
+                              profileModel: cubit.profileModel,
                             )
                           ] else if (cubit.selectedIndex == 1) ...[
                             BlocBuilder<FeedsCubit, FeedsState>(

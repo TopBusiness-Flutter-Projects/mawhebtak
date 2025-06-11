@@ -5,8 +5,8 @@ import 'custom_row_section.dart';
 import 'experince_widget.dart';
 
 class AboutWidget extends StatelessWidget {
-  const AboutWidget({super.key, required this.profileModel});
-  final ProfileModel profileModel;
+  AboutWidget({super.key, this.profileModel});
+  ProfileModel? profileModel;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,7 +25,7 @@ class AboutWidget extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 16.0.w, right: 16.w),
               child: Text(
-                profileModel.data?.bio ?? "",
+                profileModel?.data?.bio ?? "",
                 style: getRegularStyle(
                     fontSize: 13.sp, color: AppColors.grayMedium),
               ),
@@ -39,18 +39,20 @@ class AboutWidget extends StatelessWidget {
         ),
         CustomRowSection(title: "personal_info".tr()),
         CustomRowEvent(
-            text: 'email'.tr(), text2: profileModel.data?.email ?? ""),
+            text: 'email'.tr(), text2: profileModel?.data?.email ?? ""),
         CustomRowEvent(
-            text: 'phone'.tr(), text2: profileModel.data?.phone ?? "", isSecond: true),
+            text: 'phone'.tr(),
+            text2: profileModel?.data?.phone ?? "",
+            isSecond: true),
         CustomRowEvent(
-            text: 'age'.tr(), text2: profileModel.data?.age.toString() ?? ""),
+            text: 'age'.tr(), text2: profileModel?.data?.age.toString() ?? ""),
         CustomRowEvent(
             text: 'location'.tr(),
-            text2: profileModel.data?.location ?? "",
+            text2: profileModel?.data?.location ?? "",
             isSecond: true),
         CustomRowEvent(
             text: 'syndicate'.tr(),
-            text2: profileModel.data?.syndicate.toString() ?? ""),
+            text2: profileModel?.data?.syndicate.toString() ?? ""),
         Container(
             height: 8.h, color: AppColors.grayLite, width: double.infinity),
         SizedBox(
@@ -60,10 +62,10 @@ class AboutWidget extends StatelessWidget {
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: profileModel.data!.experiences!.length,
+          itemCount: profileModel?.data?.experiences?.length ?? 0,
           itemBuilder: (BuildContext context, int index) {
             return ExperinceWidget(
-              experience: profileModel.data!.experiences![index],
+              experience: profileModel?.data?.experiences?[index],
             );
           },
           separatorBuilder: (BuildContext context, int index) {

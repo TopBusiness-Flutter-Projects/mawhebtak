@@ -3,17 +3,18 @@
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/exports.dart';
+import '../../../events/screens/details_event_screen.dart';
 
 class ProfileAppBar extends StatelessWidget {
   const ProfileAppBar({
     Key? key,
     required this.avatar,
-    required this.id,
+    required this.deepLinkData,
     required this.byCaver,
   }) : super(key: key);
   final String avatar;
   final String byCaver;
-  final String id;
+  final DeepLinkDataModel deepLinkData;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -42,10 +43,12 @@ class ProfileAppBar extends StatelessWidget {
           right: 0,
           child: CustomSimpleAppbar(
             isActionButton: true,
+            isDeepLink: deepLinkData.isDeepLink,
             actionIcon: AppIcons.shareIcon,
             onShareTap: () async {
               await SharePlus.instance.share(ShareParams(
-                text: AppStrings.profilesShareLink + (id.toString() ?? ''),
+                text: AppStrings.profilesShareLink +
+                    (deepLinkData.id.toString() ?? ''),
                 title: AppStrings.appName,
               ));
             },

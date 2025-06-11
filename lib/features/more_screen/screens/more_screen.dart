@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
@@ -52,6 +54,7 @@ class MoreScreen extends StatelessWidget {
                             text: "my_profile".tr(),
                             imageUrl: AppIcons.myProfileIcon,
                             onTap: () {
+                              log("id: ${context.read<MainCubit>().loginModel!.data!.id.toString()}");
                               Navigator.pushNamed(
                                 context,
                                 Routes.profileScreen,
