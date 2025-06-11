@@ -246,6 +246,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                 await SharePlus.instance.share(ShareParams(
                   text: AppStrings.postsShareLink +
                       (widget.post?.id.toString() ?? ''),
+                  subject: widget.post?.body ?? '',
                   title: AppStrings.appName,
                 ));
               },
