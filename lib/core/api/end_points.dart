@@ -41,4 +41,5 @@ class EndPoints {
   static const String requestGigs = '${baseUrl}request-cancel-gigs';
   static const String followAndUnFollow = '${baseUrl}follow-unfollow-user';
   static const String toggleFavorite = '${baseUrl}toggle-favourite';
+  static const String profile = '${baseUrl}profile/';
 }

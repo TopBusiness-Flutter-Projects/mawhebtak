@@ -1,17 +1,16 @@
-import 'dart:io';
 
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
+import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
+import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../core/exports.dart';
-import '../../../core/widgets/media_picker.dart';
 import '../data/repo/profile_repo_impl.dart';
 
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(this.api) : super(ProfileInitial());
-  profileRepo api;
+  ProfileRepo api;
   int selectedIndex = 0;
   bool isFollowing = true;
 
@@ -22,23 +21,38 @@ changeSelected(int index){
     isFollowing=!isFollowing;
   emit(ChangeFollowersState());
 }
-  File? selectedImage;
-  File? selectedVideo;
 
-  Future<void> pickMedia(BuildContext context) async {
-    MediaPickerHelper.pickMedia(
-      context: context,
-      onImagePicked: (image) {
-        selectedImage = image;
-        selectedVideo = null;
-        emit(ImagePickedState());
-      },
-      onVideoPicked: (video) {
-        selectedVideo = video;
-        selectedImage = null;
-        emit(VideoPickedState());
-      },
-    );
+
+
+
+
+  Future<LoginModel> getUserFromPreferences() async {
+    final user = await Preferences.instance.getUserModel();
+    return user;
   }
 
+  LoginModel? user;
+  Future<void> loadUserFromPreferences() async {
+    user = await Preferences.instance.getUserModel();
+  }
+
+  ProfileModel? profileModel;
+  getProfileData({
+    required String id,
+
+  }) async {
+    emit(GetProfileStateLoading());
+    try {
+      final res =
+      await api.getProfileData(id:id);
+      res.fold((l) {
+        emit(GetProfileStateError(l.toString()));
+      }, (r) {
+        profileModel = r;
+        emit(GetProfileStateLoaded());
+      });
+    } catch (e) {
+      emit(GetProfileStateError(e.toString()));
+    }
+  }
 }

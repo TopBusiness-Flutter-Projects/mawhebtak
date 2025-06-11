@@ -221,7 +221,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                         ),
                       )),
                   if (state is AnnouncementsStateLoadingMore)
-                    const CustomLoadingIndicator(),
+                    const Center(child: CustomLoadingIndicator()),
 
                 ],
               );

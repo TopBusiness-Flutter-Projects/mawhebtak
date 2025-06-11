@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,6 +18,7 @@ import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
+import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
 import 'core/notification_services/notification_service.dart';
@@ -60,11 +59,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    log('YYYYYY ${initialMessageRcieved?.data['module_id']}');
     return MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (_) => injector.serviceLocator<SplashCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => injector.serviceLocator<MoreCubit>(),
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<AnnouncementCubit>(),

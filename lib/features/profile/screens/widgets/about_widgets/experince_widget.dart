@@ -1,7 +1,17 @@
+import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
+
 import '../../../../../core/exports.dart';
 
-class ExperinceWidget extends StatelessWidget {
-  const ExperinceWidget({super.key});
+class ExperinceWidget extends StatefulWidget {
+  const ExperinceWidget({super.key, required this.experience});
+  final Experience experience;
+
+  @override
+  State<ExperinceWidget> createState() => _ExperinceWidgetState();
+}
+
+class _ExperinceWidgetState extends State<ExperinceWidget> {
+  bool _expanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +33,33 @@ class ExperinceWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Al King Film",style: getMediumStyle(fontSize: 13.sp),),
-                  Text("November 2021 Till June 2022",style: getRegularStyle(color: AppColors.grayMedium,fontSize: 14.sp),),
+                  Text(widget.experience.title ?? "",style: getMediumStyle(fontSize: 13.sp),),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    "Mawahbtak big platform connects all artists in all fields to make large community bettwen artists in Egypt",
-                    style:
-                    getRegularStyle(
+                    widget.experience.description ?? "",
+                    maxLines: _expanded ? null : 3,
+                    overflow: TextOverflow.fade,
+                    style: getRegularStyle(
                       color: AppColors.grayText3,
                       fontSize: 14.sp,
-
-                    ),),
+                    ),
+                  ),
+                  if (  widget.experience.description!.length > 100) // adjust based on your needs
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _expanded = !_expanded;
+                        });
+                      },
+                      child: Text(
+                        _expanded ? 'See Less' : 'See All',
+                        style: TextStyle(fontSize: 14.sp, color: Colors.blue),
+                      ),
+                    ),
+                ],
+              ),
                 ],
               ),
             )
@@ -40,7 +67,6 @@ class ExperinceWidget extends StatelessWidget {
 
       ),
       SizedBox(height: 4.h,),
-
       Container(height: 2.h,color: AppColors.grayLite,width: double.infinity,),
     ],);
   }

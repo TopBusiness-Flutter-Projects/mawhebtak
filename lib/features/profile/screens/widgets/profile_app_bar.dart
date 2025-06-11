@@ -4,8 +4,9 @@ import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_simple_appbar.dart';
 
 class ProfileAppBar extends StatelessWidget {
-  const ProfileAppBar({super.key});
-
+  const ProfileAppBar({super.key, required this.avatar,required this.byCaver});
+ final String avatar;
+ final String byCaver;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -13,12 +14,15 @@ class ProfileAppBar extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         // خلفية الصورة
+
+
         SizedBox(
           height: getHeightSize(context) / 4.9,
-          width: getWidthSize(context),
-          child: Image.asset(
+          width:double.infinity,
+          child: (byCaver != null)?
+          Image.network(byCaver,fit: BoxFit.cover,):
+          Image.asset(
             ImageAssets.profileAppBar,
-            fit: BoxFit.cover,
           ),
         ),
 
@@ -60,7 +64,9 @@ class ProfileAppBar extends StatelessWidget {
         Positioned(
           bottom: -24.h, // نصف الارتفاع عشان تنزل نص الصورة
           left: 16.w,    // على الشمال
-          child: SizedBox(
+          child: (avatar != null) ?
+          CircleAvatar(backgroundImage: NetworkImage(avatar),):
+          SizedBox(
             height: 48.h,
             width: 48.h,
             child: Image.asset(ImageAssets.profileImage),

@@ -1,7 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
+import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:mawhebtak/features/more_screen/screens/widget/custom_logout_dialog.dart';
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
@@ -52,7 +52,12 @@ class MoreScreen extends StatelessWidget {
                             imageUrl: AppIcons.myProfileIcon,
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, Routes.profileScreen);
+                                context, Routes.profileScreen,
+                                arguments:  context
+                                    .read<MainCubit>()
+                                    .loginModel!
+                                    .data!.id.toString() ,
+                              );
                             }),
                         moreContainer(
                             text: "my_favorites".tr(),

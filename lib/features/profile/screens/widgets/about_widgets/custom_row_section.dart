@@ -16,7 +16,7 @@ final String title;
           Text(title,
             style: getMediumStyle(fontSize: 14.sp,color: AppColors.darkGray),
           ),
-          SvgPicture.asset(AppIcons.bioIcon),
+
         ],),
     );
   }
