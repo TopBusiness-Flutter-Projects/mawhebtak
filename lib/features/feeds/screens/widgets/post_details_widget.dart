@@ -96,7 +96,10 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                       onSelected: (value) {
                         if (value == 'delete') {
                           widget.feedsCubit?.deletePost(
-                              postId: widget.post?.id?.toString() ?? '');
+                            context,
+                            postId: widget.post?.id?.toString() ?? '',
+                            isDetails: true,
+                          );
                         }
                       },
                       color: AppColors.white,

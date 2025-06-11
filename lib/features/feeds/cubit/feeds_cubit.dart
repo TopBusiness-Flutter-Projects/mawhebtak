@@ -17,6 +17,7 @@ import 'package:video_compress/video_compress.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart' as path;
 
+import '../../../config/routes/app_routes.dart';
 import '../data/models/post_details.dart';
 
 class FeedsCubit extends Cubit<FeedsState> {
@@ -276,7 +277,8 @@ class FeedsCubit extends Cubit<FeedsState> {
     }
   }
 
-  deletePost({required String postId}) async {
+  deletePost(BuildContext context,
+      {required String postId, bool? isDetails}) async {
     emit(DeletePostStateLoading());
     try {
       final res = await api!.deletePost(postId: postId);
@@ -285,6 +287,9 @@ class FeedsCubit extends Cubit<FeedsState> {
       }, (r) {
         postsData(page: '1');
         successGetBar(r.msg);
+        if (isDetails == true) {
+          Navigator.pushReplacementNamed(context, Routes.mainRoute);
+        }
         emit(DeletePostStateSuccess());
       });
     } catch (e) {
