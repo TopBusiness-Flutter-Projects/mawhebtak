@@ -4,8 +4,11 @@ import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 
 class InfoForFollowers extends StatelessWidget {
-  const InfoForFollowers({super.key});
+  const InfoForFollowers({super.key, required this.followersCount, required this.followingCount, required this.postsCount});
 
+  final String followersCount;
+  final String followingCount;
+  final String postsCount;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -14,7 +17,7 @@ class InfoForFollowers extends StatelessWidget {
         Column(
           children: [
             Text(
-              "20 K",
+              followersCount,
               style: getRegularStyle(fontSize: 14.sp, color: AppColors.green),
             ),
             InkWell(
@@ -30,7 +33,7 @@ class InfoForFollowers extends StatelessWidget {
         Column(
           children: [
             Text(
-              "20 K",
+              followingCount,
               style: getRegularStyle(fontSize: 14.sp, color: AppColors.green),
             ),
             Text(
@@ -42,7 +45,7 @@ class InfoForFollowers extends StatelessWidget {
         Column(
           children: [
             Text(
-              "20 K",
+              postsCount,
               style: getRegularStyle(fontSize: 14.sp, color: AppColors.green),
             ),
             Text(

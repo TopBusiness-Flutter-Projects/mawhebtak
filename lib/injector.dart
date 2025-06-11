@@ -28,6 +28,8 @@ import 'package:mawhebtak/features/auth/new_password/data/repos/new_password_rep
 import 'package:get_it/get_it.dart';
 import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.dart';
 import 'package:mawhebtak/features/auth/verification/data/repos/verification.repo.dart';
+import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
+import 'package:mawhebtak/features/more_screen/data/repos/more.repo.dart';
 import 'package:mawhebtak/features/referral_code/cubit/about_us_cubit.dart';
 import 'package:mawhebtak/features/referral_code/data/repos/referral_code_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,9 +77,7 @@ Future<void> setupCubit() async {
     ),
   );
   serviceLocator.registerFactory(
-    () => AnnouncementCubit(
-serviceLocator()
-    ),
+    () => AnnouncementCubit(serviceLocator()),
   );
   serviceLocator.registerFactory(
     () => OnboardingCubit(),
@@ -162,6 +162,11 @@ serviceLocator()
     () => TopTalentsCubit(),
   );
   serviceLocator.registerFactory(
+    () => MoreCubit(
+      serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
     () => TopEventsCubit(),
   );
   serviceLocator.registerFactory(() => FeedsCubit());
@@ -186,7 +191,7 @@ Future<void> setupRepo() async {
   serviceLocator
       .registerLazySingleton(() => ReferralCodeRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => EventRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => profileRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => ProfileRepo(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => AnnouncementRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => NewAccount(serviceLocator()));
@@ -199,6 +204,7 @@ Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => FeedsRepository(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => TopEventsRepository(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => MoreRepo(serviceLocator()));
 }
 
 Future<void> setupSharedPreferences() async {

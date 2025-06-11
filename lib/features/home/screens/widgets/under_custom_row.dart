@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import '../../../../core/exports.dart';
@@ -24,7 +23,7 @@ class UnderCustomRow extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap:(){
-                      Navigator.pushNamed(context, Routes.profileScreen);
+                      Navigator.pushNamed(context, Routes.profileScreen,arguments: userTalent?.id ??"");
                     },
                     child:
                     userTalent?.image == null ?
