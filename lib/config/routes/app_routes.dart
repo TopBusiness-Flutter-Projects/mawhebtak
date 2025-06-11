@@ -525,7 +525,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
-
+      //! DEEP LINK ROUTES
       case Routes.eventsdeepLinkRoute:
         log('PPPPPPPP ${DeepLinkDataModel(id: idLink, isDeepLink: true).isDeepLink}');
         log('PPPPPPPP ${DeepLinkDataModel(id: idLink, isDeepLink: true).id}');

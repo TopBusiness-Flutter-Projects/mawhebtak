@@ -43,188 +43,199 @@ class _ProfileScreenState extends State<ProfileScreen> {
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.light,
           ),
-          child: Scaffold(
-            body: (state is GetProfileStateLoading &&
-                    cubit.profileModel == null)
-                ? const Center(
-                    child: CustomLoadingIndicator(),
-                  )
-                : Stack(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ProfileAppBar(
-                            deepLinkData: widget.model,
-                            avatar: cubit.profileModel?.data?.avatar ?? "",
-                            byCaver: cubit.profileModel?.data?.bgCover ?? "",
-                          ),
-                          SizedBox(height: 35.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 16.0.w),
-                                    child: Text(
-                                        cubit.profileModel?.data?.name ?? "",
-                                        style: getMediumStyle(
-                                            fontSize: 14.sp,
-                                            color: AppColors.primary)),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 16.0.w),
-                                    child: RichText(
-                                      text: TextSpan(
-                                        text: cubit
-                                                .profileModel?.data?.headline ??
-                                            "",
-                                        style: getRegularStyle(fontSize: 14.sp),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                              text: cubit.profileModel?.data
-                                                          ?.userType ==
-                                                      null
-                                                  ? ""
-                                                  : '(${cubit.profileModel?.data?.userType})',
-                                              style: getRegularStyle(
-                                                  fontSize: 14.sp,
-                                                  color: AppColors.primary)),
-                                        ],
+          child: WillPopScope(
+            onWillPop: () async {
+              if (widget.model.isDeepLink == true) {
+                Navigator.pushReplacementNamed(context, Routes.mainRoute);
+              } else {
+                Navigator.pop(context);
+              }
+              return false;
+            },
+            child: Scaffold(
+              body: (state is GetProfileStateLoading &&
+                      cubit.profileModel == null)
+                  ? const Center(
+                      child: CustomLoadingIndicator(),
+                    )
+                  : Stack(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ProfileAppBar(
+                              deepLinkData: widget.model,
+                              avatar: cubit.profileModel?.data?.avatar ?? "",
+                              byCaver: cubit.profileModel?.data?.bgCover ?? "",
+                            ),
+                            SizedBox(height: 35.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 16.0.w),
+                                      child: Text(
+                                          cubit.profileModel?.data?.name ?? "",
+                                          style: getMediumStyle(
+                                              fontSize: 14.sp,
+                                              color: AppColors.primary)),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 16.0.w),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          text: cubit.profileModel?.data
+                                                  ?.headline ??
+                                              "",
+                                          style:
+                                              getRegularStyle(fontSize: 14.sp),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: cubit.profileModel?.data
+                                                            ?.userType ==
+                                                        null
+                                                    ? ""
+                                                    : '(${cubit.profileModel?.data?.userType})',
+                                                style: getRegularStyle(
+                                                    fontSize: 14.sp,
+                                                    color: AppColors.primary)),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 16.0.w),
-                                    child: Text(
-                                        cubit.profileModel?.data?.location ??
-                                            "",
-                                        style: getRegularStyle(
-                                            fontSize: 14.sp,
-                                            color: AppColors.grayMedium)),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SvgPicture.asset(AppIcons.bioIcon),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 20.h),
-                          InfoForFollowers(
-                            followersCount: cubit
-                                    .profileModel?.data?.followersCount
-                                    .toString() ??
-                                "0",
-                            followingCount: cubit
-                                    .profileModel?.data?.followingCount
-                                    .toString() ??
-                                "0",
-                            postsCount: cubit.profileModel?.data?.postsCount
-                                    .toString() ??
-                                "0",
-                          ),
-                          SizedBox(height: 5.h),
-                          Container(height: 8.h, color: AppColors.grayLite),
-                          Container(height: 20.h, color: AppColors.white),
-                          ProfileTabs(id: widget.model.id),
-                          SizedBox(height: 5.h),
-                          if (cubit.selectedIndex == 0) ...[
-                            AboutWidget(
-                              profileModel: cubit.profileModel,
-                            )
-                          ] else if (cubit.selectedIndex == 1) ...[
-                            BlocBuilder<FeedsCubit, FeedsState>(
-                                builder: (context, state) {
-                              var feedsCubit = context.read<FeedsCubit>();
-                              return Expanded(
-                                child: SingleChildScrollView(
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    padding: const EdgeInsets.only(
-                                        bottom: kBottomNavigationBarHeight),
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: cubit.profileModel?.data
-                                            ?.timeline?.length ??
-                                        0,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return TimeLineList(
-                                          feedsCubit: feedsCubit,
-                                          postId: cubit.profileModel?.data
-                                                  ?.timeline?[index].id
-                                                  .toString() ??
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 16.0.w),
+                                      child: Text(
+                                          cubit.profileModel?.data?.location ??
                                               "",
-                                          feeds: cubit.profileModel?.data
-                                              ?.timeline?[index],
-                                          index: index);
-                                    },
-                                  ),
+                                          style: getRegularStyle(
+                                              fontSize: 14.sp,
+                                              color: AppColors.grayMedium)),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            })
-                          ] else if (cubit.selectedIndex == 2) ...[
-                            BlocBuilder<CastingCubit, CastingState>(
-                                builder: (context, state) {
-                              var castingCubit = context.read<CastingCubit>();
-                              return Expanded(
-                                child: SingleChildScrollView(
-                                  child: ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: cubit.profileModel?.data?.myGigs
-                                            ?.length ??
-                                        0,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return GigsWidget(
-                                        index: index,
-                                        isFromDetails: false,
-                                        eventAndGigsModel: cubit
-                                            .profileModel!.data!.myGigs![index],
-                                        castingCubit: castingCubit,
-                                      );
-                                    },
-                                  ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SvgPicture.asset(AppIcons.bioIcon),
                                 ),
-                              );
-                            })
-                          ] else if (cubit.selectedIndex == 3)
-                            ...[]
-                        ],
-                      ),
-                      cubit.selectedIndex == 2
-                          ? Positioned(
-                              bottom: 20.h,
-                              right: 16.w,
-                              child: InkWell(
-                                  onTap: () async {
-                                    final user = await Preferences.instance
-                                        .getUserModel();
-                                    if (user.data?.token == null) {
-                                      checkLogin(context);
-                                    } else {
-                                      Navigator.pushNamed(
-                                          context, Routes.newGigsRoute);
-                                    }
-                                  },
-                                  child: SvgPicture.asset(AppIcons.addIcon)),
-                            )
-                          : const SizedBox()
-                    ],
-                  ),
-            // floatingActionButton: cubit.selectedIndex==2 ?
-            // FloatingActionButton(
-            //   onPressed: (){}
-            //   ,child: SvgPicture.asset(AppIcons.addIcon),
-            // ):null
+                              ],
+                            ),
+                            SizedBox(height: 20.h),
+                            InfoForFollowers(
+                              followersCount: cubit
+                                      .profileModel?.data?.followersCount
+                                      .toString() ??
+                                  "0",
+                              followingCount: cubit
+                                      .profileModel?.data?.followingCount
+                                      .toString() ??
+                                  "0",
+                              postsCount: cubit.profileModel?.data?.postsCount
+                                      .toString() ??
+                                  "0",
+                            ),
+                            SizedBox(height: 5.h),
+                            Container(height: 8.h, color: AppColors.grayLite),
+                            Container(height: 20.h, color: AppColors.white),
+                            ProfileTabs(id: widget.model.id),
+                            SizedBox(height: 5.h),
+                            if (cubit.selectedIndex == 0) ...[
+                              AboutWidget(
+                                profileModel: cubit.profileModel,
+                              )
+                            ] else if (cubit.selectedIndex == 1) ...[
+                              BlocBuilder<FeedsCubit, FeedsState>(
+                                  builder: (context, state) {
+                                var feedsCubit = context.read<FeedsCubit>();
+                                return Expanded(
+                                  child: SingleChildScrollView(
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      padding: const EdgeInsets.only(
+                                          bottom: kBottomNavigationBarHeight),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: cubit.profileModel?.data
+                                              ?.timeline?.length ??
+                                          0,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return TimeLineList(
+                                            feedsCubit: feedsCubit,
+                                            postId: cubit.profileModel?.data
+                                                    ?.timeline?[index].id
+                                                    .toString() ??
+                                                "",
+                                            feeds: cubit.profileModel?.data
+                                                ?.timeline?[index],
+                                            index: index);
+                                      },
+                                    ),
+                                  ),
+                                );
+                              })
+                            ] else if (cubit.selectedIndex == 2) ...[
+                              BlocBuilder<CastingCubit, CastingState>(
+                                  builder: (context, state) {
+                                var castingCubit = context.read<CastingCubit>();
+                                return Expanded(
+                                  child: SingleChildScrollView(
+                                    child: ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: cubit.profileModel?.data
+                                              ?.myGigs?.length ??
+                                          0,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return GigsWidget(
+                                          index: index,
+                                          isFromDetails: false,
+                                          eventAndGigsModel: cubit.profileModel!
+                                              .data!.myGigs![index],
+                                          castingCubit: castingCubit,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                );
+                              })
+                            ] else if (cubit.selectedIndex == 3)
+                              ...[]
+                          ],
+                        ),
+                        cubit.selectedIndex == 2
+                            ? Positioned(
+                                bottom: 20.h,
+                                right: 16.w,
+                                child: InkWell(
+                                    onTap: () async {
+                                      final user = await Preferences.instance
+                                          .getUserModel();
+                                      if (user.data?.token == null) {
+                                        checkLogin(context);
+                                      } else {
+                                        Navigator.pushNamed(
+                                            context, Routes.newGigsRoute);
+                                      }
+                                    },
+                                    child: SvgPicture.asset(AppIcons.addIcon)),
+                              )
+                            : const SizedBox()
+                      ],
+                    ),
+              // floatingActionButton: cubit.selectedIndex==2 ?
+              // FloatingActionButton(
+              //   onPressed: (){}
+              //   ,child: SvgPicture.asset(AppIcons.addIcon),
+              // ):null
+            ),
           ),
         );
       },
