@@ -140,7 +140,7 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                           if (cubit.selectedReminderDate != null)
                             CustomTextField(
                               enabled: false,
-                              hintText: DateFormat('yyyy-MM-dd')
+                              hintText: DateFormat('yyyy-MM-dd', 'en')
                                   .format(cubit.selectedReminderDate!),
                             ),
                           CustomButton(

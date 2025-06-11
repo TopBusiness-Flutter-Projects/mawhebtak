@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -13,13 +12,13 @@ import 'package:path/path.dart' as path;
 
 import 'package:video_compress/video_compress.dart';
 
+import '../../../core/models/default_model.dart';
 import '../../../core/utils/widget_from_application.dart';
 import '../../location/cubit/location_cubit.dart';
 import '../data/model/countries_model.dart';
 import '../data/model/selected_talends.dart';
 import '../data/repos/model/calender_model.dart';
 import '../data/repos/model/event_model.dart';
-import '../screens/widgets/calender_widget.dart';
 
 class CalenderCubit extends Cubit<CalenderState> {
   CalenderCubit(this.api) : super(CalenderInitial());
@@ -56,8 +55,8 @@ class CalenderCubit extends Cubit<CalenderState> {
     if (isFrom && eventDateController.text.isNotEmpty) {
       // End date: start from selected start date
       try {
-        final startDate =
-            DateFormat('yyyy-MM-dd HH:mm:ss').parse(eventDateController.text);
+        final startDate = DateFormat('yyyy-MM-dd HH:mm:ss', 'en')
+            .parse(eventDateController.text);
         initialDate = startDate;
         initialTime = TimeOfDay.fromDateTime(startDate);
       } catch (e) {
@@ -66,8 +65,8 @@ class CalenderCubit extends Cubit<CalenderState> {
     } else if (!isFrom && eventDateController.text.isNotEmpty) {
       // Start date: use stored value or today
       try {
-        final startDate =
-            DateFormat('yyyy-MM-dd HH:mm:ss').parse(eventDateController.text);
+        final startDate = DateFormat('yyyy-MM-dd HH:mm:ss', 'en')
+            .parse(eventDateController.text);
         initialDate = startDate;
         initialTime = TimeOfDay.fromDateTime(startDate);
       } catch (e) {
@@ -82,7 +81,8 @@ class CalenderCubit extends Cubit<CalenderState> {
       context: context,
       initialDate: initialDate,
       firstDate: isFrom && eventDateController.text.isNotEmpty
-          ? DateFormat('yyyy-MM-dd HH:mm:ss').parse(eventDateController.text)
+          ? DateFormat('yyyy-MM-dd HH:mm:ss', 'en')
+              .parse(eventDateController.text)
           : DateTime(2020),
       lastDate: DateTime(3100),
     );
@@ -105,7 +105,7 @@ class CalenderCubit extends Cubit<CalenderState> {
         selectedDate = finalDateTime;
 
         String formattedDateTime =
-            DateFormat('yyyy-MM-dd HH:mm:ss').format(finalDateTime);
+            DateFormat('yyyy-MM-dd HH:mm:ss', 'en').format(finalDateTime);
 
         if (isFrom) {
           eventToDateController.text = formattedDateTime;
@@ -382,6 +382,7 @@ class CalenderCubit extends Cubit<CalenderState> {
     emit(RemoveNewTalendsFromEventState());
   }
 
+  DefaultMainModel? evntStore;
   Future eventStore(BuildContext context) async {
     AppWidgets.create2ProgressDialog(context);
     try {
@@ -417,6 +418,7 @@ class CalenderCubit extends Cubit<CalenderState> {
         emit(GetAddNewEventErrorState());
       }, (r) {
         if (r.status == 200) {
+          evntStore = r;
           successGetBar(r.msg ?? '');
           currentStep = 2;
           emit(GetAddNewEventSuccessState());

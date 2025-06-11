@@ -7,6 +7,12 @@ class AppStrings {
   static const String contentType = 'Content-Type';
   static const String applicationJson = 'application/json';
   // static const String googleApiKey = '';
+  static const String eventsShareLink =
+      'https://mawhebtak.topbusiness.ebharbook.com/deeplink/events?id=';
+  static const String postsShareLink =
+      'https://mawhebtak.topbusiness.ebharbook.com/deeplink/posts?id=';
+  static const String profilesShareLink =
+      'https://mawhebtak.topbusiness.ebharbook.com/deeplink/profiles?id=';
 }
 
 class AppConst {

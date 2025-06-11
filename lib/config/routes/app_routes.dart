@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
@@ -102,13 +104,36 @@ class Routes {
 
   static const String detailsOfMainCategoryFromTopTalentsRoute =
       '/detailsOfMainCategoryFromTopTalents';
+  static const String postdeepLinkRoute = '/posts';
+  static const String profiledeepLinkRoute = '/profiles';
+  static const String eventsdeepLinkRoute = '/events';
 }
 
 class AppRoutes {
-  static String route = '';
+  // static String route = '';
 
   static Route onGenerateRoute(RouteSettings settings) {
-    switch (settings.name) {
+    String route = settings.name ?? '';
+    String idLink = '0';
+    log('the route is: $route');
+    final uri = Uri.parse(route);
+    log('the link is: $uri');
+
+    if (uri.queryParameters.containsKey('id')) {
+      idLink = uri.queryParameters['id'] ?? '0';
+      log('Found ID in query params: $idLink');
+    }
+
+    String path = uri.path;
+
+    if (path.contains('/deeplink/')) {
+      path = path.split('/deeplink/').last;
+      path = '/$path';
+    }
+    log('Route for matching: $path, ID: $idLink');
+
+    switch (path) {
+      // switch (settings.name) {
       case Routes.initialRoute:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
@@ -134,7 +159,7 @@ class AppRoutes {
       case Routes.detailsAnnouncementScreen:
         final args = settings.arguments as Map<String, dynamic>;
         return PageTransition(
-          child:  DetailsAnnouncementScreen(
+          child: DetailsAnnouncementScreen(
             index: args['index'] as int,
             announcementId: args['announcementId'] as String,
           ),
@@ -188,6 +213,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
+
       case Routes.detailsOfMainCategoryAnnouncementRoute:
         String categoryId = settings.arguments as String;
         return PageTransition(
@@ -217,9 +243,12 @@ class AppRoutes {
       //     duration: const Duration(milliseconds: 800),
       //   );
       case Routes.detailsEventRoute:
-        String? eventId = settings.arguments as String?;
+        DeepLinkDataModel? eventDataModel =
+            settings.arguments as DeepLinkDataModel?;
         return PageTransition(
-          child: DetailsEventScreen(eventId: eventId),
+          child: DetailsEventScreen(
+            eventDataModel: eventDataModel,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
@@ -486,11 +515,36 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),
         );
+      case Routes.postdeepLinkRoute:
+        return PageTransition(
+          child: const FeedsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+      case Routes.profiledeepLinkRoute:
+        return PageTransition(
+          child: const ProfileScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+      case Routes.eventsdeepLinkRoute:
+        log('PPPPPPPP ${DeepLinkDataModel(id: idLink, isDeepLink: true).isDeepLink}');
+        log('PPPPPPPP ${DeepLinkDataModel(id: idLink, isDeepLink: true).id}');
+        return PageTransition(
+          child: DetailsEventScreen(
+            eventDataModel: DeepLinkDataModel(id: idLink, isDeepLink: true),
+          ),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 800),
+        );
+
       default:
         return undefinedRoute();
     }
   }
-
 
   static Route<dynamic> undefinedRoute() {
     return MaterialPageRoute(

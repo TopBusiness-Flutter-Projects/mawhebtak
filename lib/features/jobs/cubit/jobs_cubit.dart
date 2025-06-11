@@ -44,7 +44,8 @@ class JobsCubit extends Cubit<JobsState> {
         selectedDate = finalDateTime; // ✅ احفظ التاريخ المختار
 
         String formattedDateTime =
-            DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
+            DateFormat('dd MMMM yyyy \'at\' hh:mm a', 'en')
+                .format(finalDateTime);
         eventDateController.text = formattedDateTime;
 
         emit(DateTimeSelected(formattedDateTime));

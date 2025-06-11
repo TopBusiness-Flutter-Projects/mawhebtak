@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/exports.dart';
@@ -8,15 +7,18 @@ import '../../data/model/event_details_model.dart';
 import 'custom_media_view.dart';
 
 class CustomEventDetailsWidget extends StatelessWidget {
-  const CustomEventDetailsWidget(
+  CustomEventDetailsWidget(
       {super.key,
       this.onTap,
       this.isFollowed,
+      this.isDeepLink,
       required this.mediaList,
       required this.item});
   final void Function()? onTap;
   final bool? isFollowed;
   final List<Media> mediaList;
+
+  bool? isDeepLink;
   final GetMainEvenDetailsModelData? item;
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class CustomEventDetailsWidget extends StatelessWidget {
             right: 0,
             child: CustomSimpleAppbar(
               isWithShadow: true,
+              isDeepLink: isDeepLink,
               titleColor: AppColors.white,
               colorButton: AppColors.black.withOpacity(0.2),
               title: 'events_details'.tr(),

@@ -6,6 +6,7 @@ import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
+import '../../../events/screens/details_event_screen.dart';
 import '../../cubit/calender_state.dart';
 import '../../data/repos/model/calender_model.dart';
 
@@ -229,7 +230,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             },
           ),
           Text(
-            DateFormat('MMMM yyyy').format(currentDate),
+            DateFormat('MMMM yyyy', 'en').format(currentDate),
             style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
           ),
           _buildNavigatorButton(
@@ -366,7 +367,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           onTap: () {
             mainAppAwsomeDialog(context, onPressed: () {
               Navigator.pushNamed(context, Routes.detailsEventRoute,
-                  arguments: eventPos.event.id?.toString());
+                  arguments: DeepLinkDataModel(
+                      id: eventPos.event.id?.toString() ?? '',
+                      isDeepLink: false));
             }, title: 'do_you_want_nav_to_details'.tr(), btnOkText: 'go'.tr());
 
             log('event start ${eventPos.event.start} end ${eventPos.event.end}');
@@ -426,7 +429,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               onTap: () {
                 mainAppAwsomeDialog(context, onPressed: () {
                   Navigator.pushNamed(context, Routes.detailsEventRoute,
-                      arguments: event.id?.toString());
+                      arguments: DeepLinkDataModel(
+                          id: event.id?.toString() ?? '', isDeepLink: false));
                 },
                     title: 'do_you_want_nav_to_details'.tr(),
                     btnOkText: 'go'.tr());

@@ -281,7 +281,8 @@ class TimelineAssistantItem extends StatelessWidget {
                     children: [
                       assistants.date != null
                           ? Text(
-                              DateFormat('d MMMM, y').format(assistants.date!),
+                              DateFormat('d MMMM, y', 'en')
+                                  .format(assistants.date!),
                               style: TextStyle(
                                 color: Colors.grey.shade500,
                                 fontSize: 12,
@@ -324,7 +325,7 @@ class TimelineAssistantItem extends StatelessWidget {
                               SizedBox(width: 4.w),
                               Text(
                                 (assistants.remindedTime != null)
-                                    ? 'Set Reminder (${DateFormat('dd MMM yyyy • hh:mm a').format(assistants.remindedTime!)})'
+                                    ? 'Set Reminder (${DateFormat('dd MMM yyyy • hh:mm a', 'en').format(assistants.remindedTime!)})'
                                     : 'Set Reminder',
                                 style: TextStyle(
                                   color: (assistants.isActive ?? false)

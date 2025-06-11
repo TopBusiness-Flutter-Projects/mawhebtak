@@ -6,7 +6,7 @@ import '../exports.dart';
 import '../notification_services/notification_service.dart';
 
 class CustomSimpleAppbar extends StatelessWidget {
-  const CustomSimpleAppbar(
+  CustomSimpleAppbar(
       {super.key,
       this.isSearchWidget,
       this.actionIcon,
@@ -14,6 +14,8 @@ class CustomSimpleAppbar extends StatelessWidget {
       this.isActionButton,
       this.colorButton,
       this.arrowColor,
+      this.isDeepLink,
+      this.onShareTap,
       this.color,
       this.filterType,
       this.categoryId,
@@ -29,6 +31,8 @@ class CustomSimpleAppbar extends StatelessWidget {
   final String? actionIcon;
   final bool? isWithShadow;
   final String? filterType;
+  bool? isDeepLink;
+  void Function()? onShareTap;
   final String? categoryId;
   @override
   Widget build(BuildContext context) {
@@ -50,12 +54,16 @@ class CustomSimpleAppbar extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      if (isWithNotification == true) {
+                      if (isDeepLink == true) {
+                        Navigator.pushReplacementNamed(
+                            context, Routes.mainRoute);
+                      } else if (isWithNotification == true) {
                         isWithNotification = false;
                         Navigator.pushReplacementNamed(
                             context, Routes.mainRoute);
+                      } else {
+                        Navigator.pop(context);
                       }
-                      Navigator.pop(context);
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -101,10 +109,11 @@ class CustomSimpleAppbar extends StatelessWidget {
                   ),
                   if (isActionButton ?? false)
                     InkWell(
-                      onTap: () {
-                        showSortOptions(context, filterType ?? '',
-                            categoryId: categoryId);
-                      },
+                      onTap: onShareTap ??
+                          () {
+                            showSortOptions(context, filterType ?? '',
+                                categoryId: categoryId);
+                          },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child:

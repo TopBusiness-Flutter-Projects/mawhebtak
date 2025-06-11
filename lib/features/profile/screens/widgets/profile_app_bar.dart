@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_simple_appbar.dart';
@@ -30,6 +31,13 @@ class ProfileAppBar extends StatelessWidget {
           child: CustomSimpleAppbar(
             isActionButton: true,
             actionIcon: AppIcons.shareIcon,
+            // onShareTap: () async {
+            //   await SharePlus.instance.share(ShareParams(
+            //     text: AppStrings.profilesShareLink +
+            //         (cubit.evntStore?.data.toString() ?? ''),
+            //     title: AppStrings.appName,
+            //   ));
+            // },
             titleColor: AppColors.white,
             colorButton: AppColors.whiteSecond,
             title: ''.tr(),
@@ -59,7 +67,7 @@ class ProfileAppBar extends StatelessWidget {
         // صورة البروفايل في الأسفل بالشمال نصها طالع ونصها نازل
         Positioned(
           bottom: -24.h, // نصف الارتفاع عشان تنزل نص الصورة
-          left: 16.w,    // على الشمال
+          left: 16.w, // على الشمال
           child: SizedBox(
             height: 48.h,
             width: 48.h,

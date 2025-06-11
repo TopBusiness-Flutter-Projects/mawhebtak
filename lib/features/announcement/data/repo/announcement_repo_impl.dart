@@ -42,7 +42,8 @@ class AnnouncementRepo {
     required String page,
     String? orderBy,
   }) async {
-    String date = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    String date =
+        DateFormat('yyyy-MM-dd HH:mm:ss', 'en').format(DateTime.now());
     final userModel = await Preferences.instance.getUserModel();
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
@@ -58,13 +59,16 @@ class AnnouncementRepo {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, DefaultMainModel>> toggleFavoriteAnnounce(
       {required String userAnnounceId}) async {
     try {
       var response = await dio.post(
         EndPoints.toggleFavorite,
-        body: {"favouriteable_type": "Announce",
-          "favouriteable_id": userAnnounceId},
+        body: {
+          "favouriteable_type": "Announce",
+          "favouriteable_id": userAnnounceId
+        },
       );
       return Right(
         DefaultMainModel.fromJson(response),
@@ -73,6 +77,7 @@ class AnnouncementRepo {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, GetCountriesMainModel>>
       dataFromSubCategoryAnnouncement({required String categoryId}) async {
     try {
@@ -99,7 +104,6 @@ class AnnouncementRepo {
       return Left(ServerFailure());
     }
   }
-
 
   Future<Either<Failure, GetCountriesMainModel>>
       subCategoryFromCategoryAnnouncement({required String categoryId}) async {

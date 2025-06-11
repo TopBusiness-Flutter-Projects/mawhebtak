@@ -11,6 +11,7 @@ import 'package:mawhebtak/features/calender/screens/widgets/required_talents_sel
 import 'package:mawhebtak/features/calender/screens/widgets/stepper_widget.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import '../../../core/exports.dart';
 import '../../../core/utils/custom_pick_media.dart';
@@ -84,9 +85,12 @@ class _NewEventScreenState extends State<NewEventScreen> {
                           ),
                           20.h.verticalSpace,
                           InkWell(
-                              onTap: () {
-                                //! TODO
-                                successGetBar('TODO SHARE NOW');
+                              onTap: () async {
+                                await SharePlus.instance.share(ShareParams(
+                                  text: AppStrings.eventsShareLink +
+                                      (cubit.evntStore?.data.toString() ?? ''),
+                                  title: AppStrings.appName,
+                                ));
                               },
                               child: SvgPicture.asset(AppIcons.share)),
                         ],

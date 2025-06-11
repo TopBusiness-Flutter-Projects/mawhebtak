@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
+import '../../../events/screens/details_event_screen.dart';
 import 'follow_button.dart';
 
 class CustomTopEventList extends StatelessWidget {
@@ -112,7 +113,9 @@ class CustomTopEventList extends StatelessWidget {
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.detailsEventRoute,
-                                  arguments: topEvent?.id.toString());
+                                  arguments: DeepLinkDataModel(
+                                      id: topEvent?.id.toString() ?? '',
+                                      isDeepLink: false));
                             },
                             title: "details".tr(),
                             color: AppColors.transparent,

@@ -1,4 +1,3 @@
-
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcement_details_model.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
@@ -21,7 +20,8 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
   TextEditingController locationController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController announcementTitleController = TextEditingController();
-  TextEditingController announcementDescriptionController = TextEditingController();
+  TextEditingController announcementDescriptionController =
+      TextEditingController();
   Future<void> selectDateTime(BuildContext context) async {
     DateTime? date = await showDatePicker(
       context: context,
@@ -48,14 +48,14 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
         selectedDate = finalDateTime;
 
         String formattedDateTime =
-            DateFormat('dd MMMM yyyy \'at\' hh:mm a').format(finalDateTime);
+            DateFormat('dd MMMM yyyy \'at\' hh:mm a', 'en')
+                .format(finalDateTime);
         announcementDateController.text = formattedDateTime;
 
         emit(DateTimeSelected(formattedDateTime));
       }
     }
   }
-
 
   GetCountriesMainModel? announcementCategoryModel;
   bool isLoadingMore = false;
@@ -73,7 +73,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     }
     try {
       final res =
-      await api.getCategoryFromAnnouncement(page: page, orderBy: orderBy);
+          await api.getCategoryFromAnnouncement(page: page, orderBy: orderBy);
       res.fold((l) {
         emit(CategoryFromAnnouncementStateError(l.toString()));
       }, (r) {
@@ -132,10 +132,12 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     }
   }
 
-  toggleFavoriteAnnounce({required String userAnnounceId, required int index}) async {
+  toggleFavoriteAnnounce(
+      {required String userAnnounceId, required int index}) async {
     emit(ToggleFavoriteAnnounceStateLoading());
     try {
-      final res = await api.toggleFavoriteAnnounce(userAnnounceId: userAnnounceId);
+      final res =
+          await api.toggleFavoriteAnnounce(userAnnounceId: userAnnounceId);
 
       res.fold((l) {
         emit(ToggleFavoriteAnnounceStateError(l.toString()));
@@ -175,14 +177,13 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     }
   }
 
-
   // details from announcement
   AnnouncementDetailsModel? announcementDetailsModel;
   getDetailsAnnouncements({required String? announcementId}) async {
     emit(AnnouncementsDetailsStateLoading());
     try {
       final res = await api.announcementDetails(
-        announcementId:announcementId.toString(),
+        announcementId: announcementId.toString(),
       );
       res.fold((l) {
         emit(AnnouncementsDetailsStateError(l.toString()));
@@ -201,7 +202,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     emit(SubCategoryStateLoading());
     try {
       final res =
-      await api.subCategoryFromCategoryAnnouncement(categoryId: categoryId);
+          await api.subCategoryFromCategoryAnnouncement(categoryId: categoryId);
       res.fold((l) {
         emit(SubCategoryStateError(l.toString()));
       }, (r) {
@@ -213,7 +214,6 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       emit(SubCategoryStateError(e.toString()));
     }
   }
-
 
   // add announcement
 
@@ -228,16 +228,16 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
         title: announcementTitleController.text,
         description: announcementDescriptionController.text,
         lat: context
-            .read<LocationCubit>()
-            .selectedLocation
-            ?.latitude
-            .toString() ??
+                .read<LocationCubit>()
+                .selectedLocation
+                ?.latitude
+                .toString() ??
             "0.0",
         long: context
-            .read<LocationCubit>()
-            .selectedLocation
-            ?.longitude
-            .toString() ??
+                .read<LocationCubit>()
+                .selectedLocation
+                ?.longitude
+                .toString() ??
             "0.0",
         mediaFiles: [
           ...context.read<CalenderCubit>().myImagesF ?? [],
@@ -258,7 +258,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
         announcementTitleController.clear();
         announcementDescriptionController.clear();
         selectedCategory = null;
-        selectedSubCategory =null;
+        selectedSubCategory = null;
         locationController.clear();
         priceController.clear();
         announcementsData(page: '1');
@@ -269,5 +269,4 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     }
     Navigator.pop(context);
   }
-
 }
