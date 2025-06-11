@@ -109,10 +109,20 @@ class CancelReplyingState extends FeedsState {}
 class DeletePostStateLoading extends FeedsState {}
 
 class DeletePostStateSuccess extends FeedsState {}
+
 class compressVideoLoaded extends FeedsState {}
+
 class FeedsStateUpdated extends FeedsState {}
+
 class ShowReplies extends FeedsState {}
+
 class DeletePostStateError extends FeedsState {
   final String error;
   DeletePostStateError(this.error);
 }
+
+class LoadingGetPostDetails extends FeedsState {}
+
+class LoadedGetPostDetails extends FeedsState {}
+
+class ErrorGetPostDetails extends FeedsState {}

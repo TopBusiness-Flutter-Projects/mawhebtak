@@ -10,6 +10,7 @@ import 'package:mawhebtak/features/feeds/data/models/add_post_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/comments_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import '../../../../core/api/base_api_consumer.dart';
+import '../models/post_details.dart';
 
 class FeedsRepository {
   final BaseApiConsumer dio;
@@ -122,6 +123,19 @@ class FeedsRepository {
               filename: mediaFiles[i].path.split('/').last)
       });
       return Right(AddPostModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, GetDetailsOfPostModel>> getDetailsById(
+      {required String postId}) async {
+    try {
+      var response = await dio.get(EndPoints.getDetailsById, queryParameters: {
+        "model": "Post",
+        "id": postId,
+      });
+      return Right(GetDetailsOfPostModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

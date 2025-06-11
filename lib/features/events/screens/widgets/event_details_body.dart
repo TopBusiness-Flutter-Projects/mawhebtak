@@ -1,6 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/core/utils/widget_from_application.dart';
+
 import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
 
 import '../../../../core/exports.dart';
@@ -9,12 +9,18 @@ import '../../../../core/utils/check_login.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../cubit/event_cubit.dart';
 import '../../data/model/event_details_model.dart';
+import '../details_event_screen.dart';
 import 'custom_apply_button.dart';
 import 'custom_row_event.dart';
 
 class EventDetailsBody extends StatelessWidget {
-  const EventDetailsBody({super.key, this.item});
+  const EventDetailsBody({
+    Key? key,
+    this.item,
+    this.mainDeepLink,
+  }) : super(key: key);
   final GetMainEvenDetailsModelData? item;
+  final DeepLinkDataModel? mainDeepLink;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -160,9 +166,10 @@ class EventDetailsBody extends StatelessWidget {
                     mainAppAwsomeDialog(
                       context,
                       onPressed: () {
-                        context
-                            .read<EventCubit>()
-                            .deleteEvent(item?.id.toString() ?? '', context);
+                        context.read<EventCubit>().deleteEvent(
+                            item?.id.toString() ?? '',
+                            context,
+                            mainDeepLink?.isDeepLink ?? false);
                       },
                       title: 'delete_event'.tr(),
                     );

@@ -7,7 +7,6 @@ import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/time_line_list.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
-import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/about_widgets/about_widget.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/info_for_followers.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_app_bar.dart';
@@ -166,11 +165,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return TimeLineList(
-                                            feedsCubit: feedsCubit,
                                             postId: cubit.profileModel?.data
-                                                    ?.timeline?[index].id
+                                                    ?.timeline?[index]
                                                     .toString() ??
-                                                "",
+                                                '',
+                                            feedsCubit: feedsCubit,
                                             feeds: cubit.profileModel?.data
                                                 ?.timeline?[index],
                                             index: index);

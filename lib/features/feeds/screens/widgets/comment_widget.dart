@@ -14,12 +14,10 @@ class MainCommentWidget extends StatefulWidget {
     this.feeds,
     this.feedsCubit,
     required this.postId,
-    required this.index,
   });
   final PostsModelData? feeds;
   final FeedsCubit? feedsCubit;
   final String postId;
-  final int index;
 
   @override
   State<MainCommentWidget> createState() => _MainCommentWidgetState();

@@ -12,24 +12,20 @@ import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
 import 'comment_widget.dart';
 
-class TimeLineList extends StatefulWidget {
-  const TimeLineList({
+class PostDetailsWidget extends StatefulWidget {
+  const PostDetailsWidget({
     super.key,
-    this.feeds,
+    this.post,
     this.feedsCubit,
-    required this.postId,
-    required this.index,
   });
-  final PostsModelData? feeds;
+  final PostsModelData? post;
   final FeedsCubit? feedsCubit;
-  final String postId;
-  final int index;
 
   @override
-  State<TimeLineList> createState() => _TimeLineListState();
+  State<PostDetailsWidget> createState() => _PostDetailsWidgetState();
 }
 
-class _TimeLineListState extends State<TimeLineList> {
+class _PostDetailsWidgetState extends State<PostDetailsWidget> {
   @override
   void initState() {
     context.read<FeedsCubit>().loadUserFromPreferences();
@@ -56,11 +52,11 @@ class _TimeLineListState extends State<TimeLineList> {
                           SizedBox(
                             height: 40.h,
                             width: 40.w,
-                            child: widget.feeds?.user?.image == null
+                            child: widget.post?.user?.image == null
                                 ? Image.asset(ImageAssets.profileImage)
                                 : ClipOval(
                                     child: CachedNetworkImage(
-                                      imageUrl: widget.feeds?.user?.image ?? '',
+                                      imageUrl: widget.post?.user?.image ?? '',
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) =>
                                           const Center(
@@ -79,11 +75,11 @@ class _TimeLineListState extends State<TimeLineList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AutoSizeText(
-                            widget.feeds?.user?.name ?? "",
+                            widget.post?.user?.name ?? "",
                             style: getMediumStyle(fontSize: 18.sp),
                           ),
                           AutoSizeText(
-                            widget.feeds?.user?.headline ?? "",
+                            widget.post?.user?.headline ?? "",
                             style: getRegularStyle(
                               fontSize: 16.sp,
                               color: AppColors.grayLight,
@@ -94,13 +90,13 @@ class _TimeLineListState extends State<TimeLineList> {
                     ],
                   ),
                   if (widget.feedsCubit?.user?.data?.id.toString() ==
-                      widget.feedsCubit?.posts?.data?[widget.index].user?.id
-                          .toString())
+                      widget.post?.user?.id.toString())
                     PopupMenuButton<String>(
                       icon: SvgPicture.asset(AppIcons.settingIcon),
                       onSelected: (value) {
                         if (value == 'delete') {
-                          widget.feedsCubit?.deletePost(postId: widget.postId);
+                          widget.feedsCubit?.deletePost(
+                              postId: widget.post?.id?.toString() ?? '');
                         }
                       },
                       color: AppColors.white,
@@ -116,17 +112,17 @@ class _TimeLineListState extends State<TimeLineList> {
         //profile desc
         Padding(
             padding: EdgeInsets.only(left: 10.0.w),
-            child: ExpandableTextWidget(text: widget.feeds?.body ?? "")),
+            child: ExpandableTextWidget(text: widget.post?.body ?? "")),
         SizedBox(
           height: 5.h,
         ),
-        if ((widget.feeds?.media?.isNotEmpty ?? false))
+        if ((widget.post?.media?.isNotEmpty ?? false))
           SizedBox(
             height: getHeightSize(context) / 3.7,
             child: PageView.builder(
-              itemCount: widget.feeds?.media?.length ?? 0,
+              itemCount: widget.post?.media?.length ?? 0,
               itemBuilder: (context, index) {
-                final media = widget.feeds!.media![index];
+                final media = widget.post!.media![index];
                 if (media.extension == 'video') {
                   return VideoPlayerWidget(videoUrl: media.file!);
                 } else {
@@ -138,7 +134,7 @@ class _TimeLineListState extends State<TimeLineList> {
                               builder: (context) => ImageFileView(
                                   isNetwork: true,
                                   image:
-                                      widget.feeds!.media![index].file ?? "")));
+                                      widget.post!.media![index].file ?? "")));
                     },
                     child: CachedNetworkImage(
                       imageUrl: media.file ?? '',
@@ -156,7 +152,7 @@ class _TimeLineListState extends State<TimeLineList> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            (widget.feeds?.reactionCount == 0)
+            (widget.post?.reactionCount == 0)
                 ? Container()
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -169,7 +165,7 @@ class _TimeLineListState extends State<TimeLineList> {
                         ),
                       ),
                       Text(
-                        widget.feeds?.reactionCount.toString() ?? "0",
+                        widget.post?.reactionCount.toString() ?? "0",
                         style: getSemiBoldStyle(
                           fontSize: 16.sp,
                           color: AppColors.primary,
@@ -177,13 +173,13 @@ class _TimeLineListState extends State<TimeLineList> {
                       ),
                     ],
                   ),
-            if (widget.feeds?.commentCount != 0)
+            if (widget.post?.commentCount != 0)
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "${widget.feeds?.commentCount.toString()}  ${'comment'.tr()}",
+                    "${widget.post?.commentCount.toString()}  ${'comment'.tr()}",
                     style: getRegularStyle(
                       fontSize: 18.sp,
                       color: AppColors.grayDark.withOpacity(0.7),
@@ -207,8 +203,9 @@ class _TimeLineListState extends State<TimeLineList> {
                 if (user.data?.token == null) {
                   checkLogin(context);
                 } else {
-                  widget.feedsCubit
-                      ?.addReaction(postId: widget.postId, index: widget.index);
+                  widget.feedsCubit?.addReaction(
+                      postId: widget.post?.id?.toString() ?? '',
+                      isDetails: true);
                 }
               },
               child: Row(
@@ -218,9 +215,7 @@ class _TimeLineListState extends State<TimeLineList> {
                     child: SvgPicture.asset(
                       AppIcons.likeIcon,
                       width: 20.sp,
-                      color: widget.feedsCubit?.posts?.data?[widget.index]
-                                  .isReacted ==
-                              true
+                      color: widget.post?.isReacted == true
                           ? AppColors.primary
                           : AppColors.grayDarkkk,
                     ),
@@ -229,9 +224,7 @@ class _TimeLineListState extends State<TimeLineList> {
                     'like'.tr(),
                     style: getRegularStyle(
                       fontSize: 18.sp,
-                      color: widget.feedsCubit?.posts?.data?[widget.index]
-                                  .isReacted ==
-                              true
+                      color: widget.post?.isReacted == true
                           ? AppColors.primary
                           : AppColors.grayDate,
                     ),
@@ -242,13 +235,14 @@ class _TimeLineListState extends State<TimeLineList> {
 
             ///! Comment
             MainCommentWidget(
-                postId: widget.postId,
-                feeds: widget.feeds,
+                postId: widget.post?.id?.toString() ?? '',
+                feeds: widget.post,
                 feedsCubit: widget.feedsCubit),
             GestureDetector(
               onTap: () async {
                 await SharePlus.instance.share(ShareParams(
-                  text: AppStrings.postsShareLink + (widget.postId),
+                  text: AppStrings.postsShareLink +
+                      (widget.post?.id.toString() ?? ''),
                   title: AppStrings.appName,
                 ));
               },

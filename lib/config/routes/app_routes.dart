@@ -42,6 +42,7 @@ import '../../features/announcement/screens/new_announcement.dart';
 import '../../features/auth/login/screens/login_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
+import '../../features/feeds/screens/details_of_post.dart';
 import '../../features/feeds/screens/write_post.dart';
 import '../../features/home/screens/top_events_screen.dart';
 import '../../features/feeds/screens/feeds_screen.dart';
@@ -144,7 +145,7 @@ class AppRoutes {
           child: const LoginScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.gigsDetailsScreen:
         String id = settings.arguments as String;
@@ -154,7 +155,7 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.detailsAnnouncementScreen:
         final args = settings.arguments as Map<String, dynamic>;
@@ -165,14 +166,14 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.newGigsRoute:
         return PageTransition(
           child: NewGigsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.detailsOfMainCategoryFromGigsRoute:
         String? categoryId = settings.arguments as String;
@@ -182,7 +183,7 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
 
       case Routes.announcementScreen:
@@ -190,14 +191,14 @@ class AppRoutes {
           child: const AnnouncementScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.newAnnouncementScreen:
         return PageTransition(
           child: const NewAnnouncementScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.profileScreen:
         DeepLinkDataModel? model = settings.arguments as DeepLinkDataModel;
@@ -207,14 +208,14 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.feedsScreen:
         return PageTransition(
           child: const FeedsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
 
       case Routes.detailsOfMainCategoryAnnouncementRoute:
@@ -225,14 +226,14 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.followersScreen:
         return PageTransition(
           child: const FollowersScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       // case Routes.secondDetailsSecond:
       //   String? eventId = settings.arguments as String?;
@@ -243,7 +244,7 @@ class AppRoutes {
       //     ),
       //     type: PageTransitionType.fade,
       //     alignment: Alignment.center,
-      //     duration: const Duration(milliseconds: 800),
+      //     duration: const Duration(milliseconds: 300),
       //   );
       case Routes.detailsEventRoute:
         DeepLinkDataModel? eventDataModel =
@@ -254,28 +255,28 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.topEventsRoute:
         return PageTransition(
           child: const TopEventsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.notificationRoute:
         return PageTransition(
           child: const NotificationScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.allAnnouncementsRoute:
         return PageTransition(
           child: const AllAnnouncementsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.workDetailsRoute:
         WorkModel work = settings.arguments as WorkModel;
@@ -285,21 +286,21 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       // case Routes.videoScreenRoute:
       // return PageTransition(
       //   child: const VideoScreen(),
       //   type: PageTransitionType.fade,
       //   alignment: Alignment.center,
-      //   duration: const Duration(milliseconds: 800),
+      //   duration: const Duration(milliseconds: 300),
       // );
       case Routes.onboardingPageScreenRoute:
         return PageTransition(
           child: const OnBoardingScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
 
       case Routes.mainRoute:
@@ -307,21 +308,21 @@ class AppRoutes {
           child: const MainScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.applyEvent:
         return PageTransition(
           child: const ApplyForEvent(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.forgetPasswordRoute:
         return PageTransition(
           child: const ForgetPasswordScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.verificationRoute:
         bool isRegister = settings.arguments as bool;
@@ -331,49 +332,49 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.newPasswordRoute:
         return PageTransition(
           child: const NewPasswordScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.moreRoute:
         return PageTransition(
           child: const MoreScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.changeLanguageRoute:
         return PageTransition(
           child: const ChangeLanguageScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.changePasswordRoute:
         return PageTransition(
           child: const ChangePasswordScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.aboutUsRoute:
         return PageTransition(
           child: const AboutUsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.termsAndConditionRoute:
         return PageTransition(
           child: const TermsAndConditionScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.contactUsRoute:
         String type = settings.arguments as String;
@@ -383,35 +384,35 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.referralCodeRoute:
         return PageTransition(
           child: const ReferralCodeScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.newAccountRoute:
         return PageTransition(
           child: const NewAccountScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.calenderRoute:
         return PageTransition(
           child: const CalendarScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.newEventRoute:
         return PageTransition(
           child: const NewEventScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.castingRoute:
         bool isFromHome = settings.arguments as bool;
@@ -421,21 +422,21 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.jobsRoute:
         return PageTransition(
           child: const JobsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.addNewJobRoute:
         return PageTransition(
           child: const AddNewJobScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.jobDetailsRoute:
         final args = settings.arguments as Map<String, dynamic>;
@@ -446,7 +447,7 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
 
       case Routes.recordsRoute:
@@ -454,28 +455,28 @@ class AppRoutes {
           child: const AssistantScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.chatRoute:
         return PageTransition(
           child: const ChatScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.addNewWorkRoute:
         return PageTransition(
           child: const AddNewWorkScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.detailsOfMainCategoryFromTopTalentsRoute:
         return PageTransition(
           child: const DetailsOfMainCategoryTopTalents(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.topTalentsRoute:
         return PageTransition(
@@ -484,14 +485,14 @@ class AppRoutes {
               child: const TopTalentsScreen()),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.requestGigsRoute:
         return PageTransition(
           child: const RequestGigsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
 
       case Routes.addAssistantRoute:
@@ -508,7 +509,7 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
 
       case Routes.writePostScreen:
@@ -516,15 +517,9 @@ class AppRoutes {
           child: const WritePost(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
-      case Routes.postdeepLinkRoute:
-        return PageTransition(
-          child: const FeedsScreen(),
-          type: PageTransitionType.fade,
-          alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
-        );
+
       //! DEEP LINK ROUTES
       case Routes.eventsdeepLinkRoute:
         log('PPPPPPPP ${DeepLinkDataModel(id: idLink, isDeepLink: true).isDeepLink}');
@@ -535,7 +530,7 @@ class AppRoutes {
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
         );
       case Routes.profiledeepLinkRoute:
         return PageTransition(
@@ -543,7 +538,16 @@ class AppRoutes {
               model: DeepLinkDataModel(id: idLink, isDeepLink: true)),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
-          duration: const Duration(milliseconds: 800),
+          duration: const Duration(milliseconds: 300),
+        );
+      case Routes.postdeepLinkRoute:
+        return PageTransition(
+          child: PostDetailsScreen(
+              deepLinkDataModel:
+                  DeepLinkDataModel(id: idLink, isDeepLink: true)),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
         );
       default:
         return undefinedRoute();

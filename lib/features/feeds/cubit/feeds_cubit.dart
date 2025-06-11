@@ -17,6 +17,8 @@ import 'package:video_compress/video_compress.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart' as path;
 
+import '../data/models/post_details.dart';
+
 class FeedsCubit extends Cubit<FeedsState> {
   FeedsCubit() : super(FeedsStateLoading());
   FeedsRepository? api = FeedsRepository(serviceLocator());
@@ -238,21 +240,33 @@ class FeedsCubit extends Cubit<FeedsState> {
   }
 
   DefaultMainModel? defaultMainModel;
-  addReaction({required String postId, required int index}) async {
+  addReaction({required String postId, int? index, bool? isDetails}) async {
     try {
       final res = await api!.addReaction(postId: postId);
       res.fold((l) {
         emit(AddReactionStateError(l.toString()));
       }, (r) {
-        if (posts?.data?[index].isReacted == true) {
-          posts?.data![index].reactionCount =
-              (posts?.data?[index].reactionCount ?? 1) - 1;
+        if (isDetails == true) {
+          if (postDetails?.data?.isReacted == true) {
+            postDetails?.data?.reactionCount =
+                (postDetails?.data?.reactionCount ?? 1) - 1;
+          } else {
+            postDetails?.data?.reactionCount =
+                (postDetails?.data?.reactionCount ?? 0) + 1;
+          }
+          postDetails?.data?.isReacted =
+              !(postDetails?.data?.isReacted ?? false);
         } else {
-          posts?.data![index].reactionCount =
-              (posts?.data?[index].reactionCount ?? 0) + 1;
+          if (posts?.data?[index!].isReacted == true) {
+            posts?.data![index!].reactionCount =
+                (posts?.data?[index].reactionCount ?? 1) - 1;
+          } else {
+            posts?.data![index!].reactionCount =
+                (posts?.data?[index].reactionCount ?? 0) + 1;
+          }
+          posts?.data?[index!].isReacted =
+              !(posts?.data?[index].isReacted ?? false);
         }
-        posts?.data?[index].isReacted =
-            !(posts?.data?[index].isReacted ?? false);
 
         // successGetBar(r.msg);
         emit(AddReactionStateSuccess());
@@ -380,11 +394,6 @@ class FeedsCubit extends Cubit<FeedsState> {
     }
   }
 
-  Future<LoginModel> getUserFromPreferences() async {
-    final user = await Preferences.instance.getUserModel();
-    return user;
-  }
-
   LoginModel? user;
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
@@ -415,5 +424,22 @@ class FeedsCubit extends Cubit<FeedsState> {
     replyingToUserName = null;
     commentController.clear();
     emit(CancelReplyingState());
+  }
+
+  GetDetailsOfPostModel? postDetails;
+  getDetailsById({required String postId}) async {
+    try {
+      emit(LoadingGetPostDetails());
+      final res = await api!.getDetailsById(postId: postId);
+      res.fold((l) {
+        emit(ErrorGetPostDetails());
+      }, (r) {
+        postDetails = r;
+        // successGetBar(r.msg);
+        emit(LoadedGetPostDetails());
+      });
+    } catch (e) {
+      emit(ErrorGetPostDetails());
+    }
   }
 }

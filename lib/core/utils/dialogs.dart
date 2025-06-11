@@ -266,8 +266,12 @@ deleteAccountDialog(BuildContext context, {void Function()? onPressed}) async {
   ).show();
 }
 
-mainAppAwsomeDialog(BuildContext context,
-    {void Function()? onPressed, String? title, String? btnOkText}) async {
+mainAppAwsomeDialog(
+  BuildContext context, {
+  void Function()? onPressed,
+  String? title,
+  String? btnOkText,
+}) async {
   await AwesomeDialog(
     context: context,
     customHeader: Padding(

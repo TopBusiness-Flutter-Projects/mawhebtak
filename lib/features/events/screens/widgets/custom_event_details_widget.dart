@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/exports.dart';
 
@@ -42,6 +43,15 @@ class CustomEventDetailsWidget extends StatelessWidget {
             left: 0,
             right: 0,
             child: CustomSimpleAppbar(
+              isActionButton: true,
+              actionIcon: AppIcons.shareIcon,
+              onShareTap: () async {
+                await SharePlus.instance.share(ShareParams(
+                  text:
+                      AppStrings.eventsShareLink + (item?.id.toString() ?? ''),
+                  title: AppStrings.appName,
+                ));
+              },
               isWithShadow: true,
               isDeepLink: isDeepLink,
               titleColor: AppColors.white,

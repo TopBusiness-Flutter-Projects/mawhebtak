@@ -120,6 +120,7 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                 [],
                                       ),
                                       EventDetailsBody(
+                                          mainDeepLink: widget.eventDataModel,
                                           item: cubit.eventDetails?.data),
                                     ],
                                   )
@@ -160,6 +161,7 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                       const ToggleTabs(),
                                       if (cubit.selectedIndex == 0) ...[
                                         EventDetailsBody(
+                                          mainDeepLink: widget.eventDataModel,
                                           item: cubit.eventDetails?.data,
                                         ),
                                       ] else if (cubit.selectedIndex == 1) ...[

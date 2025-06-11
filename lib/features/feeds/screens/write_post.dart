@@ -33,7 +33,6 @@ class _WritePostState extends State<WritePost> {
         loginModel = value;
       });
     });
-    context.read<FeedsCubit>().getUserFromPreferences();
     context.read<FeedsCubit>().loadUserFromPreferences();
     super.initState();
   }

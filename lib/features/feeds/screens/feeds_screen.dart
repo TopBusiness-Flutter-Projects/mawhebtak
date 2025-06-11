@@ -85,9 +85,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
                         itemCount: feeds?.data?.length ?? 0,
                         itemBuilder: (BuildContext context, int index) {
                           return TimeLineList(
-                              postId: feeds!.data![index].id.toString(),
+                              postId: feeds?.data?[index].id?.toString() ?? '',
                               feedsCubit: feedsCubit,
-                              feeds: feeds.data![index],
+                              feeds: feeds?.data?[index],
                               index: index);
                         },
                         separatorBuilder: (BuildContext context, int index) {

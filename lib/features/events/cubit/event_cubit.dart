@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/events/data/repo/event_repo_impl.dart';
+import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../../core/widgets/media_picker.dart';
 import '../data/model/event_details_model.dart';
@@ -123,7 +124,7 @@ class EventCubit extends Cubit<EventState> {
     }
   }
 
-  Future deleteEvent(String id, BuildContext context) async {
+  Future deleteEvent(String id, BuildContext context, bool isDeeplink) async {
     try {
       AppWidgets.create2ProgressDialog(context);
       emit(DeleteEventLoadingState());
@@ -141,8 +142,14 @@ class EventCubit extends Cubit<EventState> {
           errorGetBar(r.msg ?? 'Error occurred');
           emit(DeleteEventErrorState());
         }
+
         Navigator.pop(context);
-        Navigator.pop(context);
+
+        if (isDeeplink) {
+          Navigator.pushReplacementNamed(context, Routes.mainRoute);
+        } else {
+          Navigator.pop(context);
+        }
       });
     } catch (e) {
       errorGetBar(e.toString());

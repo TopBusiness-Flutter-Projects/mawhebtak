@@ -115,9 +115,17 @@ class CustomSimpleAppbar extends StatelessWidget {
                                 categoryId: categoryId);
                           },
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child:
-                            SvgPicture.asset(actionIcon ?? AppIcons.eventIcon),
+                        padding: EdgeInsets.all(5.h),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: colorButton ?? AppColors.grayLite,
+                              borderRadius: BorderRadius.circular(8.r)),
+                          child: Padding(
+                            padding: EdgeInsets.all(6.r),
+                            child: SvgPicture.asset(
+                                actionIcon ?? AppIcons.eventIcon),
+                          ),
+                        ),
                       ),
                     ),
                 ],
