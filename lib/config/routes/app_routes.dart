@@ -200,8 +200,11 @@ class AppRoutes {
           duration: const Duration(milliseconds: 800),
         );
       case Routes.profileScreen:
+        String id = settings.arguments as String;
         return PageTransition(
-          child: const ProfileScreen(),
+          child:  ProfileScreen(
+            id: id,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 800),

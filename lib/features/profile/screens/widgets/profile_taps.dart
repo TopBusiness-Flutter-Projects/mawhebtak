@@ -1,106 +1,70 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
-
 import '../../../../core/exports.dart';
 
 class ProfileTabs extends StatefulWidget {
-  const ProfileTabs({super.key});
-
+  const ProfileTabs({super.key, required this.id});
+ final String id;
   @override
   State<ProfileTabs> createState() => _ProfileTabsState();
 }
 
 class _ProfileTabsState extends State<ProfileTabs> {
-
-  final List<String> tabs = ["about".tr(), "timeline".tr(), "my_gigs".tr(), "review".tr()];
-
   @override
   Widget build(BuildContext context) {
-    var cubit=context.read<ProfileCubit>();
-   return BlocBuilder<ProfileCubit,ProfileState>(builder: (BuildContext context, state) {  return Column(
-     children: [
-   //     GestureDetector(
-   //
-   //         child: Row(
-   //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-   //           children: [
-   //             InkWell(
-   //             onTap: () {
-   // cubit.  changeSelected(0);
-   //
-   //
-   // },
-   //                 child: Text("About",style: getRegularStyle(fontSize: 14.sp,color: AppColors.primary),)),
-   //             Text("About",style: getRegularStyle(fontSize: 14.sp,color: AppColors.primary),),
-   //             Text("About",style: getRegularStyle(fontSize: 14.sp,color: AppColors.primary),),
-   //             Text("About",style: getRegularStyle(fontSize: 14.sp,color: AppColors.primary),),
-   //           ],
-   //         )),
-   //     if(cubit.selectedIndex==0)...[
-   //       Padding(
-   //         padding: const EdgeInsets.all(8.0),
-   //         child: Container(
-   //           height: 2.h,
-   //           width: 72.w,
-   //           color: cubit.selectedIndex==0 ? AppColors.primary : Colors.transparent,
-   //         ),
-   //       ),
-   //
-   //     ]
+    var cubit = context.read<ProfileCubit>();
 
+    final List<String> tabs = [
+      "about".tr(),
+      if (cubit.user?.data?.id.toString() != widget.id) "timeline".tr(),
+      "my_gigs".tr(),
+      "review".tr()
+    ];
 
-       // Tabs
-       Row(
-         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-         children: List.generate(tabs.length, (index) {
-           final isSelected = cubit.selectedIndex == index;
-           return GestureDetector(
-             onTap: () {
-               cubit.changeSelected(index);
-               // setState(() {
-               //   cubit. selectedIndex = index;
-               // });
-             },
-             child: Column(
-               mainAxisSize: MainAxisSize.min,
-               children: [
-                 Text(
-                   tabs[index],
-                   style: TextStyle(
-                     fontSize: 14.sp,
-                     fontWeight: FontWeight.w500,
-                     color: isSelected ? AppColors.primary : AppColors.grayText2,
-                   ),
-                 ),
-                 SizedBox(height: 10.h),
-                 Container(
-                   height: 2.h,
-                   width: 72.w,
-                   color: isSelected ? AppColors.primary : Colors.transparent,
-                 )
-               ],
-             ),
-           );
-         }),
-       ),
-       SizedBox(height: 6.h),
-       Container(height: 8.h,color: AppColors.grayLite,),
-
-       // Content for each tab (اختياري)
-       // يمكنك استخدام IndexedStack أو PageView هنا
-       // IndexedStack(
-       //   alignment: Alignment.centerLeft,
-       //   index:cubit. selectedIndex,
-       //   children: [
-       //     AboutWidget(),
-       //     // TimeLineWidget(),
-       //     //
-       //     //
-       //     // Text("My Gigs Content",style: getRegularStyle(fontSize: 15.sp,color: AppColors.grayDark),),
-       //     // Text("Review Content"),
-       //   ],
-       // )
-     ],
-   ); },);
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (BuildContext context, state) {
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(tabs.length, (index) {
+                final isSelected = cubit.selectedIndex == index;
+                return GestureDetector(
+                  onTap: () {
+                    cubit.changeSelected(index);
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        tabs[index],
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: isSelected
+                              ? AppColors.primary
+                              : AppColors.grayText2,
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      Container(
+                        height: 2.h,
+                        width: 72.w,
+                        color:
+                        isSelected ? AppColors.primary : Colors.transparent,
+                      )
+                    ],
+                  ),
+                );
+              }),
+            ),
+            SizedBox(height: 6.h),
+            Container(
+              height: 8.h,
+              color: AppColors.grayLite,
+            ),
+          ],
+        );
+      },
+    );
   }
 }

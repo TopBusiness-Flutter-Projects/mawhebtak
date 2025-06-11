@@ -11,5 +11,9 @@ export 'package:mawhebtak/core/widgets/custom_simple_appbar.dart';
 export 'package:mawhebtak/core/widgets/dropdown_textField_widget.dart';
 export 'package:mawhebtak/core/widgets/custom_text_form_field.dart';
 export 'package:mawhebtak/injector.dart';
+export 'package:mawhebtak/core/api/end_points.dart';
+export 'package:mawhebtak/core/error/exceptions.dart';
+export 'package:mawhebtak/core/error/failures.dart';
+export 'package:mawhebtak/core/api/base_api_consumer.dart';
 
 export 'package:easy_localization/easy_localization.dart' hide TextDirection;

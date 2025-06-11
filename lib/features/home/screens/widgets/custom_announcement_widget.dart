@@ -56,15 +56,31 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         (widget.announcement?.user?.image == null)
-                            ? SizedBox(
-                                height: 40.h,
-                                width: 40.w,
-                                child: Image.asset(ImageAssets.profileImage),
-                              )
-                            : CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    widget.announcement?.user?.image ?? ""),
-                              ),
+                            ? GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context, Routes.profileScreen,
+                              arguments:  widget.announcement?.user?.id
+                            );
+                          },
+                              child: SizedBox(
+                                  height: 40.h,
+                                  width: 40.w,
+                                  child: Image.asset(ImageAssets.profileImage),
+                                ),
+                            )
+                            : GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.profileScreen,
+                                arguments:  widget.announcement?.user?.id.toString()
+                            );
+                          },
+                              child: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      widget.announcement?.user?.image ?? ""),
+                                ),
+                            ),
                         SizedBox(width: 8.w),
                         Expanded(
                           child: Row(

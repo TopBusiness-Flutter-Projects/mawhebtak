@@ -1,116 +1,227 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
+import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
+import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
+import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
+import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
+import 'package:mawhebtak/features/feeds/screens/widgets/time_line_list.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/about_widgets/about_widget.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/info_for_followers.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_app_bar.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_taps.dart';
-
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
 import '../../casting/screens/widgets/gigs_widgets.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key, required this.id});
+  final String id;
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    context.read<ProfileCubit>().getProfileData(id: widget.id);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<ProfileCubit>();
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (BuildContext context, state) {
+        var cubit = context.read<ProfileCubit>();
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light.copyWith(
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.light,
           ),
           child: Scaffold(
-            body: Stack(
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            body: (state is GetProfileStateLoading)
+                ? const Expanded(
+                    child: Center(
+                    child: CustomLoadingIndicator(),
+                  ))
+                : Stack(
                     children: [
-                      ProfileAppBar(),
-                      SizedBox(height: 35.h),
-                      Padding(
-                        padding: EdgeInsets.only(left: 16.0.w),
-                        child: Text("Ahmed Mokhtar",
-                            style: getMediumStyle(
-                                fontSize: 14.sp, color: AppColors.primary)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 16.0.w),
-                        child: RichText(
-                          text: TextSpan(
-                            text: "Talent / Actor Expert at studion masr",
-                            style: getRegularStyle(fontSize: 14.sp),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' (Amateur)',
-                                  style: getRegularStyle(
-                                      fontSize: 14.sp,
-                                      color: AppColors.primary)),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProfileAppBar(
+                            avatar: cubit.profileModel?.data?.avatar ?? "",
+                            byCaver: cubit.profileModel?.data?.bgCover ?? "",
+                          ),
+                          SizedBox(height: 35.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 16.0.w),
+                                    child: Text(
+                                        cubit.profileModel?.data?.name ?? "",
+                                        style: getMediumStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.primary)),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 16.0.w),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text: cubit
+                                                .profileModel?.data?.headline ??
+                                            "",
+                                        style: getRegularStyle(fontSize: 14.sp),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                              text: cubit.profileModel?.data
+                                                          ?.userType ==
+                                                      null
+                                                  ? ""
+                                                  : '(${cubit.profileModel?.data?.userType})',
+                                              style: getRegularStyle(
+                                                  fontSize: 14.sp,
+                                                  color: AppColors.primary)),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 16.0.w),
+                                    child: Text(
+                                        cubit.profileModel?.data?.location ??
+                                            "",
+                                        style: getRegularStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.grayMedium)),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SvgPicture.asset(AppIcons.bioIcon),
+                              ),
                             ],
                           ),
-                        ),
+                          SizedBox(height: 20.h),
+                          InfoForFollowers(
+                            followersCount: cubit
+                                    .profileModel?.data?.followersCount
+                                    .toString() ??
+                                "0",
+                            followingCount: cubit
+                                    .profileModel?.data?.followingCount
+                                    .toString() ??
+                                "0",
+                            postsCount: cubit.profileModel?.data?.postsCount
+                                    .toString() ??
+                                "0",
+                          ),
+                          SizedBox(height: 5.h),
+                          Container(height: 8.h, color: AppColors.grayLite),
+                          Container(height: 20.h, color: AppColors.white),
+                           ProfileTabs(
+                            id: widget.id,
+                          ),
+                          SizedBox(height: 5.h),
+                          if (cubit.selectedIndex == 0) ...[
+                            AboutWidget(
+                              profileModel: cubit.profileModel!,
+                            )
+                          ]
+                          else if (cubit.selectedIndex == 1) ...[
+                            BlocBuilder<FeedsCubit, FeedsState>(
+                                builder: (context, state) {
+                              var feedsCubit = context.read<FeedsCubit>();
+                              return Expanded(
+                                child: SingleChildScrollView(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    padding: const EdgeInsets.only(
+                                        bottom: kBottomNavigationBarHeight),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: cubit.profileModel?.data
+                                            ?.timeline?.length ??
+                                        0,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return TimeLineList(
+                                          feedsCubit: feedsCubit,
+                                          postId: cubit.profileModel?.data
+                                                  ?.timeline?[index].id
+                                                  .toString() ??
+                                              "",
+                                          feeds: cubit.profileModel?.data
+                                              ?.timeline?[index],
+                                          index: index);
+                                    },
+                                  ),
+                                ),
+                              );
+                            })
+                          ]
+                          else if (cubit.selectedIndex == 2) ...[
+                            BlocBuilder<CastingCubit, CastingState>(
+                                builder: (context, state) {
+                              var castingCubit = context.read<CastingCubit>();
+                              return Expanded(
+                                child: SingleChildScrollView(
+                                  child: ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: cubit.profileModel?.data?.myGigs
+                                            ?.length ??
+                                        0,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return GigsWidget(
+                                        index: index,
+                                        isFromDetails: false,
+                                        eventAndGigsModel: cubit
+                                            .profileModel!.data!.myGigs![index],
+                                        castingCubit: castingCubit,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            })
+                          ] else if (cubit.selectedIndex == 3) ...[
+
+                          ]
+                        ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 16.0.w),
-                        child: Text("Egypt, Cairo, Nasr City",
-                            style: getRegularStyle(
-                                fontSize: 14.sp, color: AppColors.grayMedium)),
-                      ),
-                      SizedBox(height: 20.h),
-                      InfoForFollowers(),
-                      SizedBox(height: 5.h),
-                      Container(height: 8.h, color: AppColors.grayLite),
-                      Container(height: 20.h, color: AppColors.white),
-                      ProfileTabs(),
-                      SizedBox(height: 5.h),
-                      if (cubit.selectedIndex == 0) ...[
-                        AboutWidget()
-                      ] else if (cubit.selectedIndex == 1) ...[
-                        // TimeLineWidget()
-                      ] else if (cubit.selectedIndex == 2) ...[
-                        ListView.separated(
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GigsWidget();
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return SizedBox(height: 5.h);
-                          },
-                        )
-                      ] else if (cubit.selectedIndex == 3) ...[
-                        GigsWidget()
-                      ]
+                      cubit.selectedIndex == 2
+                          ? Positioned(
+                              bottom: 20.h,
+                              right: 16.w,
+                              child: InkWell(
+                                  onTap: () async {
+                                    final user = await Preferences.instance
+                                        .getUserModel();
+                                    if (user.data?.token == null) {
+                                      checkLogin(context);
+                                    } else {
+                                      Navigator.pushNamed(
+                                          context, Routes.newGigsRoute);
+                                    }
+                                  },
+                                  child: SvgPicture.asset(AppIcons.addIcon)),
+                            )
+                          : const SizedBox()
                     ],
                   ),
-                ),
-                cubit.selectedIndex == 2
-                    ? Positioned(
-                        bottom: 20.h,
-                        right: 16.w,
-                        child: InkWell(
-                            onTap: () async {
-                              final user =
-                                  await Preferences.instance.getUserModel();
-                              if (user.data?.token == null) {
-                                checkLogin(context);
-                              } else {
-                                Navigator.pushNamed(
-                                    context, Routes.newGigsRoute);
-                              }
-                            },
-                            child: SvgPicture.asset(AppIcons.addIcon)),
-                      )
-                    : SizedBox()
-              ],
-            ),
             // floatingActionButton: cubit.selectedIndex==2 ?
             // FloatingActionButton(
             //   onPressed: (){}
