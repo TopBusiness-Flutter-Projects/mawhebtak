@@ -1,9 +1,11 @@
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
+
 import '../../../../core/exports.dart';
 
 class ProfileTabs extends StatefulWidget {
-  const ProfileTabs({super.key, required this.id});
- final String id;
+  const ProfileTabs({super.key, required this.isMyProfile});
+  final bool isMyProfile;
+
   @override
   State<ProfileTabs> createState() => _ProfileTabsState();
 }
@@ -15,8 +17,8 @@ class _ProfileTabsState extends State<ProfileTabs> {
 
     final List<String> tabs = [
       "about".tr(),
-      if (cubit.user?.data?.id.toString() != widget.id) "timeline".tr(),
-      "my_gigs".tr(),
+      "timeline".tr(),
+      if (widget.isMyProfile) "my_gigs".tr(),
       "review".tr()
     ];
 
@@ -49,8 +51,9 @@ class _ProfileTabsState extends State<ProfileTabs> {
                       Container(
                         height: 2.h,
                         width: 72.w,
-                        color:
-                        isSelected ? AppColors.primary : Colors.transparent,
+                        color: isSelected
+                            ? AppColors.primary
+                            : Colors.transparent,
                       )
                     ],
                   ),
@@ -58,10 +61,7 @@ class _ProfileTabsState extends State<ProfileTabs> {
               }),
             ),
             SizedBox(height: 6.h),
-            Container(
-              height: 8.h,
-              color: AppColors.grayLite,
-            ),
+            Container(height: 8.h, color: AppColors.grayLite),
           ],
         );
       },

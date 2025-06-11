@@ -1,5 +1,3 @@
-
-
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
@@ -14,17 +12,15 @@ class ProfileCubit extends Cubit<ProfileState> {
   int selectedIndex = 0;
   bool isFollowing = true;
 
-changeSelected(int index){
-  selectedIndex=index;
-  emit(ChangeIndexState());
-}toggleButton(){
-    isFollowing=!isFollowing;
-  emit(ChangeFollowersState());
-}
+  changeSelected(int index) {
+    selectedIndex = index;
+    emit(ChangeIndexState());
+  }
 
-
-
-
+  toggleButton() {
+    isFollowing = !isFollowing;
+    emit(ChangeFollowersState());
+  }
 
   Future<LoginModel> getUserFromPreferences() async {
     final user = await Preferences.instance.getUserModel();
@@ -39,12 +35,10 @@ changeSelected(int index){
   ProfileModel? profileModel;
   getProfileData({
     required String id,
-
   }) async {
     emit(GetProfileStateLoading());
     try {
-      final res =
-      await api.getProfileData(id:id);
+      final res = await api.getProfileData(id: id);
       res.fold((l) {
         emit(GetProfileStateError(l.toString()));
       }, (r) {

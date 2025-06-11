@@ -4,17 +4,24 @@ import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 
 class ProfileModel {
   Data? data;
-
+  String? msg;
+  int? status;
   ProfileModel({
     this.data,
+    this.msg,
+    this.status,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
     data: json["data"] == null ? null : Data.fromJson(json["data"]),
+    msg: json["msg"],
+    status: json["status"],
   );
 
   Map<String, dynamic> toJson() => {
     "data": data?.toJson(),
+    "msg": msg,
+    "status": status,
   };
 }
 
