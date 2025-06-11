@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             statusBarIconBrightness: Brightness.light,
           ),
           child: Scaffold(
-            body: (state is GetProfileStateLoading)
+            body: (state is GetProfileStateLoading || cubit.profileModel == null)
                 ? const Expanded(
                     child: Center(
                     child: CustomLoadingIndicator(),
