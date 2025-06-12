@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
-
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
-import '../../../auth/login/data/models/login_model.dart';
 
 class CustomAppBarRow extends StatefulWidget {
   CustomAppBarRow(
@@ -40,25 +39,36 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 40.h,
-                width: 40.w,
-                child: context.read<MainCubit>().loginModel?.data?.image == null
-                    ? Image.asset(ImageAssets.profileImage)
-                    : ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: context
-                              .read<MainCubit>()
-                              .loginModel!
-                              .data!
-                              .image!,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(strokeWidth: 2),
-                          errorWidget: (context, url, error) =>
-                              Image.asset(ImageAssets.profileImage),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.profileScreen,
+                    arguments: DeepLinkDataModel(
+                        id: context.read<MainCubit>().loginModel?.data?.id?.toString() ?? "",
+                        isDeepLink: false),
+                  );
+                },
+                child: SizedBox(
+                  height: 40.h,
+                  width: 40.w,
+                  child: context.read<MainCubit>().loginModel?.data?.image == null
+                      ? Image.asset(ImageAssets.profileImage)
+                      : ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: context
+                                .read<MainCubit>()
+                                .loginModel!
+                                .data!
+                                .image!,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(strokeWidth: 2),
+                            errorWidget: (context, url, error) =>
+                                Image.asset(ImageAssets.profileImage),
+                          ),
                         ),
-                      ),
+                ),
               ),
               Expanded(
                 child: Container(

@@ -54,7 +54,6 @@ class MoreScreen extends StatelessWidget {
                             text: "my_profile".tr(),
                             imageUrl: AppIcons.myProfileIcon,
                             onTap: () {
-                              log("id: ${context.read<MainCubit>().loginModel!.data!.id.toString()}");
                               Navigator.pushNamed(
                                 context,
                                 Routes.profileScreen,

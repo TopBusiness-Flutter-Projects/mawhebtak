@@ -33,6 +33,7 @@ import 'package:mawhebtak/features/auth/new_password/screens/new_password_screen
 import 'package:mawhebtak/features/auth/verification/screens/verification_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
+import 'package:mawhebtak/features/profile/screens/edit_profile_screen.dart';
 import 'package:mawhebtak/features/terms_and_condition/screens/terms_and_condition.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
@@ -108,6 +109,7 @@ class Routes {
   static const String postdeepLinkRoute = '/posts';
   static const String profiledeepLinkRoute = '/profiles';
   static const String eventsdeepLinkRoute = '/events';
+  static const String editProfileRoute = '/editProfile';
 }
 
 class AppRoutes {
@@ -283,6 +285,16 @@ class AppRoutes {
         return PageTransition(
           child: WorkDetailsScreen(
             work: work,
+          ),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
+      case Routes.editProfileRoute:
+        DeepLinkDataModel? model = settings.arguments as DeepLinkDataModel?;
+        return PageTransition(
+          child: EditProfileScreen(
+            model: model!,
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,

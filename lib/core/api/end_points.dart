@@ -30,17 +30,15 @@ class EndPoints {
 
   static const String storeEventUrl = '${baseUrl}store-event';
   static const String getDetailsDataUrl = '${baseUrl}get-details-data';
-  static const String followUnfollowEventUrl =
-      '${baseUrl}follow-unfollow-event';
+  static const String followUnfollowEventUrl = '${baseUrl}follow-unfollow-event';
   static const String applyToEventUrl = '${baseUrl}apply-to-event';
   static const String actionGigsUrl = '${baseUrl}action-gigs/';
-
   static const String notificationUrl = '${baseUrl}get-notifications';
-
   static const String actionEventRequestUrl = '${baseUrl}action-event-request/';
   static const String requestGigs = '${baseUrl}request-cancel-gigs';
   static const String followAndUnFollow = '${baseUrl}follow-unfollow-user';
   static const String toggleFavorite = '${baseUrl}toggle-favourite';
   static const String profile = '${baseUrl}profile/';
+  static const String updateProfile = '${baseUrl}update-profile';
   static const String getDetailsById = '${baseUrl}get-by-id/';
 }
