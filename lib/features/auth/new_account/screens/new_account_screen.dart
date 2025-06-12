@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';

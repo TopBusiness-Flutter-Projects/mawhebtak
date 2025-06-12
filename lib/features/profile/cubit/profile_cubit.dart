@@ -20,6 +20,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   bool isFollowing = true;
   List<String>? gender = ['male', 'female'];
   String? selectedGender;
+  String? selectedGenderId;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController headlineController = TextEditingController();
@@ -35,6 +36,9 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   File? avatarImage;
   File? coverImage;
+  String? avatarUrl;
+  String? coverUrl;
+
   Future<void> pickSingleImage({required String type}) async {
     try {
       final pickedFile =
@@ -67,6 +71,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   saveData() {
+    selectedGender = 'male';
+    avatarUrl = profileModel?.data?.avatar;
+    coverUrl = profileModel?.data?.bgCover;
     phoneController.text = profileModel?.data?.phone ?? '';
     nameController.text = profileModel?.data?.name ?? '';
     emailController.text = profileModel?.data?.email ?? "";
@@ -114,10 +121,10 @@ class ProfileCubit extends Cubit<ProfileState> {
       final res = await api.updateProfileData(
         name: nameController.text,
         phone: phoneController.text,
-        userSubTypeId: "",
+        userSubTypeId: selectedGenderId,
         email: emailController.text,
-        avatar: avatarImage?.path,
-        byCaver: coverImage?.path,
+        avatar: avatarImage ?? File(''),
+        byCaver: coverImage ?? File(''),
         lat: context
                 .read<LocationCubit>()
                 .selectedLocation

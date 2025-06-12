@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
@@ -19,20 +22,20 @@ class ProfileRepo {
   }
 
   Future<Either<Failure, DefaultMainModel>> updateProfileData({
-     String? name,
-     String?email,
-     String? phone,
-     String? userSubTypeId,
-     String? avatar,
-     String? byCaver,
-     String? lat,
-     String? long,
-     String? bio,
-     String? headline,
-     String? location,
-     String? age,
-     String? gender,
-     String? syndicate,
+    String? name,
+    String? email,
+    String? phone,
+    String? userSubTypeId,
+    File? avatar,
+    File? byCaver,
+    String? lat,
+    String? long,
+    String? bio,
+    String? headline,
+    String? location,
+    String? age,
+    String? gender,
+    String? syndicate,
   }) async {
     try {
       final response = await dio.post(
@@ -42,8 +45,12 @@ class ProfileRepo {
           'name': name,
           'phone': phone,
           'user_sub_type_id': userSubTypeId,
-          'avatar': avatar,
-          'bg_cover': byCaver,
+          if (avatar != null)
+            'avatar': MultipartFile.fromFileSync(avatar.path,
+                filename: avatar.path.split('/').last),
+          if (byCaver != null)
+            'bg_cover': MultipartFile.fromFileSync(byCaver.path,
+                filename: byCaver.path.split('/').last),
           'lat': lat,
           'long': long,
           'bio': bio,
@@ -52,7 +59,7 @@ class ProfileRepo {
           'age': age,
           'gender': gender,
           'syndicate': syndicate,
-          'email':email,
+          'email': email,
         },
       );
 
@@ -60,7 +67,6 @@ class ProfileRepo {
     } on ServerException {
       return Left(ServerFailure());
     } catch (e) {
-      // Optional: catch unexpected errors
       return Left(ServerFailure());
     }
   }
