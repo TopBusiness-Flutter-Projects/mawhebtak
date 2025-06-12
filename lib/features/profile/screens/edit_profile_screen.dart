@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
+import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
+import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/location/cubit/location_state.dart';
 import 'package:mawhebtak/features/location/screens/full_screen_map.dart';
@@ -24,6 +26,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     context.read<ProfileCubit>().getProfileData(id: widget.model.id);
     context.read<ProfileCubit>().loadUserFromPreferences();
+    context.read<NewAccountCubit>().getDataUserType();
+    context.read<NewAccountCubit>().selectedUserType= null;
     context.read<ProfileCubit>().profileModel == null;
     super.initState();
   }
@@ -50,6 +54,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ProfileAppBar(
+                            isEdit: true,
                             id: widget.model.id,
                             avatar: cubit.profileModel?.data?.avatar ?? "",
                             byCaver: cubit.profileModel?.data?.bgCover ?? "",
@@ -120,9 +125,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   decoration: const InputDecoration(
                                     border: InputBorder.none,
                                   ),
-                                  style: getMediumStyle(
-                                      fontSize: 14.sp,
-                                      color: AppColors.primary),
+                                  style: getRegularStyle(),
                                 ),
                               )
                             ],
@@ -229,6 +232,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       onChanged: (value) {
                                         cubit.selectedGender = value;
                                       },
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 10.h, bottom: 10.h),
+                                      child: Text(
+                                        "user_type".tr(),
+                                        style: TextStyle(
+                                            color: AppColors.darkGray,
+                                            fontSize: 16.sp),
+                                      ),
+                                    ),
+                                    BlocBuilder<NewAccountCubit,NewAccountState>(
+                                      builder: (context,state) {
+                                        var newAccountCubit = context.read<NewAccountCubit>();
+                                        return GeneralCustomDropdownButtonFormField(
+                                          itemBuilder: (item) {
+                                            return item.name ?? '';
+                                          },
+                                          value: newAccountCubit.selectedUserType,
+                                          items: newAccountCubit.userTypeList?.data ?? [],
+                                          onChanged: (value) {
+                                            newAccountCubit.selectedUserType = value;
+                                            cubit.selectedGenderId = value.id.toString();
+                                          },
+                                        );
+                                      }
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(

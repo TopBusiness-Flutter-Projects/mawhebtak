@@ -55,6 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ProfileAppBar(
+                            isEdit: false,
                             id: widget.model.id,
                             avatar: cubit.profileModel?.data?.avatar ?? "",
                             byCaver: cubit.profileModel?.data?.bgCover ?? "",
