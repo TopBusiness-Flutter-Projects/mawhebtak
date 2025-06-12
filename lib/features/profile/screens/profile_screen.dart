@@ -1,16 +1,13 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
-import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
-import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
-import 'package:mawhebtak/features/feeds/screens/widgets/time_line_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/about_widgets/about_widget.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/info_for_followers.dart';
+import 'package:mawhebtak/features/profile/screens/widgets/post_widget_profile.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_app_bar.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/profile_taps.dart';
 import '../../../config/routes/app_routes.dart';
@@ -31,7 +28,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     context.read<ProfileCubit>().getProfileData(id: widget.model.id);
-
     context.read<ProfileCubit>().loadUserFromPreferences();
     context.read<ProfileCubit>().profileModel == null;
     super.initState();
@@ -76,10 +72,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     Padding(
                                       padding: EdgeInsets.only(left: 16.0.w),
                                       child: Text(
-                                          cubit.profileModel?.data?.name ?? "",
-                                          style: getMediumStyle(
-                                              fontSize: 14.sp,
-                                              color: AppColors.primary)),
+                                        cubit.profileModel?.data?.name ?? "",
+                                        style: getMediumStyle(
+                                            fontSize: 14.sp,
+                                            color: AppColors.primary),
+                                      ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(left: 16.0.w),
@@ -117,9 +114,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SvgPicture.asset(AppIcons.bioIcon),
+                              if (cubit.user?.data?.id.toString() == widget.model.id)
+                              GestureDetector(
+                                onTap: () {
+                                  cubit.saveData();
+                                  Navigator.pushNamed(
+                                      context, Routes.editProfileRoute,
+                                      arguments: widget.model);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SvgPicture.asset(AppIcons.bioIcon),
+                                ),
                               ),
                             ],
                           ),
@@ -191,50 +197,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               profileModel: cubit.profileModel,
                             )
                           ] else if (cubit.selectedIndex == 1) ...[
-                            BlocBuilder<FeedsCubit, FeedsState>(
-                                builder: (context, state) {
-                              var feedsCubit = context.read<FeedsCubit>();
-                              return Expanded(
-                                child: SingleChildScrollView(
-                                  child: (cubit.profileModel?.data?.timeline ==
-                                              [] ||
-                                          cubit.profileModel?.data?.timeline
-                                                  ?.length ==
-                                              0)
-                                      ? Center(
-                                          child: Text(
-                                            "no_data".tr(),
-                                            style: TextStyle(
-                                                color: AppColors.black),
-                                          ),
-                                        )
-                                      : ListView.builder(
-                                          shrinkWrap: true,
-                                          padding: const EdgeInsets.only(
-                                              bottom:
-                                                  kBottomNavigationBarHeight),
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: cubit.profileModel?.data
-                                                  ?.timeline?.length ??
-                                              0,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return TimeLineList(
-                                                feedsCubit: feedsCubit,
-                                                postId: cubit.profileModel?.data
-                                                        ?.timeline?[index].id
-                                                        .toString() ??
-                                                    "",
-                                                feeds: cubit.profileModel?.data
-                                                    ?.timeline?[index],
-                                                index: index);
-                                          },
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: (cubit.profileModel?.data?.timeline ==
+                                            [] ||
+                                        cubit.profileModel?.data?.timeline
+                                                ?.length ==
+                                            0)
+                                    ? Center(
+                                        child: Text(
+                                          "no_data".tr(),
+                                          style:
+                                              TextStyle(color: AppColors.black),
                                         ),
-                                ),
-                              );
-                            })
-                          ] else if (cubit.selectedIndex == 2) ...[
+                                      )
+                                    : ListView.builder(
+                                        shrinkWrap: true,
+                                        padding: const EdgeInsets.only(
+                                            bottom: kBottomNavigationBarHeight),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: cubit.profileModel?.data
+                                                ?.timeline?.length ??
+                                            0,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return PostProfileWidget(
+                                              profileCubit: cubit,
+                                              postId: cubit.profileModel?.data
+                                                      ?.timeline?[index].id
+                                                      .toString() ??
+                                                  "",
+                                              post: cubit.profileModel?.data
+                                                  ?.timeline?[index],
+                                              index: index);
+                                        },
+                                      ),
+                              ),
+                            )
+                          ] else if (cubit.selectedIndex == 2 &&
+                              cubit.user?.data?.id.toString() ==
+                                  widget.model.id) ...[
                             BlocBuilder<CastingCubit, CastingState>(
                                 builder: (context, state) {
                               var castingCubit = context.read<CastingCubit>();

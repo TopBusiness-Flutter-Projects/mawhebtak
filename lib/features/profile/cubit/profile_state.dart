@@ -8,6 +8,7 @@ final class ChangeIndexState extends ProfileState {}
 final class ChangeFollowersState extends ProfileState {}
 final class VideoPickedState extends ProfileState {}
 final class ImagePickedState extends ProfileState {}
+final class SuccessSelectNewImageProfileState extends ProfileState {}
 final class GetProfileStateError extends ProfileState {
   final String errorMessage;
 
@@ -16,3 +17,12 @@ final class GetProfileStateError extends ProfileState {
 }
 final class GetProfileStateLoaded extends ProfileState {}
 final class GetProfileStateLoading extends ProfileState {}
+final class UpdateProfileStateError extends ProfileState {
+  final String errorMessage;
+
+  UpdateProfileStateError(this.errorMessage);
+
+}
+final class UpdateProfileStateLoaded extends ProfileState {}
+final class UpdateProfileStateLoading extends ProfileState {}
+final class EditingState extends ProfileState {}

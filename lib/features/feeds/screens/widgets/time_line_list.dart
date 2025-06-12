@@ -209,7 +209,7 @@ class _TimeLineListState extends State<TimeLineList> {
                   checkLogin(context);
                 } else {
                   widget.feedsCubit
-                      ?.addReaction(postId: widget.postId, index: widget.index);
+                      ?.addReaction(context: context,postId: widget.postId, index: widget.index);//profile
                 }
               },
               child: Row(

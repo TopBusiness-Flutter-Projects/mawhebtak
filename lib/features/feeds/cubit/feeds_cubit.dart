@@ -13,6 +13,7 @@ import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import 'package:mawhebtak/features/feeds/data/models/comments_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
+import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart' as path;
@@ -241,7 +242,7 @@ class FeedsCubit extends Cubit<FeedsState> {
   }
 
   DefaultMainModel? defaultMainModel;
-  addReaction({required String postId, int? index, bool? isDetails}) async {
+  addReaction({required String postId, int? index, bool? isDetails,required BuildContext context}) async {
     try {
       final res = await api!.addReaction(postId: postId);
       res.fold((l) {
@@ -257,16 +258,19 @@ class FeedsCubit extends Cubit<FeedsState> {
           }
           postDetails?.data?.isReacted =
               !(postDetails?.data?.isReacted ?? false);
-        } else {
-          if (posts?.data?[index!].isReacted == true) {
-            posts?.data![index!].reactionCount =
-                (posts?.data?[index].reactionCount ?? 1) - 1;
+        }
+        else {
+          if (posts?.data?[index!].isReacted == true || context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].isReacted == true) {
+            posts?.data![index!].reactionCount = (posts?.data?[index].reactionCount ?? 1) - 1;
+            context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].reactionCount = (context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].reactionCount ?? 1) - 1;
           } else {
-            posts?.data![index!].reactionCount =
-                (posts?.data?[index].reactionCount ?? 0) + 1;
+            posts?.data![index!].reactionCount = (posts?.data?[index].reactionCount ?? 1) + 1;
+            context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].reactionCount =
+                (context.read<ProfileCubit>().profileModel?.data?.timeline?[index].reactionCount ?? 0) + 1;
           }
           posts?.data?[index!].isReacted =
               !(posts?.data?[index].isReacted ?? false);
+          context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].isReacted = !( context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].isReacted ??false);
         }
 
         // successGetBar(r.msg);
