@@ -42,6 +42,7 @@ class ImageAssets {
 
 class AppIcons {
   static const String phoneIcon = '$iconsPath/phone.svg';
+  static const String sendIcon = '$iconsPath/send.svg';
   static const String homeIcon = '$iconsPath/home.svg';
   static const String feeds = '$iconsPath/feeds.svg';
   static const String casting = '$iconsPath/casting.svg';

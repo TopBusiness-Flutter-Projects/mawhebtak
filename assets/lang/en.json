@@ -268,5 +268,7 @@
   "reply": "reply",
   "replies": "replies",
   "free": "Free",
-  "repling_to": "Replying to"
+  "repling_to": "Replying to",
+    "write_msg":"write your message .."
+
 }

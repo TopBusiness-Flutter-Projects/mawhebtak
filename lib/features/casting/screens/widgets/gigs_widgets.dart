@@ -236,6 +236,9 @@ class _GigsWidgetState extends State<GigsWidget> {
                                 widget.castingCubit!.requestGigs(
                                   context: context,
                                   index: widget.index!,
+                                  userId: widget.eventAndGigsModel?.user?.id
+                                          ?.toString() ??
+                                      '',
                                   type: widget.eventAndGigsModel?.isRequested
                                           .toString() ??
                                       "",

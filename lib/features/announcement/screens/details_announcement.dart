@@ -7,10 +7,12 @@ import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
 import '../../../core/exports.dart';
+import '../../chat/screens/message_screen.dart';
 import '../cubit/announcement_cubit.dart';
 
 class DetailsAnnouncementScreen extends StatefulWidget {
-  const DetailsAnnouncementScreen({super.key, required this.announcementId, required this.index});
+  const DetailsAnnouncementScreen(
+      {super.key, required this.announcementId, required this.index});
   final String announcementId;
   final int index;
   @override
@@ -53,10 +55,11 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                   padding:
                                       EdgeInsets.only(right: 10.w, left: 10.w),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      (cubit.announcementDetailsModel?.data?.user
-                                                  ?.image ==
+                                      (cubit.announcementDetailsModel?.data
+                                                  ?.user?.image ==
                                               null)
                                           ? SizedBox(
                                               height: 40.h,
@@ -94,7 +97,8 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                       "",
                                                   style: getRegularStyle(
                                                       fontSize: 14.sp,
-                                                      color: AppColors.grayLight),
+                                                      color:
+                                                          AppColors.grayLight),
                                                 ),
                                               ],
                                             ),
@@ -102,7 +106,12 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                               children: [
                                                 InkWell(
                                                   onTap: () {
-                                                    cubit.toggleFavoriteAnnounce(userAnnounceId: widget.announcementId ?? "", index: widget.index??0);
+                                                    cubit.toggleFavoriteAnnounce(
+                                                        userAnnounceId: widget
+                                                                .announcementId ??
+                                                            "",
+                                                        index:
+                                                            widget.index ?? 0);
                                                   },
                                                   child: Icon(
                                                     (cubit.announcementDetailsModel!
@@ -186,8 +195,7 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                                     image: cubit
                                                                             .announcementDetailsModel
                                                                             ?.data
-                                                                            ?.media?[
-                                                                                index]
+                                                                            ?.media?[index]
                                                                             .file ??
                                                                         "")));
                                                       },
@@ -208,8 +216,8 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                             ),
                                           SizedBox(height: 8.h),
                                           AutoSizeText(
-                                              cubit.announcementDetailsModel?.data
-                                                      ?.title ??
+                                              cubit.announcementDetailsModel
+                                                      ?.data?.title ??
                                                   "",
                                               maxLines: 1,
                                               style: getSemiBoldStyle(
@@ -244,7 +252,8 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                       AppIcons.dollarSign),
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsets.all(8.0),
+                                                        const EdgeInsets.all(
+                                                            8.0),
                                                     child: AutoSizeText(
                                                       "${cubit.announcementDetailsModel?.data?.price} L.E",
                                                       style: getRegularStyle(
@@ -287,9 +296,19 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                 Padding(
                                     padding: EdgeInsets.all(10.w),
                                     child: CustomContainerButton(
-                                      onTap: () {
-                                        Navigator.pushNamed(context, Routes.chatRoute);
-                                      },
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, Routes.messageRoute,
+                                              arguments:
+                                                  MainUserAndRoomChatModel(
+                                                receiverId: cubit
+                                                    .announcementDetailsModel
+                                                    ?.data
+                                                    ?.user
+                                                    ?.id
+                                                    ?.toString(),
+                                              ));
+                                        },
                                         color: AppColors.primary,
                                         title: "request_this_product".tr(),
                                         height: 50.h))

@@ -30,7 +30,8 @@ class EndPoints {
 
   static const String storeEventUrl = '${baseUrl}store-event';
   static const String getDetailsDataUrl = '${baseUrl}get-details-data';
-  static const String followUnfollowEventUrl = '${baseUrl}follow-unfollow-event';
+  static const String followUnfollowEventUrl =
+      '${baseUrl}follow-unfollow-event';
   static const String applyToEventUrl = '${baseUrl}apply-to-event';
   static const String actionGigsUrl = '${baseUrl}action-gigs/';
   static const String notificationUrl = '${baseUrl}get-notifications';
@@ -41,4 +42,6 @@ class EndPoints {
   static const String profile = '${baseUrl}profile/';
   static const String updateProfile = '${baseUrl}update-profile';
   static const String getDetailsById = '${baseUrl}get-by-id/';
+  static const String createChatRoomUrl = '${baseUrl}get-chat-rooms';
+  static const String getChatsUrl = '${baseUrl}get-chats';
 }

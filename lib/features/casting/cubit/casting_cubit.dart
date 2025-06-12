@@ -9,6 +9,7 @@ import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category
 import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import '../../calender/data/model/countries_model.dart';
+import '../../chat/screens/message_screen.dart';
 import '../data/repos/casting.repo.dart';
 import 'casting_state.dart';
 
@@ -186,6 +187,7 @@ class CastingCubit extends Cubit<CastingState> {
       {required String gigId,
       required BuildContext context,
       required String type,
+      required String userId,
       required int index}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(RequestGigStateLoading());
@@ -211,12 +213,16 @@ class CastingCubit extends Cubit<CastingState> {
               allGigsModel?.data?[index].isRequested.toString() == "rejected" ||
               getDetailsGigsModel?.data?.isRequested.toString() == "null" ||
               getDetailsGigsModel?.data?.isRequested.toString() == "rejected") {
-            Navigator.pushNamed(context, Routes.chatRoute);
             allGigsModel?.data?[index].isRequested = "pending";
             getDetailsGigsModel?.data?.isRequested = "pending";
             print(
                 "getDetailsGigsModel?.data?.isRequested = pending    ${getDetailsGigsModel?.data?.isRequested}");
             print("model${getDetailsGigsModel?.data}");
+            Navigator.pushNamed(context, Routes.messageRoute,
+                arguments: MainUserAndRoomChatModel(receiverId: userId
+                    //!
+
+                    ));
             emit(RequestGigStateLoaded());
           }
         } else {
