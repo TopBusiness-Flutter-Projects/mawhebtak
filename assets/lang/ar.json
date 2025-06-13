@@ -271,5 +271,6 @@
   "write_comment": "اكتب تعليقًا.",
   "reply": "رد",
   "replies": "الردود",
-  "repling_to": "ردًا على"
+  "repling_to": "ردًا على",
+  "user_type": "تخصص المستخدم"
 }

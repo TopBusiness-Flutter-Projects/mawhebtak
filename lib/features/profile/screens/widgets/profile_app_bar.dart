@@ -10,10 +10,12 @@ class ProfileAppBar extends StatelessWidget {
     required this.avatar,
     required this.id,
     required this.byCaver,
+    required this.isEdit,
   }) : super(key: key);
   final String avatar;
   final String byCaver;
   final String id;
+  final bool isEdit;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
@@ -23,22 +25,20 @@ class ProfileAppBar extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           SizedBox(
-            height: getHeightSize(context) / 4.9,
-            width: double.infinity,
-            child: (cubit.coverImage != null)
-                ? Image.file(
-                    File(cubit.coverImage!.path),
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
-                  )
-                :
-             (byCaver != null)   ?
-            CircleAvatar(
-              backgroundImage: NetworkImage(byCaver),
-            ):
-             Image.asset(ImageAssets.profileImage)
-          ),
+              height: getHeightSize(context) / 4.9,
+              width: double.infinity,
+              child: (cubit.coverImage != null)
+                  ? Image.file(
+                      File(cubit.coverImage!.path),
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                    )
+                  : (byCaver != null)
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(byCaver),
+                        )
+                      : Image.asset(ImageAssets.profileImage)),
 
           // AppBar
           Positioned(
@@ -61,58 +61,71 @@ class ProfileAppBar extends StatelessWidget {
             ),
           ),
 
-          // زر تغيير الخلفية
-          Positioned(
-            bottom: 10,
-            right: 10,
-            child: GestureDetector(
-              onTap: () {
-                context.read<ProfileCubit>().pickSingleImage(type: 'cover');
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.whiteSecond.withOpacity(.5),
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "change_cover".tr(),
-                    style: getRegularStyle(
-                        fontSize: 13.sp, color: AppColors.white),
+          if (isEdit == true)
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: GestureDetector(
+                onTap: () {
+                  context.read<ProfileCubit>().pickSingleImage(type: 'cover');
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteSecond.withOpacity(.5),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "change_cover".tr(),
+                      style: getRegularStyle(
+                          fontSize: 13.sp, color: AppColors.white),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
 
-          // صورة البروفايل في الأسفل بالشمال نصها طالع ونصها نازل
           Positioned(
             bottom: -24.h,
             left: 16.w,
-            child: (avatar != null)
-                ? GestureDetector(
-                    onTap: () {
-                      context
-                          .read<ProfileCubit>()
-                          .pickSingleImage(type: 'avatar');
-                    },
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(avatar),
-                    ),
-                  )
-                : GestureDetector(
-                    onTap: () {
-                      context
-                          .read<ProfileCubit>()
-                          .pickSingleImage(type: 'avatar');
-                    },
-                    child: SizedBox(
-                      height: 55.h,
-                      width: 55.h,
-                      child: Image.asset(ImageAssets.profileImage),
+            child: Stack(
+              children: [
+                CircleAvatar(
+                  radius: 35.r,
+                  backgroundImage: cubit.avatarImage != null
+                      ? FileImage(File(cubit.avatarImage!.path))
+                      : (avatar != null && avatar.isNotEmpty
+                          ? NetworkImage(avatar) as ImageProvider
+                          : const AssetImage(ImageAssets.profileImage)),
+                ),
+
+                if (isEdit == true)
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        context
+                            .read<ProfileCubit>()
+                            .pickSingleImage(type: 'avatar');
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(4.sp),
+                        decoration: BoxDecoration(
+                          color: AppColors.gray,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                          size: 16.sp,
+                        ),
+                      ),
                     ),
                   ),
+              ],
+            ),
           ),
         ],
       );
