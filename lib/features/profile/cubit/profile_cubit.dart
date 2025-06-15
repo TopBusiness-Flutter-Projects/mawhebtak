@@ -5,6 +5,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
@@ -20,7 +21,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   bool isFollowing = true;
   List<String>? gender = ['male', 'female'];
   String? selectedGender;
-  String? selectedGenderId;
+  String? selectedUserTypeId;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController headlineController = TextEditingController();
@@ -36,8 +37,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   File? avatarImage;
   File? coverImage;
-  String? avatarUrl;
-  String? coverUrl;
+
 
   Future<void> pickSingleImage({required String type}) async {
     try {
@@ -72,8 +72,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   saveData() {
     selectedGender = 'male';
-    avatarUrl = profileModel?.data?.avatar;
-    coverUrl = profileModel?.data?.bgCover;
+
     phoneController.text = profileModel?.data?.phone ?? '';
     nameController.text = profileModel?.data?.name ?? '';
     emailController.text = profileModel?.data?.email ?? "";
@@ -115,16 +114,17 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   DefaultMainModel? defaultMainModel;
 
-  Future<void> updateProfileData({required BuildContext context}) async {
+  Future<void> updateProfileData({required BuildContext context,required String profileId}) async {
+    AppWidgets.create2ProgressDialog(context);
     emit(UpdateProfileStateLoading());
     try {
       final res = await api.updateProfileData(
         name: nameController.text,
         phone: phoneController.text,
-        userSubTypeId: selectedGenderId,
+        userSubTypeId: selectedUserTypeId ,
         email: emailController.text,
-        avatar: avatarImage ?? File(''),
-        byCaver: coverImage ?? File(''),
+        avatar: avatarImage != null && await avatarImage!.exists() ? avatarImage : null,
+        byCaver: coverImage != null && await coverImage!.exists() ? coverImage : null,
         lat: context
                 .read<LocationCubit>()
                 .selectedLocation
@@ -146,15 +146,27 @@ class ProfileCubit extends Cubit<ProfileState> {
       );
 
       res.fold(
-        (failure) {
-          emit(UpdateProfileStateError(failure.toString()));
+        (l) {
+          print("image${coverImage}");
+          print("image${avatarImage}");
+          errorGetBar(l.toString());
+          emit(UpdateProfileStateError(l.toString()));
+          Navigator.pop(context);
         },
-        (result) {
-          defaultMainModel = result;
-          emit(GetProfileStateLoaded());
+        (r) {
+          if(r.status == 200){
+            successGetBar(r.msg ?? 'Success');
+            defaultMainModel = r;
+            emit(UpdateProfileStateLoaded());
+            Navigator.pop(context);
+            getProfileData(id: profileId);
+          }
+
         },
       );
     } catch (e) {
+      print("image${coverImage}");
+      print("image${avatarImage}");
       emit(UpdateProfileStateError(e.toString()));
     }
   }

@@ -25,7 +25,7 @@ class UnderCustomRow extends StatelessWidget {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        Routes.profileScreen,
+                        Routes.profileRoute,
                         arguments: DeepLinkDataModel(
                             id: userTalent?.id.toString() ?? '',
                             isDeepLink: false),

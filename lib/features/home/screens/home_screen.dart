@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.pushNamed(
                                     context, Routes.topTalentsRoute);
                               },
-                              text: 'top_talents',
+                              text: 'top_talent'.tr(),
                             ),
                             8.h.verticalSpace,
                             SizedBox(

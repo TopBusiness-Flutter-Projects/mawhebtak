@@ -62,7 +62,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                               onTap: () {
                                 Navigator.pushNamed(
                                   context,
-                                  Routes.profileScreen,
+                                  Routes.profileRoute,
                                   arguments: DeepLinkDataModel(
                                       id: widget.announcement?.user?.id
                                               .toString() ??
@@ -80,7 +80,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                               onTap: () {
                                 Navigator.pushNamed(
                                   context,
-                                  Routes.profileScreen,
+                                  Routes.profileRoute,
                                   arguments: DeepLinkDataModel(
                                       id: widget.announcement?.user?.id
                                               .toString() ??
