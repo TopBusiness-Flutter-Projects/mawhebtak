@@ -272,5 +272,6 @@
   "reply": "رد",
   "replies": "الردود",
   "repling_to": "ردًا على",
-  "user_type": "تخصص المستخدم"
+  "user_type": "تخصص المستخدم",
+  "user_sub_type": "تخصص المستخدم"
 }

@@ -27,7 +27,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    context.read<ProfileCubit>().getProfileData(id: widget.model.id);
+    context.read<ProfileCubit>().getProfileData(id: widget.model.id,context: context);
     context.read<ProfileCubit>().loadUserFromPreferences();
     context.read<ProfileCubit>().profileModel == null;
     super.initState();
@@ -118,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               if (cubit.user?.data?.id.toString() == widget.model.id)
                               GestureDetector(
                                 onTap: () {
-                                  cubit.saveData();
+                                  cubit.saveData(context);
                                   Navigator.pushNamed(
                                       context, Routes.editProfileRoute,
                                       arguments: widget.model);

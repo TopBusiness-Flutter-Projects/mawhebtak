@@ -1,9 +1,10 @@
-
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
 import 'package:mawhebtak/features/auth/new_account/data/repos/new_account.repo.dart';
+import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../../config/routes/app_routes.dart';
+import '../../../profile/cubit/profile_cubit.dart';
 import '../../verification/cubit/verification_cubit.dart';
 import '../data/model/user_types.dart';
 
@@ -15,15 +16,61 @@ class NewAccountCubit extends Cubit<NewAccountState> {
   TextEditingController emailAddressController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   MainRegisterUserTypesData? selectedUserType;
+  MainRegisterUserTypesData? selectedUserSubType;
   MainRegisterUserTypes? userTypeList;
-  getDataUserType() async {
+  MainRegisterUserTypes? userSubTypeList;
+
+  getDataUserType(BuildContext context,
+      {MainRegisterUserTypesData? userTypeModel, bool? isEditProfile}) async {
     emit(LoadingGetUserTypesState());
     var response = await api.getDataUserType();
     response.fold((l) {
       emit(ErrorGetUserTypesState('error_msg'.tr()));
     }, (r) {
       userTypeList = r;
+      selectedUserSubType = null;
+      if (userTypeModel != null) {
+        for (int i = 0; i < (userTypeList?.data?.length ?? 0); i++) {
+          if (userTypeList?.data?[i].id?.toString() ==
+              userTypeModel?.id?.toString()) {
+            selectedUserType = userTypeList?.data?[i];
+          }
+          // else{
+          //   selectedUserType = null;
+          // }
+        }
+      }
+
+      if (isEditProfile == true) {
+        getDataUserSubType(
+            userTypeId: selectedUserType?.id?.toString() ?? '',
+            currentSubCategory:
+                context.read<ProfileCubit>().profileModel?.data?.userSubType);
+      }
       emit(LoadedGetUserTypesState(r));
+    });
+  }
+
+  getDataUserSubType({
+    required String userTypeId,
+    MainRegisterUserTypesData? currentSubCategory,
+  }) async {
+    emit(LoadingGetUserSubTypesState());
+    var response = await api.getDataUserSubType(userTypeId: userTypeId);
+    response.fold((l) {
+      emit(ErrorGetUserSubTypesState('error_msg'.tr()));
+    }, (r) {
+      userSubTypeList = r;
+
+      if (currentSubCategory != null) {
+        for (int i = 0; i < (userSubTypeList?.data?.length ?? 0); i++) {
+          if (userSubTypeList?.data?[i].id?.toString() ==
+              currentSubCategory?.id?.toString()) {
+            selectedUserSubType = userSubTypeList?.data?[i];
+          }
+        }
+      }
+      emit(LoadedGetUserSubTypesState(r));
     });
   }
 
@@ -56,5 +103,4 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       }
     });
   }
-
 }

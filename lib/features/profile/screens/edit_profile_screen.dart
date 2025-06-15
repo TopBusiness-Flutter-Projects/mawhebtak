@@ -17,6 +17,7 @@ import '../../events/screens/details_event_screen.dart';
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key, required this.model});
   final DeepLinkDataModel model;
+
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
@@ -24,11 +25,12 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
-    context.read<ProfileCubit>().getProfileData(id: widget.model.id);
     context.read<ProfileCubit>().loadUserFromPreferences();
-    context.read<NewAccountCubit>().getDataUserType();
-    context.read<NewAccountCubit>().selectedUserType= null;
-    context.read<ProfileCubit>().profileModel == null;
+    context.read<NewAccountCubit>().getDataUserType(context,
+        isEditProfile: true,
+        userTypeModel:
+            context.read<ProfileCubit>().profileModel?.data?.userType);
+
     super.initState();
   }
 
@@ -37,6 +39,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (BuildContext context, state) {
         var cubit = context.read<ProfileCubit>();
+
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light.copyWith(
             statusBarColor: Colors.transparent,
@@ -190,7 +193,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       },
                                       controller: cubit.phoneController,
                                       hintTextSize: 16.sp,
-
                                     ),
                                     Text(
                                       "age".tr(),
@@ -228,32 +230,79 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         cubit.selectedGender = value;
                                       },
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 10.h, bottom: 10.h),
-                                      child: Text(
-                                        "user_type".tr(),
-                                        style: TextStyle(
-                                            color: AppColors.darkGray,
-                                            fontSize: 16.sp),
-                                      ),
-                                    ),
-                                    BlocBuilder<NewAccountCubit,NewAccountState>(
-                                      builder: (context,state) {
-                                        var newAccountCubit = context.read<NewAccountCubit>();
-                                        return GeneralCustomDropdownButtonFormField(
-                                          itemBuilder: (item) {
-                                            return item.name ?? '';
-                                          },
-                                          value: newAccountCubit.selectedUserType,
-                                          items: newAccountCubit.userTypeList?.data ?? [],
-                                          onChanged: (value) {
-                                            newAccountCubit.selectedUserType = value;
-                                            cubit.selectedUserTypeId = value.id.toString();
-                                          },
-                                        );
-                                      }
-                                    ),
+                                    BlocBuilder<NewAccountCubit,
+                                            NewAccountState>(
+                                        builder: (context, state) {
+                                      var newAccountCubit =
+                                          context.read<NewAccountCubit>();
+                                      return Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 10.h, bottom: 10.h),
+                                            child: Text(
+                                              "user_type".tr(),
+                                              style: TextStyle(
+                                                  color: AppColors.darkGray,
+                                                  fontSize: 16.sp),
+                                            ),
+                                          ),
+                                          GeneralCustomDropdownButtonFormField(
+                                            itemBuilder: (item) =>
+                                                item.name ?? '',
+                                            value: newAccountCubit
+                                                .selectedUserType,
+                                            items: newAccountCubit
+                                                    .userTypeList?.data ??
+                                                [],
+                                            onChanged: (value) {
+                                              newAccountCubit.selectedUserType =
+                                                  value;
+
+                                              newAccountCubit.getDataUserSubType(
+                                                  userTypeId: newAccountCubit
+                                                          .selectedUserType?.id
+                                                          .toString() ??
+                                                      '');
+                                            },
+                                          ),
+                                          if ((newAccountCubit.userSubTypeList
+                                                  ?.data?.isNotEmpty ??
+                                              false))
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: 10.h, bottom: 10.h),
+                                              child: Text(
+                                                "user_sub_type".tr(),
+                                                style: TextStyle(
+                                                    color: AppColors.darkGray,
+                                                    fontSize: 16.sp),
+                                              ),
+                                            ),
+                                          if ((newAccountCubit.userSubTypeList
+                                                  ?.data?.isNotEmpty ??
+                                              false))
+                                            GeneralCustomDropdownButtonFormField(
+                                              itemBuilder: (item) =>
+                                                  item.name ?? '',
+                                              value: newAccountCubit
+                                                  .selectedUserSubType,
+                                              items: newAccountCubit
+                                                      .userSubTypeList?.data ??
+                                                  [],
+                                              onChanged: (value) {
+                                                newAccountCubit
+                                                        .selectedUserSubType =
+                                                    value;
+                                              },
+                                            ),
+                                        ],
+                                      );
+                                    }),
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: 10.h, bottom: 10.h),
@@ -333,8 +382,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 bottom: 10.h),
                             child: CustomButton(
                               title: "save".tr(),
-                              onTap: ()  {
-                                cubit.updateProfileData(context: context,profileId: widget.model.id);
+                              onTap: () {
+                                cubit.updateProfileData(
+                                    context: context,
+                                    profileId: widget.model.id);
                               },
                             ),
                           ),

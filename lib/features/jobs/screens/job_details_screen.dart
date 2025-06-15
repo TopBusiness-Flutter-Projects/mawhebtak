@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
+import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_state.dart';
 
@@ -224,41 +225,51 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
             ),
           ),
           10.h.verticalSpace,
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              (cubit.userJobDetailsModel?.data?.poster?.image == null)
-                  ? CircleAvatar(
-                      radius: 25.r,
-                      backgroundImage:
-                          const AssetImage(ImageAssets.profileImage))
-                  : CircleAvatar(
-                      radius: 25.r,
-                      backgroundImage: NetworkImage(
-                        cubit.userJobDetailsModel?.data?.poster?.image ?? "",
-                      )),
-              10.w.horizontalSpace,
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      cubit.userJobDetailsModel?.data?.poster?.name ?? "",
-                      style: getMediumStyle(fontSize: 14.sp),
-                    ),
-                    5.h.verticalSpace,
-                    Text(
-                      cubit.userJobDetailsModel?.data?.poster?.headline ?? "-",
-                      maxLines: 1,
-                      style: getMediumStyle(
-                        fontSize: 13.sp,
-                        color: AppColors.grayDate,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                  context,
+                  Routes.profileRoute,
+                  arguments: DeepLinkDataModel(
+                  id: widget.userJopId,
+              isDeepLink: false));
+            },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                (cubit.userJobDetailsModel?.data?.poster?.image == null)
+                    ? CircleAvatar(
+                        radius: 25.r,
+                        backgroundImage:
+                            const AssetImage(ImageAssets.profileImage))
+                    : CircleAvatar(
+                        radius: 25.r,
+                        backgroundImage: NetworkImage(
+                          cubit.userJobDetailsModel?.data?.poster?.image ?? "",
+                        )),
+                10.w.horizontalSpace,
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        cubit.userJobDetailsModel?.data?.poster?.name ?? "",
+                        style: getMediumStyle(fontSize: 14.sp),
                       ),
-                    ),
-                  ],
+                      5.h.verticalSpace,
+                      Text(
+                        cubit.userJobDetailsModel?.data?.poster?.headline ?? "-",
+                        maxLines: 1,
+                        style: getMediumStyle(
+                          fontSize: 13.sp,
+                          color: AppColors.grayDate,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

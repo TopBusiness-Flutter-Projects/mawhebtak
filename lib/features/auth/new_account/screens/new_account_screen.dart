@@ -22,7 +22,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
 
     final cubit = BlocProvider.of<NewAccountCubit>(context);
 
-    cubit.getDataUserType(); // Only fetch if not already loaded
+    cubit.getDataUserType(context); // Only fetch if not already loaded
   }
 
   bool isLoaded = true;

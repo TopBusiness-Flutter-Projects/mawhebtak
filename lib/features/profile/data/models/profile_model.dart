@@ -1,4 +1,5 @@
 
+import 'package:mawhebtak/features/auth/new_account/data/model/user_types.dart';
 import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 
@@ -31,7 +32,8 @@ class Data {
   String? headline;
   String? avatar;
   String? bgCover;
-  String? userType;
+  MainRegisterUserTypesData? userType;
+  MainRegisterUserTypesData? userSubType;
   String? followersCount;
   String? followingCount;
   String? postsCount;
@@ -52,6 +54,7 @@ class Data {
     this.avatar,
     this.bgCover,
     this.userType,
+    this.userSubType,
     this.phone,
     this.followersCount,
     this.followingCount,
@@ -73,7 +76,8 @@ class Data {
     avatar: json["avatar"],
     phone: json["phone"],
     bgCover: json["bg_cover"],
-    userType: json["user_type"],
+    userType: json["user_type"] == null ? null : MainRegisterUserTypesData.fromJson(json["user_type"]),
+    userSubType: json["user_sub_type"] == null ? null : MainRegisterUserTypesData.fromJson(json["user_sub_type"]),
     followersCount: json["followers_count"],
     followingCount: json["following_count"],
     postsCount: json["posts_count"],
@@ -93,7 +97,8 @@ class Data {
     "headline": headline,
     "avatar": avatar,
     "bg_cover": bgCover,
-    "user_type": userType,
+    "user_type": userType?.toJson(),
+    "user_sub_type": userSubType?.toJson(),
     "followers_count": followersCount,
     "following_count": followingCount,
     "posts_count": postsCount,

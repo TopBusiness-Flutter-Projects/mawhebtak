@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/see_more_text.dart';
+import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
@@ -53,24 +55,34 @@ class _TimeLineListState extends State<TimeLineList> {
                     children: [
                       Column(
                         children: [
-                          SizedBox(
-                            height: 40.h,
-                            width: 40.w,
-                            child: widget.feeds?.user?.image == null
-                                ? Image.asset(ImageAssets.profileImage)
-                                : ClipOval(
-                                    child: CachedNetworkImage(
-                                      imageUrl: widget.feeds?.user?.image ?? '',
-                                      fit: BoxFit.cover,
-                                      placeholder: (context, url) =>
-                                          const Center(
-                                        child: CircularProgressIndicator(
-                                            strokeWidth: 2),
+                          GestureDetector(
+                            onTap:(){
+                              Navigator.pushNamed(
+                                  context,
+                                  Routes.profileRoute,
+                                  arguments: DeepLinkDataModel(
+                                  id: widget.feedsCubit?.user?.data?.id.toString() ??"",
+                              isDeepLink: false));
+                            },
+                            child: SizedBox(
+                              height: 40.h,
+                              width: 40.w,
+                              child: widget.feeds?.user?.image == null
+                                  ? Image.asset(ImageAssets.profileImage)
+                                  : ClipOval(
+                                      child: CachedNetworkImage(
+                                        imageUrl: widget.feeds?.user?.image ?? '',
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                          child: CircularProgressIndicator(
+                                              strokeWidth: 2),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(ImageAssets.profileImage),
                                       ),
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset(ImageAssets.profileImage),
                                     ),
-                                  ),
+                            ),
                           ),
                         ],
                       ),

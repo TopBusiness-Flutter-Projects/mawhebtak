@@ -7,6 +7,7 @@ import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
+import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../core/exports.dart';
@@ -21,7 +22,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   bool isFollowing = true;
   List<String>? gender = ['male', 'female'];
   String? selectedGender;
-  String? selectedUserTypeId;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController headlineController = TextEditingController();
@@ -30,6 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController ageController = TextEditingController();
   TextEditingController syndicateController = TextEditingController();
   TextEditingController bioController = TextEditingController();
+
   changeSelected(int index) {
     selectedIndex = index;
     emit(ChangeIndexState());
@@ -37,7 +39,6 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   File? avatarImage;
   File? coverImage;
-
 
   Future<void> pickSingleImage({required String type}) async {
     try {
@@ -70,8 +71,12 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  saveData() {
+  saveData(BuildContext context) {
     selectedGender = 'male';
+    context.read<NewAccountCubit>().selectedUserType =
+        profileModel?.data?.userType;
+    context.read<NewAccountCubit>().selectedUserSubType =
+        profileModel?.data?.userSubType;
 
     phoneController.text = profileModel?.data?.phone ?? '';
     nameController.text = profileModel?.data?.name ?? '';
@@ -96,6 +101,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileModel? profileModel;
   getProfileData({
+    required BuildContext context,
     required String id,
   }) async {
     emit(GetProfileStateLoading());
@@ -105,6 +111,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(GetProfileStateError(l.toString()));
       }, (r) {
         profileModel = r;
+        saveData(context);
+
         emit(GetProfileStateLoaded());
       });
     } catch (e) {
@@ -112,19 +120,23 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  DefaultMainModel? defaultMainModel;
-
-  Future<void> updateProfileData({required BuildContext context,required String profileId}) async {
+  Future<void> updateProfileData(
+      {required BuildContext context, required String profileId}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(UpdateProfileStateLoading());
     try {
       final res = await api.updateProfileData(
         name: nameController.text,
         phone: phoneController.text,
-        userSubTypeId: selectedUserTypeId ,
+        userSubTypeId:
+            context.read<NewAccountCubit>().selectedUserSubType?.id.toString(),
         email: emailController.text,
-        avatar: avatarImage != null && await avatarImage!.exists() ? avatarImage : null,
-        byCaver: coverImage != null && await coverImage!.exists() ? coverImage : null,
+        avatar: avatarImage != null && await avatarImage!.exists()
+            ? avatarImage
+            : null,
+        byCaver: coverImage != null && await coverImage!.exists()
+            ? coverImage
+            : null,
         lat: context
                 .read<LocationCubit>()
                 .selectedLocation
@@ -147,26 +159,21 @@ class ProfileCubit extends Cubit<ProfileState> {
 
       res.fold(
         (l) {
-          print("image${coverImage}");
-          print("image${avatarImage}");
           errorGetBar(l.toString());
           emit(UpdateProfileStateError(l.toString()));
           Navigator.pop(context);
         },
         (r) {
-          if(r.status == 200){
+          if (r.status == 200) {
             successGetBar(r.msg ?? 'Success');
-            defaultMainModel = r;
             emit(UpdateProfileStateLoaded());
             Navigator.pop(context);
-            getProfileData(id: profileId);
+            Navigator.pop(context);
+            getProfileData(id: profileId, context: context);
           }
-
         },
       );
     } catch (e) {
-      print("image${coverImage}");
-      print("image${avatarImage}");
       emit(UpdateProfileStateError(e.toString()));
     }
   }
