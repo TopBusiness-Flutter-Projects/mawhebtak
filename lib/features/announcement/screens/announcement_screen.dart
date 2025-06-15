@@ -76,7 +76,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                           child: InkWell(
                             onTap: () {
                               Navigator.pushNamed(context,
-                                  Routes.detailsOfMainCategoryFromGigsRoute,
+                                  Routes.detailsOfMainCategoryAnnouncementRoute,
                                   arguments: announcementsCategoryData
                                       ?.data?[index].id
                                       .toString());
