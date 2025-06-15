@@ -45,7 +45,7 @@ successGetBar(String? message) {
       ),
     ),
     icon: const Icon(CupertinoIcons.checkmark_seal, color: Colors.white),
-    backgroundColor: AppColors.success,
+    backgroundColor: AppColors.secondPrimary,
     barBlur: 5.0,
     borderRadius: 12.0,
     duration: const Duration(milliseconds: 2500),

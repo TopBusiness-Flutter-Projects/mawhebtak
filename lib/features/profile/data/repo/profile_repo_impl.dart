@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
@@ -44,8 +43,7 @@ class ProfileRepo {
         body: {
           'name': name,
           'phone': phone,
-          if(userSubTypeId!=null)
-          'user_sub_type_id': userSubTypeId,
+          if (userSubTypeId != null) 'user_sub_type_id': userSubTypeId,
           if (avatar != null)
             'avatar': MultipartFile.fromFileSync(avatar.path,
                 filename: avatar.path.split('/').last),
@@ -66,7 +64,6 @@ class ProfileRepo {
 
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
-
       return Left(ServerFailure());
     } catch (e) {
       return Left(ServerFailure());
