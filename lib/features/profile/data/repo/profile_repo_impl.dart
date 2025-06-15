@@ -44,6 +44,7 @@ class ProfileRepo {
         body: {
           'name': name,
           'phone': phone,
+          if(userSubTypeId!=null)
           'user_sub_type_id': userSubTypeId,
           if (avatar != null)
             'avatar': MultipartFile.fromFileSync(avatar.path,
@@ -65,6 +66,7 @@ class ProfileRepo {
 
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
+
       return Left(ServerFailure());
     } catch (e) {
       return Left(ServerFailure());

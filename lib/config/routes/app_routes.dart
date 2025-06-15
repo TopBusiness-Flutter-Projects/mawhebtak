@@ -76,7 +76,7 @@ class Routes {
   static const String notificationRoute = '/notificationScreen';
   static const String secondDetailsSecond = '/secondDetailsSecond';
   static const String applyEvent = '/applyEvent';
-  static const String profileScreen = '/profileScreen';
+  static const String profileRoute = '/profileRoute';
   static const String followersScreen = '/followersScreen';
   static const String writePostScreen = '/writePostScreen';
   static const String newGigsRoute = '/newGigsRoute';
@@ -205,7 +205,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
         );
-      case Routes.profileScreen:
+      case Routes.profileRoute:
         DeepLinkDataModel? model = settings.arguments as DeepLinkDataModel;
         return PageTransition(
           child: ProfileScreen(

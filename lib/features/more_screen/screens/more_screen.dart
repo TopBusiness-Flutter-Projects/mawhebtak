@@ -57,7 +57,7 @@ class MoreScreen extends StatelessWidget {
                             onTap: () {
                               Navigator.pushNamed(
                                 context,
-                                Routes.profileScreen,
+                                Routes.profileRoute,
                                 arguments: DeepLinkDataModel(
                                     id: context
                                             .read<MainCubit>()

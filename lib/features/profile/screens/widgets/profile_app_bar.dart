@@ -35,9 +35,7 @@ class ProfileAppBar extends StatelessWidget {
                       fit: BoxFit.cover,
                     )
                   : (byCaver != null)
-                      ? CircleAvatar(
-                          backgroundImage: NetworkImage(byCaver),
-                        )
+                      ?Image.network(byCaver,fit: BoxFit.cover,)
                       : Image.asset(ImageAssets.profileImage)),
 
           // AppBar
@@ -101,26 +99,22 @@ class ProfileAppBar extends StatelessWidget {
                 ),
 
                 if (isEdit == true)
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        context
-                            .read<ProfileCubit>()
-                            .pickSingleImage(type: 'avatar');
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(4.sp),
-                        decoration: BoxDecoration(
-                          color: AppColors.gray,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 16.sp,
-                        ),
+                  GestureDetector(
+                    onTap: () {
+                      context
+                          .read<ProfileCubit>()
+                          .pickSingleImage(type: 'avatar');
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(4.sp),
+                      decoration: BoxDecoration(
+                        color: AppColors.gray,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 16.sp,
                       ),
                     ),
                   ),
