@@ -12,8 +12,8 @@ class ImageAssets {
   static const String onboardingBackground =
       '$imagePath/onboarding_background.png';
   static const String pinCodeImage = '$imagePath/pin_code_image.png';
-  static const String logo2Image = '$imagePath/app_icon.png';
-  static const String logo3Image = '$imagePath/app_icon.png';
+  // static const String logo2Image = '$imagePath/app_icon.png';
+  // static const String logo3Image = '$imagePath/app_icon.png';
   static const String logoImage = '$imagePath/1.png';
   static const String tasweerPhoto = '$imagePath/tasweer_image.png';
   static const String banner = '$imagePath/banner.png';

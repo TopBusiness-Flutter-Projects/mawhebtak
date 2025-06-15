@@ -45,9 +45,8 @@ class ChatRepo {
       {String? receiverId}) async {
     try {
       final useModel = await Preferences.instance.getUserModel();
-      final response = await dio.post(EndPoints.createChatRoomUrl,
-          formDataIsEnabled: true,
-          body: {
+      final response = await dio.get(EndPoints.createChatRoomUrl,
+          queryParameters: {
             'sender_id': useModel.data?.id?.toString(),
             'receiver_id': receiverId
           });

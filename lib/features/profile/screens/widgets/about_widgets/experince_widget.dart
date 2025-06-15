@@ -3,8 +3,7 @@ import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../../../core/exports.dart';
 
 class ExperinceWidget extends StatefulWidget {
-  
-   ExperinceWidget({super.key, this.experience});
+  ExperinceWidget({super.key, this.experience});
 
   Experience? experience;
 
@@ -55,7 +54,7 @@ class _ExperinceWidgetState extends State<ExperinceWidget> {
                             fontSize: 14.sp,
                           ),
                         ),
-                        if ((widget.experience?.description!.length??0) >
+                        if ((widget.experience?.description!.length ?? 0) >
                             100) // adjust based on your needs
                           TextButton(
                             onPressed: () {
