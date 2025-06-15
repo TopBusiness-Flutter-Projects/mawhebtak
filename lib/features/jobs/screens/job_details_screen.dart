@@ -8,6 +8,7 @@ import 'package:mawhebtak/features/jobs/cubit/jobs_state.dart';
 
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
+import '../../chat/screens/message_screen.dart';
 import '../../events/screens/widgets/custom_media_view.dart';
 
 class JobDetailsScreen extends StatefulWidget {
@@ -80,7 +81,15 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         if (user.data?.token == null) {
                           checkLogin(context);
                         } else {
-                          Navigator.pushNamed(context, Routes.chatRoute);
+                          Navigator.pushNamed(context, Routes.messageRoute,
+                              arguments: MainUserAndRoomChatModel(
+                                receiverId: jobDetailsCubit
+                                    .userJobDetailsModel?.data?.poster?.id
+                                    ?.toString(),
+                                chatName: jobDetailsCubit
+                                    .userJobDetailsModel?.data?.poster?.name
+                                    ?.toString(),
+                              ));
                         }
                       },
                       title: "apply_for_this_job".tr()),

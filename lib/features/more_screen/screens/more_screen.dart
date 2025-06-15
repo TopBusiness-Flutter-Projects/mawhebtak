@@ -7,6 +7,7 @@ import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:mawhebtak/features/more_screen/screens/widget/custom_logout_dialog.dart';
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
+import '../../../core/utils/check_login.dart';
 import '../../events/screens/details_event_screen.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -58,7 +59,13 @@ class MoreScreen extends StatelessWidget {
                                 context,
                                 Routes.profileRoute,
                                 arguments: DeepLinkDataModel(
-                                    id: context.read<MainCubit>().loginModel?.data?.id?.toString() ?? "",
+                                    id: context
+                                            .read<MainCubit>()
+                                            .loginModel
+                                            ?.data
+                                            ?.id
+                                            ?.toString() ??
+                                        "",
                                     isDeepLink: false),
                               );
                             }),
@@ -66,6 +73,19 @@ class MoreScreen extends StatelessWidget {
                             text: "my_favorites".tr(),
                             imageUrl: AppIcons.myFavoriteIcon,
                             onTap: () {}),
+                        moreContainer(
+                            text: "chats".tr(),
+                            imageUrl: AppIcons.chatIcon,
+                            onTap: () async {
+                              final user =
+                                  await Preferences.instance.getUserModel();
+                              if (user.data?.token == null) {
+                                checkLogin(context);
+                              } else {
+                                Navigator.pushNamed(
+                                    context, Routes.roomsScreen);
+                              }
+                            }),
                         moreContainer(
                             text: "wallet".tr(),
                             imageUrl: AppIcons.walletIcon,

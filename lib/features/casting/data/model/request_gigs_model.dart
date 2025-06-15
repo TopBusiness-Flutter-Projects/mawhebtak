@@ -1,6 +1,8 @@
 import 'package:mawhebtak/core/models/pagenation_model.dart';
 import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 
+import '../../../home/data/models/home_model.dart';
+
 class RequestGigsModel {
   List<EventAndGigsModel>? data;
   PaginationModel? links;
@@ -55,6 +57,7 @@ class EventAndGigsModel {
   String? isRequested;
   bool? isMine;
   List<GigsRequestList>? gigsRequests;
+  TopTalent? user;
 
   EventAndGigsModel({
     this.id,
@@ -63,6 +66,7 @@ class EventAndGigsModel {
     this.title,
     this.location,
     this.description,
+    this.user,
     this.price,
     this.from,
     this.isRequested,
@@ -72,20 +76,23 @@ class EventAndGigsModel {
 
   factory EventAndGigsModel.fromJson(Map<String, dynamic> json) =>
       EventAndGigsModel(
-          id: json["id"],
-          image: json["image"],
-          title: json["title"],
-          media: json["media"] == null
-              ? []
-              : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
-          description: json["description"],
-          location: json["location"],
-          price: json["price"],
-          from: json["from"],
+        id: json["id"],
+        image: json["image"],
+        title: json["title"],
+        user: json["user"] == null ? null : TopTalent.fromJson(json["user"]),
+        media: json["media"] == null
+            ? []
+            : List<Media>.from(json["media"]!.map((x) => Media.fromJson(x))),
+        description: json["description"],
+        location: json["location"],
+        price: json["price"],
+        from: json["from"],
         isRequested: json["is_requested"],
         isMine: json["is_mine"],
-        gigsRequests: json["gigs_requests"] == null ? [] : List<GigsRequestList>.from(json["gigs_requests"]!.map((x) => GigsRequestList.fromJson(x))),
-
+        gigsRequests: json["gigs_requests"] == null
+            ? []
+            : List<GigsRequestList>.from(
+                json["gigs_requests"]!.map((x) => GigsRequestList.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -97,9 +104,11 @@ class EventAndGigsModel {
             : List<dynamic>.from(media!.map((x) => x.toJson())),
         "description": description,
         "price": price,
+        "user": user?.toJson(),
         "from": from
       };
 }
+
 class GigsRequestList {
   int? id;
   User? user;
@@ -113,19 +122,22 @@ class GigsRequestList {
     this.createdAt,
   });
 
-  factory GigsRequestList.fromJson(Map<String, dynamic> json) => GigsRequestList(
-    id: json["id"],
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
-    status: json["status"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-  );
+  factory GigsRequestList.fromJson(Map<String, dynamic> json) =>
+      GigsRequestList(
+        id: json["id"],
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+        status: json["status"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "user": user?.toJson(),
-    "status": status,
-    "created_at": createdAt?.toIso8601String(),
-  };
+        "id": id,
+        "user": user?.toJson(),
+        "status": status,
+        "created_at": createdAt?.toIso8601String(),
+      };
 }
 
 class User {
@@ -144,18 +156,18 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    name: json["name"],
-    image: json["image"],
-    headline: json["headline"],
-    followersCount: json["followers_count"],
-  );
+        id: json["id"],
+        name: json["name"],
+        image: json["image"],
+        headline: json["headline"],
+        followersCount: json["followers_count"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "image": image,
-    "headline": headline,
-    "followers_count": followersCount,
-  };
+        "id": id,
+        "name": name,
+        "image": image,
+        "headline": headline,
+        "followers_count": followersCount,
+      };
 }

@@ -12,8 +12,8 @@ class ImageAssets {
   static const String onboardingBackground =
       '$imagePath/onboarding_background.png';
   static const String pinCodeImage = '$imagePath/pin_code_image.png';
-  static const String logo2Image = '$imagePath/app_icon.png';
-  static const String logo3Image = '$imagePath/app_icon.png';
+  // static const String logo2Image = '$imagePath/app_icon.png';
+  // static const String logo3Image = '$imagePath/app_icon.png';
   static const String logoImage = '$imagePath/1.png';
   static const String tasweerPhoto = '$imagePath/tasweer_image.png';
   static const String banner = '$imagePath/banner.png';
@@ -42,6 +42,7 @@ class ImageAssets {
 
 class AppIcons {
   static const String phoneIcon = '$iconsPath/phone.svg';
+  static const String sendIcon = '$iconsPath/send.svg';
   static const String homeIcon = '$iconsPath/home.svg';
   static const String feeds = '$iconsPath/feeds.svg';
   static const String casting = '$iconsPath/casting.svg';
@@ -99,4 +100,5 @@ class AppIcons {
   static const String calendarBold = '$iconsPath/solar_calendar-bold.svg';
   static const String jopIcon = '$iconsPath/jop.svg';
   static const String assistantIcon = '$iconsPath/assistant.svg';
+  static const String chatIcon = '$iconsPath/chhat_icon2.svg';
 }

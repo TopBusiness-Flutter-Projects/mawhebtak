@@ -30,6 +30,7 @@ import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/auth/splash/cubit/cubit.dart';
 import 'features/casting/cubit/casting_cubit.dart';
 import 'features/change_langauge/cubit/change_language_cubit.dart';
+import 'features/chat/cubit/chat_cubit.dart';
 import 'features/events/cubit/event_cubit.dart';
 import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
@@ -143,6 +144,7 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
               create: (_) => injector.serviceLocator<TopEventsCubit>()),
+          BlocProvider(create: (_) => injector.serviceLocator<ChatCubit>()),
         ],
         child: GetMaterialApp(
           supportedLocales: context.supportedLocales,

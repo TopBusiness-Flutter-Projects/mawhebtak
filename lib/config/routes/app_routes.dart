@@ -17,7 +17,6 @@ import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dar
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/screens/calender_screen.dart';
 import 'package:mawhebtak/features/casting/screens/casting_screen.dart';
-import 'package:mawhebtak/features/casting/screens/chat_screen.dart';
 import 'package:mawhebtak/features/casting/screens/details_of_main_category_gigs.dart';
 import 'package:mawhebtak/features/casting/screens/details_of_main_category_top_talents.dart';
 import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
@@ -41,6 +40,8 @@ import '../../features/announcement/screens/announcement_screen.dart';
 import '../../features/announcement/screens/details_announcement.dart';
 import '../../features/announcement/screens/new_announcement.dart';
 import '../../features/auth/login/screens/login_screen.dart';
+import '../../features/chat/screens/message_screen.dart';
+import '../../features/chat/screens/room_screen.dart';
 import '../../features/events/screens/apply_for_event.dart';
 import '../../features/events/screens/details_event_screen.dart';
 import '../../features/feeds/screens/details_of_post.dart';
@@ -98,7 +99,7 @@ class Routes {
   static const String topTalentsRoute = '/topTalentsRoute';
   static const String requestGigsRoute = '/requestGigsRoute';
   static const String allAnnouncementsRoute = '/allAnnouncementsRoute';
-  static const String chatRoute = '/chatRoute';
+
   static const String detailsOfMainCategoryFromGigsRoute =
       '/detailsOfMainCategoryFromGigs';
   static const String detailsOfMainCategoryAnnouncementRoute =
@@ -110,6 +111,8 @@ class Routes {
   static const String profiledeepLinkRoute = '/profiles';
   static const String eventsdeepLinkRoute = '/events';
   static const String editProfileRoute = '/editProfile';
+  static const String messageRoute = '/MessageScreen';
+  static const String roomsScreen = '/roomsScreen';
 }
 
 class AppRoutes {
@@ -469,13 +472,9 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
         );
-      case Routes.chatRoute:
-        return PageTransition(
-          child: const ChatScreen(),
-          type: PageTransitionType.fade,
-          alignment: Alignment.center,
-          duration: const Duration(milliseconds: 300),
-        );
+
+    
+    
       case Routes.addNewWorkRoute:
         return PageTransition(
           child: const AddNewWorkScreen(),
@@ -557,6 +556,23 @@ class AppRoutes {
           child: PostDetailsScreen(
               deepLinkDataModel:
                   DeepLinkDataModel(id: idLink, isDeepLink: true)),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
+      //! messageRoute
+      case Routes.messageRoute:
+        MainUserAndRoomChatModel args =
+            settings.arguments as MainUserAndRoomChatModel;
+        return PageTransition(
+          child: MessageScreen(model: args),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
+      case Routes.roomsScreen:
+        return PageTransition(
+          child: RoomScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),

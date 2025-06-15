@@ -126,8 +126,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: SvgPicture.asset(AppIcons.bioIcon),
+                              if (cubit.user?.data?.id.toString() ==
+                                  widget.model.id)
+                                GestureDetector(
+                                  onTap: () {
+                                    cubit.saveData();
+                                    Navigator.pushNamed(
+                                        context, Routes.editProfileRoute,
+                                        arguments: widget.model);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SvgPicture.asset(AppIcons.bioIcon),
+                                  ),
                                 ),
-                              ),
                             ],
                           ),
                           SizedBox(height: 20.h),
