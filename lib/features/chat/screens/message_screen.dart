@@ -17,8 +17,13 @@ import '../../auth/login/data/models/login_model.dart';
 class MainUserAndRoomChatModel {
   String? receiverId;
   String? chatId;
+  String? chatName;
 
-  MainUserAndRoomChatModel({this.receiverId, this.chatId});
+  MainUserAndRoomChatModel({
+    this.receiverId,
+    this.chatId,
+    this.chatName,
+  });
 }
 
 class MessageScreen extends StatefulWidget {
@@ -66,7 +71,9 @@ class _MessageScreenState extends State<MessageScreen> {
       builder: (context, state) {
         var cubit = context.read<ChatCubit>();
         return Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            title: Text(widget.model.chatName ?? ''),
+          ),
           body: (state is LoadingGetNewMessagteState)
               ? const Center(
                   child: CustomLoadingIndicator(),

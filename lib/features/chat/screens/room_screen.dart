@@ -100,7 +100,8 @@ class _RoomScreenState extends State<RoomScreen> {
                                     arguments: MainUserAndRoomChatModel(
                                         chatId: cubit.chatRoomModel
                                             ?.data?[index].roomToken
-                                            .toString()),
+                                            .toString(),
+                                        chatName: user?.name ?? ''),
                                   );
 
                                   //

@@ -187,6 +187,7 @@ class CastingCubit extends Cubit<CastingState> {
       {required String gigId,
       required BuildContext context,
       required String type,
+      required String chatName,
       required String userId,
       required int index}) async {
     AppWidgets.create2ProgressDialog(context);
@@ -219,9 +220,9 @@ class CastingCubit extends Cubit<CastingState> {
                 "getDetailsGigsModel?.data?.isRequested = pending    ${getDetailsGigsModel?.data?.isRequested}");
             print("model${getDetailsGigsModel?.data}");
             Navigator.pushNamed(context, Routes.messageRoute,
-                arguments: MainUserAndRoomChatModel(receiverId: userId
+                arguments: MainUserAndRoomChatModel(
+                    receiverId: userId, chatName: chatName
                     //!
-
                     ));
             emit(RequestGigStateLoaded());
           }

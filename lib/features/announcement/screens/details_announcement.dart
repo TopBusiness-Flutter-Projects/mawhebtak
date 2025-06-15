@@ -293,25 +293,32 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                           ""),
                                 ),
                                 SizedBox(height: getHeightSize(context) / 36),
-                                Padding(
-                                    padding: EdgeInsets.all(10.w),
-                                    child: CustomContainerButton(
-                                        onTap: () {
-                                          Navigator.pushNamed(
-                                              context, Routes.messageRoute,
-                                              arguments:
-                                                  MainUserAndRoomChatModel(
-                                                receiverId: cubit
-                                                    .announcementDetailsModel
-                                                    ?.data
-                                                    ?.user
-                                                    ?.id
-                                                    ?.toString(),
-                                              ));
-                                        },
-                                        color: AppColors.primary,
-                                        title: "request_this_product".tr(),
-                                        height: 50.h))
+                                if (cubit.announcementDetailsModel?.data
+                                        ?.isMine ==
+                                    false)
+                                  Padding(
+                                      padding: EdgeInsets.all(10.w),
+                                      child: CustomContainerButton(
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                                context, Routes.messageRoute,
+                                                arguments: MainUserAndRoomChatModel(
+                                                    receiverId: cubit
+                                                        .announcementDetailsModel
+                                                        ?.data
+                                                        ?.user
+                                                        ?.id
+                                                        ?.toString(),
+                                                    chatName: cubit
+                                                            .announcementDetailsModel
+                                                            ?.data
+                                                            ?.user
+                                                            ?.name ??
+                                                        ''));
+                                          },
+                                          color: AppColors.primary,
+                                          title: "request_this_product".tr(),
+                                          height: 50.h))
                               ]),
                         )
                       ]));

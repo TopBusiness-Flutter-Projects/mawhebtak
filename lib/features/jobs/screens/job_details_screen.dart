@@ -85,6 +85,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                 receiverId: jobDetailsCubit
                                     .userJobDetailsModel?.data?.poster?.id
                                     ?.toString(),
+                                chatName: jobDetailsCubit
+                                    .userJobDetailsModel?.data?.poster?.name
+                                    ?.toString(),
                               ));
                         }
                       },

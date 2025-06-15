@@ -97,12 +97,14 @@ class Announcement {
   String? location;
   String? price;
   bool? isFav;
+  bool? isMine;
   List<Media>? media;
 
   Announcement({
     this.id,
     this.user,
     this.image,
+    this.isMine,
     this.title,
     this.description,
     this.location,
@@ -116,6 +118,7 @@ class Announcement {
         user: json["user"] == null ? null : TopTalent.fromJson(json["user"]),
         image: json["image"],
         title: json["title"],
+        isMine: json["is_mine"],
         description: json["description"],
         location: json["location"],
         price: json["price"],
@@ -134,6 +137,7 @@ class Announcement {
         "location": location,
         "price": price,
         "is_fav": isFav,
+        "is_mine": isMine,
         "media": media == null
             ? []
             : List<dynamic>.from(media!.map((x) => x.toJson())),

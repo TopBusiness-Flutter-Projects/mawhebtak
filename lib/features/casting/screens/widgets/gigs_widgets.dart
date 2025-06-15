@@ -235,6 +235,9 @@ class _GigsWidgetState extends State<GigsWidget> {
                                       "null") {
                                 widget.castingCubit!.requestGigs(
                                   context: context,
+                                  chatName: widget.eventAndGigsModel?.user?.name
+                                          ?.toString() ??
+                                      '',
                                   index: widget.index!,
                                   userId: widget.eventAndGigsModel?.user?.id
                                           ?.toString() ??
