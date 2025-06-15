@@ -100,4 +100,5 @@ class AppIcons {
   static const String calendarBold = '$iconsPath/solar_calendar-bold.svg';
   static const String jopIcon = '$iconsPath/jop.svg';
   static const String assistantIcon = '$iconsPath/assistant.svg';
+  static const String chatIcon = '$iconsPath/chhat_icon2.svg';
 }

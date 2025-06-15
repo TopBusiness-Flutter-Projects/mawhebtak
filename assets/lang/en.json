@@ -270,6 +270,8 @@
   "replies": "replies",
   "free": "Free",
   "repling_to": "Replying to",
-    "write_msg":"write your message .."
+  "write_msg": "write your message ..",
+  "chats": "Chat",
+  "no_rooms":"You have no messages"
 
 }

@@ -8,8 +8,10 @@ import '../cubit/chat_cubit.dart';
 import '../cubit/chat_state.dart';
 import 'message_screen.dart';
 
+//! TEST CHAT  |
+//! SHOW CHAT IN SIDE BAR
 class RoomScreen extends StatefulWidget {
-  RoomScreen({super.key});
+  const RoomScreen({super.key});
 
   @override
   State<RoomScreen> createState() => _RoomScreenState();
@@ -36,7 +38,7 @@ class _RoomScreenState extends State<RoomScreen> {
         var cubit = context.read<ChatCubit>();
         return Scaffold(
           appBar: AppBar(
-            title: Text('rooms'.tr()),
+            title: Text('chats'.tr()),
           ),
           body: (state is LoadingCreateChatRoomState)
               ? const Center(child: RefreshProgressIndicator())
@@ -91,16 +93,14 @@ class _RoomScreenState extends State<RoomScreen> {
                                   ),
                                 ),
                                 onTap: () {
-                                  //
-
+                                  //!
                                   Navigator.pushNamed(
                                     context,
                                     Routes.messageRoute,
                                     arguments: MainUserAndRoomChatModel(
-                                      chatId: cubit
-                                          .chatRoomModel?.data?[index].roomToken
-                                          .toString(),
-                                    ),
+                                        chatId: cubit.chatRoomModel
+                                            ?.data?[index].roomToken
+                                            .toString()),
                                   );
 
                                   //
