@@ -43,4 +43,14 @@ class NewAccount {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, MainRegisterUserTypes>> getDataUserSubType({required String userTypeId}) async {
+    try {
+      var response = await dio.get(
+        EndPoints.getDataUserSubTypeUrl+userTypeId,
+      );
+      return Right(MainRegisterUserTypes.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

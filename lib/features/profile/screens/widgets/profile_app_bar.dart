@@ -89,35 +89,24 @@ class ProfileAppBar extends StatelessWidget {
             left: 16.w,
             child: Stack(
               children: [
-                CircleAvatar(
-                  radius: 35.r,
-                  backgroundImage: cubit.avatarImage != null
-                      ? FileImage(File(cubit.avatarImage!.path))
-                      : (avatar != null && avatar.isNotEmpty
-                          ? NetworkImage(avatar) as ImageProvider
-                          : const AssetImage(ImageAssets.profileImage)),
+                GestureDetector(
+                  onTap:(){
+                    if(isEdit == true)
+                    context
+                        .read<ProfileCubit>()
+                        .pickSingleImage(type: 'avatar');
+                  },
+
+                  child: CircleAvatar(
+                    radius: 35.r,
+                    backgroundImage: cubit.avatarImage != null
+                        ? FileImage(File(cubit.avatarImage!.path))
+                        : (avatar != null && avatar.isNotEmpty
+                            ? NetworkImage(avatar) as ImageProvider
+                            : const AssetImage(ImageAssets.profileImage)),
+                  ),
                 ),
 
-                if (isEdit == true)
-                  GestureDetector(
-                    onTap: () {
-                      context
-                          .read<ProfileCubit>()
-                          .pickSingleImage(type: 'avatar');
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(4.sp),
-                      decoration: BoxDecoration(
-                        color: AppColors.gray,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
-                        size: 16.sp,
-                      ),
-                    ),
-                  ),
               ],
             ),
           ),

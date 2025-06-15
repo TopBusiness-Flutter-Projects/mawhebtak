@@ -17,6 +17,17 @@ class ErrorGetUserTypesState extends NewAccountState {
 class LoadedGetUserTypesState extends NewAccountState {
   final MainRegisterUserTypes data;
   LoadedGetUserTypesState(this.data);
+}class LoadingGetUserSubTypesState extends NewAccountState {}
+
+class ErrorGetUserSubTypesState extends NewAccountState {
+  final String errorMessage;
+
+  ErrorGetUserSubTypesState(this.errorMessage);
+}
+
+class LoadedGetUserSubTypesState extends NewAccountState {
+  final MainRegisterUserTypes data;
+  LoadedGetUserSubTypesState(this.data);
 }
 
 class LoadingAddNewAccountState extends NewAccountState {}

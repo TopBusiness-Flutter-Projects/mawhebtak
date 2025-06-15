@@ -16,6 +16,8 @@ class EndPoints {
   static const String validateDataUrl = '${baseUrl}validate-data';
   static const String getDataUserTypeUrl =
       '${baseUrl}get-data?model=UserType&where[0]=status,1';
+  static const String getDataUserSubTypeUrl =
+      '${baseUrl}get-data?model=UserSubType&where[0]=user_type_id,';
   static const String forgetPasswordUrl = '${baseUrl}forget-password';
   static const String updatePasswordUrl = '${baseUrl}update-password';
   static const String loginWithSocial = '${baseUrl}login-with-social';

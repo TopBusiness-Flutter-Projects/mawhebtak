@@ -270,6 +270,7 @@
   "replies": "replies",
   "free": "Free",
   "repling_to": "Replying to",
+  "user_sub_type": "User Sub type"
   "write_msg": "write your message ..",
   "chats": "Chat",
   "no_rooms":"You have no messages"
