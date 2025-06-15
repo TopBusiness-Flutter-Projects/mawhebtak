@@ -110,10 +110,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       res.fold((l) {
         emit(GetProfileStateError(l.toString()));
       }, (r) {
+
         profileModel = r;
-        saveData(context);
 
         emit(GetProfileStateLoaded());
+
       });
     } catch (e) {
       emit(GetProfileStateError(e.toString()));
