@@ -473,8 +473,6 @@ class AppRoutes {
           duration: const Duration(milliseconds: 300),
         );
 
-    
-    
       case Routes.addNewWorkRoute:
         return PageTransition(
           child: const AddNewWorkScreen(),

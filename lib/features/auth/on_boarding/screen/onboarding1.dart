@@ -1,7 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../cubit/onboarding_cubit.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class OnBoarding1 extends StatelessWidget {
   const OnBoarding1({super.key});
@@ -75,7 +75,7 @@ class OnBoarding1 extends StatelessWidget {
                         Flexible(
                           child: Container(
                             padding: EdgeInsets.all(getSize(context) / 44),
-                            child: Text(
+                            child: AutoSizeText(
                               "onboarding1_description".tr(),
                               textAlign: TextAlign.center,
                               style: TextStyle(

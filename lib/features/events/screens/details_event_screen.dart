@@ -15,6 +15,7 @@ import '../../../core/notification_services/notification_service.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
 import '../../../core/widgets/custom_container_with_shadow.dart';
+import '../../chat/screens/message_screen.dart';
 import '../../home/screens/widgets/follow_button.dart';
 import '../cubit/event_cubit.dart';
 import 'widgets/event_details_body.dart';
@@ -257,28 +258,45 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                                 ],
                                                               ),
                                                             ),
-                                                            CustomContainerButton(
-                                                              title: "message",
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 18.sp,
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                      horizontal:
-                                                                          15.w,
-                                                                      vertical:
-                                                                          5.h),
-                                                              onTap: () {
-                                                                log('Message Button Nav To > Chat Screen');
-                                                              },
-                                                              borderColor:
-                                                                  AppColors
-                                                                      .primary,
-                                                              textColor:
-                                                                  AppColors
-                                                                      .primary,
-                                                            )
+                                                            if (cubit
+                                                                    .eventDetails
+                                                                    ?.data
+                                                                    ?.isMine ==
+                                                                false)
+                                                              CustomContainerButton(
+                                                                title:
+                                                                    "message",
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 18.sp,
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        horizontal: 15
+                                                                            .w,
+                                                                        vertical:
+                                                                            5.h),
+                                                                onTap: () {
+                                                                  Navigator.pushNamed(
+                                                                      context,
+                                                                      Routes
+                                                                          .messageRoute,
+                                                                      arguments: MainUserAndRoomChatModel(
+                                                                          receiverId: enrolledUser
+                                                                              ?.id
+                                                                              ?.toString(),
+                                                                          chatName:
+                                                                              enrolledUser?.name ?? ''));
+
+                                                                  log('Message Button Nav To > Chat Screen');
+                                                                },
+                                                                borderColor:
+                                                                    AppColors
+                                                                        .primary,
+                                                                textColor:
+                                                                    AppColors
+                                                                        .primary,
+                                                              )
                                                           ],
                                                         ),
                                                       ),

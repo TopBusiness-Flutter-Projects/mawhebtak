@@ -272,6 +272,15 @@ class _MessageScreenState extends State<MessageScreen> {
                           filled: true,
                           fillColor: AppColors.gray.withOpacity(0.1),
                         ),
+                        onSubmitted: (v) {
+                          log('0000 : ${widget.model.chatId ?? cubit.createChatRoomModel?.data?.roomToken ?? ''}');
+                          cubit.sendMessage(
+                            receiverId: widget.model.receiverId,
+                            chatId: widget.model.chatId ??
+                                cubit.createChatRoomModel?.data?.roomToken ??
+                                '',
+                          );
+                        },
                       ),
                     ),
                     IconButton(

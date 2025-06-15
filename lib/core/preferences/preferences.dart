@@ -18,8 +18,7 @@ class Preferences {
 
   Future<void> setFirstInstall() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('onBoarding', 'Done');
-    prefs.setString('onBoarding', 'Done');
+    await prefs.setString('onBoarding', 'Done');
   }
 
   Future<String?> getFirstInstall() async {

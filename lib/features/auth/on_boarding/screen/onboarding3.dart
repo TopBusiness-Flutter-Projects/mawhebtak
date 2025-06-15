@@ -1,9 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../cubit/onboarding_cubit.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class OnBoarding3 extends StatelessWidget {
   const OnBoarding3({super.key});
@@ -79,7 +79,7 @@ class OnBoarding3 extends StatelessWidget {
                         Flexible(
                           child: Container(
                             padding: EdgeInsets.all(getSize(context) / 44),
-                            child: Text(
+                            child: AutoSizeText(
                               textAlign: TextAlign.center,
                               "onboarding3_description".tr(),
                               style: TextStyle(
@@ -96,9 +96,9 @@ class OnBoarding3 extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(right: 100.w, left: 100.w),
                           child: GestureDetector(
-                            onTap: () {
-                              Preferences.instance.setFirstInstall();
+                            onTap: () async {
                               Navigator.pushNamed(context, Routes.loginRoute);
+                              await Preferences.instance.setFirstInstall();
                             },
                             child: Container(
                               padding: EdgeInsets.only(
