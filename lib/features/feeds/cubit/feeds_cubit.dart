@@ -17,7 +17,6 @@ import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart' as path;
-
 import '../../../config/routes/app_routes.dart';
 import '../data/models/post_details.dart';
 
@@ -242,38 +241,50 @@ class FeedsCubit extends Cubit<FeedsState> {
   }
 
   DefaultMainModel? defaultMainModel;
-  addReaction({required String postId, int? index, bool? isDetails,required BuildContext context}) async {
+  addReaction({
+    required String postId,
+    int? index,
+    bool? isDetails,
+    required BuildContext context,
+  }) async {
     try {
       final res = await api!.addReaction(postId: postId);
       res.fold((l) {
         emit(AddReactionStateError(l.toString()));
       }, (r) {
         if (isDetails == true) {
-          if (postDetails?.data?.isReacted == true) {
-            postDetails?.data?.reactionCount =
-                (postDetails?.data?.reactionCount ?? 1) - 1;
-          } else {
-            postDetails?.data?.reactionCount =
-                (postDetails?.data?.reactionCount ?? 0) + 1;
+          final data = postDetails?.data;
+          if (data != null) {
+            final isReacted = data.isReacted ?? false;
+            final count = data.reactionCount ?? 0;
+
+            data.reactionCount = isReacted ? count - 1 : count + 1;
+            data.isReacted = !isReacted;
           }
-          postDetails?.data?.isReacted =
-              !(postDetails?.data?.isReacted ?? false);
-        }
-        else {
-          if (posts?.data?[index!].isReacted == true || context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].isReacted == true) {
-            posts?.data![index!].reactionCount = (posts?.data?[index].reactionCount ?? 1) - 1;
-            context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].reactionCount = (context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].reactionCount ?? 1) - 1;
-          } else {
-            posts?.data![index!].reactionCount = (posts?.data?[index].reactionCount ?? 1) + 1;
-            context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].reactionCount =
-                (context.read<ProfileCubit>().profileModel?.data?.timeline?[index].reactionCount ?? 0) + 1;
+        } else {
+          if (index != null) {
+            final post = posts?.data?[index];
+            if (post != null) {
+              final isReacted = post.isReacted ?? false;
+              final count = post.reactionCount ?? 0;
+
+              post.reactionCount = isReacted ? count - 1 : count + 1;
+              post.isReacted = !isReacted;
+            }
+
+
+            final timeline = context.read<ProfileCubit>().profileModel?.data?.timeline;
+            if (timeline != null && index < timeline.length) {
+              final profilePost = timeline[index];
+              final isReacted = profilePost.isReacted ?? false;
+              final count = profilePost.reactionCount ?? 0;
+
+              profilePost.reactionCount = isReacted ? count - 1 : count + 1;
+              profilePost.isReacted = !isReacted;
+            }
           }
-          posts?.data?[index!].isReacted =
-              !(posts?.data?[index].isReacted ?? false);
-          context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].isReacted = !( context.read<ProfileCubit>().profileModel?.data?.timeline?[index!].isReacted ??false);
         }
 
-        // successGetBar(r.msg);
         emit(AddReactionStateSuccess());
       });
     } catch (e) {

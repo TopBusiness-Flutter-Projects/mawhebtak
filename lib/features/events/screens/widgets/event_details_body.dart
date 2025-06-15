@@ -42,7 +42,7 @@ class EventDetailsBody extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap:(){
-                  Navigator.pushNamed(context, Routes.profileScreen,
+                  Navigator.pushNamed(context, Routes.profileRoute,
                     arguments: DeepLinkDataModel(
                     id: item?.eventOwner?.id.toString() ??
                       '',

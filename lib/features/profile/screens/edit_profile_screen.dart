@@ -190,12 +190,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       },
                                       controller: cubit.phoneController,
                                       hintTextSize: 16.sp,
-                                      suffixIcon: Padding(
-                                        padding: EdgeInsets.all(10.0.h),
-                                        child: SvgPicture.asset(
-                                          AppIcons.phoneIcon,
-                                        ),
-                                      ),
+
                                     ),
                                     Text(
                                       "age".tr(),
@@ -254,7 +249,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           items: newAccountCubit.userTypeList?.data ?? [],
                                           onChanged: (value) {
                                             newAccountCubit.selectedUserType = value;
-                                            cubit.selectedGenderId = value.id.toString();
+                                            cubit.selectedUserTypeId = value.id.toString();
                                           },
                                         );
                                       }
@@ -338,8 +333,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 bottom: 10.h),
                             child: CustomButton(
                               title: "save".tr(),
-                              onTap: () {
-                                cubit.updateProfileData(context: context);
+                              onTap: ()  {
+                                cubit.updateProfileData(context: context,profileId: widget.model.id);
                               },
                             ),
                           ),

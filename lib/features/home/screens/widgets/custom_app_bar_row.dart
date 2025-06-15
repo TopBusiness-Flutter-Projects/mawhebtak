@@ -43,7 +43,7 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                 onTap: () {
                   Navigator.pushNamed(
                     context,
-                    Routes.profileScreen,
+                    Routes.profileRoute,
                     arguments: DeepLinkDataModel(
                         id: context.read<MainCubit>().loginModel?.data?.id?.toString() ?? "",
                         isDeepLink: false),
