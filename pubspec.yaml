@@ -112,8 +112,8 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   background_color: "#ffffff"
-  image_path: "assets/images/1.png"
-  adaptive_icon_foreground: "assets/images/1.png"
+  image_path: "assets/images/my_app_icon.png"
+  adaptive_icon_foreground: "assets/images/my_app_icon.png"
   adaptive_icon_background: "#ffffff"
 
 # For information on the generic Dart part of this file, see the

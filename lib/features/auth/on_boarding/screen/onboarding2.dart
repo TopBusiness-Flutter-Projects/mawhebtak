@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -9,8 +8,7 @@ class OnBoarding2 extends StatelessWidget {
   const OnBoarding2({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<OnboardingCubit, OnboardingState>(
-      listener: (context, state) {},
+    return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
         OnboardingCubit cubit = context.read<OnboardingCubit>();
         return Scaffold(
@@ -75,7 +73,8 @@ class OnBoarding2 extends StatelessWidget {
                                 color: AppColors.white),
                           ),
                         ),
-                        Flexible(child:  Container(
+                        Flexible(
+                            child: Container(
                           padding: EdgeInsets.all(getSize(context) / 44),
                           child: AutoSizeText(
                             textAlign: TextAlign.center,

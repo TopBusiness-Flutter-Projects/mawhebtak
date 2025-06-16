@@ -4,7 +4,7 @@ class EndPoints {
   static const String baseUrl =
       // 'https://mawhebtak.topbusiness.ebharbook.com/api/v1/';
       kReleaseMode
-          ? 'mawhebtak.topbusiness.ebharbook.com/api/v1/'
+          ? 'https://mawhebtak.topbusiness.ebharbook.com/api/v1/'
           : 'http://192.168.1.18:8000/api/v1/';
 //! Authentication
   static const String loginUrl = '${baseUrl}login';
