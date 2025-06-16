@@ -1,5 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
@@ -30,22 +32,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     context
         .read<ProfileCubit>()
         .getProfileData(id: widget.model.id, context: context);
-    context.read<ProfileCubit>().loadUserFromPreferences();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
-      builder: (BuildContext context, state) {
-        var cubit = context.read<ProfileCubit>();
-        return AnnotatedRegion<SystemUiOverlayStyle>(
+        builder: (BuildContext context, state) {
+      var cubit = context.read<ProfileCubit>();
+
+      return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light.copyWith(
             statusBarColor: Colors.transparent,
             statusBarIconBrightness: Brightness.light,
           ),
           child: Scaffold(
-            body: (state is GetProfileStateLoading &&
+            body: (state is GetProfileStateLoading ||
                     cubit.profileModel == null)
                 ? const Center(
                     child: CustomLoadingIndicator(),
@@ -57,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           ProfileAppBar(
                             isEdit: false,
-                            id: widget.model.id,
+                            id: cubit.profileModel?.data?.id?.toString() ?? '',
                             avatar: cubit.profileModel?.data?.avatar ?? "",
                             byCaver: cubit.profileModel?.data?.bgCover ?? "",
                           ),
@@ -166,21 +168,120 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       SizedBox(
                                         width: 10.w,
                                       ),
-                                      Container(
-                                        height: 40.h,
-                                        width: 40.w,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          border: Border.all(
-                                            color: AppColors.secondPrimary,
+                                      PopupMenuButton<String>(
+                                        icon: SvgPicture.asset(
+                                          AppIcons.settingIcon,
+                                          width: 35.w,
+                                          height: 35.h,
+                                        ),
+                                        onSelected: (value) {
+                                          if (value == 'rate') {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                title: const Text(
+                                                    'أدخل تقييمك وتعليقك'),
+                                                content: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    RatingStars(
+                                                      axis: Axis.horizontal,
+                                                      value:
+                                                          cubit.review ?? 0.0,
+                                                      onValueChanged: (v) {
+                                                        setState(() {
+                                                          cubit.review = v;
+                                                        });
+                                                      },
+                                                      starCount: 5,
+                                                      starSize: 20,
+                                                      valueLabelColor:
+                                                          const Color(
+                                                              0xff9b9b9b),
+                                                      valueLabelTextStyle:
+                                                          const TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontStyle:
+                                                                  FontStyle
+                                                                      .normal,
+                                                              fontSize: 12.0),
+                                                      valueLabelRadius: 10,
+                                                      maxValue: 5,
+                                                      starSpacing: 2,
+                                                      maxValueVisibility: false,
+                                                      valueLabelVisibility:
+                                                          false,
+                                                      animationDuration:
+                                                          const Duration(
+                                                              milliseconds:
+                                                                  1000),
+                                                      valueLabelPadding:
+                                                          const EdgeInsets
+                                                              .symmetric(
+                                                              vertical: 1,
+                                                              horizontal: 8),
+                                                      valueLabelMargin:
+                                                          const EdgeInsets.only(
+                                                              right: 8),
+                                                      starOffColor: const Color(
+                                                          0xffe7e8ea),
+                                                      starColor: Colors.yellow,
+                                                    ),
+                                                    const SizedBox(height: 16),
+                                                    TextField(
+                                                      controller: cubit
+                                                          .commentController,
+                                                      decoration:
+                                                          const InputDecoration(
+                                                        labelText:
+                                                            'اكتب تعليقك هنا',
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                      ),
+                                                      maxLines: 3,
+                                                    ),
+                                                  ],
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      cubit.addReview(
+                                                        context: context,
+                                                          userId: cubit
+                                                                  .profileModel
+                                                                  ?.data
+                                                                  ?.id
+                                                                  .toString() ??
+                                                              "");
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: const Text('إرسال'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.of(context)
+                                                            .pop(),
+                                                    child: const Text('إلغاء'),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        color: AppColors.white,
+                                        itemBuilder: (BuildContext context) =>
+                                            <PopupMenuEntry<String>>[
+                                          PopupMenuItem<String>(
+                                            value: 'rate',
+                                            child: Text('rate'.tr()),
                                           ),
-                                        ),
-                                        child: Icon(
-                                          Icons.more_vert_sharp,
-                                          color: AppColors.secondPrimary,
-                                        ),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -246,11 +347,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               var castingCubit = context.read<CastingCubit>();
                               return Expanded(
                                 child: SingleChildScrollView(
-                                  child: (castingCubit
-                                              .allGigsModel?.data?.length ==
+                                  child: (cubit.profileModel?.data?.myGigs
+                                              ?.length ==
                                           0)
                                       ? Center(
-                                          child: Text("no_data".tr()),
+                                          child: Text(
+                                            "no_data".tr(),
+                                            style: TextStyle(
+                                                color: AppColors.black),
+                                          ),
                                         )
                                       : ListView.builder(
                                           physics:
@@ -275,8 +380,194 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               );
                             })
-                          ] else if (cubit.selectedIndex == 3)
-                            ...[]
+                          ] else if (cubit.selectedIndex == 3 ||
+                              cubit.selectedIndex == 2) ...[
+                            (cubit.profileModel?.data?.reviews == [] ||
+                                    cubit.profileModel?.data?.reviews?.length ==
+                                        0)
+                                ? Center(
+                                    child: Text(
+                                      "no_data".tr(),
+                                      style: TextStyle(color: AppColors.black),
+                                    ),
+                                  )
+                                : Container(
+                                    color: AppColors.grayLite,
+                                    child: Expanded(
+                                      child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: cubit.profileModel?.data
+                                              ?.reviews?.length,
+                                          itemBuilder:
+                                              (context, index) => Container(
+                                                    decoration: BoxDecoration(
+                                                      color: AppColors.white,
+                                                    ),
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 10.h,
+                                                          top: 10.h,
+                                                          right: 10.w,
+                                                          left: 10.w),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Column(
+                                                                      children: [
+                                                                        SizedBox(
+                                                                          height:
+                                                                              40.h,
+                                                                          width:
+                                                                              40.w,
+                                                                          child:
+                                                                              Image.asset(ImageAssets.profileImage),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(
+                                                                        width: 8
+                                                                            .w),
+                                                                    Column(
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        AutoSizeText(
+                                                                          cubit.profileModel?.data?.reviews?[index].user?.name ??
+                                                                              "",
+                                                                          style:
+                                                                              getMediumStyle(fontSize: 18.sp),
+                                                                        ),
+                                                                        AutoSizeText(
+                                                                          cubit.profileModel?.data?.reviews?[index].user?.headline ??
+                                                                              "",
+                                                                          style:
+                                                                              getRegularStyle(
+                                                                            fontSize:
+                                                                                16.sp,
+                                                                            color:
+                                                                                AppColors.grayLight,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Row(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    RatingStars(
+                                                                      axis: Axis
+                                                                          .horizontal,
+                                                                      value: (double.parse(cubit
+                                                                              .profileModel
+                                                                              ?.data
+                                                                              ?.reviews?[index]
+                                                                              .review
+                                                                              .toString() ??
+                                                                          "0.0")),
+                                                                      onValueChanged:
+                                                                          (v) {
+                                                                        //
+                                                                        setState(
+                                                                            () {
+                                                                          cubit
+                                                                              .profileModel
+                                                                              ?.data
+                                                                              ?.reviews?[index]
+                                                                              .review = v;
+                                                                        });
+                                                                      },
+                                                                      starCount:
+                                                                          5,
+                                                                      starSize:
+                                                                          20,
+                                                                      valueLabelColor:
+                                                                          const Color(
+                                                                              0xff9b9b9b),
+                                                                      valueLabelTextStyle: const TextStyle(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          fontStyle: FontStyle
+                                                                              .normal,
+                                                                          fontSize:
+                                                                              12.0),
+                                                                      valueLabelRadius:
+                                                                          10,
+                                                                      maxValue:
+                                                                          5,
+                                                                      starSpacing:
+                                                                          2,
+                                                                      maxValueVisibility:
+                                                                          false,
+                                                                      valueLabelVisibility:
+                                                                          false,
+                                                                      animationDuration:
+                                                                          const Duration(
+                                                                              milliseconds: 1000),
+                                                                      valueLabelPadding: const EdgeInsets
+                                                                          .symmetric(
+                                                                          vertical:
+                                                                              1,
+                                                                          horizontal:
+                                                                              8),
+                                                                      valueLabelMargin: const EdgeInsets
+                                                                          .only(
+                                                                          right:
+                                                                              8),
+                                                                      starOffColor:
+                                                                          const Color(
+                                                                              0xffe7e8ea),
+                                                                      starColor:
+                                                                          Colors
+                                                                              .yellow,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ]),
+                                                          Text(
+                                                            cubit
+                                                                    .profileModel
+                                                                    ?.data
+                                                                    ?.reviews?[
+                                                                        index]
+                                                                    .comment ??
+                                                                "",
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .black
+                                                                    .withOpacity(
+                                                                        0.5)),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )),
+                                    ),
+                                  )
+                          ]
                         ],
                       ),
                       cubit.selectedIndex == 2
@@ -299,9 +590,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           : const SizedBox()
                     ],
                   ),
-          ),
-        );
-      },
-    );
+          ));
+    });
   }
 }

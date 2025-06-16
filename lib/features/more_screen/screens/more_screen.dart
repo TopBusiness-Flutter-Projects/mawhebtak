@@ -1,18 +1,27 @@
-import 'dart:developer';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
-import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
+import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import 'package:mawhebtak/features/more_screen/screens/widget/custom_logout_dialog.dart';
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
 import '../../events/screens/details_event_screen.dart';
 
-class MoreScreen extends StatelessWidget {
+class MoreScreen extends StatefulWidget {
   const MoreScreen({super.key});
 
+  @override
+  State<MoreScreen> createState() => _MoreScreenState();
+}
+
+class _MoreScreenState extends State<MoreScreen> {
+  @override
+  void initState() {
+   context.read<MoreCubit>().loadUserFromPreferences();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,8 +69,8 @@ class MoreScreen extends StatelessWidget {
                                 Routes.profileRoute,
                                 arguments: DeepLinkDataModel(
                                     id: context
-                                            .read<MainCubit>()
-                                            .loginModel
+                                            .read<MoreCubit>()
+                                            .user
                                             ?.data
                                             ?.id
                                             ?.toString() ??

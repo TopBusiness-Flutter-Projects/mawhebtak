@@ -48,7 +48,7 @@ class AnnouncementRepo {
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Announce",
-        "where[0]": "expire_in,>=,$date",
+        // "where[0]": "expire_in,>=,$date",
         // "where[1]": "user_id,${userModel.data?.id?.toString()}",
         "paginate": "true",
         "orderBy": orderBy,
@@ -127,6 +127,19 @@ class AnnouncementRepo {
         "id": announcementId,
       });
       return Right(AnnouncementDetailsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+  Future<Either<Failure, DefaultMainModel>> deleteAnnouncement(
+      {required String announcementId}) async {
+    try {
+      var response =
+          await dio.post(EndPoints.deleteData, body: {
+        "model": "Announce",
+        "id": announcementId,
+      });
+      return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

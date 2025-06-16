@@ -128,12 +128,32 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                             .withOpacity(0.5),
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: SvgPicture.asset(
-                                                      AppIcons.settingIcon),
-                                                ),
+                                                if (cubit.user?.data?.id.toString() ==
+                                                    cubit.announcements?.data?[widget.index]
+                                                        .user?.id
+                                                        .toString())
+                                                  PopupMenuButton<String>(
+                                                    icon: SvgPicture.asset(
+                                                        AppIcons.settingIcon),
+                                                    onSelected: (value) {
+                                                      if (value == 'delete') {
+                                                        cubit.deleteAnnouncement(
+                                                            announcementId: widget
+                                                                .announcementId
+                                                                .toString() ??
+                                                                "");
+                                                        Navigator.pop(context);
+                                                      }
+                                                    },
+                                                    color: AppColors.white,
+                                                    itemBuilder: (BuildContext context) =>
+                                                    <PopupMenuEntry<String>>[
+                                                      PopupMenuItem<String>(
+                                                        value: 'delete',
+                                                        child: Text('delete_post'.tr()),
+                                                      ),
+                                                    ],
+                                                  )
                                               ],
                                             )
                                           ],

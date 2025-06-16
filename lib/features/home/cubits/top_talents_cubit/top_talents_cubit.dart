@@ -1,7 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:mawhebtak/features/auth/new_account/data/model/user_types.dart';
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/data/models/top_talents_model.dart';
 import 'package:mawhebtak/features/home/data/repositories/top_talents_repository.dart';
+import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 
 import '../../../../core/exports.dart';
 import '../../data/models/home_model.dart';
@@ -11,12 +14,71 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
   TopTalentsCubit() : super(TopTalentsStateLoading());
   TopTalentsRepository? api = TopTalentsRepository(serviceLocator());
   TopTalentsModel? topTalents;
+  TopTalentsModel? topSubCategoryTalents;
   bool isLoadingMore = false;
+  GetCountriesMainModelData? selectedUserType;
+  GetCountriesMainModelData? selectedUserSubType;
+  MainRegisterUserTypes? userTypeList;
+  MainRegisterUserTypes? userSubTypeList;
+  getDataUserType(BuildContext context,
+      {GetCountriesMainModelData? userTypeModel, bool? isEditProfile}) async {
+    emit(LoadingGetUserTypesState());
+    var response = await api!.getDataUserType();
+    response.fold((l) {
+      emit(ErrorGetUserTypesState('error_msg'.tr()));
+    }, (r) {
+      userTypeList = r;
+      selectedUserSubType = null;
+      if (userTypeModel != null) {
+        for (int i = 0; i < (userTypeList?.data?.length ?? 0); i++) {
+          if (userTypeList?.data?[i].id?.toString() ==
+              userTypeModel?.id?.toString()) {
+            selectedUserType = userTypeList?.data?[i];
+          }
+          // else{
+          //   selectedUserType = null;
+          // }
+        }
+      }
+
+      if (isEditProfile == true) {
+        getDataUserSubType(
+            userTypeId: selectedUserType?.id?.toString() ?? '',
+            currentSubCategory:
+            context.read<ProfileCubit>().profileModel?.data?.userSubType);
+      }
+      emit(LoadedGetUserTypesState(r));
+    });
+  }
+
+  getDataUserSubType({
+    required String userTypeId,
+    GetCountriesMainModelData? currentSubCategory,
+  }) async {
+    emit(LoadingGetUserSubTypesState());
+    var response = await api!.getDataUserSubType(userTypeId: userTypeId);
+    response.fold((l) {
+      emit(ErrorGetUserSubTypesState('error_msg'.tr()));
+    }, (r) {
+      userSubTypeList = r;
+
+      if (currentSubCategory != null) {
+        for (int i = 0; i < (userSubTypeList?.data?.length ?? 0); i++) {
+          if (userSubTypeList?.data?[i].id?.toString() ==
+              currentSubCategory.id?.toString()) {
+            selectedUserSubType = userSubTypeList?.data?[i];
+          }
+        }
+      }
+      emit(LoadedGetUserSubTypesState(r));
+    });
+  }
 
   topTalentsData({
     bool isGetMore = false,
     required String page,
     String? orderBy,
+    String? userSubTypeId,
   }) async {
     if (isGetMore) {
       isLoadingMore = true;
@@ -25,24 +87,47 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       emit(TopTalentsStateLoading());
     }
     try {
-      final res = await api!.topTalentsData(page: page, orderBy: orderBy);
+      final res = await api!.topTalentsData(page: page, orderBy: orderBy,userSubTypeId:userSubTypeId );
 
       res.fold((l) {
         emit(TopTalentsStateError(l.toString()));
       }, (r) {
-        if (isGetMore) {
-          topTalents = TopTalentsModel(
-            links: r.links,
-            status: r.status,
-            msg: r.msg,
-            data: [...topTalents!.data!, ...r.data!],
-          );
+         if(userSubTypeId == null){
+           if (isGetMore) {
+             topTalents = TopTalentsModel(
+               links: r.links,
+               status: r.status,
+               msg: r.msg,
+               data: [...topTalents!.data!, ...r.data!],
+             );
 
-          emit(TopTalentsStateLoaded(topTalents!));
-        } else {
-          topTalents = r;
-          emit(TopTalentsStateLoaded(r));
-        }
+             emit(TopTalentsStateLoaded(topTalents!));
+
+           } else {
+
+             topTalents = r;
+             emit(TopTalentsStateLoaded(r));
+           }
+
+         }
+         else{
+           if (isGetMore) {
+             topSubCategoryTalents = TopTalentsModel(
+               links: r.links,
+               status: r.status,
+               msg: r.msg,
+               data: [...topSubCategoryTalents!.data!, ...r.data!],
+             );
+
+             emit(TopTalentsStateLoaded(topSubCategoryTalents!));
+
+           } else {
+
+             topSubCategoryTalents = r;
+             emit(TopTalentsStateLoaded(r));
+           }
+         }
+
         emit(TopTalentsStateLoaded(r));
       });
     } catch (e) {

@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
@@ -33,6 +32,9 @@ class _CastingScreenState extends State<CastingScreen> {
     tabs = ["talents".tr(), "gigs".tr()];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CastingCubit>().getCategoryFromGigs();
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TopTalentsCubit>().getDataUserType(context);
     });
     scrollTopTalentController.addListener(_scrollTopTalentListener);
     scrollGigsController.addListener(_scrollRequestGigsListener);
@@ -193,7 +195,7 @@ class _CastingScreenState extends State<CastingScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        //_buildTopTalentsHorizontalList(context),
+        _buildTopTalentsHorizontalList(context),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           child: Text(
@@ -421,106 +423,126 @@ class _CastingScreenState extends State<CastingScreen> {
   }
 
   Widget _buildTopTalentsHorizontalList(BuildContext context) {
-    final castingCubit = context.read<CastingCubit>();
-    final categoryTopTalent = castingCubit.categoryModel?.data ?? [];
-
-    return BlocBuilder<CastingCubit, CastingState>(
+    return BlocBuilder<TopTalentsCubit, TopTalentsState>(
       builder: (context, state) {
-        if (state is CategoryFromGigsStateLoading) {
-          return const Center(child: CustomLoadingIndicator());
-        } else if (state is CategoryFromGigsStateLoaded) {
-          return SizedBox(
-            height: 145.w,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: categoryTopTalent.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                var talent = categoryTopTalent[index];
-                return Padding(
-                  padding: EdgeInsetsDirectional.only(start: 10.w, end: 10.w),
-                  child: GestureDetector(
-                    onTap: () {
-                      print('sadasd');
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.r),
-                        image: const DecorationImage(
-                          image: AssetImage(ImageAssets.tasweerPhoto),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(8.r),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.r),
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.black.withOpacity(0.6),
-                              Colors.transparent
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
+        var cubit = context.read<TopTalentsCubit>();
+        return (state is LoadingGetUserSubTypesState)
+            ? const Center(child: CustomLoadingIndicator())
+            : SizedBox(
+                height: 145.w,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: cubit.userTypeList?.data?.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding:
+                          EdgeInsetsDirectional.only(start: 10.w, end: 10.w),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context,
+                              Routes.detailsOfMainCategoryFromTopTalentsRoute,
+                              arguments: cubit.userTypeList?.data?[index].id
+                                  .toString());
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.r),
+                            image: const DecorationImage(
+                              image: AssetImage(ImageAssets.tasweerPhoto),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: SizedBox(
-                            width: 130.w,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 10.h, left: 10.w, right: 10.w),
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    WidgetSpan(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: AppColors.secondPrimary,
+                          child: Container(
+                            padding: EdgeInsets.all(8.r),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.r),
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.black.withOpacity(0.6),
+                                  Colors.transparent
+                                ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                              ),
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomLeft,
+                              child: SizedBox(
+                                width: 130.w,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: 10.h, left: 10.w, right: 10.w),
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        WidgetSpan(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: AppColors.secondPrimary,
+                                            ),
+                                            child: Text(
+                                              (cubit.userTypeList?.data?[index]
+                                                          .name ??
+                                                      "")
+                                                  .substring(
+                                                      0,
+                                                      (cubit
+                                                                      .userTypeList
+                                                                      ?.data?[
+                                                                          index]
+                                                                      .name
+                                                                      ?.length ??
+                                                                  0) >=
+                                                              5
+                                                          ? 5
+                                                          : (cubit
+                                                                  .userTypeList
+                                                                  ?.data?[index]
+                                                                  .name
+                                                                  ?.length ??
+                                                              0)),
+                                              style: getMediumStyle(
+                                                color: Colors.white,
+                                                fontSize: 16.sp,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                        child: Text(
-                                          (talent.name ?? "").substring(
-                                              0,
-                                              (talent.name?.length ?? 0) >= 5
-                                                  ? 5
-                                                  : (talent.name?.length ?? 0)),
+                                        TextSpan(
+                                          text: (cubit
+                                                          .userTypeList
+                                                          ?.data?[index]
+                                                          .name
+                                                          ?.length ??
+                                                      0) >
+                                                  5
+                                              ? (cubit.userTypeList
+                                                          ?.data?[index].name ??
+                                                      "")
+                                                  .substring(5)
+                                              : "",
                                           style: getMediumStyle(
-                                            color: Colors.white,
+                                            color: AppColors.white,
                                             fontSize: 16.sp,
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    TextSpan(
-                                      text: (talent.name?.length ?? 0) > 5
-                                          ? (talent.name ?? "").substring(5)
-                                          : "",
-                                      style: getMediumStyle(
-                                        color: AppColors.white,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                  ],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          );
-        } else if (state is TopTalentsStateError) {
-          return Center(child: Text("error_loading_data".tr()));
-        }
-        return const SizedBox.shrink();
+                    );
+                  },
+                ),
+              );
       },
     );
   }

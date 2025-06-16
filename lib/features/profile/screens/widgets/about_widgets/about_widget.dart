@@ -9,8 +9,9 @@ class AboutWidget extends StatelessWidget {
   ProfileModel? profileModel;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
+    return Flexible(
+      child: ListView(
+        shrinkWrap: true,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -28,7 +29,6 @@ class AboutWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 16.0.w, right: 16.w),
                 child: Text(
-
                   profileModel?.data?.bio ?? "",
                   style: getRegularStyle(
                       fontSize: 13.sp, color: AppColors.grayMedium),
@@ -49,32 +49,35 @@ class AboutWidget extends StatelessWidget {
               text2: profileModel?.data?.phone ?? "",
               isSecond: true),
           CustomRowEvent(
-              text: 'age'.tr(), text2: profileModel?.data?.age.toString() ?? ""),
+              text: 'age'.tr(),
+              text2: profileModel?.data?.age == null
+                  ? ''
+                  : profileModel?.data?.age.toString() ?? ""),
           CustomRowEvent(
               text: 'location'.tr(),
               text2: profileModel?.data?.location ?? "",
               isSecond: true),
           CustomRowEvent(
               text: 'syndicate'.tr(),
-              text2: profileModel?.data?.syndicate.toString() ?? ""),
+              text2: profileModel?.data?.syndicate == null
+                  ? ''
+                  : profileModel?.data?.syndicate.toString() ?? ''),
           Container(
               height: 8.h, color: AppColors.grayLite, width: double.infinity),
           SizedBox(
             height: 10.h,
           ),
-          CustomRowSection(title: "experience".tr()),
-          (profileModel?.data?.experiences == [])?
-          Center(child: Text("no_data".tr()),):
+          if (profileModel?.data?.experiences?.length != 0)
+            CustomRowSection(title: "experience".tr()),
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: profileModel?.data?.experiences?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 return ExperinceWidget(
                   experience: profileModel?.data?.experiences?[index],
                 );
-
               },
             ),
           )

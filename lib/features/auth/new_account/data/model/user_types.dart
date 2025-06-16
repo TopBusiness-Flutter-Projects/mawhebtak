@@ -4,12 +4,14 @@
 
 import 'dart:convert';
 
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
+
 MainRegisterUserTypes mainRegisterUserTypesFromJson(String str) => MainRegisterUserTypes.fromJson(json.decode(str));
 
 String mainRegisterUserTypesToJson(MainRegisterUserTypes data) => json.encode(data.toJson());
 
 class MainRegisterUserTypes {
-    List<MainRegisterUserTypesData>? data;
+    List<GetCountriesMainModelData>? data;
     String? msg;
     int? status;
 
@@ -20,7 +22,7 @@ class MainRegisterUserTypes {
     });
 
     factory MainRegisterUserTypes.fromJson(Map<String, dynamic> json) => MainRegisterUserTypes(
-        data: json["data"] == null ? [] : List<MainRegisterUserTypesData>.from(json["data"]!.map((x) => MainRegisterUserTypesData.fromJson(x))),
+        data: json["data"] == null ? [] : List<GetCountriesMainModelData>.from(json["data"]!.map((x) => GetCountriesMainModelData.fromJson(x))),
         msg: json["msg"],
         status: json["status"],
     );
@@ -32,22 +34,4 @@ class MainRegisterUserTypes {
     };
 }
 
-class MainRegisterUserTypesData {
-    int? id;
-    String? name;
 
-    MainRegisterUserTypesData({
-        this.id,
-        this.name,
-    });
-
-    factory MainRegisterUserTypesData.fromJson(Map<String, dynamic> json) => MainRegisterUserTypesData(
-        id: json["id"],
-        name: json["name"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-    };
-}

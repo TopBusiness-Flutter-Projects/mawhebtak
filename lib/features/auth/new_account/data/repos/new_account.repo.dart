@@ -33,20 +33,39 @@ class NewAccount {
   }
 
   //registerUrl
-  Future<Either<Failure, MainRegisterUserTypes>> getDataUserType() async {
+  Future<Either<Failure, MainRegisterUserTypes>> getDataUserType({
+     String? paginate,
+     String? orderBy,
+}) async {
     try {
       var response = await dio.get(
-        EndPoints.getDataUserTypeUrl,
+        EndPoints.getDataBaseUrl,
+        queryParameters: {
+          'model':"UserType",
+          'where[0]':'status,1',
+          'paginate':paginate,
+          'orderBy':orderBy,
+        }
       );
       return Right(MainRegisterUserTypes.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
-  Future<Either<Failure, MainRegisterUserTypes>> getDataUserSubType({required String userTypeId}) async {
+  Future<Either<Failure, MainRegisterUserTypes>> getDataUserSubType({
+     String? paginate,
+     String? orderBy,
+    required String userTypeId}) async {
     try {
       var response = await dio.get(
-        EndPoints.getDataUserSubTypeUrl+userTypeId,
+        EndPoints.getDataBaseUrl,
+        queryParameters: {
+          'model':'UserSubType',
+          'where[0]':'status,1',
+          'where[1]':'user_type_id,$userTypeId',
+          'paginate':paginate,
+          'orderBy':orderBy,
+        }
       );
       return Right(MainRegisterUserTypes.fromJson(response));
     } on ServerException {

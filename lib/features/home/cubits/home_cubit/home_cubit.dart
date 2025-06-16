@@ -1,4 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
@@ -75,5 +77,14 @@ class HomeCubit extends Cubit<HomeState> {
       }
       emit(UpdateIsFollowState());
     }
+  }
+  Future<LoginModel> getUserFromPreferences() async {
+    final user = await Preferences.instance.getUserModel();
+    return user;
+  }
+
+  LoginModel? user;
+  Future<void> loadUserFromPreferences() async {
+    user = await Preferences.instance.getUserModel();
   }
 }

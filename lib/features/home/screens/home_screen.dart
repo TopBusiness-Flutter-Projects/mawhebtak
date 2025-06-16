@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     userController = PageController();
     context.read<HomeCubit>().homeData();
+    context.read<HomeCubit>().loadUserFromPreferences();
   }
 
   @override

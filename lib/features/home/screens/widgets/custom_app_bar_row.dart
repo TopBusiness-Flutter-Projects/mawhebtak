@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
@@ -41,11 +42,12 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
             children: [
               GestureDetector(
                 onTap: () {
+                  print('the id from user ${context.read<MainCubit>().loginModel?.data?.id?.toString()}');
                   Navigator.pushNamed(
                     context,
                     Routes.profileRoute,
                     arguments: DeepLinkDataModel(
-                        id: context.read<MainCubit>().loginModel?.data?.id?.toString() ?? "",
+                        id: context.read<HomeCubit>().user?.data?.id?.toString() ?? "",
                         isDeepLink: false),
                   );
                 },

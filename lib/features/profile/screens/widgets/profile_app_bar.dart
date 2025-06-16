@@ -35,7 +35,12 @@ class ProfileAppBar extends StatelessWidget {
                       fit: BoxFit.cover,
                     )
                   : (byCaver != null)
-                      ?Image.network(byCaver,fit: BoxFit.cover,)
+                      ? Image.network(
+                          byCaver,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Image.asset(ImageAssets.profileAppBar),
+                        )
                       : Image.asset(ImageAssets.profileImage)),
 
           // AppBar
@@ -90,23 +95,24 @@ class ProfileAppBar extends StatelessWidget {
             child: Stack(
               children: [
                 GestureDetector(
-                  onTap:(){
-                    if(isEdit == true)
-                    context
-                        .read<ProfileCubit>()
-                        .pickSingleImage(type: 'avatar');
+                  onTap: () {
+                    if (isEdit == true) {
+                      context
+                          .read<ProfileCubit>()
+                          .pickSingleImage(type: 'avatar');
+                    }
                   },
-
                   child: CircleAvatar(
                     radius: 35.r,
                     backgroundImage: cubit.avatarImage != null
                         ? FileImage(File(cubit.avatarImage!.path))
                         : (avatar != null && avatar.isNotEmpty
-                            ? NetworkImage(avatar) as ImageProvider
+                            ? NetworkImage(
+                                avatar,
+                              )
                             : const AssetImage(ImageAssets.profileImage)),
                   ),
                 ),
-
               ],
             ),
           ),

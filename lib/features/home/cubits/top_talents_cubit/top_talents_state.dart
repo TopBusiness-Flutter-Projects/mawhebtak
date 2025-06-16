@@ -1,59 +1,50 @@
 part of 'top_talents_cubit.dart';
 
 @immutable
-sealed class TopTalentsState extends Equatable {}
+sealed class TopTalentsState  {}
 
 final class TopTalentsStateLoading extends TopTalentsState {
-  @override
-  List<Object?> get props => [];
+
 }
 
 final class TopTalentsStateLoadingMore extends TopTalentsState {
-  List<Object?> get props => [];
+
 }
 
 final class TopTalentsStateError extends TopTalentsState {
   final String? errorMessage;
   TopTalentsStateError(this.errorMessage);
 
-  @override
-  List<Object?> get props => [errorMessage];
 }
 
 final class TopTalentsStateLoaded extends TopTalentsState {
   final TopTalentsModel? topTalents;
   TopTalentsStateLoaded(this.topTalents);
 
-  @override
-  List<Object?> get props => [topTalents];
+
 }
 
 final class HideTopTalentStateError extends TopTalentsState {
   final String? errorMessage;
   HideTopTalentStateError(this.errorMessage);
-  @override
-  List<Object?> get props => [errorMessage];
+
 }
 
 final class HideTopTalentStateLoaded extends TopTalentsState {
   HideTopTalentStateLoaded();
-  @override
-  List<Object?> get props => [];
+
 }
 
 final class HideTopTalentStateLoading extends TopTalentsState {
   HideTopTalentStateLoading();
-  @override
-  List<Object?> get props => [];
+
 }
 
 class FollowAndUnFollowStateError extends TopTalentsState {
   String? errorMessage;
   FollowAndUnFollowStateError(this.errorMessage);
 
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
+
 }
 
 class FollowAndUnFollowStateLoaded extends TopTalentsState {
@@ -72,4 +63,29 @@ class UpdateIsFollowState extends TopTalentsState {
   @override
   // TODO: implement props
   List<Object?> get props => [];
+}
+
+
+class LoadingGetUserTypesState extends TopTalentsState {}
+
+class ErrorGetUserTypesState extends TopTalentsState {
+  final String errorMessage;
+
+  ErrorGetUserTypesState(this.errorMessage);
+}
+
+class LoadedGetUserTypesState extends TopTalentsState {
+  final MainRegisterUserTypes data;
+  LoadedGetUserTypesState(this.data);
+}class LoadingGetUserSubTypesState extends TopTalentsState {}
+
+class ErrorGetUserSubTypesState extends TopTalentsState {
+  final String errorMessage;
+
+  ErrorGetUserSubTypesState(this.errorMessage);
+}
+
+class LoadedGetUserSubTypesState extends TopTalentsState {
+  final MainRegisterUserTypes data;
+  LoadedGetUserSubTypesState(this.data);
 }

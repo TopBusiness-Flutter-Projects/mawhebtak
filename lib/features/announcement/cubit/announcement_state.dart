@@ -36,6 +36,13 @@ class SubCategoryStateError extends AnnouncementState {
   SubCategoryStateError(this.errorMessage);
 }
 class SubCategoryStateLoading extends AnnouncementState {}
+class DeleteAnnounceStateLoading extends AnnouncementState {}
+class DeleteAnnounceStateError extends AnnouncementState {
+  final String errorMessage;
+
+  DeleteAnnounceStateError(this.errorMessage);
+}
+class DeleteAnnounceStateLoaded extends AnnouncementState {}
 class SubCategoryStateLoaded extends AnnouncementState {
   final GetCountriesMainModel? getCountriesMainModel;
 
