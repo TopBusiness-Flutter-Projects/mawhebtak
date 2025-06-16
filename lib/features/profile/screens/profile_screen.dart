@@ -31,7 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .read<ProfileCubit>()
         .getProfileData(id: widget.model.id, context: context);
     context.read<ProfileCubit>().loadUserFromPreferences();
-    context.read<ProfileCubit>().profileModel == null;
     super.initState();
   }
 
@@ -94,10 +93,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           children: <TextSpan>[
                                             TextSpan(
                                                 text: cubit.profileModel?.data
-                                                            ?.userType ==
+                                                            ?.userType?.name ==
                                                         null
                                                     ? ""
-                                                    : '(${cubit.profileModel?.data?.userType})',
+                                                    : '(${cubit.profileModel?.data?.userType?.name})',
                                                 style: getRegularStyle(
                                                     fontSize: 14.sp,
                                                     color: AppColors.primary)),
