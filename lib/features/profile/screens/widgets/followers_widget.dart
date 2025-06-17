@@ -1,7 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
-
+import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
@@ -9,13 +7,13 @@ import '../../../../core/widgets/custom_container_with_shadow.dart';
 import '../../../home/screens/widgets/follow_button.dart';
 
 class FollowersWidget extends StatelessWidget {
-  const FollowersWidget({super.key});
-
+  FollowersWidget({super.key, this.index});
+  int? index;
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<ProfileCubit>();
-    return BlocBuilder<ProfileCubit, ProfileState>(
+    return BlocBuilder<TopTalentsCubit, TopTalentsState>(
       builder: (BuildContext context, state) {
+        var topTalentCubit = context.read<TopTalentsCubit>();
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: CustomContainerWithShadow(
@@ -38,10 +36,13 @@ class FollowersWidget extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AutoSizeText("Ahmed Mokhtar",
+                          AutoSizeText(
+                              topTalentCubit.topTalents?.data?[index!].name ??
+                                  "",
                               style: getMediumStyle(fontSize: 16.sp)),
                           AutoSizeText(
-                            "Talent / Actor Expert",
+                            topTalentCubit.topTalents?.data?[index!].headline ??
+                                "",
                             style: getRegularStyle(
                                 fontSize: 14.sp, color: AppColors.grayLight),
                           ),
@@ -55,19 +56,35 @@ class FollowersWidget extends StatelessWidget {
                       if (user.data?.token == null) {
                         checkLogin(context);
                       } else {
-                        cubit.toggleButton();
+                        topTalentCubit.followAndUnFollow(context,
+                            item: topTalentCubit.topTalents?.data?[index!],
+                            followedId: topTalentCubit
+                                    .topTalents?.data?[index!].id
+                                    .toString() ??
+                                "");
                       }
                     },
-                    textColor:
-                        cubit.isFollowing ? AppColors.primary : AppColors.white,
-                    title: cubit.isFollowing ? 'follow'.tr() : "un_follow".tr(),
-                    borderColor: cubit.isFollowing
+                    height: 35.h,
+                    title: topTalentCubit.topTalents?.data?[index!].isIFollow ==
+                            true
+                        ? "un_follow".tr()
+                        : "follow".tr(),
+                    borderColor:
+                        topTalentCubit.topTalents?.data?[index!].isIFollow ==
+                                true
+                            ? AppColors.white
+                            : AppColors.primary,
+                    color: topTalentCubit.topTalents?.data?[index!].isIFollow ==
+                            true
                         ? AppColors.primary
-                        : AppColors.transparent,
-                    color: cubit.isFollowing
-                        ? AppColors.transparent
-                        : AppColors.primary,
-                  )
+                        : AppColors.white,
+                    textColor:
+                        topTalentCubit.topTalents?.data?[index!].isIFollow ==
+                                true
+                            ? AppColors.white
+                            : AppColors.primary,
+                    width: 138.w,
+                  ),
                 ],
               ),
             ),

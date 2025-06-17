@@ -161,8 +161,6 @@ class FeedsCubit extends Cubit<FeedsState> {
         startTime: 0,
         duration: trimDurationInSeconds,
       );
-      log('LLLLLLLLLL ${compressedVideo != null && compressedVideo.path != null}');
-      log('LLLLLLLLLL ${compressedVideo?.path}');
       emit(compressVideoLoaded());
       if (compressedVideo != null && compressedVideo.path != null) {
         return compressedVideo.path != null
@@ -272,8 +270,8 @@ class FeedsCubit extends Cubit<FeedsState> {
               post.isReacted = !isReacted;
             }
 
-
-            final timeline = context.read<ProfileCubit>().profileModel?.data?.timeline;
+            final timeline =
+                context.read<ProfileCubit>().profileModel?.data?.timeline;
             if (timeline != null && index < timeline.length) {
               final profilePost = timeline[index];
               final isReacted = profilePost.isReacted ?? false;
@@ -294,6 +292,7 @@ class FeedsCubit extends Cubit<FeedsState> {
 
   deletePost(BuildContext context,
       {required String postId, bool? isDetails}) async {
+
     emit(DeletePostStateLoading());
     try {
       final res = await api!.deletePost(postId: postId);
@@ -301,6 +300,8 @@ class FeedsCubit extends Cubit<FeedsState> {
         emit(DeletePostStateError(l.toString()));
       }, (r) {
         postsData(page: '1');
+        context.read<ProfileCubit>().getProfileData(
+            context: context, id: user?.data?.id.toString() ?? "");
         successGetBar(r.msg);
         if (isDetails == true) {
           Navigator.pushReplacementNamed(context, Routes.mainRoute);
@@ -400,9 +401,11 @@ class FeedsCubit extends Cubit<FeedsState> {
         errorGetBar(l.toString());
       }, (r) async {
         emit(AddPostStateLoaded());
-
         await postsData(page: '1', isGetMore: false);
-        Navigator.pop(context);
+        context.read<ProfileCubit>().getProfileData(
+            context: context, id: user.data?.id.toString() ?? "");
+
+        // Navigator.pop(context);
         bodyController.clear();
         myImages = [];
         myImagesF = [];
@@ -434,7 +437,6 @@ class FeedsCubit extends Cubit<FeedsState> {
 
   // bool showReplies = false;
   isOpen(CommentModelData comment) {
-    print("11111111111111${comment.showReplies}");
     comment.showReplies = !(comment.showReplies ?? false);
     emit(ShowReplies());
   }

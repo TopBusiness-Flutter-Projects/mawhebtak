@@ -96,26 +96,23 @@ class ProfileAppBar extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    if (isEdit == true) {
-                      context
-                          .read<ProfileCubit>()
-                          .pickSingleImage(type: 'avatar');
+                    if (isEdit) {
+                      context.read<ProfileCubit>().pickSingleImage(type: 'avatar');
                     }
                   },
                   child: CircleAvatar(
                     radius: 35.r,
                     backgroundImage: cubit.avatarImage != null
                         ? FileImage(File(cubit.avatarImage!.path))
-                        : (avatar != null && avatar.isNotEmpty
-                            ? NetworkImage(
-                                avatar,
-                              )
-                            : const AssetImage(ImageAssets.profileImage)),
+                        : (avatar.isNotEmpty && avatar.startsWith('http'))
+                        ? NetworkImage(avatar)
+                        : const AssetImage(ImageAssets.profileImage),
+                    backgroundColor: Colors.transparent,
                   ),
                 ),
               ],
             ),
-          ),
+          )
         ],
       );
     });

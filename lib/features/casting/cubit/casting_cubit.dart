@@ -2,12 +2,15 @@ import 'dart:developer';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
+import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/casting/data/model/get_datails_gigs_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
 import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
+import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import '../../calender/data/model/countries_model.dart';
 import '../../chat/screens/message_screen.dart';
 import '../data/repos/casting.repo.dart';
@@ -205,9 +208,7 @@ class CastingCubit extends Cubit<CastingState> {
               getDetailsGigsModel?.data?.isRequested.toString() == "pending") {
             allGigsModel?.data?[index].isRequested = "null";
             getDetailsGigsModel?.data?.isRequested = "null";
-            print(
-                "getDetailsGigsModel?.data?.isRequested = null    ${getDetailsGigsModel?.data?.isRequested}");
-            print("model${getDetailsGigsModel?.data}");
+
             emit(RequestGigStateLoaded());
           } else if (allGigsModel?.data?[index].isRequested.toString() ==
                   "null" ||
@@ -216,9 +217,7 @@ class CastingCubit extends Cubit<CastingState> {
               getDetailsGigsModel?.data?.isRequested.toString() == "rejected") {
             allGigsModel?.data?[index].isRequested = "pending";
             getDetailsGigsModel?.data?.isRequested = "pending";
-            print(
-                "getDetailsGigsModel?.data?.isRequested = pending    ${getDetailsGigsModel?.data?.isRequested}");
-            print("model${getDetailsGigsModel?.data}");
+
             Navigator.pushNamed(context, Routes.messageRoute,
                 arguments: MainUserAndRoomChatModel(
                     receiverId: userId, chatName: chatName
@@ -283,6 +282,8 @@ class CastingCubit extends Cubit<CastingState> {
           selectedCategory = null;
           selectedSubCategory = null;
           Navigator.pop(context);
+          context.read<ProfileCubit>().getProfileData(
+              context: context, id: context.read<ProfileCubit>().profileModel?.data?.id.toString() ?? "");
           emit(AddNewGigStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
@@ -296,10 +297,12 @@ class CastingCubit extends Cubit<CastingState> {
     }
     Navigator.pop(context);
   }
-
-  deleteGigs(String gigId, BuildContext context) async {
+  LoginModel? user;
+  Future<void> loadUserFromPreferences() async {
+    user = await Preferences.instance.getUserModel();
+  }
+  deleteGigs({required String gigId,required  BuildContext context}) async {
     emit(DeleteGigsStateLoading());
-    AppWidgets.create2ProgressDialog(context);
     try {
       final res = await castingRepo.deleteGigs(gigId);
       res.fold((l) {
@@ -310,9 +313,7 @@ class CastingCubit extends Cubit<CastingState> {
       }, (r) {
         if (r.status == 200) {
           successGetBar(r.msg.toString());
-          Navigator.pop(context);
           allGigsData(page: '1', isGetMore: false);
-          //!
           emit(DeleteGigsStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
