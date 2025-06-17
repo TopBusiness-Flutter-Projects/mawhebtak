@@ -30,7 +30,8 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
         builder: (context, state) {
       return GestureDetector(
          onTap: () {
-           Navigator.pushNamed(context, Routes.profileRoute, arguments: DeepLinkDataModel(
+           Navigator.pushNamed(context, Routes.profileRoute,
+             arguments: DeepLinkDataModel(
            id: widget.topTalentsData?.id.toString() ??
                '',
            isDeepLink: false),);

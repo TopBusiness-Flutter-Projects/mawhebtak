@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
@@ -112,7 +111,7 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
                             title: 'delete'.tr(),
                             color: AppColors.red,
                             onTap: () {
-                              castingCubit.deleteGigs(widget.id, context);
+                              castingCubit.deleteGigs(gigId:widget.id,context:  context);
                             })
                     ],
                   ),

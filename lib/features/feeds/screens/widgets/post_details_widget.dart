@@ -96,9 +96,10 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                       onSelected: (value) {
                         if (value == 'delete') {
                           widget.feedsCubit?.deletePost(
+
                             context,
                             postId: widget.post?.id?.toString() ?? '',
-                            isDetails: true,
+
                           );
                         }
                       },
@@ -120,7 +121,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
           height: 5.h,
         ),
         if ((widget.post?.media?.isNotEmpty ?? false))
-        SizedBox(
+          SizedBox(
             height: getHeightSize(context) / 3.7,
             child: PageView.builder(
               itemCount: widget.post?.media?.length ?? 0,
@@ -207,7 +208,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                   checkLogin(context);
                 } else {
                   widget.feedsCubit?.addReaction(
-                      context:context,
+                      context: context,
                       postId: widget.post?.id?.toString() ?? '',
                       isDetails: true);
                 }

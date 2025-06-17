@@ -164,7 +164,8 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       res.fold((l) {
         emit(FollowAndUnFollowStateError(l.toString()));
       }, (r) {
-        item?.isIFollow = !(item?.isIFollow ?? false);
+        item?.isIFollow = !(item.isIFollow ?? false);
+
         successGetBar(r.msg ?? "");
         updateTopTalentCastingFollow(item);
         context.read<HomeCubit>().updateTopTalentHomeFollow(item);

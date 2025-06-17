@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/features/about_us/cubit/about_us_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/screens/work_details_screen.dart';
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
@@ -9,7 +8,6 @@ import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
-import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
@@ -19,6 +17,7 @@ import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
 import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
+import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
 import 'core/notification_services/notification_service.dart';
@@ -37,7 +36,6 @@ import 'features/auth/verification/cubit/verification_cubit.dart';
 import 'features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import 'features/location/cubit/location_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
-import 'features/referral_code/cubit/about_us_cubit.dart';
 import 'initialization.dart';
 
 class MyApp extends StatefulWidget {
@@ -95,18 +93,14 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) => injector.serviceLocator<NewPasswordCubit>(),
           ),
-          BlocProvider(
-            create: (_) => injector.serviceLocator<ContactUsCubit>(),
-          ),
+
           BlocProvider(
             create: (_) => injector.serviceLocator<ChangePasswordCubit>(),
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<ChangeLanguageCubit>(),
           ),
-          BlocProvider(
-            create: (_) => injector.serviceLocator<AboutUsCubit>(),
-          ),
+
           BlocProvider(
             create: (_) => injector.serviceLocator<ReferralCodeCubit>(),
           ),

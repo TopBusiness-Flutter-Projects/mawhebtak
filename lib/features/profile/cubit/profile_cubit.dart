@@ -113,14 +113,11 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(GetProfileStateError(l.toString()));
       }, (r) {
         profileModel = r;
-        log("******** ${profileModel?.data?.name?.toString() ?? ''}");
         emit(GetProfileStateLoaded());
 
         loadUserFromPreferences();
       });
     } catch (e) {
-      log("******** ${e?.toString() ?? ''}");
-
       emit(GetProfileStateError(e.toString()));
     }
   }
@@ -139,6 +136,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         review: review.toString(),
       );
       res.fold((l) {
+
         emit(AddReviewStateError(l.toString()));
       }, (r) {
 

@@ -132,7 +132,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.contactUsRoute,
-                                  arguments: "advertising_and_publicity");
+                                  arguments: "advertisement");
                             }),
                         moreContainer(
                             text: "complaining".tr(),
@@ -140,7 +140,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.contactUsRoute,
-                                  arguments: "complaining");
+                                  arguments: "complaints");
                             }),
                         moreContainer(
                             text: "terms_and_condition".tr(),

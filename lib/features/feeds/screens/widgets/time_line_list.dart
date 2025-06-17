@@ -113,7 +113,10 @@ class _TimeLineListState extends State<TimeLineList> {
                       onSelected: (value) {
                         if (value == 'delete') {
                           widget.feedsCubit
-                              ?.deletePost(context, postId: widget.postId);
+                              ?.deletePost(
+                              context, postId: widget.postId,
+
+                             );
                         }
                       },
                       color: AppColors.white,

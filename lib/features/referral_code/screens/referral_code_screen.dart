@@ -1,8 +1,7 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/exports.dart';
-import 'package:mawhebtak/features/referral_code/cubit/about_us_cubit.dart';
+import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';
 import 'package:mawhebtak/features/referral_code/cubit/referral_code_state.dart';
 
 class ReferralCodeScreen extends StatelessWidget {

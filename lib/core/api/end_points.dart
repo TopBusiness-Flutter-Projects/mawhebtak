@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class EndPoints {
   static const String baseUrl =
-      // 'https://mawhebtak.topbusiness.ebharbook.com/api/v1/';
+      //'https://mawhebtak.topbusiness.ebharbook.com/api/v1/';
       kReleaseMode
           ? 'https://mawhebtak.topbusiness.ebharbook.com/api/v1/'
           : 'http://192.168.1.18:8000/api/v1/';
@@ -43,4 +43,5 @@ class EndPoints {
   static const String getDetailsById = '${baseUrl}get-by-id/';
   static const String createChatRoomUrl = '${baseUrl}get-chat-rooms';
   static const String getChatsUrl = '${baseUrl}get-chats';
+  static const String settingUrl = '${baseUrl}get-setting';
 }

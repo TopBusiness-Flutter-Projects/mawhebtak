@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
@@ -16,7 +15,7 @@ import 'package:mawhebtak/features/location/screens/full_screen_map.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
 
 class NewGigsScreen extends StatefulWidget {
-  NewGigsScreen({super.key});
+  const NewGigsScreen({super.key});
 
   @override
   State<NewGigsScreen> createState() => _NewGigsScreenState();
@@ -90,7 +89,6 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                 cubit.selectedCategory = value;
                                 cubit.subCategoryFromCategoryGigsModel?.data = [];
                                 cubit.selectedSubCategory = null;
-                                print('id from sub ${value?.id}');
                                 cubit.subCategoryFromCategoryGigs(
                                     categoryId: value?.id.toString() ?? "");
                               },

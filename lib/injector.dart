@@ -12,8 +12,6 @@ import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart'
 import 'package:mawhebtak/features/auth/splash/cubit/cubit.dart';
 import 'package:mawhebtak/features/calender/data/repos/calender.repo.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
-import 'package:mawhebtak/features/contact_us/cubit/contact_us_cubit.dart';
-import 'package:mawhebtak/features/contact_us/data/repos/contact_us_repo.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
@@ -30,7 +28,7 @@ import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.da
 import 'package:mawhebtak/features/auth/verification/data/repos/verification.repo.dart';
 import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import 'package:mawhebtak/features/more_screen/data/repos/more.repo.dart';
-import 'package:mawhebtak/features/referral_code/cubit/about_us_cubit.dart';
+import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';
 import 'package:mawhebtak/features/referral_code/data/repos/referral_code_repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/api/app_interceptors.dart';
@@ -45,8 +43,7 @@ import 'features/chat/cubit/chat_cubit.dart';
 import 'features/chat/data/repos/chat_repo.dart';
 import 'features/events/cubit/event_cubit.dart';
 import 'features/events/data/repo/event_repo_impl.dart';
-import 'features/about_us/cubit/about_us_cubit.dart';
-import 'features/about_us/data/repos/about_us_repo.dart';
+
 import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/change_langauge/data/repos/change_language_repo.dart';
 import 'features/home/cubits/top_events_cubit/top_events_cubit.dart';
@@ -109,11 +106,7 @@ Future<void> setupCubit() async {
       serviceLocator(),
     ),
   );
-  serviceLocator.registerFactory(
-    () => ContactUsCubit(
-      serviceLocator(),
-    ),
-  );
+
   serviceLocator.registerFactory(
     () => ChangePasswordCubit(
       serviceLocator(),
@@ -129,11 +122,7 @@ Future<void> setupCubit() async {
       serviceLocator(),
     ),
   );
-  serviceLocator.registerFactory(
-    () => AboutUsCubit(
-      serviceLocator(),
-    ),
-  );
+
   serviceLocator.registerFactory(
     () => ReferralCodeCubit(
       serviceLocator(),
@@ -189,12 +178,10 @@ Future<void> setupRepo() async {
   serviceLocator
       .registerLazySingleton(() => VerificationRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => NewPasswordRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => ContactUsRepo(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => ChangePasswordRepo(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => ChangeLanguageRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => AboutUsRepo(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => ReferralCodeRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => EventRepo(serviceLocator()));
