@@ -83,8 +83,12 @@ class ProfileCubit extends Cubit<ProfileState> {
     nameController.text = profileModel?.data?.name ?? '';
     emailController.text = profileModel?.data?.email ?? "";
     bioController.text = profileModel?.data?.bio ?? "";
-    ageController.text = profileModel?.data?.age.toString() ?? '';
-    syndicateController.text = profileModel?.data?.syndicate.toString() ?? "";
+    ageController.text = (profileModel?.data?.age.toString() == null)
+        ? ''
+        : (profileModel?.data?.age?.toString() ?? "");
+    syndicateController.text = (profileModel?.data?.syndicate == null)
+        ? ''
+        : (profileModel?.data?.syndicate.toString() ?? '');
     headlineController.text = profileModel?.data?.headline ?? '';
     locationController.text = profileModel?.data?.location ?? "";
     emit(EditingState());
@@ -113,14 +117,11 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(GetProfileStateError(l.toString()));
       }, (r) {
         profileModel = r;
-        log("******** ${profileModel?.data?.name?.toString() ?? ''}");
         emit(GetProfileStateLoaded());
 
         loadUserFromPreferences();
       });
     } catch (e) {
-      log("******** ${e?.toString() ?? ''}");
-
       emit(GetProfileStateError(e.toString()));
     }
   }
@@ -131,7 +132,6 @@ class ProfileCubit extends Cubit<ProfileState> {
   }) async {
     AppWidgets.create2ProgressDialog(context);
 
-
     try {
       final res = await api.addReview(
         userId: userId,
@@ -141,13 +141,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       res.fold((l) {
         emit(AddReviewStateError(l.toString()));
       }, (r) {
-
         successGetBar(r.msg.toString());
         Navigator.pop(context);
         emit(AddReviewStateLoaded());
         commentController.clear();
-        review =0.0;
-
+        review = 0.0;
       });
     } catch (e) {
       errorGetBar(e.toString());

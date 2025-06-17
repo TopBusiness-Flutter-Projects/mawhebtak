@@ -49,6 +49,8 @@ class MyProfileModelData {
   List<PostsModelData>? timeline;
   List<EventAndGigsModel>? myGigs;
   List<Review>? reviews;
+  bool? isIFollow;
+  bool? isIReviewed;
 
   MyProfileModelData({
     this.id,
@@ -71,6 +73,8 @@ class MyProfileModelData {
     this.timeline,
     this.myGigs,
     this.reviews,
+    this.isIFollow,
+    this.isIReviewed,
   });
 
   factory MyProfileModelData.fromJson(Map<String, dynamic> json) =>
@@ -95,6 +99,7 @@ class MyProfileModelData {
         email: json["email"],
         age: json["age"],
         syndicate: json["syndicate"],
+        isIFollow: json["is_i_follow"],
         experiences: json["experiences"] == null
             ? []
             : List<Experience>.from(
@@ -111,6 +116,7 @@ class MyProfileModelData {
             ? []
             : List<Review>.from(
                 json["reviews"]!.map((x) => Review.fromJson(x))),
+        isIReviewed: json["is_i_reviewed"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -130,6 +136,8 @@ class MyProfileModelData {
         "email": email,
         "age": age,
         "syndicate": syndicate,
+        "is_i_follow": isIFollow,
+        "is_i_reviewed": isIReviewed,
         "experiences": experiences == null
             ? []
             : List<dynamic>.from(experiences!.map((x) => x.toJson())),

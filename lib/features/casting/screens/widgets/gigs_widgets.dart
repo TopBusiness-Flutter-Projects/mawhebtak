@@ -1,8 +1,11 @@
-import 'dart:developer';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
+import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
 import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
@@ -74,6 +77,92 @@ class _GigsWidgetState extends State<GigsWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, Routes.profileRoute,
+                                    arguments: DeepLinkDataModel(
+                                        id: widget.eventAndGigsModel?.user?.id
+                                                .toString() ??
+                                            "",
+                                        isDeepLink: false));
+                              },
+                              child: SizedBox(
+                                height: 40.h,
+                                width: 40.w,
+                                child: widget.eventAndGigsModel?.user?.image ==
+                                        null
+                                    ? Image.asset(ImageAssets.profileImage)
+                                    : ClipOval(
+                                        child: CachedNetworkImage(
+                                          imageUrl: widget.eventAndGigsModel
+                                                  ?.user?.image ??
+                                              '',
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              const Center(
+                                            child: CircularProgressIndicator(
+                                                strokeWidth: 2),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              Image.asset(
+                                                  ImageAssets.profileImage),
+                                        ),
+                                      ),
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                AutoSizeText(
+                                  widget.eventAndGigsModel?.user?.name ?? "",
+                                  style: getMediumStyle(fontSize: 18.sp),
+                                ),
+                                AutoSizeText(
+                                  widget.eventAndGigsModel?.user?.headline ??
+                                      "",
+                                  style: getRegularStyle(
+                                    fontSize: 16.sp,
+                                    color: AppColors.grayLight,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        if (widget.eventAndGigsModel?.isMine == true)
+                          PopupMenuButton<String>(
+                            icon: SvgPicture.asset(AppIcons.settingIcon),
+                            onSelected: (value) {
+                              if (value == 'delete') {
+                                widget.castingCubit?.deleteGigs(
+                                    gigId: widget.eventAndGigsModel?.id.toString() ??
+                                        "",
+                                    context: context);
+                              }
+                            },
+                            color: AppColors.white,
+                            itemBuilder: (BuildContext context) =>
+                                <PopupMenuEntry<String>>[
+                              PopupMenuItem<String>(
+                                value: 'delete',
+                                child: Text('delete_post'.tr()),
+                              ),
+                            ],
+                          )
+                      ],
+                    ),
+                  ),
                   Stack(
                     children: [
                       (mediaCount > 0)
