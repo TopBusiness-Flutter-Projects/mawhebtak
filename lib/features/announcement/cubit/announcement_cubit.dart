@@ -1,5 +1,8 @@
+import 'package:mawhebtak/core/models/default_model.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcement_details_model.dart';
+import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcements_model.dart';
@@ -214,6 +217,26 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       emit(SubCategoryStateError(e.toString()));
     }
   }
+  deleteAnnouncement({required String announcementId}) async {
+    emit(DeleteAnnounceStateLoading());
+    try {
+      final res =
+          await api.deleteAnnouncement(announcementId:announcementId);
+      res.fold((l) {
+        emit(DeleteAnnounceStateError(l.toString()));
+      }, (r) {
+        successGetBar(r.msg.toString());
+        announcementsData(
+          page: '1',
+          orderBy: 'desc'
+
+        );
+        emit(DeleteAnnounceStateLoaded());
+      });
+    } catch (e) {
+      emit(DeleteAnnounceStateError(e.toString()));
+    }
+  }
 
   // add announcement
 
@@ -261,12 +284,23 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
         selectedSubCategory = null;
         locationController.clear();
         priceController.clear();
-        announcementsData(page: '1');
+        announcementsData(page: '1',
+            orderBy: 'desc'
+        );
         emit(AddAnnouncementStateLoaded());
       });
     } catch (e) {
       emit(AddAnnouncementStateError(e.toString()));
     }
     Navigator.pop(context);
+  }
+  Future<LoginModel> getUserFromPreferences() async {
+    final user = await Preferences.instance.getUserModel();
+    return user;
+  }
+
+  LoginModel? user;
+  Future<void> loadUserFromPreferences() async {
+    user = await Preferences.instance.getUserModel();
   }
 }

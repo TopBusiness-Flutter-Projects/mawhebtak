@@ -4,9 +4,9 @@ import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
 import 'package:mawhebtak/features/auth/new_account/screens/widgets/role_selection_widget.dart';
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import '../../login/screens/widgets/register_or_login_with_goole_or_facebook.dart';
 import '../../verification/cubit/verification_cubit.dart';
-import '../data/model/user_types.dart';
 
 class NewAccountScreen extends StatefulWidget {
   const NewAccountScreen({super.key});
@@ -27,7 +27,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
 
   bool isLoaded = true;
 
-  List<MainRegisterUserTypesData>? listType;
+  List<GetCountriesMainModelData>? listType;
 
   final formKey = GlobalKey<FormState>();
 

@@ -16,8 +16,9 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
   late final ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    context.read<AnnouncementCubit>().announcementsData(page: '1');
+    context.read<AnnouncementCubit>().announcementsData(page: '1', orderBy: selctedFilterOption?.key);
     scrollController.addListener(_scrollListener);
+    context.read<AnnouncementCubit>().loadUserFromPreferences();
     super.initState();
   }
 
@@ -75,7 +76,7 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
               ),
             ),
             if (state is AnnouncementsStateLoadingMore)
-              const Expanded(child: CustomLoadingIndicator())
+              const Expanded(child: Center(child: CustomLoadingIndicator()))
           ],
         );
       }),

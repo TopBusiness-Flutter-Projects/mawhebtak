@@ -1,11 +1,14 @@
-
+import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
+import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
-import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
+import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
+import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
 import '../../../core/exports.dart';
 
 class DetailsOfMainCategoryTopTalents extends StatefulWidget {
-  const DetailsOfMainCategoryTopTalents({super.key});
+  const DetailsOfMainCategoryTopTalents({super.key, required this.userTypeId});
+  final String userTypeId;
 
   @override
   State<DetailsOfMainCategoryTopTalents> createState() =>
@@ -16,16 +19,17 @@ class _DetailsOfMainCategoryTopTalentsState
     extends State<DetailsOfMainCategoryTopTalents> {
   @override
   void initState() {
-    context.read<CastingCubit>().getCategoryFromGigs();
+    final cubit = context.read<TopTalentsCubit>();
+    cubit.selectedUserSubType = null;
+    cubit.getDataUserSubType(userTypeId: widget.userTypeId);
     super.initState();
   }
-
+  // topSubCategoryTalents
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           10.h.verticalSpace,
           CustomSimpleAppbar(
@@ -33,52 +37,84 @@ class _DetailsOfMainCategoryTopTalentsState
             isActionButton: true,
             filterType: 'top_talent',
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.h, right: 10.w, left: 10.w),
-            child: BlocBuilder<CastingCubit, CastingState>(
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
+              child: BlocBuilder<TopTalentsCubit, TopTalentsState>(
                 builder: (context, state) {
-                  var subCategory = context.read<CastingCubit>();
+                  var cubit = context.read<TopTalentsCubit>();
+
+                  if (state is SubCategoryStateLoading) {
+                    return const Center(child: CustomLoadingIndicator());
+                  }
+
+                  if (cubit.userSubTypeList?.data?.isEmpty ?? true) {
+                    return Center(child: Text('no_data'.tr()));
+                  }
+
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 60.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColors.grayLite,
-                          borderRadius: BorderRadius.circular(8.sp),
-                        ),
-                        child: DropdownButton<GetCountriesMainModelData>(
-                          enableFeedback: true,
-                          iconSize: 25.sp,
-                          padding: EdgeInsets.only(
-                              bottom: 10.h, top: 10.h, left: 10.w, right: 10.w),
-                          underline: const SizedBox(),
-                          onTap: () {},
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          iconEnabledColor: AppColors.secondPrimary,
-                          isExpanded: true,
-                          dropdownColor: AppColors.grayLite,
-                          hint: Text('choose_category'.tr()),
-                          value: subCategory.selectedCategory,
-                          items: subCategory.categoryModel?.data?.map((category) {
-                            return DropdownMenuItem<GetCountriesMainModelData>(
-                              value: category,
-                              child: Text(category.name ?? ""),
-                            );
-                          }).toList(),
-                          onChanged: (GetCountriesMainModelData? value) {
-                            subCategory.selectedCategory = value;
-                            subCategory.subCategoryId = value?.id;
-                            subCategory.subCategoryFromCategoryGigs(
-                                categoryId: value?.id.toString() ?? "");
-                          },
-                        ),
+                      _buildSubCategoryDropdown(context, cubit),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: (cubit.topTalents?.data?.isEmpty ?? true)
+                            ? Center(child: Text('no_data'.tr()))
+                            : GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10,
+                                  childAspectRatio: 0.8,
+                                ),
+                                shrinkWrap: true,
+                                itemCount: cubit.topSubCategoryTalents?.data?.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  final topTalent =
+                                      cubit.topSubCategoryTalents!.data![index];
+                                  return CustomTopTalentsList(
+                                    topTalentsCubit: cubit,
+                                    index: index,
+                                    topTalentsData: topTalent,
+                                  );
+                                },
+                              ),
                       ),
                     ],
                   );
-                }),
+                },
+              ),
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSubCategoryDropdown(
+      BuildContext context, TopTalentsCubit cubit) {
+    return Container(
+      height: 70.h,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.grayLite,
+        borderRadius: BorderRadius.circular(8.sp),
+      ),
+      child: GeneralCustomDropdownButtonFormField<GetCountriesMainModelData>(
+        onChanged: (value) {
+          cubit.selectedUserSubType = value;
+          if (value?.id != null) {
+            cubit.topTalentsData(
+              page: '1',
+              userSubTypeId: value?.id.toString(),
+            );
+          }
+
+        },
+        value: cubit.selectedUserSubType,
+        items: cubit.userSubTypeList?.data ?? [],
+        itemBuilder: (item) => item.name ?? '',
       ),
     );
   }

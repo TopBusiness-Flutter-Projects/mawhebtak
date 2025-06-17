@@ -2,7 +2,7 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
 import 'package:mawhebtak/features/auth/new_account/data/repos/new_account.repo.dart';
-import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../profile/cubit/profile_cubit.dart';
 import '../../verification/cubit/verification_cubit.dart';
@@ -15,13 +15,13 @@ class NewAccountCubit extends Cubit<NewAccountState> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
-  MainRegisterUserTypesData? selectedUserType;
-  MainRegisterUserTypesData? selectedUserSubType;
+  GetCountriesMainModelData? selectedUserType;
+  GetCountriesMainModelData? selectedUserSubType;
   MainRegisterUserTypes? userTypeList;
   MainRegisterUserTypes? userSubTypeList;
 
   getDataUserType(BuildContext context,
-      {MainRegisterUserTypesData? userTypeModel, bool? isEditProfile}) async {
+      {GetCountriesMainModelData? userTypeModel, bool? isEditProfile}) async {
     emit(LoadingGetUserTypesState());
     var response = await api.getDataUserType();
     response.fold((l) {
@@ -53,7 +53,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
 
   getDataUserSubType({
     required String userTypeId,
-    MainRegisterUserTypesData? currentSubCategory,
+    GetCountriesMainModelData? currentSubCategory,
   }) async {
     emit(LoadingGetUserSubTypesState());
     var response = await api.getDataUserSubType(userTypeId: userTypeId);
@@ -65,7 +65,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       if (currentSubCategory != null) {
         for (int i = 0; i < (userSubTypeList?.data?.length ?? 0); i++) {
           if (userSubTypeList?.data?[i].id?.toString() ==
-              currentSubCategory?.id?.toString()) {
+              currentSubCategory.id?.toString()) {
             selectedUserSubType = userSubTypeList?.data?[i];
           }
         }

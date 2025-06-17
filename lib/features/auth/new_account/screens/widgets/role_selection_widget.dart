@@ -2,12 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 
-import '../../data/model/user_types.dart';
 
 class RoleSelectionWidget extends StatefulWidget {
   const RoleSelectionWidget({required this.list, super.key});
-  final List<MainRegisterUserTypesData> list;
+  final List<GetCountriesMainModelData> list;
   @override
   _RoleSelectionWidgetState createState() => _RoleSelectionWidgetState();
 }
@@ -30,9 +30,9 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
               height: 50.h,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: widget.list?.length ?? 0,
+                itemCount: widget.list.length ?? 0,
                 itemBuilder: (context, index) {
-                  var item = widget.list?[index];
+                  var item = widget.list[index];
 
                   return GestureDetector(
                     onTap: () {

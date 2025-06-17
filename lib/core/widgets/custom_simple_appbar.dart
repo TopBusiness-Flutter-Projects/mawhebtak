@@ -20,7 +20,7 @@ class CustomSimpleAppbar extends StatelessWidget {
       this.filterType,
       this.categoryId,
       this.isWithShadow = false,
-      this.titleColor});
+      this.titleColor,  });
   final String title;
   final bool? isActionButton;
   final bool? isSearchWidget;
@@ -31,6 +31,7 @@ class CustomSimpleAppbar extends StatelessWidget {
   final String? actionIcon;
   final bool? isWithShadow;
   final String? filterType;
+
   bool? isDeepLink;
   void Function()? onShareTap;
   final String? categoryId;
@@ -61,6 +62,8 @@ class CustomSimpleAppbar extends StatelessWidget {
                         isWithNotification = false;
                         Navigator.pushReplacementNamed(
                             context, Routes.mainRoute);
+
+
                       } else {
                         Navigator.pop(context);
                       }

@@ -481,8 +481,11 @@ class AppRoutes {
           duration: const Duration(milliseconds: 300),
         );
       case Routes.detailsOfMainCategoryFromTopTalentsRoute:
+        String userTypeId = settings.arguments as String;
         return PageTransition(
-          child: const DetailsOfMainCategoryTopTalents(),
+          child:  DetailsOfMainCategoryTopTalents(
+            userTypeId: userTypeId,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
@@ -570,7 +573,7 @@ class AppRoutes {
         );
       case Routes.roomsScreen:
         return PageTransition(
-          child: RoomScreen(),
+          child: const RoomScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),

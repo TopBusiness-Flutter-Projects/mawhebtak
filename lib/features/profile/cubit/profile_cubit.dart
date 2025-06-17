@@ -1,9 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
@@ -22,6 +21,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   bool isFollowing = true;
   List<String>? gender = ['male', 'female'];
   String? selectedGender;
+  double? review;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -31,6 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController ageController = TextEditingController();
   TextEditingController syndicateController = TextEditingController();
   TextEditingController bioController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
 
   changeSelected(int index) {
     selectedIndex = index;
@@ -82,10 +83,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     nameController.text = profileModel?.data?.name ?? '';
     emailController.text = profileModel?.data?.email ?? "";
     bioController.text = profileModel?.data?.bio ?? "";
-    ageController.text = profileModel?.data?.age.toString() ?? "";
+    ageController.text = profileModel?.data?.age.toString() ?? '';
     syndicateController.text = profileModel?.data?.syndicate.toString() ?? "";
-    headlineController.text = profileModel?.data?.headline.toString() ?? "";
-    locationController.text = profileModel?.data?.location.toString() ?? "";
+    headlineController.text = profileModel?.data?.headline ?? '';
+    locationController.text = profileModel?.data?.location ?? "";
     emit(EditingState());
   }
 
@@ -105,19 +106,52 @@ class ProfileCubit extends Cubit<ProfileState> {
     required String id,
   }) async {
     emit(GetProfileStateLoading());
+
     try {
       final res = await api.getProfileData(id: id);
       res.fold((l) {
         emit(GetProfileStateError(l.toString()));
       }, (r) {
-
         profileModel = r;
-
+        log("******** ${profileModel?.data?.name?.toString() ?? ''}");
         emit(GetProfileStateLoaded());
+
+        loadUserFromPreferences();
+      });
+    } catch (e) {
+      log("******** ${e?.toString() ?? ''}");
+
+      emit(GetProfileStateError(e.toString()));
+    }
+  }
+
+  addReview({
+    required BuildContext context,
+    required String userId,
+  }) async {
+    AppWidgets.create2ProgressDialog(context);
+
+
+    try {
+      final res = await api.addReview(
+        userId: userId,
+        comment: commentController.text,
+        review: review.toString(),
+      );
+      res.fold((l) {
+        emit(AddReviewStateError(l.toString()));
+      }, (r) {
+
+        successGetBar(r.msg.toString());
+        Navigator.pop(context);
+        emit(AddReviewStateLoaded());
+        commentController.clear();
+        review =0.0;
 
       });
     } catch (e) {
-      emit(GetProfileStateError(e.toString()));
+      errorGetBar(e.toString());
+      emit(AddReviewStateError(e.toString()));
     }
   }
 

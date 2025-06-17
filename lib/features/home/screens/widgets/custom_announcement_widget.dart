@@ -27,6 +27,12 @@ class CustomAnnouncementWidget extends StatefulWidget {
 
 class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
   @override
+
+  void initState() {
+    context.read<AnnouncementCubit>().loadUserFromPreferences();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<AnnouncementCubit, AnnouncementState>(
         builder: (context, state) {
@@ -135,30 +141,31 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                                           : AppColors.lbny.withOpacity(0.5),
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      PopupMenuButton<String>(
-                                        icon: SvgPicture.asset(
-                                            AppIcons.settingIcon),
-                                        onSelected: (value) {
-                                          if (value == 'delete') {}
-                                        },
-                                        color: AppColors.white,
-                                        itemBuilder: (BuildContext context) =>
-                                            <PopupMenuEntry<String>>[
-                                          PopupMenuItem<String>(
-                                            value: 'delete',
-                                            child: Text('delete_post'.tr()),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SvgPicture.asset(
+                                  if (cubit.user?.data?.id.toString() ==
+                                      cubit.announcements?.data?[widget.index]
+                                          .user?.id
+                                          .toString())
+                                    PopupMenuButton<String>(
+                                      icon: SvgPicture.asset(
                                           AppIcons.settingIcon),
-                                    ),
-                                  ),
+                                      onSelected: (value) {
+                                        if (value == 'delete') {
+                                          cubit.deleteAnnouncement(
+                                              announcementId: widget
+                                                      .announcement?.id
+                                                      .toString() ??
+                                                  "");
+                                        }
+                                      },
+                                      color: AppColors.white,
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry<String>>[
+                                        PopupMenuItem<String>(
+                                          value: 'delete',
+                                          child: Text('delete_post'.tr()),
+                                        ),
+                                      ],
+                                    )
                                 ],
                               )
                           ],

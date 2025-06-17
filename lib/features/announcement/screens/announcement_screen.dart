@@ -18,8 +18,8 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   late final ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    context.read<AnnouncementCubit>().announcementsData(page: '1', isGetMore: false,orderBy: "desc");
-    context.read<AnnouncementCubit>().getCategoryFromAnnouncment(page: '1', isGetMore: false, orderBy: "desc");
+    context.read<AnnouncementCubit>().announcementsData(page: '1', isGetMore: false,orderBy: selctedFilterOption?.key);
+    context.read<AnnouncementCubit>().getCategoryFromAnnouncment(page: '1', isGetMore: false, orderBy: selctedFilterOption?.key);
     scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -200,7 +200,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                         padding: EdgeInsets.only(left: 8.w, right: 8.w),
                         child: RefreshIndicator(
                           onRefresh:()async{
-                            context.read<AnnouncementCubit>().announcementsData(page: '1');
+                            context.read<AnnouncementCubit>().announcementsData(page: '1', orderBy: selctedFilterOption?.key);
                           },
                           child: ListView.builder(
                             physics: const AlwaysScrollableScrollPhysics(),

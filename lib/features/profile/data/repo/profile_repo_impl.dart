@@ -10,11 +10,29 @@ class ProfileRepo {
   ProfileRepo(this.dio);
 
   Future<Either<Failure, ProfileModel>> getProfileData({
-    required String id,
+     String ?id
   }) async {
     try {
-      var response = await dio.get(EndPoints.profile + id.toString());
+      var response = await dio.get(EndPoints.profile +( id??''));
       return Right(ProfileModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+  Future<Either<Failure, DefaultMainModel>> addReview({
+     String ?userId,
+    String? comment,
+    String?review,
+  }) async {
+    try {
+      var response = await dio.post(EndPoints.addReview,
+      body: {
+        'comment':comment,
+        'user_id':userId,
+        'review':review,
+      }
+      );
+      return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
@@ -55,8 +73,10 @@ class ProfileRepo {
           'bio': bio,
           'headline': headline,
           'location': location,
+          if (age != null)
           'age': age,
           'gender': gender,
+          if (syndicate != null)
           'syndicate': syndicate,
           'email': email,
         },

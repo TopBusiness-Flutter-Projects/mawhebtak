@@ -73,6 +73,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 TextField(
                                   controller: cubit.nameController,
                                   decoration: const InputDecoration(
+                                    hintText: "write your name",
                                     border: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                     isDense: true,
@@ -81,25 +82,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   style: getRegularStyle(),
                                 ),
                                 TextField(
+
                                   controller: cubit.headlineController,
                                   style: getRegularStyle(),
                                   decoration: const InputDecoration(
+                                    hintText: "write your headline",
                                     border: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                     isDense: true,
                                     contentPadding: EdgeInsets.zero,
                                   ),
                                 ),
-                                TextField(
-                                  controller: cubit.locationController,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    isDense: true,
-                                    contentPadding: EdgeInsets.zero,
-                                  ),
-                                  style: getRegularStyle(),
-                                ),
+
                               ],
                             ),
                           ),

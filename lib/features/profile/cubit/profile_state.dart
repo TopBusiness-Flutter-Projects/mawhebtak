@@ -11,12 +11,16 @@ final class ImagePickedState extends ProfileState {}
 final class SuccessSelectNewImageProfileState extends ProfileState {}
 final class GetProfileStateError extends ProfileState {
   final String errorMessage;
-
   GetProfileStateError(this.errorMessage);
-
 }
 final class GetProfileStateLoaded extends ProfileState {}
 final class GetProfileStateLoading extends ProfileState {}
+final class AddReviewStateError extends ProfileState {
+  final String errorMessage;
+  AddReviewStateError(this.errorMessage);
+}
+final class AddReviewStateLoaded extends ProfileState {}
+final class AddReviewStateLoading extends ProfileState {}
 final class UpdateProfileStateError extends ProfileState {
   final String errorMessage;
 
