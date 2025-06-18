@@ -83,8 +83,12 @@ class ProfileCubit extends Cubit<ProfileState> {
     nameController.text = profileModel?.data?.name ?? '';
     emailController.text = profileModel?.data?.email ?? "";
     bioController.text = profileModel?.data?.bio ?? "";
-    ageController.text = profileModel?.data?.age.toString() ?? '';
-    syndicateController.text = profileModel?.data?.syndicate.toString() ?? "";
+    ageController.text = (profileModel?.data?.age.toString() == null)
+        ? ''
+        : (profileModel?.data?.age?.toString() ?? "");
+    syndicateController.text = (profileModel?.data?.syndicate == null)
+        ? ''
+        : (profileModel?.data?.syndicate.toString() ?? '');
     headlineController.text = profileModel?.data?.headline ?? '';
     locationController.text = profileModel?.data?.location ?? "";
     emit(EditingState());

@@ -405,7 +405,7 @@ class FeedsCubit extends Cubit<FeedsState> {
         context.read<ProfileCubit>().getProfileData(
             context: context, id: user.data?.id.toString() ?? "");
 
-        // Navigator.pop(context);
+        Navigator.pop(context);
         bodyController.clear();
         myImages = [];
         myImagesF = [];
