@@ -9,7 +9,6 @@ import 'package:mawhebtak/features/assistant/screens/add_assistant_screen.dart';
 import 'package:mawhebtak/features/assistant/screens/add_new_work_screen.dart';
 import 'package:mawhebtak/features/assistant/screens/work_details_screen.dart';
 import 'package:mawhebtak/features/assistant/screens/work_screen.dart';
-import 'package:mawhebtak/features/auth/change_password/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/auth/forget_password/screens/forget_password_screen.dart';
 import 'package:mawhebtak/features/auth/new_account/screens/new_account_screen.dart';
 import 'package:mawhebtak/features/auth/on_boarding/screen/onboarding_screen.dart';
@@ -29,7 +28,9 @@ import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
 import 'package:mawhebtak/features/auth/new_password/screens/new_password_screen.dart';
 import 'package:mawhebtak/features/auth/verification/screens/verification_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/about_us_screen.dart';
+import 'package:mawhebtak/features/more_screen/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/contact_us_screen.dart';
+import 'package:mawhebtak/features/more_screen/screens/favourites_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
 import 'package:mawhebtak/features/profile/screens/edit_profile_screen.dart';
@@ -113,6 +114,7 @@ class Routes {
   static const String editProfileRoute = '/editProfile';
   static const String messageRoute = '/MessageScreen';
   static const String roomsScreen = '/roomsScreen';
+  static const String favouritesRoute = '/FavouritesRoute';
 }
 
 class AppRoutes {
@@ -176,6 +178,13 @@ class AppRoutes {
       case Routes.newGigsRoute:
         return PageTransition(
           child: NewGigsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
+        case Routes.favouritesRoute:
+        return PageTransition(
+          child: const FavouritesScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),

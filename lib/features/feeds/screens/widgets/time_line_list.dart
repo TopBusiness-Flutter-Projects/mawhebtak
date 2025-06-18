@@ -114,6 +114,7 @@ class _TimeLineListState extends State<TimeLineList> {
                         if (value == 'delete') {
                           widget.feedsCubit
                               ?.deletePost(
+                              index: widget.index,
                               context, postId: widget.postId,
 
                              );

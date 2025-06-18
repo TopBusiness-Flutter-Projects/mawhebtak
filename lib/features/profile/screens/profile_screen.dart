@@ -4,6 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
+import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
+import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
+import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/what_do_you_want.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
@@ -241,11 +244,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return AboutWidget(profileModel: cubit.profileModel);
 
       case 1:
-        return _buildPostsSection(cubit);
+        return BlocBuilder<FeedsCubit,FeedsState>(
+          builder: (context,state) {
+            return _buildPostsSection(cubit);
+          }
+        );
 
       case 2:
         if (isMyProfile) {
-          return _buildGigsSection(context);
+          return BlocBuilder<CastingCubit,CastingState>(
+            builder: (context,state) {
+              return _buildGigsSection(context);
+            }
+          );
         } else {
           return _buildReviewsSection(cubit);
         }

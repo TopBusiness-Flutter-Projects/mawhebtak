@@ -111,7 +111,9 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
                             title: 'delete'.tr(),
                             color: AppColors.red,
                             onTap: () {
-                              castingCubit.deleteGigs(gigId:widget.id,context:  context);
+                              castingCubit.deleteGigs(
+
+                                  gigId:widget.id,context:  context);
                             })
                     ],
                   ),

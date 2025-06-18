@@ -95,6 +95,7 @@ class _JobWidgetState extends State<JobWidget> {
                                   checkLogin(context);
                                 } else {
                                   widget.jobsCubit.toggleFavorite(
+                                      context: context,
                                       index: widget.index,
                                       userJopId:
                                           widget.userJop?.id.toString() ?? "");

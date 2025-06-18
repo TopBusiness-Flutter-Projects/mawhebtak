@@ -140,6 +140,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                               print(
                                   "the is fav ${cubit.userJobDetailsModel?.data?.isFav}");
                               cubit.toggleFavorite(
+                                  context: context,
                                   index: widget.index,
                                   userJopId: widget.userJopId.toString() ?? "");
                             }

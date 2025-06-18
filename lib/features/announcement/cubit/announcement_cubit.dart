@@ -8,6 +8,7 @@ import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcements_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
+import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import '../../../core/exports.dart';
 import '../data/repo/announcement_repo_impl.dart';
 part 'announcement_state.dart';
@@ -136,7 +137,9 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
   }
 
   toggleFavoriteAnnounce(
-      {required String userAnnounceId, required int index}) async {
+      {required String userAnnounceId,
+      required int index,
+      required BuildContext context}) async {
     emit(ToggleFavoriteAnnounceStateLoading());
     try {
       final res =
@@ -145,12 +148,28 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       res.fold((l) {
         emit(ToggleFavoriteAnnounceStateError(l.toString()));
       }, (r) {
-        successGetBar(r.msg.toString());
         if (announcements?.data?[index].isFav == true ||
-            announcementDetailsModel?.data?.isFav == true) {
+            announcementDetailsModel?.data?.isFav == true ||
+            context
+                    .read<MoreCubit>()
+                    .announcementFavouriteModel
+                    ?.data?[index]
+                    .isFav ==
+                true) {
           announcements?.data?[index].isFav = false;
           announcementDetailsModel?.data?.isFav = false;
+          context
+              .read<MoreCubit>()
+              .announcementFavouriteModel
+              ?.data?[index]
+              .isFav = false;
+          context.read<MoreCubit>().announcementFavouriteModel!.data!.removeAt(index);
         } else {
+          context
+              .read<MoreCubit>()
+              .announcementFavouriteModel
+              ?.data?[index]
+              .isFav = true;
           announcements?.data?[index].isFav = true;
           announcementDetailsModel?.data?.isFav = true;
         }
@@ -217,20 +236,16 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       emit(SubCategoryStateError(e.toString()));
     }
   }
+
   deleteAnnouncement({required String announcementId}) async {
     emit(DeleteAnnounceStateLoading());
     try {
-      final res =
-          await api.deleteAnnouncement(announcementId:announcementId);
+      final res = await api.deleteAnnouncement(announcementId: announcementId);
       res.fold((l) {
         emit(DeleteAnnounceStateError(l.toString()));
       }, (r) {
         successGetBar(r.msg.toString());
-        announcementsData(
-          page: '1',
-          orderBy: 'desc'
-
-        );
+        announcementsData(page: '1', orderBy: 'desc');
         emit(DeleteAnnounceStateLoaded());
       });
     } catch (e) {
@@ -284,9 +299,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
         selectedSubCategory = null;
         locationController.clear();
         priceController.clear();
-        announcementsData(page: '1',
-            orderBy: 'desc'
-        );
+        announcementsData(page: '1', orderBy: 'desc');
         emit(AddAnnouncementStateLoaded());
       });
     } catch (e) {
@@ -294,6 +307,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     }
     Navigator.pop(context);
   }
+
   Future<LoginModel> getUserFromPreferences() async {
     final user = await Preferences.instance.getUserModel();
     return user;
