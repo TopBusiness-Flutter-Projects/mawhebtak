@@ -281,9 +281,10 @@ class CastingCubit extends Cubit<CastingState> {
           locationAddressController.clear();
           selectedCategory = null;
           selectedSubCategory = null;
-          Navigator.pop(context);
+          allGigsData(page: '1');
           context.read<ProfileCubit>().getProfileData(
               context: context, id: context.read<ProfileCubit>().profileModel?.data?.id.toString() ?? "");
+          Navigator.pop(context);
           emit(AddNewGigStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
@@ -301,7 +302,7 @@ class CastingCubit extends Cubit<CastingState> {
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
   }
-  deleteGigs({required String gigId,required  BuildContext context}) async {
+  deleteGigs({required String gigId,required  BuildContext context, int? index}) async {
     emit(DeleteGigsStateLoading());
     try {
       final res = await castingRepo.deleteGigs(gigId);
@@ -313,17 +314,16 @@ class CastingCubit extends Cubit<CastingState> {
       }, (r) {
         if (r.status == 200) {
           successGetBar(r.msg.toString());
-          allGigsData(page: '1', isGetMore: false);
+          allGigsModel?.data?.removeAt(index!);
+          context.read<ProfileCubit>().profileModel?.data?.myGigs?.removeAt(index!);
           emit(DeleteGigsStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
           emit(DeleteGigsStateError());
         }
-        Navigator.pop(context);
+
       });
     } catch (e) {
-      Navigator.pop(context);
-
       errorGetBar(e.toString());
       emit(DeleteGigsStateError());
     }

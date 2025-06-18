@@ -3,14 +3,17 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
+import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 import 'package:mawhebtak/features/more_screen/cubit/more_state.dart';
+import 'package:mawhebtak/features/more_screen/data/model/announcement_favourite_model.dart';
 import 'package:mawhebtak/features/more_screen/data/model/setting_model.dart';
+import 'package:mawhebtak/features/more_screen/data/model/user_jop_model.dart';
 import 'package:mawhebtak/features/more_screen/data/repos/more.repo.dart';
 
 class MoreCubit extends Cubit<MoreState> {
   MoreCubit(this.api) : super(MoreInitial());
   MoreRepo api;
-
+  int selectedIndex = 0;
   TextEditingController messageController = TextEditingController();
   TextEditingController oldPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
@@ -25,11 +28,9 @@ class MoreCubit extends Cubit<MoreState> {
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
   }
-
   saveData() {
     phoneNumberController.text = user?.data?.phone ?? "";
   }
-
   SettingModel? settingModel;
   getSettingData() async {
     emit(GetSettingDataStateLoading());
@@ -45,9 +46,38 @@ class MoreCubit extends Cubit<MoreState> {
       emit(GetSettingDataStateError(e.toString()));
     }
   }
+  AnnouncementFavouriteModel? announcementFavouriteModel;
+  getAnnounceFavouritesData() async {
+    emit(AnnounceFavouritesDataStateLoading());
+    try {
+      final res = await api.announcementFavourite();
+      res.fold((l) {
+        emit(AnnounceFavouritesDataStateError(l.toString()));
+      }, (r) {
+        announcementFavouriteModel = r;
+        emit(AnnounceFavouritesDataStateLoaded());
+      });
+    } catch (e) {
+      emit(AnnounceFavouritesDataStateError(e.toString()));
+    }
+  }
+  UserJobModel? userJobFavouriteModel;
+  getUserJobFavouritesData() async {
+    emit(UserJobFavouritesDataStateLoading());
+    try {
+      final res = await api.userJobFavourite();
+      res.fold((l) {
+        emit(UserJobFavouritesDataStateError(l.toString()));
+      }, (r) {
+        userJobFavouriteModel = r;
 
-  contactUs(
-      {required bool isComplaining, required BuildContext context}) async {
+        emit(UserJobFavouritesDataStateLoaded());
+      });
+    } catch (e) {
+      emit(UserJobFavouritesDataStateError(e.toString()));
+    }
+  }
+  contactUs({required bool isComplaining, required BuildContext context}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(ContactUsStateLoading());
     try {
@@ -70,7 +100,6 @@ class MoreCubit extends Cubit<MoreState> {
       emit(GetSettingDataStateError(e.toString()));
     }
   }
-
   logout({required BuildContext context}) async {
     emit(LogoutStateLoading());
     try {
@@ -90,7 +119,10 @@ class MoreCubit extends Cubit<MoreState> {
       emit(LogoutStateError(e.toString()));
     }
   }
-
+  changeSelected(int index) {
+    selectedIndex = index;
+    emit(ChangeIndexState());
+  }
   changePassword({required BuildContext context}) async {
     AppWidgets.create2ProgressDialog(context);
     try {
@@ -107,6 +139,8 @@ class MoreCubit extends Cubit<MoreState> {
           successGetBar('change_password_successfully'.tr());
           emit(ChangePasswordStateLoaded());
           Navigator.pop(context);
+          oldPasswordController.clear();
+          newPasswordController.clear();
 
         }
         else{
@@ -119,4 +153,6 @@ class MoreCubit extends Cubit<MoreState> {
       emit(ChangePasswordStateError(e.toString()));
     }
   }
+
+
 }

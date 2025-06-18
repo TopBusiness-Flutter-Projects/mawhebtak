@@ -291,7 +291,7 @@ class FeedsCubit extends Cubit<FeedsState> {
   }
 
   deletePost(BuildContext context,
-      {required String postId, bool? isDetails}) async {
+      {required String postId, bool? isDetails, int? index}) async {
 
     emit(DeletePostStateLoading());
     try {
@@ -299,9 +299,9 @@ class FeedsCubit extends Cubit<FeedsState> {
       res.fold((l) {
         emit(DeletePostStateError(l.toString()));
       }, (r) {
-        postsData(page: '1');
-        context.read<ProfileCubit>().getProfileData(
-            context: context, id: user?.data?.id.toString() ?? "");
+        posts?.data?.removeAt(index!);
+        context.read<ProfileCubit>().profileModel?.data?.timeline?.removeAt(index!);
+
         successGetBar(r.msg);
         if (isDetails == true) {
           Navigator.pushReplacementNamed(context, Routes.mainRoute);

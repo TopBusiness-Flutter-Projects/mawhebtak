@@ -34,15 +34,30 @@ class ChangePasswordScreen extends StatelessWidget {
                           style: TextStyle(fontSize: 20.sp),
                         ),
                         CustomTextField(
+                          isPassword: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'please_enter_password'.tr();
+                            }
+                            return null;
+                          },
                           hintTextSize: 20.sp,
                           controller: cubit.oldPasswordController,
                           hintText: "● ● ● ● ● ● ● ● ● ●",
+
                         ),
                         Text(
                           "new_password".tr(),
                           style: TextStyle(fontSize: 14.sp),
                         ),
                         CustomTextField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'please_enter_password'.tr();
+                            }
+                            return null;
+                          },
+                          isPassword: true,
                           hintTextSize: 20.sp,
                           controller: cubit.newPasswordController,
                           hintText: "● ● ● ● ● ● ● ● ● ●",

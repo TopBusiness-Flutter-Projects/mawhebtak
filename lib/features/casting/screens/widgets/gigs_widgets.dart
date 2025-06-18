@@ -146,6 +146,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                             onSelected: (value) {
                               if (value == 'delete') {
                                 widget.castingCubit?.deleteGigs(
+                                  index: widget.index!,
                                     gigId: widget.eventAndGigsModel?.id.toString() ??
                                         "",
                                     context: context);

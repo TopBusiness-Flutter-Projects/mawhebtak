@@ -5,6 +5,7 @@ import 'package:mawhebtak/features/jobs/data/model/user_jop_details_model.dart';
 import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 import 'package:mawhebtak/features/jobs/data/repos/jobs.repo.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
+import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import 'jobs_state.dart';
 
 class JobsCubit extends Cubit<JobsState> {
@@ -108,7 +109,10 @@ class JobsCubit extends Cubit<JobsState> {
     }
   }
 
-  toggleFavorite({required String userJopId, required int index}) async {
+  toggleFavorite(
+      {required String userJopId,
+      required int index,
+      required BuildContext context}) async {
     emit(ToggleFavoriteStateLoading());
     try {
       final res = await jobsRepo.toggleFavorite(userJopId: userJopId);
@@ -116,14 +120,24 @@ class JobsCubit extends Cubit<JobsState> {
       res.fold((l) {
         emit(ToggleFavoriteStateError(l.toString()));
       }, (r) {
-        successGetBar(r.msg.toString());
         if (userJopModel?.data?[index].isFav == true ||
-            userJobDetailsModel?.data?.isFav == true) {
+            userJobDetailsModel?.data?.isFav == true ||
+            context
+                    .read<MoreCubit>()
+                    .userJobFavouriteModel
+                    ?.data?[index]
+                    .isFav ==
+                true) {
           userJopModel?.data?[index].isFav = false;
           userJobDetailsModel?.data?.isFav = false;
+          context.read<MoreCubit>().userJobFavouriteModel?.data?[index].isFav =
+              false;
+          context.read<MoreCubit>().userJobFavouriteModel?.data?.removeAt(index);
         } else {
           userJopModel?.data?[index].isFav = true;
           userJobDetailsModel?.data?.isFav = true;
+          context.read<MoreCubit>().userJobFavouriteModel?.data?[index].isFav =
+              true;
         }
         emit(ToggleFavoriteStateLoaded());
       });

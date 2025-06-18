@@ -45,4 +45,5 @@ class EndPoints {
   static const String settingUrl = '${baseUrl}get-setting';
   static const String changePasswordUrl = '${baseUrl}change-password';
   static const String logoutUrl = '${baseUrl}logout';
+  static const String favouritesUrl = '${baseUrl}get-favourites';
 }

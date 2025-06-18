@@ -30,6 +30,7 @@ import 'package:mawhebtak/features/auth/verification/screens/verification_screen
 import 'package:mawhebtak/features/more_screen/screens/about_us_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/contact_us_screen.dart';
+import 'package:mawhebtak/features/more_screen/screens/favourites_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
 import 'package:mawhebtak/features/profile/screens/edit_profile_screen.dart';
@@ -113,6 +114,7 @@ class Routes {
   static const String editProfileRoute = '/editProfile';
   static const String messageRoute = '/MessageScreen';
   static const String roomsScreen = '/roomsScreen';
+  static const String favouritesRoute = '/FavouritesRoute';
 }
 
 class AppRoutes {
@@ -176,6 +178,13 @@ class AppRoutes {
       case Routes.newGigsRoute:
         return PageTransition(
           child: NewGigsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
+        case Routes.favouritesRoute:
+        return PageTransition(
+          child: const FavouritesScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),

@@ -107,7 +107,9 @@ class _PostProfileWidgetState extends State<PostProfileWidget> {
                         icon: SvgPicture.asset(AppIcons.settingIcon),
                         onSelected: (value) {
                           if (value == 'delete') {
-                            context.read<FeedsCubit>().deletePost(context,
+                            context.read<FeedsCubit>().deletePost(
+                              index: widget.index,
+                              context,
                                 postId: widget.postId,);
                           }
                         },

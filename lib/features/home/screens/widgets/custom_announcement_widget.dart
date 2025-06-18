@@ -125,6 +125,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                                   InkWell(
                                     onTap: () {
                                       cubit.toggleFavoriteAnnounce(
+                                        context: context,
                                           userAnnounceId: widget
                                                   .announcement?.id
                                                   .toString() ??

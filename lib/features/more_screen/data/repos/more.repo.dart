@@ -1,9 +1,9 @@
-import 'package:mawhebtak/core/api/base_api_consumer.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
+import 'package:mawhebtak/features/more_screen/data/model/announcement_favourite_model.dart';
 import 'package:mawhebtak/features/more_screen/data/model/setting_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MoreRepo {
   BaseApiConsumer api;
@@ -14,6 +14,35 @@ class MoreRepo {
         EndPoints.settingUrl,
       );
       return Right(SettingModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, AnnouncementFavouriteModel>> announcementFavourite() async {
+    try {
+      var response = await api.get(
+        EndPoints.favouritesUrl,
+        queryParameters: {
+          'favouriteable_type':'Announce',
+        }
+      );
+      return Right(AnnouncementFavouriteModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+
+  Future<Either<Failure, UserJobModel>> userJobFavourite() async {
+    try {
+      var response = await api.get(
+        EndPoints.favouritesUrl,
+        queryParameters: {
+          'favouriteable_type':'UserJob',
+        }
+      );
+      return Right(UserJobModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
