@@ -91,17 +91,27 @@ class MoreCubit extends Cubit<MoreState> {
     }
   }
 
-  changePassword() async {
-    emit(ChangePasswordStateLoading());
+  changePassword({required BuildContext context}) async {
+    AppWidgets.create2ProgressDialog(context);
     try {
       final res = await api.changePassword(
           oldPassword: oldPasswordController.text,
           newPassword: newPasswordController.text);
       res.fold((l) {
         emit(ChangePasswordStateError(l.toString()));
+        Navigator.pop(context);
       }, (r) {
-        successGetBar(r.data.toString());
-        emit(ChangePasswordStateLoaded());
+        if(r.status == 200){
+          successGetBar('change_password_successfully'.tr());
+          emit(ChangePasswordStateLoaded());
+          Navigator.pop(context);
+
+        }
+        else{
+          errorGetBar(r.msg.toString());
+          Navigator.pop(context);
+        }
+
       });
     } catch (e) {
       emit(ChangePasswordStateError(e.toString()));

@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/data/repos/assistant.repo.dart';
-import 'package:mawhebtak/features/auth/change_password/data/repos/change_password_repo.dart';
 import 'package:mawhebtak/features/auth/forget_password/cubit/forget_password_cubit.dart';
 import 'package:mawhebtak/features/auth/forget_password/data/repos/forget_password_repo.dart';
 import 'package:mawhebtak/features/auth/login/cubit/cubit.dart';
@@ -43,8 +42,6 @@ import 'features/chat/cubit/chat_cubit.dart';
 import 'features/chat/data/repos/chat_repo.dart';
 import 'features/events/cubit/event_cubit.dart';
 import 'features/events/data/repo/event_repo_impl.dart';
-
-import 'features/auth/change_password/cubit/change_password_cubit.dart';
 import 'features/change_langauge/data/repos/change_language_repo.dart';
 import 'features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import 'features/home/data/repositories/top_events_repository.dart';
@@ -107,11 +104,7 @@ Future<void> setupCubit() async {
     ),
   );
 
-  serviceLocator.registerFactory(
-    () => ChangePasswordCubit(
-      serviceLocator(),
-    ),
-  );
+
   serviceLocator.registerFactory(
     () => ProfileCubit(
       serviceLocator(),
@@ -178,8 +171,7 @@ Future<void> setupRepo() async {
   serviceLocator
       .registerLazySingleton(() => VerificationRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => NewPasswordRepo(serviceLocator()));
-  serviceLocator
-      .registerLazySingleton(() => ChangePasswordRepo(serviceLocator()));
+
   serviceLocator
       .registerLazySingleton(() => ChangeLanguageRepo(serviceLocator()));
   serviceLocator
