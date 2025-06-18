@@ -1,7 +1,7 @@
 import '../../../events/data/model/event_details_model.dart';
 
 class UserJobDetailsModel {
-  Data? data;
+  JopData? data;
   String? msg;
   int? status;
 
@@ -13,7 +13,7 @@ class UserJobDetailsModel {
 
   factory UserJobDetailsModel.fromJson(Map<String, dynamic> json) =>
       UserJobDetailsModel(
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        data: json["data"] == null ? null : JopData.fromJson(json["data"]),
         msg: json["msg"],
         status: json["status"],
       );
@@ -25,7 +25,7 @@ class UserJobDetailsModel {
       };
 }
 
-class Data {
+class JopData {
   int? id;
   String? title;
   String? description;
@@ -38,7 +38,7 @@ class Data {
   bool? isMine;
   bool? isFav;
 
-  Data({
+  JopData({
     this.id,
     this.title,
     this.description,
@@ -52,7 +52,7 @@ class Data {
     this.isFav,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory JopData.fromJson(Map<String, dynamic> json) => JopData(
         id: json["id"],
         title: json["title"],
         description: json["description"],

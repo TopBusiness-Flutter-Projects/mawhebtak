@@ -81,7 +81,9 @@ class _MoreScreenState extends State<MoreScreen> {
                         moreContainer(
                             text: "my_favorites".tr(),
                             imageUrl: AppIcons.myFavoriteIcon,
-                            onTap: () {}),
+                            onTap: () {
+                              Navigator.pushNamed(context, Routes.favouritesRoute);
+                            }),
                         moreContainer(
                             text: "chats".tr(),
                             imageUrl: AppIcons.chatIcon,
