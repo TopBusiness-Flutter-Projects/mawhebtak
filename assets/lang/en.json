@@ -277,7 +277,7 @@
   "write_comment_here": "Write comment here",
   "enter_your_rating_and_comment": "Enter your rating and comment",
   "please_enter_rating": "please enter rating",
-  "favourites":"Favourites",
+  "favourites": "Favourites",
   "please_enter_comment": "please enter comment",
   "logout_successfully": "Logout Successfully !!",
   "change_password_successfully": "Change password successfully!!",
@@ -287,11 +287,9 @@
   "write_your_headline": "write your headline",
   "title": "Title",
   "until_now": "Working until now",
-    "present":"Present",
-      "to_date":"To Date",
-      "from_date":"From Date",
-        "add_experience":"Add Experience",
-  "update_experience":"Update Experience"
-
-
+  "present": "Present",
+  "to_date": "To Date",
+  "from_date": "From Date",
+  "add_experience": "Add Experience",
+  "update_experience": "Update Experience"
 }

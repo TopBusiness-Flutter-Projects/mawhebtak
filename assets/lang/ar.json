@@ -284,16 +284,12 @@
   "logout_successfully": "تم تسجيل الخروج بنجاح!!",
   "favourites": "المفضلة",
   "change_password_successfully": "تم تغير كلمة المرور بنجاح !!",
-
   "you_do_review_in_this_user": "انت بالفعل قمت بالتقيم علي هذا المستخدم",
   "title": "العنوان",
   "until_now": "حتى الان",
-  "present":"حاليا",
-  "to_date":"الى تاريخ",
-  "from_date":"من تاريخ",
-  "add_experience":"أضف خبرة جديدة",
-  "update_experience":"تحديث الخبرة"
-
-  
-
+  "present": "حاليا",
+  "to_date": "الى تاريخ",
+  "from_date": "من تاريخ",
+  "add_experience": "أضف خبرة جديدة",
+  "update_experience": "تحديث الخبرة"
 }
