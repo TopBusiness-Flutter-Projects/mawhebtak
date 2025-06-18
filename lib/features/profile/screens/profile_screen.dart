@@ -164,6 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         followersCount: profileData?.followersCount.toString() ?? "0",
         followingCount: profileData?.followingCount.toString() ?? "0",
         postsCount: profileData?.postsCount.toString() ?? "0",
+
       );
     }
 

@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/features/profile/data/models/followers_model.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 
 class ProfileRepo {
@@ -14,9 +15,23 @@ class ProfileRepo {
   Future<Either<Failure, ProfileModel>> getProfileData({String? id}) async {
     try {
       var response = await dio.get(EndPoints.profile + (id ?? ''));
-
-      log('eeeeeeeeeee ${response}');
       return Right(ProfileModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, FollowersModel>> getFollowersData(
+      {String? followedId, String? paginate, String? orderBy,String? page}) async {
+    try {
+      var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
+        'model': 'Follower',
+        'where[1]': 'followed_id,$followedId',
+        'paginate': paginate,
+        'orderBy': orderBy,
+        'page':page,
+      });
+      return Right(FollowersModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
