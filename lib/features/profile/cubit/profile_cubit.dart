@@ -116,12 +116,22 @@ class ProfileCubit extends Cubit<ProfileState> {
       res.fold((l) {
         emit(GetProfileStateError(l.toString()));
       }, (r) {
-        profileModel = r;
-        emit(GetProfileStateLoaded());
+        if (r.status == 200) {
+          profileModel = r;
+          log('555 ${profileModel?.data?.id?.toString() ?? '**'}');
+          log('555 ${profileModel ?? '**'}');
+          emit(GetProfileStateLoaded());
+          successGetBar(r.msg);
 
-        loadUserFromPreferences();
+          loadUserFromPreferences();
+        } else {
+          errorGetBar(r.msg ?? '');
+          emit(GetProfileStateError(r.msg.toString()));
+        }
       });
     } catch (e) {
+      // errorGetBar(e.toString());
+
       emit(GetProfileStateError(e.toString()));
     }
   }

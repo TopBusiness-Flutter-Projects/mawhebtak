@@ -37,9 +37,9 @@ class MyProfileModelData {
   String? bgCover;
   GetCountriesMainModelData? userType;
   GetCountriesMainModelData? userSubType;
-  String? followersCount;
-  String? followingCount;
-  String? postsCount;
+  dynamic followersCount;
+  dynamic followingCount;
+  dynamic postsCount;
   String? location;
   String? bio;
   String? email;
@@ -85,6 +85,22 @@ class MyProfileModelData {
         avatar: json["avatar"],
         phone: json["phone"],
         bgCover: json["bg_cover"],
+        experiences:
+            json["experiences"] == null || (json["experiences"] as List).isEmpty
+                ? null
+                : List<Experience>.from(
+                    json["experiences"].map((x) => Experience.fromJson(x))),
+        timeline: json["timeline"] == null || (json["timeline"] as List).isEmpty
+            ? null
+            : List<PostsModelData>.from(
+                json["timeline"].map((x) => PostsModelData.fromJson(x))),
+        myGigs: json["my_gigs"] == null || (json["my_gigs"] as List).isEmpty
+            ? null
+            : List<EventAndGigsModel>.from(
+                json["my_gigs"].map((x) => EventAndGigsModel.fromJson(x))),
+        reviews: json["reviews"] == null || (json["reviews"] as List).isEmpty
+            ? null
+            : List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
         userType: json["user_type"] == null
             ? null
             : GetCountriesMainModelData.fromJson(json["user_type"]),
@@ -100,22 +116,6 @@ class MyProfileModelData {
         age: json["age"],
         syndicate: json["syndicate"],
         isIFollow: json["is_i_follow"],
-        experiences: json["experiences"] == null
-            ? []
-            : List<Experience>.from(
-                json["experiences"]!.map((x) => Experience.fromJson(x))),
-        timeline: json["timeline"] == null
-            ? []
-            : List<PostsModelData>.from(
-                json["timeline"]!.map((x) => PostsModelData.fromJson(x))),
-        myGigs: json["my_gigs"] == null
-            ? []
-            : List<EventAndGigsModel>.from(
-                json["my_gigs"]!.map((x) => EventAndGigsModel.fromJson(x))),
-        reviews: json["reviews"] == null
-            ? []
-            : List<Review>.from(
-                json["reviews"]!.map((x) => Review.fromJson(x))),
         isIReviewed: json["is_i_reviewed"],
       );
 
