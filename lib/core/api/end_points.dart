@@ -26,7 +26,6 @@ class EndPoints {
   //! delete
   static const String deleteData = '${baseUrl}delete-data';
   static const String eventCalendarUrl = '${baseUrl}calendar';
-
   static const String storeEventUrl = '${baseUrl}store-event';
   static const String getDetailsDataUrl = '${baseUrl}get-details-data';
   static const String followUnfollowEventUrl =

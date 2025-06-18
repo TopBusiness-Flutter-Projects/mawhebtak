@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -9,29 +10,28 @@ class ProfileRepo {
   final BaseApiConsumer dio;
   ProfileRepo(this.dio);
 
-  Future<Either<Failure, ProfileModel>> getProfileData({
-     String ?id
-  }) async {
+  Future<Either<Failure, ProfileModel>> getProfileData({String? id}) async {
     try {
-      var response = await dio.get(EndPoints.profile +( id??''));
+      var response = await dio.get(EndPoints.profile + (id ?? ''));
+
+      log('eeeeeeeeeee ${response}');
       return Right(ProfileModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, DefaultMainModel>> addReview({
-     String ?userId,
+    String? userId,
     String? comment,
-    String?review,
+    String? review,
   }) async {
     try {
-      var response = await dio.post(EndPoints.addReview,
-      body: {
-        'comment':comment,
-        'user_id':userId,
-        'review':review,
-      }
-      );
+      var response = await dio.post(EndPoints.addReview, body: {
+        'comment': comment,
+        'user_id': userId,
+        'review': review,
+      });
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
@@ -73,11 +73,9 @@ class ProfileRepo {
           'bio': bio,
           'headline': headline,
           'location': location,
-          if (age != null)
-          'age': age,
+          if (age != null) 'age': age,
           'gender': gender,
-          if (syndicate != null)
-          'syndicate': syndicate,
+          if (syndicate != null) 'syndicate': syndicate,
           'email': email,
         },
       );

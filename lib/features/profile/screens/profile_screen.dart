@@ -179,9 +179,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       checkLogin(context);
                     } else {
                       if (cubit.profileModel?.data?.isIFollow != null) {
-                        cubit.profileModel?.data?.isIFollow = !(cubit
-                            .profileModel?.data?.isIFollow)!;
-                      }  topTalentCubit.followAndUnFollow(
+                        cubit.profileModel?.data?.isIFollow =
+                            !(cubit.profileModel?.data?.isIFollow)!;
+                      }
+                      topTalentCubit.followAndUnFollow(
                         context,
                         followedId:
                             cubit.profileModel?.data?.id.toString() ?? "",
@@ -215,13 +216,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             onSelected: (value) {
               if (value == 'rate') {
-                if(cubit.profileModel?.data?.isIReviewed == true){
+                if (cubit.profileModel?.data?.isIReviewed == true) {
                   _showRatingDialog(context, cubit);
-                }
-                else{
+                } else {
                   errorGetBar('you_do_review_in_this_user'.tr());
                 }
-
               }
             },
             color: AppColors.white,
@@ -271,7 +270,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
           if (timeline.isEmpty) {
             return Center(
-              child: Text("no_data".tr(),
+              child: Text(
+                "no_data".tr(),
                 style: TextStyle(color: AppColors.black),
               ),
             );
@@ -287,7 +287,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
 
   Widget _buildGigsSection(BuildContext context) {
     final castingCubit = context.read<CastingCubit>();

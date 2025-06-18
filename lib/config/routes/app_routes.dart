@@ -208,9 +208,7 @@ class AppRoutes {
       case Routes.profileRoute:
         DeepLinkDataModel? model = settings.arguments as DeepLinkDataModel;
         return PageTransition(
-          child: ProfileScreen(
-            model: model,
-          ),
+          child: ProfileScreen(model: model),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
@@ -483,7 +481,7 @@ class AppRoutes {
       case Routes.detailsOfMainCategoryFromTopTalentsRoute:
         String userTypeId = settings.arguments as String;
         return PageTransition(
-          child:  DetailsOfMainCategoryTopTalents(
+          child: DetailsOfMainCategoryTopTalents(
             userTypeId: userTypeId,
           ),
           type: PageTransitionType.fade,
