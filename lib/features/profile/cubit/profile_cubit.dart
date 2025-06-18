@@ -8,6 +8,7 @@ import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
+import 'package:mawhebtak/features/profile/data/models/followers_model.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../core/exports.dart';
 import '../data/repo/profile_repo_impl.dart';
@@ -98,12 +99,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     isFollowing = !isFollowing;
     emit(ChangeFollowersState());
   }
-
+  Future<LoginModel> getUserFromPreferences() async {
+    final user = await Preferences.instance.getUserModel();
+    return user;
+  }
   LoginModel? user;
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
   }
-
+  bool isLoadingMore = false;
   ProfileModel? profileModel;
   getProfileData({
     required BuildContext context,
@@ -135,6 +139,56 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(GetProfileStateError(e.toString()));
     }
   }
+  FollowersModel? followersModel;
+  getFollowersData({
+    bool isGetMore = false,
+    required String page,
+    String? orderBy,
+    String? followedId,
+
+  }) async {
+    if (isGetMore) {
+      isLoadingMore = true;
+      emit(GetFollowersStateLoadingMore());
+    } else {
+      emit(GetFollowersStateLoading());
+    }
+    try {
+      final res = await api.getFollowersData(
+          page: page,
+          orderBy: orderBy,
+          followedId:followedId,
+          paginate: orderBy );
+
+      res.fold((l) {
+        emit(GetFollowersStateError(l.toString()));
+      }, (r) {
+
+          if (isGetMore) {
+            followersModel = FollowersModel(
+              links: r.links,
+              status: r.status,
+              msg: r.msg,
+              data: [...followersModel!.data!, ...r.data!],
+            );
+
+            emit(GetFollowersStateLoaded());
+
+          } else {
+
+            followersModel = r;
+            emit(GetFollowersStateLoaded());
+          }
+
+      });
+    } catch (e) {
+      emit(GetFollowersStateError(e.toString()));
+    } finally {
+      isLoadingMore = false;
+    }
+  }
+
+
 
   addReview({
     required BuildContext context,
