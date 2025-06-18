@@ -101,6 +101,8 @@ class MoreCubit extends Cubit<MoreState> {
         emit(ChangePasswordStateError(l.toString()));
         Navigator.pop(context);
       }, (r) {
+
+
         if(r.status == 200){
           successGetBar('change_password_successfully'.tr());
           emit(ChangePasswordStateLoaded());
