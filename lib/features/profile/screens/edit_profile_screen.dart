@@ -27,10 +27,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     context.read<ProfileCubit>().loadUserFromPreferences();
     context.read<NewAccountCubit>().getDataUserType(
-      context,
-      isEditProfile: true,
-      userTypeModel: context.read<ProfileCubit>().profileModel?.data?.userType,
-    );
+          context,
+          isEditProfile: true,
+          userTypeModel:
+              context.read<ProfileCubit>().profileModel?.data?.userType,
+        );
     super.initState();
   }
 
@@ -45,10 +46,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
             var cubit = context.read<ProfileCubit>();
-            return (state is GetProfileStateLoading && cubit.profileModel == null) ?
-               const Center(child: CustomLoadingIndicator())
-            :
-             _buildProfileContent(context);
+            return (state is GetProfileStateLoading &&
+                    cubit.profileModel == null)
+                ? const Center(child: CustomLoadingIndicator())
+                : _buildProfileContent(context);
           },
         ),
       ),
@@ -59,53 +60,55 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final cubit = context.read<ProfileCubit>();
     final newAccountCubit = context.read<NewAccountCubit>();
 
-    return Column( // Removed Stack
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ProfileAppBar(
-          isEdit: true,
-          id: widget.model.id,
-          avatar: cubit.profileModel?.data?.avatar ?? "",
-          byCaver: cubit.profileModel?.data?.bgCover ?? "",
-        ),
-        SizedBox(height: 20.h),
-        _buildNameField(cubit),
-        Container(height: 8.h, color: AppColors.grayLite),
-        Container(height: 20.h, color: AppColors.white),
-        _buildHeadlineSection(cubit),
-        Container(height: 8.h, color: AppColors.grayLite),
-        Container(height: 20.h, color: AppColors.white),
-        _buildBioSection(cubit),
-        Container(height: 8.h, color: AppColors.grayLite),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(left: 20.w, top: 10.h, right: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _buildPersonalInfoHeader(),
-                  _buildEmailField(cubit),
-                  _buildPhoneField(cubit),
-                  _buildAgeField(cubit),
-                  _buildGenderDropdown(cubit),
-                  _buildUserTypeDropdown(newAccountCubit),
-                  if ((newAccountCubit.userSubTypeList?.data?.isNotEmpty ?? false))
-                    _buildUserSubTypeDropdown(newAccountCubit),
-                  _buildLocationSection(cubit),
-                  _buildSyndicateField(cubit),
-                ],
+    return BlocBuilder<NewAccountCubit, NewAccountState>(
+        builder: (context, state) {
+      return Column(
+        // Removed Stack
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ProfileAppBar(
+            isEdit: true,
+            id: widget.model.id,
+            avatar: cubit.profileModel?.data?.avatar ?? "",
+            byCaver: cubit.profileModel?.data?.bgCover ?? "",
+          ),
+          SizedBox(height: 20.h),
+          _buildNameField(cubit),
+          Container(height: 8.h, color: AppColors.grayLite),
+          Container(height: 20.h, color: AppColors.white),
+          _buildHeadlineSection(cubit),
+          Container(height: 8.h, color: AppColors.grayLite),
+          Container(height: 20.h, color: AppColors.white),
+          _buildBioSection(cubit),
+          Container(height: 8.h, color: AppColors.grayLite),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(left: 20.w, top: 10.h, right: 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _buildPersonalInfoHeader(),
+                    _buildEmailField(cubit),
+                    _buildPhoneField(cubit),
+                    _buildAgeField(cubit),
+                    _buildGenderDropdown(cubit),
+                    _buildUserTypeDropdown(newAccountCubit),
+                    if ((newAccountCubit.userSubTypeList?.data?.length != 0))
+                      _buildUserSubTypeDropdown(newAccountCubit),
+                    _buildLocationSection(cubit),
+                    _buildSyndicateField(cubit),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        _buildSaveButton(context, cubit),
-      ],
-    );
+          _buildSaveButton(context, cubit),
+        ],
+      );
+    });
   }
-
-
 
   Widget _buildNameField(ProfileCubit cubit) {
     return Padding(
@@ -300,6 +303,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               value: cubit.selectedUserType,
               items: cubit.userTypeList?.data ?? [],
               onChanged: (value) {
+                cubit.selectedUserSubType = null;
                 cubit.selectedUserType = value;
                 cubit.getDataUserSubType(
                     userTypeId: cubit.selectedUserType?.id.toString() ?? '');
@@ -367,7 +371,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  FullScreenMap(type: 'edit_profile'),
+                  builder: (context) => FullScreenMap(type: 'edit_profile'),
                 ),
               );
             },
@@ -411,7 +415,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Widget _buildSaveButton(BuildContext context, ProfileCubit cubit) {
     return Padding(
-      padding: EdgeInsets.only(right: 20.w, left: 20.w, top: 20.h, bottom: 10.h),
+      padding:
+          EdgeInsets.only(right: 20.w, left: 20.w, top: 20.h, bottom: 10.h),
       child: CustomButton(
         title: "save".tr(),
         onTap: () {

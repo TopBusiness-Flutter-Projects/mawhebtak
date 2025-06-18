@@ -24,33 +24,37 @@ class FollowersWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 40.h,
-                        width: 40.w,
-                        child: Image.asset(ImageAssets.profileImage),
-                      ),
-                      SizedBox(width: 8.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AutoSizeText(
-                              topTalentCubit.topTalents?.data?[index!].name ??
+                  Expanded(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 40.h,
+                          width: 40.w,
+                          child: Image.asset(ImageAssets.profileImage),
+                        ),
+                        SizedBox(width: 8.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText(
+                                topTalentCubit.topTalents?.data?[index!].name ??
+                                    "",
+                                style: getMediumStyle(fontSize: 14.sp)),
+                            AutoSizeText(
+                              topTalentCubit.topTalents?.data?[index!].headline ??
                                   "",
-                              style: getMediumStyle(fontSize: 16.sp)),
-                          AutoSizeText(
-                            topTalentCubit.topTalents?.data?[index!].headline ??
-                                "",
-                            style: getRegularStyle(
-                                fontSize: 14.sp, color: AppColors.grayLight),
-                          ),
-                        ],
-                      ),
-                    ],
+                              style: getRegularStyle(
+                                  fontSize: 14.sp, color: AppColors.grayLight),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
+
                   CustomContainerButton(
+                    fontSize: 14.sp,
                     onTap: () async {
                       final user = await Preferences.instance.getUserModel();
                       if (user.data?.token == null) {
@@ -83,7 +87,7 @@ class FollowersWidget extends StatelessWidget {
                                 true
                             ? AppColors.white
                             : AppColors.primary,
-                    width: 138.w,
+
                   ),
                 ],
               ),

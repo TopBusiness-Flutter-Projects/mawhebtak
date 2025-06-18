@@ -55,17 +55,19 @@ class _FollowersScreenState extends State<FollowersScreen> {
                       child: Center(
                       child: CustomLoadingIndicator(),
                     ))
-                  : ListView.builder(
-                      controller: scrollController,
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: cubit.topTalents?.data?.length ?? 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        return FollowersWidget(
-                          index: index,
-                        );
-                      },
-                    ),
+                  : Expanded(
+                    child: ListView.builder(
+                        controller: scrollController,
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: cubit.topTalents?.data?.length ?? 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          return FollowersWidget(
+                            index: index,
+                          );
+                        },
+                      ),
+                  ),
               if(state is TopTalentsStateLoadingMore)
               const Center(child: CustomLoadingIndicator(),)
             ],

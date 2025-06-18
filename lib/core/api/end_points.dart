@@ -44,4 +44,6 @@ class EndPoints {
   static const String createChatRoomUrl = '${baseUrl}get-chat-rooms';
   static const String getChatsUrl = '${baseUrl}get-chats';
   static const String settingUrl = '${baseUrl}get-setting';
+  static const String changePasswordUrl = '${baseUrl}change-password';
+  static const String logoutUrl = '${baseUrl}logout';
 }

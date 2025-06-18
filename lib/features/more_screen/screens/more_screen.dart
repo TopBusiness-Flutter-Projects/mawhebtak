@@ -155,7 +155,7 @@ class _MoreScreenState extends State<MoreScreen> {
                           onTap: () {
                             showAnimatedLogoutDialog(context, () {
                               Preferences.instance.clearShared();
-                              Navigator.pushNamed(context, Routes.loginRoute);
+                             context.read<MoreCubit>().logout(context: context);
                             });
                           },
                         ),
