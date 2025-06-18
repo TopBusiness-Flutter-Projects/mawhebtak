@@ -5,7 +5,7 @@
   "casting": "Casting",
   "calendar": "Calendar",
   "more": "More",
-  "see_all": "See All",
+  "see_all": "see all",
   "top_talents": "Top Talents",
   "search": "Search",
   "home": "Home",
@@ -279,5 +279,17 @@
   "please_enter_rating": "please enter rating",
   "please_enter_comment": "please enter comment",
   "logout_successfully": "Logout Successfully !!",
-  "you_do_review_in_this_user": "You do review in this user"
+  "you_do_review_in_this_user": "You do review in this user",
+  "write_your_bio": "write your bio",
+  "write_your_name": "write your name",
+  "write_your_headline": "write your headline",
+  "title": "Title",
+  "until_now": "Working until now",
+    "present":"Present",
+      "to_date":"To Date",
+      "from_date":"From Date",
+        "add_experience":"Add Experience",
+  "update_experience":"Update Experience"
+
+
 }

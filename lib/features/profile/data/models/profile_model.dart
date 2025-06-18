@@ -153,11 +153,13 @@ class MyProfileModelData {
 
 class Experience {
   String? title;
+  int? id;
   String? description;
-  String? from;
+  DateTime? from;
   DateTime? to;
 
   Experience({
+    this.id,
     this.title,
     this.description,
     this.from,
@@ -166,15 +168,18 @@ class Experience {
 
   factory Experience.fromJson(Map<String, dynamic> json) => Experience(
         title: json["title"],
+        id: json["id"],
         description: json["description"],
-        from: json["from"],
+        from: json["from"] == null ? null : DateTime.parse(json["from"]),
         to: json["to"] == null ? null : DateTime.parse(json["to"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "title": title,
         "description": description,
-        "from": from,
+        "from":
+            "${from!.year.toString().padLeft(4, '0')}-${from!.month.toString().padLeft(2, '0')}-${from!.day.toString().padLeft(2, '0')}",
         "to":
             "${to!.year.toString().padLeft(4, '0')}-${to!.month.toString().padLeft(2, '0')}-${to!.day.toString().padLeft(2, '0')}",
       };

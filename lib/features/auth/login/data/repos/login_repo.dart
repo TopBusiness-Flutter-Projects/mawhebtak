@@ -4,6 +4,7 @@ import 'package:mawhebtak/core/api/base_api_consumer.dart';
 import '../../../../../core/api/end_points.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
+import '../../../../../core/preferences/preferences.dart';
 import '../models/login_model.dart';
 
 class LoginRepo {
@@ -13,9 +14,15 @@ class LoginRepo {
   Future<Either<Failure, LoginModel>> login(
       String email, String password) async {
     try {
+      final deviceToken = await Preferences.instance.getDeviceToken();
       var response = await dio.post(
         EndPoints.loginUrl,
-        body: {'email': email, 'password': password, 'key': 'login'},
+        body: {
+          'email': email,
+          'password': password,
+          'key': 'login',
+          "device_token": deviceToken
+        },
       );
       return Right(LoginModel.fromJson(response));
     } on ServerException {
@@ -29,6 +36,8 @@ class LoginRepo {
       required String name,
       required String socialType}) async {
     try {
+      final deviceToken = await Preferences.instance.getDeviceToken();
+
       var response = await dio.post(
         EndPoints.loginWithSocial,
         body: {
@@ -37,6 +46,7 @@ class LoginRepo {
           'name': name,
           'phone': phone,
           'social_type': socialType,
+          "device_token": deviceToken
         },
       );
       return Right(LoginModel.fromJson(response));

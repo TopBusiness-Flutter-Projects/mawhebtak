@@ -121,8 +121,6 @@ class ProfileCubit extends Cubit<ProfileState> {
           log('555 ${profileModel?.data?.id?.toString() ?? '**'}');
           log('555 ${profileModel ?? '**'}');
           emit(GetProfileStateLoaded());
-          successGetBar(r.msg);
-
           loadUserFromPreferences();
         } else {
           errorGetBar(r.msg ?? '');
@@ -130,7 +128,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         }
       });
     } catch (e) {
-      // errorGetBar(e.toString());
+      errorGetBar(e.toString());
 
       emit(GetProfileStateError(e.toString()));
     }
@@ -173,7 +171,6 @@ class ProfileCubit extends Cubit<ProfileState> {
         phone: phoneController.text,
         userSubTypeId:
             context.read<NewAccountCubit>().selectedUserSubType?.id.toString(),
-        email: emailController.text,
         avatar: avatarImage != null && await avatarImage!.exists()
             ? avatarImage
             : null,
@@ -210,6 +207,8 @@ class ProfileCubit extends Cubit<ProfileState> {
           if (r.status == 200) {
             successGetBar(r.msg ?? 'Success');
             emit(UpdateProfileStateLoaded());
+            coverImage = null;
+            avatarImage = null;
             Navigator.pop(context);
             Navigator.pop(context);
             getProfileData(id: profileId, context: context);
@@ -219,5 +218,132 @@ class ProfileCubit extends Cubit<ProfileState> {
     } catch (e) {
       emit(UpdateProfileStateError(e.toString()));
     }
+  }
+
+  //! add experience
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
+  DateTime? fromDate;
+  DateTime? toDate;
+  bool isUntilNow = false;
+
+  void setFromDate(DateTime date) {
+    fromDate = date;
+    emit(ExperienceFormChanged());
+  }
+
+  /// Called when user picks a "to" date
+  void setToDate(DateTime date) {
+    toDate = date;
+    emit(ExperienceFormChanged());
+  }
+
+  /// Toggle "working until now"
+  void toggleUntilNow(bool value) {
+    isUntilNow = value;
+    if (value) {
+      toDate = null;
+    }
+    emit(ExperienceFormChanged());
+  }
+
+  /// Submit the new experience to the server
+  Future<void> addNewExperience(BuildContext context) async {
+    if (titleController.text.isEmpty || fromDate == null) {
+      errorGetBar('please_fill_all_fields'.tr());
+
+      emit(ExperienceError());
+      return;
+    }
+
+    emit(ExperienceLoading());
+
+    try {
+      AppWidgets.create2ProgressDialog(context);
+      final result = await api.addNewExperience(
+        title: titleController.text.trim(),
+        description: descriptionController.text.trim().isEmpty
+            ? null
+            : descriptionController.text.trim(),
+        from: fromDate,
+        to: isUntilNow ? null : toDate,
+        isUntilNow: isUntilNow,
+      );
+
+      result.fold((l) {
+        emit(ExperienceError());
+
+        Navigator.pop(context);
+      }, (r) {
+        resetForm();
+        successGetBar(r.msg.toString());
+        emit(ExperienceSuccess());
+
+        Navigator.pop(context);
+        Navigator.pop(context);
+        getProfileData(context: context, id: profileModel!.data!.id.toString());
+      });
+    } catch (e) {
+      Navigator.pop(context);
+      emit(ExperienceError());
+    }
+  }
+
+  /// For edit: initialize controllers & dates from an existing experience
+  void initExperience(Experience exp) {
+    titleController.text = exp.title ?? '';
+    descriptionController.text = exp.description ?? '';
+    fromDate = exp.from;
+    toDate = exp.to;
+    isUntilNow = (exp.to == null);
+    emit(ProfileFormChanged());
+  }
+
+  /// Update an existing experience
+  Future<void> updateExperience(BuildContext context,
+      {required String id}) async {
+    if (titleController.text.isEmpty || fromDate == null) {
+      errorGetBar('please_fill_all_fields'.tr());
+      emit(ExperienceError());
+      return;
+    }
+
+    emit(ExperienceLoading());
+    AppWidgets.create2ProgressDialog(context);
+
+    final result = await api.updateExperience(
+      id: id,
+      title: titleController.text.trim(),
+      description: descriptionController.text.trim().isEmpty
+          ? null
+          : descriptionController.text.trim(),
+      from: fromDate,
+      to: isUntilNow ? null : toDate,
+      isUntilNow: isUntilNow,
+    );
+
+    result.fold((l) {
+      Navigator.pop(context);
+      emit(ExperienceError());
+    }, (r) {
+      resetForm();
+      successGetBar(r.msg.toString());
+      emit(ExperienceSuccess());
+      Navigator.pop(context);
+      Navigator.pop(context);
+      getProfileData(
+        context: context,
+        id: profileModel!.data!.id.toString(),
+      );
+    });
+  }
+
+  void resetForm() {
+    titleController.clear();
+    descriptionController.clear();
+    fromDate = null;
+    toDate = null;
+    isUntilNow = false;
   }
 }

@@ -13,6 +13,7 @@ import 'package:mawhebtak/features/profile/screens/widgets/about_widgets/custom_
 import 'package:mawhebtak/features/profile/screens/widgets/profile_app_bar.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
+import 'package:escapable_padding/escapable_padding.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key, required this.model});
@@ -37,13 +38,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light.copyWith(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light,
-        ),
-        child: BlocBuilder<ProfileCubit, ProfileState>(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ),
+      child: Scaffold(
+        body: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
             var cubit = context.read<ProfileCubit>();
             return (state is GetProfileStateLoading &&
@@ -66,30 +67,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         // Removed Stack
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProfileAppBar(
-            isEdit: true,
-            id: widget.model.id,
-            avatar: cubit.profileModel?.data?.avatar ?? "",
-            byCaver: cubit.profileModel?.data?.bgCover ?? "",
-          ),
-          SizedBox(height: 20.h),
-          _buildNameField(cubit),
-          Container(height: 8.h, color: AppColors.grayLite),
-          Container(height: 20.h, color: AppColors.white),
-          _buildHeadlineSection(cubit),
-          Container(height: 8.h, color: AppColors.grayLite),
-          Container(height: 20.h, color: AppColors.white),
-          _buildBioSection(cubit),
-          Container(height: 8.h, color: AppColors.grayLite),
           Expanded(
             child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.w, top: 10.h, right: 20.w),
-                child: Column(
+              child: EscapablePadding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                flexChild: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Escaped(
+                      child: ProfileAppBar(
+                          isEdit: true,
+                          id: widget.model.id,
+                          avatar: cubit.profileModel?.data?.avatar ?? "",
+                          byCaver: cubit.profileModel?.data?.bgCover ?? ""),
+                    ),
+                    SizedBox(height: 20.h),
+                    _buildNameField(cubit),
+                    Container(height: 8.h, color: AppColors.grayLite),
+                    Container(height: 20.h, color: AppColors.white),
+                    _buildHeadlineSection(cubit),
+                    Container(height: 8.h, color: AppColors.grayLite),
+                    Container(height: 20.h, color: AppColors.white),
+                    _buildBioSection(cubit),
+                    Container(height: 8.h, color: AppColors.grayLite),
                     _buildPersonalInfoHeader(),
+                    10.h.verticalSpace,
                     _buildEmailField(cubit),
                     _buildPhoneField(cubit),
                     _buildAgeField(cubit),
@@ -115,8 +118,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
       child: TextField(
         controller: cubit.nameController,
-        decoration: const InputDecoration(
-          hintText: "write your name",
+        decoration: InputDecoration(
+          hintText: "write_your_name".tr(),
           border: InputBorder.none,
           enabledBorder: InputBorder.none,
           isDense: true,
@@ -137,16 +140,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         SizedBox(height: 4.h),
         Padding(
           padding: EdgeInsets.only(left: 10.w, right: 10.w),
-          child: TextField(
+          child: CustomTextField(
             controller: cubit.headlineController,
-            style: getRegularStyle(),
-            decoration: const InputDecoration(
-              hintText: "write your headline",
-              border: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              isDense: true,
-              contentPadding: EdgeInsets.zero,
-            ),
+            hintText: "write_your_headline".tr(),
           ),
         )
       ],
@@ -163,13 +159,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         SizedBox(height: 4.h),
         Padding(
           padding: EdgeInsets.only(left: 10.w, right: 10.w),
-          child: TextField(
+          child: CustomTextField(
             controller: cubit.bioController,
-            decoration: const InputDecoration(
-              hintText: "write your bio",
-              border: InputBorder.none,
-            ),
-            style: getRegularStyle(),
+            hintText: "write_your_bio".tr(),
           ),
         )
       ],
@@ -201,6 +193,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           style: TextStyle(color: AppColors.darkGray, fontSize: 16.sp),
         ),
         CustomTextField(
+          enabled: false,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'please_enter_email'.tr();

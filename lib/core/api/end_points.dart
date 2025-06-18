@@ -23,6 +23,7 @@ class EndPoints {
   //! add event
   static const String getDataBaseUrl = '${baseUrl}get-data';
   static const String storeDataUrl = '${baseUrl}store-data';
+  static const String updateDataUrl = '${baseUrl}update-data';
   //! delete
   static const String deleteData = '${baseUrl}delete-data';
   static const String eventCalendarUrl = '${baseUrl}calendar';

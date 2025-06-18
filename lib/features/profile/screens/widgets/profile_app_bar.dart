@@ -5,15 +5,16 @@ import 'package:share_plus/share_plus.dart';
 import '../../../../core/exports.dart';
 
 class ProfileAppBar extends StatelessWidget {
-  const ProfileAppBar({
+  ProfileAppBar({
     Key? key,
     required this.avatar,
     required this.id,
-    required this.byCaver,
+    this.byCaver,
     required this.isEdit,
   }) : super(key: key);
   final String avatar;
-  final String byCaver;
+
+  String? byCaver;
   final String id;
   final bool isEdit;
   @override
@@ -25,23 +26,25 @@ class ProfileAppBar extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           SizedBox(
-              height: getHeightSize(context) / 4.9,
-              width: double.infinity,
-              child: (cubit.coverImage != null)
-                  ? Image.file(
-                      File(cubit.coverImage!.path),
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    )
-                  : (byCaver != null)
-                      ? Image.network(
-                          byCaver,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Image.asset(ImageAssets.profileAppBar),
-                        )
-                      : Image.asset(ImageAssets.profileImage)),
+            height: getHeightSize(context) / 4.9,
+            width: double.infinity,
+            child: (cubit.coverImage != null)
+                ? Image.file(
+                    File(cubit.coverImage!.path),
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  )
+                : (byCaver != null)
+                    ? Image.network(
+                        byCaver ?? '',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        errorBuilder: (context, error, stackTrace) =>
+                            Image.asset(ImageAssets.profileAppBar),
+                      )
+                    : Image.asset(ImageAssets.profileImage),
+          ),
 
           // AppBar
           Positioned(
@@ -97,7 +100,9 @@ class ProfileAppBar extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     if (isEdit) {
-                      context.read<ProfileCubit>().pickSingleImage(type: 'avatar');
+                      context
+                          .read<ProfileCubit>()
+                          .pickSingleImage(type: 'avatar');
                     }
                   },
                   child: CircleAvatar(
@@ -105,8 +110,8 @@ class ProfileAppBar extends StatelessWidget {
                     backgroundImage: cubit.avatarImage != null
                         ? FileImage(File(cubit.avatarImage!.path))
                         : (avatar.isNotEmpty && avatar.startsWith('http'))
-                        ? NetworkImage(avatar)
-                        : const AssetImage(ImageAssets.profileImage),
+                            ? NetworkImage(avatar)
+                            : const AssetImage(ImageAssets.profileImage),
                     backgroundColor: Colors.transparent,
                   ),
                 ),

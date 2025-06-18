@@ -6,6 +6,7 @@ import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../login/data/models/login_model.dart';
 import '../model/user_types.dart';
+import '../../../../../core/preferences/preferences.dart';
 
 class NewAccount {
   BaseApiConsumer dio;
@@ -15,6 +16,8 @@ class NewAccount {
   Future<Either<Failure, LoginModel>> register(String email, String name,
       String password, String phone, String? userTypeId) async {
     try {
+      final deviceToken = await Preferences.instance.getDeviceToken();
+
       var response = await dio.post(
         EndPoints.registerUrl,
         body: {
@@ -23,7 +26,8 @@ class NewAccount {
           'name': name,
           'phone': phone,
           'user_type_id': userTypeId,
-          'password': password
+          'password': password,
+          "device_token": deviceToken
         },
       );
       return Right(LoginModel.fromJson(response));
@@ -34,39 +38,32 @@ class NewAccount {
 
   //registerUrl
   Future<Either<Failure, MainRegisterUserTypes>> getDataUserType({
-     String? paginate,
-     String? orderBy,
-}) async {
+    String? paginate,
+    String? orderBy,
+  }) async {
     try {
-      var response = await dio.get(
-        EndPoints.getDataBaseUrl,
-        queryParameters: {
-          'model':"UserType",
-          'where[0]':'status,1',
-          'paginate':paginate,
-          'orderBy':orderBy,
-        }
-      );
+      var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
+        'model': "UserType",
+        'where[0]': 'status,1',
+        'paginate': paginate,
+        'orderBy': orderBy,
+      });
       return Right(MainRegisterUserTypes.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
-  Future<Either<Failure, MainRegisterUserTypes>> getDataUserSubType({
-     String? paginate,
-     String? orderBy,
-    required String userTypeId}) async {
+
+  Future<Either<Failure, MainRegisterUserTypes>> getDataUserSubType(
+      {String? paginate, String? orderBy, required String userTypeId}) async {
     try {
-      var response = await dio.get(
-        EndPoints.getDataBaseUrl,
-        queryParameters: {
-          'model':'UserSubType',
-          'where[0]':'status,1',
-          'where[1]':'user_type_id,$userTypeId',
-          'paginate':paginate,
-          'orderBy':orderBy,
-        }
-      );
+      var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
+        'model': 'UserSubType',
+        'where[0]': 'status,1',
+        'where[1]': 'user_type_id,$userTypeId',
+        'paginate': paginate,
+        'orderBy': orderBy,
+      });
       return Right(MainRegisterUserTypes.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());

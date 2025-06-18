@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
-
 import '../../../../../core/exports.dart';
+import '../../add_new_experience.dart';
 
 class ExperinceWidget extends StatefulWidget {
-  ExperinceWidget({super.key, this.experience});
+  const ExperinceWidget({super.key, this.experience, this.isMe});
 
-  Experience? experience;
+  final Experience? experience;
+  final bool? isMe;
 
   @override
   State<ExperinceWidget> createState() => _ExperinceWidgetState();
@@ -20,9 +23,7 @@ class _ExperinceWidgetState extends State<ExperinceWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 10.h,
-        ),
+        SizedBox(height: 10.h),
         Padding(
           padding: EdgeInsets.only(left: 16.0.w, right: 16.w),
           child: Row(
@@ -30,18 +31,23 @@ class _ExperinceWidgetState extends State<ExperinceWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset(ImageAssets.experience),
-              SizedBox(
-                width: 5.w,
-              ),
+              SizedBox(width: 5.w),
               Flexible(
+                fit: FlexFit.tight,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       widget.experience?.title ?? "",
-                      style: getMediumStyle(fontSize: 13.sp),
+                      style: getMediumStyle(
+                        fontSize: 14.sp,
+                      ),
                     ),
+                    Text(
+                        "${'from'.tr()}: ${DateFormat('yyyy-MM-dd').format(widget.experience?.from ?? DateTime.now())}- ${'to'.tr()}: ${widget.experience?.to == null ? 'present'.tr() : DateFormat('yyyy-MM-dd').format(widget.experience?.to ?? DateTime.now())}",
+                        style: getRegularStyle(
+                            fontSize: 11.sp, color: AppColors.gray)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -50,9 +56,7 @@ class _ExperinceWidgetState extends State<ExperinceWidget> {
                           maxLines: _expanded ? null : 3,
                           overflow: TextOverflow.fade,
                           style: getRegularStyle(
-                            color: AppColors.grayText3,
-                            fontSize: 14.sp,
-                          ),
+                              color: AppColors.grayText3, fontSize: 14.sp),
                         ),
                         if ((widget.experience?.description!.length ?? 0) >
                             100) // adjust based on your needs
@@ -63,22 +67,34 @@ class _ExperinceWidgetState extends State<ExperinceWidget> {
                               });
                             },
                             child: Text(
-                              _expanded ? 'See Less' : 'See All',
+                              _expanded ? 'see_less'.tr() : 'see_all'.tr(),
                               style: TextStyle(
-                                  fontSize: 14.sp, color: Colors.blue),
+                                  fontSize: 14.sp, color: AppColors.primary),
                             ),
                           ),
                       ],
                     ),
                   ],
                 ),
-              )
+              ),
+              if (widget.isMe == true)
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddNewExperienceScreen(
+                                editing: widget.experience)));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SvgPicture.asset(AppIcons.bioIcon),
+                  ),
+                )
             ],
           ),
         ),
-        SizedBox(
-          height: 4.h,
-        ),
+        SizedBox(height: 4.h),
         Container(
           height: 2.h,
           color: AppColors.grayLite,

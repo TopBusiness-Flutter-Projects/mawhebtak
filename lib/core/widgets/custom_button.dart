@@ -1,7 +1,7 @@
 import 'package:mawhebtak/core/exports.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, this.onTap, required this.title,  this.color});
+  const CustomButton({super.key, this.onTap, required this.title, this.color});
   final void Function()? onTap;
   final String title;
   final Color? color;

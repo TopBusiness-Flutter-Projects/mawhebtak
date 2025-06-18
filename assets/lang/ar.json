@@ -282,7 +282,15 @@
   "please_enter_rating": "من فضلك ادخل التقيم",
   "please_enter_comment": "من فضلك ادخل التعليق",
   "logout_successfully": "تم تسجيل الخروج بنجاح!!",
-  "you_do_review_in_this_user": "انت بالفعل قمت بالتقيم علي هذا المستخدم"
+  "you_do_review_in_this_user": "انت بالفعل قمت بالتقيم علي هذا المستخدم",
+  "title": "العنوان",
+  "until_now": "حتى الان",
+  "present":"حاليا",
+  "to_date":"الى تاريخ",
+  "from_date":"من تاريخ",
+  "add_experience":"أضف خبرة جديدة",
+  "update_experience":"تحديث الخبرة"
 
+  
 
 }
