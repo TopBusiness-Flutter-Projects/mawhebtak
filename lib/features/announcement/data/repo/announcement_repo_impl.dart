@@ -91,15 +91,15 @@ class AnnouncementRepo {
     }
   }
 
-  Future<Either<Failure, GetGigsFromSubCategoryModel>>
+  Future<Either<Failure, AnnouncementsModel>>
       getAnnouncementsFromSubCategory({required String subCategoryId}) async {
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
-        "model": "Gig",
+        "model": "Announce",
         "where[1]": "sub_category_id,$subCategoryId",
         "orderBy": 'desc',
       });
-      return Right(GetGigsFromSubCategoryModel.fromJson(response));
+      return Right(AnnouncementsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

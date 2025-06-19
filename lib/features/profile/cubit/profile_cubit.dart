@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -8,7 +7,6 @@ import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
-import 'package:mawhebtak/features/profile/data/models/followers_model.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../core/exports.dart';
 import '../data/repo/profile_repo_impl.dart';
@@ -125,8 +123,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       }, (r) {
         if (r.status == 200) {
           profileModel = r;
-          log('555 ${profileModel?.data?.id?.toString() ?? '**'}');
-          log('555 ${profileModel ?? '**'}');
           emit(GetProfileStateLoaded());
           loadUserFromPreferences();
         } else {
@@ -136,51 +132,14 @@ class ProfileCubit extends Cubit<ProfileState> {
       });
     } catch (e) {
       errorGetBar(e.toString());
+
       emit(GetProfileStateError(e.toString()));
     }
   }
 
-  FollowersModel? followersModel;
-  getFollowersData({
-    bool isGetMore = false,
-    required String page,
-    String? orderBy,
-    String? followedId,
-  }) async {
-    if (isGetMore) {
-      isLoadingMore = true;
-      emit(GetFollowersStateLoadingMore());
-    } else {
-      emit(GetFollowersStateLoading());
-    }
-    try {
-      final res = await api.getFollowersData(
-          page: page,
-          orderBy: orderBy,
-          followedId:followedId,
-          paginate: orderBy );
-      res.fold((l) {
-        emit(GetFollowersStateError(l.toString()));
-      }, (r) {
-          if (isGetMore) {
-            followersModel = FollowersModel(
-              links: r.links,
-              status: r.status,
-              msg: r.msg,
-              data: [...followersModel!.data!, ...r.data!],
-            );
-            emit(GetFollowersStateLoaded());
-          } else {
-            followersModel = r;
-            emit(GetFollowersStateLoaded());
-          }
-      });
-    } catch (e) {
-      emit(GetFollowersStateError(e.toString()));
-    } finally {
-      isLoadingMore = false;
-    }
-  }
+
+
+
   addReview({
     required BuildContext context,
     required String userId,
@@ -207,6 +166,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(AddReviewStateError(e.toString()));
     }
   }
+
   Future<void> updateProfileData(
       {required BuildContext context, required String profileId}) async {
     AppWidgets.create2ProgressDialog(context);
@@ -282,13 +242,11 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ExperienceFormChanged());
   }
 
-  /// Called when user picks a "to" date
   void setToDate(DateTime date) {
     toDate = date;
     emit(ExperienceFormChanged());
   }
 
-  /// Toggle "working until now"
   void toggleUntilNow(bool value) {
     isUntilNow = value;
     if (value) {
@@ -297,7 +255,6 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ExperienceFormChanged());
   }
 
-  /// Submit the new experience to the server
   Future<void> addNewExperience(BuildContext context) async {
     if (titleController.text.isEmpty || fromDate == null) {
       errorGetBar('please_fill_all_fields'.tr());
@@ -339,7 +296,6 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  /// For edit: initialize controllers & dates from an existing experience
   void initExperience(Experience exp) {
     titleController.text = exp.title ?? '';
     descriptionController.text = exp.description ?? '';

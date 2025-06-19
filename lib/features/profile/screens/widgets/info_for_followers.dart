@@ -22,7 +22,7 @@ class InfoForFollowers extends StatelessWidget {
             ),
             InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, Routes.followersScreen);
+                  Navigator.pushNamed(context, Routes.followersScreen,arguments: 'followers');
                 },
                 child: Text(
                   "followers".tr(),
@@ -36,9 +36,15 @@ class InfoForFollowers extends StatelessWidget {
               followingCount,
               style: getRegularStyle(fontSize: 14.sp, color: AppColors.green),
             ),
-            Text(
-              "following".tr(),
-              style: getUnderLine(fontSize: 14.sp, color: AppColors.green),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.followersScreen,arguments: 'following');
+
+              },
+              child: Text(
+                "following".tr(),
+                style: getUnderLine(fontSize: 14.sp, color: AppColors.green),
+              ),
             )
           ],
         ),

@@ -43,15 +43,7 @@ final class UpdateProfileStateLoaded extends ProfileState {}
 
 final class UpdateProfileStateLoading extends ProfileState {}
 
-final class GetFollowersStateError extends ProfileState {
-  final String errorMessage;
 
-  GetFollowersStateError(this.errorMessage);
-
-}
-final class GetFollowersStateLoaded extends ProfileState {}
-final class GetFollowersStateLoading extends ProfileState {}
-final class GetFollowersStateLoadingMore extends ProfileState {}
 final class EditingState extends ProfileState {}
 
 class ExperienceInitial extends ProfileState {}
