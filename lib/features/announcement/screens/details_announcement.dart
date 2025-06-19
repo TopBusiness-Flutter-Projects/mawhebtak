@@ -11,10 +11,15 @@ import '../../chat/screens/message_screen.dart';
 import '../cubit/announcement_cubit.dart';
 
 class DetailsAnnouncementScreen extends StatefulWidget {
-  const DetailsAnnouncementScreen(
-      {super.key, required this.announcementId, required this.index});
+  const DetailsAnnouncementScreen({
+    super.key,
+    required this.announcementId,
+    required this.index,
+    required this.isDeeplink,
+  });
   final String announcementId;
   final int index;
+  final bool isDeeplink;
   @override
   State<DetailsAnnouncementScreen> createState() =>
       _DetailsAnnouncementScreenState();
@@ -129,10 +134,17 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                             .withOpacity(0.5),
                                                   ),
                                                 ),
-                                                if (cubit.user?.data?.id.toString() ==
-                                                    cubit.announcements?.data?[widget.index]
-                                                        .user?.id
-                                                        .toString())
+                                                if (cubit.user?.data?.id
+                                                            .toString() ==
+                                                        cubit
+                                                            .announcements
+                                                            ?.data?[
+                                                                widget.index]
+                                                            .user
+                                                            ?.id
+                                                            .toString() &&
+                                                    (widget.isDeeplink ==
+                                                        false))
                                                   PopupMenuButton<String>(
                                                     icon: SvgPicture.asset(
                                                         AppIcons.settingIcon),
@@ -140,18 +152,21 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                       if (value == 'delete') {
                                                         cubit.deleteAnnouncement(
                                                             announcementId: widget
-                                                                .announcementId
-                                                                .toString() ??
+                                                                    .announcementId
+                                                                    .toString() ??
                                                                 "");
                                                         Navigator.pop(context);
                                                       }
                                                     },
                                                     color: AppColors.white,
-                                                    itemBuilder: (BuildContext context) =>
-                                                    <PopupMenuEntry<String>>[
+                                                    itemBuilder: (BuildContext
+                                                            context) =>
+                                                        <PopupMenuEntry<
+                                                            String>>[
                                                       PopupMenuItem<String>(
                                                         value: 'delete',
-                                                        child: Text('delete_post'.tr()),
+                                                        child: Text(
+                                                            'delete_post'.tr()),
                                                       ),
                                                     ],
                                                   )

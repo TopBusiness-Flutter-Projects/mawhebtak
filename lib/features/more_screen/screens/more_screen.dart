@@ -63,8 +63,12 @@ class _MoreScreenState extends State<MoreScreen> {
                         moreContainer(
                             text: "my_profile".tr(),
                             imageUrl: AppIcons.myProfileIcon,
-                            onTap: () {
-                              Navigator.pushNamed(
+                            onTap: () async{
+
+     final user =await Preferences.instance.getUserModel();
+                                if (user.data?.token == null) {
+                                  checkLogin(context);
+                                }else{ Navigator.pushNamed(
                                 context,
                                 Routes.profileRoute,
                                 arguments: DeepLinkDataModel(
@@ -76,7 +80,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                             ?.toString() ??
                                         "",
                                     isDeepLink: false),
-                              );
+                              );}
+                             
                             }),
                         moreContainer(
                             text: "my_favorites".tr(),

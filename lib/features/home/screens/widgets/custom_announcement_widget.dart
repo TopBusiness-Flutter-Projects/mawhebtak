@@ -27,11 +27,11 @@ class CustomAnnouncementWidget extends StatefulWidget {
 
 class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
   @override
-
   void initState() {
     context.read<AnnouncementCubit>().loadUserFromPreferences();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AnnouncementCubit, AnnouncementState>(
@@ -43,6 +43,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
               arguments: {
                 'announcementId': widget.announcement?.id.toString(),
                 'index': widget.index,
+                "isDeeplink": false
               });
         },
         child: Padding(
@@ -125,7 +126,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                                   InkWell(
                                     onTap: () {
                                       cubit.toggleFavoriteAnnounce(
-                                        context: context,
+                                          context: context,
                                           userAnnounceId: widget
                                                   .announcement?.id
                                                   .toString() ??

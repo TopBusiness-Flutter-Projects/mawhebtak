@@ -9,6 +9,7 @@ import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart'
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
+import 'package:mawhebtak/features/feeds/screens/details_of_post.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/notifications_cubit/notification_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
@@ -18,6 +19,7 @@ import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
 import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
+import 'package:mawhebtak/features/profile/screens/profile_screen.dart';
 import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
@@ -26,13 +28,16 @@ import 'core/preferences/hive/models/work_model.dart';
 import 'core/utils/app_strings.dart';
 import 'package:mawhebtak/injector.dart' as injector;
 import 'features/announcement/cubit/announcement_cubit.dart';
+import 'features/announcement/screens/details_announcement.dart';
 import 'features/auth/splash/cubit/cubit.dart';
 import 'features/casting/cubit/casting_cubit.dart';
+import 'features/casting/screens/gigs_details.dart';
 import 'features/change_langauge/cubit/change_language_cubit.dart';
 import 'features/chat/cubit/chat_cubit.dart';
 import 'features/events/cubit/event_cubit.dart';
 import 'features/auth/login/cubit/cubit.dart';
 import 'features/auth/verification/cubit/verification_cubit.dart';
+import 'features/events/screens/details_event_screen.dart';
 import 'features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import 'features/location/cubit/location_cubit.dart';
 import 'features/profile/cubit/profile_cubit.dart';
@@ -65,7 +70,8 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<MoreCubit>(),
-          ),     BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<NotificationCubit>(),
           ),
           BlocProvider(
@@ -95,11 +101,9 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) => injector.serviceLocator<NewPasswordCubit>(),
           ),
-
           BlocProvider(
             create: (_) => injector.serviceLocator<ChangeLanguageCubit>(),
           ),
-
           BlocProvider(
             create: (_) => injector.serviceLocator<ReferralCodeCubit>(),
           ),
@@ -152,13 +156,70 @@ class _MyAppState extends State<MyApp> {
           onGenerateRoute: AppRoutes.onGenerateRoute,
           routes: {
             '/': (context) => isWithNotification
-                ? initialMessageRcieved?.data['type'] == "add_assistant"
+                ? initialMessageRcieved?.data['reference_table'] ==
+                        "add_assistant"
                     ? WorkDetailsScreen(
                         work: WorkModel(
                             id: initialMessageRcieved?.data['id'],
                             title: initialMessageRcieved?.data['title'],
                             assistants: []))
-                    : const NotificationScreen()
+                    : (initialMessageRcieved?.data['reference_table'] ==
+                            "posts")
+                        ? PostDetailsScreen(
+                            deepLinkDataModel: DeepLinkDataModel(
+                                id: initialMessageRcieved?.data['reference_id']
+                                        .toString() ??
+                                    '',
+                                isDeepLink: true))
+                        : (initialMessageRcieved?.data['reference_table'] ==
+                                "events")
+                            ? DetailsEventScreen(
+                                eventDataModel: DeepLinkDataModel(
+                                    id: initialMessageRcieved?.data['reference_id']
+                                            .toString() ??
+                                        '',
+                                    isDeepLink: true))
+                            : (initialMessageRcieved?.data['reference_table'] ==
+                                    "profile")
+                                ? ProfileScreen(
+                                    model: DeepLinkDataModel(
+                                        id: initialMessageRcieved
+                                                ?.data['reference_id']
+                                                .toString() ??
+                                            '',
+                                        isDeepLink: true))
+                                : (initialMessageRcieved?.data['reference_table'] ==
+                                        "gigs")
+                                    ? GigsDetailsScreen(
+                                        id: DeepLinkDataModel(
+                                            id: initialMessageRcieved?.data['reference_id'].toString() ?? '',
+                                            isDeepLink: true))
+                                    : //! userjobs
+
+                                    (initialMessageRcieved?.data['reference_table'] == "user_jobs")
+                                        ? GigsDetailsScreen(
+                                            id: DeepLinkDataModel(
+                                                id: initialMessageRcieved
+                                                        ?.data['reference_id']
+                                                        .toString() ??
+                                                    '',
+                                                isDeepLink: true),
+                                          )
+                                        :
+
+                                        //! Announcement
+
+                                        (initialMessageRcieved?.data['reference_table'] == "announcements")
+                                            ? DetailsAnnouncementScreen(
+                                                isDeeplink: true,
+                                                announcementId:
+                                                    initialMessageRcieved?.data[
+                                                                'reference_id']
+                                                            .toString() ??
+                                                        '',
+                                                index: 0,
+                                              )
+                                            : const NotificationScreen()
                 : const SplashScreen()
           },
         ));

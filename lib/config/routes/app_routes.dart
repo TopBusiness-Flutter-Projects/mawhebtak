@@ -117,6 +117,9 @@ class Routes {
   static const String messageRoute = '/MessageScreen';
   static const String roomsScreen = '/roomsScreen';
   static const String favouritesRoute = '/FavouritesRoute';
+  static const String postDetailsRoute = '/postDetailsRoute';
+  static const String eventsDetailsRoute = '/eventsDetailsRoute';
+  static const String profileDetailsRoute = '/profileDetailsRoute';
 }
 
 class AppRoutes {
@@ -157,11 +160,9 @@ class AppRoutes {
           duration: const Duration(milliseconds: 300),
         );
       case Routes.gigsDetailsScreen:
-        String id = settings.arguments as String;
+        DeepLinkDataModel? id = settings.arguments as DeepLinkDataModel;
         return PageTransition(
-          child: GigsDetailsScreen(
-            id: id,
-          ),
+          child: GigsDetailsScreen(id: id),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
@@ -171,6 +172,7 @@ class AppRoutes {
         return PageTransition(
           child: DetailsAnnouncementScreen(
             index: args['index'] as int,
+            isDeeplink: args['isDeeplink'] as bool,
             announcementId: args['announcementId'] as String,
           ),
           type: PageTransitionType.fade,
@@ -184,7 +186,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
         );
-        case Routes.favouritesRoute:
+      case Routes.favouritesRoute:
         return PageTransition(
           child: const FavouritesScreen(),
           type: PageTransitionType.fade,
@@ -245,7 +247,7 @@ class AppRoutes {
       case Routes.followersScreen:
         String pageName = settings.arguments as String;
         return PageTransition(
-          child:  FollowerAndFollowingScreen(
+          child: FollowerAndFollowingScreen(
             pageName: pageName,
           ),
           type: PageTransitionType.fade,
@@ -476,6 +478,7 @@ class AppRoutes {
         final args = settings.arguments as Map<String, dynamic>;
         return PageTransition(
           child: JobDetailsScreen(
+            isDeepLink: args['isDeepLink'] as bool,
             index: args['index'] as int,
             userJopId: args['userJopId'] as String,
           ),
@@ -550,7 +553,34 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
         );
+      case Routes.eventsDetailsRoute:
+        DeepLinkDataModel args = settings.arguments as DeepLinkDataModel;
 
+        return PageTransition(
+          child: DetailsEventScreen(
+            eventDataModel: args,
+          ),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
+      case Routes.postDetailsRoute:
+        DeepLinkDataModel args = settings.arguments as DeepLinkDataModel;
+        return PageTransition(
+          child: PostDetailsScreen(deepLinkDataModel: args),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
+      case Routes.profileDetailsRoute:
+        DeepLinkDataModel args = settings.arguments as DeepLinkDataModel;
+
+        return PageTransition(
+          child: ProfileScreen(model: args),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
       //! DEEP LINK ROUTES
       case Routes.eventsdeepLinkRoute:
         log('PPPPPPPP ${DeepLinkDataModel(id: idLink, isDeepLink: true).isDeepLink}');
@@ -580,6 +610,7 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
         );
+
       //! messageRoute
       case Routes.messageRoute:
         MainUserAndRoomChatModel args =

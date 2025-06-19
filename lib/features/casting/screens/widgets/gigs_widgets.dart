@@ -66,8 +66,9 @@ class _GigsWidgetState extends State<GigsWidget> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => GigsDetailsScreen(
-                        id: widget.eventAndGigsModel?.id.toString() ?? "",
-                      ),
+                          id: DeepLinkDataModel(
+                              id: widget.eventAndGigsModel?.id.toString() ?? "",
+                              isDeepLink: false)),
                     ));
               }
             },
@@ -146,8 +147,9 @@ class _GigsWidgetState extends State<GigsWidget> {
                             onSelected: (value) {
                               if (value == 'delete') {
                                 widget.castingCubit?.deleteGigs(
-                                  index: widget.index!,
-                                    gigId: widget.eventAndGigsModel?.id.toString() ??
+                                    index: widget.index!,
+                                    gigId: widget.eventAndGigsModel?.id
+                                            .toString() ??
                                         "",
                                     context: context);
                               }

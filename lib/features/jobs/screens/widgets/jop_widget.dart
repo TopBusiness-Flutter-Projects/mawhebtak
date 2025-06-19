@@ -29,6 +29,7 @@ class _JobWidgetState extends State<JobWidget> {
         Navigator.pushNamed(context, Routes.jobDetailsRoute, arguments: {
           'userJopId': widget.userJop?.id.toString() ?? 0,
           'index': widget.index,
+          "isDeepLink": false
         });
       },
       child: Padding(

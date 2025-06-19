@@ -131,7 +131,11 @@ class JobsCubit extends Cubit<JobsState> {
           userJobDetailsModel?.data?.isFav = false;
           context.read<MoreCubit>().userJobFavouriteModel?.data?[index].isFav =
               false;
-          context.read<MoreCubit>().userJobFavouriteModel?.data?.removeAt(index);
+          context
+              .read<MoreCubit>()
+              .userJobFavouriteModel
+              ?.data
+              ?.removeAt(index);
         } else {
           userJopModel?.data?[index].isFav = true;
           userJobDetailsModel?.data?.isFav = true;

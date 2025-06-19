@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
+import '../../features/events/screens/details_event_screen.dart';
 import '../exports.dart';
 import '../preferences/preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -66,21 +67,53 @@ class NotificationService {
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       initialMessageRcieved = message;
 
-      if (message.data['type'] == "add_assistant") {
+      if (message.data['reference_table'] == "add_assistant") {
         navigatorKey.currentState?.pushNamed(Routes.workDetailsRoute,
             arguments: WorkModel(
                 id: message.data['id'],
                 title: message.data['title'],
                 assistants: []));
+      } else if (message.data['reference_table'] == "posts") {
+        navigatorKey.currentState?.pushNamed(Routes.postDetailsRoute,
+            arguments: DeepLinkDataModel(
+                id: message.data['reference_id'].toString(), isDeepLink: true));
+      } else if (message.data['reference_table'] == "events") {
+        navigatorKey.currentState?.pushNamed(Routes.eventsDetailsRoute,
+            arguments: DeepLinkDataModel(
+                id: message.data['reference_id'].toString(), isDeepLink: true));
+      } else if (message.data['reference_table'] == "profile") {
+        navigatorKey.currentState?.pushNamed(Routes.profileDetailsRoute,
+            arguments: DeepLinkDataModel(
+                id: message.data['reference_id'].toString(), isDeepLink: true));
       }
-      // if (
 
-      //     message.data['type'] == "office_request") {
-      //   navigatorKey.currentState?.pushNamed(Routes.mainLawyerRoute,
+      //! GIGS
+      else if (message.data['reference_table'] == "gigs") {
+        navigatorKey.currentState?.pushNamed(Routes.gigsDetailsScreen,
+            arguments: DeepLinkDataModel(
+                id: message.data['reference_id'].toString(), isDeepLink: true));
+      } //! userjobs
 
-      //      );
-      // }
+      else if (message.data['reference_table'] == "user_jobs") {
+        navigatorKey.currentState
+            ?.pushNamed(Routes.jobDetailsRoute, arguments: {
+          "isDeepLink": true,
+          'userJopId': message.data['reference_id'].toString(),
+          'index': 0,
+        });
+      }
 
+      //! Announcement
+      else if (message.data['reference_table'] == "announcements") {
+        navigatorKey.currentState
+            ?.pushNamed(Routes.detailsAnnouncementScreen, arguments: {
+          "isDeepLink": true,
+          'announcementId': message.data['reference_id'].toString(),
+          'index': 0,
+        });
+      } else {
+        navigatorKey.currentState?.pushNamed(Routes.notificationRoute);
+      }
       // //!
       // else {
       //   navigatorKey.currentState
@@ -184,28 +217,59 @@ class NotificationService {
             initialMessageRcieved = RemoteMessage(data: message);
             isWithNotification = true;
             //!
-            if (message['type'] == "add_assistant") {
+            if (message['reference_table'] == "add_assistant") {
               navigatorKey.currentState?.pushNamed(Routes.workDetailsRoute,
                   arguments: WorkModel(
                       id: message['id'],
                       title: message['title'],
                       assistants: []));
               print("the message scdule");
+            } else if (message['reference_table'] == "posts") {
+              navigatorKey.currentState?.pushNamed(Routes.postDetailsRoute,
+                  arguments: DeepLinkDataModel(
+                      id: message['reference_id'].toString(),
+                      isDeepLink: true));
+            } else if (message['reference_table'] == "events") {
+              navigatorKey.currentState?.pushNamed(Routes.eventsDetailsRoute,
+                  arguments: DeepLinkDataModel(
+                      id: message['reference_id'].toString(),
+                      isDeepLink: true));
+            } else if (message['reference_table'] == "profile") {
+              navigatorKey.currentState?.pushNamed(Routes.profileDetailsRoute,
+                  arguments: DeepLinkDataModel(
+                      id: message['reference_id'].toString(),
+                      isDeepLink: true));
             }
-            //   if (message['type'] == "office_delete_request" ||
-            //       message['type'] == "change_type" ||
-            //       message['type'] == "court_case_cancel" ||
-            //       message['type'] == "office_request") {
-            //     navigatorKey.currentState?.pushNamed(Routes.mainLawyerRoute,
-            //         arguments: ChooseTypeRegisterArgs(
-            //           indexPageClientOrLawyer: userType ? 1 : 0,
-            //         ));
+
+            //! GIGS
+            else if (message['reference_table'] == "gigs") {
+              navigatorKey.currentState?.pushNamed(Routes.gigsDetailsScreen,
+                  arguments: DeepLinkDataModel(
+                      id: message['reference_id'].toString(),
+                      isDeepLink: true));
+            } //! userjobs
+
+            else if (message['reference_table'] == "user_jobs") {
+              navigatorKey.currentState
+                  ?.pushNamed(Routes.jobDetailsRoute, arguments: {
+                "isDeepLink": true,
+                'userJopId': message['reference_id'].toString(),
+                'index': 0,
+              });
+            }
+
+            //! Announcement
+            else if (message['reference_table'] == "announcements") {
+              navigatorKey.currentState
+                  ?.pushNamed(Routes.detailsAnnouncementScreen, arguments: {
+                "isDeepLink": true,
+                'announcementId': message['reference_id'].toString(),
+                'index': 0,
+              });
+            } else {
+              navigatorKey.currentState?.pushNamed(Routes.notificationRoute);
+            }
           }
-          // } else {
-          //   // Default action if payload is null
-          //   navigatorKey.currentState
-          //       ?.pushNamed(Routes.notificationRoute, arguments: userType);
-          // }
         } catch (e) {
           log('Error parsing notification payload: $e');
           // navigatorKey.currentState

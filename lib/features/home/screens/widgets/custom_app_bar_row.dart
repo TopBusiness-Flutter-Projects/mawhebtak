@@ -42,19 +42,27 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
             children: [
               GestureDetector(
                 onTap: () {
-                  print('the id from user ${context.read<MainCubit>().loginModel?.data?.id?.toString()}');
+                  print(
+                      'the id from user ${context.read<MainCubit>().loginModel?.data?.id?.toString()}');
                   Navigator.pushNamed(
                     context,
                     Routes.profileRoute,
                     arguments: DeepLinkDataModel(
-                        id: context.read<HomeCubit>().user?.data?.id?.toString() ?? "",
+                        id: context
+                                .read<HomeCubit>()
+                                .user
+                                ?.data
+                                ?.id
+                                ?.toString() ??
+                            "",
                         isDeepLink: false),
                   );
                 },
                 child: SizedBox(
                   height: 40.h,
                   width: 40.w,
-                  child: context.read<MainCubit>().loginModel?.data?.image == null
+                  child: context.read<MainCubit>().loginModel?.data?.image ==
+                          null
                       ? Image.asset(ImageAssets.profileImage)
                       : ClipOval(
                           child: CachedNetworkImage(

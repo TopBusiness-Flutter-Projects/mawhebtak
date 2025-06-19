@@ -13,10 +13,13 @@ import '../../events/screens/widgets/custom_media_view.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   const JobDetailsScreen(
-      {super.key, required this.userJopId, required this.index});
+      {super.key,
+      required this.userJopId,
+      required this.index,
+      required this.isDeepLink});
   final String userJopId;
   final int index;
-
+  final bool isDeepLink;
   @override
   State<JobDetailsScreen> createState() => _JobDetailsScreenState();
 }
@@ -130,31 +133,33 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                           style: getMediumStyle(fontSize: 14.sp),
                         ),
                       ),
-                      InkWell(
-                          onTap: () async {
-                            final user =
-                                await Preferences.instance.getUserModel();
-                            if (user.data?.token == null) {
-                              checkLogin(context);
-                            } else {
-                              print(
-                                  "the is fav ${cubit.userJobDetailsModel?.data?.isFav}");
-                              cubit.toggleFavorite(
-                                  context: context,
-                                  index: widget.index,
-                                  userJopId: widget.userJopId.toString() ?? "");
-                            }
-                          },
-                          child: Icon(
-                            cubit.userJobDetailsModel?.data?.isFav == true
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            size: 20.sp,
-                            color:
-                                cubit.userJobDetailsModel?.data?.isFav == true
-                                    ? AppColors.primary
-                                    : AppColors.darkGray.withOpacity(0.5),
-                          )),
+                      if (widget.isDeepLink == false)
+                        InkWell(
+                            onTap: () async {
+                              final user =
+                                  await Preferences.instance.getUserModel();
+                              if (user.data?.token == null) {
+                                checkLogin(context);
+                              } else {
+                                print(
+                                    "the is fav ${cubit.userJobDetailsModel?.data?.isFav}");
+                                cubit.toggleFavorite(
+                                    context: context,
+                                    index: widget.index,
+                                    userJopId:
+                                        widget.userJopId.toString() ?? "");
+                              }
+                            },
+                            child: Icon(
+                              cubit.userJobDetailsModel?.data?.isFav == true
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              size: 20.sp,
+                              color:
+                                  cubit.userJobDetailsModel?.data?.isFav == true
+                                      ? AppColors.primary
+                                      : AppColors.darkGray.withOpacity(0.5),
+                            )),
                     ],
                   ),
                   6.h.verticalSpace,
@@ -237,12 +242,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
           10.h.verticalSpace,
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(
-                  context,
-                  Routes.profileRoute,
+              Navigator.pushNamed(context, Routes.profileRoute,
                   arguments: DeepLinkDataModel(
-                  id: widget.userJopId,
-              isDeepLink: false));
+                      id: widget.userJopId, isDeepLink: false));
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,7 +270,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                       ),
                       5.h.verticalSpace,
                       Text(
-                        cubit.userJobDetailsModel?.data?.poster?.headline ?? "-",
+                        cubit.userJobDetailsModel?.data?.poster?.headline ??
+                            "-",
                         maxLines: 1,
                         style: getMediumStyle(
                           fontSize: 13.sp,
