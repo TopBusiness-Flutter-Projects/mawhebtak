@@ -14,8 +14,10 @@ import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.d
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/notifications_cubit/notification_cubit.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
+import 'package:mawhebtak/features/home/data/repositories/notification_repository.dart';
 import 'package:mawhebtak/features/home/data/repositories/top_talents_repository.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
 import 'package:mawhebtak/features/jobs/data/repos/jobs.repo.dart';
@@ -60,6 +62,10 @@ Future<void> setupCubit() async {
   serviceLocator.registerFactory(
     () => LoginCubit(
       serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => NotificationCubit(
     ),
   );
   serviceLocator.registerFactory(
@@ -166,6 +172,7 @@ Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => HomeRepository(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => NotificationsRepository(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
   serviceLocator

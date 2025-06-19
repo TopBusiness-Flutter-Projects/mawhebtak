@@ -3,14 +3,14 @@ import 'package:mawhebtak/features/home/data/models/home_model.dart';
 
 import '../../../feeds/data/models/posts_model.dart';
 
-class FollowersModel {
+class FollowerAndFollowingModel {
   List<TopTalent>? data;
   Links? links;
   Meta? meta;
   String? msg;
   int? status;
 
-  FollowersModel({
+  FollowerAndFollowingModel({
     this.data,
     this.links,
     this.meta,
@@ -18,7 +18,7 @@ class FollowersModel {
     this.status,
   });
 
-  factory FollowersModel.fromJson(Map<String, dynamic> json) => FollowersModel(
+  factory FollowerAndFollowingModel.fromJson(Map<String, dynamic> json) => FollowerAndFollowingModel(
     data: json["data"] == null ? [] : List<TopTalent>.from(json["data"]!.map((x) => TopTalent.fromJson(x))),
     links: json["links"] == null ? null : Links.fromJson(json["links"]),
     meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),

@@ -51,7 +51,7 @@ import '../../features/home/screens/top_events_screen.dart';
 import '../../features/feeds/screens/feeds_screen.dart';
 import '../../features/home/screens/notification_screen.dart';
 import '../../features/jobs/screens/add_new_job_screen.dart';
-import '../../features/profile/screens/followers_screen.dart';
+import '../../features/profile/screens/follower_and_following_screen.dart';
 import '../../features/casting/screens/new_gigs_screen.dart';
 import '../../features/profile/screens/profile_screen.dart';
 import '../../features/referral_code/screens/referral_code_screen.dart';
@@ -241,8 +241,11 @@ class AppRoutes {
           duration: const Duration(milliseconds: 300),
         );
       case Routes.followersScreen:
+        String pageName = settings.arguments as String;
         return PageTransition(
-          child: const FollowersScreen(),
+          child:  FollowerAndFollowingScreen(
+            pageName: pageName,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),

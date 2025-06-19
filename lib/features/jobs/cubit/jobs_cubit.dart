@@ -66,7 +66,6 @@ class JobsCubit extends Cubit<JobsState> {
     }
     try {
       final res = await jobsRepo.getUserJopData(page: page, orderBy: orderBy);
-
       res.fold((l) {
         emit(GetUserJopStateError(l.toString()));
       }, (r) {
