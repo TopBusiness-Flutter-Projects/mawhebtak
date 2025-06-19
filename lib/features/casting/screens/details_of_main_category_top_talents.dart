@@ -20,10 +20,11 @@ class _DetailsOfMainCategoryTopTalentsState
   @override
   void initState() {
     final cubit = context.read<TopTalentsCubit>();
-    cubit.selectedUserSubType = null;
     cubit.getDataUserSubType(userTypeId: widget.userTypeId);
+    cubit.selectedUserSubType = null;
     super.initState();
   }
+
   // topSubCategoryTalents
   @override
   Widget build(BuildContext context) {
@@ -43,46 +44,84 @@ class _DetailsOfMainCategoryTopTalentsState
               child: BlocBuilder<TopTalentsCubit, TopTalentsState>(
                 builder: (context, state) {
                   var cubit = context.read<TopTalentsCubit>();
+                  var hasSelectedSub = cubit.selectedUserSubType != null;
+                  var hasNewData =
+                      cubit.topTalents?.data?.isNotEmpty == true;
+                  return
 
-                  if (state is SubCategoryStateLoading) {
-                    return const Center(child: CustomLoadingIndicator());
-                  }
-
-                  if (cubit.userSubTypeList?.data?.isEmpty ?? true) {
-                    return Center(child: Text('no_data'.tr()));
-                  }
-
-                  return Column(
+                  hasSelectedSub && hasNewData?
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildSubCategoryDropdown(context, cubit),
                       const SizedBox(height: 16),
-                      Expanded(
-                        child: (cubit.topTalents?.data?.isEmpty ?? true)
+                      (state is SubCategoryStateLoading)
+                          ? const Center(child: CustomLoadingIndicator())
+                          :Expanded(
+                        child: ( cubit.topSubCategoryTalents?.data?.length == 0 || cubit.userSubTypeList?.data == [])
                             ? Center(child: Text('no_data'.tr()))
                             : GridView.builder(
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
-                                  childAspectRatio: 0.8,
-                                ),
-                                shrinkWrap: true,
-                                itemCount: cubit.topSubCategoryTalents?.data?.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  final topTalent =
-                                      cubit.topSubCategoryTalents!.data![index];
-                                  return CustomTopTalentsList(
-                                    topTalentsCubit: cubit,
-                                    index: index,
-                                    topTalentsData: topTalent,
-                                  );
-                                },
-                              ),
+                          gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 0.8,
+                          ),
+                          shrinkWrap: true,
+                          itemCount: cubit.topSubCategoryTalents?.data?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            final topSubCategoryTalents = cubit.topSubCategoryTalents!.data![index];
+                            return CustomTopTalentsList(
+                              topTalentsCubit: cubit,
+                              index: index,
+                              topTalentsData: topSubCategoryTalents,
+                            );
+                          },
+                        ),
                       ),
                     ],
-                  );
+                  ):
+                  Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildSubCategoryDropdown(context, cubit),
+                            const SizedBox(height: 16),
+                            Expanded(
+                              child: (state is TopTalentsStateLoading)?
+                              const Center(child: CustomLoadingIndicator(),):
+                              (cubit.topTalents?.data?.isEmpty ?? true)
+                                  ? Center(child: Text('no_data'.tr()))
+                                  : GridView.builder(
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 10,
+                                        crossAxisSpacing: 10,
+                                        childAspectRatio: 0.8,
+                                      ),
+                                      shrinkWrap: true,
+                                      itemCount: cubit.topTalents
+                                              ?.data?.length ??
+                                          0,
+                                      itemBuilder: (context, index) {
+                                        final topTalent = cubit
+                                            .topTalents!
+                                            .data![index];
+                                        return CustomTopTalentsList(
+                                          topTalentsCubit: cubit,
+                                          index: index,
+                                          topTalentsData: topTalent,
+                                        );
+                                      },
+                                    ),
+
+                            ),
+                            if (state
+                            is TopTalentsStateLoadingMore)
+                              const CustomLoadingIndicator(),
+                          ],
+                        );
                 },
               ),
             ),
@@ -110,7 +149,6 @@ class _DetailsOfMainCategoryTopTalentsState
               userSubTypeId: value?.id.toString(),
             );
           }
-
         },
         value: cubit.selectedUserSubType,
         items: cubit.userSubTypeList?.data ?? [],

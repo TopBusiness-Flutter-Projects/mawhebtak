@@ -157,8 +157,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
         emit(FollowAndUnFollowStateError(l.toString()));
       }, (r) {
         item?.isIFollow = !(item.isIFollow ?? false);
-        followerAndFollowingModel?.data?[index!].isIFollow =
-            !(followerAndFollowingModel?.data?[index].isIFollow ?? false);
+        followerAndFollowingModel?.data?[index!].isIFollow = !(followerAndFollowingModel?.data?[index].isIFollow ?? false);
 
         successGetBar(r.msg ?? "");
         updateTopTalentCastingFollow(item);
@@ -173,13 +172,13 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
   }
 
   FollowerAndFollowingModel? followerAndFollowingModel;
-  getFollowersAndFollowingData(
-      {bool isGetMore = false,
-      required String page,
-      String? orderBy,
-      String? followedId,
-      required String pageName,
-      String? paginate}) async {
+  getFollowersAndFollowingData({
+    bool isGetMore = false,
+    required String page,
+    String? orderBy,
+    String? followedId,
+    required String pageName,
+  }) async {
     if (isGetMore) {
       isLoadingMore = true;
       emit(GetFollowersStateLoadingMore());
@@ -192,7 +191,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
           page: page,
           orderBy: orderBy,
           followedId: followedId,
-          paginate: paginate);
+       );
 
       res.fold((l) {
         emit(GetFollowersStateError(l.toString()));
