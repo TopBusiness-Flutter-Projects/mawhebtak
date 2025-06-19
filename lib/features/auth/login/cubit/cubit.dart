@@ -62,7 +62,7 @@ class LoginCubit extends Cubit<LoginState> {
         if (r.status == 200) {
           Preferences.instance.setUser(r);
           successGetBar(r.msg ?? '');
-          emit(LoginStateLoaded());
+          emit(LoginStateLoaded(isRegister: r.data?.isRegister));
         } else {
           errorGetBar(r.msg ?? '');
           emit(LoginStateError());

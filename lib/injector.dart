@@ -51,14 +51,11 @@ import 'features/location/cubit/location_cubit.dart';
 import 'features/main_screen/data/repo/main_repo_impl.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/profile/data/repo/profile_repo_impl.dart';
-
 final serviceLocator = GetIt.instance;
-
 Future<void> setupCubit() async {
   serviceLocator.registerFactory(
     () => SplashCubit(),
   );
-
   serviceLocator.registerFactory(
     () => LoginCubit(
       serviceLocator(),
@@ -109,7 +106,6 @@ Future<void> setupCubit() async {
       serviceLocator(),
     ),
   );
-
 
   serviceLocator.registerFactory(
     () => ProfileCubit(

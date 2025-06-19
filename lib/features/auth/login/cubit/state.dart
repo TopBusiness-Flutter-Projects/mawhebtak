@@ -4,7 +4,10 @@ class LoginStateInitial extends LoginState {}
 
 class LoginStateLoading extends LoginState {}
 
-class LoginStateLoaded extends LoginState {}
+class LoginStateLoaded extends LoginState {
+  final int? isRegister;
+  LoginStateLoaded({ this.isRegister});
+}
 
 class LoginStateError extends LoginState {}
 
