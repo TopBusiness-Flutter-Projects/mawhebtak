@@ -1,9 +1,11 @@
+import 'package:mawhebtak/features/home/data/models/notifications_model.dart';
+
 import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_container_with_shadow.dart';
 
 class NotificationWidget extends StatelessWidget {
-  const NotificationWidget({super.key});
-
+  const NotificationWidget({super.key, this.notification});
+  final GetNotificationsModelData? notification;
   @override
   Widget build(BuildContext context) {
     return       Padding(
@@ -24,8 +26,8 @@ class NotificationWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Ahmed Omar cancels the request made direct to you for a job",style: getMediumStyle(fontSize: 14.sp),),
-                Text("10 march, 2022",style: getMediumStyle(fontSize: 13.sp,color: AppColors.grayDate),)
+                Text(notification?.body ?? "",style: getMediumStyle(fontSize: 14.sp),),
+                Text(notification?.createdAt.toString().substring(0,10) ??"",style: getMediumStyle(fontSize: 13.sp,color: AppColors.grayDate),)
               ],)
           ],),
       )),

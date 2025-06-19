@@ -48,21 +48,16 @@ class FollowAndUnFollowStateError extends TopTalentsState {
 }
 
 class FollowAndUnFollowStateLoaded extends TopTalentsState {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
+
 }
 
 class FollowAndUnFollowStateLoading extends TopTalentsState {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
+
 }
 
 class UpdateIsFollowState extends TopTalentsState {
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
+
+
 }
 
 
@@ -89,3 +84,12 @@ class LoadedGetUserSubTypesState extends TopTalentsState {
   final MainRegisterUserTypes data;
   LoadedGetUserSubTypesState(this.data);
 }
+final class GetFollowersStateError extends TopTalentsState {
+  final String errorMessage;
+
+  GetFollowersStateError(this.errorMessage);
+
+}
+final class GetFollowersStateLoaded extends TopTalentsState {}
+final class GetFollowersStateLoading extends TopTalentsState {}
+final class GetFollowersStateLoadingMore extends TopTalentsState {}

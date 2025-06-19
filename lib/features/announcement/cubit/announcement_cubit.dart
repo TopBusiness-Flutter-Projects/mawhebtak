@@ -181,7 +181,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
   }
 
   // gigs from sub
-  GetGigsFromSubCategoryModel? getAnnouncementsFromSubCategoryModel;
+  AnnouncementsModel? announcementsFromSubCategory;
   getAnnouncementsFromSubCategory({required String? id}) async {
     emit(AnnouncementsFromCategoryStateLoading());
     try {
@@ -191,7 +191,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       res.fold((l) {
         emit(AnnouncementsFromCategoryStateError(l.toString()));
       }, (r) {
-        getAnnouncementsFromSubCategoryModel = r;
+        announcementsFromSubCategory = r;
         emit(AnnouncementsFromCategoryStateLoaded());
       });
     } catch (e) {
@@ -228,7 +228,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       res.fold((l) {
         emit(SubCategoryStateError(l.toString()));
       }, (r) {
-        getAnnouncementsFromSubCategoryModel = null;
+        announcementsFromSubCategory = null;
         subCategoryFromCategoryAnnouncementsModel = r;
         emit(SubCategoryStateLoaded(r));
       });

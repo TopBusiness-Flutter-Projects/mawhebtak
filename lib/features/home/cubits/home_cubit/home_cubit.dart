@@ -68,9 +68,11 @@ class HomeCubit extends Cubit<HomeState> {
           if (item?.isIFollow == true) {
             homeModel?.data?.topTalents?[i].followersCount =
                 (item?.followersCount ?? 0) + 1;
+            homeModel?.data?.topTalents?[i].isIFollow = false;
           } else {
             homeModel?.data?.topTalents?[i].followersCount =
                 (item?.followersCount ?? 0) - 1;
+            homeModel?.data?.topTalents?[i].isIFollow = true;
           }
           homeModel?.data?.topTalents?[i].isIFollow = item?.isIFollow;
         }
