@@ -21,7 +21,6 @@ class _FollowerAndFollowingScreenState
   @override
   void initState() {
     context.read<TopTalentsCubit>().getFollowersAndFollowingData(
-          paginate: 'true',
           page: '1',
           isGetMore: false,
           pageName: widget.pageName,

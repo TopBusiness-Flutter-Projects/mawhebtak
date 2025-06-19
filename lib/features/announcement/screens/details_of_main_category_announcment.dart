@@ -21,7 +21,7 @@ class _DetailsOfMainCategoryAnnouncementState
   void initState() {
     var cubit = context.read<AnnouncementCubit>();
     cubit.subCategoryFromCategoryAnnouncement(categoryId: widget.categoryId);
-    cubit.announcementsFromSubCategory = null;
+    cubit.selectedSubCategory = null;
     super.initState();
   }
 
@@ -56,9 +56,11 @@ class _DetailsOfMainCategoryAnnouncementState
                             hasSelectedSub && hasNewData
                                 ? Expanded(
                                     child: GridView.builder(
-                                      itemCount:
-                                          cubit.announcementsFromSubCategory?.data?.length ??
-                                              0,
+                                      itemCount: cubit
+                                              .announcementsFromSubCategory
+                                              ?.data
+                                              ?.length ??
+                                          0,
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 1,
@@ -70,8 +72,9 @@ class _DetailsOfMainCategoryAnnouncementState
                                           CustomAnnouncementWidget(
                                         index: index,
                                         isMainWidget: true,
-                                        announcement:
-                                            cubit.announcementsFromSubCategory?.data?[index],
+                                        announcement: cubit
+                                            .announcementsFromSubCategory
+                                            ?.data?[index],
                                       ),
                                     ),
                                   )

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/api/base_api_consumer.dart';
@@ -13,7 +12,6 @@ import 'package:mawhebtak/features/casting/data/model/add_gig_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_datails_gigs_model.dart';
 import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
 import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
-
 import '../../../calender/data/model/countries_model.dart';
 
 class CastingRepo {

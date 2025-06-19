@@ -19,9 +19,8 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
   @override
   void initState() {
     var cubit = context.read<CastingCubit>();
-    cubit.selectedSubCategory = null;
-
     cubit.subCategoryFromCategoryGigs(categoryId: widget.categoryId);
+    cubit.selectedSubCategory = null;
     super.initState();
   }
 
@@ -43,18 +42,19 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
               child: BlocBuilder<CastingCubit, CastingState>(
                 builder: (context, state) {
                   var cubit = context.read<CastingCubit>();
-
-                  return (state is SubCategoryStateLoading)
-                      ? Center(child: const CustomLoadingIndicator())
-                      : (cubit.subCategoryFromCategoryGigsModel?.data?.length == 0)
-                          ? Center(
-                              child: Text('no_data'.tr()),
-                            )
-                          : Column(
+                  var hasSelectedSub = cubit.selectedSubCategory != null;
+                  var hasNewData =
+                      cubit.allGigsModel?.data?.isNotEmpty == true;
+                  return
+                    hasNewData && hasSelectedSub ?
+                    Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 _buildSubCategoryDropdown(context, cubit),
                                 const SizedBox(height: 16),
+                                (state is SubCategoryStateLoading)
+                                    ? const Center(child: CustomLoadingIndicator())
+                                    :
                                 Flexible(
                                   child: (cubit.getGigsFromSubCategoryModel
                                                   ?.data?.length ==
@@ -85,7 +85,47 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
                                         ),
                                 )
                               ],
-                            );
+                            ):
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSubCategoryDropdown(context, cubit),
+                        const SizedBox(height: 16),
+                        (state is SubCategoryStateLoading)
+                            ? const Center(child: CustomLoadingIndicator())
+                            :
+                        Flexible(
+                          child: (cubit.allGigsModel
+                              ?.data?.length ==
+                              0 ||
+                              cubit.allGigsModel ==
+                                  null)
+                              ? Center(
+                            child: Text('no_data'.tr()),
+                          )
+                              : ListView.builder(
+                            shrinkWrap: true,
+                            physics:
+                            const AlwaysScrollableScrollPhysics(),
+                            itemCount: cubit
+                                .allGigsModel
+                                ?.data
+                                ?.length,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12.w),
+                            itemBuilder: (context, index) =>
+                                GigsWidget(
+                                  index: index,
+                                  castingCubit: cubit,
+                                  eventAndGigsModel: cubit
+                                      .allGigsModel
+                                      ?.data?[index],
+                                ),
+                          ),
+                        )
+                      ],
+                    );
+
                 },
               ),
             ),

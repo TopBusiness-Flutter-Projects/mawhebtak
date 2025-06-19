@@ -21,7 +21,7 @@ class TopTalentsRepository {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "User",
         "where[0]": "status,1",
-        "paginate": "true",
+        "paginate": true,
         if (userSubTypeId != null)
           "where[1]": "user_sub_type_id,$userSubTypeId",
         "orderBy": orderBy,
@@ -36,14 +36,13 @@ class TopTalentsRepository {
   Future<Either<Failure, FollowerAndFollowingModel>> getFollowersData({
     required String pageName,
     String? followedId,
-    String? paginate,
     String? orderBy,
     String? page,
   }) async {
     try {
       final queryParams = {
         'model': 'Follower',
-        'paginate': paginate,
+        "paginate": true,
         'orderBy': orderBy,
         'page': page,
       };
@@ -75,7 +74,7 @@ class TopTalentsRepository {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         'model': "UserType",
         'where[0]': 'status,1',
-        'paginate': paginate,
+        "paginate": true,
         'orderBy': orderBy,
       });
       return Right(MainRegisterUserTypes.fromJson(response));
@@ -91,7 +90,7 @@ class TopTalentsRepository {
         'model': 'UserSubType',
         'where[0]': 'status,1',
         'where[1]': 'user_type_id,$userTypeId',
-        'paginate': paginate,
+        "paginate": true,
         'orderBy': orderBy,
       });
       return Right(MainRegisterUserTypes.fromJson(response));
