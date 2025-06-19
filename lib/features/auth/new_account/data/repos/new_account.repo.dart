@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/api/base_api_consumer.dart';
 
 import '../../../../../core/api/end_points.dart';
@@ -13,8 +14,13 @@ class NewAccount {
   NewAccount(this.dio);
 
   //registerUrl
-  Future<Either<Failure, LoginModel>> register(String email, String name,
-      String password, String phone, String? userTypeId) async {
+  Future<Either<Failure, LoginModel>> register(
+      String email,
+      String name,
+      String password,
+      String phone,
+      String? userTypeId,
+      String? userSubTypeId) async {
     try {
       final deviceToken = await Preferences.instance.getDeviceToken();
 
@@ -25,9 +31,10 @@ class NewAccount {
           'email': email,
           'name': name,
           'phone': phone,
-          'user_type_id': userTypeId,
+          // 'user_type_id': userTypeId,
+          'user_sub_type_id': userSubTypeId ?? userTypeId,
           'password': password,
-          "device_token": deviceToken
+          "device_token": deviceToken,
         },
       );
       return Right(LoginModel.fromJson(response));

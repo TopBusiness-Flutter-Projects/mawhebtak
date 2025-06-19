@@ -77,12 +77,12 @@ class NewAccountCubit extends Cubit<NewAccountState> {
   register(BuildContext context) async {
     emit(LoadingAddNewAccountState());
     var response = await api.register(
-      emailAddressController.text,
-      fullNameController.text,
-      passwordController.text,
-      mobileNumberController.text,
-      selectedUserType?.id?.toString(),
-    );
+        emailAddressController.text,
+        fullNameController.text,
+        passwordController.text,
+        mobileNumberController.text,
+        selectedUserType?.id?.toString(),
+        selectedUserSubType?.id?.toString());
     response.fold((l) {
       emit(ErrorAddNewAccountState('error_msg'.tr()));
     }, (r) async {
@@ -99,6 +99,8 @@ class NewAccountCubit extends Cubit<NewAccountState> {
 
         emit(LoadedAddNewAccountState());
       } else {
+        errorGetBar(r.msg ?? '');
+
         emit(ErrorAddNewAccountState('error_msg'.tr()));
       }
     });

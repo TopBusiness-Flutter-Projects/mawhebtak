@@ -99,14 +99,17 @@ class ProfileCubit extends Cubit<ProfileState> {
     isFollowing = !isFollowing;
     emit(ChangeFollowersState());
   }
+
   Future<LoginModel> getUserFromPreferences() async {
     final user = await Preferences.instance.getUserModel();
     return user;
   }
+
   LoginModel? user;
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
   }
+
   bool isLoadingMore = false;
   ProfileModel? profileModel;
   getProfileData({
@@ -137,13 +140,13 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(GetProfileStateError(e.toString()));
     }
   }
+
   FollowersModel? followersModel;
   getFollowersData({
     bool isGetMore = false,
     required String page,
     String? orderBy,
     String? followedId,
-
   }) async {
     if (isGetMore) {
       isLoadingMore = true;
@@ -155,29 +158,25 @@ class ProfileCubit extends Cubit<ProfileState> {
       final res = await api.getFollowersData(
           page: page,
           orderBy: orderBy,
-          followedId:followedId,
-          paginate: orderBy );
+          followedId: followedId,
+          paginate: orderBy);
 
       res.fold((l) {
         emit(GetFollowersStateError(l.toString()));
       }, (r) {
+        if (isGetMore) {
+          followersModel = FollowersModel(
+            links: r.links,
+            status: r.status,
+            msg: r.msg,
+            data: [...followersModel!.data!, ...r.data!],
+          );
 
-          if (isGetMore) {
-            followersModel = FollowersModel(
-              links: r.links,
-              status: r.status,
-              msg: r.msg,
-              data: [...followersModel!.data!, ...r.data!],
-            );
-
-            emit(GetFollowersStateLoaded());
-
-          } else {
-
-            followersModel = r;
-            emit(GetFollowersStateLoaded());
-          }
-
+          emit(GetFollowersStateLoaded());
+        } else {
+          followersModel = r;
+          emit(GetFollowersStateLoaded());
+        }
       });
     } catch (e) {
       emit(GetFollowersStateError(e.toString()));
@@ -185,8 +184,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       isLoadingMore = false;
     }
   }
-
-
 
   addReview({
     required BuildContext context,
@@ -221,8 +218,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(UpdateProfileStateLoading());
     try {
       final res = await api.updateProfileData(
-        name: nameController.text,
-        phone: phoneController.text,
+        name: nameController.text.isEmpty ? null : nameController.text,
+        phone: phoneController.text.isEmpty ? null : phoneController.text,
         userSubTypeId:
             context.read<NewAccountCubit>().selectedUserSubType?.id.toString(),
         avatar: avatarImage != null && await avatarImage!.exists()
@@ -243,12 +240,15 @@ class ProfileCubit extends Cubit<ProfileState> {
                 ?.longitude
                 .toString() ??
             "0.0",
-        bio: bioController.text,
-        headline: headlineController.text,
-        location: locationController.text,
-        age: ageController.text,
+        bio: bioController.text.isEmpty ? null : bioController.text,
+        headline:
+            headlineController.text.isEmpty ? null : headlineController.text,
+        location:
+            locationController.text.isEmpty ? null : locationController.text,
+        age: ageController.text.isEmpty ? null : ageController.text,
         gender: selectedGender,
-        syndicate: syndicateController.text,
+        syndicate:
+            syndicateController.text.isEmpty ? null : syndicateController.text,
       );
 
       res.fold(

@@ -81,7 +81,7 @@ class AppIcons {
   static const String bagIcon = '$iconsPath/bag_icon.svg';
   static const String announceIcon = '$iconsPath/announce.svg';
   static const String emailIcon = '$iconsPath/email_icon.svg';
-  static const String passwordIcon = '$iconsPath/Password_icon.svg';
+  static const String passwordIcon = '$iconsPath/password_icon.svg';
   static const String appleIcon = '$iconsPath/apple.svg';
   static const String googleIcon = '$iconsPath/google.svg';
   static const String myProfileIcon = '$iconsPath/my_profile.svg';
@@ -101,4 +101,5 @@ class AppIcons {
   static const String jopIcon = '$iconsPath/jop.svg';
   static const String assistantIcon = '$iconsPath/assistant.svg';
   static const String chatIcon = '$iconsPath/chhat_icon2.svg';
+  static const String deleteAccountIcon = '$iconsPath/delete_account.svg';
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
@@ -19,9 +18,10 @@ class MoreScreen extends StatefulWidget {
 class _MoreScreenState extends State<MoreScreen> {
   @override
   void initState() {
-   context.read<MoreCubit>().loadUserFromPreferences();
+    context.read<MoreCubit>().loadUserFromPreferences();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +82,8 @@ class _MoreScreenState extends State<MoreScreen> {
                             text: "my_favorites".tr(),
                             imageUrl: AppIcons.myFavoriteIcon,
                             onTap: () {
-                              Navigator.pushNamed(context, Routes.favouritesRoute);
+                              Navigator.pushNamed(
+                                  context, Routes.favouritesRoute);
                             }),
                         moreContainer(
                             text: "chats".tr(),
@@ -152,12 +153,24 @@ class _MoreScreenState extends State<MoreScreen> {
                                   context, Routes.termsAndConditionRoute);
                             }),
                         moreContainer(
+                          text: "delete_account".tr(),
+                          imageUrl: AppIcons.deleteAccountIcon,
+                          onTap: () {
+                            showAnimatedDeleteDialog(context, () {
+                              context
+                                  .read<MoreCubit>()
+                                  .deleteAccount(context: context);
+                            });
+                          },
+                        ),
+                        moreContainer(
                           text: "logout".tr(),
                           imageUrl: AppIcons.logout,
                           onTap: () {
                             showAnimatedLogoutDialog(context, () {
-                              Preferences.instance.clearShared();
-                             context.read<MoreCubit>().logout(context: context);
+                              context
+                                  .read<MoreCubit>()
+                                  .logout(context: context);
                             });
                           },
                         ),
@@ -189,6 +202,25 @@ class _MoreScreenState extends State<MoreScreen> {
           child: Opacity(
             opacity: animation.value,
             child: CustomLogoutDialog(onConfirm: onConfirm),
+          ),
+        );
+      },
+    );
+  }
+
+  void showAnimatedDeleteDialog(BuildContext context, VoidCallback onConfirm) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: "delete_account",
+      transitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (_, __, ___) => const SizedBox.shrink(),
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return Transform.scale(
+          scale: animation.value,
+          child: Opacity(
+            opacity: animation.value,
+            child: CustomDeleteDialog(onConfirm: onConfirm),
           ),
         );
       },

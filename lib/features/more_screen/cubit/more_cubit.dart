@@ -28,9 +28,11 @@ class MoreCubit extends Cubit<MoreState> {
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
   }
+
   saveData() {
     phoneNumberController.text = user?.data?.phone ?? "";
   }
+
   SettingModel? settingModel;
   getSettingData() async {
     emit(GetSettingDataStateLoading());
@@ -46,6 +48,7 @@ class MoreCubit extends Cubit<MoreState> {
       emit(GetSettingDataStateError(e.toString()));
     }
   }
+
   AnnouncementFavouriteModel? announcementFavouriteModel;
   getAnnounceFavouritesData() async {
     emit(AnnounceFavouritesDataStateLoading());
@@ -61,6 +64,7 @@ class MoreCubit extends Cubit<MoreState> {
       emit(AnnounceFavouritesDataStateError(e.toString()));
     }
   }
+
   UserJobModel? userJobFavouriteModel;
   getUserJobFavouritesData() async {
     emit(UserJobFavouritesDataStateLoading());
@@ -77,7 +81,9 @@ class MoreCubit extends Cubit<MoreState> {
       emit(UserJobFavouritesDataStateError(e.toString()));
     }
   }
-  contactUs({required bool isComplaining, required BuildContext context}) async {
+
+  contactUs(
+      {required bool isComplaining, required BuildContext context}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(ContactUsStateLoading());
     try {
@@ -100,6 +106,7 @@ class MoreCubit extends Cubit<MoreState> {
       emit(GetSettingDataStateError(e.toString()));
     }
   }
+
   logout({required BuildContext context}) async {
     emit(LogoutStateLoading());
     try {
@@ -107,22 +114,28 @@ class MoreCubit extends Cubit<MoreState> {
       res.fold((l) {
         emit(LogoutStateError(l.toString()));
       }, (r) {
-        if(r.status == 200){
+        if (r.status == 200) {
           successGetBar('logout_successfully'.tr());
-          Navigator.pushNamed(context, Routes.loginRoute);
-        }else{
-          errorGetBar(r.errors.toString());
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.loginRoute, (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.loginRoute, (route) => false);
         }
         emit(LogoutStateLoaded());
       });
     } catch (e) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, Routes.loginRoute, (route) => false);
       emit(LogoutStateError(e.toString()));
     }
   }
+
   changeSelected(int index) {
     selectedIndex = index;
     emit(ChangeIndexState());
   }
+
   changePassword({required BuildContext context}) async {
     AppWidgets.create2ProgressDialog(context);
     try {
@@ -133,26 +146,47 @@ class MoreCubit extends Cubit<MoreState> {
         emit(ChangePasswordStateError(l.toString()));
         Navigator.pop(context);
       }, (r) {
-
-
-        if(r.status == 200){
+        if (r.status == 200) {
           successGetBar('change_password_successfully'.tr());
           emit(ChangePasswordStateLoaded());
           Navigator.pop(context);
           oldPasswordController.clear();
           newPasswordController.clear();
-
-        }
-        else{
+        } else {
           errorGetBar(r.msg.toString());
           Navigator.pop(context);
         }
-
       });
     } catch (e) {
       emit(ChangePasswordStateError(e.toString()));
     }
   }
 
-
+  deleteAccount({required BuildContext context}) async {
+    AppWidgets.create2ProgressDialog(context);
+    try {
+      final res = await api.deleteAccount();
+      res.fold((l) {
+        emit(ChangePasswordStateError(l.toString()));
+        Navigator.pop(context);
+      }, (r) {
+        if (r.status == 200) {
+          successGetBar(
+            'delete_account_successfully'.tr(),
+            seconds: 2,
+          );
+          Navigator.pop(context);
+          emit(ChangePasswordStateLoaded());
+        } else {
+          errorGetBar(r.msg.toString());
+          Navigator.pop(context);
+        }
+        Navigator.pushNamedAndRemoveUntil(
+            context, Routes.loginRoute, (route) => false);
+      });
+    } catch (e) {
+      Navigator.pop(context);
+      emit(ChangePasswordStateError(e.toString()));
+    }
+  }
 }

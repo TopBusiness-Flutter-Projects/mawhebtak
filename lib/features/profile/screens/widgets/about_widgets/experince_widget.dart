@@ -47,7 +47,9 @@ class _ExperinceWidgetState extends State<ExperinceWidget> {
                     Text(
                         "${'from'.tr()}: ${DateFormat('yyyy-MM-dd').format(widget.experience?.from ?? DateTime.now())}- ${'to'.tr()}: ${widget.experience?.to == null ? 'present'.tr() : DateFormat('yyyy-MM-dd').format(widget.experience?.to ?? DateTime.now())}",
                         style: getRegularStyle(
-                            fontSize: 11.sp, color: AppColors.gray)),
+                            fontHeight: 1,
+                            fontSize: 11.sp,
+                            color: AppColors.gray)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -58,8 +60,7 @@ class _ExperinceWidgetState extends State<ExperinceWidget> {
                           style: getRegularStyle(
                               color: AppColors.grayText3, fontSize: 14.sp),
                         ),
-                        if ((widget.experience?.description!.length ?? 0) >
-                            100) // adjust based on your needs
+                        if ((widget.experience?.description!.length ?? 0) > 100)
                           TextButton(
                             onPressed: () {
                               setState(() {

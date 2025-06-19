@@ -100,7 +100,7 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
                   ),
               },
               if (state is SeeAllEventStateLoadingMore)
-                const CustomLoadingIndicator(),
+                const Center(child: CustomLoadingIndicator()),
             ],
           ),
         );

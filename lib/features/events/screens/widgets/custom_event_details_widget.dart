@@ -34,7 +34,8 @@ class CustomEventDetailsWidget extends StatelessWidget {
                   child: SizedBox(
                     height: 220.h,
                     width: getWidthSize(context),
-                    child: Image.asset(ImageAssets.appIcon, fit: BoxFit.cover),
+                    child:
+                        Image.asset(ImageAssets.logoImage, fit: BoxFit.cover),
                   ))
               : MediaCarousel(mediaList: mediaList),
           Positioned(

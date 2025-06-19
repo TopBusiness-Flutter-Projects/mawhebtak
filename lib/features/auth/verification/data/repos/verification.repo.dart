@@ -14,7 +14,10 @@ class VerificationRepo {
 
   //registerUrl
   Future<Either<Failure, ValidateDataMainModel>> validateData(String email,
-      String name, String password, String phone, String? userTypeId) async {
+      String name, String password, String phone,
+       String? userTypeId,
+       String? userSubTypeId,
+      ) async {
     try {
       var response = await dio.post(
         EndPoints.validateDataUrl,
@@ -23,7 +26,7 @@ class VerificationRepo {
           'email': email,
           'name': name,
           'phone': phone,
-          'user_type_id': userTypeId,
+          'user_sub_type_id': userSubTypeId??userTypeId,
           'password': password
         },
       );

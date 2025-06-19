@@ -48,12 +48,13 @@ class VerificationCubit extends Cubit<VerificationState> {
     required String password,
     required String phone,
     required String userTypeId,
+    required String userSubTypeId,
   }) async {
     AppWidgets.create2ProgressDialog(context);
     emit(ValidateDataStateLoading());
     try {
-      final res =
-          await api.validateData(email, name, password, phone, userTypeId);
+      final res = await api.validateData(
+          email, name, password, phone, userTypeId, userSubTypeId);
       res.fold((l) {
         emit(ValidateDataStateError());
       }, (r) {

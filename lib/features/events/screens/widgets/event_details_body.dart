@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
@@ -23,6 +25,7 @@ class EventDetailsBody extends StatelessWidget {
   final DeepLinkDataModel? mainDeepLink;
   @override
   Widget build(BuildContext context) {
+    log('44444444 ${(item?.isMine == false && item?.requirements?.length != 0)}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -41,12 +44,14 @@ class EventDetailsBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap:(){
-                  Navigator.pushNamed(context, Routes.profileRoute,
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.profileRoute,
                     arguments: DeepLinkDataModel(
-                    id: item?.eventOwner?.id.toString() ??
-                      '',
-                  isDeepLink: false), );
+                        id: item?.eventOwner?.id.toString() ?? '',
+                        isDeepLink: false),
+                  );
                 },
                 child: SizedBox(
                   height: 40.h,
@@ -132,14 +137,14 @@ class EventDetailsBody extends StatelessWidget {
               ),
         StaticsCards(item: item),
         SizedBox(height: 10.h),
-
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 16.h),
-          child: Text(
-            'Required Talents'.tr(),
-            style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
+        if (item?.requirements?.length != 0)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 16.h),
+            child: Text(
+              'required_talents'.tr(),
+              style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
+            ),
           ),
-        ),
 
         ListView.builder(
           shrinkWrap: true,
@@ -159,7 +164,8 @@ class EventDetailsBody extends StatelessWidget {
         20.h.verticalSpace,
         //TODO: need pass id and apply request
 
-        if (item?.isMine == false) const CustomApplyButton(),
+        if (item?.isMine == false && item?.requirements?.length != 0)
+          const CustomApplyButton(),
 
         if (item?.isMine == true)
           Padding(

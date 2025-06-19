@@ -35,7 +35,7 @@ errorGetBar(String message) {
 /*------------------------------  Success Get Bar  ---------------------------*/
 /*----------------------------------------------------------------------------*/
 
-successGetBar(String? message) {
+successGetBar(String? message, {int? seconds}) {
   Get.showSnackbar(GetSnackBar(
     messageText: Text(
       message ?? 'success'.tr(),
@@ -48,7 +48,7 @@ successGetBar(String? message) {
     backgroundColor: AppColors.secondPrimary,
     barBlur: 5.0,
     borderRadius: 12.0,
-    duration: const Duration(milliseconds: 2500),
+    duration: Duration(milliseconds: 2500, seconds: seconds ?? 0),
     isDismissible: true,
     margin: const EdgeInsets.all(8.0),
     snackPosition: SnackPosition.TOP,

@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_state.dart';
 import '../../../core/exports.dart';
@@ -19,43 +19,41 @@ class ChangeLanguageScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              BlocBuilder<ChangeLanguageCubit,ChangeLanguageState>(
-                builder: (context,state) {
-                  return Container(
-                    color: AppColors.grayLite,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(right: 15.w, left: 15.w, bottom: 20.h),
-                      child: Column(
-                        children: [
-                          changeLanguageContainer(
-                            text: "English",
-                            onTap: () {
-                              // EasyLocalization.of(context)!
-                              //     .setLocale(const Locale('en', ''));
-                              // Preferences.instance.savedLang('en');
-                              cubit.changeLanguage(context, "English");
-                           //   Preferences.instance.getSavedLang();
-                            },
-                          ),
-                          changeLanguageContainer(
-                            text: "اللغة العربية",
-                            onTap: () {
-                              cubit.changeLanguage(context, "Arabic");
+              BlocBuilder<ChangeLanguageCubit, ChangeLanguageState>(
+                  builder: (context, state) {
+                return Container(
+                  color: AppColors.grayLite,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(right: 15.w, left: 15.w, bottom: 20.h),
+                    child: Column(
+                      children: [
+                        changeLanguageContainer(
+                          text: "English",
+                          onTap: () {
+                            // EasyLocalization.of(context)!
+                            //     .setLocale(const Locale('en', ''));
+                            // Preferences.instance.savedLang('en');
+                            cubit.changeLanguage(context, "English");
+                            //   Preferences.instance.getSavedLang();
+                          },
+                        ),
+                        changeLanguageContainer(
+                          text: "اللغة العربية",
+                          onTap: () {
+                            cubit.changeLanguage(context, "Arabic");
 
-                              // EasyLocalization.of(context)!
-                              //     .setLocale(const Locale('ar', ''));
-                              // Preferences.instance.savedLang('ar');
-                             // Preferences.instance.getSavedLang();
-
-                            },
-                          ),
-                        ],
-                      ),
+                            // EasyLocalization.of(context)!
+                            //     .setLocale(const Locale('ar', ''));
+                            // Preferences.instance.savedLang('ar');
+                            // Preferences.instance.getSavedLang();
+                          },
+                        ),
+                      ],
                     ),
-                  );
-                }
-              ),
+                  ),
+                );
+              }),
             ],
           ),
         ),

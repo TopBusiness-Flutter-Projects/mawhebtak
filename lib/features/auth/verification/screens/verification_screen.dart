@@ -180,6 +180,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   userTypeId:
                                       cubitx.selectedUserType?.id?.toString() ??
                                           '',
+                                  userSubTypeId: cubitx.selectedUserSubType?.id
+                                          ?.toString() ??
+                                      '',
                                 );
                               }
                             },

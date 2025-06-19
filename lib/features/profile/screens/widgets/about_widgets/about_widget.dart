@@ -72,26 +72,25 @@ class _AboutWidgetState extends State<AboutWidget> {
           Container(
               height: 8.h, color: AppColors.grayLite, width: double.infinity),
           SizedBox(height: 10.h),
-          if ((widget.profileModel?.data?.experiences?.isNotEmpty ?? false))
-            Row(
-              children: [
-                Flexible(child: CustomRowSection(title: "experience".tr())),
-                if (context.read<ProfileCubit>().user?.data?.id.toString() ==
-                    widget.profileModel?.data?.id.toString())
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const AddNewExperienceScreen()));
-                      },
-                      icon: Icon(
-                        Icons.add_box,
-                        color: AppColors.primary,
-                      ))
-              ],
-            ),
+          Row(
+            children: [
+              Flexible(child: CustomRowSection(title: "experience".tr())),
+              if (context.read<ProfileCubit>().user?.data?.id.toString() ==
+                  widget.profileModel?.data?.id.toString())
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const AddNewExperienceScreen()));
+                    },
+                    icon: Icon(
+                      Icons.add_box,
+                      color: AppColors.primary,
+                    ))
+            ],
+          ),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

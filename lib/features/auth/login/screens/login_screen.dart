@@ -126,8 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     decorationColor: AppColors.secondPrimary),
                               ),
                             ),
-                            30.w.horizontalSpace,
-                            Expanded(
+                            // 30.w.horizontalSpace,
+                            Flexible(
                               child: CustomButton(
                                   onTap: () async {
                                     if (formKey.currentState!.validate()) {

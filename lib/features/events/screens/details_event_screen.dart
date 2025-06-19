@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_event_details_widget.dart';
+import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
@@ -259,10 +260,20 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                               ),
                                                             ),
                                                             if (cubit
-                                                                    .eventDetails
-                                                                    ?.data
-                                                                    ?.isMine ==
-                                                                false)
+                                                                        .eventDetails
+                                                                        ?.data
+                                                                        ?.isMine ==
+                                                                    false &&
+                                                                (context
+                                                                        .read<
+                                                                            ProfileCubit>()
+                                                                        .user
+                                                                        ?.data
+                                                                        ?.id
+                                                                        ?.toString() !=
+                                                                    enrolledUser
+                                                                        ?.id
+                                                                        ?.toString()))
                                                               CustomContainerButton(
                                                                 title:
                                                                     "message",
@@ -276,7 +287,17 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                                             .w,
                                                                         vertical:
                                                                             5.h),
-                                                                onTap: () {
+                                                                onTap:
+                                                                    () async {
+                                                                  final user =
+                                                                      await Preferences
+                                                                          .instance
+                                                                          .getUserModel();
+
+                                                                  log('0990 ${(user.data?.id?.toString() != enrolledUser?.id?.toString())}');
+                                                                  log('0990 ${(user.data?.id?.toString())}');
+                                                                  log('0990 ${(enrolledUser?.id?.toString())}');
+
                                                                   Navigator.pushNamed(
                                                                       context,
                                                                       Routes

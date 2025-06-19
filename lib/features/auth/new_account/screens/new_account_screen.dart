@@ -186,6 +186,10 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                         userTypeId: cubit.selectedUserType?.id
                                                 ?.toString() ??
                                             '',
+                                        userSubTypeId: cubit
+                                                .selectedUserSubType?.id
+                                                ?.toString() ??
+                                            '',
                                       );
                                     }
                                   }),

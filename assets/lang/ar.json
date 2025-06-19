@@ -291,5 +291,17 @@
   "to_date": "الى تاريخ",
   "from_date": "من تاريخ",
   "add_experience": "أضف خبرة جديدة",
-  "update_experience": "تحديث الخبرة"
+  "update_experience": "تحديث الخبرة",
+  "delete_account":"حذف الحساب",
+  "delete_account_msg":"هل تريد حذف الحساب ؟",
+  "delete_account_successfully":"تم تفعيل طلب حذف حسابك، وسيتم حذفه نهائيًا خلال الـ24 ساعة القادمة."
+
+
+
+
+
+
+
+
+
 }

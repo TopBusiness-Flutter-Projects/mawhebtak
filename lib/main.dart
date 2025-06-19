@@ -8,24 +8,20 @@ import 'core/utils/restart_app_class.dart';
 void main() async {
   await initialization();
   runApp(EasyLocalization(
-    supportedLocales: const [Locale('ar', ''), Locale('en', '')],
-    path: 'assets/lang',
-    saveLocale: true,
-    startLocale: const Locale('en', ''),
-    fallbackLocale: const Locale('en', ''),
-    child: HotRestartController(
-      child: Builder(builder: (context) {
+      supportedLocales: const [Locale('ar', ''), Locale('en', '')],
+      path: 'assets/lang',
+      saveLocale: true,
+      startLocale: const Locale('en', ''),
+      fallbackLocale: const Locale('en', ''),
+      child: HotRestartController(child: Builder(builder: (context) {
         double width = MediaQuery.of(context).size.width;
         double height = MediaQuery.of(context).size.height;
         return ScreenUtilInit(
-          designSize: Size(width, height),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (ctx, child) {
-            return const MyApp();
-          },
-        );
-      }),
-    ),
-  ));
+            designSize: Size(width, height),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (ctx, child) {
+              return const MyApp();
+            });
+      }))));
 }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -22,14 +21,17 @@ class ProfileRepo {
   }
 
   Future<Either<Failure, FollowersModel>> getFollowersData(
-      {String? followedId, String? paginate, String? orderBy,String? page}) async {
+      {String? followedId,
+      String? paginate,
+      String? orderBy,
+      String? page}) async {
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         'model': 'Follower',
         'where[1]': 'followed_id,$followedId',
         'paginate': paginate,
         'orderBy': orderBy,
-        'page':page,
+        'page': page,
       });
       return Right(FollowersModel.fromJson(response));
     } on ServerException {
