@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
@@ -33,8 +35,16 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is LoginStateLoading) {
           AppWidgets.create2ProgressDialog(context);
         } else if (state is LoginStateLoaded) {
-          Navigator.pop(context);
+          if (state.isRegister == 1){
+ log("Register");
+  Navigator.pop(context);
+  Navigator.pushReplacementNamed(context, Routes.addReferralCodeRoute);
+
+          }else{
+  Navigator.pop(context);
           Navigator.pushReplacementNamed(context, Routes.mainRoute);
+          }    
+    
         } else if (state is LoginStateError) {
           Navigator.pop(context);
         }

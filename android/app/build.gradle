@@ -7,21 +7,18 @@ plugins {
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
-
 android {
     namespace  'com.topbusiness.mawhebtak'
     compileSdk = 35
     ndkVersion = "25.1.8937393"
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true 
     }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
-
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.topbusiness.mawhebtak"
@@ -45,4 +42,9 @@ android {
 
 flutter {
     source = "../.."
+}
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4' // إضافة مكتبة desugaring
+    // باقي المكتبات
+    implementation 'com.android.support:multidex:1.0.3'
 }

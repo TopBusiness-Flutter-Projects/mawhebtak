@@ -14,9 +14,9 @@ class AppStrings {
   static const String profilesShareLink =
       'https://mawhebtak.topbusiness.ebharbook.com/deeplink/profiles?id=';
 }
-
 class AppConst {
-  // static bool isLogged = prefs.getBool("ISLOGGED") ?? false;
 
+  // static bool isLogged = prefs.getBool("ISLOGGED") ?? false;
   // static bool get isLogged  =>  prefs.getBool("ISLOGGED") ?? false;
+  
 }

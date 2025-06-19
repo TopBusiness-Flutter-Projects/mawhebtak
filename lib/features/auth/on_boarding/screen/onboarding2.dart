@@ -117,9 +117,7 @@ class OnBoarding2 extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: getSize(context) / 4,
-                        ),
+                     
                       ],
                     ),
                   )

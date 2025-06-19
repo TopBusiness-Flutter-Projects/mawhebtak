@@ -33,6 +33,8 @@ class UserModel {
   dynamic wallet;
   String? socialType;
   String? token;
+    String? referralCode;
+
 
   UserModel({
     this.id,
@@ -45,6 +47,8 @@ class UserModel {
     this.wallet,
     this.socialType,
     this.token,
+        this.referralCode,
+
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -58,6 +62,8 @@ class UserModel {
         wallet: json["wallet"],
         socialType: json["social_type"],
         token: json["token"],
+                referralCode: json["referral_code"],
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,5 +77,6 @@ class UserModel {
         "wallet": wallet,
         "social_type": socialType,
         "token": token,
+                "referral_code": referralCode,
       };
 }

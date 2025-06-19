@@ -136,7 +136,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       });
     } catch (e) {
       errorGetBar(e.toString());
-
       emit(GetProfileStateError(e.toString()));
     }
   }
@@ -158,25 +157,23 @@ class ProfileCubit extends Cubit<ProfileState> {
       final res = await api.getFollowersData(
           page: page,
           orderBy: orderBy,
-          followedId: followedId,
-          paginate: orderBy);
-
+          followedId:followedId,
+          paginate: orderBy );
       res.fold((l) {
         emit(GetFollowersStateError(l.toString()));
       }, (r) {
-        if (isGetMore) {
-          followersModel = FollowersModel(
-            links: r.links,
-            status: r.status,
-            msg: r.msg,
-            data: [...followersModel!.data!, ...r.data!],
-          );
-
-          emit(GetFollowersStateLoaded());
-        } else {
-          followersModel = r;
-          emit(GetFollowersStateLoaded());
-        }
+          if (isGetMore) {
+            followersModel = FollowersModel(
+              links: r.links,
+              status: r.status,
+              msg: r.msg,
+              data: [...followersModel!.data!, ...r.data!],
+            );
+            emit(GetFollowersStateLoaded());
+          } else {
+            followersModel = r;
+            emit(GetFollowersStateLoaded());
+          }
       });
     } catch (e) {
       emit(GetFollowersStateError(e.toString()));
@@ -184,7 +181,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       isLoadingMore = false;
     }
   }
-
   addReview({
     required BuildContext context,
     required String userId,
@@ -211,7 +207,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(AddReviewStateError(e.toString()));
     }
   }
-
   Future<void> updateProfileData(
       {required BuildContext context, required String profileId}) async {
     AppWidgets.create2ProgressDialog(context);
