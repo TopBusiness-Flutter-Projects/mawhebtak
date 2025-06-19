@@ -1,6 +1,6 @@
 import 'package:mawhebtak/core/utils/filter.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
-import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
+import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:mawhebtak/features/profile/screens/widgets/followers_widget.dart';
 import '../../../core/exports.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
@@ -17,30 +17,38 @@ class _FollowersScreenState extends State<FollowersScreen> {
 
   @override
   void initState() {
-    context.read<TopTalentsCubit>().topTalentsData(page: '1', isGetMore: false);
+    context.read<ProfileCubit>().getFollowersData(
+        page: '1', isGetMore: false,
+      orderBy: selctedFilterOption?.key,
+      followedId: context.read<ProfileCubit>().user?.data?.id.toString(),
+    );
     scrollController.addListener(_scrollListener);
+    context.read<ProfileCubit>().loadUserFromPreferences();
+    context.read<ProfileCubit>().getUserFromPreferences();
     super.initState();
   }
 
   _scrollListener() {
     if (scrollController.position.maxScrollExtent == scrollController.offset) {
-      if (context.read<TopTalentsCubit>().topTalents?.links?.next != null) {
+      if (context.read<ProfileCubit>().followersModel?.links?.next != null) {
         Uri uri = Uri.parse(
-            context.read<TopTalentsCubit>().topTalents?.links?.next ?? "");
+            context.read<ProfileCubit>().followersModel?.links?.next ?? "");
         String? page = uri.queryParameters['page'];
-        context.read<TopTalentsCubit>().topTalentsData(
+        context.read<ProfileCubit>().getFollowersData(
             page: page ?? '1',
             isGetMore: true,
-            orderBy: selctedFilterOption?.key);
+            orderBy: selctedFilterOption?.key,
+           followedId: context.read<ProfileCubit>().user?.data?.id.toString(),
+        );
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TopTalentsCubit, TopTalentsState>(
+    return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (BuildContext context, state) {
-        var cubit = context.read<TopTalentsCubit>();
+        var cubit = context.read<ProfileCubit>();
         return Scaffold(
           body: Column(
             children: <Widget>[
@@ -50,25 +58,28 @@ class _FollowersScreenState extends State<FollowersScreen> {
               SizedBox(
                 height: 10.h,
               ),
-              (state is TopTalentsStateLoading)
+              (state is GetFollowersStateLoading)
                   ? const Expanded(
                       child: Center(
                       child: CustomLoadingIndicator(),
                     ))
-                  : Expanded(
-                    child: ListView.builder(
-                        controller: scrollController,
-                        shrinkWrap: true,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemCount: cubit.topTalents?.data?.length ?? 0,
-                        itemBuilder: (BuildContext context, int index) {
-                          return FollowersWidget(
-                            index: index,
-                          );
-                        },
-                      ),
+                  :
+              Expanded(
+                child: (cubit.followersModel?.data?.length == 0)?
+                 Center(child: Text("no_data".tr()),):
+                ListView.builder(
+                    controller: scrollController,
+                    shrinkWrap: true,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: cubit.followersModel?.data?.length ?? 0,
+                    itemBuilder: (BuildContext context, int index) {
+                      return FollowersWidget(
+                        index: index,
+                      );
+                    },
                   ),
-              if(state is TopTalentsStateLoadingMore)
+              ),
+              if(state is GetFollowersStateLoadingMore)
               const Center(child: CustomLoadingIndicator(),)
             ],
           ),
