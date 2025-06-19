@@ -120,9 +120,7 @@ class OnBoarding3 extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: getSize(context) / 4,
-                        ),
+                     
                       ],
                     ),
                   )

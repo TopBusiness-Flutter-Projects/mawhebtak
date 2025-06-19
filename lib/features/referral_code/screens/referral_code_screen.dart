@@ -1,20 +1,24 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
+import 'package:mawhebtak/features/main_screen/cubit/state.dart';
+import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';
 import 'package:mawhebtak/features/referral_code/cubit/referral_code_state.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReferralCodeScreen extends StatelessWidget {
   const ReferralCodeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<ReferralCodeCubit>();
-    const fullCode = "Ahmed 25367895"; // تقدر تجيب ده من Cubit لو عايز
+    var cubit = context.read<MainCubit>();
+    
 
     return SafeArea(
       child: Scaffold(
-        body: BlocBuilder<ReferralCodeCubit, ReferralCodeState>(
+        body: BlocBuilder<MainCubit, MainState>(
           builder: (context, state) {
             return Column(
               children: [
@@ -53,13 +57,14 @@ class ReferralCodeScreen extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                fullCode,
+                                cubit.loginModel?.data?.referralCode ?? "",
+                                
                                 style: TextStyle(fontSize: 14.sp, color: AppColors.black),
                               ),
                             ),
                             ElevatedButton(
                               onPressed: () {
-                                Clipboard.setData(ClipboardData(text: fullCode));
+                                Clipboard.setData(ClipboardData(text:cubit.loginModel?.data?.referralCode ?? ""));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text('Code copied!')),
                                 );
@@ -81,27 +86,38 @@ class ReferralCodeScreen extends StatelessWidget {
                       ),
 
                       SizedBox(height: 20.h),
-                      Text(
-                        "share_code_now".tr(),
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.black.withOpacity(0.8),
-                          fontWeight: FontWeight.w500,
+                      GestureDetector(
+                          onTap: () async {
+                              String url =  cubit.loginModel?.data?.referralCode ?? "refe";
+                                await SharePlus.instance.share(ShareParams(
+                  text:
+                      url,
+                  title: AppStrings.appName,
+                ));
+                            
+                            },
+                        child: Text(
+                          "share_code_now".tr(),
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            color: AppColors.black.withOpacity(0.8),
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
 
                       SizedBox(height: 12.h),
 
                       // ==== Share Icons ====
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _buildIcon(AppIcons.xIcon),
-                          _buildIcon(AppIcons.face),
-                          _buildIcon(AppIcons.messenger),
-                          _buildIcon(AppIcons.whatsapp),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     _buildIcon(AppIcons.xIcon),
+                      //     _buildIcon(AppIcons.face),
+                      //     _buildIcon(AppIcons.messenger),
+                      //     _buildIcon(AppIcons.whatsapp),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),

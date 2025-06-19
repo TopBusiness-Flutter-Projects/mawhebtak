@@ -16,6 +16,7 @@ class EndPoints {
   static const String validateDataUrl = '${baseUrl}validate-data';
   static const String forgetPasswordUrl = '${baseUrl}forget-password';
   static const String updatePasswordUrl = '${baseUrl}update-password';
+  static const String addReferralCodeUrl = '${baseUrl}add-referral-code';
   static const String loginWithSocial = '${baseUrl}login-with-social';
   static const String addCommentUrl = '${baseUrl}add-comment';
   static const String addCommentReply = '${baseUrl}add-comment-reply';

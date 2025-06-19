@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
@@ -89,7 +91,13 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       if (r.status == 200 || r.status == 201) {
         successGetBar(r.msg);
         Navigator.pop(context);
-        Navigator.pushReplacementNamed(context, Routes.mainRoute);
+        if (r.data?.isRegister == 1){
+log(" Register");
+ Navigator.pushReplacementNamed(context, Routes.addReferralCodeRoute);
+        }else{
+                  Navigator.pushReplacementNamed(context, Routes.mainRoute);
+
+        }
         await Preferences.instance.setUser(r);
         emailAddressController.clear();
         fullNameController.clear();

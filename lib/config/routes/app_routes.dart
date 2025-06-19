@@ -35,6 +35,7 @@ import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
 import 'package:mawhebtak/features/profile/screens/edit_profile_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/terms_and_condition.dart';
+import 'package:mawhebtak/features/referral_code/screens/add_referral_code_screen.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/announcement/screens/announcement_screen.dart';
@@ -70,6 +71,7 @@ class Routes {
   static const String aboutUsRoute = '/aboutUs';
   static const String contactUsRoute = '/contactUs';
   static const String referralCodeRoute = '/referralCode';
+  static const String addReferralCodeRoute = '/addReferralCode';
   static const String termsAndConditionRoute = '/termsAndCondition';
   static const String videoScreenRoute = '/videoScreenRoute';
   static const String topEventsRoute = '/topEventScreen';
@@ -411,6 +413,13 @@ class AppRoutes {
       case Routes.referralCodeRoute:
         return PageTransition(
           child: const ReferralCodeScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
+      case Routes.addReferralCodeRoute:
+        return PageTransition(
+          child: const AddReferralScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
