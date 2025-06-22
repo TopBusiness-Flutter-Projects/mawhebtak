@@ -135,31 +135,31 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                       ),
                       if (widget.isDeepLink == false)
                         InkWell(
-                            onTap: () async {
-                              final user =
-                                  await Preferences.instance.getUserModel();
-                              if (user.data?.token == null) {
-                                checkLogin(context);
-                              } else {
-                                print(
-                                    "the is fav ${cubit.userJobDetailsModel?.data?.isFav}");
-                                cubit.toggleFavorite(
-                                    context: context,
-                                    index: widget.index,
-                                    userJopId:
-                                        widget.userJopId.toString() ?? "");
-                              }
-                            },
-                            child: Icon(
-                              cubit.userJobDetailsModel?.data?.isFav == true
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              size: 20.sp,
-                              color:
-                                  cubit.userJobDetailsModel?.data?.isFav == true
-                                      ? AppColors.primary
-                                      : AppColors.darkGray.withOpacity(0.5),
-                            )),
+                          onTap: () async {
+                            final user =
+                                await Preferences.instance.getUserModel();
+                            if (user.data?.token == null) {
+                              checkLogin(context);
+                            } else {
+                              print(
+                                  "the is fav ${cubit.userJobDetailsModel?.data?.isFav}");
+                              cubit.toggleFavorite(
+                                  context: context,
+                                  index: widget.index,
+                                  userJopId: widget.userJopId.toString() ?? "");
+                            }
+                          },
+                          child: Icon(
+                            cubit.userJobDetailsModel?.data?.isFav == true
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            size: 20.sp,
+                            color:
+                                cubit.userJobDetailsModel?.data?.isFav == true
+                                    ? AppColors.primary
+                                    : AppColors.darkGray.withOpacity(0.5),
+                          ),
+                        ),
                     ],
                   ),
                   6.h.verticalSpace,

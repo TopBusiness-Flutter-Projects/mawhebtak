@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
@@ -33,13 +35,13 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
                   var item = widget.list[index];
                   return GestureDetector(
                     onTap: () {
+                      setState(() {
+                        cubit.selectedUserType = item;
+                      });
                       cubit.getDataUserSubType(
                         userTypeId:
                             cubit.selectedUserType?.id?.toString() ?? '',
                       );
-                      setState(() {
-                        cubit.selectedUserType = item;
-                      });
                     },
                     child: Container(
                       margin: EdgeInsets.only(right: 10.w),
@@ -52,7 +54,7 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
                             : Colors.grey[200],
                         border: Border.all(
                           color: (cubit.selectedUserType?.id?.toString() ==
-                                  item?.id?.toString())
+                                  item.id?.toString())
                               ? AppColors.primary
                               : Colors.transparent,
                         ),

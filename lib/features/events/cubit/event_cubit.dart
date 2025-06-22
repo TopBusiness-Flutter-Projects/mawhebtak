@@ -19,7 +19,7 @@ class EventCubit extends Cubit<EventState> {
     emit(ChangeToggleState());
   }
 
-  String selectedCurrency = "L.E";
+  String selectedCurrency = "";
 
   void changeCurrency(String currency) {
     selectedCurrency = currency;

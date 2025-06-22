@@ -55,14 +55,16 @@ class CastingRepo {
 
   // categories data
   Future<Either<Failure, GetCountriesMainModel>> getCategoryFromGigs({
+    bool? paginate,
     String? page,
     String? orderBy,
   }) async {
     try {
       var response = await api.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Category",
-        "paginate": true,
+        "paginate": paginate ?? true,
         "page": page,
+        "where[0]": "type,0",
         "orderBy": orderBy ?? 'desc',
       });
       return Right(GetCountriesMainModel.fromJson(response));

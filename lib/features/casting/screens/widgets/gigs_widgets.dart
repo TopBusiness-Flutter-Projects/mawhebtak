@@ -141,28 +141,28 @@ class _GigsWidgetState extends State<GigsWidget> {
                             ),
                           ],
                         ),
-                        if (widget.eventAndGigsModel?.isMine == true)
-                          PopupMenuButton<String>(
-                            icon: SvgPicture.asset(AppIcons.settingIcon),
-                            onSelected: (value) {
-                              if (value == 'delete') {
-                                widget.castingCubit?.deleteGigs(
-                                    index: widget.index!,
-                                    gigId: widget.eventAndGigsModel?.id
-                                            .toString() ??
-                                        "",
-                                    context: context);
-                              }
-                            },
-                            color: AppColors.white,
-                            itemBuilder: (BuildContext context) =>
-                                <PopupMenuEntry<String>>[
-                              PopupMenuItem<String>(
-                                value: 'delete',
-                                child: Text('delete_post'.tr()),
-                              ),
-                            ],
-                          )
+                        // if (widget.eventAndGigsModel?.isMine == true)
+                        //   PopupMenuButton<String>(
+                        //     icon: SvgPicture.asset(AppIcons.settingIcon),
+                        //     onSelected: (value) {
+                        //       if (value == 'delete') {
+                        //         widget.castingCubit?.deleteGigs(
+                        //             index: widget.index!,
+                        //             gigId: widget.eventAndGigsModel?.id
+                        //                     .toString() ??
+                        //                 "",
+                        //             context: context);
+                        //       }
+                        //     },
+                        //     color: AppColors.white,
+                        //     itemBuilder: (BuildContext context) =>
+                        //         <PopupMenuEntry<String>>[
+                        //       PopupMenuItem<String>(
+                        //         value: 'delete',
+                        //         child: Text('delete_post'.tr()),
+                        //       ),
+                        //     ],
+                        //   )
                       ],
                     ),
                   ),
@@ -280,11 +280,11 @@ class _GigsWidgetState extends State<GigsWidget> {
                             ),
                             Row(
                               children: [
-                                SvgPicture.asset(AppIcons.dollar),
+                                // SvgPicture.asset(AppIcons.dollar),
                                 5.w.horizontalSpace,
                                 Text(
-                                  widget.eventAndGigsModel?.price.toString() ??
-                                      "",
+                                  (widget.eventAndGigsModel?.price.toString() ??
+                                      ""),
                                   style: TextStyle(
                                       color: AppColors.primary,
                                       fontSize: 18.sp,

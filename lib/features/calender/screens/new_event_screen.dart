@@ -397,7 +397,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            cubit.selectedCurrency?.currency ?? 'L.E',
+                            cubit.selectedCurrency?.currency ?? '',
                             style: getRegularStyle(
                                 color: Colors.blue, fontSize: 14.sp),
                           ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/api/base_api_consumer.dart';
@@ -62,13 +64,12 @@ class NewAccount {
   }
 
   Future<Either<Failure, MainRegisterUserTypes>> getDataUserSubType(
-      {String? paginate, String? orderBy, required String userTypeId}) async {
+      {String? orderBy, required String userTypeId}) async {
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         'model': 'UserSubType',
         'where[0]': 'status,1',
         'where[1]': 'user_type_id,$userTypeId',
-        'paginate': paginate,
         'orderBy': orderBy,
       });
       return Right(MainRegisterUserTypes.fromJson(response));

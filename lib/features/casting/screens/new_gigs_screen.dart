@@ -24,7 +24,7 @@ class NewGigsScreen extends StatefulWidget {
 class _NewGigsScreenState extends State<NewGigsScreen> {
   @override
   void initState() {
-    context.read<CastingCubit>().getCategoryFromGigs();
+    context.read<CastingCubit>().getCategoryFromGigs(paginate: false);
     context.read<CastingCubit>().selectedCategory = null;
     context.read<CastingCubit>().selectedSubCategory = null;
     if (context.read<CalenderCubit>().countriesMainModel == null) {
@@ -79,15 +79,17 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                               color: AppColors.grayLite,
                               borderRadius: BorderRadius.circular(8.sp),
                             ),
-                            child: GeneralCustomDropdownButtonFormField(
+                            child: GeneralCustomDropdownButtonFormField<
+                                GetCountriesMainModelData>(
                               itemBuilder: (item) {
-                                return item?.name ?? '';
+                                return item.name ?? '';
                               },
                               value: cubit.selectedCategory,
                               items: cubit.categoryModel?.data ?? [],
                               onChanged: (value) {
                                 cubit.selectedCategory = value;
-                                cubit.subCategoryFromCategoryGigsModel?.data = [];
+                                cubit.subCategoryFromCategoryGigsModel?.data =
+                                    [];
                                 cubit.selectedSubCategory = null;
                                 cubit.subCategoryFromCategoryGigs(
                                     categoryId: value?.id.toString() ?? "");
@@ -99,7 +101,9 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              if (cubit.subCategoryFromCategoryGigsModel?.data?.length != 0)
+                              if (cubit.subCategoryFromCategoryGigsModel?.data
+                                      ?.length !=
+                                  0)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(top: 10.h, bottom: 10.h),
@@ -108,7 +112,9 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     style: getRegularStyle(fontSize: 18.sp),
                                   ),
                                 ),
-                              if (cubit.subCategoryFromCategoryGigsModel?.data?.length != 0)
+                              if (cubit.subCategoryFromCategoryGigsModel?.data
+                                      ?.length !=
+                                  0)
                                 Container(
                                   height: 60.h,
                                   width: double.infinity,
@@ -121,14 +127,11 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                       return item?.name ?? '';
                                     },
                                     value: cubit.selectedSubCategory,
-                                    items: cubit.subCategoryFromCategoryGigsModel?.data ?? [],
+                                    items: cubit
+                                            .subCategoryFromCategoryGigsModel
+                                            ?.data ??
+                                        [],
                                     onChanged: (value) {
-                                      // cubit.selectedCategory = value;
-                                      // cubit.subCategoryFromCategoryGigsModel?.data = [];
-                                      // cubit.selectedSubCategory = null;
-                                      // print('id from sub ${value?.id}');
-                                      // cubit.subCategoryFromCategoryGigs(
-                                      //     categoryId: value?.id.toString() ?? "");
                                       cubit.selectedSubCategory = value;
                                     },
                                   ),
@@ -165,8 +168,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      cubit2.selectedCurrency?.currency ??
-                                          'L.E',
+                                      cubit2.selectedCurrency?.currency ?? '',
                                       style: getRegularStyle(
                                           color: Colors.blue, fontSize: 14.sp),
                                     ),

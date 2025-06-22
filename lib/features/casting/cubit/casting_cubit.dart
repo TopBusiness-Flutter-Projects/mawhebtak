@@ -32,6 +32,7 @@ class CastingCubit extends Cubit<CastingState> {
   GetCountriesMainModel? categoryModel;
   getCategoryFromGigs({
     bool isGetMore = false,
+    bool paginate = true,
     String? page,
     String? orderBy,
   }) async {
@@ -42,8 +43,8 @@ class CastingCubit extends Cubit<CastingState> {
       emit(CategoryFromGigsStateLoading());
     }
     try {
-      final res =
-          await castingRepo.getCategoryFromGigs(page: page, orderBy: orderBy);
+      final res = await castingRepo.getCategoryFromGigs(
+          paginate: paginate, page: page, orderBy: orderBy);
       res.fold((l) {
         emit(CategoryFromGigsStateError(l.toString()));
       }, (r) {

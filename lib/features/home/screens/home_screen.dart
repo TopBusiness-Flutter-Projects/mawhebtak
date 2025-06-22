@@ -153,8 +153,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               text: 'top_talent'.tr(),
                             ),
                             8.h.verticalSpace,
-                            SizedBox(
+                            Container(
                               height: 184.h,
+                              alignment: AlignmentDirectional.centerStart,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: homeData?.topTalents?.length ?? 0,
@@ -182,8 +183,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     context, Routes.topEventsRoute),
                               ),
                             ),
-                            SizedBox(
+                            Container(
                               height: 215.h,
+                              alignment: AlignmentDirectional.centerStart,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: homeData?.topEvents?.length ?? 0,
@@ -214,8 +216,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 text: 'request_gigs'.tr(),
                               ),
                             ),
-                            SizedBox(
+                            Container(
                               height: 145.w,
+                              alignment: AlignmentDirectional.centerStart,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 physics: const AlwaysScrollableScrollPhysics(),
@@ -344,8 +347,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                               ),
                             ),
-                            SizedBox(
+                            Container(
                               height: getHeightSize(context) / 2,
+                              alignment: AlignmentDirectional.centerStart,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: homeData?.announcements?.length ?? 0,
@@ -353,8 +357,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return CustomAnnouncementWidget(
                                     index: index,
                                     isMainWidget: false,
-                                    announcement: homeData?.announcements?[index],
-                                   );
+                                    announcement:
+                                        homeData?.announcements?[index],
+                                  );
                                 },
                               ),
                             ),

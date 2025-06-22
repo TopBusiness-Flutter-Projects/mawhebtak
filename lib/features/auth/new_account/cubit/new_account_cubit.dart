@@ -63,7 +63,6 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       emit(ErrorGetUserSubTypesState('error_msg'.tr()));
     }, (r) {
       userSubTypeList = r;
-
       if (currentSubCategory != null) {
         for (int i = 0; i < (userSubTypeList?.data?.length ?? 0); i++) {
           if (userSubTypeList?.data?[i].id?.toString() ==
@@ -91,12 +90,11 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       if (r.status == 200 || r.status == 201) {
         successGetBar(r.msg);
         Navigator.pop(context);
-        if (r.data?.isRegister == 1){
-log(" Register");
- Navigator.pushReplacementNamed(context, Routes.addReferralCodeRoute);
-        }else{
-                  Navigator.pushReplacementNamed(context, Routes.mainRoute);
-
+        if (r.data?.isRegister == 1) {
+          log(" Register");
+          Navigator.pushReplacementNamed(context, Routes.addReferralCodeRoute);
+        } else {
+          Navigator.pushReplacementNamed(context, Routes.mainRoute);
         }
         await Preferences.instance.setUser(r);
         emailAddressController.clear();

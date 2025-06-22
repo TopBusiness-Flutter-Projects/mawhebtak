@@ -63,25 +63,26 @@ class _MoreScreenState extends State<MoreScreen> {
                         moreContainer(
                             text: "my_profile".tr(),
                             imageUrl: AppIcons.myProfileIcon,
-                            onTap: () async{
-
-     final user =await Preferences.instance.getUserModel();
-                                if (user.data?.token == null) {
-                                  checkLogin(context);
-                                }else{ Navigator.pushNamed(
-                                context,
-                                Routes.profileRoute,
-                                arguments: DeepLinkDataModel(
-                                    id: context
-                                            .read<MoreCubit>()
-                                            .user
-                                            ?.data
-                                            ?.id
-                                            ?.toString() ??
-                                        "",
-                                    isDeepLink: false),
-                              );}
-                             
+                            onTap: () async {
+                              final user =
+                                  await Preferences.instance.getUserModel();
+                              if (user.data?.token == null) {
+                                checkLogin(context);
+                              } else {
+                                Navigator.pushNamed(
+                                  context,
+                                  Routes.profileRoute,
+                                  arguments: DeepLinkDataModel(
+                                      id: context
+                                              .read<MoreCubit>()
+                                              .user
+                                              ?.data
+                                              ?.id
+                                              ?.toString() ??
+                                          "",
+                                      isDeepLink: false),
+                                );
+                              }
                             }),
                         moreContainer(
                             text: "my_favorites".tr(),
@@ -103,6 +104,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                     context, Routes.roomsScreen);
                               }
                             }),
+                        //TODO
+
                         moreContainer(
                             text: "wallet".tr(),
                             imageUrl: AppIcons.walletIcon,
@@ -134,6 +137,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             onTap: () {
                               Navigator.pushNamed(context, Routes.aboutUsRoute);
                             }),
+                        //TODO
                         moreContainer(
                             text: "advertising_and_publicity".tr(),
                             imageUrl: AppIcons.contactUs,

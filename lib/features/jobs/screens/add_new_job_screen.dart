@@ -94,7 +94,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                                 children: [
                                   Text(
                                     calenderCubit.selectedCurrency?.currency ??
-                                        'L.E',
+                                        '',
                                     style: getRegularStyle(
                                         color: Colors.blue, fontSize: 14.sp),
                                   ),
@@ -127,7 +127,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                                 children: [
                                   Text(
                                     calenderCubit.selectedCurrency?.currency ??
-                                        'L.E',
+                                        '',
                                     style: getRegularStyle(
                                         color: Colors.blue, fontSize: 14.sp),
                                   ),

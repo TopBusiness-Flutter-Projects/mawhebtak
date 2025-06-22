@@ -86,7 +86,8 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                                 return item.name ?? '';
                               },
                               value: cubit.selectedCategory,
-                              items: cubit.announcementCategoryModel?.data ?? [],
+                              items:
+                                  cubit.announcementCategoryModel?.data ?? [],
                               onChanged: (value) {
                                 cubit.selectedCategory = value;
                                 cubit.subCategoryFromCategoryAnnouncementsModel
@@ -102,8 +103,10 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              if (cubit.subCategoryFromCategoryAnnouncementsModel
-                                      ?.data?.length !=
+                              if (cubit
+                                      .subCategoryFromCategoryAnnouncementsModel
+                                      ?.data
+                                      ?.length !=
                                   0)
                                 Padding(
                                   padding:
@@ -113,8 +116,10 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                                     style: getRegularStyle(fontSize: 18.sp),
                                   ),
                                 ),
-                              if (cubit.subCategoryFromCategoryAnnouncementsModel
-                                      ?.data?.length !=
+                              if (cubit
+                                      .subCategoryFromCategoryAnnouncementsModel
+                                      ?.data
+                                      ?.length !=
                                   0)
                                 Container(
                                   height: 60.h,
@@ -159,14 +164,15 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                             suffixIcon: InkWell(
                               onTap: () {
                                 showCurrencyPicker(
-                                    calenderCubit.countriesMainModel?.data ?? []);
+                                    calenderCubit.countriesMainModel?.data ??
+                                        []);
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     calenderCubit.selectedCurrency?.currency ??
-                                        'L.E',
+                                        '',
                                     style: getRegularStyle(
                                         color: Colors.blue, fontSize: 14.sp),
                                   ),
@@ -187,7 +193,8 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                               }
                               return null;
                             },
-                            controller: announcementCubit.announcementDateController,
+                            controller:
+                                announcementCubit.announcementDateController,
                             suffixIcon: Padding(
                               padding: EdgeInsets.all(10.0.r),
                               child: SvgPicture.asset(AppIcons.dateIcon),
@@ -207,7 +214,8 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                             builder: (context, state) {
                               return CustomTextField(
                                 hintTextSize: 18.sp,
-                                controller: announcementCubit.locationController,
+                                controller:
+                                    announcementCubit.locationController,
                                 validator: (p0) {
                                   if (p0!.isEmpty) {
                                     return 'select_location'.tr();
@@ -245,7 +253,8 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                             style: getRegularStyle(fontSize: 14.sp),
                           ),
                           CustomTextField(
-                            controller: announcementCubit.announcementDescriptionController,
+                            controller: announcementCubit
+                                .announcementDescriptionController,
                             hintText: "".tr(),
                             hintTextSize: 18.sp,
                             maxLines: 6,

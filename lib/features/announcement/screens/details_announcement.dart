@@ -284,14 +284,14 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                               ),
                                               Row(
                                                 children: [
-                                                  SvgPicture.asset(
-                                                      AppIcons.dollarSign),
+                                                  // SvgPicture.asset(
+                                                  //     AppIcons.dollarSign),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.all(
                                                             8.0),
                                                     child: AutoSizeText(
-                                                      "${cubit.announcementDetailsModel?.data?.price} L.E",
+                                                      "${cubit.announcementDetailsModel?.data?.price?.toString()}",
                                                       style: getRegularStyle(
                                                           fontSize: 14.sp,
                                                           color: AppColors

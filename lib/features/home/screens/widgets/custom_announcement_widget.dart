@@ -245,11 +245,11 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                       ),
                       Row(
                         children: [
-                          SvgPicture.asset(AppIcons.dollarSign),
+                          // SvgPicture.asset(AppIcons.dollarSign),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: AutoSizeText(
-                              "${widget.announcement?.price} L.E",
+                              "${widget.announcement?.price?.toString() ?? ''}",
                               style: getRegularStyle(
                                   fontSize: 14.sp, color: AppColors.blueLight),
                             ),
