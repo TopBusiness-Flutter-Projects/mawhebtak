@@ -20,7 +20,6 @@ class _JobsScreenState extends State<JobsScreen> {
 
   @override
   void initState() {
-
     context.read<JobsCubit>().getUserJobData(page: '1');
     scrollController.addListener(_scrollListener);
     super.initState();
@@ -65,7 +64,7 @@ class _JobsScreenState extends State<JobsScreen> {
                         child: CustomLoadingIndicator(),
                       ))
                     : (jopUserData?.length == 0)
-                        ? const Expanded(child: Center(child: Text("no_data")))
+                        ? Expanded(child: Center(child: Text("no_data".tr())))
                         : Expanded(
                             child: RefreshIndicator(
                               onRefresh: () async {

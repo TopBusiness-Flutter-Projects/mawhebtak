@@ -14,12 +14,6 @@ class AboutUsScreen extends StatefulWidget {
 
 class _AboutUsScreenState extends State<AboutUsScreen> {
   @override
-  void initState() {
-    context.read<MoreCubit>().getSettingData();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -30,8 +24,6 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               CustomSimpleAppbar(
                 title: "about_us".tr(),
               ),
-              (state is GetSettingDataStateLoading)?
-              const Expanded(child: Center(child: CustomLoadingIndicator(),)):
               Expanded(
                 child: Container(
                   color: AppColors.grayLite.withOpacity(0.3),
@@ -47,7 +39,10 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                         child: SingleChildScrollView(
                           child: Container(
                             padding: EdgeInsets.only(
-                                left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
+                                left: 20.w,
+                                right: 20.w,
+                                top: 20.h,
+                                bottom: 20.h),
                             width: double.infinity,
                             decoration: BoxDecoration(color: AppColors.white),
                             child: Column(

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../core/exports.dart';
+import '../../more_screen/cubit/more_cubit.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
 
@@ -16,6 +17,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() {
+    context.read<MoreCubit>().getSettingData(context);
+    super.initState();
+  }
+
   Future<bool> _showExitDialog(BuildContext context) async {
     bool exitConfirmed = false;
     await AwesomeDialog(

@@ -8,29 +8,26 @@ class TermsAndConditionScreen extends StatefulWidget {
   const TermsAndConditionScreen({super.key});
 
   @override
-  State<TermsAndConditionScreen> createState() => _TermsAndConditionScreenState();
+  State<TermsAndConditionScreen> createState() =>
+      _TermsAndConditionScreenState();
 }
 
 class _TermsAndConditionScreenState extends State<TermsAndConditionScreen> {
- @override
+  @override
   void initState() {
-    context.read<MoreCubit>().getSettingData();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: BlocBuilder<MoreCubit, MoreState>(
-          builder: (context, state) {
-            var cubit = context.read<MoreCubit>();
+      body: BlocBuilder<MoreCubit, MoreState>(builder: (context, state) {
+        var cubit = context.read<MoreCubit>();
         return Column(
           children: [
             CustomSimpleAppbar(
               title: "terms_and_condition".tr(),
             ),
-            (state is GetSettingDataStateLoading)?
-                const Expanded(child: Center(child: CustomLoadingIndicator(),)):
             Expanded(
               child: Container(
                 color: AppColors.grayLite.withOpacity(0.3),
@@ -42,12 +39,16 @@ class _TermsAndConditionScreenState extends State<TermsAndConditionScreen> {
                     Expanded(
                       child: SingleChildScrollView(
                         child: Container(
-                          padding: EdgeInsets.only(
-                              left: 20.w, right: 20.w, top: 20.h, bottom: 20.h),
-                          width: double.infinity,
-                          decoration: BoxDecoration(color: AppColors.white),
-                          child: Html(data: cubit.settingModel?.data?.terms ?? "",)
-                        ),
+                            padding: EdgeInsets.only(
+                                left: 20.w,
+                                right: 20.w,
+                                top: 20.h,
+                                bottom: 20.h),
+                            width: double.infinity,
+                            decoration: BoxDecoration(color: AppColors.white),
+                            child: Html(
+                              data: cubit.settingModel?.data?.terms ?? "",
+                            )),
                       ),
                     )
                   ],
