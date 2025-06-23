@@ -91,8 +91,8 @@ class LocationCubit extends Cubit<LocationState> {
           newLocationData.longitude ?? 0.0,
         );
 
-        log('currentLocation:Update ${currentLocation?.latitude.toString()}, ${currentLocation?.longitude.toString()}');
-        log('currentLocation:Selected ${selectedLocation?.latitude.toString()}, ${selectedLocation?.longitude.toString()}');
+      //  log('currentLocation:Update ${currentLocation?.latitude.toString()}, ${currentLocation?.longitude.toString()}');
+        //log('currentLocation:Selected ${selectedLocation?.latitude.toString()}, ${selectedLocation?.longitude.toString()}');
 
         currentLocation = newLocationData;
 

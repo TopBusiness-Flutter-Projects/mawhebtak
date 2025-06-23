@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
+import 'package:mawhebtak/features/jobs/data/model/user_jop_details_model.dart';
 import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 
 import '../../../../core/preferences/preferences.dart';
@@ -14,7 +15,7 @@ class JobWidget extends StatefulWidget {
     required this.jobsCubit,
     required this.index,
   });
-  final UserJobModelData? userJop;
+  final JopData? userJop;
   final JobsCubit jobsCubit;
   final int index;
   @override
@@ -97,7 +98,7 @@ class _JobWidgetState extends State<JobWidget> {
                                 } else {
                                   widget.jobsCubit.toggleFavorite(
                                       context: context,
-                                      index: widget.index,
+                                      userJop: widget.userJop,
                                       userJopId:
                                           widget.userJop?.id.toString() ?? "");
                                 }

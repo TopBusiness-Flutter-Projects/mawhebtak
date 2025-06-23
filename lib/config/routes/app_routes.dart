@@ -36,6 +36,7 @@ import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
 import 'package:mawhebtak/features/profile/screens/edit_profile_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/terms_and_condition.dart';
 import 'package:mawhebtak/features/referral_code/screens/add_referral_code_screen.dart';
+import 'package:mawhebtak/features/search/screens/search_screen.dart';
 import '../../core/utils/app_strings.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../features/announcement/screens/announcement_screen.dart';
@@ -120,6 +121,7 @@ class Routes {
   static const String postDetailsRoute = '/postDetailsRoute';
   static const String eventsDetailsRoute = '/eventsDetailsRoute';
   static const String profileDetailsRoute = '/profileDetailsRoute';
+  static const String searchRoute = '/searchRoute';
 }
 
 class AppRoutes {
@@ -167,11 +169,17 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
         );
+        case Routes.searchRoute:
+        return PageTransition(
+          child: SearchScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
       case Routes.detailsAnnouncementScreen:
         final args = settings.arguments as Map<String, dynamic>;
         return PageTransition(
           child: DetailsAnnouncementScreen(
-            index: args['index'] as int,
             isDeeplink: args['isDeeplink'] as bool,
             announcementId: args['announcementId'] as String,
           ),
@@ -479,7 +487,6 @@ class AppRoutes {
         return PageTransition(
           child: JobDetailsScreen(
             isDeepLink: args['isDeepLink'] as bool,
-            index: args['index'] as int,
             userJopId: args['userJopId'] as String,
           ),
           type: PageTransitionType.fade,
@@ -555,7 +562,6 @@ class AppRoutes {
         );
       case Routes.eventsDetailsRoute:
         DeepLinkDataModel args = settings.arguments as DeepLinkDataModel;
-
         return PageTransition(
           child: DetailsEventScreen(
             eventDataModel: args,

@@ -326,20 +326,15 @@ class _GigsWidgetState extends State<GigsWidget> {
                                           .toString() ==
                                       "null") {
                                 widget.castingCubit!.requestGigs(
+                                  eventAndGigsModel: widget.eventAndGigsModel??EventAndGigsModel(),
                                   context: context,
                                   chatName: widget.eventAndGigsModel?.user?.name
-                                          ?.toString() ??
-                                      '',
-                                  index: widget.index!,
-                                  userId: widget.eventAndGigsModel?.user?.id
                                           ?.toString() ??
                                       '',
                                   type: widget.eventAndGigsModel?.isRequested
                                           .toString() ??
                                       "",
-                                  gigId:
-                                      widget.eventAndGigsModel?.id.toString() ??
-                                          "",
+
                                 );
                               }
                             }

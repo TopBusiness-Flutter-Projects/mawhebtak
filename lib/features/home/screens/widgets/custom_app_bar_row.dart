@@ -80,34 +80,39 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                         ),
                 ),
               ),
-              Expanded(
-                child: Container(
-                    height: 40.h,
-                    width: 171.w,
-                    decoration: BoxDecoration(
-                      color: widget.backgroundColorTextFieldSearch ??
-                          AppColors.blackLite,
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    margin: const EdgeInsets.only(left: 10),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("search".tr(),
-                              style: getRegularStyle(
-                                  fontSize: 13.sp,
-                                  color: widget.colorTextFromSearchTextField ??
-                                      AppColors.white)),
-                          const Spacer(),
-                          SvgPicture.asset(
-                            AppIcons.searchIcon,
-                            color: widget.colorSearchIcon ?? AppColors.white,
-                          ),
-                        ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.searchRoute);
+                },
+                child: Expanded(
+                  child: Container(
+                      height: 40.h,
+                      width: 171.w,
+                      decoration: BoxDecoration(
+                        color: widget.backgroundColorTextFieldSearch ??
+                            AppColors.blackLite,
+                        borderRadius: BorderRadius.circular(8.r),
                       ),
-                    )),
+                      margin: const EdgeInsets.only(left: 10),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("search".tr(),
+                                style: getRegularStyle(
+                                    fontSize: 13.sp,
+                                    color: widget.colorTextFromSearchTextField ??
+                                        AppColors.white)),
+                            const Spacer(),
+                            SvgPicture.asset(
+                              AppIcons.searchIcon,
+                              color: widget.colorSearchIcon ?? AppColors.white,
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
               ),
               10.w.horizontalSpace,
               widget.isMore == true

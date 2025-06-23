@@ -15,10 +15,8 @@ class JobDetailsScreen extends StatefulWidget {
   const JobDetailsScreen(
       {super.key,
       required this.userJopId,
-      required this.index,
       required this.isDeepLink});
   final String userJopId;
-  final int index;
   final bool isDeepLink;
   @override
   State<JobDetailsScreen> createState() => _JobDetailsScreenState();
@@ -145,7 +143,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                   "the is fav ${cubit.userJobDetailsModel?.data?.isFav}");
                               cubit.toggleFavorite(
                                   context: context,
-                                  index: widget.index,
+                                  userJop: cubit.userJobDetailsModel?.data,
                                   userJopId: widget.userJopId.toString() ?? "");
                             }
                           },

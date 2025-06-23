@@ -21,6 +21,7 @@ import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.da
 import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import 'package:mawhebtak/features/profile/screens/profile_screen.dart';
 import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';
+import 'package:mawhebtak/features/search/cubit/search_cubit.dart';
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
 import 'core/notification_services/notification_service.dart';
@@ -134,6 +135,9 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) =>
                 injector.serviceLocator<FeedsCubit>()..postsData(page: '1'),
+          ),BlocProvider(
+            create: (_) =>
+                injector.serviceLocator<SearchCubit>(),
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<LocationCubit>()
@@ -217,7 +221,7 @@ class _MyAppState extends State<MyApp> {
                                                                 'reference_id']
                                                             .toString() ??
                                                         '',
-                                                index: 0,
+
                                               )
                                             : const NotificationScreen()
                 : const SplashScreen()

@@ -188,16 +188,16 @@ class CastingCubit extends Cubit<CastingState> {
   }
 
   requestGigs(
-      {required String gigId,
+      {
       required BuildContext context,
       required String type,
       required String chatName,
-      required String userId,
-      required int index}) async {
+
+      required EventAndGigsModel eventAndGigsModel}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(RequestGigStateLoading());
     try {
-      final res = await castingRepo.requestGig(gigId: gigId);
+      final res = await castingRepo.requestGig(gigId: eventAndGigsModel.id.toString());
       res.fold((l) {
         errorGetBar(l.toString());
         emit(RequestGigStateError(l.toString()));
@@ -205,23 +205,16 @@ class CastingCubit extends Cubit<CastingState> {
         if (r.status == 200) {
           Navigator.pop(context);
           successGetBar(r.msg);
-          if (allGigsModel?.data?[index].isRequested.toString() == "pending" ||
-              getDetailsGigsModel?.data?.isRequested.toString() == "pending") {
-            allGigsModel?.data?[index].isRequested = "null";
-            getDetailsGigsModel?.data?.isRequested = "null";
-
+          if (eventAndGigsModel.isRequested.toString() == "pending" ) {
+            eventAndGigsModel.isRequested = "null";
             emit(RequestGigStateLoaded());
-          } else if (allGigsModel?.data?[index].isRequested.toString() ==
+          } else if (eventAndGigsModel.isRequested.toString() ==
                   "null" ||
-              allGigsModel?.data?[index].isRequested.toString() == "rejected" ||
-              getDetailsGigsModel?.data?.isRequested.toString() == "null" ||
-              getDetailsGigsModel?.data?.isRequested.toString() == "rejected") {
-            allGigsModel?.data?[index].isRequested = "pending";
-            getDetailsGigsModel?.data?.isRequested = "pending";
-
+              eventAndGigsModel.isRequested.toString() == "rejected" ) {
+            eventAndGigsModel.isRequested = "pending";
             Navigator.pushNamed(context, Routes.messageRoute,
                 arguments: MainUserAndRoomChatModel(
-                    receiverId: userId, chatName: chatName
+                    receiverId: eventAndGigsModel.user?.id.toString(), chatName: chatName
                     //!
                     ));
             emit(RequestGigStateLoaded());
