@@ -99,7 +99,6 @@ class NotificationService {
             ?.pushNamed(Routes.jobDetailsRoute, arguments: {
           "isDeepLink": true,
           'userJopId': message.data['reference_id'].toString(),
-          'index': 0,
         });
       }
 
@@ -109,7 +108,6 @@ class NotificationService {
             ?.pushNamed(Routes.detailsAnnouncementScreen, arguments: {
           "isDeepLink": true,
           'announcementId': message.data['reference_id'].toString(),
-          'index': 0,
         });
       } else {
         navigatorKey.currentState?.pushNamed(Routes.notificationRoute);
@@ -223,7 +221,6 @@ class NotificationService {
                       id: message['id'],
                       title: message['title'],
                       assistants: []));
-              print("the message scdule");
             } else if (message['reference_table'] == "posts") {
               navigatorKey.currentState?.pushNamed(Routes.postDetailsRoute,
                   arguments: DeepLinkDataModel(
@@ -264,7 +261,6 @@ class NotificationService {
                   ?.pushNamed(Routes.detailsAnnouncementScreen, arguments: {
                 "isDeepLink": true,
                 'announcementId': message['reference_id'].toString(),
-                'index': 0,
               });
             } else {
               navigatorKey.currentState?.pushNamed(Routes.notificationRoute);

@@ -22,7 +22,6 @@ class NotificationCubit extends Cubit<NotificationState> {
     }
     try {
       final res = await api!.notificationsData(
-        paginate: paginate,
         orderBy: orderBy,
         page: page,
       );

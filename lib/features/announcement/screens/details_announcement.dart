@@ -14,11 +14,10 @@ class DetailsAnnouncementScreen extends StatefulWidget {
   const DetailsAnnouncementScreen({
     super.key,
     required this.announcementId,
-    required this.index,
     required this.isDeeplink,
   });
   final String announcementId;
-  final int index;
+
   final bool isDeeplink;
   @override
   State<DetailsAnnouncementScreen> createState() =>
@@ -35,12 +34,13 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<AnnouncementCubit>();
     return Scaffold(
         backgroundColor: AppColors.grayLite,
         body: BlocBuilder<AnnouncementCubit, AnnouncementState>(
             builder: (BuildContext context, state) {
-          return (state is AnnouncementsDetailsStateLoading ||
+              var cubit = context.read<AnnouncementCubit>();
+
+              return (state is AnnouncementsDetailsStateLoading ||
                   cubit.announcementDetailsModel == null)
               ? const Center(child: CustomLoadingIndicator())
               : Padding(
@@ -112,12 +112,8 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                 InkWell(
                                                   onTap: () {
                                                     cubit.toggleFavoriteAnnounce(
-                                                        context: context,
-                                                        userAnnounceId: widget
-                                                                .announcementId ??
-                                                            "",
-                                                        index:
-                                                            widget.index ?? 0);
+                                                        announcement: cubit.announcementDetailsModel!.data!,
+                                                        context: context,);
                                                   },
                                                   child: Icon(
                                                     (cubit.announcementDetailsModel!
@@ -137,11 +133,8 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                 if (cubit.user?.data?.id
                                                             .toString() ==
                                                         cubit
-                                                            .announcements
-                                                            ?.data?[
-                                                                widget.index]
-                                                            .user
-                                                            ?.id
+                                                            .announcementDetailsModel
+                                                            ?.data?.user?.id
                                                             .toString() &&
                                                     (widget.isDeeplink ==
                                                         false))

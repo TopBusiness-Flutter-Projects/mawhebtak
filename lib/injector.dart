@@ -31,6 +31,8 @@ import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import 'package:mawhebtak/features/more_screen/data/repos/more.repo.dart';
 import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';
 import 'package:mawhebtak/features/referral_code/data/repos/referral_code_repo.dart';
+import 'package:mawhebtak/features/search/cubit/search_cubit.dart';
+import 'package:mawhebtak/features/search/data/repositories/search_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
@@ -72,6 +74,10 @@ Future<void> setupCubit() async {
   );
   serviceLocator.registerFactory(
     () => HomeCubit(
+      serviceLocator(),
+    ),
+  );serviceLocator.registerFactory(
+    () => SearchCubit(
       serviceLocator(),
     ),
   );
@@ -168,6 +174,7 @@ Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => HomeRepository(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => SearchRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => NotificationsRepository(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));

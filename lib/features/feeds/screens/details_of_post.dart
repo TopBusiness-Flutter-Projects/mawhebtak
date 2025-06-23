@@ -33,6 +33,9 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
             if (widget.deepLinkDataModel?.isDeepLink == true) {
               Navigator.pushReplacementNamed(context, Routes.mainRoute);
             }
+            else{
+              Navigator.pop(context);
+            }
             return Future.value(false);
           },
           child: Scaffold(
@@ -41,6 +44,9 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
                 onPressed: () {
                   if (widget.deepLinkDataModel?.isDeepLink == true) {
                     Navigator.pushReplacementNamed(context, Routes.mainRoute);
+                  }
+                  else{
+                    Navigator.pop(context);
                   }
                 },
               ),

@@ -12,7 +12,6 @@ class NotificationsRepository {
   NotificationsRepository(this.dio);
   Future<Either<Failure, NotificationModel>> notificationsData({
      String? orderBy,
-     String? paginate,
      String? page,
 }) async {
     final user = await Preferences.instance.getUserModel();
@@ -21,7 +20,7 @@ class NotificationsRepository {
       queryParameters: {
         'model':'Notification',
         'orderBy':orderBy,
-        'paginate':paginate,
+        'paginate':true,
         'where[1]':'user_id,${user.data?.id?.toString()}',
         'page':page,
       }

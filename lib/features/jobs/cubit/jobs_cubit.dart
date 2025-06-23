@@ -110,7 +110,7 @@ class JobsCubit extends Cubit<JobsState> {
 
   toggleFavorite(
       {required String userJopId,
-      required int index,
+      required JopData? userJop,
       required BuildContext context}) async {
     emit(ToggleFavoriteStateLoading());
     try {
@@ -119,28 +119,12 @@ class JobsCubit extends Cubit<JobsState> {
       res.fold((l) {
         emit(ToggleFavoriteStateError(l.toString()));
       }, (r) {
-        if (userJopModel?.data?[index].isFav == true ||
-            userJobDetailsModel?.data?.isFav == true ||
-            context
-                    .read<MoreCubit>()
-                    .userJobFavouriteModel
-                    ?.data?[index]
-                    .isFav ==
-                true) {
-          userJopModel?.data?[index].isFav = false;
+        if (userJop?.isFav == true) {
+          userJop?.isFav = false;
           userJobDetailsModel?.data?.isFav = false;
-          context.read<MoreCubit>().userJobFavouriteModel?.data?[index].isFav =
-              false;
-          context
-              .read<MoreCubit>()
-              .userJobFavouriteModel
-              ?.data
-              ?.removeAt(index);
         } else {
-          userJopModel?.data?[index].isFav = true;
-          userJobDetailsModel?.data?.isFav = true;
-          context.read<MoreCubit>().userJobFavouriteModel?.data?[index].isFav =
-              true;
+          userJop?.isFav = true;
+
         }
         emit(ToggleFavoriteStateLoaded());
       });

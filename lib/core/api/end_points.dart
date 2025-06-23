@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 
 class EndPoints {
   static const String baseUrl =
-      'https://mawhebtak.topbusiness.ebharbook.com/api/v1/';
-  // kReleaseMode
-  //     ? 'https://mawhebtak.topbusiness.ebharbook.com/api/v1/'
-  //     : 'http://192.168.1.18:8000/api/v1/';
+    //  'https://mawhebtak.topbusiness.ebharbook.com/api/v1/';
+  kReleaseMode
+      ? 'https://mawhebtak.topbusiness.ebharbook.com/api/v1/'
+      : 'http://192.168.1.18:8000/api/v1/';
 //! Authentication
   static const String loginUrl = '${baseUrl}login';
   static const String homeUrl = '${baseUrl}home';
@@ -49,5 +49,6 @@ class EndPoints {
   static const String logoutUrl = '${baseUrl}logout';
   static const String favouritesUrl = '${baseUrl}get-favourites';
   static const String toggleLanguage = '${baseUrl}toggle-language';
+  static const String searchRoute = '${baseUrl}search';
   static const String toggleDeleteAccount = '${baseUrl}toggle-delete-account';
 }

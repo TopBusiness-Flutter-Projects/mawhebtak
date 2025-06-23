@@ -42,7 +42,6 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
           Navigator.pushNamed(context, Routes.detailsAnnouncementScreen,
               arguments: {
                 'announcementId': widget.announcement?.id.toString(),
-                'index': widget.index,
                 "isDeeplink": false
               });
         },
@@ -127,11 +126,8 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                                     onTap: () {
                                       cubit.toggleFavoriteAnnounce(
                                           context: context,
-                                          userAnnounceId: widget
-                                                  .announcement?.id
-                                                  .toString() ??
-                                              "",
-                                          index: widget.index ?? 0);
+                                          announcement:widget.announcement??Announcement(),
+                                          );
                                     },
                                     child: Icon(
                                       (widget.announcement?.isFav)!

@@ -1,4 +1,3 @@
-import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcement_details_model.dart';
@@ -6,9 +5,8 @@ import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcements_model.dart';
-import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
+import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
-import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import '../../../core/exports.dart';
 import '../data/repo/announcement_repo_impl.dart';
 part 'announcement_state.dart';
@@ -137,41 +135,21 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
   }
 
   toggleFavoriteAnnounce(
-      {required String userAnnounceId,
-      required int index,
+      {
+      required Announcement announcement,
       required BuildContext context}) async {
     emit(ToggleFavoriteAnnounceStateLoading());
     try {
       final res =
-          await api.toggleFavoriteAnnounce(userAnnounceId: userAnnounceId);
+          await api.toggleFavoriteAnnounce(userAnnounceId: announcement.user?.id.toString()??"");
 
       res.fold((l) {
         emit(ToggleFavoriteAnnounceStateError(l.toString()));
       }, (r) {
-        if (announcements?.data?[index].isFav == true ||
-            announcementDetailsModel?.data?.isFav == true ||
-            context
-                    .read<MoreCubit>()
-                    .announcementFavouriteModel
-                    ?.data?[index]
-                    .isFav ==
-                true) {
-          announcements?.data?[index].isFav = false;
-          announcementDetailsModel?.data?.isFav = false;
-          context
-              .read<MoreCubit>()
-              .announcementFavouriteModel
-              ?.data?[index]
-              .isFav = false;
-          context.read<MoreCubit>().announcementFavouriteModel!.data!.removeAt(index);
+        if (announcement.isFav == true) {
+          announcement.isFav = false;
         } else {
-          context
-              .read<MoreCubit>()
-              .announcementFavouriteModel
-              ?.data?[index]
-              .isFav = true;
-          announcements?.data?[index].isFav = true;
-          announcementDetailsModel?.data?.isFav = true;
+          announcement.isFav = true;
         }
         emit(ToggleFavoriteAnnounceStateLoaded());
       });
