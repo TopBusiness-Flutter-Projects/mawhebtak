@@ -299,8 +299,12 @@
   "add_experience": "Add Experience",
   "update_experience": "Update Experience",
   "delete_account": "Delete Account",
-"delete_account_msg": "Do you want to delete the account?",
-"delete_account_successfully": "Your account deletion request has been processed, and your account will be permanently deleted within the next 24 hours."
-
+  "delete_account_msg": "Do you want to delete the account?",
+  "delete_account_successfully": "Your account deletion request has been processed, and your account will be permanently deleted within the next 24 hours.",
+  "please_enter_message": "Please enter message",
+  "enter_message": "Enter message",
+  "please_enter_phone": "please enter phone",
+  "write_your_title":"write your title" ,
+  "please_enter_title": "please enter title"
 
 }
