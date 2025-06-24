@@ -14,11 +14,7 @@ class SettingModel {
   String? msg;
   int? status;
 
-  SettingModel({
-    this.data,
-    this.msg,
-    this.status,
-  });
+  SettingModel({this.data, this.msg, this.status});
 
   factory SettingModel.fromJson(Map<String, dynamic> json) => SettingModel(
         data: json["data"] == null
@@ -28,11 +24,8 @@ class SettingModel {
         status: json["status"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "data": data?.toJson(),
-        "msg": msg,
-        "status": status,
-      };
+  Map<String, dynamic> toJson() =>
+      {"data": data?.toJson(), "msg": msg, "status": status};
 }
 
 class SettingModelData {
@@ -43,24 +36,22 @@ class SettingModelData {
   String? androidAppVersion;
   String? iosAppVersion;
 
-  SettingModelData({
-    this.aboutUs,
-    this.terms,
-    this.developmentMode,
-    this.appMentainance,
-    this.androidAppVersion,
-    this.iosAppVersion,
-  });
+  SettingModelData(
+      {this.aboutUs,
+      this.terms,
+      this.developmentMode,
+      this.appMentainance,
+      this.androidAppVersion,
+      this.iosAppVersion});
 
   factory SettingModelData.fromJson(Map<String, dynamic> json) =>
       SettingModelData(
-        aboutUs: json["about_us"],
-        terms: json["terms"],
-        developmentMode: json["development_mode"],
-        appMentainance: json["app_mentainance"],
-        androidAppVersion: json["android_app_version"],
-        iosAppVersion: json["ios_app_version"],
-      );
+          aboutUs: json["about_us"],
+          terms: json["terms"],
+          developmentMode: json["development_mode"],
+          appMentainance: json["app_mentainance"],
+          androidAppVersion: json["android_app_version"],
+          iosAppVersion: json["ios_app_version"]);
 
   Map<String, dynamic> toJson() => {
         "about_us": aboutUs,
@@ -68,6 +59,6 @@ class SettingModelData {
         "development_mode": developmentMode,
         "app_mentainance": appMentainance,
         "android_app_version": androidAppVersion,
-        "ios_app_version": iosAppVersion,
+        "ios_app_version": iosAppVersion
       };
 }
