@@ -61,13 +61,13 @@ class AnnouncementRepo {
   }
 
   Future<Either<Failure, DefaultMainModel>> toggleFavoriteAnnounce(
-      {required String userAnnounceId}) async {
+      {required String announcementId}) async {
     try {
       var response = await dio.post(
         EndPoints.toggleFavorite,
         body: {
           "favouriteable_type": "Announce",
-          "favouriteable_id": userAnnounceId
+          "favouriteable_id": announcementId
         },
       );
       return Right(

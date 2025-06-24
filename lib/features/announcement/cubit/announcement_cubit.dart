@@ -135,18 +135,18 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
   }
 
   toggleFavoriteAnnounce(
-      {
-      required Announcement announcement,
+      {required Announcement announcement,
       required BuildContext context}) async {
     emit(ToggleFavoriteAnnounceStateLoading());
     try {
-      final res =
-          await api.toggleFavoriteAnnounce(userAnnounceId: announcement.user?.id.toString()??"");
+      final res = await api.toggleFavoriteAnnounce(
+          announcementId: announcement.id.toString() ?? "");
 
       res.fold((l) {
         emit(ToggleFavoriteAnnounceStateError(l.toString()));
       }, (r) {
-        if (announcement.isFav == true || announcementDetailsModel?.data?.isFav ==  true) {
+        if (announcement.isFav == true ||
+            announcementDetailsModel?.data?.isFav == true) {
           announcement.isFav = false;
           announcementDetailsModel?.data?.isFav = false;
         } else {
@@ -159,6 +159,8 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       emit(ToggleFavoriteAnnounceStateError(e.toString()));
     }
   }
+
+  AnnouncementsModel? announcementsModel;
 
   // gigs from sub
   AnnouncementsModel? announcementsFromSubCategory;

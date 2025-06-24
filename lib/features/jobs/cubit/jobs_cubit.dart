@@ -5,7 +5,6 @@ import 'package:mawhebtak/features/jobs/data/model/user_jop_details_model.dart';
 import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 import 'package:mawhebtak/features/jobs/data/repos/jobs.repo.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
-import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import 'jobs_state.dart';
 
 class JobsCubit extends Cubit<JobsState> {
@@ -119,12 +118,14 @@ class JobsCubit extends Cubit<JobsState> {
       res.fold((l) {
         emit(ToggleFavoriteStateError(l.toString()));
       }, (r) {
-        if (userJop?.isFav == true) {
+        if (userJop?.isFav == true ||
+            userJobDetailsModel?.data?.isFav == true) {
           userJop?.isFav = false;
           userJobDetailsModel?.data?.isFav = false;
+
         } else {
           userJop?.isFav = true;
-
+          userJobDetailsModel?.data?.isFav = true;
         }
         emit(ToggleFavoriteStateLoaded());
       });
