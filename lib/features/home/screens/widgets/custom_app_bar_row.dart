@@ -80,11 +80,11 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                         ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.searchRoute);
-                },
-                child: Expanded(
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.searchRoute);
+                  },
                   child: Container(
                       height: 40.h,
                       width: 171.w,
