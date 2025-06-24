@@ -23,6 +23,7 @@ class HomeModel {
 }
 
 class HomeData {
+  bool? seeAllNotification;
   Slider? sliders;
   List<TopTalent>? userSliders;
   List<TopTalent>? topTalents;
@@ -36,9 +37,14 @@ class HomeData {
       this.topTalents,
       this.topEvents,
       this.topGigs,
-      this.announcements});
+      this.announcements,
+      this.seeAllNotification,
+
+      });
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
+
+        seeAllNotification: json["is_i_see_all_notifications"],
         sliders: (json["sliders"].isEmpty ||
                 json["sliders"] == null ||
                 json["sliders"] is List)
@@ -69,6 +75,7 @@ class HomeData {
       );
 
   Map<String, dynamic> toJson() => {
+        "is_i_see_all_notifications":seeAllNotification,
         "sliders": sliders?.toJson(),
         "user_sliders": (userSliders == null || userSliders == [])
             ? []

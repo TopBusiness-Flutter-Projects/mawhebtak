@@ -51,11 +51,12 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             style: TextStyle(fontSize: 14.sp),
                           ),
                           CustomTextField(
+                            hintText: "write_your_title".tr(),
                             hintTextSize: 18.sp,
                             controller: cubit.titleController,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Please enter a title';
+                                return 'please_enter_title'.tr();
                               }
                               return null;
                             },
@@ -69,7 +70,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             controller: cubit.phoneNumberController,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Please enter a phone';
+                                return 'please_enter_phone'.tr();
                               }
                               return null;
                             },
@@ -79,9 +80,16 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             style: TextStyle(fontSize: 14.sp),
                           ),
                           CustomTextField(
+                            hintText: "enter_message".tr(),
                             isMessage: true,
                             hintTextSize: 18.sp,
                             controller: cubit.messageController,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'please_enter_message'.tr();
+                              }
+                              return null;
+                            },
                           ),
                           CustomButton(
                               title: 'send'.tr(),

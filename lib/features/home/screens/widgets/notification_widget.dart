@@ -1,7 +1,6 @@
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
 import 'package:mawhebtak/features/home/data/models/notifications_model.dart';
-
 import '../../../../core/exports.dart';
 import '../../../../core/widgets/custom_container_with_shadow.dart';
 
@@ -53,6 +52,7 @@ class NotificationWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.0.w),
         child: CustomContainerWithShadow(
+          color: notification?.seen == 0 ? AppColors.secondPrimary.withOpacity(0.3) : AppColors.white,
             child: Padding(
           padding: EdgeInsets.all(10.0.w),
           child: Row(

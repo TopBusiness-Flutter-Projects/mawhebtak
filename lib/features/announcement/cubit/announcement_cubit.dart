@@ -146,10 +146,12 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
       res.fold((l) {
         emit(ToggleFavoriteAnnounceStateError(l.toString()));
       }, (r) {
-        if (announcement.isFav == true) {
+        if (announcement.isFav == true || announcementDetailsModel?.data?.isFav ==  true) {
           announcement.isFav = false;
+          announcementDetailsModel?.data?.isFav = false;
         } else {
           announcement.isFav = true;
+          announcementDetailsModel?.data?.isFav = true;
         }
         emit(ToggleFavoriteAnnounceStateLoaded());
       });
