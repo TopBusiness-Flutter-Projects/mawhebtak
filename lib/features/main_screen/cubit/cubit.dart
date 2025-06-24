@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 
@@ -33,11 +35,10 @@ class MainCubit extends Cubit<MainState> {
   LoginModel? loginModel;
 
   void getUserData() {
-    if (loginModel == null) {
-      Preferences.instance.getUserModel().then((value) {
-        loginModel = value;
-        // });
-      });
-    }
+    log('sssssssss');
+    Preferences.instance.getUserModel().then((value) {
+      loginModel = value;
+    });
+    emit(GetUserDataState());
   }
 }

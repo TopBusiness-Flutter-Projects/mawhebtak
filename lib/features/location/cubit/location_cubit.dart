@@ -4,17 +4,12 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'dart:typed_data';
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
-
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as loc;
-import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:permission_handler/permission_handler.dart' as perm;
-
 import 'location_state.dart';
 
 class LocationCubit extends Cubit<LocationState> {
@@ -91,12 +86,12 @@ class LocationCubit extends Cubit<LocationState> {
           newLocationData.longitude ?? 0.0,
         );
 
-      //  log('currentLocation:Update ${currentLocation?.latitude.toString()}, ${currentLocation?.longitude.toString()}');
+        //  log('currentLocation:Update ${currentLocation?.latitude.toString()}, ${currentLocation?.longitude.toString()}');
         //log('currentLocation:Selected ${selectedLocation?.latitude.toString()}, ${selectedLocation?.longitude.toString()}');
 
         currentLocation = newLocationData;
 
-        emit(GetCurrentLocationState());
+        // emit(GetCurrentLocationState());
       }
     });
   }

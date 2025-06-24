@@ -31,7 +31,7 @@ class ChatCubit extends Cubit<ChatState> {
       messages = snapshot.docs
           .map((doc) => MessageModel.fromJson(doc.data()))
           .toList();
-      log('messages length : ${messages.length}');
+
       emit(ChatLoaded(messages));
     });
   }

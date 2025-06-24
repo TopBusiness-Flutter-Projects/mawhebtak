@@ -28,8 +28,8 @@ class _FollowerAndFollowingScreenState
           followedId: context.read<ProfileCubit>().user?.data?.id.toString(),
         );
     scrollController.addListener(_scrollListener);
+
     context.read<ProfileCubit>().loadUserFromPreferences();
-    context.read<ProfileCubit>().getUserFromPreferences();
     super.initState();
   }
 

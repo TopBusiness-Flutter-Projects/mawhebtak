@@ -20,7 +20,6 @@ class ProfileRepo {
     }
   }
 
-
   Future<Either<Failure, DefaultMainModel>> addReview({
     String? userId,
     String? comment,
@@ -87,8 +86,7 @@ class ProfileRepo {
   }
 
   Future<Either<Failure, DefaultMainModel>> addNewExperience(
-      {
-      String? description,
+      {String? description,
       String? title,
       DateTime? from,
       DateTime? to,

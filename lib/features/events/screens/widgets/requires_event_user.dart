@@ -6,10 +6,12 @@ import 'package:mawhebtak/features/events/cubit/event_cubit.dart';
 
 import '../../../../../core/exports.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
 import '../../../../core/widgets/custom_container_with_shadow.dart';
 import '../../../../core/widgets/full_screen_video_view.dart';
+import '../../../chat/screens/message_screen.dart';
 import '../../../home/screens/widgets/follow_button.dart';
 import '../../data/model/event_details_model.dart';
 import 'custom_row_event.dart';
@@ -136,6 +138,10 @@ class RequireEventUser extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             horizontal: 15.w, vertical: 5.h),
                         onTap: () {
+                          Navigator.pushNamed(context, Routes.messageRoute,
+                              arguments: MainUserAndRoomChatModel(
+                                  receiverId: user?.user?.id?.toString(),
+                                  chatName: user?.user?.name ?? ''));
                           log('Message Button Nav To > Chat Screen');
                         },
                         borderColor: AppColors.primary,

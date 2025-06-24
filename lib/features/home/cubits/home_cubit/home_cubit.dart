@@ -9,9 +9,7 @@ import '../../../../core/exports.dart';
 import '../../screens/home_screen.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(this.api) : super(HomeStateLoading()) {
-    getUserFromPreferences();
-  }
+  HomeCubit(this.api) : super(HomeStateLoading()) {}
   HomeRepository api;
   TextEditingController searchController = TextEditingController();
   final List<HomeItem> items = [
@@ -81,15 +79,5 @@ class HomeCubit extends Cubit<HomeState> {
       }
       emit(UpdateIsFollowState());
     }
-  }
-
-  Future<LoginModel> getUserFromPreferences() async {
-    final user = await Preferences.instance.getUserModel();
-    return user;
-  }
-
-  LoginModel? user;
-  Future<void> loadUserFromPreferences() async {
-    user = await Preferences.instance.getUserModel();
   }
 }

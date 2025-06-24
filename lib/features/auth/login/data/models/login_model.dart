@@ -33,8 +33,7 @@ class UserModel {
   dynamic wallet;
   String? socialType;
   String? token;
-    String? referralCode;
-
+  String? referralCode;
 
   UserModel({
     this.id,
@@ -47,8 +46,7 @@ class UserModel {
     this.wallet,
     this.socialType,
     this.token,
-        this.referralCode,
-
+    this.referralCode,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -62,8 +60,7 @@ class UserModel {
         wallet: json["wallet"],
         socialType: json["social_type"],
         token: json["token"],
-                referralCode: json["referral_code"],
-
+        referralCode: json["referral_code"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -77,6 +74,34 @@ class UserModel {
         "wallet": wallet,
         "social_type": socialType,
         "token": token,
-                "referral_code": referralCode,
+        "referral_code": referralCode,
       };
+
+  UserModel copyWith({
+    int? id,
+    String? name,
+    int? notification,
+    String? image,
+    int? isRegister,
+    String? email,
+    String? phone,
+    dynamic wallet,
+    String? socialType,
+    String? token,
+    String? referralCode,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      notification: notification ?? this.notification,
+      image: image ?? this.image,
+      isRegister: isRegister ?? this.isRegister,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      wallet: wallet ?? this.wallet,
+      socialType: socialType ?? this.socialType,
+      token: token ?? this.token,
+      referralCode: referralCode ?? this.referralCode,
+    );
+  }
 }

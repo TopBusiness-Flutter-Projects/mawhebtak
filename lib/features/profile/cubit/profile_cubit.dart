@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -9,6 +10,7 @@ import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../core/exports.dart';
+import '../../main_screen/cubit/cubit.dart';
 import '../data/repo/profile_repo_impl.dart';
 
 part 'profile_state.dart';
@@ -98,11 +100,6 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ChangeFollowersState());
   }
 
-  Future<LoginModel> getUserFromPreferences() async {
-    final user = await Preferences.instance.getUserModel();
-    return user;
-  }
-
   LoginModel? user;
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
@@ -120,10 +117,23 @@ class ProfileCubit extends Cubit<ProfileState> {
       final res = await api.getProfileData(id: id);
       res.fold((l) {
         emit(GetProfileStateError(l.toString()));
-      }, (r) {
+      }, (r) async {
         if (r.status == 200) {
           profileModel = r;
           emit(GetProfileStateLoaded());
+          Preferences.instance.getUserModel().then((v) {
+            if (r.data?.id.toString() == v.data?.id.toString()) {
+              var userModel = v;
+              UserModel updatedUser = userModel.data!.copyWith(
+                name: r.data?.name,
+                email: r.data?.email,
+                image: r.data?.avatar,
+                phone: r.data?.phone,
+              );
+              Preferences.instance
+                  .setUser(LoginModel(msg: '', status: 200, data: updatedUser));
+            }
+          });
           loadUserFromPreferences();
         } else {
           errorGetBar(r.msg ?? '');
@@ -136,9 +146,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(GetProfileStateError(e.toString()));
     }
   }
-
-
-
 
   addReview({
     required BuildContext context,
@@ -160,6 +167,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(AddReviewStateLoaded());
         commentController.clear();
         review = 0.0;
+
+        getProfileData(context: context, id: userId);
       });
     } catch (e) {
       errorGetBar(e.toString());
@@ -221,6 +230,10 @@ class ProfileCubit extends Cubit<ProfileState> {
             Navigator.pop(context);
             Navigator.pop(context);
             getProfileData(id: profileId, context: context);
+          } else {
+            errorGetBar(r.msg ?? '');
+            emit(UpdateProfileStateError(r.msg.toString()));
+            Navigator.pop(context);
           }
         },
       );

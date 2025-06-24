@@ -287,7 +287,7 @@
   "please_enter_comment": "please enter comment",
   "logout_successfully": "Logout Successfully !!",
   "change_password_successfully": "Change password successfully!!",
-  "you_do_review_in_this_user": "You do review in this user",
+  "you_do_review_in_this_user": "You did review in this user before",
   "write_your_bio": "write your bio",
   "write_your_name": "write your name",
   "write_your_headline": "write your headline",
@@ -299,6 +299,7 @@
   "add_experience": "Add Experience",
   "update_experience": "Update Experience",
   "delete_account": "Delete Account",
+  "rate":"Rate",
 "delete_account_msg": "Do you want to delete the account?",
 "delete_account_successfully": "Your account deletion request has been processed, and your account will be permanently deleted within the next 24 hours."
 

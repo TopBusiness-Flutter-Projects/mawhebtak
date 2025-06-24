@@ -164,7 +164,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         followersCount: profileData?.followersCount.toString() ?? "0",
         followingCount: profileData?.followingCount.toString() ?? "0",
         postsCount: profileData?.postsCount.toString() ?? "0",
-
       );
     }
 
@@ -221,9 +220,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onSelected: (value) {
               if (value == 'rate') {
                 if (cubit.profileModel?.data?.isIReviewed == true) {
-                  _showRatingDialog(context, cubit);
-                } else {
                   errorGetBar('you_do_review_in_this_user'.tr());
+                } else {
+                  _showRatingDialog(context, cubit);
                 }
               }
             },
@@ -245,19 +244,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return AboutWidget(profileModel: cubit.profileModel);
 
       case 1:
-        return BlocBuilder<FeedsCubit,FeedsState>(
-          builder: (context,state) {
-            return _buildPostsSection(cubit);
-          }
-        );
+        return BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
+          return _buildPostsSection(cubit);
+        });
 
       case 2:
         if (isMyProfile) {
-          return BlocBuilder<CastingCubit,CastingState>(
-            builder: (context,state) {
-              return _buildGigsSection(context);
-            }
-          );
+          return BlocBuilder<CastingCubit, CastingState>(
+              builder: (context, state) {
+            return _buildGigsSection(context);
+          });
         } else {
           return _buildReviewsSection(cubit);
         }
@@ -397,7 +393,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             starCount: 5,
                             starSize: 20,
                             starOffColor: const Color(0xffe7e8ea),
-                            starColor: Colors.yellow,
+                            starColor: Colors.yellow.shade700,
                           ),
                         ],
                       ),
@@ -461,7 +457,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     maxValue: 5,
                     starSpacing: 4,
                     starOffColor: AppColors.gray,
-                    starColor: Colors.yellow,
+                    starColor: Colors.yellow.shade700,
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(

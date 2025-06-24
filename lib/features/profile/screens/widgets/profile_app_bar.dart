@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../../core/exports.dart';
+import '../../../main_screen/cubit/cubit.dart';
 
 class ProfileAppBar extends StatelessWidget {
   ProfileAppBar({
@@ -45,7 +46,6 @@ class ProfileAppBar extends StatelessWidget {
                       )
                     : Image.asset(ImageAssets.profileImage),
           ),
-
           // AppBar
           Positioned(
             top: 20.h,
@@ -53,6 +53,10 @@ class ProfileAppBar extends StatelessWidget {
             right: 0,
             child: CustomSimpleAppbar(
               isActionButton: true,
+              backActionOnTap: () {
+                context.read<MainCubit>().getUserData();
+                Navigator.pop(context);
+              },
               actionIcon: AppIcons.shareIcon,
               onShareTap: () async {
                 await SharePlus.instance.share(ShareParams(

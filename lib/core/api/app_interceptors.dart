@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
+import '../../config/routes/app_routes.dart';
+import '../../initialization.dart';
 import '../utils/app_strings.dart';
 
 class AppInterceptors extends Interceptor {
@@ -16,6 +17,14 @@ class AppInterceptors extends Interceptor {
     debugPrint(
         'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
     super.onResponse(response, handler);
+
+    if (response.statusCode == 401) {
+      debugPrint('Unauthorized access detected. Redirecting to login.');
+      notificationService?.navigatorKey.currentState?.pushNamedAndRemoveUntil(
+        Routes.loginRoute,
+        (route) => false,
+      );
+    }
   }
 
   @override

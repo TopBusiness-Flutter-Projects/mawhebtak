@@ -11,6 +11,7 @@ import 'package:mawhebtak/features/home/screens/widgets/under_custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
+import '../../main_screen/cubit/cubit.dart';
 
 class HomeItem {
   final String icon;
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     userController = PageController();
     context.read<HomeCubit>().homeData();
-    context.read<HomeCubit>().loadUserFromPreferences();
+    context.read<MainCubit>().getUserData();
   }
 
   @override

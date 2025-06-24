@@ -6,21 +6,23 @@ import '../exports.dart';
 import '../notification_services/notification_service.dart';
 
 class CustomSimpleAppbar extends StatelessWidget {
-  CustomSimpleAppbar(
-      {super.key,
-      this.isSearchWidget,
-      this.actionIcon,
-      required this.title,
-      this.isActionButton,
-      this.colorButton,
-      this.arrowColor,
-      this.isDeepLink,
-      this.onShareTap,
-      this.color,
-      this.filterType,
-      this.categoryId,
-      this.isWithShadow = false,
-      this.titleColor,  });
+  CustomSimpleAppbar({
+    super.key,
+    this.isSearchWidget,
+    this.actionIcon,
+    required this.title,
+    this.isActionButton,
+    this.colorButton,
+    this.arrowColor,
+    this.isDeepLink,
+    this.onShareTap,
+    this.color,
+    this.filterType,
+    this.categoryId,
+    this.isWithShadow = false,
+    this.titleColor,
+    this.backActionOnTap,
+  });
   final String title;
   final bool? isActionButton;
   final bool? isSearchWidget;
@@ -31,7 +33,7 @@ class CustomSimpleAppbar extends StatelessWidget {
   final String? actionIcon;
   final bool? isWithShadow;
   final String? filterType;
-
+  void Function()? backActionOnTap;
   bool? isDeepLink;
   void Function()? onShareTap;
   final String? categoryId;
@@ -54,20 +56,19 @@ class CustomSimpleAppbar extends StatelessWidget {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      if (isDeepLink == true) {
-                        Navigator.pushReplacementNamed(
-                            context, Routes.mainRoute);
-                      } else if (isWithNotification == true) {
-                        isWithNotification = false;
-                        Navigator.pushReplacementNamed(
-                            context, Routes.mainRoute);
-
-
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
+                    onTap: backActionOnTap ??
+                        () {
+                          if (isDeepLink == true) {
+                            Navigator.pushReplacementNamed(
+                                context, Routes.mainRoute);
+                          } else if (isWithNotification == true) {
+                            isWithNotification = false;
+                            Navigator.pushReplacementNamed(
+                                context, Routes.mainRoute);
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        },
                     child: Padding(
                       padding: EdgeInsets.only(
                           left: 10.w, right: 10.w, top: 10.h, bottom: 5.h),
