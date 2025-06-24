@@ -4,6 +4,7 @@ import 'package:mawhebtak/core/error/exceptions.dart';
 import 'package:mawhebtak/core/error/failures.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/auth/new_account/data/model/user_types.dart';
 import 'package:mawhebtak/features/home/data/models/followers_model.dart';
 import 'package:mawhebtak/features/home/data/models/top_talents_model.dart';
@@ -18,14 +19,16 @@ class TopTalentsRepository {
     String? orderBy,
     String? userSubTypeId,
   }) async {
+
     try {
       final user = await Preferences.instance.getUserModel();
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "User",
         "where[0]": "status,1",
+        "where[2]":"id,!=,${userData.data?.id}",
         "paginate": true,
         if (userSubTypeId != null)
-          "where[1]": "user_sub_type_id,$userSubTypeId",
+        "where[1]": "user_sub_type_id,$userSubTypeId",
         "orderBy": orderBy,
         "page": page,
         "where[2]": "id,!=,${user.data?.id?.toString()}",

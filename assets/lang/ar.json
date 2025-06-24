@@ -301,7 +301,12 @@
   "update_experience": "تحديث الخبرة",
   "delete_account":"حذف الحساب",
   "delete_account_msg":"هل تريد حذف الحساب ؟",
-  "delete_account_successfully":"تم تفعيل طلب حذف حسابك، وسيتم حذفه نهائيًا خلال الـ24 ساعة القادمة."
+  "delete_account_successfully":"تم تفعيل طلب حذف حسابك، وسيتم حذفه نهائيًا خلال الـ24 ساعة القادمة.",
+  "please_enter_message": "من فضلك ادخل الرسالة",
+  "enter_message": "ادخل الرسالة",
+  "please_enter_phone": "من فضلك ادخل رقم الموبيل",
+  "write_your_title":"اكتب العنوان" ,
+  "please_enter_title": "من فضلك ادخل العنوان"
 
 
 
