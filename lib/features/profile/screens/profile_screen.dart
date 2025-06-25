@@ -274,7 +274,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         itemCount: timeline.isEmpty ? 2 : timeline.length + 1,
         itemBuilder: (context, index) {
           if (index == 0) {
-            return const WhatDoYouWant();
+            print(
+                "profileModel?.data?.id  ${cubit.profileModel?.data?.id.toString()}");
+            print(widget.model.id);
+            return (cubit.user?.data?.id.toString() == widget.model.id)
+                ? const WhatDoYouWant()
+                : Container();
           }
           if (timeline.isEmpty) {
             return Center(

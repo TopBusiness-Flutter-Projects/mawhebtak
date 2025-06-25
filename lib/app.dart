@@ -19,6 +19,8 @@ import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
 import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
+import 'package:mawhebtak/features/my_advertiment_screen/cubit/cubit.dart';
+import 'package:mawhebtak/features/packages/cubit/cubit.dart';
 import 'package:mawhebtak/features/profile/screens/profile_screen.dart';
 import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';
 import 'package:mawhebtak/features/search/cubit/search_cubit.dart';
@@ -100,6 +102,9 @@ class _MyAppState extends State<MyApp> {
             create: (_) => injector.serviceLocator<VerificationCubit>(),
           ),
           BlocProvider(
+            create: (_) => injector.serviceLocator<MyAdvertismentCubit>(),
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<NewPasswordCubit>(),
           ),
           BlocProvider(
@@ -135,13 +140,16 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) =>
                 injector.serviceLocator<FeedsCubit>()..postsData(page: '1'),
-          ),BlocProvider(
-            create: (_) =>
-                injector.serviceLocator<SearchCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => injector.serviceLocator<SearchCubit>(),
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<LocationCubit>()
               ..checkAndRequestLocationPermission(context),
+          ),
+          BlocProvider(
+            create: (_) => injector.serviceLocator<PackagesCubit>(),
           ),
           BlocProvider(
               create: (_) => injector.serviceLocator<TopEventsCubit>()),
@@ -221,7 +229,6 @@ class _MyAppState extends State<MyApp> {
                                                                 'reference_id']
                                                             .toString() ??
                                                         '',
-
                                               )
                                             : const NotificationScreen()
                 : const SplashScreen()

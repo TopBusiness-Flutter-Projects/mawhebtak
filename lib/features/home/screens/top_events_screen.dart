@@ -55,8 +55,15 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
                     child: Center(child: Text(state.errorMessage.toString()))),
                 TopEventsStateLoaded() ||
                 SeeAllEventStateLoadingMore() =>
-                  Expanded(
-                    child: Padding(
+
+              Expanded(
+                    child:(
+                        context
+                            .read<TopEventsCubit>()
+                            .topEvents
+                            ?.data
+                            ?.length == 0)?
+                    Center(child: Text("no_data".tr())): Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                       child: RefreshIndicator(
                         onRefresh: () async {

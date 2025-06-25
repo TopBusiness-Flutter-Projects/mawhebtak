@@ -297,23 +297,21 @@
   "from_date": "من تاريخ",
   "add_experience": "أضف خبرة جديدة",
     "rate":"تقييم",
-
+  "start_date": "تاريخ بداية الاعلان",
+  "end_date": "تاريخ نهاية الاعلان",
   "update_experience": "تحديث الخبرة",
   "delete_account":"حذف الحساب",
+  "add_advertisment": "اضافة اعلان",
+  "advertisment_image": "صورة الاعلان",
   "delete_account_msg":"هل تريد حذف الحساب ؟",
   "delete_account_successfully":"تم تفعيل طلب حذف حسابك، وسيتم حذفه نهائيًا خلال الـ24 ساعة القادمة.",
   "please_enter_message": "من فضلك ادخل الرسالة",
   "enter_message": "ادخل الرسالة",
   "please_enter_phone": "من فضلك ادخل رقم الموبيل",
   "write_your_title":"اكتب العنوان" ,
-  "please_enter_title": "من فضلك ادخل العنوان"
-
-
-
-
-
-
-
-
-
+  "please_enter_title": "من فضلك ادخل العنوان",
+  "advertising_packages": "باقات الاعلانات",
+  "my_subscriptions": "اشتراكاتى",
+  "monthly_package": "باقة شهرية",
+  "reset_advertisment": "الاعلانات المتبقية"
 }
