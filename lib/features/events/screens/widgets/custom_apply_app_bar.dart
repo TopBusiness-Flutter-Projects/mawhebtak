@@ -1,6 +1,8 @@
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/exports.dart';
+import '../../../calender/cubit/calender_cubit.dart';
+import '../../../feeds/cubit/feeds_cubit.dart';
 
 class CustomAppBarWithClearWidget extends StatelessWidget {
   const CustomAppBarWithClearWidget({super.key, required this.title});
@@ -35,7 +37,7 @@ class CustomAppBarWithClearWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: InkWell(
                     onTap: () {
-                      Navigator.pop(context);
+                      context.read<FeedsCubit>().clearDataAndBack(context);
                     },
                     child: SvgPicture.asset(AppIcons.xIcon)),
               ),

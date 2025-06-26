@@ -10,11 +10,11 @@
   "search": "Search",
   "home": "Home",
   "onboarding1_title": "The Largest Community of Artists",
-  "onboarding1_description": "Mawhebtak is a large platform that connects all artists across various fields to create a vast community of artists in Egypt.",
+  "onboarding1_description": "Mawhebtac is a large platform that connects all artists across various fields to create a vast community of artists in Egypt.",
   "onboarding2_title": "Follow Your Favorite Artist",
-  "onboarding2_description": "Mawhebtak is a large platform that connects all artists across various fields to create a vast community of artists in Egypt.",
+  "onboarding2_description": "Mawhebtac is a large platform that connects all artists across various fields to create a vast community of artists in Egypt.",
   "onboarding3_title": "Connect for Job Opportunities",
-  "onboarding3_description": "Mawhebtak is a large platform that connects all artists across various fields to create a vast community of artists in Egypt.",
+  "onboarding3_description": "Mawhebtac is a large platform that connects all artists across various fields to create a vast community of artists in Egypt.",
   "enter_code_to_get_points": "Do you have a promo code?\nYou can now enter it to earn your welcome points.",
 "thank_you_all_features": "Thank you! Your account has been successfully activated, and you can now use all the features of our app.",
 "account_activated": "Your account has been successfully activated.",
@@ -210,7 +210,7 @@
   "delete_assistant_successful": "Delete assistant successful !",
   "no_work": "The job does not exist or has not been identified.",
   "description_from_new_work": "Please add new work to start saving your racords",
-  "job_description_sample": "Mawhebtak is a big platform that connects all artists in all fields to form a large artistic community in Egypt.",
+  "job_description_sample": "Mawhebtac is a big platform that connects all artists in all fields to form a large artistic community in Egypt.",
   "error_msg": "Something went wrong, please try again",
   "please_fill_all_fields": "Please fill all fields",
   "or_sign_up_with": "Or sign up with",
@@ -306,7 +306,10 @@
   "please_enter_phone": "please enter phone",
   "write_your_title":"write your title" ,
   "please_enter_title": "please enter title",
-  "rate":"Rate"
+  "rate":"Rate",
+  "delete_account_desc":"Are you sure you want to permanently delete the account?",
+"delete_account_desc_message":"Are you sure you want to permanently delete the message?",
+"delete_account_desc_room":"Are you sure you want to permanently delete the chat room?"
 
 
 }

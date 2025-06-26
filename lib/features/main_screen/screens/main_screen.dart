@@ -122,61 +122,64 @@ class _MainScreenState extends State<MainScreen> {
             }
             return false;
           },
-          child: Scaffold(
-            body: Stack(
-              children: [
-                cubit.screens[cubit.currentpage],
-                Positioned(
-                    bottom: 0,
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(0),
-                            topRight: Radius.circular(0),
+          child: SafeArea(
+            bottom: true,
+            child: Scaffold(
+              body: Stack(
+                children: [
+                  cubit.screens[cubit.currentpage],
+                  Positioned(
+                      bottom: 0,
+                      child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              topRight: Radius.circular(0),
+                            ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10.w, vertical: 5.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomBottomNavBarItem(
-                                cubit: cubit,
-                                index: 0,
-                                icon: AppIcons.homeIcon,
-                                title: 'home'.tr(),
-                              ),
-                              CustomBottomNavBarItem(
-                                cubit: cubit,
-                                index: 1,
-                                icon: AppIcons.feeds,
-                                title: 'feeds'.tr(),
-                              ),
-                              CustomBottomNavBarItem(
-                                cubit: cubit,
-                                index: 2,
-                                icon: AppIcons.casting,
-                                title: 'casting'.tr(),
-                              ),
-                              CustomBottomNavBarItem(
-                                cubit: cubit,
-                                index: 3,
-                                icon: AppIcons.calendar,
-                                title: 'calendar'.tr(),
-                              ),
-                              CustomBottomNavBarItem(
-                                cubit: cubit,
-                                index: 4,
-                                icon: AppIcons.more,
-                                title: 'more'.tr(),
-                              ),
-                            ],
-                          ),
-                        )))
-              ],
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 5.h),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomBottomNavBarItem(
+                                  cubit: cubit,
+                                  index: 0,
+                                  icon: AppIcons.homeIcon,
+                                  title: 'home'.tr(),
+                                ),
+                                CustomBottomNavBarItem(
+                                  cubit: cubit,
+                                  index: 1,
+                                  icon: AppIcons.feeds,
+                                  title: 'feeds'.tr(),
+                                ),
+                                CustomBottomNavBarItem(
+                                  cubit: cubit,
+                                  index: 2,
+                                  icon: AppIcons.casting,
+                                  title: 'casting'.tr(),
+                                ),
+                                CustomBottomNavBarItem(
+                                  cubit: cubit,
+                                  index: 3,
+                                  icon: AppIcons.calendar,
+                                  title: 'calendar'.tr(),
+                                ),
+                                CustomBottomNavBarItem(
+                                  cubit: cubit,
+                                  index: 4,
+                                  icon: AppIcons.more,
+                                  title: 'more'.tr(),
+                                ),
+                              ],
+                            ),
+                          )))
+                ],
+              ),
             ),
           ),
         );

@@ -263,7 +263,7 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                                         .eventDetails
                                                                         ?.data
                                                                         ?.isMine ==
-                                                                    false &&
+                                                                    false ||
                                                                 (context
                                                                         .read<
                                                                             ProfileCubit>()

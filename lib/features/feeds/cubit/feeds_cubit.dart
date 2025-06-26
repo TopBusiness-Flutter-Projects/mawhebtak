@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +17,7 @@ import 'package:video_compress/video_compress.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:path/path.dart' as path;
 import '../../../config/routes/app_routes.dart';
+import '../../calender/cubit/calender_cubit.dart';
 import '../data/models/post_details.dart';
 
 class FeedsCubit extends Cubit<FeedsState> {
@@ -32,6 +32,17 @@ class FeedsCubit extends Cubit<FeedsState> {
   List<XFile>? myImages;
   List<File>? myImagesF;
   List<File> thumbnails = [];
+  clearDataAndBack(BuildContext context) {
+    validVideos = [];
+    myImages = null;
+    myImagesF = null;
+    thumbnails = [];
+    context.read<CalenderCubit>().validVideos = [];
+    context.read<CalenderCubit>().myImages = null;
+    context.read<CalenderCubit>().myImagesF = null;
+
+    Navigator.pop(context);
+  }
 
   Future pickMultiImage() async {
     List<XFile>? images;
@@ -292,7 +303,6 @@ class FeedsCubit extends Cubit<FeedsState> {
 
   deletePost(BuildContext context,
       {required String postId, bool? isDetails, int? index}) async {
-
     emit(DeletePostStateLoading());
     try {
       final res = await api!.deletePost(postId: postId);
@@ -300,7 +310,12 @@ class FeedsCubit extends Cubit<FeedsState> {
         emit(DeletePostStateError(l.toString()));
       }, (r) {
         posts?.data?.removeAt(index!);
-        context.read<ProfileCubit>().profileModel?.data?.timeline?.removeAt(index!);
+        context
+            .read<ProfileCubit>()
+            .profileModel
+            ?.data
+            ?.timeline
+            ?.removeAt(index!);
 
         successGetBar(r.msg);
         if (isDetails == true) {

@@ -306,7 +306,10 @@
   "enter_message": "ادخل الرسالة",
   "please_enter_phone": "من فضلك ادخل رقم الموبيل",
   "write_your_title":"اكتب العنوان" ,
-  "please_enter_title": "من فضلك ادخل العنوان"
+  "please_enter_title": "من فضلك ادخل العنوان",
+  "delete_account_desc":"هل انت متاكد من حذف الحساب نهائياً",
+  "delete_account_desc_message":"هل انت متاكد من حذف الرسالة نهائياً",
+  "delete_account_desc_room":"هل انت متاكد من حذف غرفة الدردشة نهائياً"
 
 
 

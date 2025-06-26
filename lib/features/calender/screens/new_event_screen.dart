@@ -11,6 +11,7 @@ import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.d
 import 'package:share_plus/share_plus.dart';
 import '../../../core/exports.dart';
 import '../../../core/utils/custom_pick_media.dart';
+import '../../feeds/cubit/feeds_cubit.dart';
 import '../../feeds/screens/widgets/image_view_file.dart';
 import '../../feeds/screens/widgets/video_from_file_screen.dart';
 import '../../location/cubit/location_cubit.dart';
@@ -47,161 +48,167 @@ class _NewEventScreenState extends State<NewEventScreen> {
       builder: (context, state) {
         var cubit = context.read<CalenderCubit>();
 
-        return SafeArea(
-          child: Scaffold(
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomAppBarWithClearWidget(title: "new_event".tr()),
-                if (cubit.currentStep == 2)
-                  Expanded(
-                    child: Center(
+        return WillPopScope(
+      onWillPop: () async {
+        context.read<FeedsCubit>().clearDataAndBack(context);
+        return Future.value(false);
+      },
+          child: SafeArea(
+            child: Scaffold(
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomAppBarWithClearWidget(title: "new_event".tr()),
+                  if (cubit.currentStep == 2)
+                    Expanded(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(AppIcons.successIcon),
+                            SizedBox(height: 16.h),
+                            Text(
+                              'event_created'.tr(),
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            20.h.verticalSpace,
+                            Text(
+                              textAlign: TextAlign.center,
+                              'event_created_subtext'.tr(),
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            20.h.verticalSpace,
+                            InkWell(
+                                onTap: () async {
+                                  await SharePlus.instance.share(ShareParams(
+                                    text: AppStrings.eventsShareLink +
+                                        (cubit.evntStore?.data.toString() ?? ''),
+                                    title: AppStrings.appName,
+                                  ));
+                                },
+                                child: SvgPicture.asset(AppIcons.share)),
+                          ],
+                        ),
+                      ),
+                    )
+                  else
+                    Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(AppIcons.successIcon),
-                          SizedBox(height: 16.h),
-                          Text(
-                            'event_created'.tr(),
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
+                          StepIndicator(
+                            currentStep: cubit.currentStep + 1,
+                            steps: [
+                              'event_information'.tr(),
+                              'required_talents'.tr()
+                            ],
+                          ),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: BlocBuilder<CalenderCubit, CalenderState>(
+                                builder: (context, state) {
+                                  return cubit.currentStep == 0
+                                      ? _buildEventInformationStep(cubit)
+                                      : _buildRequiredTalentsStep();
+                                },
+                              ),
                             ),
                           ),
-                          20.h.verticalSpace,
-                          Text(
-                            textAlign: TextAlign.center,
-                            'event_created_subtext'.tr(),
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w400,
+                          Container(
+                            padding: EdgeInsets.all(20.w),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, -2),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (cubit.currentStep > 0)
+                                  TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        cubit.currentStep = 0;
+                                      });
+                                    },
+                                    child: Text(
+                                      'back'.tr(),
+                                      style: TextStyle(
+                                        color: AppColors.primary,
+                                        fontSize: 18.sp,
+                                      ),
+                                    ),
+                                  ),
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 48.h,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        if (cubit.currentStep == 0) {
+                                          if (formKeyInformation.currentState!
+                                              .validate()) {
+                                            setState(() {
+                                              cubit.currentStep = 1;
+                                            });
+                                            cubit.getAllSubCategories(cubit
+                                                    .selectedCategoty?.id
+                                                    .toString() ??
+                                                '');
+                                          }
+                                        } else if (cubit.currentStep == 1) {
+                                          cubit.eventStore(context);
+                                          // cubit.addEvent(
+                                          //   title: cubit
+                                          //       .titleOfTheEventController.text,
+                                          //   date: cubit.selectedDate ??
+                                          //       DateTime.now(),
+                                          // );
+          
+                                          // Navigator.pop(context);
+                                        } else {
+                                          print(
+                                              'Form submitted with \.length} talents');
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.primary,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        cubit.currentStep == 0
+                                            ? 'next'.tr()
+                                            : 'create_event'.tr(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          20.h.verticalSpace,
-                          InkWell(
-                              onTap: () async {
-                                await SharePlus.instance.share(ShareParams(
-                                  text: AppStrings.eventsShareLink +
-                                      (cubit.evntStore?.data.toString() ?? ''),
-                                  title: AppStrings.appName,
-                                ));
-                              },
-                              child: SvgPicture.asset(AppIcons.share)),
                         ],
                       ),
                     ),
-                  )
-                else
-                  Expanded(
-                    child: Column(
-                      children: [
-                        StepIndicator(
-                          currentStep: cubit.currentStep + 1,
-                          steps: [
-                            'event_information'.tr(),
-                            'required_talents'.tr()
-                          ],
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: BlocBuilder<CalenderCubit, CalenderState>(
-                              builder: (context, state) {
-                                return cubit.currentStep == 0
-                                    ? _buildEventInformationStep(cubit)
-                                    : _buildRequiredTalentsStep();
-                              },
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(20.w),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 4,
-                                offset: const Offset(0, -2),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              if (cubit.currentStep > 0)
-                                TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      cubit.currentStep = 0;
-                                    });
-                                  },
-                                  child: Text(
-                                    'back'.tr(),
-                                    style: TextStyle(
-                                      color: AppColors.primary,
-                                      fontSize: 18.sp,
-                                    ),
-                                  ),
-                                ),
-                              Expanded(
-                                child: SizedBox(
-                                  height: 48.h,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      if (cubit.currentStep == 0) {
-                                        if (formKeyInformation.currentState!
-                                            .validate()) {
-                                          setState(() {
-                                            cubit.currentStep = 1;
-                                          });
-                                          cubit.getAllSubCategories(cubit
-                                                  .selectedCategoty?.id
-                                                  .toString() ??
-                                              '');
-                                        }
-                                      } else if (cubit.currentStep == 1) {
-                                        cubit.eventStore(context);
-                                        // cubit.addEvent(
-                                        //   title: cubit
-                                        //       .titleOfTheEventController.text,
-                                        //   date: cubit.selectedDate ??
-                                        //       DateTime.now(),
-                                        // );
-
-                                        // Navigator.pop(context);
-                                      } else {
-                                        print(
-                                            'Form submitted with \.length} talents');
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.primary,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.r),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      cubit.currentStep == 0
-                                          ? 'next'.tr()
-                                          : 'create_event'.tr(),
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         );

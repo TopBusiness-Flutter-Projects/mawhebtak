@@ -135,9 +135,9 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(
             create: (_) =>
                 injector.serviceLocator<FeedsCubit>()..postsData(page: '1'),
-          ),BlocProvider(
-            create: (_) =>
-                injector.serviceLocator<SearchCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => injector.serviceLocator<SearchCubit>(),
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<LocationCubit>()
@@ -221,7 +221,6 @@ class _MyAppState extends State<MyApp> {
                                                                 'reference_id']
                                                             .toString() ??
                                                         '',
-
                                               )
                                             : const NotificationScreen()
                 : const SplashScreen()

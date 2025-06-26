@@ -244,7 +244,11 @@ loadingDialog({required bool isLoading, required Widget child}) {
 //   // );
 // }
 
-deleteAccountDialog(BuildContext context, {void Function()? onPressed}) async {
+deleteAccountDialog(
+  BuildContext context, {
+  void Function()? onPressed,
+String?title
+}) async {
   await AwesomeDialog(
     context: context,
     customHeader: Padding(
@@ -256,7 +260,7 @@ deleteAccountDialog(BuildContext context, {void Function()? onPressed}) async {
     animType: AnimType.topSlide,
     showCloseIcon: true,
     padding: EdgeInsets.all(10.w),
-    title: "delete_account_desc".tr(),
+    title:title?? "delete_account_desc".tr(),
     titleTextStyle: getRegularStyle(fontSize: 16.sp),
     btnOkText: "delete".tr(),
     btnOkOnPress: onPressed,

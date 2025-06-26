@@ -56,13 +56,13 @@ class _TimeLineListState extends State<TimeLineList> {
                       Column(
                         children: [
                           GestureDetector(
-                            onTap:(){
-                              Navigator.pushNamed(
-                                  context,
-                                  Routes.profileRoute,
+                            onTap: () {
+                              Navigator.pushNamed(context, Routes.profileRoute,
                                   arguments: DeepLinkDataModel(
-                                  id: widget.feedsCubit?.user?.data?.id.toString() ??"",
-                              isDeepLink: false));
+                                      id: widget.feedsCubit?.user?.data?.id
+                                              .toString() ??
+                                          "",
+                                      isDeepLink: false));
                             },
                             child: SizedBox(
                               height: 40.h,
@@ -71,7 +71,8 @@ class _TimeLineListState extends State<TimeLineList> {
                                   ? Image.asset(ImageAssets.profileImage)
                                   : ClipOval(
                                       child: CachedNetworkImage(
-                                        imageUrl: widget.feeds?.user?.image ?? '',
+                                        imageUrl:
+                                            widget.feeds?.user?.image ?? '',
                                         fit: BoxFit.cover,
                                         placeholder: (context, url) =>
                                             const Center(
@@ -79,7 +80,8 @@ class _TimeLineListState extends State<TimeLineList> {
                                               strokeWidth: 2),
                                         ),
                                         errorWidget: (context, url, error) =>
-                                            Image.asset(ImageAssets.profileImage),
+                                            Image.asset(
+                                                ImageAssets.profileImage),
                                       ),
                                     ),
                             ),
@@ -112,12 +114,11 @@ class _TimeLineListState extends State<TimeLineList> {
                       icon: SvgPicture.asset(AppIcons.settingIcon),
                       onSelected: (value) {
                         if (value == 'delete') {
-                          widget.feedsCubit
-                              ?.deletePost(
-                              index: widget.index,
-                              context, postId: widget.postId,
-
-                             );
+                          widget.feedsCubit?.deletePost(
+                            index: widget.index,
+                            context,
+                            postId: widget.postId,
+                          );
                         }
                       },
                       color: AppColors.white,
@@ -224,8 +225,10 @@ class _TimeLineListState extends State<TimeLineList> {
                 if (user.data?.token == null) {
                   checkLogin(context);
                 } else {
-                  widget.feedsCubit
-                      ?.addReaction(context: context,postId: widget.postId, index: widget.index);//profile
+                  widget.feedsCubit?.addReaction(
+                      context: context,
+                      postId: widget.postId,
+                      index: widget.index); //profile
                 }
               },
               child: Row(

@@ -80,7 +80,6 @@ class ChatCubit extends Cubit<ChatState> {
           .doc(messageId)
           .delete();
 
-      // Update local state
       messages.removeWhere((message) => message.id == messageId);
       emit(ChatLoaded(messages));
     } catch (e) {

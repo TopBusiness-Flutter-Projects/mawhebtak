@@ -93,6 +93,8 @@ class _MessageScreenState extends State<MessageScreen> {
                       itemBuilder: (context, index) {
                         var item = cubit.messages[index];
                         return ChatBubble(
+                          chatId: item.chatId ?? '',
+                          id: item.id ?? '',
                           isSender: (userModel?.data?.id.toString() ==
                               item.senderId.toString()),
                           message: item.bodyMessage ?? '',

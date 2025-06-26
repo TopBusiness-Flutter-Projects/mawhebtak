@@ -35,4 +35,7 @@ class FilePickCancelled extends ChatState {}
 class UpdateProfileError extends ChatState {}
 
 class UpdateProfileImagePicked extends ChatState {}
+
 class MessageErrorState extends ChatState {}
+
+class RoomErrorState extends ChatState {}
