@@ -22,6 +22,13 @@ class ContainerOfPackage extends StatelessWidget {
       decoration: BoxDecoration(
 
           color: AppColors.white,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 2,
+              spreadRadius: 0.02,
+              color: AppColors.grayDark
+            )
+          ],
           borderRadius: BorderRadius.circular(8.r)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -45,7 +45,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
                           ? const Center(child: CustomLoadingIndicator())
                           : ListView.builder(
                          shrinkWrap: true,
-                         itemCount: 1,
+                         itemCount: 3,
                         // itemCount: cubit.mainAdOfferPackagesModel?.data?.length,
                         itemBuilder: (context, index) {
                       //    var item = cubit.mainAdOfferPackagesModel?.data?[index];
