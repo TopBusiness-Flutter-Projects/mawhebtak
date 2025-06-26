@@ -27,32 +27,33 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
-      return Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: GestureDetector(
-          onTap: () async {
-            final user = await Preferences.instance.getUserModel();
-            if (user.data?.token == null) {
-              checkLogin(context);
-            } else {
-              context.read<FeedsCubit>().commentsData(postId: widget.postId);
-              showModalBottomSheet(
-                showDragHandle: true,
-                useSafeArea: true,
-                context: context,
-                isScrollControlled: true,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                ),
-                backgroundColor: AppColors.white,
-                builder: (context) {
-                  return FractionallySizedBox(
-                    heightFactor: 0.7,
+      return GestureDetector(
+        onTap: () async {
+          final user = await Preferences.instance.getUserModel();
+          if (user.data?.token == null) {
+            checkLogin(context);
+          } else {
+            context.read<FeedsCubit>().commentsData(postId: widget.postId);
+            showModalBottomSheet(
+              showDragHandle: true,
+              useSafeArea: true,
+              context: context,
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              backgroundColor: AppColors.white,
+              builder: (context) {
+                return FractionallySizedBox(
+                  heightFactor: 0.7,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                    ),
                     child: BlocBuilder<FeedsCubit, FeedsState>(
                       builder: (context, state) {
-                        final comments = widget.feedsCubit?.comments?.data ?? [];
+                        final comments =
+                            widget.feedsCubit?.comments?.data ?? [];
                         return SafeArea(
                           child: Column(
                             children: [
@@ -67,9 +68,9 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                               ),
                               10.h.verticalSpace,
                               Expanded(
-
                                 child: ListView.builder(
-                                  controller: widget.feedsCubit?.scrollController,
+                                  controller:
+                                      widget.feedsCubit?.scrollController,
                                   itemCount: comments.length,
                                   itemBuilder: (context, index) {
                                     var comment = comments[index];
@@ -81,7 +82,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                           horizontal: 12.w, vertical: 6.h),
                                       elevation: 0.5,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5.r),
+                                        borderRadius:
+                                            BorderRadius.circular(5.r),
                                       ),
                                       child: Padding(
                                         padding: EdgeInsets.all(10.w),
@@ -93,21 +95,23 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                           children: [
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Flexible(
                                                   child: Row(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets.all(
-                                                                8.0),
+                                                            const EdgeInsets
+                                                                .all(8.0),
                                                         child: CircleAvatar(
                                                           backgroundImage:
                                                               NetworkImage(comment
@@ -125,7 +129,9 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: [
-                                                            Text(user?.name ?? "",
+                                                            Text(
+                                                                user?.name ??
+                                                                    "",
                                                                 style: TextStyle(
                                                                     fontWeight:
                                                                         FontWeight
@@ -136,7 +142,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                                 text: comment
                                                                         .comment ??
                                                                     "",
-                                                                fontSize: 16.sp),
+                                                                fontSize:
+                                                                    16.sp),
                                                             Row(
                                                               children: [
                                                                 replies.isEmpty
@@ -152,16 +159,12 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                                             Row(
                                                                           children: [
                                                                             Icon(
-                                                                              comment.showReplies == true
-                                                                                  ? Icons.keyboard_arrow_up_outlined
-                                                                                  : Icons.keyboard_arrow_down_outlined,
-                                                                              color:
-                                                                                  AppColors.primary,
+                                                                              comment.showReplies == true ? Icons.keyboard_arrow_up_outlined : Icons.keyboard_arrow_down_outlined,
+                                                                              color: AppColors.primary,
                                                                             ),
                                                                             Text(
                                                                               '${replies.isEmpty ? '' : replies.length} ${'replies'.tr()}',
-                                                                              style:
-                                                                                  TextStyle(
+                                                                              style: TextStyle(
                                                                                 fontSize: 16.sp,
                                                                                 color: AppColors.primary,
                                                                               ),
@@ -170,7 +173,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                                         ),
                                                                       ),
                                                                 TextButton(
-                                                                  onPressed: () {
+                                                                  onPressed:
+                                                                      () {
                                                                     context
                                                                         .read<
                                                                             FeedsCubit>()
@@ -183,7 +187,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                                         );
                                                                   },
                                                                   child: Text(
-                                                                    'reply'.tr(),
+                                                                    'reply'
+                                                                        .tr(),
                                                                     style:
                                                                         TextStyle(
                                                                       fontSize:
@@ -201,8 +206,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                     ],
                                                   ),
                                                 ),
-                                                if (widget.feedsCubit?.user?.data
-                                                        ?.id ==
+                                                if (widget.feedsCubit?.user
+                                                        ?.data?.id ==
                                                     comment.user?.id)
                                                   PopupMenuButton<String>(
                                                     color: AppColors.white,
@@ -221,7 +226,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                     },
                                                     itemBuilder: (BuildContext
                                                             context) =>
-                                                        <PopupMenuEntry<String>>[
+                                                        <PopupMenuEntry<
+                                                            String>>[
                                                       PopupMenuItem<String>(
                                                         value: 'delete',
                                                         child: Text(
@@ -254,7 +260,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                       top: 6.h),
                                                   child: Row(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       CircleAvatar(
                                                         radius: 16.r,
@@ -272,7 +279,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                                replyUser?.name ??
+                                                                replyUser
+                                                                        ?.name ??
                                                                     "",
                                                                 style: TextStyle(
                                                                     fontWeight:
@@ -281,8 +289,9 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                                                     fontSize:
                                                                         16.sp)),
                                                             ExpandableTextWidget(
-                                                              text: reply.reply ??
-                                                                  "",
+                                                              text:
+                                                                  reply.reply ??
+                                                                      "",
                                                               fontSize: 16.sp,
                                                             ),
                                                           ],
@@ -329,8 +338,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                               ),
                                               suffixIcon: isReplying
                                                   ? IconButton(
-                                                      icon:
-                                                          const Icon(Icons.close),
+                                                      icon: const Icon(
+                                                          Icons.close),
                                                       onPressed:
                                                           cubit.cancelReplying,
                                                     )
@@ -358,8 +367,8 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                                               if (isReplying) {
                                                 cubit.addReply(
                                                   postId: widget.postId,
-                                                  postCommentId:
-                                                      cubit.replyingToCommentId!,
+                                                  postCommentId: cubit
+                                                      .replyingToCommentId!,
                                                 );
                                                 cubit.cancelReplying();
                                               } else {
@@ -379,30 +388,30 @@ class _MainCommentWidgetState extends State<MainCommentWidget> {
                         );
                       },
                     ),
-                  );
-                },
-              );
-            }
-          },
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(
-                  AppIcons.commentIcon,
-                  width: 20.sp,
-                  color: AppColors.grayDarkkk,
-                ),
+                  ),
+                );
+              },
+            );
+          }
+        },
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SvgPicture.asset(
+                AppIcons.commentIcon,
+                width: 20.sp,
+                color: AppColors.grayDarkkk,
               ),
-              Text(
-                'comment'.tr(),
-                style: getRegularStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.grayDate,
-                ),
+            ),
+            Text(
+              'comment'.tr(),
+              style: getRegularStyle(
+                fontSize: 16.sp,
+                color: AppColors.grayDate,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });

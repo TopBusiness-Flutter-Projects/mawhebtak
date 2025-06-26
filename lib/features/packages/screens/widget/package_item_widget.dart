@@ -15,6 +15,7 @@ class packageItemWidget extends StatelessWidget {
     return InkWell(
       onTap:onTap,
       child: ContainerOfPackage(
+        hideDividor: false,
         height: 72.h,
         widgetOne: Flexible(
             fit: FlexFit.tight,

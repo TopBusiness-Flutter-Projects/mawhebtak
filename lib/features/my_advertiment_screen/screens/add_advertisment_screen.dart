@@ -14,9 +14,9 @@ class AddAdvertismentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<MyAdvertismentCubit>();
-    return SafeArea(
-      child: Scaffold(
-        body: BlocBuilder<MyAdvertismentCubit, MyAdvertismentState>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocBuilder<MyAdvertismentCubit, MyAdvertismentState>(
             builder: (context, state) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,

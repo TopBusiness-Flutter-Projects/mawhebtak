@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/my_svg_widget.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
@@ -31,8 +30,10 @@ class _MyAdvertismentScreenState extends State<MyAdvertismentScreen> {
     return Scaffold(
       floatingActionButton: GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, Routes.addAdvertismentRoute,
-             );
+          Navigator.pushNamed(
+            context,
+            Routes.addAdvertismentRoute,
+          );
         },
         child: CircleAvatar(
           backgroundColor: AppColors.primary,
@@ -44,247 +45,252 @@ class _MyAdvertismentScreenState extends State<MyAdvertismentScreen> {
               )),
         ),
       ),
-      body: BlocBuilder<MyAdvertismentCubit, MyAdvertismentState>(
-          builder: (context, state) {
-        var cubit = context.read<MyAdvertismentCubit>();
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomAppBarWithClearWidget(
-              title: "apply_for_event".tr(),
-            ),
-            SizedBox(
-              height: 40.h,
-            ),
-            (state is LoadingLawyerPackageAdsState)
-                ? const Center(
-                    child: CustomLoadingIndicator(),
-                  )
-                : Expanded(
-                    child: Column(
-                      children: [
-                        ContainerOfPackage(
-                          height: 125.h,
-                          widgetOne: Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    MySvgWidget(
-                                        path: AppIcons.calendarIcon,
-                                        imageColor: AppColors.primary,
-                                        size: 20.w),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.only(
-                                        start: 8.0.w,
-                                        bottom: 12.h,
-                                      ),
-                                      child: Text(
-                                        'من 12',
-                                       // 'من : ${cubit.getLawyerPackageAdsModelDetails?.data?.package?.fromDate.toString()}',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontFamily: AppStrings.fontFamily,
-                                          color: AppColors.grayDark,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Flexible(
-                                  child: Text(
-                                    'monthly_package'.tr(),
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                      fontFamily: AppStrings.fontFamily,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  'اعلانات فى الشهر5 ',
-                                 // '${cubit.getLawyerPackageAdsModelDetails?.data?.package?.numberOfAds??0} اعلانات فى الشهر',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontFamily: AppStrings.fontFamily,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14.sp,
-                                    color: AppColors.grayDark,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          widgetTwo: Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    MySvgWidget(
-                                        path: AppIcons.calendarIcon,
-                                        imageColor: AppColors.primary,
-                                        size: 20.w),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.only(
-                                        start: 8.0.w,
-                                        bottom: 12.h,
-                                      ),
-                                      child: Text(
-                                        'الي 4',
-                                       // '   الي : ${cubit.getLawyerPackageAdsModelDetails?.data?.package?.toDate.toString()}',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontFamily: AppStrings.fontFamily,
-                                          color: AppColors.grayDark,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Flexible(
-                                  child: Text(
-                                    'reset_advertisment'.tr(),
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                      fontFamily: AppStrings.fontFamily,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  'اعلانات 5 ',
-                                 // "${cubit.getLawyerPackageAdsModelDetails?.data?.package?.numberOfBumps??0} اعلانات",
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontFamily: AppStrings.fontFamily,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14.sp,
-                                    color: AppColors.grayDark,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: 1,
-                            // itemCount: cubit.getLawyerPackageAdsModelDetails
-                            //     ?.data?.ads?.length,
-                            itemBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
+      body: SafeArea(
+        child: BlocBuilder<MyAdvertismentCubit, MyAdvertismentState>(
+            builder: (context, state) {
+          var cubit = context.read<MyAdvertismentCubit>();
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomAppBarWithClearWidget(
+                title: "apply_for_event".tr(),
+              ),
+              SizedBox(
+                height: 40.h,
+              ),
+              (state is LoadingLawyerPackageAdsState)
+                  ? const Center(
+                      child: CustomLoadingIndicator(),
+                    )
+                  : Expanded(
+                      child: Column(
+                        children: [
+                          ContainerOfPackage(
+                            height: 125.h,
+                            widgetOne: Expanded(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Image.asset(
-                                    "assets/images/test_swiper.png",
-                                    height: 120.h,
-                                    width: double.infinity,
-                                  ),
-                                  // cubit.getLawyerPackageAdsModelDetails?.data
-                                  //             ?.ads?[index].image ==
-                                  //         null
-                                  //     ? Image.asset(
-                                  //         "assets/images/test_swiper.png",
-                                  //         height: 120.h,
-                                  //         width: double.infinity,
-                                  //       )
-                                  //     : Padding(
-                                  //         padding: EdgeInsets.only(
-                                  //             left: 10.w,
-                                  //             right: 5.w,
-                                  //             top: 10.h,
-                                  //             bottom: 10.h),
-                                  //         child: Image.network(
-                                  //           cubit.getLawyerPackageAdsModelDetails
-                                  //                   ?.data?.ads?[index].image
-                                  //                   .toString() ??
-                                  //               "",
-                                  //           height: 120.h,
-                                  //           width: double.infinity,
-                                  //         ),
-                                  //       ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.date_range,
-                                              size: 15.sp,
-                                              color: AppColors.primary,
-                                            ),
-                                            SizedBox(
-                                              width: 10.w,
-                                            ),
-                                            Text(
-                                              'تاريخ الانتهاء',
-                                             // "تاريخ الانتهاء : ${cubit.getLawyerPackageAdsModelDetails?.data?.ads?[index].toDate.toString().substring(0, 10)}",
-                                              style: TextStyle(
-                                                  color: AppColors.gray,
-                                                  fontSize: 13.sp,
-                                                  fontFamily:
-                                                      AppStrings.fontFamily),
-                                            ),
-                                          ],
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      MySvgWidget(
+                                          path: AppIcons.calendarIcon,
+                                          imageColor: AppColors.primary,
+                                          size: 20.w),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.only(
+                                          start: 8.0.w,
+                                          bottom: 12.h,
                                         ),
-                                        const Spacer(),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: AppColors.yellow,
-                                              borderRadius:
-                                                  BorderRadius.circular(5.sp)),
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 5.w,
-                                                right: 5.w,
-                                                top: 2.h,
-                                                bottom: 2.h),
-                                            child: Center(
-                                              child: Text(
-                                                'status',
-                                                // cubit
-                                                //         .getLawyerPackageAdsModelDetails
-                                                //         ?.data
-                                                //         ?.ads?[index]
-                                                //         .status ??
-                                                //     "",
-                                                style: TextStyle(
-                                                    fontSize: 12.sp,
-                                                    color: AppColors.white),
-                                              ),
-                                            ),
+                                        child: Text(
+                                          'من 12',
+                                          // 'من : ${cubit.getLawyerPackageAdsModelDetails?.data?.package?.fromDate.toString()}',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontFamily: AppStrings.fontFamily,
+                                            color: AppColors.grayDark,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 15.sp,
                                           ),
-                                        )
-                                      ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      'monthly_package'.tr(),
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontFamily: AppStrings.fontFamily,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14.sp,
+                                      ),
                                     ),
-                                  )
+                                  ),
+                                  Text(
+                                    'اعلانات فى الشهر5 ',
+                                    // '${cubit.getLawyerPackageAdsModelDetails?.data?.package?.numberOfAds??0} اعلانات فى الشهر',
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontFamily: AppStrings.fontFamily,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                      color: AppColors.grayDark,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            widgetTwo: Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      MySvgWidget(
+                                          path: AppIcons.calendarIcon,
+                                          imageColor: AppColors.primary,
+                                          size: 20.w),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.only(
+                                          start: 8.0.w,
+                                          bottom: 12.h,
+                                        ),
+                                        child: Text(
+                                          'الي 4',
+                                          // '   الي : ${cubit.getLawyerPackageAdsModelDetails?.data?.package?.toDate.toString()}',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontFamily: AppStrings.fontFamily,
+                                            color: AppColors.grayDark,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 15.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      'reset_advertisment'.tr(),
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontFamily: AppStrings.fontFamily,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    'اعلانات 5 ',
+                                    // "${cubit.getLawyerPackageAdsModelDetails?.data?.package?.numberOfBumps??0} اعلانات",
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontFamily: AppStrings.fontFamily,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                      color: AppColors.grayDark,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: ListView.builder(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: 1,
+                              // itemCount: cubit.getLawyerPackageAdsModelDetails
+                              //     ?.data?.ads?.length,
+                              itemBuilder: (context, index) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/app_icon_white.png",
+                                      height: 120.h,
+                                      width: double.infinity,
+                                    ),
+                                    // cubit.getLawyerPackageAdsModelDetails?.data
+                                    //             ?.ads?[index].image ==
+                                    //         null
+                                    //     ? Image.asset(
+                                    //         "assets/images/test_swiper.png",
+                                    //         height: 120.h,
+                                    //         width: double.infinity,
+                                    //       )
+                                    //     : Padding(
+                                    //         padding: EdgeInsets.only(
+                                    //             left: 10.w,
+                                    //             right: 5.w,
+                                    //             top: 10.h,
+                                    //             bottom: 10.h),
+                                    //         child: Image.network(
+                                    //           cubit.getLawyerPackageAdsModelDetails
+                                    //                   ?.data?.ads?[index].image
+                                    //                   .toString() ??
+                                    //               "",
+                                    //           height: 120.h,
+                                    //           width: double.infinity,
+                                    //         ),
+                                    //       ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.date_range,
+                                                size: 15.sp,
+                                                color: AppColors.primary,
+                                              ),
+                                              SizedBox(
+                                                width: 10.w,
+                                              ),
+                                              Text(
+                                                'تاريخ الانتهاء',
+                                                // "تاريخ الانتهاء : ${cubit.getLawyerPackageAdsModelDetails?.data?.ads?[index].toDate.toString().substring(0, 10)}",
+                                                style: TextStyle(
+                                                    color: AppColors.gray,
+                                                    fontSize: 13.sp,
+                                                    fontFamily:
+                                                        AppStrings.fontFamily),
+                                              ),
+                                            ],
+                                          ),
+                                          const Spacer(),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                color: AppColors.yellow,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        5.sp)),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 5.w,
+                                                  right: 5.w,
+                                                  top: 2.h,
+                                                  bottom: 2.h),
+                                              child: Center(
+                                                child: Text(
+                                                  'status',
+                                                  // cubit
+                                                  //         .getLawyerPackageAdsModelDetails
+                                                  //         ?.data
+                                                  //         ?.ads?[index]
+                                                  //         .status ??
+                                                  //     "",
+                                                  style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      color: AppColors.white),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-          ],
-        );
-      }),
+            ],
+          );
+        }),
+      ),
     );
   }
 }
