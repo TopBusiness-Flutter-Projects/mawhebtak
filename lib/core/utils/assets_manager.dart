@@ -62,6 +62,7 @@ class AppIcons {
   static const String settingIcon = '$iconsPath/setting_icon.svg';
   static const String likeIcon = '$iconsPath/like_icon.svg';
   static const String xIcon = '$iconsPath/x.svg';
+  static const String calendarIcon = '$iconsPath/calendar.svg';
   static const String imagePicked = '$iconsPath/image_pick.svg';
   static const String shareIcon = '$iconsPath/share_icon.svg';
   static const String bioIcon = '$iconsPath/bio.svg';

@@ -8,6 +8,7 @@ import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/comment_widget.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
+import 'package:mawhebtak/features/feeds/screens/widgets/what_do_you_want.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../../core/exports.dart';
@@ -42,9 +43,14 @@ class _PostProfileWidgetState extends State<PostProfileWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<FeedsCubit, FeedsState>(builder: (context, state) {
       var feedCubit = context.read<FeedsCubit>();
-      return Column(
+      return
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          (feedCubit.posts?.data?.length == 0 || feedCubit.posts?.data == [])?
+          Center(child: Text("no_data".tr()),):
+
           Padding(
               padding: EdgeInsets.only(
                   bottom: 10.h, top: 10.h, right: 10.w, left: 10.w),

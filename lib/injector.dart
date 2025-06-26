@@ -29,6 +29,10 @@ import 'package:mawhebtak/features/auth/verification/cubit/verification_cubit.da
 import 'package:mawhebtak/features/auth/verification/data/repos/verification.repo.dart';
 import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import 'package:mawhebtak/features/more_screen/data/repos/more.repo.dart';
+import 'package:mawhebtak/features/my_advertiment_screen/cubit/cubit.dart';
+import 'package:mawhebtak/features/my_advertiment_screen/data/repos/my_advertisment_repo.dart';
+import 'package:mawhebtak/features/packages/cubit/cubit.dart';
+import 'package:mawhebtak/features/packages/data/repo/packages_repo.dart';
 import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';
 import 'package:mawhebtak/features/referral_code/data/repos/referral_code_repo.dart';
 import 'package:mawhebtak/features/search/cubit/search_cubit.dart';
@@ -53,6 +57,7 @@ import 'features/location/cubit/location_cubit.dart';
 import 'features/main_screen/data/repo/main_repo_impl.dart';
 import 'features/profile/cubit/profile_cubit.dart';
 import 'features/profile/data/repo/profile_repo_impl.dart';
+
 final serviceLocator = GetIt.instance;
 Future<void> setupCubit() async {
   serviceLocator.registerFactory(
@@ -64,8 +69,12 @@ Future<void> setupCubit() async {
     ),
   );
   serviceLocator.registerFactory(
-    () => NotificationCubit(
+    () => MyAdvertismentCubit(
+      serviceLocator(),
     ),
+  );
+  serviceLocator.registerFactory(
+    () => NotificationCubit(),
   );
   serviceLocator.registerFactory(
     () => MainCubit(
@@ -76,7 +85,8 @@ Future<void> setupCubit() async {
     () => HomeCubit(
       serviceLocator(),
     ),
-  );serviceLocator.registerFactory(
+  );
+  serviceLocator.registerFactory(
     () => SearchCubit(
       serviceLocator(),
     ),
@@ -168,14 +178,21 @@ Future<void> setupCubit() async {
   );
   serviceLocator.registerFactory(() => FeedsCubit());
   serviceLocator.registerFactory(() => LocationCubit());
+  serviceLocator.registerFactory(() => PackagesCubit(
+        serviceLocator(),
+      ));
 }
 
 Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => PackagesRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => HomeRepository(serviceLocator()));
   serviceLocator.registerLazySingleton(() => SearchRepo(serviceLocator()));
-  serviceLocator.registerLazySingleton(() => NotificationsRepository(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => MyAdvertismentRepo(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => NotificationsRepository(serviceLocator()));
   serviceLocator
       .registerLazySingleton(() => ForgetPasswordRepo(serviceLocator()));
   serviceLocator
