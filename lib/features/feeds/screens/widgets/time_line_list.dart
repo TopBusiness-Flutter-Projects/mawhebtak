@@ -61,7 +61,7 @@ class _TimeLineListState extends State<TimeLineList> {
                                   context,
                                   Routes.profileRoute,
                                   arguments: DeepLinkDataModel(
-                                  id: widget.feedsCubit?.user?.data?.id.toString() ??"",
+                                  id: widget.feedsCubit?.posts?.data?[widget.index]?.user?.id.toString() ??"",
                               isDeepLink: false));
                             },
                             child: SizedBox(

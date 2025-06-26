@@ -184,7 +184,7 @@ class WorkItemWidget extends StatelessWidget {
                         itemBuilder: (context) => [
                           PopupMenuItem(
                             value: 'edit',
-                            child: Text("modify".tr(),
+                            child: Text("edit".tr(),
                                 style: getRegularStyle(fontSize: 14.sp)),
                           ),
                           PopupMenuItem(
