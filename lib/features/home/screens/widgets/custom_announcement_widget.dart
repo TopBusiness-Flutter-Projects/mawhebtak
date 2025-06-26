@@ -160,7 +160,7 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                                           <PopupMenuEntry<String>>[
                                         PopupMenuItem<String>(
                                           value: 'delete',
-                                          child: Text('delete_post'.tr()),
+                                          child: Text('delete_announcement'.tr()),
                                         ),
                                       ],
                                     )

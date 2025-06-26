@@ -33,6 +33,10 @@ import 'package:mawhebtak/features/more_screen/screens/contact_us_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/favourites_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
+import 'package:mawhebtak/features/my_advertiment_screen/screens/add_advertisment_screen.dart';
+import 'package:mawhebtak/features/my_advertiment_screen/screens/my_advertisment_screen.dart';
+import 'package:mawhebtak/features/my_advertiment_screen/screens/subscribtion_screen.dart';
+import 'package:mawhebtak/features/packages/screens/packages_screen.dart';
 import 'package:mawhebtak/features/profile/screens/edit_profile_screen.dart';
 import 'package:mawhebtak/features/more_screen/screens/terms_and_condition.dart';
 import 'package:mawhebtak/features/referral_code/screens/add_referral_code_screen.dart';
@@ -103,6 +107,10 @@ class Routes {
   static const String topTalentsRoute = '/topTalentsRoute';
   static const String requestGigsRoute = '/requestGigsRoute';
   static const String allAnnouncementsRoute = '/allAnnouncementsRoute';
+  static const String addAdvertismentRoute = '/addAdvertismentRoute';
+  static const String myAdvertismentRoute = '/myAdvertismentRoute';
+  static const String packagesRoute = '/packagesRoute';
+  static const String subscribtionRoute = '/subscribtionRoute';
 
   static const String detailsOfMainCategoryFromGigsRoute =
       '/detailsOfMainCategoryFromGigs';
@@ -169,9 +177,9 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
         );
-        case Routes.searchRoute:
+      case Routes.searchRoute:
         return PageTransition(
-          child: SearchScreen(),
+          child: const SearchScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
@@ -189,7 +197,7 @@ class AppRoutes {
         );
       case Routes.newGigsRoute:
         return PageTransition(
-          child: NewGigsScreen(),
+          child: const NewGigsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
@@ -211,7 +219,20 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
         );
-
+      case Routes.myAdvertismentRoute:
+        return PageTransition(
+          child: const MyAdvertismentScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 100),
+        );
+      case Routes.addAdvertismentRoute:
+        return PageTransition(
+          child: const AddAdvertismentScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 100),
+        );
       case Routes.announcementScreen:
         return PageTransition(
           child: const AnnouncementScreen(),
@@ -633,6 +654,20 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
+        );
+      case Routes.subscribtionRoute:
+        return PageTransition(
+          child: const SubscribtionScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 100),
+        );
+      case Routes.packagesRoute:
+        return PageTransition(
+          child: const PackagesScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 100),
         );
       default:
         return undefinedRoute();

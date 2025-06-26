@@ -2,11 +2,18 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mawhebtak/initialization.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'app.dart';
 import 'core/utils/restart_app_class.dart';
 
+void requestNotificationPermission() async {
+  if (await Permission.notification.isDenied) {
+    await Permission.notification.request();
+  }
+}
 void main() async {
   await initialization();
+  requestNotificationPermission();
   runApp(EasyLocalization(
       supportedLocales: const [Locale('ar', ''), Locale('en', '')],
       path: 'assets/lang',

@@ -35,16 +35,15 @@ class _LoginScreenState extends State<LoginScreen> {
         if (state is LoginStateLoading) {
           AppWidgets.create2ProgressDialog(context);
         } else if (state is LoginStateLoaded) {
-          if (state.isRegister == 1){
- log("Register");
-  Navigator.pop(context);
-  Navigator.pushReplacementNamed(context, Routes.addReferralCodeRoute);
-
-          }else{
-  Navigator.pop(context);
-          Navigator.pushReplacementNamed(context, Routes.mainRoute);
-          }    
-    
+          if (state.isRegister == 1) {
+            log("Register");
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(
+                context, Routes.addReferralCodeRoute);
+          } else {
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, Routes.mainRoute);
+          }
         } else if (state is LoginStateError) {
           Navigator.pop(context);
         }

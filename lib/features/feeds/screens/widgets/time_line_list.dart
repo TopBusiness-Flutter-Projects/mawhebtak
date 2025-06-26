@@ -59,10 +59,8 @@ class _TimeLineListState extends State<TimeLineList> {
                             onTap: () {
                               Navigator.pushNamed(context, Routes.profileRoute,
                                   arguments: DeepLinkDataModel(
-                                      id: widget.feedsCubit?.user?.data?.id
-                                              .toString() ??
-                                          "",
-                                      isDeepLink: false));
+                                  id: widget.feedsCubit?.posts?.data?[widget.index]?.user?.id.toString() ??"",
+                              isDeepLink: false));
                             },
                             child: SizedBox(
                               height: 40.h,

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/custom_container_with_shadow.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
+import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
@@ -63,23 +64,31 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      (cubit.announcementDetailsModel?.data
-                                                  ?.user?.image ==
-                                              null)
-                                          ? SizedBox(
-                                              height: 40.h,
-                                              width: 40.w,
-                                              child: Image.asset(
-                                                  ImageAssets.profileImage),
-                                            )
-                                          : CircleAvatar(
-                                              backgroundImage: NetworkImage(cubit
-                                                      .announcementDetailsModel!
-                                                      .data!
-                                                      .user
-                                                      ?.image ??
-                                                  ""),
-                                            ),
+                                      GestureDetector(
+                                         onTap:(){
+                                           Navigator.pushNamed(context, Routes.profileRoute,arguments:DeepLinkDataModel(
+                                               id: cubit.announcementDetailsModel?.data?.user?.id.toString() ??"",
+                                               isDeepLink: false) );
+
+                                         },
+                                        child: (cubit.announcementDetailsModel?.data
+                                                    ?.user?.image ==
+                                                null)
+                                            ? SizedBox(
+                                                height: 40.h,
+                                                width: 40.w,
+                                                child: Image.asset(
+                                                    ImageAssets.profileImage),
+                                              )
+                                            : CircleAvatar(
+                                                backgroundImage: NetworkImage(cubit
+                                                        .announcementDetailsModel!
+                                                        .data!
+                                                        .user
+                                                        ?.image ??
+                                                    ""),
+                                              ),
+                                      ),
                                       SizedBox(width: 8.w),
                                       Expanded(
                                         child: Row(

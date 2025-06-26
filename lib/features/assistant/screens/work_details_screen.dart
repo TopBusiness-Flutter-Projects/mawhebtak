@@ -361,7 +361,7 @@ class TimelineAssistantItem extends StatelessWidget {
                                 itemBuilder: (context) => [
                                   PopupMenuItem(
                                     value: 'edit',
-                                    child: Text('modify'.tr()),
+                                    child: Text('edit'.tr()),
                                   ),
                                   PopupMenuItem(
                                     value: 'delete',

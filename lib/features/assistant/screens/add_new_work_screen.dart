@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
@@ -50,6 +49,7 @@ class _AddNewWorkScreenState extends State<AddNewWorkScreen> {
                         style: getMediumStyle(
                             fontSize: 14.sp, color: AppColors.blackLite)),
                     CustomTextField(
+
                       controller: cubit.workNameController,
                       hintText: "go_to_cinema".tr(),
                     ),
