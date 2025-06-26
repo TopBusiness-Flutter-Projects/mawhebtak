@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:mawhebtak/config/routes/app_routes.dart';
+import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
@@ -28,11 +30,28 @@ class FollowersWidget extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: 40.h,
-                          width: 40.w,
-                          child: Image.asset(ImageAssets.profileImage),
-                        ),
+                        topTalentCubit.followerAndFollowingModel?.data?[index!].image != null?
+                        GestureDetector(
+                           onTap: () {
+                             Navigator.pushNamed(context, Routes.profileRoute,arguments:DeepLinkDataModel(
+                                 id: topTalentCubit.followerAndFollowingModel?.data?[index!].id.toString()??"",
+                                 isDeepLink: false) );                           },
+                          child: CircleAvatar(
+                            backgroundImage:NetworkImage( topTalentCubit.followerAndFollowingModel?.data?[index!].image ??""),),
+                        )
+                       : GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.profileRoute,arguments:DeepLinkDataModel(
+                                id: topTalentCubit.followerAndFollowingModel?.data?[index!].id.toString()??"",
+                                isDeepLink: false) );
+
+                          },
+                         child: SizedBox(
+                            height: 40.h,
+                            width: 40.w,
+                            child: Image.asset(ImageAssets.profileImage),
+                          ),
+                       ),
                         SizedBox(width: 8.w),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

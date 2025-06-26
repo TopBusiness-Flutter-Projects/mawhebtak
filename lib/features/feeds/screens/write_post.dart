@@ -311,6 +311,7 @@ class _WritePostState extends State<WritePost> {
                                 showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
+                                    insetPadding: EdgeInsets.zero,
                                     title: Text("alert".tr()),
                                     content: Text("must_login".tr()),
                                     actions: [
@@ -344,6 +345,7 @@ class _WritePostState extends State<WritePost> {
                                   showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
+                                      insetPadding: EdgeInsets.zero,
                                       title: Text("alert".tr()),
                                       content:
                                           Text("please_add_text_or_media".tr()),

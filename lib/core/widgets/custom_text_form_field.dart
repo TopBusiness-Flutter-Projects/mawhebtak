@@ -73,6 +73,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.w),
         child: TextFormField(
+
             enabled: widget.enabled,
             controller: widget.controller,
             expands: false,
