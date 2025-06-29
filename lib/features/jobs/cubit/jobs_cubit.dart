@@ -141,6 +141,7 @@ class JobsCubit extends Cubit<JobsState> {
     try {
       final res = await jobsRepo.addJopUser(
         title: jopUserTitleController.text,
+        currencyId: context.read<CalenderCubit>().selectedCurrency?.id.toString() ?? '',
         deadLine: selectedDate ?? DateTime.now(),
         priceEndAt: priceStartAt.text,
         priceStartAt: priceEndAt.text,

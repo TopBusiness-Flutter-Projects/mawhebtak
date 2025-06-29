@@ -94,7 +94,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     _buildPersonalInfoHeader(),
                     10.h.verticalSpace,
                     _buildEmailField(cubit),
-                    _buildPhoneField(cubit),
+                    _buildPhoneField(cubit,context),
                     _buildAgeField(cubit),
                     _buildGenderDropdown(cubit),
                     _buildUserTypeDropdown(newAccountCubit),
@@ -211,27 +211,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Widget _buildPhoneField(ProfileCubit cubit) {
+  Widget _buildPhoneField(ProfileCubit cubit, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "phone".tr(),
-          style: TextStyle(color: AppColors.darkGray, fontSize: 16.sp),
-        ),
-        CustomTextField(
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'please_enter_phone'.tr();
-            }
-            return null;
+        SwitchListTile(
+          title: Text("show_phone".tr()),
+          value:cubit.isShowPhone,
+          activeColor: AppColors.primary,
+          onChanged: (value) {
+            cubit.toggleShowPhone(value);
           },
-          controller: cubit.phoneController,
-          hintTextSize: 16.sp,
         ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+                Text(
+                "phone".tr(),
+                style: TextStyle(color: AppColors.darkGray, fontSize: 16.sp),
+              ),
+              CustomTextField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'please_enter_phone'.tr();
+                  }
+                  return null;
+                },
+                controller: cubit.phoneController,
+                hintTextSize: 16.sp,
+              ),
+            ],
+          ),
       ],
     );
   }
+
 
   Widget _buildAgeField(ProfileCubit cubit) {
     return Column(

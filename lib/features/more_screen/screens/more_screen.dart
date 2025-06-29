@@ -138,15 +138,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             onTap: () {
                               Navigator.pushNamed(context, Routes.aboutUsRoute);
                             }),
-                        //TODO
-                        moreContainer(
-                            text: "advertising_and_publicity".tr(),
-                            imageUrl: AppIcons.contactUs,
-                            onTap: () {
-                              // Navigator.pushNamed(
-                              //     context, Routes.contactUsRoute,
-                              //     arguments: "advertisement");
-                            }),
+
                         moreContainer(
                             text: 'packages'.tr(),
                             imageUrl: AppIcons.contactUs,

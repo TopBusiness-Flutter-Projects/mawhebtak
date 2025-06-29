@@ -67,6 +67,7 @@ class JobsRepo {
     required String long,
     required String priceEndAt,
     required String priceStartAt,
+    required String currencyId,
     required DateTime deadLine,
   }) async {
     try {
@@ -83,6 +84,7 @@ class JobsRepo {
         "long": long,
         "price_end_at": priceEndAt,
         "price_start_at": priceStartAt,
+        "currency_id":currencyId,
         "deadline": deadLine,
         for (int i = 0; i < mediaFiles.length; i++)
           "media[$i]": MultipartFile.fromFileSync(mediaFiles[i].path,

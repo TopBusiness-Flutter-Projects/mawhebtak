@@ -242,6 +242,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     emit(AddAnnouncementStateLoading());
     try {
       final res = await api.addAnnouncement(
+        currencyId: context.read<CalenderCubit>().selectedCurrency?.id.toString() ?? '',
         expireIn: selectedDate!,
         price: priceController.text,
         subCategoryId: selectedSubCategory?.id.toString() ?? "",

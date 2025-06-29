@@ -48,7 +48,6 @@ class CastingCubit extends Cubit<CastingState> {
       res.fold((l) {
         emit(CategoryFromGigsStateError(l.toString()));
       }, (r) {
-        log('0000000000 ${categoryModel?.data?.length}');
         if (isGetMore) {
           categoryModel = GetCountriesMainModel(
             links: r.links,
@@ -237,6 +236,7 @@ class CastingCubit extends Cubit<CastingState> {
 
     try {
       final res = await castingRepo.addNewGig(
+        currencyId: context.read<CalenderCubit>().selectedCurrency?.id.toString() ?? '',
         categoryId: selectedCategory?.id.toString() ?? "",
         title: gigTitleController.text,
         price: priceRangeController.text,
@@ -253,6 +253,7 @@ class CastingCubit extends Cubit<CastingState> {
                 ?.longitude
                 .toString() ??
             "0.0",
+
         mediaFiles: [
           ...context.read<CalenderCubit>().myImagesF ?? [],
           ...context.read<CalenderCubit>().validVideos

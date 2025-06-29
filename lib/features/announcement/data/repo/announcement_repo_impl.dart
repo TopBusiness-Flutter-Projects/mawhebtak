@@ -1,20 +1,12 @@
 import 'dart:io';
-
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:mawhebtak/core/api/end_points.dart';
-import 'package:mawhebtak/core/error/exceptions.dart';
-import 'package:mawhebtak/core/error/failures.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
-import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcement_details_model.dart';
 import 'package:mawhebtak/features/announcement/data/models/announcements_model.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
-import 'package:mawhebtak/features/casting/data/model/get_gigs_from_sub_category_model.dart';
-import '../../../../core/api/base_api_consumer.dart';
 
 class AnnouncementRepo {
   final BaseApiConsumer dio;
@@ -42,8 +34,7 @@ class AnnouncementRepo {
     required String page,
     String? orderBy,
   }) async {
-    String date =
-        DateFormat('yyyy-MM-dd HH:mm:ss', 'en').format(DateTime.now());
+    String date = DateFormat('yyyy-MM-dd HH:mm:ss', 'en').format(DateTime.now());
     final userModel = await Preferences.instance.getUserModel();
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
@@ -155,6 +146,7 @@ class AnnouncementRepo {
     required String price,
     required String subCategoryId,
     required DateTime expireIn,
+    required String currencyId,
   }) async {
     try {
       LoginModel? user;
@@ -169,6 +161,7 @@ class AnnouncementRepo {
         "lat": lat,
         "long": long,
         "expire_in": expireIn,
+        "currency_id":currencyId,
         "sub_category_id": subCategoryId,
         "price": price,
         for (int i = 0; i < mediaFiles.length; i++)

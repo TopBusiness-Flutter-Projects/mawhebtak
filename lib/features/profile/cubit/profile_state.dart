@@ -23,6 +23,7 @@ final class GetProfileStateError extends ProfileState {
 final class GetProfileStateLoaded extends ProfileState {}
 
 final class GetProfileStateLoading extends ProfileState {}
+final class ProfileTogglePhoneState extends ProfileState {}
 
 final class AddReviewStateError extends ProfileState {
   final String errorMessage;

@@ -49,6 +49,7 @@
   "location": "Location",
   "apply_for_this_event": "Apply for this event",
   "type": "Type",
+  "show_phone": "Show phone",
   "event_date": "Event Date",
   "cancel_this_event": "Cancel this event",
   "statistics": "Statistics",

@@ -51,6 +51,8 @@ class MyProfileModelData {
   List<Review>? reviews;
   bool? isIFollow;
   bool? isIReviewed;
+  int? isPhoneHidden;
+
 
   MyProfileModelData({
     this.id,
@@ -75,6 +77,8 @@ class MyProfileModelData {
     this.reviews,
     this.isIFollow,
     this.isIReviewed,
+    this.isPhoneHidden,
+
   });
 
   factory MyProfileModelData.fromJson(Map<String, dynamic> json) =>
@@ -117,6 +121,7 @@ class MyProfileModelData {
         syndicate: json["syndicate"],
         isIFollow: json["is_i_follow"],
         isIReviewed: json["is_i_reviewed"],
+        isPhoneHidden: json["is_phone_hidden"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -138,7 +143,8 @@ class MyProfileModelData {
         "syndicate": syndicate,
         "is_i_follow": isIFollow,
         "is_i_reviewed": isIReviewed,
-        "experiences": experiences == null
+    "is_phone_hidden": isPhoneHidden,
+    "experiences": experiences == null
             ? []
             : List<dynamic>.from(experiences!.map((x) => x.toJson())),
         "timeline": timeline == null

@@ -31,7 +31,6 @@ class MoreCubit extends Cubit<MoreState> {
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
   }
-
   saveData() {
     phoneNumberController.text = user?.data?.phone ?? "";
   }
@@ -190,7 +189,6 @@ class MoreCubit extends Cubit<MoreState> {
     }
   }
 
-//!
   AnnouncementFavouriteModel? announcementFavouriteModel;
   getAnnounceFavouritesData() async {
     emit(AnnounceFavouritesDataStateLoading());
@@ -224,8 +222,7 @@ class MoreCubit extends Cubit<MoreState> {
     }
   }
 
-  contactUs(
-      {required bool isComplaining, required BuildContext context}) async {
+  contactUs({required bool isComplaining, required BuildContext context}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(ContactUsStateLoading());
     try {

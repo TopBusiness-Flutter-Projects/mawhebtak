@@ -51,12 +51,15 @@ class ProfileRepo {
     String? age,
     String? gender,
     String? syndicate,
+    int? isPhoneHidden,
   }) async {
     try {
       final response = await dio.post(
         EndPoints.updateProfile,
         formDataIsEnabled: true,
         body: {
+          if(isPhoneHidden == 0)
+          'is_phone_hidden':isPhoneHidden,
           'name': name,
           if (phone != null) 'phone': phone,
           if (userSubTypeId != null) 'user_sub_type_id': userSubTypeId,
@@ -90,12 +93,14 @@ class ProfileRepo {
       String? title,
       DateTime? from,
       DateTime? to,
+
       bool isUntilNow = false}) async {
     try {
       final userModel = await Preferences.instance.getUserModel();
       var response = await dio.post(EndPoints.storeDataUrl, body: {
         'model': 'Experience',
         'user_id': userModel.data?.id.toString(),
+
         'title': title,
         'description': description,
         if (from != null) 'from': DateFormat('yyyy-MM-dd').format(from),
