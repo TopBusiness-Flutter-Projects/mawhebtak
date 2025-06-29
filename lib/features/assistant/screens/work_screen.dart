@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
@@ -7,7 +6,6 @@ import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import 'package:mawhebtak/features/assistant/screens/add_new_work_screen.dart';
 import '../../../core/exports.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
 
