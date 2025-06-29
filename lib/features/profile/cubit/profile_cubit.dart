@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -10,9 +9,7 @@ import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../core/exports.dart';
-import '../../main_screen/cubit/cubit.dart';
 import '../data/repo/profile_repo_impl.dart';
-
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
@@ -119,6 +116,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(GetProfileStateError(l.toString()));
       }, (r) async {
         if (r.status == 200) {
+          isShowPhone = profileModel?.data?.isPhoneHidden == 0;
           profileModel = r;
           emit(GetProfileStateLoaded());
           Preferences.instance.getUserModel().then((v) {
@@ -145,6 +143,13 @@ class ProfileCubit extends Cubit<ProfileState> {
 
       emit(GetProfileStateError(e.toString()));
     }
+  }
+
+  bool isShowPhone =  false ;
+  void toggleShowPhone(bool value) {
+    isShowPhone = value;
+    profileModel?.data?.isPhoneHidden = value  ? 0: 1;
+    emit(ProfileTogglePhoneState());
   }
 
   addReview({
@@ -182,6 +187,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(UpdateProfileStateLoading());
     try {
       final res = await api.updateProfileData(
+        isPhoneHidden: isShowPhone ? 0 : 1,
         name: nameController.text.isEmpty ? null : nameController.text,
         phone: phoneController.text.isEmpty ? null : phoneController.text,
         userSubTypeId:

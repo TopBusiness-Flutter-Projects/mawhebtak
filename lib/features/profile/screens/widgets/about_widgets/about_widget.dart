@@ -51,11 +51,14 @@ class _AboutWidgetState extends State<AboutWidget> {
           CustomRowEvent(
               text: 'email'.tr(),
               text2: widget.profileModel?.data?.email ?? ""),
-          CustomRowEvent(
-            text: 'phone'.tr(),
-            text2: widget.profileModel?.data?.phone ?? "",
-            isSecond: true,
-          ),
+          if (widget.profileModel?.data?.isPhoneHidden == 0 &&
+              (widget.profileModel?.data?.id.toString() ==
+                  context.read<ProfileCubit>().user?.data?.id.toString()))
+            CustomRowEvent(
+              text: 'phone'.tr(),
+              text2: widget.profileModel?.data?.phone ?? "",
+              isSecond: true,
+            ),
           CustomRowEvent(
             text: 'age'.tr(),
             text2: widget.profileModel?.data?.age?.toString() ?? "",

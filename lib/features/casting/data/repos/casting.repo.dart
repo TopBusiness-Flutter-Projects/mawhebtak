@@ -27,6 +27,7 @@ class CastingRepo {
     required String lat,
     required String long,
     required String price,
+    required String currencyId,
   }) async {
     try {
       LoginModel? user;
@@ -42,6 +43,7 @@ class CastingRepo {
         "lat": lat,
         "long": long,
         "price": price,
+        "currency_id":currencyId,
         "category_id": categoryId,
         for (int i = 0; i < mediaFiles.length; i++)
           "media[$i]": MultipartFile.fromFileSync(mediaFiles[i].path,

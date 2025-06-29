@@ -273,6 +273,7 @@
   "enter_end_price_must_greater_than_start_price": "يجب ان يكون السعر النهائي اكبر من السعر الابتدائي",
   "delete_post": "حذف المنشور",
   "delete_announcement": "حذف الاعلان",
+  "show_phone": "عرض رقم الهاتف",
   "delete_comment": "حذف التعليق",
   "write_comment": "اكتب تعليقًا.",
   "reply": "رد",

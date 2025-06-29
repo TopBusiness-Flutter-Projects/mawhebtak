@@ -42,14 +42,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileCubit, ProfileState>(
-      builder: (context, state) {
-        var profileCubit = context.read<ProfileCubit>();
-        return (state is GetProfileStateLoading ||
-                profileCubit.profileModel == null)
-            ? const Center(child: CustomLoadingIndicator())
-            : _buildProfileContent(context);
-      },
+    return Scaffold(
+      body: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          var profileCubit = context.read<ProfileCubit>();
+          return (state is GetProfileStateLoading ||
+                  profileCubit.profileModel == null)
+              ? const Center(child: CustomLoadingIndicator())
+              : _buildProfileContent(context);
+        },
+      ),
     );
   }
 
@@ -63,37 +65,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
       ),
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ProfileAppBar(
-                  isEdit: false,
-                  id: profile?.id.toString() ?? '',
-                  avatar: profile?.avatar ?? "",
-                  byCaver: profile?.bgCover ?? "",
-                ),
-                SizedBox(height: 35.h),
-                _buildProfileHeader(profile),
-                SizedBox(height: 20.h),
-                _buildFollowButtons(context, user, profile),
-                SizedBox(height: 5.h),
-                Container(height: 8.h, color: AppColors.grayLite),
-                Container(height: 20.h, color: AppColors.white),
-                ProfileTabs(
-                  isMyProfile: user?.id.toString() == widget.model.id,
-                ),
-                SizedBox(height: 5.h),
-                _buildTabContent(cubit, context),
-              ],
-            ),
-            if (cubit.selectedIndex == 2 &&
-                user?.id.toString() == widget.model.id)
-              _buildAddGigButton(context),
-          ],
-        ),
+      child: Stack(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProfileAppBar(
+                isEdit: false,
+                id: profile?.id.toString() ?? '',
+                avatar: profile?.avatar ?? "",
+                byCaver: profile?.bgCover ?? "",
+              ),
+              SizedBox(height: 35.h),
+              _buildProfileHeader(profile),
+              SizedBox(height: 20.h),
+              _buildFollowButtons(context, user, profile),
+              SizedBox(height: 5.h),
+              Container(height: 8.h, color: AppColors.grayLite),
+              Container(height: 20.h, color: AppColors.white),
+              ProfileTabs(
+                isMyProfile: user?.id.toString() == widget.model.id,
+              ),
+              SizedBox(height: 5.h),
+              _buildTabContent(cubit, context),
+            ],
+          ),
+          if (cubit.selectedIndex == 2 &&
+              user?.id.toString() == widget.model.id)
+            _buildAddGigButton(context),
+        ],
       ),
     );
   }
@@ -274,9 +274,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         itemCount: timeline.isEmpty ? 2 : timeline.length + 1,
         itemBuilder: (context, index) {
           if (index == 0) {
-            print(
-                "profileModel?.data?.id  ${cubit.profileModel?.data?.id.toString()}");
-            print(widget.model.id);
             return (cubit.user?.data?.id.toString() == widget.model.id)
                 ? const WhatDoYouWant()
                 : Container();
