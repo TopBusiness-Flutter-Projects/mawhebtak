@@ -90,8 +90,8 @@ class CalenderRepo {
         for (int i = 0; i < selectedTalends.length; i++)
           "prices[$i]": selectedTalends[i].prices.toString(),
         for (int i = 0; i < selectedTalends.length; i++)
-          "country_currencies[$i]":
-              selectedTalends[i].countryCurrencies.currency?.toString() ?? '',
+          "currency_ids[$i]":
+              selectedTalends[i].countryCurrencies.id?.toString() ?? '',
         for (int i = 0; i < files.length; i++)
           "media[$i]": MultipartFile.fromFileSync(files[i].path,
               filename: files[i].path.split('/').last)
