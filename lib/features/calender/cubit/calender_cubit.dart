@@ -411,6 +411,8 @@ class CalenderCubit extends Cubit<CalenderState> {
         isPublic: isPublic == true ? '1' : '0',
         eventPrice: isFree ? '0' : ticketPriceController.text,
         eventLimit: eventLimitController.text,
+
+        currencyId:selectedCurrency?.id?.toString()??'1'
       );
       result.fold((l) {
         errorGetBar(l.toString());
