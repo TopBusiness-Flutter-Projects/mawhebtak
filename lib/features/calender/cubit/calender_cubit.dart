@@ -388,32 +388,30 @@ class CalenderCubit extends Cubit<CalenderState> {
     try {
       emit(GetAddNewEventState());
       final result = await api.storeEvent(
-        categoryId: selectedCategoty?.id.toString() ?? '',
-        selectedTalends: selectedTalends,
-        files: [...(myImagesF ?? []), ...validVideos],
-        description: descriptionController.text,
-        title: titleOfTheEventController.text,
-        from: eventDateController.text,
-        to: eventToDateController.text,
-        location: locationAddressController.text,
-        lat: context
-                .read<LocationCubit>()
-                .selectedLocation
-                ?.latitude
-                .toString() ??
-            '0',
-        long: context
-                .read<LocationCubit>()
-                .selectedLocation
-                ?.longitude
-                .toString() ??
-            '0',
-        isPublic: isPublic == true ? '1' : '0',
-        eventPrice: isFree ? '0' : ticketPriceController.text,
-        eventLimit: eventLimitController.text,
-
-        currencyId:selectedCurrency?.id?.toString()??'1'
-      );
+          categoryId: selectedCategoty?.id.toString() ?? '',
+          selectedTalends: selectedTalends,
+          files: [...(myImagesF ?? []), ...validVideos],
+          description: descriptionController.text,
+          title: titleOfTheEventController.text,
+          from: eventDateController.text,
+          to: eventToDateController.text,
+          location: locationAddressController.text,
+          lat: context
+                  .read<LocationCubit>()
+                  .selectedLocation
+                  ?.latitude
+                  .toString() ??
+              '0',
+          long: context
+                  .read<LocationCubit>()
+                  .selectedLocation
+                  ?.longitude
+                  .toString() ??
+              '0',
+          isPublic: isPublic == true ? '1' : '0',
+          eventPrice: isFree ? '0' : ticketPriceController.text,
+          eventLimit: eventLimitController.text,
+          currencyId: selectedCurrency?.id?.toString() ?? '1');
       result.fold((l) {
         errorGetBar(l.toString());
 
