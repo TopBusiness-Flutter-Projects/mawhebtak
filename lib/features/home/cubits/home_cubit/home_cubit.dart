@@ -61,6 +61,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+
+
   updateTopTalentHomeFollow(TopTalent? item) {
     if (homeModel?.data?.topTalents != null) {
       for (int i = 0; i < (homeModel?.data?.topTalents?.length ?? 0); i++) {

@@ -13,6 +13,7 @@ class AppColors {
   static Color grayMedium = HexColor('#ADADAD');
   static Color grayAfaf = HexColor('#AFAFAF');
   static Color grey = HexColor('#8EA3AC');
+  static Color textGreyColor = const Color(0xff8EA3AC);
 
   static Color red = HexColor('#FF0000');
   static Color redLight2 = Colors.red.shade700;

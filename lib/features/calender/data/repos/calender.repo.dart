@@ -67,7 +67,6 @@ class CalenderRepo {
     required String categoryId,
     required String eventLimit,
     required String eventPrice,
-    String? currencyId,
   }) async {
     try {
       var response = await dio
@@ -85,7 +84,6 @@ class CalenderRepo {
         "category_id": categoryId,
         "event_limit": eventLimit,
         "event_price": eventPrice,
-        "currency_id": currencyId,
         for (int i = 0; i < selectedTalends.length; i++)
           "sub_category_ids[$i]":
               selectedTalends[i].subCategoryIds.id?.toString() ?? '',
