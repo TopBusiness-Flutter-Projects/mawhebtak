@@ -67,7 +67,7 @@ class CalenderRepo {
     required String categoryId,
     required String eventLimit,
     required String eventPrice,
-     String? currencyId,
+    String? currencyId,
   }) async {
     try {
       var response = await dio
