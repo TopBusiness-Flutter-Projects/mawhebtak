@@ -30,7 +30,6 @@ class _MoreScreenState extends State<MoreScreen> {
           Padding(
             padding: EdgeInsets.only(top: 40.h),
             child: CustomAppBarRow(
-
               colorTextFromSearchTextField: AppColors.darkGray.withOpacity(0.3),
               backgroundColorTextFieldSearch: AppColors.grayLite,
               isMore: true,

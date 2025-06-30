@@ -23,8 +23,8 @@ class VerificationCubit extends Cubit<VerificationState> {
 
   validateOTP(bool isRegister, BuildContext context) {
     if (pinController.text != correctOTP) {
+      print("the correct otp ;;;;;;;;;;;;;$correctOTP");
       emit(state.copyWith(errorMessage: "Invalid Code, Enter Correct One"));
-
       errorGetBar('Invalid Code, Enter Correct One');
     } else {
       if (isRegister) {
