@@ -364,12 +364,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Column(
                                 children: [
+                                  review.user?.image == null ?
                                   SizedBox(
                                     height: 40.h,
                                     width: 40.w,
                                     child:
                                         Image.asset(ImageAssets.profileImage),
-                                  ),
+                                  ):
+                                      CircleAvatar(backgroundImage:NetworkImage( review.user?.image ?? ""),),
                                 ],
                               ),
                               SizedBox(width: 8.w),
