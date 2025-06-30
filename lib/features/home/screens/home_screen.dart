@@ -168,6 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         homeData?.topTalents?[index],
                                     index: index,
                                   );
+
+
                                 },
                               ),
                             ),

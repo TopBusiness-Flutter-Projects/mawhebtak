@@ -156,8 +156,11 @@ class TopTalent {
   String? name;
   String? image;
   dynamic headline;
-  dynamic followersCount;
+  int? followersCount;
+  String? referralCode;
+  int? isPhoneHidden;
   bool? isIFollow;
+  int? isDeleteOrdered;
 
   TopTalent({
     this.id,
@@ -165,26 +168,35 @@ class TopTalent {
     this.image,
     this.headline,
     this.followersCount,
+    this.referralCode,
+    this.isPhoneHidden,
     this.isIFollow,
+    this.isDeleteOrdered,
   });
 
   factory TopTalent.fromJson(Map<String, dynamic> json) => TopTalent(
-        id: json["id"],
-        name: json["name"],
-        image: json["image"],
-        headline: json["headline"],
-        followersCount: json["followers_count"],
-        isIFollow: json["is_i_follow"],
-      );
+    id: json["id"],
+    name: json["name"],
+    image: json["image"],
+    headline: json["headline"],
+    followersCount: json["followers_count"],
+    referralCode: json["referral_code"],
+    isPhoneHidden: json["is_phone_hidden"],
+    isIFollow: json["is_i_follow"],
+    isDeleteOrdered: json["is_delete_ordered"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "image": image,
-        "headline": headline,
-        "followers_count": followersCount,
-        "is_i_follow": isIFollow,
-      };
+    "id": id,
+    "name": name,
+    "image": image,
+    "headline": headline,
+    "followers_count": followersCount,
+    "referral_code": referralCode,
+    "is_phone_hidden": isPhoneHidden,
+    "is_i_follow": isIFollow,
+    "is_delete_ordered": isDeleteOrdered,
+  };
 }
 
 class Slider {

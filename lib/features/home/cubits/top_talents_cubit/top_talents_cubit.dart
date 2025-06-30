@@ -158,12 +158,9 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       }, (r) {
         item?.isIFollow = !(item.isIFollow ?? false);
         followerAndFollowingModel?.data?[index!].isIFollow = !(followerAndFollowingModel?.data?[index].isIFollow ?? false);
-
         successGetBar(r.msg ?? "");
         updateTopTalentCastingFollow(item);
-
         context.read<HomeCubit>().updateTopTalentHomeFollow(item);
-
         emit(FollowAndUnFollowStateLoaded());
       });
     } catch (e) {
