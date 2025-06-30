@@ -147,6 +147,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
     }
   }
 
+
   followAndUnFollow(BuildContext context,
       {required String followedId, TopTalent? item, int? index}) async {
     emit(FollowAndUnFollowStateLoading());
