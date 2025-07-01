@@ -1,5 +1,4 @@
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 import 'package:mawhebtak/features/packages/cubit/state.dart';
@@ -17,7 +16,7 @@ class PackagesScreen extends StatefulWidget {
 class _PackagesScreenState extends State<PackagesScreen> {
   @override
   void initState() {
-    // context.read<PackagesCubit>().getAdOfferPackages();
+    context.read<PackagesCubit>().getPackagesData();
 
     super.initState();
   }
@@ -45,12 +44,12 @@ class _PackagesScreenState extends State<PackagesScreen> {
                           ? const Center(child: CustomLoadingIndicator())
                           : ListView.builder(
                          shrinkWrap: true,
-                         itemCount: 3,
-                        // itemCount: cubit.mainAdOfferPackagesModel?.data?.length,
+                         itemCount: cubit.packagesModel?.data?.length,
                         itemBuilder: (context, index) {
-                      //    var item = cubit.mainAdOfferPackagesModel?.data?[index];
+                         var item = cubit.packagesModel?.data?[index];
                           return packageItemWidget(
-                        //    item: item,
+
+                           item: item,
                             onTap: () async {
                               bool? confirm = await showDialog<bool>(
                                 context: context,

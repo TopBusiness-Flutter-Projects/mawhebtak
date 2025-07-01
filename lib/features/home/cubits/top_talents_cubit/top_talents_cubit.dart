@@ -147,6 +147,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
     }
   }
 
+
   followAndUnFollow(BuildContext context,
       {required String followedId, TopTalent? item, int? index}) async {
     emit(FollowAndUnFollowStateLoading());
@@ -158,12 +159,9 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       }, (r) {
         item?.isIFollow = !(item.isIFollow ?? false);
         followerAndFollowingModel?.data?[index!].isIFollow = !(followerAndFollowingModel?.data?[index].isIFollow ?? false);
-
         successGetBar(r.msg ?? "");
         updateTopTalentCastingFollow(item);
-
         context.read<HomeCubit>().updateTopTalentHomeFollow(item);
-
         emit(FollowAndUnFollowStateLoaded());
       });
     } catch (e) {

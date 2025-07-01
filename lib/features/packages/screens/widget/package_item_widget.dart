@@ -1,5 +1,6 @@
+import 'package:mawhebtak/features/packages/data/model/package_model.dart';
+
 import '../../../../../core/exports.dart';
-import '../../data/model/main_packages_model.dart';
 import 'custom_container_package.dart';
 
 class packageItemWidget extends StatelessWidget {
@@ -8,14 +9,13 @@ class packageItemWidget extends StatelessWidget {
     this.item,
     this.onTap,
   });
-  GetAdOfferPackagesModelData? item;
+  PackagesModelData? item;
   void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap:onTap,
       child: ContainerOfPackage(
-        hideDividor: false,
         height: 72.h,
         widgetOne: Flexible(
             fit: FlexFit.tight,
@@ -40,7 +40,7 @@ class packageItemWidget extends StatelessWidget {
                     fontFamily: AppStrings.fontFamily,
                     fontWeight: FontWeight.w600,
                     fontSize: 14.sp,
-                    color: AppColors.grayLite,
+                    color: AppColors.textGreyColor,
                   ),
                 ),
               ],
@@ -48,7 +48,7 @@ class packageItemWidget extends StatelessWidget {
         widgetTwo: Row(
           children: [
             Text(
-              '${item?.price?.toString()} ',
+              '${item?.price?.toString()}',
               maxLines: 1,
               style: TextStyle(
                   fontFamily: AppStrings.fontFamily,

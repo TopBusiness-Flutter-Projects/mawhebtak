@@ -15,11 +15,11 @@
   "onboarding2_description": "مواهبتك منصة كبيرة تربط كل الفنانين في كل المجالات لخلق مجتمع كبير بين الفنانين في مصر",
   "onboarding3_title": "الاتصال للحصول على وظائف",
   "onboarding3_description": "مواهبتك منصة كبيرة تربط كل الفنانين في كل المجالات لخلق مجتمع كبير بين الفنانين في مصر",
-    "enter_code_to_get_points": "هل لديك كود ترويجى ؟\nيمكنك الان ادخاله لكسب نقاطك الترحيبية",
+  "enter_code_to_get_points": "هل لديك كود ترويجى ؟\nيمكنك الان ادخاله لكسب نقاطك الترحيبية",
   "thank_you_all_features":  "شكرا لك تم تفعيل حسابك بنجاح ويمكنك استخدام  كل مميزات تطبيقنا الان",
-    "account_activated":  "تم تفعيل حسابك بنجاح",
+  "account_activated":  "تم تفعيل حسابك بنجاح",
   "skip": "تخطي",
-"enter_code" : "ادخل الكود",
+  "enter_code" : "ادخل الكود",
   "Let_is_start": "هيا بنا",
   "next": "التالي",
   "email_address": "البريد الالكتروني",
@@ -230,7 +230,7 @@
   "alert": "تنبيه",
   "must_login": "يجب تسجيل الدخول أولاً.",
   "fill_the_data": "املا البيانات !",
-  "please_add_text_or_media": "من فضلك اكمل بينات منشورك",
+  "please_add_text_or_media": "من فضلك اكمل بيانات منشورك",
   "ok": "تم",
   "enter_post_title": "ادخل عنوان البوست",
   "comments": "الكومنتات",
@@ -298,7 +298,7 @@
   "to_date": "الى تاريخ",
   "from_date": "من تاريخ",
   "add_experience": "أضف خبرة جديدة",
-    "rate":"تقييم",
+  "rate":"تقييم",
   "start_date": "تاريخ بداية الاعلان",
   "end_date": "تاريخ نهاية الاعلان",
   "update_experience": "تحديث الخبرة",
@@ -316,17 +316,10 @@
   "my_subscriptions": "اشتراكاتى",
   "monthly_package": "باقة شهرية",
   "reset_advertisment": "الاعلانات المتبقية",
-  "please_enter_title": "من فضلك ادخل العنوان",
   "delete_account_desc":"هل انت متاكد من حذف الحساب نهائياً",
   "delete_account_desc_message":"هل انت متاكد من حذف الرسالة نهائياً",
-  "delete_account_desc_room":"هل انت متاكد من حذف غرفة الدردشة نهائياً"
-
-
-
-
-
-
-
-
-
+  "delete_account_desc_room":"هل انت متاكد من حذف غرفة الدردشة نهائياً",
+  "update": "تحديث",
+  "ads_in_month": "اعلانات فى الشهر",
+  "my_advertisment": "اعلاناتي"
 }

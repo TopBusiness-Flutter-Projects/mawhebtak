@@ -1,7 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:mawhebtak/core/preferences/preferences.dart';
-import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
-
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
@@ -61,6 +57,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+
+
   updateTopTalentHomeFollow(TopTalent? item) {
     if (homeModel?.data?.topTalents != null) {
       for (int i = 0; i < (homeModel?.data?.topTalents?.length ?? 0); i++) {
@@ -68,11 +66,9 @@ class HomeCubit extends Cubit<HomeState> {
           if (item?.isIFollow == true) {
             homeModel?.data?.topTalents?[i].followersCount =
                 (item?.followersCount ?? 0) + 1;
-            homeModel?.data?.topTalents?[i].isIFollow = false;
           } else {
             homeModel?.data?.topTalents?[i].followersCount =
                 (item?.followersCount ?? 0) - 1;
-            homeModel?.data?.topTalents?[i].isIFollow = true;
           }
           homeModel?.data?.topTalents?[i].isIFollow = item?.isIFollow;
         }
