@@ -76,7 +76,6 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
                                               horizontal: 12.w),
                                           itemBuilder: (context, index) =>
                                               GigsWidget(
-                                            index: index,
                                             castingCubit: cubit,
                                             eventAndGigsModel: cubit
                                                 .getGigsFromSubCategoryModel
@@ -115,7 +114,6 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
                                 horizontal: 12.w),
                             itemBuilder: (context, index) =>
                                 GigsWidget(
-                                  index: index,
                                   castingCubit: cubit,
                                   eventAndGigsModel: cubit
                                       .allGigsModel

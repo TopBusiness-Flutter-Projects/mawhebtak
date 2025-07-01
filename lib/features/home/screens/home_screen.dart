@@ -11,7 +11,7 @@ import 'package:mawhebtak/features/home/screens/widgets/under_custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
-import '../../main_screen/cubit/cubit.dart';
+import '../../main/cubit/cubit.dart';
 
 class HomeItem {
   final String icon;
@@ -137,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Padding(
                                 padding: EdgeInsets.only(top: 5.h),
                                 child: CustomAppBarRow(
+
                                     color: AppColors.transparent),
                               )),
                         ],

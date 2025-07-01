@@ -288,7 +288,6 @@ class _CastingScreenState extends State<CastingScreen> {
                       return const CustomLoadingIndicator();
                     }
                     return GigsWidget(
-                      index: index,
                       castingCubit: cubit,
                       eventAndGigsModel: cubit.allGigsModel?.data?[index],
                     );
