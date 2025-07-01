@@ -155,84 +155,85 @@ class _MyAppState extends State<MyApp> {
               create: (_) => injector.serviceLocator<TopEventsCubit>()),
           BlocProvider(create: (_) => injector.serviceLocator<ChatCubit>()),
         ],
-        child: GetMaterialApp(
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          theme: appThemeLight(),
-          themeMode: ThemeMode.light,
-          navigatorKey: notificationService?.navigatorKey,
-          darkTheme: ThemeData.light(),
-          localizationsDelegates: context.localizationDelegates,
-          debugShowCheckedModeBanner: false,
-          title: AppStrings.appName,
-          onGenerateRoute: AppRoutes.onGenerateRoute,
-          routes: {
-            '/': (context) => isWithNotification
-                ? initialMessageRcieved?.data['reference_table'] ==
-                        "add_assistant"
-                    ? WorkDetailsScreen(
-                        work: WorkModel(
-                            id: initialMessageRcieved?.data['id'],
-                            title: initialMessageRcieved?.data['title'],
-                            assistants: []))
-                    : (initialMessageRcieved?.data['reference_table'] ==
-                            "posts")
-                        ? PostDetailsScreen(
-                            deepLinkDataModel: DeepLinkDataModel(
-                                id: initialMessageRcieved?.data['reference_id']
-                                        .toString() ??
-                                    '',
-                                isDeepLink: true))
-                        : (initialMessageRcieved?.data['reference_table'] ==
-                                "events")
-                            ? DetailsEventScreen(
-                                eventDataModel: DeepLinkDataModel(
-                                    id: initialMessageRcieved?.data['reference_id']
-                                            .toString() ??
-                                        '',
-                                    isDeepLink: true))
-                            : (initialMessageRcieved?.data['reference_table'] ==
-                                    "profile")
-                                ? ProfileScreen(
-                                    model: DeepLinkDataModel(
-                                        id: initialMessageRcieved
-                                                ?.data['reference_id']
-                                                .toString() ??
-                                            '',
-                                        isDeepLink: true))
-                                : (initialMessageRcieved?.data['reference_table'] ==
-                                        "gigs")
-                                    ? GigsDetailsScreen(
-                                        id: DeepLinkDataModel(
-                                            id: initialMessageRcieved?.data['reference_id'].toString() ?? '',
-                                            isDeepLink: true))
-                                    : //! userjobs
+        child: SafeArea(
+          child: GetMaterialApp(
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            theme: appThemeLight(),
+            themeMode: ThemeMode.light,
+            navigatorKey: notificationService?.navigatorKey,
+            darkTheme: ThemeData.light(),
+            localizationsDelegates: context.localizationDelegates,
+            debugShowCheckedModeBanner: false,
+            title: AppStrings.appName,
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+            routes: {
+              '/': (context) => isWithNotification
+                  ? initialMessageRcieved?.data['reference_table'] ==
+                          "add_assistant"
+                      ? WorkDetailsScreen(
+                          work: WorkModel(
+                              id: initialMessageRcieved?.data['id'],
+                              title: initialMessageRcieved?.data['title'],
+                              assistants: []))
+                      : (initialMessageRcieved?.data['reference_table'] ==
+                              "posts")
+                          ? PostDetailsScreen(
+                              deepLinkDataModel: DeepLinkDataModel(
+                                  id: initialMessageRcieved?.data['reference_id'].toString() ??
+                                      '',
+                                  isDeepLink: true))
+                          : (initialMessageRcieved?.data['reference_table'] ==
+                                  "events")
+                              ? DetailsEventScreen(
+                                  eventDataModel: DeepLinkDataModel(
+                                      id: initialMessageRcieved?.data['reference_id'].toString() ??
+                                          '',
+                                      isDeepLink: true))
+                              : (initialMessageRcieved?.data['reference_table'] ==
+                                      "profile")
+                                  ? ProfileScreen(
+                                      model: DeepLinkDataModel(
+                                          id: initialMessageRcieved
+                                                  ?.data['reference_id']
+                                                  .toString() ??
+                                              '',
+                                          isDeepLink: true))
+                                  : (initialMessageRcieved?.data['reference_table'] ==
+                                          "gigs")
+                                      ? GigsDetailsScreen(
+                                          id: DeepLinkDataModel(
+                                              id: initialMessageRcieved?.data['reference_id'].toString() ?? '',
+                                              isDeepLink: true))
+                                      : //! userjobs
 
-                                    (initialMessageRcieved?.data['reference_table'] == "user_jobs")
-                                        ? GigsDetailsScreen(
-                                            id: DeepLinkDataModel(
-                                                id: initialMessageRcieved
-                                                        ?.data['reference_id']
-                                                        .toString() ??
-                                                    '',
-                                                isDeepLink: true),
-                                          )
-                                        :
+                                      (initialMessageRcieved?.data['reference_table'] == "user_jobs")
+                                          ? GigsDetailsScreen(
+                                              id: DeepLinkDataModel(
+                                                  id: initialMessageRcieved
+                                                          ?.data['reference_id']
+                                                          .toString() ??
+                                                      '',
+                                                  isDeepLink: true),
+                                            )
+                                          :
 
-                                        //! Announcement
+                                          //! Announcement
 
-                                        (initialMessageRcieved?.data['reference_table'] == "announcements")
-                                            ? DetailsAnnouncementScreen(
-                                                isDeeplink: true,
-                                                announcementId:
-                                                    initialMessageRcieved?.data[
-                                                                'reference_id']
-                                                            .toString() ??
-                                                        '',
-                                              )
-                                            : const NotificationScreen()
-                : const SplashScreen()
-          },
+                                          (initialMessageRcieved?.data['reference_table'] == "announcements")
+                                              ? DetailsAnnouncementScreen(
+                                                  isDeeplink: true,
+                                                  announcementId:
+                                                      initialMessageRcieved
+                                                              ?.data[
+                                                                  'reference_id']
+                                                              .toString() ??
+                                                          '',
+                                                )
+                                              : const NotificationScreen()
+                  : const SplashScreen()
+            },
+          ),
         ));
   }
 }

@@ -187,16 +187,15 @@ class CastingCubit extends Cubit<CastingState> {
   }
 
   requestGigs(
-      {
-      required BuildContext context,
+      {required BuildContext context,
       required String type,
       required String chatName,
-
       required EventAndGigsModel eventAndGigsModel}) async {
     AppWidgets.create2ProgressDialog(context);
     emit(RequestGigStateLoading());
     try {
-      final res = await castingRepo.requestGig(gigId: eventAndGigsModel.id.toString());
+      final res =
+          await castingRepo.requestGig(gigId: eventAndGigsModel.id.toString());
       res.fold((l) {
         errorGetBar(l.toString());
         emit(RequestGigStateError(l.toString()));
@@ -204,16 +203,16 @@ class CastingCubit extends Cubit<CastingState> {
         if (r.status == 200) {
           Navigator.pop(context);
           successGetBar(r.msg);
-          if (eventAndGigsModel.isRequested.toString() == "pending" ) {
+          if (eventAndGigsModel.isRequested.toString() == "pending") {
             eventAndGigsModel.isRequested = "null";
             emit(RequestGigStateLoaded());
-          } else if (eventAndGigsModel.isRequested.toString() ==
-                  "null" ||
-              eventAndGigsModel.isRequested.toString() == "rejected" ) {
+          } else if (eventAndGigsModel.isRequested.toString() == "null" ||
+              eventAndGigsModel.isRequested.toString() == "rejected") {
             eventAndGigsModel.isRequested = "pending";
             Navigator.pushNamed(context, Routes.messageRoute,
                 arguments: MainUserAndRoomChatModel(
-                    receiverId: eventAndGigsModel.user?.id.toString(), chatName: chatName
+                    receiverId: eventAndGigsModel.user?.id.toString(),
+                    chatName: chatName
                     //!
                     ));
             emit(RequestGigStateLoaded());
@@ -236,7 +235,8 @@ class CastingCubit extends Cubit<CastingState> {
 
     try {
       final res = await castingRepo.addNewGig(
-        currencyId: context.read<CalenderCubit>().selectedCurrency?.id.toString() ?? '',
+        currencyId:
+            context.read<CalenderCubit>().selectedCurrency?.id.toString() ?? '',
         categoryId: selectedCategory?.id.toString() ?? "",
         title: gigTitleController.text,
         price: priceRangeController.text,
@@ -253,7 +253,6 @@ class CastingCubit extends Cubit<CastingState> {
                 ?.longitude
                 .toString() ??
             "0.0",
-
         mediaFiles: [
           ...context.read<CalenderCubit>().myImagesF ?? [],
           ...context.read<CalenderCubit>().validVideos
@@ -309,6 +308,7 @@ class CastingCubit extends Cubit<CastingState> {
   deleteGigs(
       {required String gigId,
       required BuildContext context,
+      bool? isDetails = false,
       int? index}) async {
     emit(DeleteGigsStateLoading());
     try {
@@ -328,6 +328,10 @@ class CastingCubit extends Cubit<CastingState> {
               ?.data
               ?.myGigs
               ?.removeAt(index!);
+          if (isDetails == true) {
+            Navigator.pop(context);
+          }
+
           emit(DeleteGigsStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
