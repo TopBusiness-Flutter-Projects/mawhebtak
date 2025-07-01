@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mawhebtak/features/my_advertiment_screen/data/models/user_package_model.dart';
 import '../../../core/exports.dart';
 import '../data/repos/my_advertisment_repo.dart';
 import 'state.dart';
@@ -67,18 +68,18 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
   }
 
   // // ✅ إدارة الاشتراكات
-  // GetLawyerAdPackagesModel? getLawyerAdPackagesModel;
-  // void getLawyerAdPackages() async {
-  //   emit(LoadingLawyerAdPackagesState());
-  //   final res = await api.getLawyerAdPackages();
-  //   res.fold((l) {
-  //     emit(ErrorLawyerAdPackagesState());
-  //   }, (r) {
-  //     getLawyerAdPackagesModel = r;
-  //     emit(SuccessLawyerAdPackagesState());
-  //   });
-  // }
-  //
+  UserPackageModel? userPackageModel;
+  void getUserPackageData() async {
+    emit(LoadingUserPackageState());
+    final res = await api.getUserPackageData();
+    res.fold((l) {
+      emit(ErrorUserPackageState());
+    }, (r) {
+      userPackageModel = r;
+      emit(SuccessUserPackageState());
+    });
+  }
+
   // // ✅ تفاصيل الاشتراك
   // GetLawyerPackageAdsModel? getLawyerPackageAdsModelDetails;
   //

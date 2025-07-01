@@ -19,3 +19,6 @@ class LoadingAddAdsToLawyerPackageState extends MyAdvertismentState {}
  class LoadingLawyerPackageAdsState extends MyAdvertismentState {}
  class FilePickCancelled extends MyAdvertismentState {}
  class UpdateProfileError extends MyAdvertismentState {}
+ class LoadingUserPackageState extends MyAdvertismentState {}
+ class ErrorUserPackageState extends MyAdvertismentState {}
+ class SuccessUserPackageState extends MyAdvertismentState {}

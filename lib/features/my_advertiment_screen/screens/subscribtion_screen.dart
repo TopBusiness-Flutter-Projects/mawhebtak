@@ -1,5 +1,6 @@
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/my_svg_widget.dart';
+import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 import 'package:mawhebtak/features/my_advertiment_screen/cubit/cubit.dart';
 import 'package:mawhebtak/features/my_advertiment_screen/cubit/state.dart';
@@ -17,7 +18,7 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
   @override
   initState() {
     super.initState();
-  //  context.read<MyAdvertismentCubit>().getLawyerAdPackages();
+   context.read<MyAdvertismentCubit>().getUserPackageData();
   }
   @override
   Widget build(BuildContext context) {
@@ -36,10 +37,10 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
               SizedBox(
                 height: 40.h,
               ),
-              // (state is LoadingLawyerAdPackagesState)?
-              //     const Center(child: CustomLoadingIndicator(),):
-              // (cubit.getLawyerAdPackagesModel?.data?.length == 0)?
-              //     Center(child: Text("no_subscribtion".tr()),):
+              (state is LoadingLawyerAdPackagesState)?
+                  const Center(child: CustomLoadingIndicator(),):
+              (cubit.userPackageModel?.data?.length == 0)?
+                  Center(child: Text("no_subscribtion".tr()),):
               Flexible(
                 child: ListView.builder(
                   //itemCount: cubit.getLawyerAdPackagesModel?.data?.length ?? 0,
@@ -49,7 +50,7 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
                     return InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, Routes.myAdvertismentRoute,
-                        //    arguments: cubit.getLawyerAdPackagesModel?.data?[index].packageId.toString()
+                            arguments: cubit.userPackageModel?.data?[index].packageId.toString()
         
                         );
                       },
@@ -73,8 +74,8 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
                                       bottom: 12.h,
                                     ),
                                     child: Text(
-                                      //'من : ${cubit.getLawyerAdPackagesModel?.data?[index].startDate}',
-                                      'من 12:12',
+                                      'من : ${cubit.userPackageModel?.data?[index].startDate.toString().substring(0,10)}',
+
                                       maxLines: 1,
                                       style: TextStyle(
                                         fontFamily: AppStrings.fontFamily,
@@ -98,8 +99,7 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
                                 ),
                               ),
                               Text(
-                                ' 2 اعلانات فى الشهر',
-                               // '${cubit.getLawyerAdPackagesModel?.data?[index].numberOfAds??0} اعلانات فى الشهر ',
+                               '${cubit.userPackageModel?.data?[index].numberOfBumps??0} اعلانات فى الشهر ',
                                 maxLines: 1,
                                 style: TextStyle(
                                   fontFamily: AppStrings.fontFamily,
@@ -129,8 +129,7 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
                                       bottom: 12.h,
                                     ),
                                     child: Text(
-                                      'الي 5',
-                                   //   '   الي : ${cubit.getLawyerAdPackagesModel?.data?[index].endDate}',
+                                     '   الي : ${cubit.userPackageModel?.data?[index].endDate.toString().substring(0,10)}',
                                       maxLines: 1,
                                       style: TextStyle(
                                         fontFamily: AppStrings.fontFamily,
@@ -154,8 +153,7 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
                                 ),
                               ),
                               Text(
-                                'اعلانات 5',
-                              //  "${cubit.getLawyerAdPackagesModel?.data?[index].numberOfBumps??0} اعلانات",
+                               "${cubit.userPackageModel?.data?[index].numberOfBumps??0} اعلانات",
                                 maxLines: 1,
                                 style: TextStyle(
                                   fontFamily: AppStrings.fontFamily,

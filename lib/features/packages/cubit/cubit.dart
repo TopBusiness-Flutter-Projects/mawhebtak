@@ -1,3 +1,5 @@
+import 'package:mawhebtak/core/models/default_model.dart';
+
 import '../../../core/exports.dart';
 import '../data/model/package_model.dart';
 import '../data/repo/packages_repo.dart';
@@ -19,24 +21,26 @@ class PackagesCubit extends Cubit<PackagesState> {
     });
   }
 
-  // AddAdOfferPackageToLawyerModel? addAdOfferPackageToLawyerModel;
-  // Future<void> addAdOfferPackageToLawyer({
-  //   required String packageId,
-  // }) async {
-  //   emit(LoadingAddAdOfferPackageToLawyerState());
-  //   final res = await api.addAdOfferPackagesToLawyer(
-  //     packageId: packageId,
-  //   );
-  //   res.fold((l) {
-  //     emit(ErrorAddAdOfferPackageToLawyerState());
-  //   }, (r) {
-  //     if (r.status == 200) {
-  //       successGetBar(r.msg ?? "");
-  //     } else {
-  //       errorGetBar(r.msg ?? "");
-  //     }
-  //     addAdOfferPackageToLawyerModel = r;
-  //     emit(LoadedAddAdOfferPackageToLawyersState());
-  //   });
-  // }
+  Future<void> subscribeToPackage({
+    required String packageId,
+    required BuildContext context,
+  }) async {
+    emit(LoadingSubscribeToPackageState());
+    final res = await api.subscribeToPackage(
+      packageId: packageId,
+    );
+    res.fold((l) {
+      emit(ErrorSubscribeToPackageState());
+    }, (r) {
+      if (r.status == 200) {
+        successGetBar(r.msg ?? "");
+        Navigator.pop(context);
+      } else {
+        errorGetBar(r.msg ?? "");
+        Navigator.pop(context);
+      }
+
+      emit(LoadedSubscribeToPackageState());
+    });
+   }
 }

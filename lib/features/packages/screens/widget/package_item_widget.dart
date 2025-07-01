@@ -3,8 +3,8 @@ import 'package:mawhebtak/features/packages/data/model/package_model.dart';
 import '../../../../../core/exports.dart';
 import 'custom_container_package.dart';
 
-class packageItemWidget extends StatelessWidget {
-  packageItemWidget({
+class PackageItemWidget extends StatelessWidget {
+  PackageItemWidget({
     super.key,
     this.item,
     this.onTap,

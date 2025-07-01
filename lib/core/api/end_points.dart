@@ -51,4 +51,5 @@ class EndPoints {
   static const String toggleLanguage = '${baseUrl}toggle-language';
   static const String searchRoute = '${baseUrl}search';
   static const String toggleDeleteAccount = '${baseUrl}toggle-delete-account';
+  static const String subscribeToPackageUrl = '${baseUrl}subscribe-to-package';
 }
