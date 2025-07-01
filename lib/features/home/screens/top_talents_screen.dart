@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
+import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
 
@@ -40,45 +42,49 @@ class _TopTalentsScreenState extends State<TopTalentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<TopTalentsCubit, TopTalentsState>(
-        builder: (context, state) {
-          var topTalentData = context.read<TopTalentsCubit>().topTalents;
-          return Column(
-            children: [
-              CustomSimpleAppbar(
-                title: 'top_talents'.tr(),
-                isActionButton: true,
-                filterType: 'top_talents',
-              ),
-              (state is TopTalentsStateLoading)
-                  ? const Expanded(
-                      child: Center(
-                        child: CustomLoadingIndicator(),
-                      ),
-                    )
-                  : Expanded(
-                      child: GridView.builder(
-                          controller: scrollController,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 1,
-                            mainAxisSpacing: 1,
-                            crossAxisSpacing: 1,
+      body: BlocBuilder<HomeCubit,HomeState>(
+        builder: (context,state) {
+          return BlocBuilder<TopTalentsCubit, TopTalentsState>(
+            builder: (context, state) {
+              var topTalentData = context.read<TopTalentsCubit>().topTalents;
+              return Column(
+                children: [
+                  CustomSimpleAppbar(
+                    title: 'top_talents'.tr(),
+                    isActionButton: true,
+                    filterType: 'top_talents',
+                  ),
+                  (state is TopTalentsStateLoading)
+                      ? const Expanded(
+                          child: Center(
+                            child: CustomLoadingIndicator(),
                           ),
-                          itemBuilder: (context, index) => CustomTopTalentsList(
-                                topTalentsCubit:
-                                    context.read<TopTalentsCubit>(),
-                                index: index,
-                                topTalentsData: topTalentData?.data?[index],
+                        )
+                      : Expanded(
+                          child: GridView.builder(
+                              controller: scrollController,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 1,
+                                mainAxisSpacing: 1,
+                                crossAxisSpacing: 1,
                               ),
-                          itemCount: topTalentData?.data?.length ?? 0),
-                    ),
-              if (state is TopTalentsStateLoadingMore)
-                const CustomLoadingIndicator(),
-            ],
+                              itemBuilder: (context, index) => CustomTopTalentsList(
+                                    topTalentsCubit:
+                                        context.read<TopTalentsCubit>(),
+                                    index: index,
+                                    topTalentsData: topTalentData?.data?[index],
+                                  ),
+                              itemCount: topTalentData?.data?.length ?? 0),
+                        ),
+                  if (state is TopTalentsStateLoadingMore)
+                    const CustomLoadingIndicator(),
+                ],
+              );
+            },
           );
-        },
+        }
       ),
     );
   }

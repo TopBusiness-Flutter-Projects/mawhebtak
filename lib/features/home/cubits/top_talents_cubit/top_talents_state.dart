@@ -93,3 +93,4 @@ final class GetFollowersStateError extends TopTalentsState {
 final class GetFollowersStateLoaded extends TopTalentsState {}
 final class GetFollowersStateLoading extends TopTalentsState {}
 final class GetFollowersStateLoadingMore extends TopTalentsState {}
+final class TopTalentsStateUpdated extends TopTalentsState {}

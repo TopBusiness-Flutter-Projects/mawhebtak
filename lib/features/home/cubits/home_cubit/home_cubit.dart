@@ -59,21 +59,6 @@ class HomeCubit extends Cubit<HomeState> {
 
 
 
-  updateTopTalentHomeFollow(TopTalent? item) {
-    if (homeModel?.data?.topTalents != null) {
-      for (int i = 0; i < (homeModel?.data?.topTalents?.length ?? 0); i++) {
-        if (item?.id == homeModel?.data?.topTalents?[i].id) {
-          if (item?.isIFollow == true) {
-            homeModel?.data?.topTalents?[i].followersCount =
-                (item?.followersCount ?? 0) + 1;
-          } else {
-            homeModel?.data?.topTalents?[i].followersCount =
-                (item?.followersCount ?? 0) - 1;
-          }
-          homeModel?.data?.topTalents?[i].isIFollow = item?.isIFollow;
-        }
-      }
-      emit(UpdateIsFollowState());
-    }
-  }
+
+
 }

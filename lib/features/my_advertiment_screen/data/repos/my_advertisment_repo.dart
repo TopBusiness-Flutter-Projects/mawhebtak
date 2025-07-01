@@ -1,25 +1,31 @@
 
-import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/exports.dart';
-import '../models/get_lawyer_ad_packages_model.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
+import '../models/user_package_model.dart';
 
 class MyAdvertismentRepo {
   BaseApiConsumer dio;
   MyAdvertismentRepo(this.dio);
 
   // // الاشتراكات
-  // Future<Either<Failure, GetLawyerAdPackagesModel>>
-  //     getLawyerAdPackages() async {
-  //   try {
-  //     final response = await dio.get(
-  //       EndPoints.getLawyerAdPackagesUrl,
-  //     );
-  //     return Right(GetLawyerAdPackagesModel.fromJson(response));
-  //   } on ServerException {
-  //     return Left(ServerFailure());
-  //   }
-  // }
-  //
+  Future<Either<Failure, UserPackageModel>>
+  getUserPackageData() async {
+    final userModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.get(
+        EndPoints.getDataBaseUrl,
+        queryParameters: {
+          'model':'UserPackage',
+          'where[0]':'status,1',
+          "where[1]": "user_id,${userModel.data?.id?.toString()}",
+        }
+      );
+      return Right(UserPackageModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
   // // تفاصيل الاشتراك
   //
   // Future<Either<Failure, GetLawyerPackageAdsModel>> getLawyerPackageAdsDetails(

@@ -140,34 +140,50 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
             topTalents?.data?[i].followersCount =
                 (item?.followersCount ?? 0) - 1;
           }
-          topTalents?.data?[i].isIFollow = item?.isIFollow;
         }
       }
       emit(UpdateIsFollowState());
     }
   }
-
-
-  followAndUnFollow(BuildContext context,
-      {required String followedId, TopTalent? item, int? index}) async {
+  followAndUnFollow(BuildContext context, {
+    required String followedId,
+    TopTalent? item,
+    int? index,
+  }) async {
     emit(FollowAndUnFollowStateLoading());
+
     try {
       final res = await api!.followAndUnFollow(followedId: followedId);
 
       res.fold((l) {
         emit(FollowAndUnFollowStateError(l.toString()));
       }, (r) {
-        item?.isIFollow = !(item.isIFollow ?? false);
-        followerAndFollowingModel?.data?[index!].isIFollow = !(followerAndFollowingModel?.data?[index].isIFollow ?? false);
+        context.read<HomeCubit>().homeData();
         successGetBar(r.msg ?? "");
-        updateTopTalentCastingFollow(item);
-        context.read<HomeCubit>().updateTopTalentHomeFollow(item);
+        if (item != null) {
+          item.isIFollow = !(item.isIFollow ?? false);
+          if (item.isIFollow == true) {
+            item.followersCount = (item.followersCount ?? 0) + 1;
+          } else {
+            item.followersCount = (item.followersCount ?? 0) - 1;
+          }
+          updateFollowStatus(topTalents?.data, item);
+          updateFollowStatus( context.read<HomeCubit>().homeModel?.data?.topTalents,
+            item,);
+
+        }
+        if (index != null) {
+          followerAndFollowingModel?.data?[index].isIFollow =
+          !(followerAndFollowingModel?.data?[index].isIFollow ?? false);
+        }
+
         emit(FollowAndUnFollowStateLoaded());
       });
     } catch (e) {
       emit(FollowAndUnFollowStateError(e.toString()));
     }
   }
+
 
   FollowerAndFollowingModel? followerAndFollowingModel;
   getFollowersAndFollowingData({
@@ -185,11 +201,11 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
     }
     try {
       final res = await api!.getFollowersData(
-          pageName: pageName,
-          page: page,
-          orderBy: orderBy,
-          followedId: followedId,
-       );
+        pageName: pageName,
+        page: page,
+        orderBy: orderBy,
+        followedId: followedId,
+      );
 
       res.fold((l) {
         emit(GetFollowersStateError(l.toString()));
@@ -231,5 +247,20 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
     } catch (e) {
       emit(HideTopTalentStateError(e.toString()));
     }
+  }
+
+  void updateFollowStatus(List<TopTalent>? list, TopTalent? item) {
+    if (list == null || item == null) return;
+
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].id == item.id) {
+        list[i].isIFollow = item.isIFollow;
+        list[i].followersCount = item.followersCount;
+        break;
+      }
+    }
+
+    emit(TopTalentsStateLoaded(topTalents!));
+
   }
 }

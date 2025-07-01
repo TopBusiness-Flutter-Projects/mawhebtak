@@ -1,4 +1,6 @@
 
+import 'package:mawhebtak/core/models/default_model.dart';
+
 import '../../../../../core/exports.dart';
 import '../model/package_model.dart';
 
@@ -22,19 +24,19 @@ class PackagesRepo {
     }
   }
   //! Add AdOfferPackageToLawyer
-  // Future<Either<Failure, AddAdOfferPackageToLawyerModel>> addAdOfferPackagesToLawyer({
-  //   required String packageId,
+  Future<Either<Failure, DefaultMainModel>> subscribeToPackage({
+    required String packageId,
 
-// }) async {
-//     try {
-//       final response = await dio.post(EndPoints.addAdOfferPackagesToLawyer,
-//       body: {
-//         "package_id":packageId,
-//
-//       });
-//       return Right(AddAdOfferPackageToLawyerModel.fromJson(response));
-//     } on ServerException {
-//       return Left(ServerFailure());
-//     }
-//   }
+}) async {
+    try {
+      final response = await dio.post(EndPoints.subscribeToPackageUrl,
+      body: {
+        "key":"subscribeToPackage",
+        "package_id":packageId,
+      });
+      return Right(DefaultMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

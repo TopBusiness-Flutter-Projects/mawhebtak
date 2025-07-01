@@ -47,8 +47,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
                          itemCount: cubit.packagesModel?.data?.length,
                         itemBuilder: (context, index) {
                          var item = cubit.packagesModel?.data?[index];
-                          return packageItemWidget(
-
+                          return PackageItemWidget(
                            item: item,
                             onTap: () async {
                               bool? confirm = await showDialog<bool>(
@@ -62,18 +61,16 @@ class _PackagesScreenState extends State<PackagesScreen> {
                                       child: Text('cancel'.tr()),
                                     ),
                                     TextButton(
-                                      onPressed: () => Navigator.of(context).pop(true),
+                                      onPressed: (){
+                                        cubit.subscribeToPackage(
+                                            context: context,
+                                            packageId: cubit.packagesModel?.data?[index].id.toString() ?? '');
+                                      },
                                       child: Text('confirm'.tr()),
                                     ),
                                   ],
                                 ),
                               );
-        
-                              if (confirm == true) {
-                                // cubit.addAdOfferPackageToLawyer(
-                                //   packageId: cubit.mainAdOfferPackagesModel?.data?[index].id.toString() ?? "",
-                                // );
-                              }
                             },
         
                           );
