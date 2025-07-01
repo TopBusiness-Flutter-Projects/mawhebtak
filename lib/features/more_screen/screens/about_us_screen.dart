@@ -1,7 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:mawhebtak/core/exports.dart';
-import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
 import 'package:mawhebtak/features/more_screen/cubit/more_state.dart';
 

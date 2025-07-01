@@ -130,6 +130,7 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
                               onTap: () {
                                 castingCubit.deleteGigs(
                                     gigId: widget.id?.id ?? '',
+                                    isDetails:true,
                                     context: context);
                               })
                       ],
