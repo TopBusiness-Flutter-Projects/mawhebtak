@@ -8,6 +8,7 @@ class AppColors {
   static Color grayLite = const Color(0xffF7F7F7);
   static Color grayLite2 = HexColor("#F7F7F7");
   static Color whiteSecond = HexColor('#8C7B95');
+  static Color blackLight = HexColor('#2A3A65');
   static Color darkGray = const Color(0xff464545);
   static Color gray = const Color(0xffC0C0C0);
   static Color grayMedium = HexColor('#ADADAD');

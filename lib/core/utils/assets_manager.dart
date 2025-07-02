@@ -9,6 +9,7 @@ class ImageAssets {
   static const String onboarding1Image = '$imagePath/onboarding1.png';
   static const String onboarding2Image = '$imagePath/onboarding2.png';
   static const String onboarding3Image = '$imagePath/onboarding3.png';
+
   static const String onboardingBackground =
       '$imagePath/onboarding_background.png';
   static const String pinCodeImage = '$imagePath/pin_code_image.png';
@@ -47,6 +48,8 @@ class AppIcons {
   static const String feeds = '$iconsPath/feeds.svg';
   static const String casting = '$iconsPath/casting.svg';
   static const String calendar = '$iconsPath/calendar.svg';
+  static const String pillIcon = '$iconsPath/pill_icon.svg';
+  static const String pushIcon = '$iconsPath/push_icon.svg';
   static const String eventCalenderSecondColorIcon =
       '$iconsPath/event(calender_second_color).svg';
   static const String more = '$iconsPath/more.svg';

@@ -331,5 +331,24 @@
   "please_select_end_date": "يرجى اختيار تاريخ النهاية",
   "end_date_must_be_after_start_date": "تاريخ الانتهاء يجب أن يكون بعد تاريخ البداية",
   "please_select_image": "يرجى اختيار صورة",
+  "maintenance_mode_title": "وضع الصيانة",
+  "pull": "سحب",
+  "deposit": "ايداع",
+  "count": "العدد",
+  "current_balance": "رصيدك الحالي",
+  "electronic_wallet": "المحفظة الالكترونية",
+  "deposit_process": "عملية الإيداع",
+  "enter_the_amount": "أدخل المبلغ",
+  "pull_process": "عملية السحب",
+  "enter_price": "أدخل السعر",
+  "choose_the_method": "اختر الطريقة",
+  "enter_mobile_number": "أدخل رقم الهاتف المحمول",
+  "enter_phone_or_account_number": "أدخل رقم الهاتف أو الحساب",
+  "enter_iban": "أدخل رقم الآيبان",
+  "process": "العمليات",
+  "no_process": "لا توجد عمليات",
+  "egp": "ج.م",
+  "maintenance_mode_description": "التطبيق حالياً تحت الصيانة.\nنحن نعمل على تحسين تجربتك. يرجى العودة لاحقاً."
   "no_posts": "لا يوجد بوستات"
+
 }

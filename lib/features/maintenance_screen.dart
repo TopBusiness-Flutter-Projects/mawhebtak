@@ -21,7 +21,7 @@ class MaintenanceScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 Text(
-                  'وضع الصيانة',
+                  'maintenance_mode_title'.tr(),
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -30,9 +30,9 @@ class MaintenanceScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'التطبيق حالياً تحت الصيانة.\nنحن نعمل على تحسين تجربتك. يرجى العودة لاحقاً.',
-                  style: TextStyle(
+                Text(
+                  'maintenance_mode_description'.tr(),
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.black87,
                   ),
