@@ -410,6 +410,8 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                     fontSize: 14.sp *
                                                         textScaleFactor(
                                                             context),
+
+
                                                   ),
                                                 ),
 
