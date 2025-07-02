@@ -7,7 +7,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'app.dart';
 import 'core/utils/restart_app_class.dart';
 
-
 void main() async {
   await initialization();
   if (Platform.isAndroid && Platform.version.contains("13")) {
