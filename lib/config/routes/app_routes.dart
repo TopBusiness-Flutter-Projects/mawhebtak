@@ -24,21 +24,21 @@ import 'package:mawhebtak/features/home/screens/request_gigs_screen.dart';
 import 'package:mawhebtak/features/home/screens/top_talents_screen.dart';
 import 'package:mawhebtak/features/jobs/screens/job_details_screen.dart';
 import 'package:mawhebtak/features/jobs/screens/jobs_screen.dart';
-import 'package:mawhebtak/features/main_screen/screens/main_screen.dart';
+import 'package:mawhebtak/features/main/screens/main_screen.dart';
 import 'package:mawhebtak/features/auth/new_password/screens/new_password_screen.dart';
 import 'package:mawhebtak/features/auth/verification/screens/verification_screen.dart';
-import 'package:mawhebtak/features/more_screen/screens/about_us_screen.dart';
-import 'package:mawhebtak/features/more_screen/screens/change_password_screen.dart';
-import 'package:mawhebtak/features/more_screen/screens/contact_us_screen.dart';
-import 'package:mawhebtak/features/more_screen/screens/favourites_screen.dart';
-import 'package:mawhebtak/features/more_screen/screens/more_screen.dart';
+import 'package:mawhebtak/features/more/screens/about_us_screen.dart';
+import 'package:mawhebtak/features/more/screens/change_password_screen.dart';
+import 'package:mawhebtak/features/more/screens/contact_us_screen.dart';
+import 'package:mawhebtak/features/more/screens/favourites_screen.dart';
+import 'package:mawhebtak/features/more/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
-import 'package:mawhebtak/features/my_advertiment_screen/screens/add_advertisment_screen.dart';
-import 'package:mawhebtak/features/my_advertiment_screen/screens/my_advertisment_screen.dart';
-import 'package:mawhebtak/features/my_advertiment_screen/screens/subscribtion_screen.dart';
+import 'package:mawhebtak/features/my_advertiment/screens/add_advertisment_screen.dart';
+import 'package:mawhebtak/features/my_advertiment/screens/my_advertisment_screen.dart';
+import 'package:mawhebtak/features/my_advertiment/screens/subscribtion_screen.dart';
 import 'package:mawhebtak/features/packages/screens/packages_screen.dart';
 import 'package:mawhebtak/features/profile/screens/edit_profile_screen.dart';
-import 'package:mawhebtak/features/more_screen/screens/terms_and_condition.dart';
+import 'package:mawhebtak/features/more/screens/terms_and_condition.dart';
 import 'package:mawhebtak/features/referral_code/screens/add_referral_code_screen.dart';
 import 'package:mawhebtak/features/search/screens/search_screen.dart';
 import '../../core/utils/app_strings.dart';
@@ -220,15 +220,19 @@ class AppRoutes {
           duration: const Duration(milliseconds: 300),
         );
       case Routes.myAdvertismentRoute:
+        String? idFromPackage = settings.arguments as String;
         return PageTransition(
-          child: const MyAdvertismentScreen(),
+          child:  MyAdvertismentScreen(idFromPackage: idFromPackage),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 100),
         );
       case Routes.addAdvertismentRoute:
+        String? id = settings.arguments as String;
         return PageTransition(
-          child: const AddAdvertismentScreen(),
+          child:  AddAdvertismentScreen(
+            id: id,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 100),

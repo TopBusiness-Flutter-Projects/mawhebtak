@@ -20,12 +20,10 @@ class GigsWidget extends StatefulWidget {
     super.key,
     this.eventAndGigsModel,
     this.castingCubit,
-    this.index,
     this.isFromDetails = false,
   });
   final EventAndGigsModel? eventAndGigsModel;
   final CastingCubit? castingCubit;
-  final int? index;
   final bool? isFromDetails;
 
   @override

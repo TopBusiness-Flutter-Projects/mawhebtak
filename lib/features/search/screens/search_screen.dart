@@ -167,7 +167,6 @@ class _SearchScreenState extends State<SearchScreen> {
                               padding: EdgeInsets.symmetric(horizontal: 12.w),
                               itemBuilder: (context, index) {
                                 return GigsWidget(
-                                  index: index,
                                   castingCubit: castingCubit,
                                   eventAndGigsModel: data[index],
                                 );
