@@ -1,6 +1,6 @@
 
 class GetWalletTransactionModel {
-  GetWalletTransactionModelData? data;
+  Data? data;
   String? msg;
   int? status;
 
@@ -11,7 +11,7 @@ class GetWalletTransactionModel {
   });
 
   factory GetWalletTransactionModel.fromJson(Map<String, dynamic> json) => GetWalletTransactionModel(
-    data: json["data"] == null ? null : GetWalletTransactionModelData.fromJson(json["data"]),
+    data: json["data"] == null ? null : Data.fromJson(json["data"]),
     msg: json["msg"],
     status: json["status"],
   );
@@ -23,74 +23,54 @@ class GetWalletTransactionModel {
   };
 }
 
-class GetWalletTransactionModelData {
-  dynamic wallet;
-  List<WalletTransaction>? walletTransactions;
+class Data {
+  int? walletBalance;
+  List<MyTransaction>? myTransaction;
 
-  GetWalletTransactionModelData({
-    this.wallet,
-    this.walletTransactions,
+  Data({
+    this.walletBalance,
+    this.myTransaction,
   });
 
-  factory GetWalletTransactionModelData.fromJson(Map<String, dynamic> json) => GetWalletTransactionModelData(
-    wallet: json["wallet"],
-    walletTransactions: json["walletTransactions"] == null ? [] : List<WalletTransaction>.from(json["walletTransactions"]!.map((x) => WalletTransaction.fromJson(x))),
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+    walletBalance: json["wallet_balance"],
+    myTransaction: json["my_transaction"] == null ? [] : List<MyTransaction>.from(json["my_transaction"]!.map((x) => MyTransaction.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "wallet": wallet,
-    "walletTransactions": walletTransactions == null ? [] : List<dynamic>.from(walletTransactions!.map((x) => x.toJson())),
+    "wallet_balance": walletBalance,
+    "my_transaction": myTransaction == null ? [] : List<dynamic>.from(myTransaction!.map((x) => x.toJson())),
   };
 }
 
-class WalletTransaction {
+class MyTransaction {
   int? id;
-  int? userId;
-  String? userType;
-  int? credit;
-  double? debit;
-  dynamic caseId;
+  String? type;
   String? comment;
-  String? createdAt;
-  String? updatedAt;
-  dynamic deletedAt;
+  String? time;
+  int? amount;
 
-  WalletTransaction({
+  MyTransaction({
     this.id,
-    this.userId,
-    this.userType,
-    this.credit,
-    this.debit,
-    this.caseId,
+    this.type,
     this.comment,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
+    this.time,
+    this.amount,
   });
 
-  factory WalletTransaction.fromJson(Map<String, dynamic> json) => WalletTransaction(
+  factory MyTransaction.fromJson(Map<String, dynamic> json) => MyTransaction(
     id: json["id"],
-    userId: json["user_id"],
-    userType: json["user_type"],
-    credit: json["credit"],
-    debit: json["debit"],
-    caseId: json["case_id"],
+    type: json["type"],
     comment: json["comment"],
-    createdAt: json["created_at"] ,
-    updatedAt: json["updated_at"],
-    deletedAt: json["deleted_at"],
+    time: json["time"],
+    amount: json["amount"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "user_id": userId,
-    "user_type": userType,
-    "credit": credit,
-    "debit": debit,
-    "case_id": caseId,
+    "type": type,
     "comment": comment,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
-    "deleted_at": deletedAt,
+    "time": time,
+    "amount": amount,
   };
 }

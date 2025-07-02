@@ -16,7 +16,7 @@ class ElectronicWalletScreen extends StatefulWidget {
 class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
   @override
   void initState() {
-    //context.read<ElectronicWalletCubit>().getClientWalletTransaction();
+    context.read<ElectronicWalletCubit>().getWalletTransactionData();
     super.initState();
   }
 
@@ -32,11 +32,11 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
           children: [
             CustomSimpleAppbar(title: "electronic_wallet".tr()),
             SizedBox(height: 20.h),
-            // (state is LoadingGetWalletTransactionDataState)
-            //     ? const Center(
-            //         child: CustomLoadingIndicator(),
-            //       )
-            //     :
+            (state is LoadingGetWalletTransactionDataState)
+                ? const Center(
+                    child: CustomLoadingIndicator(),
+                  )
+                :
 
             Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0.w),
@@ -69,8 +69,8 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                       height: 5.h,
                                     ),
                                     Text(
-                                      '30000',
-                                    //  '${cubit.getWalletTransactionModel?.data?.wallet ?? 0} ${"egp".tr()}',
+
+                                      '${cubit.getWalletTransactionModel?.data?.walletBalance.toString().substring(0,8)?? 0} ${"egp".tr()}',
                                       style: getRegularStyle(
                                           fontSize:
                                               20.sp * textScaleFactor(context),
@@ -268,7 +268,7 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () {
-
+                                                        cubit.requestWithdraw();
                                                         Navigator.of(context)
                                                             .pop();
                                                       },
@@ -332,120 +332,118 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                         SizedBox(
                           height: 10.h,
                         ),
-                        // (cubit.getWalletTransactionModel?.data
-                        //             ?.walletTransactions?.length ==
-                        //         0)
-                        //     ? Center(child: Text("no_process".tr()))
-                        //     : ListView.builder(
-                        //         itemBuilder: (context, index) => Container(
-                        //             padding: EdgeInsets.all(
-                        //               10.sp * textScaleFactor(context),
-                        //             ),
-                        //             decoration: BoxDecoration(
-                        //                 borderRadius: BorderRadius.circular(
-                        //                   8.sp * textScaleFactor(context),
-                        //                 ),
-                        //                 boxShadow: customShadow),
-                        //             width: double.infinity,
-                        //             child: Row(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.start,
-                        //               mainAxisAlignment:
-                        //                   MainAxisAlignment.start,
-                        //               children: [
-                        //                 Container(
-                        //                   decoration: BoxDecoration(
-                        //                       color: AppColors.redLight,
-                        //                       shape: BoxShape.rectangle,
-                        //                       borderRadius:
-                        //                           BorderRadius.circular(
-                        //                         8.sp * textScaleFactor(context),
-                        //                       )),
-                        //                   child: Padding(
-                        //                     padding: const EdgeInsets.all(8.0),
-                        //                     child: Icon(
-                        //                       Icons.arrow_upward_outlined,
-                        //                       color: AppColors.white,
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //                 SizedBox(
-                        //                   width: 10.w,
-                        //                 ),
-                        //                 Column(
-                        //                   mainAxisAlignment:
-                        //                       MainAxisAlignment.start,
-                        //                   crossAxisAlignment:
-                        //                       CrossAxisAlignment.start,
-                        //                   children: [
-                        //                     Row(
-                        //                       children: [
-                        //                         SizedBox(
-                        //                           width: getWidthSize(context) /
-                        //                               1.6,
-                        //                           child: Text(
-                        //                             cubit
-                        //                                     .getWalletTransactionModel
-                        //                                     ?.data
-                        //                                     ?.walletTransactions?[
-                        //                                         index]
-                        //                                     .comment ??
-                        //                                 "",
-                        //                             maxLines: 2,
-                        //                             style: getRegularStyle(
-                        //                               color:
-                        //                                   AppColors.blackLight,
-                        //                               fontSize: 14.sp *
-                        //                                   textScaleFactor(
-                        //                                       context),
-                        //                             ),
-                        //                           ),
-                        //                         )
-                        //                       ],
-                        //                     ),
-                        //                     Row(
-                        //                       children: [
-                        //                         Text(
-                        //                           "${cubit.getWalletTransactionModel?.data?.walletTransactions?[index].debit ?? ""} ${"egp".tr()}",
-                        //                           style: getRegularStyle(
-                        //                             color: AppColors.green,
-                        //                             fontSize: 14.sp *
-                        //                                 textScaleFactor(
-                        //                                     context),
-                        //                           ),
-                        //                         ),
-                        //                         SizedBox(
-                        //                           width: 100.w,
-                        //                         ),
-                        //                         Text(
-                        //                           cubit
-                        //                                   .getWalletTransactionModel
-                        //                                   ?.data
-                        //                                   ?.walletTransactions?[
-                        //                                       index]
-                        //                                   .createdAt
-                        //                                   .toString()
-                        //                                   .substring(0, 10) ??
-                        //                               "",
-                        //                           style: getRegularStyle(
-                        //                             color: AppColors.gray,
-                        //                             fontSize: 14.sp *
-                        //                                 textScaleFactor(
-                        //                                     context),
-                        //                           ),
-                        //                         ),
-                        //                       ],
-                        //                     )
-                        //                   ],
-                        //                 ),
-                        //               ],
-                        //             )),
-                        //         itemCount: cubit.getWalletTransactionModel?.data
-                        //                 ?.walletTransactions?.length ??
-                        //             0,
-                        //         shrinkWrap: true,
-                        //         physics: const AlwaysScrollableScrollPhysics(),
-                        //       ),
+                        (cubit.getWalletTransactionModel?.data
+                                    ?.myTransaction?.length ==
+                                0)
+                            ? Center(child: Text("no_process".tr()))
+                            : ListView.builder(
+                                itemBuilder: (context, index) => Container(
+                                    padding: EdgeInsets.all(
+                                      10.sp * textScaleFactor(context),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          8.sp * textScaleFactor(context),
+                                        ),
+                                        boxShadow: customShadow),
+                                    width: double.infinity,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: AppColors.redLight,
+                                              shape: BoxShape.rectangle,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                8.sp * textScaleFactor(context),
+                                              )),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Icon(
+                                              Icons.arrow_upward_outlined,
+                                              color: AppColors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: getWidthSize(context) /
+                                                      1.6,
+                                                  child: Text(
+                                                    cubit
+                                                            .getWalletTransactionModel
+                                                            ?.data
+                                                            ?.myTransaction?[
+                                                                index]
+                                                            .comment ??
+                                                        "",
+                                                    maxLines: 2,
+                                                    style: getRegularStyle(
+                                                      color:
+                                                          AppColors.blackLight,
+                                                      fontSize: 14.sp *
+                                                          textScaleFactor(
+                                                              context),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "${cubit.getWalletTransactionModel?.data?.myTransaction?[index].amount ?? ""} ${"egp".tr()}",
+                                                  style: getRegularStyle(
+                                                    color: AppColors.green,
+                                                    fontSize: 14.sp *
+                                                        textScaleFactor(
+                                                            context),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 100.w,
+                                                ),
+                                                Text(
+                                                  cubit
+                                                          .getWalletTransactionModel
+                                                          ?.data
+                                                          ?.myTransaction?[
+                                                              index]
+                                                          .time
+                                                          .toString()
+                                                          .substring(0, 10) ??
+                                                      "",
+                                                  style: getRegularStyle(
+                                                    color: AppColors.gray,
+                                                    fontSize: 14.sp *
+                                                        textScaleFactor(
+                                                            context),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                                itemCount: cubit.getWalletTransactionModel?.data
+                                        ?.myTransaction?.length ??
+                                    0,
+                                shrinkWrap: true,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                              ),
                       ],
                     ),
                   ),

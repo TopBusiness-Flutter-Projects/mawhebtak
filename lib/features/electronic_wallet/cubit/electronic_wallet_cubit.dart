@@ -1,7 +1,9 @@
 
 import 'package:mawhebtak/core/exports.dart';
+import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/electronic_wallet/cubit/electronic_wallet_state.dart';
+import 'package:mawhebtak/features/electronic_wallet/data/models/get_wallet_transaction_model.dart';
 import 'package:mawhebtak/features/electronic_wallet/data/repos/electronic_wallet_repo.dart';
 import '../data/models/paymob-pay_model.dart';
 import '../screens/payment.dart';
@@ -53,4 +55,38 @@ class ElectronicWalletCubit extends Cubit<ElectronicWalletState> {
       emit(LoadedPaymentCallBackDataState());
     });
   }
+  DefaultMainModel? defaultMainModel;
+  Future<void> requestWithdraw() async {
+    emit(LoadingRequestWithdrawDataState());
+    final res = await electronicWalletRepo.requestWithdraw(
+      amount: amountController.text,
+      paymentKey: paymentKeyController.text,
+      paymentMethod: paymentMethodController.text,
+    );
+
+    res.fold((l) {
+      emit(ErrorRequestWithdrawDataState());
+    }, (r) {
+      defaultMainModel = r;
+      successGetBar(r.msg ?? "");
+      amountController.clear();
+      paymentKeyController.clear();
+      paymentMethodController.clear();
+      emit(LoadedRequestWithdrawDataState());
+    });
+  }
+  GetWalletTransactionModel? getWalletTransactionModel;
+  Future<void> getWalletTransactionData() async {
+    emit(LoadingGetWalletTransactionDataState());
+    final res = await electronicWalletRepo.getWalletTransaction();
+
+    res.fold((l) {
+      emit(ErrorGetWalletTransactionDataState());
+    }, (r) {
+      getWalletTransactionModel = r;
+
+      emit(LoadedGetWalletTransactionDataState());
+    });
+  }
+
 }

@@ -58,4 +58,6 @@ class EndPoints {
   static const String paymobPayUrl = '${baseUrl}paymob-pay';
 
   static const String paymobCallbackUrl = '${baseUrl}paymob-callback';
+  static const String requestWithdrawUrl = '${baseUrl}request-withdraw';
+  static const String getMyTransactionUrl = '${baseUrl}get-my-transaction';
 }

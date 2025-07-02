@@ -337,6 +337,16 @@
   "count": "العدد",
   "current_balance": "رصيدك الحالي",
   "electronic_wallet": "المحفظة الالكترونية",
-  "enter_price": "ادخل السعر",
+  "deposit_process": "عملية الإيداع",
+  "enter_the_amount": "أدخل المبلغ",
+  "pull_process": "عملية السحب",
+  "enter_price": "أدخل السعر",
+  "choose_the_method": "اختر الطريقة",
+  "enter_mobile_number": "أدخل رقم الهاتف المحمول",
+  "enter_phone_or_account_number": "أدخل رقم الهاتف أو الحساب",
+  "enter_iban": "أدخل رقم الآيبان",
+  "process": "العمليات",
+  "no_process": "لا توجد عمليات",
+  "egp": "ج.م",
   "maintenance_mode_description": "التطبيق حالياً تحت الصيانة.\nنحن نعمل على تحسين تجربتك. يرجى العودة لاحقاً."
 }
