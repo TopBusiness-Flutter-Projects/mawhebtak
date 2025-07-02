@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
-import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 import 'package:mawhebtak/features/my_advertiment/cubit/cubit.dart';
 import 'package:mawhebtak/features/my_advertiment/cubit/state.dart';
@@ -54,7 +54,7 @@ class AddAdvertismentScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (state is FilePickedSuccessfully) // استخدم الحالة
+                    (cubit.uploadedImage != null) ?
                       Stack(
                         children: [
                           ClipRRect(
@@ -86,7 +86,7 @@ class AddAdvertismentScreen extends StatelessWidget {
                           ),
                         ],
                       )
-                    else
+                    :
                       GestureDetector(
                         onTap: () {
                           cubit.pickImage(context, true);
@@ -117,11 +117,17 @@ class AddAdvertismentScreen extends StatelessWidget {
                 padding: EdgeInsets.only(
                     top: 20.0, right: 10.w, bottom: 10.h, left: 10.w),
                 child: CustomButton(
-                        title: "send".tr(),
-                        onTap: () {
-                           cubit.addAdds(context, id: id.toString());
-                        },
-                      ),
+                  title: "send".tr(),
+                  onTap: () {
+
+                    if (cubit.fromData.isAfter(cubit.toDate)) {
+                      Fluttertoast.showToast(msg: "start_date_must_be_before_end_date".tr());
+                      return;
+                    }
+                    cubit.addAdds(context, id: id.toString());
+                  },
+                ),
+
               )
             ],
           );

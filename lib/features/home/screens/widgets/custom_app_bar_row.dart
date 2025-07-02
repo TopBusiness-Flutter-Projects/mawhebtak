@@ -16,13 +16,17 @@ class CustomAppBarRow extends StatefulWidget {
       this.isMore,
       this.colorSearchIcon,
       this.backgroundColorTextFieldSearch,
-      this.colorTextFromSearchTextField});
-  bool? isMore;
+      this.colorTextFromSearchTextField,
+      this.readNotification,
+
+      });
+  bool?  isMore;
   Color? colorSearchIcon;
   Color? backgroundColorTextFieldSearch;
   Color? colorTextFromSearchTextField;
   Color? backgroundNotification;
   Color? color;
+  bool? readNotification;
 
   @override
   State<CustomAppBarRow> createState() => _CustomAppBarRowState();
@@ -45,8 +49,6 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print(
-                          'the id from user ${cubit.loginModel?.data?.id?.toString()}');
                       Navigator.pushNamed(
                         context,
                         Routes.profileRoute,
@@ -133,6 +135,8 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                             ),
                           ),
                         ),
+
+                  
                   GestureDetector(
                     onTap: () async {
                       final user = await Preferences.instance.getUserModel();
@@ -152,12 +156,19 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                               AppColors.grayDark,
                           borderRadius: BorderRadius.circular(8.r),
                         ),
-                        child: Padding(
+                        child: 
+                        
+                        widget.readNotification == true ?
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.notifications_sharp,color: AppColors.white,)
+                        ):
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SvgPicture.asset(
                               height: 21.h,
                               width: 18.w,
-                              widget.isMore == true
+                              (widget.isMore == true )
                                   ? AppIcons.notificationWithBlueContainer
                                   : AppIcons.notificationIcon),
                         ),
