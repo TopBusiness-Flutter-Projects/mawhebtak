@@ -332,5 +332,7 @@
   "please_select_start_date": "Please select a start date",
   "please_select_end_date": "Please select an end date",
   "end_date_must_be_after_start_date": "End date must be after start date",
-  "please_select_image": "Please select an image"
+  "please_select_image": "Please select an image",
+  "maintenance_mode_title": "Maintenance Mode",
+  "maintenance_mode_description": "The app is currently under maintenance.\nWe are working to improve your experience. Please check back later."
 }
