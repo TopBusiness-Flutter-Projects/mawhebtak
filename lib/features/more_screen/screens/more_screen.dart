@@ -140,20 +140,21 @@ class _MoreScreenState extends State<MoreScreen> {
 
                         moreContainer(
                             text: 'packages'.tr(),
-                            imageUrl: AppIcons.contactUs,
+                            imageUrl: AppIcons.packageIcon,
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.packagesRoute);
-                            }),  moreContainer(
+                            }),
+                        moreContainer(
                             text: 'subscribtion'.tr(),
-                            imageUrl: AppIcons.contactUs,
+                            imageUrl: AppIcons.subscribtionIcon,
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.subscribtionRoute);
                             }),
                         moreContainer(
                             text: "complaining".tr(),
-                            imageUrl: AppIcons.contactUs,
+                            imageUrl: AppIcons.complaingIcon,
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.contactUsRoute,
