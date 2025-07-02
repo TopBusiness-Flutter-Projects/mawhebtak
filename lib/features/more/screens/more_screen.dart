@@ -1,12 +1,12 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
-import 'package:mawhebtak/features/more/cubit/more_cubit.dart';
-import 'package:mawhebtak/features/more/screens/widget/custom_logout_dialog.dart';
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
 import '../../events/screens/details_event_screen.dart';
+import '../cubit/more_cubit.dart';
+import 'widget/custom_logout_dialog.dart';
 
 class MoreScreen extends StatefulWidget {
   const MoreScreen({super.key});
@@ -140,20 +140,21 @@ class _MoreScreenState extends State<MoreScreen> {
 
                         moreContainer(
                             text: 'packages'.tr(),
-                            imageUrl: AppIcons.contactUs,
+                            imageUrl: AppIcons.packageIcon,
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.packagesRoute);
-                            }),  moreContainer(
+                            }),
+                        moreContainer(
                             text: 'subscribtion'.tr(),
-                            imageUrl: AppIcons.contactUs,
+                            imageUrl: AppIcons.subscribtionIcon,
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.subscribtionRoute);
                             }),
                         moreContainer(
                             text: "complaining".tr(),
-                            imageUrl: AppIcons.contactUs,
+                            imageUrl: AppIcons.complaingIcon,
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.contactUsRoute,

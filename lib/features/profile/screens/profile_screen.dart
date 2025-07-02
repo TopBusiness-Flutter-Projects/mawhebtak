@@ -61,41 +61,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final user = cubit.user?.data;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
-      ),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileAppBar(
-                isEdit: false,
-                id: profile?.id.toString() ?? '',
-                avatar: profile?.avatar ?? "",
-                byCaver: profile?.bgCover ?? "",
-              ),
-              SizedBox(height: 35.h),
-              _buildProfileHeader(profile),
-              SizedBox(height: 20.h),
-              _buildFollowButtons(context, user, profile),
-              SizedBox(height: 5.h),
-              Container(height: 8.h, color: AppColors.grayLite),
-              Container(height: 20.h, color: AppColors.white),
-              ProfileTabs(
-                isMyProfile: user?.id.toString() == widget.model.id,
-              ),
-              SizedBox(height: 5.h),
-              _buildTabContent(cubit, context),
-            ],
-          ),
+        value: SystemUiOverlayStyle.light.copyWith(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+        ),
+        child: Stack(children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            ProfileAppBar(
+              isEdit: false,
+              id: profile?.id.toString() ?? '',
+              avatar: profile?.avatar ?? "",
+              byCaver: profile?.bgCover ?? "",
+            ),
+            SizedBox(height: 35.h),
+            _buildProfileHeader(profile),
+            SizedBox(height: 20.h),
+            _buildFollowButtons(context, user, profile),
+            SizedBox(height: 5.h),
+            Container(height: 8.h, color: AppColors.grayLite),
+            Container(height: 20.h, color: AppColors.white),
+            ProfileTabs(isMyProfile: user?.id.toString() == widget.model.id),
+            SizedBox(height: 5.h),
+            _buildTabContent(cubit, context)
+          ]),
           if (cubit.selectedIndex == 2 &&
               user?.id.toString() == widget.model.id)
-            _buildAddGigButton(context),
-        ],
-      ),
-    );
+            _buildAddGigButton(context)
+        ]));
   }
 
   Widget _buildProfileHeader(profile) {
@@ -363,14 +355,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             children: [
                               Column(
                                 children: [
-                                  review.user?.image == null ?
-                                  SizedBox(
-                                    height: 40.h,
-                                    width: 40.w,
-                                    child:
-                                        Image.asset(ImageAssets.profileImage),
-                                  ):
-                                      CircleAvatar(backgroundImage:NetworkImage( review.user?.image ?? ""),),
+                                  review.user?.image == null
+                                      ? SizedBox(
+                                          height: 40.h,
+                                          width: 40.w,
+                                          child: Image.asset(
+                                              ImageAssets.profileImage),
+                                        )
+                                      : CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                              review.user?.image ?? ""),
+                                        ),
                                 ],
                               ),
                               SizedBox(width: 8.w),

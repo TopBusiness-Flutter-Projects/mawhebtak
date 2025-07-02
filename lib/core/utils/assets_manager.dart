@@ -102,7 +102,10 @@ class AppIcons {
   static const String jopIcon = '$iconsPath/jop.svg';
   static const String assistantIcon = '$iconsPath/assistant.svg';
   static const String chatIcon = '$iconsPath/chhat_icon2.svg';
-    static const String correctGreen = '$iconsPath/correct_green.svg';
+  static const String correctGreen = '$iconsPath/correct_green.svg';
 
   static const String deleteAccountIcon = '$iconsPath/delete_account.svg';
+  static const String complaingIcon = '$iconsPath/complaing.svg';
+  static const String subscribtionIcon = '$iconsPath/subcribtion.svg';
+  static const String packageIcon = '$iconsPath/package_icon.svg';
 }
