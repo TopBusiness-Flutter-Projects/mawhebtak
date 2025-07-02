@@ -119,6 +119,7 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
         defaultMainModel = r;
         successGetBar(r.msg ?? '');
         getUserPackageData();
+        uploadedImage = null;
         Navigator.pop(context);
       }
       emit(SuccessAddAdsState());

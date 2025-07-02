@@ -77,7 +77,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
                       onRefresh: () async {
                         await feedsCubit.postsData(page: '1', isGetMore: false);
                       },
-                      child: ListView.separated(
+                      child: (feeds?.data?.length == 0)?
+                      Center(child: Text("no_data".tr()),):
+                      ListView.separated(
                         padding: const EdgeInsets.only(
                             bottom: kBottomNavigationBarHeight),
                         controller: scrollController,

@@ -295,8 +295,8 @@
   "title": "العنوان",
   "until_now": "حتى الان",
   "present": "حاليا",
-  "to_date": "الى تاريخ",
-  "from_date": "من تاريخ",
+  "to_date": "الى ",
+  "from_date": "من ",
   "add_experience": "أضف خبرة جديدة",
   "rate":"تقييم",
   "start_date": "تاريخ بداية الاعلان",
@@ -321,5 +321,14 @@
   "delete_account_desc_room":"هل انت متاكد من حذف غرفة الدردشة نهائياً",
   "update": "تحديث",
   "ads_in_month": "اعلانات فى الشهر",
-  "my_advertisment": "اعلاناتي"
+  "my_advertisment": "اعلاناتي",
+  "ads_per_month": "إعلانات في الشهر",
+  "ads": "إعلانات",
+  "expiration_date": "تاريخ الانتهاء :",
+  "subscribtion": "الاشتراكات",
+  "no_subscribtion": "لا توجد اشتراكات متاحة",
+  "please_select_start_date": "يرجى اختيار تاريخ البداية",
+  "please_select_end_date": "يرجى اختيار تاريخ النهاية",
+  "end_date_must_be_after_start_date": "تاريخ الانتهاء يجب أن يكون بعد تاريخ البداية",
+  "please_select_image": "يرجى اختيار صورة"
 }

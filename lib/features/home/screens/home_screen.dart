@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Padding(
                                 padding: EdgeInsets.only(top: 5.h),
                                 child: CustomAppBarRow(
-
+                                    readNotification: homeData?.seeAllNotification,
                                     color: AppColors.transparent),
                               )),
                         ],
