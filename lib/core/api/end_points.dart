@@ -55,4 +55,8 @@ class EndPoints {
   static const String subscribeToPackageUrl = '${baseUrl}subscribe-to-package';
   static const String userPackageDetailsUrl = '${baseUrl}get-add-data/';
   static const String addAddsUrl = '${baseUrl}add-ad';
+  static const String paymobPayUrl = '${baseUrl}paymob-pay';
+  static const String requestWithdrawUrl = '${baseUrl}request-withdraw';
+  static const String paymobCallbackUrl = '${baseUrl}paymob-callback';
+  static const String getMyTransactionUrl = '${baseUrl}get-my-transaction';
 }
