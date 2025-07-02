@@ -416,6 +416,8 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                 ),
 
 
+
+
                                                 SizedBox(
                                                   width: 100.w,
                                                 ),
