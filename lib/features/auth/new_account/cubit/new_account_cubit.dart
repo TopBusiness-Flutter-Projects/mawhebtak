@@ -21,6 +21,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
   GetCountriesMainModelData? selectedUserSubType;
   MainRegisterUserTypes? userTypeList;
   MainRegisterUserTypes? userSubTypeList;
+  String countryCode = '+20';
 
   getDataUserType(BuildContext context,
       {GetCountriesMainModelData? userTypeModel, bool? isEditProfile}) async {
@@ -81,7 +82,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
         emailAddressController.text,
         fullNameController.text,
         passwordController.text,
-        mobileNumberController.text,
+        countryCode + mobileNumberController.text,
         selectedUserType?.id?.toString(),
         selectedUserSubType?.id?.toString());
     response.fold((l) {
