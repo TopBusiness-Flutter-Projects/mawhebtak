@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
@@ -102,12 +103,19 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
   DefaultMainModel? defaultMainModel;
 
   void addAdds(BuildContext context, {required String id}) async {
+    if (uploadedImage == null || !uploadedImage!.existsSync()) {
+      Fluttertoast.showToast(msg: "please_select_image".tr());
+      return;
+    }
+
     AppWidgets.create2ProgressDialog(context);
+
     final res = await api.addAdds(
-        id: id,
-        fromDate: DateFormat('yyyy-MM-dd', 'en').format(fromData),
-        toDate: DateFormat('yyyy-MM-dd', 'en').format(toDate),
-        image: uploadedImage ?? File(''));
+      id: id,
+      fromDate: DateFormat('yyyy-MM-dd', 'en').format(fromData),
+      toDate: DateFormat('yyyy-MM-dd', 'en').format(toDate),
+      image: uploadedImage!,
+    );
 
     res.fold((l) {
       errorGetBar(l.toString());
@@ -115,14 +123,18 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
     }, (r) {
       if (r.status == 422) {
         errorGetBar(r.msg ?? '');
+        Navigator.pop(context);
       } else {
         defaultMainModel = r;
         successGetBar(r.msg ?? '');
         getUserPackageData();
         uploadedImage = null;
+        toDate == DateTime.now();
+        fromData == DateTime.now();
         Navigator.pop(context);
       }
       emit(SuccessAddAdsState());
     });
   }
+
 }

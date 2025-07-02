@@ -332,5 +332,11 @@
   "end_date_must_be_after_start_date": "تاريخ الانتهاء يجب أن يكون بعد تاريخ البداية",
   "please_select_image": "يرجى اختيار صورة",
   "maintenance_mode_title": "وضع الصيانة",
+  "pull": "سحب",
+  "deposit": "ايداع",
+  "count": "العدد",
+  "current_balance": "رصيدك الحالي",
+  "electronic_wallet": "المحفظة الالكترونية",
+  "enter_price": "ادخل السعر",
   "maintenance_mode_description": "التطبيق حالياً تحت الصيانة.\nنحن نعمل على تحسين تجربتك. يرجى العودة لاحقاً."
 }

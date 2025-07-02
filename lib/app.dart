@@ -8,6 +8,7 @@ import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart
 import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart';
 import 'package:mawhebtak/features/auth/splash/screens/splash_screen.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
+import 'package:mawhebtak/features/electronic_wallet/cubit/electronic_wallet_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/screens/details_of_post.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
@@ -73,6 +74,8 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<MoreCubit>(),
+          ),BlocProvider(
+            create: (_) => injector.serviceLocator<ElectronicWalletCubit>(),
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<NotificationCubit>(),

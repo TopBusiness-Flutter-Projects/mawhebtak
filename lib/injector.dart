@@ -11,6 +11,8 @@ import 'package:mawhebtak/features/auth/on_boarding/cubit/onboarding_cubit.dart'
 import 'package:mawhebtak/features/auth/splash/cubit/cubit.dart';
 import 'package:mawhebtak/features/calender/data/repos/calender.repo.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
+import 'package:mawhebtak/features/electronic_wallet/cubit/electronic_wallet_cubit.dart';
+import 'package:mawhebtak/features/electronic_wallet/data/repos/electronic_wallet_repo.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/data/repository/feeds_repository.dart';
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
@@ -65,6 +67,10 @@ Future<void> setupCubit() async {
   );
   serviceLocator.registerFactory(
     () => LoginCubit(
+      serviceLocator(),
+    ),
+  );  serviceLocator.registerFactory(
+    () => ElectronicWalletCubit(
       serviceLocator(),
     ),
   );
@@ -187,6 +193,7 @@ Future<void> setupRepo() async {
   serviceLocator.registerLazySingleton(() => LoginRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => PackagesRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => MainRepo(serviceLocator()));
+  serviceLocator.registerLazySingleton(() => ElectronicWalletRepo(serviceLocator()));
   serviceLocator.registerLazySingleton(() => HomeRepository(serviceLocator()));
   serviceLocator.registerLazySingleton(() => SearchRepo(serviceLocator()));
   serviceLocator

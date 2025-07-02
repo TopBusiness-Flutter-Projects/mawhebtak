@@ -19,6 +19,7 @@ import 'package:mawhebtak/features/casting/screens/details_of_main_category_gigs
 import 'package:mawhebtak/features/casting/screens/details_of_main_category_top_talents.dart';
 import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
+import 'package:mawhebtak/features/electronic_wallet/screens/electronic_wallet_screen.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/request_gigs_screen.dart';
 import 'package:mawhebtak/features/home/screens/top_talents_screen.dart';
@@ -111,6 +112,7 @@ class Routes {
   static const String myAdvertismentRoute = '/myAdvertismentRoute';
   static const String packagesRoute = '/packagesRoute';
   static const String subscribtionRoute = '/subscribtionRoute';
+  static const String electronicWalletRoute = '/electronicWalletRoute';
 
   static const String detailsOfMainCategoryFromGigsRoute =
       '/detailsOfMainCategoryFromGigs';
@@ -198,6 +200,12 @@ class AppRoutes {
       case Routes.newGigsRoute:
         return PageTransition(
           child: const NewGigsScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );case Routes.electronicWalletRoute:
+        return PageTransition(
+          child:  const ElectronicWalletScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),

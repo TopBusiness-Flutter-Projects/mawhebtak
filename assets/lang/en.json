@@ -334,5 +334,10 @@
   "end_date_must_be_after_start_date": "End date must be after start date",
   "please_select_image": "Please select an image",
   "maintenance_mode_title": "Maintenance Mode",
+  "pull": "Pull",
+  "current_balance": "Current Balance",
+  "deposit": "Deposit",
+  "enter_price": "enter price",
+  "electronic_wallet": "Electronic Wallet",
   "maintenance_mode_description": "The app is currently under maintenance.\nWe are working to improve your experience. Please check back later."
 }

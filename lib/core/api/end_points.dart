@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class EndPoints {
   static const String baseUrl =
-      'https://mawhebtak.topbusiness.ebharbook.com/api/v1/';
+      'http://192.168.1.18:8000/api/v1/';
   // kReleaseMode
   //     ? 'https://mawhebtak.topbusiness.ebharbook.com/api/v1/'
   //     : 'http://192.168.1.18:8000/api/v1/';
@@ -54,4 +54,8 @@ class EndPoints {
   static const String subscribeToPackageUrl = '${baseUrl}subscribe-to-package';
   static const String userPackageDetailsUrl = '${baseUrl}get-add-data/';
   static const String addAddsUrl = '${baseUrl}add-ad';
+  // الدفع
+  static const String paymobPayUrl = '${baseUrl}paymob-pay';
+
+  static const String paymobCallbackUrl = '${baseUrl}paymob-callback';
 }

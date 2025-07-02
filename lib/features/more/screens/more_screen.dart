@@ -109,7 +109,9 @@ class _MoreScreenState extends State<MoreScreen> {
                         moreContainer(
                             text: "wallet".tr(),
                             imageUrl: AppIcons.walletIcon,
-                            onTap: () {}),
+                            onTap: () {
+                              Navigator.pushNamed(context, Routes.electronicWalletRoute);
+                            }),
                         moreContainer(
                             text: "referral_code".tr(),
                             imageUrl: AppIcons.referralCode,

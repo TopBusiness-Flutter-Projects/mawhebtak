@@ -119,7 +119,6 @@ class AddAdvertismentScreen extends StatelessWidget {
                 child: CustomButton(
                   title: "send".tr(),
                   onTap: () {
-
                     if (cubit.fromData.isAfter(cubit.toDate)) {
                       Fluttertoast.showToast(msg: "start_date_must_be_before_end_date".tr());
                       return;
