@@ -351,5 +351,6 @@
   "no_process": "No transactions available",
   "egp": "EGP",
   "electronic_wallet": "Electronic Wallet",
-  "maintenance_mode_description": "The app is currently under maintenance.\nWe are working to improve your experience. Please check back later."
+  "maintenance_mode_description": "The app is currently under maintenance.\nWe are working to improve your experience. Please check back later.",
+  "no_posts": "No Posts"
 }
