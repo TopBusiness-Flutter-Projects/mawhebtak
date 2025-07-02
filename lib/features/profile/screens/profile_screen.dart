@@ -316,7 +316,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           itemCount: gigs.length,
           itemBuilder: (context, index) {
             return GigsWidget(
-              index: index,
               isFromDetails: false,
               eventAndGigsModel: gigs[index],
               castingCubit: castingCubit,

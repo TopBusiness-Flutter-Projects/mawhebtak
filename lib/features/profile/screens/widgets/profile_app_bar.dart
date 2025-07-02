@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../../core/exports.dart';
-import '../../../main_screen/cubit/cubit.dart';
+import '../../../main/cubit/cubit.dart';
 
 class ProfileAppBar extends StatelessWidget {
   ProfileAppBar({

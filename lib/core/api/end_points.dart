@@ -52,4 +52,6 @@ class EndPoints {
   static const String searchRoute = '${baseUrl}search';
   static const String toggleDeleteAccount = '${baseUrl}toggle-delete-account';
   static const String subscribeToPackageUrl = '${baseUrl}subscribe-to-package';
+  static const String userPackageDetailsUrl = '${baseUrl}get-add-data/';
+  static const String addAddsUrl = '${baseUrl}add-ad';
 }

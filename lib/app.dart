@@ -15,11 +15,11 @@ import 'package:mawhebtak/features/home/cubits/notifications_cubit/notification_
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/notification_screen.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
-import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
+import 'package:mawhebtak/features/main/cubit/cubit.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:mawhebtak/features/auth/new_password/cubit/new_password_cubit.dart';
-import 'package:mawhebtak/features/more_screen/cubit/more_cubit.dart';
-import 'package:mawhebtak/features/my_advertiment_screen/cubit/cubit.dart';
+import 'package:mawhebtak/features/more/cubit/more_cubit.dart';
+import 'package:mawhebtak/features/my_advertiment/cubit/cubit.dart';
 import 'package:mawhebtak/features/packages/cubit/cubit.dart';
 import 'package:mawhebtak/features/profile/screens/profile_screen.dart';
 import 'package:mawhebtak/features/referral_code/cubit/referral_code_cubit.dart';

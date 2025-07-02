@@ -1,14 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
-import 'package:mawhebtak/features/home/cubits/home_cubit/home_cubit.dart';
-import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
-import 'package:mawhebtak/features/main_screen/cubit/cubit.dart';
+import 'package:mawhebtak/features/main/cubit/cubit.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
-import '../../../main_screen/cubit/state.dart';
+import '../../../main/cubit/state.dart';
 
 class CustomAppBarRow extends StatefulWidget {
   CustomAppBarRow(

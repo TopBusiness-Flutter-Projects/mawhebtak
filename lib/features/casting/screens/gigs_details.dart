@@ -59,7 +59,6 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
                               color: AppColors.white,
                               child: GigsWidget(
                                 isFromDetails: true,
-                                index: 1,
                                 castingCubit: castingCubit,
                                 eventAndGigsModel:
                                     castingCubit.getDetailsGigsModel?.data,
@@ -130,8 +129,8 @@ class _GigsDetailsScreenState extends State<GigsDetailsScreen> {
                               onTap: () {
                                 castingCubit.deleteGigs(
                                     gigId: widget.id?.id ?? '',
-                                    isDetails:true,
                                     context: context);
+
                               })
                       ],
                     ),

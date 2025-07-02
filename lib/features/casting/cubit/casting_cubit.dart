@@ -286,6 +286,7 @@ class CastingCubit extends Cubit<CastingState> {
                       .toString() ??
                   "");
           Navigator.pop(context);
+
           emit(AddNewGigStateLoaded());
         } else {
           errorGetBar(r.msg.toString());
@@ -308,35 +309,19 @@ class CastingCubit extends Cubit<CastingState> {
   deleteGigs(
       {required String gigId,
       required BuildContext context,
-      bool? isDetails = false,
-      int? index}) async {
+     }) async {
     emit(DeleteGigsStateLoading());
     try {
       final res = await castingRepo.deleteGigs(gigId);
       res.fold((l) {
-        Navigator.pop(context);
-
-        errorGetBar(l.toString());
         emit(DeleteGigsStateError());
       }, (r) {
         if (r.status == 200) {
           successGetBar(r.msg.toString());
-          allGigsModel?.data?.removeAt(index!);
-          context
-              .read<ProfileCubit>()
-              .profileModel
-              ?.data
-              ?.myGigs
-              ?.removeAt(index!);
-          if (isDetails == true) {
-            Navigator.pop(context);
-          }
-
+          Navigator.pushNamed(context, Routes.mainRoute);
           emit(DeleteGigsStateLoaded());
-        } else {
-          errorGetBar(r.msg.toString());
-          emit(DeleteGigsStateError());
         }
+
       });
     } catch (e) {
       errorGetBar(e.toString());
