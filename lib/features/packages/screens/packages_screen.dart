@@ -1,4 +1,6 @@
 
+import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/core/utils/check_login.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
 import 'package:mawhebtak/features/packages/cubit/state.dart';
@@ -61,10 +63,15 @@ class _PackagesScreenState extends State<PackagesScreen> {
                                       child: Text('cancel'.tr()),
                                     ),
                                     TextButton(
-                                      onPressed: (){
-                                        cubit.subscribeToPackage(
-                                            context: context,
-                                            packageId: cubit.packagesModel?.data?[index].id.toString() ?? '');
+                                      onPressed: ()async{
+                                        final user = await Preferences.instance.getUserModel();
+                                        if (user.data?.token == null) {
+                                          checkLogin(context);
+                                        } else {
+                                          cubit.subscribeToPackage(
+                                              context: context,
+                                              packageId: cubit.packagesModel?.data?[index].id.toString() ?? '');
+                                        }
                                       },
                                       child: Text('confirm'.tr()),
                                     ),

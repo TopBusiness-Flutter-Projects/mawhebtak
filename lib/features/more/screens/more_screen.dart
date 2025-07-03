@@ -60,7 +60,8 @@ class _MoreScreenState extends State<MoreScreen> {
                   Expanded(
                     child: ListView(
                       children: [
-                        moreContainer(
+                        if(context.read<MoreCubit>().user?.data?.token != null)
+                          moreContainer(
                             text: "my_profile".tr(),
                             imageUrl: AppIcons.myProfileIcon,
                             onTap: () async {
@@ -84,14 +85,18 @@ class _MoreScreenState extends State<MoreScreen> {
                                 );
                               }
                             }),
-                        moreContainer(
+                        if(context.read<MoreCubit>().user?.data?.token != null)
+
+                          moreContainer(
                             text: "my_favorites".tr(),
                             imageUrl: AppIcons.myFavoriteIcon,
                             onTap: () {
                               Navigator.pushNamed(
                                   context, Routes.favouritesRoute);
                             }),
-                        moreContainer(
+                        if(context.read<MoreCubit>().user?.data?.token != null)
+
+                          moreContainer(
                             text: "chats".tr(),
                             imageUrl: AppIcons.chatIcon,
                             onTap: () async {
@@ -105,14 +110,18 @@ class _MoreScreenState extends State<MoreScreen> {
                               }
                             }),
                         //TODO
+                        if(context.read<MoreCubit>().user?.data?.token != null)
 
                         moreContainer(
                             text: "wallet".tr(),
                             imageUrl: AppIcons.walletIcon,
                             onTap: () {
-                              Navigator.pushNamed(context, Routes.electronicWalletRoute);
+                              Navigator.pushNamed(
+                                  context, Routes.electronicWalletRoute);
                             }),
-                        moreContainer(
+                        if(context.read<MoreCubit>().user?.data?.token != null)
+
+                          moreContainer(
                             text: "referral_code".tr(),
                             imageUrl: AppIcons.referralCode,
                             onTap: () {
@@ -126,7 +135,9 @@ class _MoreScreenState extends State<MoreScreen> {
                               Navigator.pushNamed(
                                   context, Routes.changeLanguageRoute);
                             }),
-                        moreContainer(
+                        if(context.read<MoreCubit>().user?.data?.token != null)
+
+                          moreContainer(
                             text: "change_password".tr(),
                             imageUrl: AppIcons.changePassword,
                             onTap: () {
@@ -154,6 +165,7 @@ class _MoreScreenState extends State<MoreScreen> {
                               Navigator.pushNamed(
                                   context, Routes.subscribtionRoute);
                             }),
+                        if(context.read<MoreCubit>().user?.data?.token != null)
                         moreContainer(
                             text: "complaining".tr(),
                             imageUrl: AppIcons.complaingIcon,
@@ -169,7 +181,8 @@ class _MoreScreenState extends State<MoreScreen> {
                               Navigator.pushNamed(
                                   context, Routes.termsAndConditionRoute);
                             }),
-                        moreContainer(
+                        if(context.read<MoreCubit>().user?.data?.token != null)
+                          moreContainer(
                           text: "delete_account".tr(),
                           imageUrl: AppIcons.deleteAccountIcon,
                           onTap: () {
@@ -180,6 +193,8 @@ class _MoreScreenState extends State<MoreScreen> {
                             });
                           },
                         ),
+
+                        if(context.read<MoreCubit>().user?.data?.token != null)
                         moreContainer(
                           text: "logout".tr(),
                           imageUrl: AppIcons.logout,
@@ -188,10 +203,19 @@ class _MoreScreenState extends State<MoreScreen> {
                               context
                                   .read<MoreCubit>()
                                   .logout(context: context);
+                              Preferences.instance.clearShared();
                             });
                           },
                         ),
-                        SizedBox(
+                        if(context.read<MoreCubit>().user?.data?.token == null)
+                          moreContainer(
+                            text: "login".tr(),
+                            imageUrl:AppIcons.logout ,
+                            onTap: () {
+                             Navigator.pushNamed(context, Routes.loginRoute);
+                            },
+                          ),
+                          SizedBox(
                           height: 50.h,
                         ),
                       ],

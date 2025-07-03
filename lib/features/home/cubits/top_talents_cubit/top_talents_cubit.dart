@@ -158,6 +158,9 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       res.fold((l) {
         emit(FollowAndUnFollowStateError(l.toString()));
       }, (r) {
+        updateFollowStatus(topTalents?.data, item);
+        updateFollowStatus( context.read<HomeCubit>().homeModel?.data?.topTalents,
+          item,);
         context.read<HomeCubit>().homeData();
         successGetBar(r.msg ?? "");
         if (item != null) {
@@ -167,9 +170,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
           } else {
             item.followersCount = (item.followersCount ?? 0) - 1;
           }
-          updateFollowStatus(topTalents?.data, item);
-          updateFollowStatus( context.read<HomeCubit>().homeModel?.data?.topTalents,
-            item,);
+
 
         }
         if (index != null) {
@@ -206,7 +207,6 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
         orderBy: orderBy,
         followedId: followedId,
       );
-
       res.fold((l) {
         emit(GetFollowersStateError(l.toString()));
       }, (r) {

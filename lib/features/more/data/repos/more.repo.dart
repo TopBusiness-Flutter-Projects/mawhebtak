@@ -65,6 +65,7 @@ class MoreRepo {
         'key': 'logout',
         'device_token': deviceToken,
       });
+      print('5555555555555555$deviceToken');
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());

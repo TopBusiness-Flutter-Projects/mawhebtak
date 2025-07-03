@@ -33,13 +33,18 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
         return BlocBuilder<TopTalentsCubit, TopTalentsState>(
             builder: (context, state) {
           return GestureDetector(
-             onTap: () {
-               Navigator.pushNamed(context, Routes.profileRoute,
-                 arguments: DeepLinkDataModel(
-               id: widget.topTalentsData?.id.toString() ??
-                   '',
-               isDeepLink: false),
-               );
+             onTap: () async{
+               final user = await Preferences.instance.getUserModel();
+               if (user.data?.token == null) {
+                 checkLogin(context);
+               } else {
+                 Navigator.pushNamed(context, Routes.profileRoute,
+                   arguments: DeepLinkDataModel(
+                       id: widget.topTalentsData?.id.toString() ??
+                           '',
+                       isDeepLink: false),
+                 );
+               }
              },
             child: Padding(
               padding: EdgeInsetsDirectional.only(start: 10.w, end: 5.w),
