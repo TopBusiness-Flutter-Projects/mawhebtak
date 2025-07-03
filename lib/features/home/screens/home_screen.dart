@@ -52,8 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
-          var homeDataCubit = context.read<HomeCubit>();
-          var homeData = homeDataCubit.homeModel?.data;
+          var homeData = context.read<HomeCubit>().homeModel?.data;
           if (state is HomeStateLoading && homeData == null) {
             return const Center(child: CustomLoadingIndicator());
           } else if (state is HomeStateError) {
@@ -69,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.homeColor,
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    await homeDataCubit.homeData();
+                    await context.read<HomeCubit>().homeData();
                   },
                   child: ListView(
                     children: [
@@ -137,45 +136,51 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Padding(
                                 padding: EdgeInsets.only(top: 5.h),
                                 child: CustomAppBarRow(
-                                    readNotification: homeData?.seeAllNotification,
+                                    readNotification:
+                                        homeData?.seeAllNotification,
                                     color: AppColors.transparent),
                               )),
                         ],
                       ),
                       SizedBox(height: 10.h),
-                      if (homeData?.topTalents?.isNotEmpty ?? false)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomRow(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, Routes.topTalentsRoute);
-                              },
-                              text: 'top_talent'.tr(),
-                            ),
-                            8.h.verticalSpace,
-                            Container(
-                              height: 184.h,
-                              alignment: AlignmentDirectional.centerStart,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: homeData?.topTalents?.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  return CustomTopTalentsList(
-                                    topTalentsCubit:
-                                        context.read<TopTalentsCubit>(),
-                                    topTalentsData:
-                                        homeData?.topTalents?[index],
-                                    index: index,
-                                  );
-
-
+                      BlocBuilder<TopTalentsCubit, TopTalentsState>(
+                          builder: (context, state) {
+                        var cubit = context.read<TopTalentsCubit>();
+                        if (cubit.topTalents?.data?.length == 0) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomRow(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.topTalentsRoute);
                                 },
+                                text: 'top_talent'.tr(),
                               ),
-                            ),
-                          ],
-                        ),
+                              8.h.verticalSpace,
+                              Container(
+                                height: 184.h,
+                                alignment: AlignmentDirectional.centerStart,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                      cubit.topTalents?.data?.length ?? 0,
+                                  itemBuilder: (context, index) {
+                                    return CustomTopTalentsList(
+                                      topTalentsCubit: cubit,
+                                      topTalentsData:
+                                          cubit.topTalents?.data?[index],
+                                      index: index,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      }),
                       if (homeData?.topEvents?.isNotEmpty ?? false)
                         Column(
                           children: [

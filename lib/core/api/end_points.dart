@@ -24,6 +24,7 @@ class EndPoints {
   static const String addReview = '${baseUrl}add-review';
   //! add event
   static const String getDataBaseUrl = '${baseUrl}get-data';
+  static const String getNotificationUrl = '${baseUrl}get-notifications';
   static const String storeDataUrl = '${baseUrl}store-data';
   static const String updateDataUrl = '${baseUrl}update-data';
   //! delete

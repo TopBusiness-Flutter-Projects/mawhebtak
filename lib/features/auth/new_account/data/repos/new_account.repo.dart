@@ -1,9 +1,5 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/api/base_api_consumer.dart';
-
 import '../../../../../core/api/end_points.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
@@ -17,12 +13,13 @@ class NewAccount {
 
   //registerUrl
   Future<Either<Failure, LoginModel>> register(
-      String email,
-      String name,
-      String password,
-      String phone,
-      String? userTypeId,
-      String? userSubTypeId) async {
+      {
+     required String email,
+        required String name,
+        required  String password,
+        required  String phone,
+        required String? userTypeId,
+        required String? userSubTypeId}) async {
     try {
       final deviceToken = await Preferences.instance.getDeviceToken();
 

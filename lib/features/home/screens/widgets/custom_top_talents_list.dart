@@ -38,7 +38,8 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
                  arguments: DeepLinkDataModel(
                id: widget.topTalentsData?.id.toString() ??
                    '',
-               isDeepLink: false),);
+               isDeepLink: false),
+               );
              },
             child: Padding(
               padding: EdgeInsetsDirectional.only(start: 10.w, end: 5.w),
@@ -73,6 +74,7 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
                               checkLogin(context);
                             } else {
                               widget.topTalentsCubit?.hideTopTalent(
+                                context: context,
                                 index: widget.index,
                                 unwantedUserId: widget.topTalentsData?.id.toString() ?? "0",
                               );

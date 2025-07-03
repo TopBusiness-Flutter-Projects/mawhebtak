@@ -134,14 +134,15 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                 initialValue: cubit.countryCode,
                                 title: "phone".tr(),
                                 onCountryChanged: (v) {
+                                  print("1111111111${v.fullCountryCode}");
+
                                   cubit.countryCode = '+${v.fullCountryCode}';
-                                  debugPrint("Country changed to: ${v.name}");
                                 },
                                 onChanged: (phone) {
-                                  debugPrint(phone.completeNumber);
+                                  cubit.fullPhoneFromWidget = phone.completeNumber;
+                                  debugPrint("Full phone from widget: ${phone.completeNumber}");
                                 },
                               ),
-
                               Padding(
                                 padding:
                                     EdgeInsets.only(top: 20.h, bottom: 10.h),
@@ -184,8 +185,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                             cubit.emailAddressController.text,
                                         name: cubit.fullNameController.text,
                                         password: cubit.passwordController.text,
-                                        phone:
-                                            cubit.mobileNumberController.text,
+
                                         userTypeId: cubit.selectedUserType?.id
                                                 ?.toString() ??
                                             '',

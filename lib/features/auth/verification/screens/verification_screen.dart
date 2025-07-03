@@ -176,7 +176,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   email: cubitx.emailAddressController.text,
                                   name: cubitx.fullNameController.text,
                                   password: cubitx.passwordController.text,
-                                  phone: cubitx.mobileNumberController.text,
                                   userTypeId:
                                       cubitx.selectedUserType?.id?.toString() ??
                                           '',
