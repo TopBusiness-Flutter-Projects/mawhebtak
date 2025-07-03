@@ -27,7 +27,7 @@ class CustomPhoneFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 20.w),
+      padding: EdgeInsets.symmetric( horizontal: 10.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,7 +35,7 @@ class CustomPhoneFormField extends StatelessWidget {
             Text(
               title!,
               style: getMediumStyle(
-                  color: AppColors.secondPrimary, fontSize: 14.sp),
+                  color: AppColors.black, fontSize: 14.sp),
             ),
             SizedBox(height: 1.h),
           ],

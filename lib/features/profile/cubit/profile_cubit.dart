@@ -20,7 +20,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   List<String>? gender = ['male', 'female'];
   String? selectedGender;
   double? review;
-
+  String? fullPhoneFromWidget;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController headlineController = TextEditingController();
@@ -101,6 +101,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
   }
+  String countryCode = '+20';
 
   bool isLoadingMore = false;
   ProfileModel? profileModel;
@@ -116,6 +117,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(GetProfileStateError(l.toString()));
       }, (r) async {
         if (r.status == 200) {
+
           isShowPhone = profileModel?.data?.isPhoneHidden == 0;
           profileModel = r;
           emit(GetProfileStateLoaded());
@@ -184,12 +186,13 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> updateProfileData(
       {required BuildContext context, required String profileId}) async {
     AppWidgets.create2ProgressDialog(context);
-    emit(UpdateProfileStateLoading());
+    String fullPhone = fullPhoneFromWidget ??
+        '$countryCode${phoneController.text.trim()}';
     try {
       final res = await api.updateProfileData(
         isPhoneHidden: isShowPhone ? 0 : 1,
         name: nameController.text.isEmpty ? null : nameController.text,
-        phone: phoneController.text.isEmpty ? null : phoneController.text,
+        phone: fullPhone,
         userSubTypeId:
             context.read<NewAccountCubit>().selectedUserSubType?.id.toString(),
         avatar: avatarImage != null && await avatarImage!.exists()
