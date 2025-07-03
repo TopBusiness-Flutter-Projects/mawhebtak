@@ -11,6 +11,7 @@ import 'state.dart';
 
 class MainCubit extends Cubit<MainState> {
   MainCubit(this.api) : super(MainInitial()) {
+    int currentpage = 0;
     getUserData();
   }
   MainRepo api;
