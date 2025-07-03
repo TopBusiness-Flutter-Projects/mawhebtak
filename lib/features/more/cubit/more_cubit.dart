@@ -32,6 +32,7 @@ class MoreCubit extends Cubit<MoreState> {
     user = await Preferences.instance.getUserModel();
   }
   saveData() {
+    print('user phone ${user?.data?.phone}');
     phoneNumberController.text = user?.data?.phone ?? "";
   }
 

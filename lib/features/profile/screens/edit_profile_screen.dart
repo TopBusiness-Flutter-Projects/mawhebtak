@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
+import 'package:mawhebtak/core/widgets/custom_phone_formfield.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
@@ -223,25 +224,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             cubit.toggleShowPhone(value);
           },
         ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-                Text(
-                "phone".tr(),
-                style: TextStyle(color: AppColors.darkGray, fontSize: 16.sp),
-              ),
-              CustomTextField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'please_enter_phone'.tr();
-                  }
-                  return null;
-                },
-                controller: cubit.phoneController,
-                hintTextSize: 16.sp,
-              ),
-            ],
-          ),
+        CustomPhoneFormField(
+          controller: cubit.phoneController,
+          initialValue: cubit.countryCode,
+          title: "phone".tr(),
+          onCountryChanged: (v) {
+            cubit.countryCode = '+${v.fullCountryCode}';
+          },
+          onChanged: (phone) {
+            cubit.fullPhoneFromWidget = phone.completeNumber;
+            debugPrint("Full phone from widget: ${phone.completeNumber}");
+          },
+        ),
       ],
     );
   }
