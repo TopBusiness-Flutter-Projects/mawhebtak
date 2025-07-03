@@ -1,6 +1,7 @@
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
+import 'package:mawhebtak/core/widgets/custom_phone_formfield.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
 import 'package:mawhebtak/features/auth/new_account/screens/widgets/role_selection_widget.dart';
@@ -128,17 +129,19 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                       fontSize: 18.sp),
                                 ),
                               ),
-                              CustomTextField(
-                                hintTextSize: 16.sp,
+                              CustomPhoneFormField(
                                 controller: cubit.mobileNumberController,
-                                hintText: "01xxxxxxxx",
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'please_enter_phone_number'.tr();
-                                  }
-                                  return null;
+                                initialValue: cubit.countryCode,
+                                title: "phone".tr(),
+                                onCountryChanged: (v) {
+                                  cubit.countryCode = '+${v.fullCountryCode}';
+                                  debugPrint("Country changed to: ${v.name}");
+                                },
+                                onChanged: (phone) {
+                                  debugPrint(phone.completeNumber);
                                 },
                               ),
+
                               Padding(
                                 padding:
                                     EdgeInsets.only(top: 20.h, bottom: 10.h),
