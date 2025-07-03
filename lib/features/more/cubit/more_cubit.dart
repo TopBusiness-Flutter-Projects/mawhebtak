@@ -34,6 +34,8 @@ class MoreCubit extends Cubit<MoreState> {
   saveData() {
     print('user phone ${user?.data?.phone}');
     phoneNumberController.text = user?.data?.phone ?? "";
+    print("ppppppppppppp${user?.data?.token}");
+
   }
 
   SettingModel? settingModel;
@@ -258,6 +260,7 @@ class MoreCubit extends Cubit<MoreState> {
           successGetBar('logout_successfully'.tr());
           Navigator.pushNamedAndRemoveUntil(
               context, Routes.loginRoute, (route) => false);
+
         } else {
           Navigator.pushNamedAndRemoveUntil(
               context, Routes.loginRoute, (route) => false);

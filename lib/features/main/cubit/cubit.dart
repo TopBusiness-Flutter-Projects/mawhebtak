@@ -1,8 +1,4 @@
-import 'dart:developer';
-
-import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/more/screens/more_screen.dart';
-
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../auth/login/data/models/login_model.dart';
@@ -35,7 +31,6 @@ class MainCubit extends Cubit<MainState> {
   LoginModel? loginModel;
 
   void getUserData() {
-    log('sssssssss');
     Preferences.instance.getUserModel().then((value) {
       loginModel = value;
     });

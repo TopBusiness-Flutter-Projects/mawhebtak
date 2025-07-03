@@ -1,8 +1,10 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
+import '../../../core/utils/check_login.dart';
 import '../../../core/utils/filter.dart';
 import '../../home/screens/widgets/custom_announcement_widget.dart';
 
@@ -230,8 +232,13 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, Routes.newAnnouncementScreen);
+        onPressed: () async {
+          final user = await Preferences.instance.getUserModel();
+          if (user.data?.token == null) {
+            checkLogin(context);
+          } else {
+            Navigator.pushNamed(context, Routes.newAnnouncementScreen);
+          }
         },
         backgroundColor: Colors.transparent,
         elevation: 0,

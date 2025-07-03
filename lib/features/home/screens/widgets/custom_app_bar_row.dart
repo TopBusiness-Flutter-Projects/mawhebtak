@@ -48,14 +48,20 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        Routes.profileRoute,
-                        arguments: DeepLinkDataModel(
-                            id: cubit.loginModel?.data?.id?.toString() ?? "",
-                            isDeepLink: false),
-                      );
+                    onTap: () async{
+                      final user = await Preferences.instance.getUserModel();
+                      if (user.data?.token == null) {
+                        checkLogin(context);
+                      } else {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.profileRoute,
+                          arguments: DeepLinkDataModel(
+                              id: cubit.loginModel?.data?.id?.toString() ?? "",
+                              isDeepLink: false),
+                        );
+                      }
+
                     },
                     child: SizedBox(
                       height: 40.h,
