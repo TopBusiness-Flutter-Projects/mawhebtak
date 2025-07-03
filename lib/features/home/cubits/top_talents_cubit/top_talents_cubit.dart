@@ -162,7 +162,6 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
         updateFollowStatus( context.read<HomeCubit>().homeModel?.data?.topTalents,
           item,);
         context.read<HomeCubit>().homeData();
-        successGetBar(r.msg ?? "");
         if (item != null) {
           item.isIFollow = !(item.isIFollow ?? false);
           if (item.isIFollow == true) {
@@ -170,8 +169,6 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
           } else {
             item.followersCount = (item.followersCount ?? 0) - 1;
           }
-
-
         }
         if (index != null) {
           followerAndFollowingModel?.data?[index].isIFollow =

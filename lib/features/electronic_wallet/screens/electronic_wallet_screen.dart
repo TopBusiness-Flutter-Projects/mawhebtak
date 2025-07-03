@@ -337,6 +337,7 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                 0)
                             ? Center(child: Text("no_process".tr()))
                             : ListView.builder(
+
                                 itemBuilder: (context, index) => Container(
                                     padding: EdgeInsets.all(
                                       10.sp * textScaleFactor(context),
@@ -369,7 +370,7 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                             ),
                                           ),
                                         ),
-                                        
+
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
