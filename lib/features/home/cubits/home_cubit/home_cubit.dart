@@ -43,12 +43,6 @@ class HomeCubit extends Cubit<HomeState> {
         emit(HomeStateError(l.toString()));
       }, (r) {
         homeModel = r;
-        // if(r.data?.topTalents?[index].isIFollow == true){
-        //   r.data?.topTalents?[index].isIFollow == true
-        // }
-        // else{
-        //   r.data?.topTalents?[index].isIFollow == true
-        // }
         emit(HomeStateLoaded(r));
       });
     } catch (e) {
@@ -56,7 +50,10 @@ class HomeCubit extends Cubit<HomeState> {
       return null;
     }
   }
-
+  void removeTalentById(String id) {
+    homeModel?.data?.topTalents?.removeWhere((e) => e.id == id);
+    emit(HomeStateLoaded(homeModel!));
+  }
 
 
 

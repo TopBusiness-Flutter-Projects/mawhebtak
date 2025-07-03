@@ -76,15 +76,24 @@ class NewAccountCubit extends Cubit<NewAccountState> {
     });
   }
 
+  String? fullPhoneFromWidget;
   register(BuildContext context) async {
     emit(LoadingAddNewAccountState());
+
+    String fullPhone = fullPhoneFromWidget ??
+        '$countryCode${mobileNumberController.text.trim()}'; // fallback if needed
+
+    log('PHONE SENT: $fullPhone');
+
     var response = await api.register(
-        emailAddressController.text,
-        fullNameController.text,
-        passwordController.text,
-        countryCode + mobileNumberController.text,
-        selectedUserType?.id?.toString(),
-        selectedUserSubType?.id?.toString());
+      email: emailAddressController.text,
+      name: fullNameController.text,
+      password: passwordController.text,
+      phone: fullPhone,
+      userTypeId: selectedUserType?.id?.toString(),
+      userSubTypeId: selectedUserSubType?.id?.toString(),
+    );
+
     response.fold((l) {
       emit(ErrorAddNewAccountState('error_msg'.tr()));
     }, (r) async {
@@ -92,7 +101,6 @@ class NewAccountCubit extends Cubit<NewAccountState> {
         successGetBar(r.msg);
         Navigator.pop(context);
         if (r.data?.isRegister == 1) {
-          log(" Register");
           Navigator.pushReplacementNamed(context, Routes.addReferralCodeRoute);
         } else {
           Navigator.pushReplacementNamed(context, Routes.mainRoute);
@@ -107,7 +115,6 @@ class NewAccountCubit extends Cubit<NewAccountState> {
         emit(LoadedAddNewAccountState());
       } else {
         errorGetBar(r.msg ?? '');
-
         emit(ErrorAddNewAccountState('error_msg'.tr()));
       }
     });

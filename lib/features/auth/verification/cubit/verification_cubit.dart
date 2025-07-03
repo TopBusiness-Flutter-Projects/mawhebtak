@@ -42,26 +42,38 @@ class VerificationCubit extends Cubit<VerificationState> {
   }
 
   validateData(
-    BuildContext context, {
-    required String email,
-    required String name,
-    required String password,
-    required String phone,
-    required String userTypeId,
-    required String userSubTypeId,
-  }) async {
+      BuildContext context, {
+        required String email,
+        required String name,
+        required String password,
+        required String userTypeId,
+        required String userSubTypeId,
+      }) async {
     AppWidgets.create2ProgressDialog(context);
     emit(ValidateDataStateLoading());
+
     try {
+      final newAccountCubit = context.read<NewAccountCubit>();
+
+      // خُد الرقم الكامل من المتغير اللي اتخزن في onChanged
+      String fullPhone = newAccountCubit.fullPhoneFromWidget ??
+          '${newAccountCubit.countryCode}${newAccountCubit.mobileNumberController.text.trim()}';
+
       final res = await api.validateData(
-          email, name, password, phone, userTypeId, userSubTypeId);
+        email,
+        name,
+        password,
+        fullPhone, // هنا التغيير المهم
+        userTypeId,
+        userSubTypeId,
+      );
+
       res.fold((l) {
         emit(ValidateDataStateError());
       }, (r) {
         if (r.status == 200) {
           Navigator.pop(context);
-          Navigator.pushNamed(context, Routes.verificationRoute,
-              arguments: true);
+          Navigator.pushNamed(context, Routes.verificationRoute, arguments: true);
           correctOTP = r.data?.otp.toString();
           timerDate = r.data?.otpExpired;
           emit(ValidateDataStateLoaded());
@@ -73,9 +85,8 @@ class VerificationCubit extends Cubit<VerificationState> {
       });
     } catch (e) {
       emit(ValidateDataStateError());
-
       return null;
     }
-    //!
   }
+
 }

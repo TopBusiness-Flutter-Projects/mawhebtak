@@ -231,8 +231,11 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
     }
   }
 
-  Future<void> hideTopTalent(
-      {required String unwantedUserId, required int index}) async {
+  Future<void> hideTopTalent({
+    required BuildContext context,
+    required String unwantedUserId,
+    required int index,
+  }) async {
     emit(HideTopTalentStateLoading());
     try {
       final res = await api!.hideTopTalents(unwantedUserId: unwantedUserId);
@@ -241,6 +244,9 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
         emit(HideTopTalentStateError(l.toString()));
       }, (r) {
         topTalents?.data?.removeAt(index);
+
+        context.read<HomeCubit>().removeTalentById(unwantedUserId);
+
         successGetBar(r.msg ?? "");
         emit(HideTopTalentStateLoaded());
       });
@@ -248,6 +254,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       emit(HideTopTalentStateError(e.toString()));
     }
   }
+
 
   void updateFollowStatus(List<TopTalent>? list, TopTalent? item) {
     if (list == null || item == null) return;

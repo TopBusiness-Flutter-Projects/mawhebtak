@@ -16,14 +16,7 @@ class NotificationsRepository {
 }) async {
     final user = await Preferences.instance.getUserModel();
     try {
-      var response = await dio.get(EndPoints.getDataBaseUrl,
-      queryParameters: {
-        'model':'Notification',
-        'orderBy':orderBy,
-        'paginate':true,
-        'where[1]':'user_id,${user.data?.id?.toString()}',
-        'page':page,
-      }
+      var response = await dio.get(EndPoints.getNotificationUrl,
       );
 
       return Right(NotificationModel.fromJson(response));
