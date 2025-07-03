@@ -12,6 +12,7 @@ import 'state.dart';
 class MainCubit extends Cubit<MainState> {
   MainCubit(this.api) : super(MainInitial()) {
     getUserData();
+
   }
   MainRepo api;
   List<Widget> screens = [
@@ -25,6 +26,10 @@ class MainCubit extends Cubit<MainState> {
 
   changePage(int index) {
     currentpage = index;
+    emit(ChangepageIndexx());
+  }
+  void resetToHome() {
+    currentpage = 0;
     emit(ChangepageIndexx());
   }
 

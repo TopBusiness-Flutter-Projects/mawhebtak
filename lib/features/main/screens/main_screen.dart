@@ -18,6 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     context.read<MoreCubit>().getSettingData(context);
+    context.read<MainCubit>().resetToHome();
     super.initState();
   }
 
