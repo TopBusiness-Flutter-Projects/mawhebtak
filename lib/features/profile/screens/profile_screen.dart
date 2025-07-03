@@ -209,12 +209,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               width: 35.w,
               height: 35.h,
             ),
-            onSelected: (value) {
+            onSelected: (value) async{
               if (value == 'rate') {
                 if (cubit.profileModel?.data?.isIReviewed == true) {
                   errorGetBar('you_do_review_in_this_user'.tr());
                 } else {
-                  _showRatingDialog(context, cubit);
+
+                  final user = await Preferences.instance.getUserModel();
+                  if (user.data?.token == null) {
+                    checkLogin(context);
+                  } else {
+                    _showRatingDialog(context, cubit);
+                  }
                 }
               }
             },
