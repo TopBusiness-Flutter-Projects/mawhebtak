@@ -171,6 +171,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 var cubitx = context.read<NewAccountCubit>();
                                 if (cubit.timerDate == null) {
                                   cubit.validateData(
+                                    selectedUserSubType: cubitx.selectedUserSubTypes,
+                                    countryCode: cubitx.countryCode,
                                     context,
                                     email: cubitx.emailAddressController.text,
                                     name: cubitx.fullNameController.text,

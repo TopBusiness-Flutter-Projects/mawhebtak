@@ -244,9 +244,12 @@ class _SearchScreenState extends State<SearchScreen> {
                             shrinkWrap: true,
                             padding: EdgeInsets.symmetric(horizontal: 12.w),
                             itemBuilder: (context, index) {
-                              return CustomTopEventList(
-                                topEvent: cubit.eventsModel?.data?[index],
-                                isAll: true,
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomTopEventList(
+                                  topEvent: cubit.eventsModel?.data?[index],
+                                  isAll: true,
+                                ),
                               );
                             },
                           );

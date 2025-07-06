@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mawhebtak/core/api/base_api_consumer.dart';
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 
 import '../../../../../core/api/end_points.dart';
 import '../../../../../core/error/exceptions.dart';
@@ -13,11 +14,16 @@ class VerificationRepo {
   // validate-data
 
   //registerUrl
-  Future<Either<Failure, ValidateDataMainModel>> validateData(String email,
-      String name, String password, String phone,
-       String? userTypeId,
-       String? userSubTypeId,
-      ) async {
+  Future<Either<Failure, ValidateDataMainModel>> validateData({
+   required String email,
+    required String name,
+    required  String password,
+    required  String phone,
+    required  String? userTypeId,
+    required  String? userSubTypeId,
+    required   String? countryCode,
+    required List<GetCountriesMainModelData> selectedUserSubType,
+  }) async {
     try {
       var response = await dio.post(
         EndPoints.validateDataUrl,
@@ -25,8 +31,11 @@ class VerificationRepo {
           'key': 'validateData',
           'email': email,
           'name': name,
+          'country_code':countryCode,
           'phone': phone,
-          'user_sub_type_id': userSubTypeId??userTypeId,
+          for (int i = 0; i < selectedUserSubType.length; i++)
+            "user_sub_type_ids[$i]":
+            selectedUserSubType[i].id?.toString() ?? '',
           'password': password
         },
       );

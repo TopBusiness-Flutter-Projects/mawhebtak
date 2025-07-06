@@ -180,6 +180,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                           context.read<VerificationCubit>();
 
                                       verificationCubit.validateData(
+                                        selectedUserSubType: cubit.selectedUserSubTypes,
+                                        countryCode: cubit.countryCode,
                                         context,
                                         email:
                                             cubit.emailAddressController.text,
