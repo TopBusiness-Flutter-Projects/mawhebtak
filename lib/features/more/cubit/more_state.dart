@@ -9,6 +9,7 @@
   GetSettingDataStateError(this.errorMessage);
  } class ContactUsStateLoaded extends MoreState {}
  class ContactUsStateLoading extends MoreState {}
+ class LoadUserInformationState extends MoreState {}
  class ContactUsStateError extends MoreState {
  final String errorMessage;
 

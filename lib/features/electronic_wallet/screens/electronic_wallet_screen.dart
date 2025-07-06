@@ -6,8 +6,9 @@ import 'package:mawhebtak/features/electronic_wallet/cubit/electronic_wallet_sta
 import 'package:mawhebtak/features/electronic_wallet/screens/widgets/shadow.dart';
 
 class ElectronicWalletScreen extends StatefulWidget {
-  const ElectronicWalletScreen({super.key,});
-
+  const ElectronicWalletScreen({
+    super.key,
+  });
 
   @override
   State<ElectronicWalletScreen> createState() => _ElectronicWalletScreenState();
@@ -38,9 +39,7 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                     ? const Center(
                         child: CustomLoadingIndicator(),
                       )
-                    :
-            
-                Padding(
+                    : Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -54,28 +53,30 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 20.0.w, vertical: 15.h),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
                                           "current_balance".tr(),
                                           style: getRegularStyle(
-                                              fontSize:
-                                                  11.sp * textScaleFactor(context),
+                                              fontSize: 11.sp *
+                                                  textScaleFactor(context),
                                               color: AppColors.white),
                                         ),
                                         SizedBox(
                                           height: 5.h,
                                         ),
                                         Text(
-            
-                                          '${cubit.getWalletTransactionModel?.data?.walletBalance.toString().substring(0,8)?? 0} ${"egp".tr()}',
+                                          '${cubit.getWalletTransactionModel?.data?.walletBalance.toString().substring(0, 8) ?? 0} ${"egp".tr()}',
                                           style: getRegularStyle(
-                                              fontSize:
-                                                  20.sp * textScaleFactor(context),
+                                              fontSize: 20.sp *
+                                                  textScaleFactor(context),
                                               color: AppColors.white),
                                         ),
                                       ],
@@ -90,18 +91,20 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                 return AlertDialog(
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
-                                                        BorderRadius.circular(20),
+                                                        BorderRadius.circular(
+                                                            20),
                                                   ),
-                                                  title:
-                                                      Text("deposit_process".tr()),
+                                                  title: Text(
+                                                      "deposit_process".tr()),
                                                   content: TextField(
-                                                    controller: cubit
-                                                        .priceController,
+                                                    controller:
+                                                        cubit.priceController,
                                                     keyboardType:
                                                         TextInputType.number,
                                                     decoration: InputDecoration(
                                                       labelText:
-                                                          "enter_the_amount".tr(),
+                                                          "enter_the_amount"
+                                                              .tr(),
                                                       border:
                                                           const OutlineInputBorder(),
                                                     ),
@@ -109,10 +112,11 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () {
-                                                        cubit.paymobPay(
-                                                            context);
+                                                        cubit
+                                                            .paymobPay(context);
                                                       },
-                                                      child: Text("deposit".tr()),
+                                                      child:
+                                                          Text("deposit".tr()),
                                                     ),
                                                   ],
                                                 );
@@ -121,14 +125,16 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color:
-                                                  AppColors.white.withOpacity(0.2),
-                                              borderRadius: BorderRadius.circular(
-                                                  20.sp * textScaleFactor(context)),
+                                              color: AppColors.white
+                                                  .withOpacity(0.2),
+                                              borderRadius:
+                                                  BorderRadius.circular(20.sp *
+                                                      textScaleFactor(context)),
                                             ),
                                             child: Padding(
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 8.0.w, vertical: 5.h),
+                                                  horizontal: 8.0.w,
+                                                  vertical: 5.h),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -144,7 +150,8 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                     "deposit".tr(),
                                                     style: getRegularStyle(
                                                       fontSize: 14.sp *
-                                                          textScaleFactor(context),
+                                                          textScaleFactor(
+                                                              context),
                                                       color: AppColors.white,
                                                     ),
                                                   ),
@@ -161,23 +168,25 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                             showDialog(
                                               context: context,
                                               builder: (context) {
-                                                String selectedMethod = 'wallet';
+                                                String selectedMethod =
+                                                    'wallet';
                                                 List<String> methods = [
                                                   'wallet',
                                                   'ipa',
                                                   'bank'
                                                 ];
-            
+
                                                 return StatefulBuilder(
                                                   builder: (context, setState) {
                                                     return AlertDialog(
-                                                      shape: RoundedRectangleBorder(
+                                                      shape:
+                                                          RoundedRectangleBorder(
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                20),
+                                                            BorderRadius
+                                                                .circular(20),
                                                       ),
-                                                      title:
-                                                          Text("pull_process".tr()),
+                                                      title: Text(
+                                                          "pull_process".tr()),
                                                       content:
                                                           SingleChildScrollView(
                                                         child: Column(
@@ -203,7 +212,8 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                                 height: 15),
                                                             DropdownButtonFormField<
                                                                 String>(
-                                                              value: selectedMethod,
+                                                              value:
+                                                                  selectedMethod,
                                                               decoration:
                                                                   InputDecoration(
                                                                 labelText:
@@ -212,13 +222,14 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                                 border:
                                                                     const OutlineInputBorder(),
                                                               ),
-                                                              items: methods.map(
-                                                                  (String method) {
+                                                              items: methods
+                                                                  .map((String
+                                                                      method) {
                                                                 return DropdownMenuItem<
                                                                     String>(
                                                                   value: method,
-                                                                  child:
-                                                                      Text(method),
+                                                                  child: Text(
+                                                                      method),
                                                                 );
                                                               }).toList(),
                                                               onChanged: (String?
@@ -270,11 +281,14 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                       actions: [
                                                         TextButton(
                                                           onPressed: () {
-                                                            cubit.requestWithdraw();
-                                                            Navigator.of(context)
+                                                            cubit
+                                                                .requestWithdraw();
+                                                            Navigator.of(
+                                                                    context)
                                                                 .pop();
                                                           },
-                                                          child: Text("pull".tr()),
+                                                          child:
+                                                              Text("pull".tr()),
                                                         ),
                                                       ],
                                                     );
@@ -285,14 +299,16 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color:
-                                                  AppColors.white.withOpacity(0.2),
-                                              borderRadius: BorderRadius.circular(
-                                                  20.sp * textScaleFactor(context)),
+                                              color: AppColors.white
+                                                  .withOpacity(0.2),
+                                              borderRadius:
+                                                  BorderRadius.circular(20.sp *
+                                                      textScaleFactor(context)),
                                             ),
                                             child: Padding(
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 8.0.w, vertical: 5.h),
+                                                  horizontal: 8.0.w,
+                                                  vertical: 5.h),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
@@ -308,7 +324,8 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                                     "pull".tr(),
                                                     style: getRegularStyle(
                                                       fontSize: 14.sp *
-                                                          textScaleFactor(context),
+                                                          textScaleFactor(
+                                                              context),
                                                       color: AppColors.white,
                                                     ),
                                                   ),
@@ -339,124 +356,148 @@ class _ElectronicWalletScreenState extends State<ElectronicWalletScreen> {
                                     0)
                                 ? Center(child: Text("no_process".tr()))
                                 : SingleChildScrollView(
-                                  child: Expanded(
-                                    child: ListView.builder(
-            
-                                        itemBuilder: (context, index) => Container(
-                                            padding: EdgeInsets.all(
-                                              10.sp * textScaleFactor(context),
-                                            ),
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(
-                                                  8.sp * textScaleFactor(context),
+                                    child: Expanded(
+                                      child: ListView.builder(
+                                        itemBuilder: (context, index) =>
+                                            Container(
+                                                padding: EdgeInsets.all(
+                                                  10.sp *
+                                                      textScaleFactor(context),
                                                 ),
-                                                boxShadow: customShadow),
-                                            width: double.infinity,
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors.redLight,
-                                                      shape: BoxShape.rectangle,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                        8.sp * textScaleFactor(context),
-                                                      )),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.all(8.0),
-                                                    child: Icon(
-                                                      Icons.arrow_upward_outlined,
-                                                      color: AppColors.white,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                      8.sp *
+                                                          textScaleFactor(
+                                                              context),
                                                     ),
-                                                  ),
-                                                ),
-            
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
+                                                    boxShadow: customShadow),
+                                                width: double.infinity,
+                                                child: Row(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Row(
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                          color: AppColors
+                                                              .redLight,
+                                                          shape: BoxShape
+                                                              .rectangle,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                            8.sp *
+                                                                textScaleFactor(
+                                                                    context),
+                                                          )),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .arrow_upward_outlined,
+                                                          color:
+                                                              AppColors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        SizedBox(
-                                                          width: getWidthSize(context) /
-                                                              1.6,
-                                                          child: Text(
-                                                            cubit
-                                                                    .getWalletTransactionModel
-                                                                    ?.data
-                                                                    ?.myTransaction?[
-                                                                        index]
-                                                                    .comment ??
-                                                                "",
-                                                            maxLines: 2,
-                                                            style: getRegularStyle(
-                                                              color:
-                                                                  AppColors.blackLight,
-                                                              fontSize: 14.sp *
-                                                                  textScaleFactor(
-                                                                      context),
+                                                        Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: getWidthSize(
+                                                                      context) /
+                                                                  1.6,
+                                                              child: Text(
+                                                                cubit
+                                                                        .getWalletTransactionModel
+                                                                        ?.data
+                                                                        ?.myTransaction?[
+                                                                            index]
+                                                                        .comment ??
+                                                                    "",
+                                                                maxLines: 2,
+                                                                style:
+                                                                    getRegularStyle(
+                                                                  color: AppColors
+                                                                      .blackLight,
+                                                                  fontSize: 14
+                                                                          .sp *
+                                                                      textScaleFactor(
+                                                                          context),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              "${cubit.getWalletTransactionModel?.data?.myTransaction?[index].amount ?? ""} ${"egp".tr()}",
+                                                              style:
+                                                                  getRegularStyle(
+                                                                color: AppColors
+                                                                    .green,
+                                                                fontSize: 14
+                                                                        .sp *
+                                                                    textScaleFactor(
+                                                                        context),
+                                                              ),
                                                             ),
-                                                          ),
+                                                            SizedBox(
+                                                              width: 100.w,
+                                                            ),
+                                                            Text(
+                                                              cubit
+                                                                      .getWalletTransactionModel
+                                                                      ?.data
+                                                                      ?.myTransaction?[
+                                                                          index]
+                                                                      .time
+                                                                      .toString()
+                                                                      .substring(
+                                                                          0,
+                                                                          10) ??
+                                                                  "",
+                                                              style:
+                                                                  getRegularStyle(
+                                                                color: AppColors
+                                                                    .gray,
+                                                                fontSize: 14
+                                                                        .sp *
+                                                                    textScaleFactor(
+                                                                        context),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         )
                                                       ],
                                                     ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          "${cubit.getWalletTransactionModel?.data?.myTransaction?[index].amount ?? ""} ${"egp".tr()}",
-                                                          style: getRegularStyle(
-                                                            color: AppColors.green,
-                                                            fontSize: 14.sp *
-                                                                textScaleFactor(
-                                                                    context),
-            
-            
-                                                          ),
-                                                        ),
-            
-            
-            
-            
-                                                        SizedBox(
-                                                          width: 100.w,
-                                                        ),
-                                                        Text(
-                                                          cubit
-                                                                  .getWalletTransactionModel
-                                                                  ?.data
-                                                                  ?.myTransaction?[
-                                                                      index]
-                                                                  .time
-                                                                  .toString()
-                                                                  .substring(0, 10) ??
-                                                              "",
-                                                          style: getRegularStyle(
-                                                            color: AppColors.gray,
-                                                            fontSize: 14.sp *
-                                                                textScaleFactor(
-                                                                    context),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
                                                   ],
-                                                ),
-                                              ],
-                                            )),
-                                        itemCount: cubit.getWalletTransactionModel?.data
-                                                ?.myTransaction?.length ??
+                                                )),
+                                        itemCount: cubit
+                                                .getWalletTransactionModel
+                                                ?.data
+                                                ?.myTransaction
+                                                ?.length ??
                                             0,
                                         shrinkWrap: true,
-                                        physics: const NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                       ),
+                                    ),
                                   ),
-                                ),
                           ],
                         ),
                       ),
