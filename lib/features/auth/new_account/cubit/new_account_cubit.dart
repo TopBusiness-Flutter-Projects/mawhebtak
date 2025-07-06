@@ -22,7 +22,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
   MainRegisterUserTypes? userTypeList;
   MainRegisterUserTypes? userSubTypeList;
   String countryCode = '+20';
-
+  List<GetCountriesMainModelData> selectedUserSubTypes = [];
   getDataUserType(BuildContext context,
       {GetCountriesMainModelData? userTypeModel, bool? isEditProfile}) async {
     emit(LoadingGetUserTypesState());
@@ -86,12 +86,13 @@ class NewAccountCubit extends Cubit<NewAccountState> {
     log('PHONE SENT: $fullPhone');
 
     var response = await api.register(
+      selectedUserSubType: selectedUserSubTypes,
       email: emailAddressController.text,
       name: fullNameController.text,
       password: passwordController.text,
       phone: fullPhone,
+      countryCode: countryCode,
       userTypeId: selectedUserType?.id?.toString(),
-      userSubTypeId: selectedUserSubType?.id?.toString(),
     );
 
     response.fold((l) {

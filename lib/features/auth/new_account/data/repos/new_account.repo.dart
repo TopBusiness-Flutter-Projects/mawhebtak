@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:mawhebtak/core/api/base_api_consumer.dart';
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import '../../../../../core/api/end_points.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
@@ -19,7 +20,9 @@ class NewAccount {
         required  String password,
         required  String phone,
         required String? userTypeId,
-        required String? userSubTypeId}) async {
+        required String? countryCode,
+        required List<GetCountriesMainModelData> selectedUserSubType,
+      }) async {
     try {
       final deviceToken = await Preferences.instance.getDeviceToken();
 
@@ -30,8 +33,11 @@ class NewAccount {
           'email': email,
           'name': name,
           'phone': phone,
+          'country_code':countryCode,
           // 'user_type_id': userTypeId,
-          'user_sub_type_id': userSubTypeId ?? userTypeId,
+          for (int i = 0; i < selectedUserSubType.length; i++)
+            "user_sub_type_ids[$i]":
+            selectedUserSubType[i].id?.toString() ?? '',
           'password': password,
           "device_token": deviceToken,
         },

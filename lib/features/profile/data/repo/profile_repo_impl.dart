@@ -52,6 +52,7 @@ class ProfileRepo {
     String? gender,
     String? syndicate,
     int? isPhoneHidden,
+    String? countryCode,
   }) async {
     try {
       final response = await dio.post(
@@ -62,6 +63,7 @@ class ProfileRepo {
           'is_phone_hidden':isPhoneHidden,
           'name': name,
           if (phone != null) 'phone': phone,
+          if (countryCode != null) 'country_code':countryCode,
           if (userSubTypeId != null) 'user_sub_type_id': userSubTypeId,
           if (avatar != null)
             'avatar': MultipartFile.fromFileSync(avatar.path,

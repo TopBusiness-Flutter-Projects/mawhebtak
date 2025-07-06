@@ -190,6 +190,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         '$countryCode${phoneController.text.trim()}';
     try {
       final res = await api.updateProfileData(
+        countryCode: countryCode,
         isPhoneHidden: isShowPhone ? 0 : 1,
         name: nameController.text.isEmpty ? null : nameController.text,
         phone: fullPhone,
@@ -220,6 +221,7 @@ class ProfileCubit extends Cubit<ProfileState> {
             locationController.text.isEmpty ? null : locationController.text,
         age: ageController.text.isEmpty ? null : ageController.text,
         gender: selectedGender,
+
         syndicate:
             syndicateController.text.isEmpty ? null : syndicateController.text,
       );

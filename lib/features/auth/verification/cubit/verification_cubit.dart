@@ -1,29 +1,26 @@
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
-
 import 'package:mawhebtak/features/auth/verification/data/repos/verification.repo.dart';
-
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import '../../../../config/routes/app_routes.dart';
 import 'verification_state.dart';
 
 class VerificationCubit extends Cubit<VerificationState> {
   VerificationCubit(this.api) : super(VerificationInitial());
   VerificationRepo api;
-
   String? correctOTP = "";
   DateTime? timerDate;
   TextEditingController pinController = TextEditingController();
-  // Method to reset timer and OTP
+
   void resetTimerAndOTP() {
     timerDate = null;
     correctOTP = '';
-    emit(VerificationStateUpdated()); // Emit a state update if needed
+    emit(VerificationStateUpdated());
   }
 
   validateOTP(bool isRegister, BuildContext context) {
     if (pinController.text != correctOTP) {
-      print("the correct otp ;;;;;;;;;;;;;$correctOTP");
       emit(state.copyWith(errorMessage: "Invalid Code, Enter Correct One"));
       errorGetBar('Invalid Code, Enter Correct One');
     } else {
@@ -44,10 +41,12 @@ class VerificationCubit extends Cubit<VerificationState> {
   validateData(
       BuildContext context, {
         required String email,
+        required String countryCode,
         required String name,
         required String password,
         required String userTypeId,
         required String userSubTypeId,
+        required List<GetCountriesMainModelData> selectedUserSubType,
       }) async {
     AppWidgets.create2ProgressDialog(context);
     emit(ValidateDataStateLoading());
@@ -55,17 +54,17 @@ class VerificationCubit extends Cubit<VerificationState> {
     try {
       final newAccountCubit = context.read<NewAccountCubit>();
 
-      // خُد الرقم الكامل من المتغير اللي اتخزن في onChanged
       String fullPhone = newAccountCubit.fullPhoneFromWidget ??
           '${newAccountCubit.countryCode}${newAccountCubit.mobileNumberController.text.trim()}';
-
       final res = await api.validateData(
-        email,
-        name,
-        password,
-        fullPhone, // هنا التغيير المهم
-        userTypeId,
-        userSubTypeId,
+        countryCode: countryCode,
+       selectedUserSubType: selectedUserSubType,
+       email:  email,
+        name: name,
+        password: password,
+        phone: fullPhone, // هنا التغيير المهم
+        userTypeId: userTypeId,
+        userSubTypeId: userSubTypeId,
       );
 
       res.fold((l) {

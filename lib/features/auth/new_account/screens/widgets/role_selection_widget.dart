@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
@@ -61,12 +60,12 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        item?.name ?? "",
+                        item.name ?? "",
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w400,
                           color: (cubit.selectedUserType?.id?.toString() ==
-                                  item?.id?.toString())
+                                  item.id?.toString())
                               ? AppColors.white
                               : Colors.black,
                         ),
@@ -90,7 +89,11 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              cubit.selectedUserSubType = item;
+                              if (cubit.selectedUserSubTypes.contains(item)) {
+                                cubit.selectedUserSubTypes.remove(item);
+                              } else {
+                                cubit.selectedUserSubTypes.add(item!);
+                              }
                             });
                           },
                           child: Container(
@@ -98,11 +101,9 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
                             padding: EdgeInsets.symmetric(horizontal: 16.w),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.r),
-                              color:
-                                  (cubit.selectedUserSubType?.id?.toString() ==
-                                          item?.id?.toString())
-                                      ? AppColors.primary
-                                      : Colors.grey[200],
+                              color: cubit.selectedUserSubTypes.contains(item)
+                                  ? AppColors.primary
+                                  : Colors.grey[200],
                               border: Border.all(
                                 color: (cubit.selectedUserSubType?.id
                                             ?.toString() ==
@@ -129,6 +130,30 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
                       },
                     ),
                   ),
+                  if (cubit.selectedUserSubTypes.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        10.h.verticalSpace,
+                        Wrap(
+                          spacing: 8.w,
+                          runSpacing: 8.h,
+                          children: cubit.selectedUserSubTypes.map((selectedItem) {
+                            return Chip(
+                              label: Text(selectedItem?.name ?? ""),
+                              onDeleted: () {
+                                setState(() {
+                                  cubit.selectedUserSubTypes.remove(selectedItem);
+                                });
+                              },
+                              backgroundColor: AppColors.primary.withOpacity(0.2),
+                              deleteIconColor: AppColors.primary,
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+
                 ],
               )
           ],
