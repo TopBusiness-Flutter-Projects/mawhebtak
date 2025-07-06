@@ -134,9 +134,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             widget.model.id)
           GestureDetector(
             onTap: () {
-              context.read<ProfileCubit>().saveData(context);
-              Navigator.pushNamed(context, Routes.editProfileRoute,
-                  arguments: widget.model);
+              context.read<ProfileCubit>().saveData(context, widget.model);
+              // Navigator.pushNamed(context, Routes.editProfileRoute,
+              //     arguments: widget.model);
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -209,12 +209,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               width: 35.w,
               height: 35.h,
             ),
-            onSelected: (value) async{
+            onSelected: (value) async {
               if (value == 'rate') {
                 if (cubit.profileModel?.data?.isIReviewed == true) {
                   errorGetBar('you_do_review_in_this_user'.tr());
                 } else {
-
                   final user = await Preferences.instance.getUserModel();
                   if (user.data?.token == null) {
                     checkLogin(context);

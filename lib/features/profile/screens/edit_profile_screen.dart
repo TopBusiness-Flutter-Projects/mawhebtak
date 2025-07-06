@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
@@ -213,30 +215,36 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Widget _buildPhoneField(ProfileCubit cubit, BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SwitchListTile(
-          title: Text("show_phone".tr()),
-          value: cubit.isShowPhone,
-          activeColor: AppColors.primary,
-          onChanged: (value) {
-            cubit.toggleShowPhone(value);
-          },
-        ),
-        CustomPhoneFormField(
-          controller: cubit.phoneController,
-          onCountryChanged: (p0) {
-            cubit.countryCode = p0.code;
-          },
-          title: "phone".tr(),
-          initialValue: cubit.countryCode,
-          onChanged: (phone) {
-            cubit.countryCode = phone.countryCode;
-            cubit.fullPhoneFromWidget = phone.completeNumber;
-          },
-        ),
-      ],
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SwitchListTile(
+              title: Text("show_phone".tr()),
+              value: cubit.isShowPhone,
+              activeColor: AppColors.primary,
+              onChanged: (value) {
+                cubit.toggleShowPhone(value);
+              },
+            ),
+            CustomPhoneFormField(
+              controller: cubit.phoneController,
+              initialValue: cubit.countryCode,
+              onCountryChanged: (p0) {
+                cubit.countryCode = '+${p0.fullCountryCode}';
+                log('5dialCode PP ${cubit.countryCode}');
+              },
+              title: "phone".tr(),
+              // initialValue: cubit.countryCode.replaceAll('+', ''),
+              onChanged: (phone) {
+                cubit.countryCode = phone.countryCode;
+                cubit.fullPhoneFromWidget = phone.completeNumber;
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

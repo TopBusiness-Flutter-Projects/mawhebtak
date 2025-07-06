@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:mawhebtak/core/exports.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -15,6 +17,7 @@ class CustomPhoneFormField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
   });
+  
 
   final void Function(Country)? onCountryChanged;
   final void Function(PhoneNumber)? onChanged;
@@ -22,11 +25,13 @@ class CustomPhoneFormField extends StatelessWidget {
   final bool? enabled;
   final String? initialValue; // like "+20"
   final String? title;
+
   final Widget? prefixIcon;
   final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
+    log("initial value $initialValue ");
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
@@ -45,7 +50,7 @@ class CustomPhoneFormField extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 3.w),
               child: IntlPhoneField(
                 controller: controller,
-                initialCountryCode: initialValue?.replaceAll('+', '') ?? 'EG',
+                initialValue: initialValue ?? '+20',
                 onCountryChanged: onCountryChanged,
                 onChanged: onChanged,
                 showCountryFlag: true,
