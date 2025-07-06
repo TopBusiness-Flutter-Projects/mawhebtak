@@ -2,6 +2,7 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
+
 class CustomPhoneFormField extends StatelessWidget {
   const CustomPhoneFormField({
     super.key,
@@ -27,15 +28,14 @@ class CustomPhoneFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric( horizontal: 10.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (title != null) ...[
             Text(
               title!,
-              style: getMediumStyle(
-                  color: AppColors.black, fontSize: 14.sp),
+              style: getMediumStyle(color: AppColors.black, fontSize: 14.sp),
             ),
             SizedBox(height: 1.h),
           ],
@@ -45,8 +45,7 @@ class CustomPhoneFormField extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 3.w),
               child: IntlPhoneField(
                 controller: controller,
-                initialCountryCode:
-                initialValue?.replaceAll('+', '') ?? 'EG',
+                initialCountryCode: initialValue?.replaceAll('+', '') ?? 'EG',
                 onCountryChanged: onCountryChanged,
                 onChanged: onChanged,
                 showCountryFlag: true,
@@ -63,34 +62,32 @@ class CustomPhoneFormField extends StatelessWidget {
                       ? AppColors.white
                       : AppColors.gray.withOpacity(0.5),
                   contentPadding:
-                  EdgeInsets.symmetric(horizontal: 18, vertical: 5.h),
+                      EdgeInsets.symmetric(horizontal: 18, vertical: 5.h),
                   hintText: '1023654789',
                   hintStyle:
-                  getRegularStyle(color: AppColors.gray, fontSize: 15.sp),
+                      getRegularStyle(color: AppColors.gray, fontSize: 15.sp),
                   errorStyle: getRegularStyle(color: AppColors.red),
                   enabledBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: AppColors.grayLite, width: 1.5),
+                        BorderSide(color: AppColors.grayLite, width: 1.5),
                     borderRadius: BorderRadius.all(Radius.circular(15.r)),
                   ),
                   disabledBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: AppColors.grayLite, width: 1.5),
+                        BorderSide(color: AppColors.grayLite, width: 1.5),
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide:
-                    BorderSide(color: AppColors.primary, width: 1.5),
+                        BorderSide(color: AppColors.primary, width: 1.5),
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                   ),
                   errorBorder: OutlineInputBorder(
-                    borderSide:
-                    BorderSide(color: AppColors.red, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.red, width: 1.5),
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
-                    borderSide:
-                    BorderSide(color: AppColors.red, width: 1.5),
+                    borderSide: BorderSide(color: AppColors.red, width: 1.5),
                     borderRadius: BorderRadius.all(Radius.circular(10.r)),
                   ),
                 ),

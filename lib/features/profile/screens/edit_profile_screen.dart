@@ -95,7 +95,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     _buildPersonalInfoHeader(),
                     10.h.verticalSpace,
                     _buildEmailField(cubit),
-                    _buildPhoneField(cubit,context),
+                    _buildPhoneField(cubit, context),
                     _buildAgeField(cubit),
                     _buildGenderDropdown(cubit),
                     _buildUserTypeDropdown(newAccountCubit),
@@ -218,7 +218,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       children: [
         SwitchListTile(
           title: Text("show_phone".tr()),
-          value:cubit.isShowPhone,
+          value: cubit.isShowPhone,
           activeColor: AppColors.primary,
           onChanged: (value) {
             cubit.toggleShowPhone(value);
@@ -230,16 +230,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             cubit.countryCode = p0.code;
           },
           title: "phone".tr(),
+          initialValue: cubit.countryCode,
           onChanged: (phone) {
             cubit.countryCode = phone.countryCode;
             cubit.fullPhoneFromWidget = phone.completeNumber;
           },
         ),
-
       ],
     );
   }
-
 
   Widget _buildAgeField(ProfileCubit cubit) {
     return Column(
