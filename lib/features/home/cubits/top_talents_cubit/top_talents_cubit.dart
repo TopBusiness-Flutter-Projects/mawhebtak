@@ -42,7 +42,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
         getDataUserSubType(
             userTypeId: selectedUserType?.id?.toString() ?? '',
             currentSubCategory:
-                context.read<ProfileCubit>().profileModel?.data?.userSubType);
+                context.read<ProfileCubit>().profileModel?.data?.userSubTypes);
       }
       emit(LoadedGetUserTypesState(r));
     });
@@ -50,7 +50,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
 
   getDataUserSubType({
     required String userTypeId,
-    GetCountriesMainModelData? currentSubCategory,
+    List <GetCountriesMainModelData>? currentSubCategory,
   }) async {
     emit(LoadingGetUserSubTypesState());
     var response = await api!.getDataUserSubType(userTypeId: userTypeId);
@@ -62,7 +62,7 @@ class TopTalentsCubit extends Cubit<TopTalentsState> {
       if (currentSubCategory != null) {
         for (int i = 0; i < (userSubTypeList?.data?.length ?? 0); i++) {
           if (userSubTypeList?.data?[i].id?.toString() ==
-              currentSubCategory.id?.toString()) {
+              currentSubCategory[i].id?.toString()) {
             selectedUserSubType = userSubTypeList?.data?[i];
           }
         }

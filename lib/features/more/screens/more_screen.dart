@@ -162,7 +162,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                   Navigator.pushNamed(
                                       context, Routes.packagesRoute);
                                 }),
-                            if(cubit.user?.data?.token != null)
+
                             moreContainer(
                                 text: 'subscribtion'.tr(),
                                 imageUrl: AppIcons.subscribtionIcon,
