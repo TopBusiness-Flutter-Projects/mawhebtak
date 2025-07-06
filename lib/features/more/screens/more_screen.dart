@@ -154,7 +154,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                 onTap: () {
                                   Navigator.pushNamed(context, Routes.aboutUsRoute);
                                 }),
-
+                            if(cubit.user?.data?.token != null)
                             moreContainer(
                                 text: 'packages'.tr(),
                                 imageUrl: AppIcons.packageIcon,
@@ -162,6 +162,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                   Navigator.pushNamed(
                                       context, Routes.packagesRoute);
                                 }),
+                            if(cubit.user?.data?.token != null)
                             moreContainer(
                                 text: 'subscribtion'.tr(),
                                 imageUrl: AppIcons.subscribtionIcon,
