@@ -6,6 +6,7 @@ import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/location/cubit/location_state.dart';
 import 'package:mawhebtak/features/location/screens/full_screen_map.dart';
@@ -101,6 +102,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     _buildUserTypeDropdown(newAccountCubit),
                     if ((newAccountCubit.userSubTypeList?.data?.length != 0))
                       _buildUserSubTypeDropdown(newAccountCubit),
+                    _userSubType(),
                     _buildLocationSection(cubit),
                     _buildSyndicateField(cubit),
                   ],
@@ -226,9 +228,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         CustomPhoneFormField(
           controller: cubit.phoneController,
-          onCountryChanged: (p0) {
-            cubit.countryCode = p0.code;
-          },
           title: "phone".tr(),
           initialValue: cubit.countryCode,
           onChanged: (phone) {
@@ -303,7 +302,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               value: cubit.selectedUserType,
               items: cubit.userTypeList?.data ?? [],
               onChanged: (value) {
-                cubit.selectedUserSubType = null;
+
                 cubit.selectedUserType = value;
                 cubit.getDataUserSubType(
                     userTypeId: cubit.selectedUserType?.id.toString() ?? '');
@@ -326,15 +325,62 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             style: TextStyle(color: AppColors.darkGray, fontSize: 16.sp),
           ),
         ),
-        GeneralCustomDropdownButtonFormField(
-          itemBuilder: (item) => item.name ?? '',
-          value: cubit.selectedUserSubType,
-          items: cubit.userSubTypeList?.data ?? [],
-          onChanged: (value) {
-            cubit.selectedUserSubType = value;
+        BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
+            var profileCubit = context.read<ProfileCubit>();
+
+            return GeneralCustomDropdownButtonFormField<GetCountriesMainModelData>(
+              itemBuilder: (item) => item.name ?? '',
+              value: cubit.selectedUserSubType,
+              items: cubit.userSubTypeList?.data ?? [],
+              onChanged: (value) {
+                cubit.selectedUserSubType = value;
+
+                final alreadyExists = profileCubit.selectedUserSubTypes
+                    .any((element) => element.id == value?.id);
+
+                if (!alreadyExists && value != null) {
+                  profileCubit.addUserSubType(value);
+                }
+              },
+            );
           },
         ),
       ],
+    );
+  }
+
+  Widget _userSubType() {
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        var cubit = context.read<ProfileCubit>();
+        if (cubit.profileModel?.data?.userSubTypes?.isNotEmpty ?? false) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              10.h.verticalSpace,
+              Wrap(
+                spacing: 8.w,
+                runSpacing: 8.h,
+                children: cubit.selectedUserSubTypes.map((selectedItem) {
+                  return Chip(
+                    label: Text(selectedItem.name ?? ""),
+                    onDeleted: () {
+                      context
+                          .read<ProfileCubit>()
+                          .removeUserSubType(selectedItem);
+                    },
+                    backgroundColor: AppColors.primary.withOpacity(0.2),
+                    deleteIconColor: AppColors.primary,
+                  );
+                }).toList(),
+              ),
+            ],
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 

@@ -6,6 +6,7 @@ sealed class NewAccountState {}
 
 class NewAccountInitial extends NewAccountState {}
 
+
 class LoadingGetUserTypesState extends NewAccountState {}
 
 class ErrorGetUserTypesState extends NewAccountState {
