@@ -57,11 +57,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   @override
   void dispose() {
     _timer.cancel();
-
-// Call the reset method in the Cubit using post-frame callback
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<VerificationCubit>().resetTimerAndOTP();
-    });
+    context.read<VerificationCubit>().resetTimerAndOTP();
     super.dispose();
   }
 

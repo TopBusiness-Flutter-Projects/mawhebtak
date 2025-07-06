@@ -41,6 +41,7 @@ class MyProfileModelData {
   dynamic followingCount;
   dynamic postsCount;
   String? location;
+  String? countryCode;
   String? bio;
   String? email;
   dynamic age;
@@ -52,7 +53,6 @@ class MyProfileModelData {
   bool? isIFollow;
   bool? isIReviewed;
   int? isPhoneHidden;
-
 
   MyProfileModelData({
     this.id,
@@ -78,7 +78,7 @@ class MyProfileModelData {
     this.isIFollow,
     this.isIReviewed,
     this.isPhoneHidden,
-
+    this.countryCode,
   });
 
   factory MyProfileModelData.fromJson(Map<String, dynamic> json) =>
@@ -86,6 +86,7 @@ class MyProfileModelData {
         id: json["id"],
         name: json["name"],
         headline: json["headline"],
+        countryCode: json["country_code"],
         avatar: json["avatar"],
         phone: json["phone"],
         bgCover: json["bg_cover"],
@@ -127,6 +128,7 @@ class MyProfileModelData {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+        "country_code": countryCode,
         "headline": headline,
         "avatar": avatar,
         "phone": phone,
@@ -143,8 +145,8 @@ class MyProfileModelData {
         "syndicate": syndicate,
         "is_i_follow": isIFollow,
         "is_i_reviewed": isIReviewed,
-    "is_phone_hidden": isPhoneHidden,
-    "experiences": experiences == null
+        "is_phone_hidden": isPhoneHidden,
+        "experiences": experiences == null
             ? []
             : List<dynamic>.from(experiences!.map((x) => x.toJson())),
         "timeline": timeline == null

@@ -32,6 +32,7 @@ class UserModel {
   String? phone;
   dynamic wallet;
   String? socialType;
+  String? countryCode;
   String? token;
   String? referralCode;
 
@@ -41,6 +42,8 @@ class UserModel {
     this.notification,
     this.image,
     this.isRegister,
+    this.countryCode,
+
     this.email,
     this.phone,
     this.wallet,
@@ -55,7 +58,9 @@ class UserModel {
         notification: json["notification"],
         image: json["image"],
         isRegister: json["is_register"],
-        email: json["email"],
+    countryCode: json["country_code"],
+
+    email: json["email"],
         phone: json["phone"],
         wallet: json["wallet"],
         socialType: json["social_type"],
@@ -67,6 +72,7 @@ class UserModel {
         "id": id,
         "name": name,
         "notification": notification,
+        "country_code":countryCode,
         "image": image,
         "is_register": isRegister,
         "email": email,

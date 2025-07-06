@@ -27,6 +27,7 @@ class VerificationRepo {
     try {
       var response = await dio.post(
         EndPoints.validateDataUrl,
+        formDataIsEnabled: true,
         body: {
           'key': 'validateData',
           'email': email,
