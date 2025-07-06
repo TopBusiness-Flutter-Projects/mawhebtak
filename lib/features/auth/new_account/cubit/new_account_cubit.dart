@@ -25,7 +25,8 @@ class NewAccountCubit extends Cubit<NewAccountState> {
 
   List<GetCountriesMainModelData> selectedUserSubTypes = [];
   getDataUserType(BuildContext context,
-      {GetCountriesMainModelData? userTypeModel, bool? isEditProfile}) async {
+      {GetCountriesMainModelData? userTypeModel,
+        bool? isEditProfile}) async {
     emit(LoadingGetUserTypesState());
     var response = await api.getDataUserType();
     response.fold((l) {

@@ -99,7 +99,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     _buildPhoneField(cubit, context),
                     _buildAgeField(cubit),
                     _buildGenderDropdown(cubit),
-                    _buildUserTypeDropdown(newAccountCubit),
+                    _buildUserTypeDropdown(),
                     if ((newAccountCubit.userSubTypeList?.data?.length != 0))
                       _buildUserSubTypeDropdown(newAccountCubit),
                     _userSubType(),
@@ -284,9 +284,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Widget _buildUserTypeDropdown(NewAccountCubit cubit) {
+  Widget _buildUserTypeDropdown() {
     return BlocBuilder<NewAccountCubit, NewAccountState>(
       builder: (context, state) {
+        var cubit = context.read<NewAccountCubit>();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -302,7 +303,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               value: cubit.selectedUserType,
               items: cubit.userTypeList?.data ?? [],
               onChanged: (value) {
-
                 cubit.selectedUserType = value;
                 cubit.getDataUserSubType(
                     userTypeId: cubit.selectedUserType?.id.toString() ?? '');

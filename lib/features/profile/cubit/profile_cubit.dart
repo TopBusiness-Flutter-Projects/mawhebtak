@@ -78,6 +78,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     context.read<NewAccountCubit>().selectedUserType =
         profileModel?.data?.userType;
     selectedUserSubTypes = profileModel?.data?.userSubTypes ?? [];
+
+
     phoneController.text = profileModel?.data?.phone ?? '';
     nameController.text = profileModel?.data?.name ?? '';
     emailController.text = profileModel?.data?.email ?? "";
