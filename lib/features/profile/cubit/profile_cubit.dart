@@ -69,14 +69,15 @@ class ProfileCubit extends Cubit<ProfileState> {
       debugPrint('Image picker error: $e');
     }
   }
+
   String countryCode = '+20';
   saveData(BuildContext context) {
-    countryCode = profileModel?.data?.countryCode ?? '';
+    countryCode = profileModel?.data?.countryCode ?? '+20';
     selectedGender = 'male';
     context.read<NewAccountCubit>().selectedUserType =
         profileModel?.data?.userType;
-    context.read<NewAccountCubit>().selectedUserSubType =
-        profileModel?.data?.userSubType;
+    // context.read<NewAccountCubit>().selectedUserSubType =
+    //     profileModel?.data?.userSubType;
 
     phoneController.text = profileModel?.data?.phone ?? '';
     nameController.text = profileModel?.data?.name ?? '';
@@ -103,7 +104,6 @@ class ProfileCubit extends Cubit<ProfileState> {
     user = await Preferences.instance.getUserModel();
   }
 
-
   bool isLoadingMore = false;
   ProfileModel? profileModel;
   getProfileData({
@@ -118,7 +118,6 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(GetProfileStateError(l.toString()));
       }, (r) async {
         if (r.status == 200) {
-
           isShowPhone = profileModel?.data?.isPhoneHidden == 0;
           profileModel = r;
           emit(GetProfileStateLoaded());
@@ -148,10 +147,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  bool isShowPhone =  false ;
+  bool isShowPhone = false;
   void toggleShowPhone(bool value) {
     isShowPhone = value;
-    profileModel?.data?.isPhoneHidden = value  ? 0: 1;
+    profileModel?.data?.isPhoneHidden = value ? 0 : 1;
     emit(ProfileTogglePhoneState());
   }
 
@@ -187,8 +186,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> updateProfileData(
       {required BuildContext context, required String profileId}) async {
     AppWidgets.create2ProgressDialog(context);
-    String fullPhone = fullPhoneFromWidget ??
-        '$countryCode${phoneController.text.trim()}';
+    String fullPhone =
+        fullPhoneFromWidget ?? '$countryCode${phoneController.text.trim()}';
     try {
       final res = await api.updateProfileData(
         countryCode: countryCode,
@@ -222,7 +221,6 @@ class ProfileCubit extends Cubit<ProfileState> {
             locationController.text.isEmpty ? null : locationController.text,
         age: ageController.text.isEmpty ? null : ageController.text,
         gender: selectedGender,
-
         syndicate:
             syndicateController.text.isEmpty ? null : syndicateController.text,
       );

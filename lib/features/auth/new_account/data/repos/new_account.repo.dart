@@ -13,16 +13,15 @@ class NewAccount {
   NewAccount(this.dio);
 
   //registerUrl
-  Future<Either<Failure, LoginModel>> register(
-      {
-     required String email,
-        required String name,
-        required  String password,
-        required  String phone,
-        required String? userTypeId,
-        required String? countryCode,
-        required List<GetCountriesMainModelData> selectedUserSubType,
-      }) async {
+  Future<Either<Failure, LoginModel>> register({
+    required String email,
+    required String name,
+    required String password,
+    required String phone,
+    required String? userTypeId,
+    required String? countryCode,
+    required List<GetCountriesMainModelData> selectedUserSubType,
+  }) async {
     try {
       final deviceToken = await Preferences.instance.getDeviceToken();
 
@@ -33,11 +32,11 @@ class NewAccount {
           'email': email,
           'name': name,
           'phone': phone,
-          'country_code':countryCode,
+          'country_code': countryCode,
           // 'user_type_id': userTypeId,
           for (int i = 0; i < selectedUserSubType.length; i++)
             "user_sub_type_ids[$i]":
-            selectedUserSubType[i].id?.toString() ?? '',
+                selectedUserSubType[i].id?.toString() ?? '',
           'password': password,
           "device_token": deviceToken,
         },
@@ -67,12 +66,12 @@ class NewAccount {
   }
 
   Future<Either<Failure, MainRegisterUserTypes>> getDataUserSubType(
-      {String? orderBy, required String userTypeId}) async {
+      {String? orderBy, String? userTypeId}) async {
     try {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         'model': 'UserSubType',
         'where[0]': 'status,1',
-        'where[1]': 'user_type_id,$userTypeId',
+        if (userTypeId != null) 'where[1]': 'user_type_id,$userTypeId',
         'orderBy': orderBy,
       });
       return Right(MainRegisterUserTypes.fromJson(response));
