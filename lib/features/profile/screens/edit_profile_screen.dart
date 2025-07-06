@@ -226,9 +226,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         CustomPhoneFormField(
           controller: cubit.phoneController,
-          onCountryChanged: (p0) {
-            cubit.countryCode = p0.code;
-          },
+
           title: "phone".tr(),
           onChanged: (phone) {
             cubit.countryCode = phone.countryCode;
