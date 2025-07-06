@@ -22,6 +22,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
   MainRegisterUserTypes? userTypeList;
   MainRegisterUserTypes? userSubTypeList;
   String countryCode = '+20';
+
   List<GetCountriesMainModelData> selectedUserSubTypes = [];
   getDataUserType(BuildContext context,
       {GetCountriesMainModelData? userTypeModel, bool? isEditProfile}) async {
@@ -35,12 +36,10 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       if (userTypeModel != null) {
         for (int i = 0; i < (userTypeList?.data?.length ?? 0); i++) {
           if (userTypeList?.data?[i].id?.toString() ==
-              userTypeModel?.id?.toString()) {
+              userTypeModel.id?.toString()) {
             selectedUserType = userTypeList?.data?[i];
           }
-          // else{
-          //   selectedUserType = null;
-          // }
+
         }
       }
 
@@ -48,7 +47,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
         getDataUserSubType(
             userTypeId: selectedUserType?.id?.toString() ?? '',
             currentSubCategory:
-                context.read<ProfileCubit>().profileModel?.data?.userSubType);
+                context.read<ProfileCubit>().profileModel?.data?.userSubTypes);
       }
       emit(LoadedGetUserTypesState(r));
     });
@@ -56,7 +55,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
 
   getDataUserSubType({
     required String userTypeId,
-    GetCountriesMainModelData? currentSubCategory,
+   List <GetCountriesMainModelData>? currentSubCategory,
   }) async {
     emit(LoadingGetUserSubTypesState());
     var response = await api.getDataUserSubType(userTypeId: userTypeId);
@@ -67,7 +66,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       if (currentSubCategory != null) {
         for (int i = 0; i < (userSubTypeList?.data?.length ?? 0); i++) {
           if (userSubTypeList?.data?[i].id?.toString() ==
-              currentSubCategory.id?.toString()) {
+              currentSubCategory[i].id?.toString()) {
             selectedUserSubType = userSubTypeList?.data?[i];
           }
         }

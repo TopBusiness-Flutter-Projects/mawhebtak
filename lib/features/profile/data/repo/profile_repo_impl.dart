@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/home/data/models/followers_model.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 
@@ -53,6 +54,7 @@ class ProfileRepo {
     String? syndicate,
     int? isPhoneHidden,
     String? countryCode,
+    required List<GetCountriesMainModelData> selectedUserSubType,
   }) async {
     try {
       final response = await dio.post(
@@ -79,6 +81,9 @@ class ProfileRepo {
           if (age != null) 'age': age,
           if (gender != null) 'gender': gender,
           if (syndicate != null) 'syndicate': syndicate,
+          for (int i = 0; i < selectedUserSubType.length; i++)
+            "user_sub_type_ids[$i]":
+            selectedUserSubType[i].id?.toString() ?? '',
         },
       );
 

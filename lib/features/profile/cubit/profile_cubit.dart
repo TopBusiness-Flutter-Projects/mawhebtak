@@ -6,6 +6,7 @@ import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
+import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../core/exports.dart';
@@ -30,7 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController syndicateController = TextEditingController();
   TextEditingController bioController = TextEditingController();
   TextEditingController commentController = TextEditingController();
-
+  List<GetCountriesMainModelData> selectedUserSubTypes = [];
   changeSelected(int index) {
     selectedIndex = index;
     emit(ChangeIndexState());
@@ -76,9 +77,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     selectedGender = 'male';
     context.read<NewAccountCubit>().selectedUserType =
         profileModel?.data?.userType;
-    // context.read<NewAccountCubit>().selectedUserSubType =
-    //     profileModel?.data?.userSubType;
-
+    selectedUserSubTypes = profileModel?.data?.userSubTypes ?? [];
     phoneController.text = profileModel?.data?.phone ?? '';
     nameController.text = profileModel?.data?.name ?? '';
     emailController.text = profileModel?.data?.email ?? "";
@@ -182,7 +181,15 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(AddReviewStateError(e.toString()));
     }
   }
+  void addUserSubType(GetCountriesMainModelData userSubType) {
+    selectedUserSubTypes.add(userSubType);
+    emit(ProfileFormChanged());
+  }
 
+  void removeUserSubType(GetCountriesMainModelData userSubType) {
+    selectedUserSubTypes.remove(userSubType);
+    emit(ProfileFormChanged());
+  }
   Future<void> updateProfileData(
       {required BuildContext context, required String profileId}) async {
     AppWidgets.create2ProgressDialog(context);
@@ -190,6 +197,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         fullPhoneFromWidget ?? '$countryCode${phoneController.text.trim()}';
     try {
       final res = await api.updateProfileData(
+        selectedUserSubType: selectedUserSubTypes,
         countryCode: countryCode,
         isPhoneHidden: isShowPhone ? 0 : 1,
         name: nameController.text.isEmpty ? null : nameController.text,
