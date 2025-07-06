@@ -226,16 +226,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         CustomPhoneFormField(
           controller: cubit.phoneController,
-          initialValue: cubit.countryCode,
-          title: "phone".tr(),
-          onCountryChanged: (v) {
-            cubit.countryCode = '+${v.fullCountryCode}';
+          onCountryChanged: (p0) {
+            cubit.countryCode = p0.code;
           },
+          title: "phone".tr(),
           onChanged: (phone) {
+            cubit.countryCode = phone.countryCode;
             cubit.fullPhoneFromWidget = phone.completeNumber;
-            debugPrint("Full phone from widget: ${phone.completeNumber}");
           },
         ),
+
       ],
     );
   }

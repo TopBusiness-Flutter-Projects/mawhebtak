@@ -69,8 +69,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       debugPrint('Image picker error: $e');
     }
   }
-
+  String countryCode = '+20';
   saveData(BuildContext context) {
+    countryCode = profileModel?.data?.countryCode ?? '';
     selectedGender = 'male';
     context.read<NewAccountCubit>().selectedUserType =
         profileModel?.data?.userType;
@@ -101,7 +102,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
   }
-  String countryCode = '+20';
+
 
   bool isLoadingMore = false;
   ProfileModel? profileModel;
