@@ -30,6 +30,7 @@ class MoreCubit extends Cubit<MoreState> {
   LoginModel? user;
   Future<void> loadUserFromPreferences() async {
     user = await Preferences.instance.getUserModel();
+    emit(LoadUserInformationState());
   }
   saveData() {
     print('user phone ${user?.data?.phone}');

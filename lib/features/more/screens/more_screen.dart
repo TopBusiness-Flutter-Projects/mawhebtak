@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
+import 'package:mawhebtak/features/more/cubit/more_state.dart';
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
@@ -57,169 +58,174 @@ class _MoreScreenState extends State<MoreScreen> {
                       style: TextStyle(fontSize: 20.sp),
                     ),
                   ),
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        if(context.read<MoreCubit>().user?.data?.token != null)
-                          moreContainer(
-                            text: "my_profile".tr(),
-                            imageUrl: AppIcons.myProfileIcon,
-                            onTap: () async {
-                              final user =
-                                  await Preferences.instance.getUserModel();
-                              if (user.data?.token == null) {
-                                checkLogin(context);
-                              } else {
-                                Navigator.pushNamed(
-                                  context,
-                                  Routes.profileRoute,
-                                  arguments: DeepLinkDataModel(
-                                      id: context
-                                              .read<MoreCubit>()
-                                              .user
-                                              ?.data
-                                              ?.id
-                                              ?.toString() ??
-                                          "",
-                                      isDeepLink: false),
-                                );
-                              }
-                            }),
-                        if(context.read<MoreCubit>().user?.data?.token != null)
+                  BlocBuilder<MoreCubit,MoreState>(
+                    builder: (context,state) {
+                      var cubit  = context.read<MoreCubit>();
+                      return Expanded(
+                        child:  ListView(
+                          children: [
+                            if(cubit.user?.data?.token != null)
+                              moreContainer(
+                                text: "my_profile".tr(),
+                                imageUrl: AppIcons.myProfileIcon,
+                                onTap: () async {
+                                  final user =
+                                      await Preferences.instance.getUserModel();
+                                  if (user.data?.token == null) {
+                                    checkLogin(context);
+                                  } else {
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.profileRoute,
+                                      arguments: DeepLinkDataModel(
+                                          id: context
+                                                  .read<MoreCubit>()
+                                                  .user
+                                                  ?.data
+                                                  ?.id
+                                                  ?.toString() ??
+                                              "",
+                                          isDeepLink: false),
+                                    );
+                                  }
+                                }),
+                            if(cubit.user?.data?.token != null)
 
-                          moreContainer(
-                            text: "my_favorites".tr(),
-                            imageUrl: AppIcons.myFavoriteIcon,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.favouritesRoute);
-                            }),
-                        if(context.read<MoreCubit>().user?.data?.token != null)
+                              moreContainer(
+                                text: "my_favorites".tr(),
+                                imageUrl: AppIcons.myFavoriteIcon,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.favouritesRoute);
+                                }),
+                            if(cubit.user?.data?.token != null)
 
-                          moreContainer(
-                            text: "chats".tr(),
-                            imageUrl: AppIcons.chatIcon,
-                            onTap: () async {
-                              final user =
-                                  await Preferences.instance.getUserModel();
-                              if (user.data?.token == null) {
-                                checkLogin(context);
-                              } else {
-                                Navigator.pushNamed(
-                                    context, Routes.roomsScreen);
-                              }
-                            }),
-                        //TODO
-                        if(context.read<MoreCubit>().user?.data?.token != null)
+                              moreContainer(
+                                text: "chats".tr(),
+                                imageUrl: AppIcons.chatIcon,
+                                onTap: () async {
+                                  final user =
+                                      await Preferences.instance.getUserModel();
+                                  if (user.data?.token == null) {
+                                    checkLogin(context);
+                                  } else {
+                                    Navigator.pushNamed(
+                                        context, Routes.roomsScreen);
+                                  }
+                                }),
+                            //TODO
+                            if(cubit.user?.data?.token != null)
 
-                        moreContainer(
-                            text: "wallet".tr(),
-                            imageUrl: AppIcons.walletIcon,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.electronicWalletRoute);
-                            }),
-                        if(context.read<MoreCubit>().user?.data?.token != null)
+                            moreContainer(
+                                text: "wallet".tr(),
+                                imageUrl: AppIcons.walletIcon,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.electronicWalletRoute);
+                                }),
+                            if(cubit.user?.data?.token != null)
 
-                          moreContainer(
-                            text: "referral_code".tr(),
-                            imageUrl: AppIcons.referralCode,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.referralCodeRoute);
-                            }),
-                        moreContainer(
-                            text: "change_language".tr(),
-                            imageUrl: AppIcons.changeLanguage,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.changeLanguageRoute);
-                            }),
-                        if(context.read<MoreCubit>().user?.data?.token != null)
+                              moreContainer(
+                                text: "referral_code".tr(),
+                                imageUrl: AppIcons.referralCode,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.referralCodeRoute);
+                                }),
+                            moreContainer(
+                                text: "change_language".tr(),
+                                imageUrl: AppIcons.changeLanguage,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.changeLanguageRoute);
+                                }),
+                            if(cubit.user?.data?.token != null)
 
-                          moreContainer(
-                            text: "change_password".tr(),
-                            imageUrl: AppIcons.changePassword,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.changePasswordRoute);
-                            }),
-                        moreContainer(
-                            text: "about_us".tr(),
-                            imageUrl: AppIcons.aboutUs,
-                            onTap: () {
-                              Navigator.pushNamed(context, Routes.aboutUsRoute);
-                            }),
+                              moreContainer(
+                                text: "change_password".tr(),
+                                imageUrl: AppIcons.changePassword,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.changePasswordRoute);
+                                }),
+                            moreContainer(
+                                text: "about_us".tr(),
+                                imageUrl: AppIcons.aboutUs,
+                                onTap: () {
+                                  Navigator.pushNamed(context, Routes.aboutUsRoute);
+                                }),
 
-                        moreContainer(
-                            text: 'packages'.tr(),
-                            imageUrl: AppIcons.packageIcon,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.packagesRoute);
-                            }),
-                        moreContainer(
-                            text: 'subscribtion'.tr(),
-                            imageUrl: AppIcons.subscribtionIcon,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.subscribtionRoute);
-                            }),
-                        if(context.read<MoreCubit>().user?.data?.token != null)
-                        moreContainer(
-                            text: "complaining".tr(),
-                            imageUrl: AppIcons.complaingIcon,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.contactUsRoute,
-                                  arguments: "complaints");
-                            }),
-                        moreContainer(
-                            text: "terms_and_condition".tr(),
-                            imageUrl: AppIcons.termsAndCondition,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.termsAndConditionRoute);
-                            }),
-                        if(context.read<MoreCubit>().user?.data?.token != null)
-                          moreContainer(
-                          text: "delete_account".tr(),
-                          imageUrl: AppIcons.deleteAccountIcon,
-                          onTap: () {
-                            showAnimatedDeleteDialog(context, () {
-                              context
-                                  .read<MoreCubit>()
-                                  .deleteAccount(context: context);
-                            });
-                          },
+                            moreContainer(
+                                text: 'packages'.tr(),
+                                imageUrl: AppIcons.packageIcon,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.packagesRoute);
+                                }),
+                            moreContainer(
+                                text: 'subscribtion'.tr(),
+                                imageUrl: AppIcons.subscribtionIcon,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.subscribtionRoute);
+                                }),
+                            if(cubit.user?.data?.token != null)
+                            moreContainer(
+                                text: "complaining".tr(),
+                                imageUrl: AppIcons.complaingIcon,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.contactUsRoute,
+                                      arguments: "complaints");
+                                }),
+                            moreContainer(
+                                text: "terms_and_condition".tr(),
+                                imageUrl: AppIcons.termsAndCondition,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.termsAndConditionRoute);
+                                }),
+                            if(cubit.user?.data?.token != null)
+                              moreContainer(
+                              text: "delete_account".tr(),
+                              imageUrl: AppIcons.deleteAccountIcon,
+                              onTap: () {
+                                showAnimatedDeleteDialog(context, () {
+                                  context
+                                      .read<MoreCubit>()
+                                      .deleteAccount(context: context);
+                                });
+                              },
+                            ),
+
+                            if(cubit.user?.data?.token != null)
+                            moreContainer(
+                              text: "logout".tr(),
+                              imageUrl: AppIcons.logout,
+                              onTap: () {
+                                showAnimatedLogoutDialog(context, () {
+                                  context
+                                      .read<MoreCubit>()
+                                      .logout(context: context);
+                                  Preferences.instance.clearShared();
+                                });
+                              },
+                            ),
+                            if(cubit.user?.data?.token == null)
+                              moreContainer(
+                                text: "login".tr(),
+                                imageUrl:AppIcons.logout ,
+                                onTap: () {
+                                 Navigator.pushNamed(context, Routes.loginRoute);
+                                },
+                              ),
+                              SizedBox(
+                              height: 50.h,
+                            ),
+                          ],
                         ),
-
-                        if(context.read<MoreCubit>().user?.data?.token != null)
-                        moreContainer(
-                          text: "logout".tr(),
-                          imageUrl: AppIcons.logout,
-                          onTap: () {
-                            showAnimatedLogoutDialog(context, () {
-                              context
-                                  .read<MoreCubit>()
-                                  .logout(context: context);
-                              Preferences.instance.clearShared();
-                            });
-                          },
-                        ),
-                        if(context.read<MoreCubit>().user?.data?.token == null)
-                          moreContainer(
-                            text: "login".tr(),
-                            imageUrl:AppIcons.logout ,
-                            onTap: () {
-                             Navigator.pushNamed(context, Routes.loginRoute);
-                            },
-                          ),
-                          SizedBox(
-                          height: 50.h,
-                        ),
-                      ],
-                    ),
+                      );
+                    }
                   )
                 ],
               ),
