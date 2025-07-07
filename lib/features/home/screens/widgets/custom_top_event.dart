@@ -26,118 +26,106 @@ class CustomTopEventList extends StatelessWidget {
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          topEvent?.image != null
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(8.r),
-                  child: SizedBox(
-                    height: 200.h,
-                    width: isAll ?? false ? getWidthSize(context) / .9 : 287.w,
-                    child: Image.network(topEvent?.image ?? "",
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            Image.asset(
-                              ImageAssets.imagePicked,
-                              fit: BoxFit.contain,
-                            )),
-                  ),
-                )
-              : ClipRRect(
-                  borderRadius: BorderRadius.circular(8.r),
-                  child: SizedBox(
-                    height: 200.h,
-                    width: isAll ?? false ? getWidthSize(context) / .9 : 287.w,
-                    child: Image.asset(
-                      ImageAssets.imagePicked,
-                      fit: BoxFit.cover,
+          // الصورة
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.r),
+            child: SizedBox(
+              height: 200.h,
+              width: isAll ?? false ? getWidthSize(context) / .9 : 287.w,
+              child: Image.network(
+                topEvent?.image ?? "",
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Image.asset(
+                  ImageAssets.imagePicked,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+
+          // طبقة تغطية شفافة
+          Container(
+            height: 200.h,
+            width: isAll ?? false ? getWidthSize(context) / .9 : 287.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.r),
+              color: Colors.black.withOpacity(0.4), // التغطية السوداء الشفافة
+            ),
+          ),
+
+          // النصوص والمحتوى
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: EdgeInsets.all(8.0.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    topEvent?.title ?? "",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: getBoldStyle(
+                      color: AppColors.white,
+                      fontSize: 16.sp,
                     ),
                   ),
-                ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              SizedBox(
-                width: isAll ?? false
-                    ? getWidthSize(context) / .9
-                    : 287.w, // Match image width
-                child: Padding(
-                  padding: EdgeInsets.all(8.0.r),
-                  child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.end, // Center vertically
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start, // Center horizontally
+                  Text(
+                    topEvent?.description ?? "",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: getRegularStyle(
+                      color: AppColors.grayText,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                  5.h.verticalSpace,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        topEvent?.title ?? "",
-                        maxLines: 1,
-                        style: getBoldStyle(
-                          color: AppColors.white,
-                          fontSize: 16.sp,
-                          isShadow: true,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        topEvent?.description ?? "",
-                        maxLines: 1,
-                        style: getRegularStyle(
-                            isShadow: true,
-                            color: AppColors.grayText,
-                            fontSize: 14.sp),
-                        textAlign: TextAlign.left,
-                      ),
-                      5.h.verticalSpace,
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(AppIcons.calenderIcon),
-                                SizedBox(width: 5.w),
-                                Expanded(
-                                  child: Text(
-                                    topEvent?.from ?? "",
-                                    style: getRegularStyle(
-                                        fontSize: 14.sp,
-                                        isShadow: true,
-                                        color: AppColors.white),
-                                  ),
-                                ),
-                              ],
+                          SvgPicture.asset(AppIcons.calenderIcon),
+                          SizedBox(width: 5.w),
+                          Text(
+                            topEvent?.from ?? "",
+                            style: getRegularStyle(
+                              fontSize: 14.sp,
+                              color: AppColors.white,
                             ),
-                          ),
-                          CustomContainerButton(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.detailsEventRoute,
-                                  arguments: DeepLinkDataModel(
-                                      id: topEvent?.id.toString() ?? '',
-                                      isDeepLink: false));
-                            },
-                            title: "details".tr(),
-                            color: AppColors.transparent,
-                            textColor: isAll ?? false
-                                ? AppColors.lbny
-                                : AppColors.primary,
-                            borderColor: isAll ?? false
-                                ? AppColors.lbny
-                                : AppColors.primary,
-                            width: 120.w,
                           ),
                         ],
                       ),
-                      5.h.verticalSpace,
+                      CustomContainerButton(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            Routes.detailsEventRoute,
+                            arguments: DeepLinkDataModel(
+                              id: topEvent?.id.toString() ?? '',
+                              isDeepLink: false,
+                            ),
+                          );
+                        },
+                        title: "details".tr(),
+                        color: AppColors.transparent,
+                        textColor:
+                        isAll ?? false ? AppColors.lbny : AppColors.primary,
+                        borderColor:
+                        isAll ?? false ? AppColors.lbny : AppColors.primary,
+                        width: 120.w,
+                      ),
                     ],
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ],
       ),
+
     );
   }
 }

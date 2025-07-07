@@ -31,19 +31,17 @@ class HomeData {
   List<GigCategory>? topGigs;
   List<Announcement>? announcements;
 
-  HomeData(
-      {this.sliders,
-      this.userSliders,
-      this.topTalents,
-      this.topEvents,
-      this.topGigs,
-      this.announcements,
-      this.seeAllNotification,
-
-      });
+  HomeData({
+    this.sliders,
+    this.userSliders,
+    this.topTalents,
+    this.topEvents,
+    this.topGigs,
+    this.announcements,
+    this.seeAllNotification,
+  });
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
-
         seeAllNotification: json["is_i_see_all_notifications"],
         sliders: (json["sliders"].isEmpty ||
                 json["sliders"] == null ||
@@ -75,7 +73,7 @@ class HomeData {
       );
 
   Map<String, dynamic> toJson() => {
-        "is_i_see_all_notifications":seeAllNotification,
+        "is_i_see_all_notifications": seeAllNotification,
         "sliders": sliders?.toJson(),
         "user_sliders": (userSliders == null || userSliders == [])
             ? []
@@ -103,6 +101,8 @@ class Announcement {
   String? description;
   String? location;
   String? price;
+  String? discount;
+  String? priceAfterDiscount;
   bool? isFav;
   bool? isMine;
   List<Media>? media;
@@ -116,6 +116,8 @@ class Announcement {
     this.description,
     this.location,
     this.price,
+    this.discount,
+    this.priceAfterDiscount,
     this.isFav,
     this.media,
   });
@@ -129,6 +131,8 @@ class Announcement {
         description: json["description"],
         location: json["location"],
         price: json["price"],
+        discount: json["discount"],
+        priceAfterDiscount: json["price_after_discount"],
         isFav: json["is_fav"],
         media: json["media"] == null
             ? []
@@ -143,6 +147,8 @@ class Announcement {
         "description": description,
         "location": location,
         "price": price,
+        "discount": discount,
+        "price_after_discount": priceAfterDiscount,
         "is_fav": isFav,
         "is_mine": isMine,
         "media": media == null
@@ -175,28 +181,28 @@ class TopTalent {
   });
 
   factory TopTalent.fromJson(Map<String, dynamic> json) => TopTalent(
-    id: json["id"],
-    name: json["name"],
-    image: json["image"],
-    headline: json["headline"],
-    followersCount: json["followers_count"],
-    referralCode: json["referral_code"],
-    isPhoneHidden: json["is_phone_hidden"],
-    isIFollow: json["is_i_follow"],
-    isDeleteOrdered: json["is_delete_ordered"],
-  );
+        id: json["id"],
+        name: json["name"],
+        image: json["image"],
+        headline: json["headline"],
+        followersCount: json["followers_count"],
+        referralCode: json["referral_code"],
+        isPhoneHidden: json["is_phone_hidden"],
+        isIFollow: json["is_i_follow"],
+        isDeleteOrdered: json["is_delete_ordered"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "image": image,
-    "headline": headline,
-    "followers_count": followersCount,
-    "referral_code": referralCode,
-    "is_phone_hidden": isPhoneHidden,
-    "is_i_follow": isIFollow,
-    "is_delete_ordered": isDeleteOrdered,
-  };
+        "id": id,
+        "name": name,
+        "image": image,
+        "headline": headline,
+        "followers_count": followersCount,
+        "referral_code": referralCode,
+        "is_phone_hidden": isPhoneHidden,
+        "is_i_follow": isIFollow,
+        "is_delete_ordered": isDeleteOrdered,
+      };
 }
 
 class Slider {

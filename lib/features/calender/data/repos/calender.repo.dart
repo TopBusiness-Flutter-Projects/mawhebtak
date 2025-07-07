@@ -1,12 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:mawhebtak/core/api/base_api_consumer.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
-
 import '../../../../core/api/end_points.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
@@ -54,7 +51,7 @@ class CalenderRepo {
   }
 
   Future<Either<Failure, DefaultMainModel>> storeEvent({
-    required List<SelectedTalends> selectedTalends,
+    required List<SelectedTalends> selectedTalents,
     required List<File> files,
     required String title,
     required String description,
@@ -67,12 +64,13 @@ class CalenderRepo {
     required String categoryId,
     required String eventLimit,
     required String eventPrice,
+    required String discountValue,
     String? currencyId,
   }) async {
     try {
       var response = await dio
-          .post(EndPoints.storeEventUrl, formDataIsEnabled: true, body: {
-        //!
+          .post(EndPoints.storeEventUrl,
+          formDataIsEnabled: true, body: {
         "key": "storeEvent",
         "title": title,
         "description": description,
@@ -86,14 +84,15 @@ class CalenderRepo {
         "event_limit": eventLimit,
         "event_price": eventPrice,
         "currency_id": currencyId,
-        for (int i = 0; i < selectedTalends.length; i++)
+        "discount": discountValue,
+        for (int i = 0; i < selectedTalents.length; i++)
           "sub_category_ids[$i]":
-              selectedTalends[i].subCategoryIds.id?.toString() ?? '',
-        for (int i = 0; i < selectedTalends.length; i++)
-          "prices[$i]": selectedTalends[i].prices.toString(),
-        for (int i = 0; i < selectedTalends.length; i++)
+              selectedTalents[i].subCategoryIds.id?.toString() ?? '',
+        for (int i = 0; i < selectedTalents.length; i++)
+          "prices[$i]": selectedTalents[i].prices.toString(),
+        for (int i = 0; i < selectedTalents.length; i++)
           "currency_ids[$i]":
-              selectedTalends[i].countryCurrencies.id?.toString() ?? '',
+              selectedTalents[i].countryCurrencies.id?.toString() ?? '',
         for (int i = 0; i < files.length; i++)
           "media[$i]": MultipartFile.fromFileSync(files[i].path,
               filename: files[i].path.split('/').last)

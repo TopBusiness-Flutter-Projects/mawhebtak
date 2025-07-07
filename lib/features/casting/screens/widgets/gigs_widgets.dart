@@ -276,20 +276,78 @@ class _GigsWidgetState extends State<GigsWidget> {
                                 ],
                               ),
                             ),
-                            Row(
-                              children: [
-                                // SvgPicture.asset(AppIcons.dollar),
-                                5.w.horizontalSpace,
-                                Text(
-                                  (widget.eventAndGigsModel?.price.toString() ??
-                                      ""),
-                                  style: TextStyle(
-                                      color: AppColors.primary,
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.w400),
-                                )
-                              ],
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  5.w.horizontalSpace,
+
+                                  if (widget.eventAndGigsModel?.price == "0" ||
+                                      widget.eventAndGigsModel?.price?.toLowerCase() == "free") ...[
+                                    Flexible(
+                                      child: AutoSizeText(
+                                        "free".tr(),
+                                        style: TextStyle(
+                                          color: Colors.green,
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ] else if (widget.eventAndGigsModel?.discount != null &&
+                                      widget.eventAndGigsModel?.discount != "0" &&
+                                      widget.eventAndGigsModel?.priceAfterDiscount != null) ...[
+                                    Flexible(
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                            child: AutoSizeText(
+                                              widget.eventAndGigsModel!.price!,
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 14.sp,
+                                                decoration: TextDecoration.lineThrough,
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          8.w.horizontalSpace,
+                                          Flexible(
+                                            child: AutoSizeText(
+                                              widget.eventAndGigsModel!.priceAfterDiscount!,
+                                              style: TextStyle(
+                                                color: AppColors.primary,
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ] else ...[
+                                    Flexible(
+                                      child: AutoSizeText(
+                                        widget.eventAndGigsModel?.price ?? "",
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontSize: 18.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
                             ),
+
+
                           ],
                         ),
                       ],
@@ -324,7 +382,8 @@ class _GigsWidgetState extends State<GigsWidget> {
                                           .toString() ==
                                       "null") {
                                 widget.castingCubit!.requestGigs(
-                                  eventAndGigsModel: widget.eventAndGigsModel??EventAndGigsModel(),
+                                  eventAndGigsModel: widget.eventAndGigsModel??
+                                      EventAndGigsModel(),
                                   context: context,
                                   chatName: widget.eventAndGigsModel?.user?.name
                                           ?.toString() ??

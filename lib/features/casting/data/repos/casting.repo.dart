@@ -28,12 +28,15 @@ class CastingRepo {
     required String long,
     required String price,
     required String currencyId,
+    required String discount,
   }) async {
     try {
       LoginModel? user;
       user = await Preferences.instance.getUserModel();
       var response = await api
-          .post(EndPoints.storeDataUrl, formDataIsEnabled: true, body: {
+          .post(EndPoints.storeDataUrl,
+          formDataIsEnabled: true, body: {
+        "discount":discount,
         "model": "Gig",
         "user_id": user.data?.id,
         "sub_category_id": subCategoryId,

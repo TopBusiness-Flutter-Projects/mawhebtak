@@ -20,10 +20,12 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
   GetCountriesMainModelData? selectedCategory;
   int? subCategoryId;
   TextEditingController locationController = TextEditingController();
+  TextEditingController discountController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController announcementTitleController = TextEditingController();
   TextEditingController announcementDescriptionController =
       TextEditingController();
+  bool isDiscount = true;
   Future<void> selectDateTime(BuildContext context) async {
     DateTime? date = await showDatePicker(
       context: context,
@@ -242,6 +244,7 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
     emit(AddAnnouncementStateLoading());
     try {
       final res = await api.addAnnouncement(
+        discount: discountController.text,
         currencyId: context.read<CalenderCubit>().selectedCurrency?.id.toString() ?? '',
         expireIn: selectedDate!,
         price: priceController.text,
@@ -270,20 +273,27 @@ class AnnouncementCubit extends Cubit<AnnouncementState> {
         errorGetBar(l.toString());
         emit(AddAnnouncementStateError(l.toString()));
       }, (r) {
-        selectedDate = null;
-        context.read<CalenderCubit>().myImagesF = [];
-        context.read<CalenderCubit>().myImages = [];
-        context.read<CalenderCubit>().validVideos = [];
-        Navigator.pop(context);
-        successGetBar(r.msg.toString());
-        announcementTitleController.clear();
-        announcementDescriptionController.clear();
-        selectedCategory = null;
-        selectedSubCategory = null;
-        locationController.clear();
-        priceController.clear();
-        announcementsData(page: '1', orderBy: 'desc');
-        emit(AddAnnouncementStateLoaded());
+
+        if(r.status == 200){
+          announcementsData(page: '1', orderBy: 'desc');
+          emit(AddAnnouncementStateLoaded());
+          Navigator.pop(context);
+          successGetBar(r.msg.toString());
+          announcementTitleController.clear();
+          announcementDescriptionController.clear();
+          selectedCategory = null;
+          selectedSubCategory = null;
+          locationController.clear();
+          priceController.clear();
+          selectedDate = null;
+          context.read<CalenderCubit>().myImagesF = [];
+          context.read<CalenderCubit>().myImages = [];
+          context.read<CalenderCubit>().validVideos = [];
+        }
+        else{
+          errorGetBar(r.msg.toString());
+        }
+
       });
     } catch (e) {
       emit(AddAnnouncementStateError(e.toString()));

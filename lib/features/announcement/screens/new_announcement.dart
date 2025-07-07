@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
@@ -33,7 +34,17 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
     context.read<AnnouncementCubit>().getCategoryFromAnnouncment(page: '1');
     super.initState();
   }
+  double getDiscountedPrice() {
+    double price = double.tryParse(
+        context.read<AnnouncementCubit>().priceController.text) ??
+        0;
+    double discount = double.tryParse(
+        context.read<AnnouncementCubit>().discountController.text) ??
+        0;
 
+
+    return price - ((discount / 100) * price);
+  }
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<AnnouncementCubit>();
@@ -188,6 +199,106 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                                 ),
                               ),
                             ),
+                              Column(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16.w, vertical: 12.h),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12.r),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.event_available,
+                                                color: AppColors.primary),
+                                            SizedBox(width: 10.w),
+                                            Text(
+                                              'is_discount'.tr(),
+                                              style: getMediumStyle(
+                                                  fontSize: 18.sp,
+                                                  color: AppColors.grayDark),
+                                            ),
+                                          ],
+                                        ),
+                                        Switch(
+                                          value: cubit.isDiscount,
+                                          activeColor: AppColors.primary,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              cubit.isDiscount = !cubit.isDiscount;
+                                              if (cubit.isDiscount == false) {
+                                                cubit.discountController.clear();
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (cubit.isDiscount)
+                                    CustomTextField(
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}')),
+                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                          try {
+                                            final text = newValue.text;
+                                            if (text.isEmpty) return newValue;
+                                            final value = double.parse(text);
+                                            if (value >= 100) {
+                                              return oldValue; // امنع التحديث
+                                            }
+                                            return newValue;
+                                          } catch (e) {
+                                            return oldValue;
+                                          }
+                                        }),
+                                      ],
+                                      validator: (p0) {
+                                        if (p0 == null || p0.isEmpty) {
+                                          return 'enter_discount_price'.tr();
+                                        }
+
+                                        double? value = double.tryParse(p0);
+                                        if (value == null) {
+                                          return 'invalid_number'.tr();
+                                        }
+
+                                        if (value >= 100) {
+                                          return 'must_less_than_100'.tr();
+                                        }
+
+                                        return null;
+                                      },
+                                      controller: cubit.discountController,
+                                      hintText: 'discount_value'.tr(),
+                                      hintTextSize: 18.sp,
+                                      suffixIcon: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                                        child: Text(
+                                          "%",
+                                          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  if (cubit.isDiscount)
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 10.h, left: 10.w),
+                                      child: Text(
+                                        '${'price_after_discount'.tr()}: ${getDiscountedPrice().toStringAsFixed(2)}',
+                                        style: TextStyle(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.primary,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
                             Text(
                               "expire_in".tr(),
                               style: getRegularStyle(fontSize: 14.sp),

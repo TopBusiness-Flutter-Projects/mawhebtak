@@ -39,9 +39,9 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
         backgroundColor: AppColors.grayLite,
         body: BlocBuilder<AnnouncementCubit, AnnouncementState>(
             builder: (BuildContext context, state) {
-              var cubit = context.read<AnnouncementCubit>();
+          var cubit = context.read<AnnouncementCubit>();
 
-              return (state is AnnouncementsDetailsStateLoading ||
+          return (state is AnnouncementsDetailsStateLoading ||
                   cubit.announcementDetailsModel == null)
               ? const Center(child: CustomLoadingIndicator())
               : Padding(
@@ -65,14 +65,21 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       GestureDetector(
-                                         onTap:(){
-                                           Navigator.pushNamed(context, Routes.profileRoute,arguments:DeepLinkDataModel(
-                                               id: cubit.announcementDetailsModel?.data?.user?.id.toString() ??"",
-                                               isDeepLink: false) );
-
-                                         },
-                                        child: (cubit.announcementDetailsModel?.data
-                                                    ?.user?.image ==
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, Routes.profileRoute,
+                                              arguments: DeepLinkDataModel(
+                                                  id: cubit
+                                                          .announcementDetailsModel
+                                                          ?.data
+                                                          ?.user
+                                                          ?.id
+                                                          .toString() ??
+                                                      "",
+                                                  isDeepLink: false));
+                                        },
+                                        child: (cubit.announcementDetailsModel
+                                                    ?.data?.user?.image ==
                                                 null)
                                             ? SizedBox(
                                                 height: 40.h,
@@ -81,12 +88,10 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                     ImageAssets.profileImage),
                                               )
                                             : CircleAvatar(
-                                                backgroundImage: NetworkImage(cubit
-                                                        .announcementDetailsModel!
-                                                        .data!
-                                                        .user
-                                                        ?.image ??
-                                                    ""),
+                                                backgroundImage: NetworkImage(
+                                                    cubit.announcementDetailsModel!
+                                                            .data!.user?.image ??
+                                                        ""),
                                               ),
                                       ),
                                       SizedBox(width: 8.w),
@@ -120,9 +125,13 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                               children: [
                                                 InkWell(
                                                   onTap: () {
-                                                    cubit.toggleFavoriteAnnounce(
-                                                        announcement: cubit.announcementDetailsModel!.data!,
-                                                        context: context,);
+                                                    cubit
+                                                        .toggleFavoriteAnnounce(
+                                                      announcement: cubit
+                                                          .announcementDetailsModel!
+                                                          .data!,
+                                                      context: context,
+                                                    );
                                                   },
                                                   child: Icon(
                                                     (cubit.announcementDetailsModel!
@@ -143,7 +152,9 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                             .toString() ==
                                                         cubit
                                                             .announcementDetailsModel
-                                                            ?.data?.user?.id
+                                                            ?.data
+                                                            ?.user
+                                                            ?.id
                                                             .toString() &&
                                                     (widget.isDeeplink ==
                                                         false))
@@ -284,24 +295,51 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                   ],
                                                 ),
                                               ),
-                                              Row(
-                                                children: [
-                                                  // SvgPicture.asset(
-                                                  //     AppIcons.dollarSign),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: AutoSizeText(
-                                                      "${cubit.announcementDetailsModel?.data?.price?.toString()}",
-                                                      style: getRegularStyle(
-                                                          fontSize: 14.sp,
-                                                          color: AppColors
-                                                              .blueLight),
-                                                    ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: (cubit.announcementDetailsModel?.data?.priceAfterDiscount != null &&
+                                                      cubit.announcementDetailsModel?.data?.priceAfterDiscount !=
+                                                          cubit.announcementDetailsModel?.data?.price)
+                                                      ? Row(
+                                                    children: [
+                                                      Flexible(
+                                                        child: AutoSizeText(
+                                                          "${cubit.announcementDetailsModel?.data?.price}",
+                                                          style: getRegularStyle(
+                                                            fontSize: 12.sp,
+                                                            color: Colors.grey,
+                                                          ).copyWith(decoration: TextDecoration.lineThrough),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 4.w),
+                                                      Flexible(
+                                                        child: AutoSizeText(
+                                                          "${cubit.announcementDetailsModel?.data?.priceAfterDiscount}",
+                                                          style: getRegularStyle(
+                                                            fontSize: 16.sp,
+                                                            color: AppColors.blueLight,
+                                                          ),
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   )
-                                                ],
+                                                      : AutoSizeText(
+                                                    cubit.announcementDetailsModel?.data?.price?.toString() ?? '',
+                                                    style: getRegularStyle(
+                                                      fontSize: 14.sp,
+                                                      color: AppColors.blueLight,
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                ),
                                               )
+
                                             ],
                                           )
                                         ],

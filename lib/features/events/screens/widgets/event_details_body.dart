@@ -1,8 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
-
 import 'package:mawhebtak/features/events/screens/widgets/statics_cards.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
@@ -25,7 +22,6 @@ class EventDetailsBody extends StatelessWidget {
   final DeepLinkDataModel? mainDeepLink;
   @override
   Widget build(BuildContext context) {
-    log('44444444 ${(item?.isMine == false && item?.requirements?.length != 0)}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -137,6 +133,43 @@ class EventDetailsBody extends StatelessWidget {
               ),
         StaticsCards(item: item),
         SizedBox(height: 10.h),
+
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 16.h),
+          child: Text(
+            'event_price'.tr(),
+            style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
+          ),
+        ),
+        ListView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            CustomRowEvent(
+              text: "event_price".tr(),
+              text2:item?.eventPrice.toString()??'',
+              isSecond: true,
+              isRequiredTalent: true,
+            ),CustomRowEvent(
+              text: "price_after_discount".tr(),
+              text2:item?.priceAfterDiscount.toString()??'',
+              isSecond: true,
+              isRequiredTalent: true,
+            ),CustomRowEvent(
+              text: "vat".tr(),
+              text2:item?.vat.toString()??'',
+              isSecond: true,
+              isRequiredTalent: true,
+            ),
+            CustomRowEvent(
+              text: "final_price".tr(),
+              text2:item?.finalPrice.toString()??'',
+              isSecond: true,
+              isRequiredTalent: true,
+            ),
+    ],
+
+        ),
         if (item?.requirements?.length != 0)
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 16.h),
@@ -145,7 +178,6 @@ class EventDetailsBody extends StatelessWidget {
               style: getMediumStyle(fontSize: 14.sp, color: AppColors.darkGray),
             ),
           ),
-
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -162,11 +194,8 @@ class EventDetailsBody extends StatelessWidget {
           },
         ),
         20.h.verticalSpace,
-        //TODO: need pass id and apply request
-
         if (item?.isMine == false && item?.requirements?.length != 0)
           const CustomApplyButton(),
-
         if (item?.isMine == true)
           Padding(
               padding: const EdgeInsets.all(8),

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -46,7 +45,6 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
     context
         .read<EventCubit>()
         .getEventDetailsById(widget.eventDataModel?.id ?? "", context);
-    // إذا كنت تريد الحصول على تفاصيل الحدث عند تحميل الشاشة
     super.initState();
   }
 
@@ -156,7 +154,6 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                             cubit.eventDetails?.data?.media ??
                                                 [],
                                       ),
-                                      //toogle
                                       SizedBox(
                                         height: getHeightSize(context) / 55,
                                       ),
@@ -294,9 +291,6 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                                           .instance
                                                                           .getUserModel();
 
-                                                                  log('0990 ${(user.data?.id?.toString() != enrolledUser?.id?.toString())}');
-                                                                  log('0990 ${(user.data?.id?.toString())}');
-                                                                  log('0990 ${(enrolledUser?.id?.toString())}');
 
                                                                   Navigator.pushNamed(
                                                                       context,
@@ -363,7 +357,7 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                         ?.length ??
                                                     0)
                                       ] else
-                                        SizedBox(),
+                                        const SizedBox(),
                                     ],
                                   ),
                           ),
