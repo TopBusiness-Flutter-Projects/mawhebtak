@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl_phone_field/countries.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
@@ -11,7 +10,6 @@ import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
-import 'package:phone_number/phone_number.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../events/screens/details_event_screen.dart';

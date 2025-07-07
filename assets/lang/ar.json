@@ -349,5 +349,14 @@
   "egp": "ج.م",
   "maintenance_mode_description": "التطبيق حالياً تحت الصيانة.\nنحن نعمل على تحسين تجربتك. يرجى العودة لاحقاً.",
   "please_select_image": "يرجى اختيار صورة",
-  "no_posts": "لا يوجد بوستات"
+  "no_posts": "لا يوجد بوستات",
+  "is_discount": "هل يوجد خصم ؟",
+  "discount_value": "قيمة الخصم",
+  "enter_discount_price": " ادخل قيمة الخصم",
+  "price_after_discount": "السعر بعد الخصم",
+  "must_lease_than_100": "لازم السعر لا يقل عن 100 %",
+  "final_price": "السعر النهائي",
+  "event_price_after_vat": "السعر بعد الضريبة",
+  "vat": "الضريبة",
+  "event_price": "سعر الحدث"
 }

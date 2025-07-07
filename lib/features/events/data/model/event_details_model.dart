@@ -39,6 +39,11 @@ class GetMainEvenDetailsModelData {
   String? category;
   String? eventLimit;
   String? eventPrice;
+  String? vat;
+  String? eventPriceAfterVat;
+  String? discount;
+  String? priceAfterDiscount;
+  String? finalPrice;
   int? isFree;
   int? enrolled;
   int? revenu;
@@ -64,6 +69,11 @@ class GetMainEvenDetailsModelData {
     this.category,
     this.eventLimit,
     this.eventPrice,
+    this.vat,
+    this.eventPriceAfterVat,
+    this.discount,
+    this.priceAfterDiscount,
+    this.finalPrice,
     this.isFree,
     this.enrolled,
     this.revenu,
@@ -93,6 +103,11 @@ class GetMainEvenDetailsModelData {
         category: json["category"],
         eventLimit: json["event_limit"],
         eventPrice: json["event_price"],
+        vat: json["vat"],
+        eventPriceAfterVat: json["event_price_after_vat"],
+        discount: json["discount"],
+        priceAfterDiscount: json["price_after_discount"],
+        finalPrice: json["final_price"],
         isFree: json["is_free"],
         enrolled: json["enrolled"],
         revenu: json["revenu"],
@@ -130,6 +145,11 @@ class GetMainEvenDetailsModelData {
         "category": category,
         "event_limit": eventLimit,
         "event_price": eventPrice,
+        "vat": vat,
+        "event_price_after_vat": eventPriceAfterVat,
+        "discount": discount,
+        "price_after_discount": priceAfterDiscount,
+        "final_price": finalPrice,
         "is_free": isFree,
         "enrolled": enrolled,
         "revenu": revenu,

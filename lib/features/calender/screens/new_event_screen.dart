@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
@@ -38,8 +39,41 @@ class _NewEventScreenState extends State<NewEventScreen> {
     if (context.read<CalenderCubit>().countriesMainModel == null) {
       context.read<CalenderCubit>().getAllCountries();
     }
-
+    context
+        .read<CalenderCubit>()
+        .ticketPriceController
+        .addListener(_updatePrice);
+    context.read<CalenderCubit>().discountController.addListener(_updatePrice);
     super.initState();
+  }
+
+  void _updatePrice() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    context
+        .read<CalenderCubit>()
+        .ticketPriceController
+        .removeListener(_updatePrice);
+    context
+        .read<CalenderCubit>()
+        .discountController
+        .removeListener(_updatePrice);
+    super.dispose();
+  }
+
+  double getDiscountedPrice() {
+    double price = double.tryParse(
+        context.read<CalenderCubit>().ticketPriceController.text) ??
+        0;
+    double discount = double.tryParse(
+        context.read<CalenderCubit>().discountController.text) ??
+        0;
+
+
+    return price - ((discount / 100) * price);
   }
 
   @override
@@ -49,10 +83,10 @@ class _NewEventScreenState extends State<NewEventScreen> {
         var cubit = context.read<CalenderCubit>();
 
         return WillPopScope(
-      onWillPop: () async {
-        context.read<FeedsCubit>().clearDataAndBack(context);
-        return Future.value(false);
-      },
+          onWillPop: () async {
+            context.read<FeedsCubit>().clearDataAndBack(context);
+            return Future.value(false);
+          },
           child: SafeArea(
             child: Scaffold(
               body: Column(
@@ -89,7 +123,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                 onTap: () async {
                                   await SharePlus.instance.share(ShareParams(
                                     text: AppStrings.eventsShareLink +
-                                        (cubit.evntStore?.data.toString() ?? ''),
+                                        (cubit.evntStore?.data.toString() ??
+                                            ''),
                                     title: AppStrings.appName,
                                   ));
                                 },
@@ -174,7 +209,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                           //   date: cubit.selectedDate ??
                                           //       DateTime.now(),
                                           // );
-          
+
                                           // Navigator.pop(context);
                                         } else {
                                           print(
@@ -414,6 +449,108 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       ),
                     ),
                   ),
+                if (!cubit.isFree)
+                  Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 12.h),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.event_available,
+                                    color: AppColors.primary),
+                                SizedBox(width: 10.w),
+                                Text(
+                                  'is_discount'.tr(),
+                                  style: getMediumStyle(
+                                      fontSize: 18.sp,
+                                      color: AppColors.grayDark),
+                                ),
+                              ],
+                            ),
+                            Switch(
+                              value: cubit.isDiscount,
+                              activeColor: AppColors.primary,
+                              onChanged: (value) {
+                                setState(() {
+                                  cubit.isDiscount = !cubit.isDiscount;
+                                  if (cubit.isDiscount == false) {
+                                    cubit.discountController.clear();
+                                  }
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (cubit.isDiscount)
+                        CustomTextField(
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}')),
+                            TextInputFormatter.withFunction((oldValue, newValue) {
+                              try {
+                                final text = newValue.text;
+                                if (text.isEmpty) return newValue;
+                                final value = double.parse(text);
+                                if (value >= 100) {
+                                  return oldValue; // امنع التحديث
+                                }
+                                return newValue;
+                              } catch (e) {
+                                return oldValue;
+                              }
+                            }),
+                          ],
+                          validator: (p0) {
+                            if (p0 == null || p0.isEmpty) {
+                              return 'enter_discount_price'.tr();
+                            }
+
+                            double? value = double.tryParse(p0);
+                            if (value == null) {
+                              return 'invalid_number'.tr();
+                            }
+
+                            if (value >= 100) {
+                              return 'must_less_than_100'.tr();
+                            }
+
+                            return null;
+                          },
+                          controller: cubit.discountController,
+                          hintText: 'discount_value'.tr(),
+                          hintTextSize: 18.sp,
+                          suffixIcon: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                            child: Text(
+                              "%",
+                              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      if (cubit.isDiscount)
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.h, left: 10.w),
+                          child: Text(
+                            '${'price_after_discount'.tr()}: ${getDiscountedPrice().toStringAsFixed(2)} ${cubit.selectedCurrency?.currency ?? ''}',
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+
                 _label("event_limit".tr()),
 
                 CustomTextField(

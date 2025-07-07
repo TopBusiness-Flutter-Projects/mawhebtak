@@ -31,6 +31,7 @@ class CalenderCubit extends Cubit<CalenderState> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController titleOfTheEventController = TextEditingController();
   TextEditingController ticketPriceController = TextEditingController();
+  TextEditingController discountController = TextEditingController();
   TextEditingController eventLimitController = TextEditingController();
   TextEditingController locationAddressController = TextEditingController();
   TextEditingController feesPriceController = TextEditingController();
@@ -40,6 +41,7 @@ class CalenderCubit extends Cubit<CalenderState> {
   List<XFile>? myImages;
   List<File>? myImagesF;
   bool isFree = true;
+  bool isDiscount = true;
   bool isPublic = true;
 
   List<SelectedTalends> selectedTalends = [];
@@ -388,8 +390,9 @@ class CalenderCubit extends Cubit<CalenderState> {
     try {
       emit(GetAddNewEventState());
       final result = await api.storeEvent(
+          discountValue: discountController.text,
           categoryId: selectedCategoty?.id.toString() ?? '',
-          selectedTalends: selectedTalends,
+          selectedTalents: selectedTalends,
           files: [...(myImagesF ?? []), ...validVideos],
           description: descriptionController.text,
           title: titleOfTheEventController.text,
