@@ -139,8 +139,10 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                   cubit.countryCode = '+${v.fullCountryCode}';
                                 },
                                 onChanged: (phone) {
-                                  cubit.fullPhoneFromWidget = phone.completeNumber;
-                                  debugPrint("Full phone from widget: ${phone.completeNumber}");
+                                  cubit.fullPhoneFromWidget =
+                                      phone.completeNumber;
+                                  debugPrint(
+                                      "Full phone from widget: ${phone.completeNumber}");
                                 },
                               ),
                               Padding(
@@ -180,21 +182,14 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                                           context.read<VerificationCubit>();
 
                                       verificationCubit.validateData(
-                                        selectedUserSubType: cubit.selectedUserSubTypes,
+                                        selectedUserSubType:
+                                            cubit.selectedUserSubTypes,
                                         countryCode: cubit.countryCode,
                                         context,
                                         email:
                                             cubit.emailAddressController.text,
                                         name: cubit.fullNameController.text,
                                         password: cubit.passwordController.text,
-
-                                        userTypeId: cubit.selectedUserType?.id
-                                                ?.toString() ??
-                                            '',
-                                        userSubTypeId: cubit
-                                                .selectedUserSubType?.id
-                                                ?.toString() ??
-                                            '',
                                       );
                                     }
                                   }),

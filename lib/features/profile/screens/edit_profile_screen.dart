@@ -299,67 +299,77 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return BlocBuilder<NewAccountCubit, NewAccountState>(
       builder: (context, state) {
         var cubit = context.read<NewAccountCubit>();
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
-              child: Text(
-                "user_type".tr(),
-                style: TextStyle(color: AppColors.darkGray, fontSize: 16.sp),
-              ),
-            ),
-            GeneralCustomDropdownButtonFormField(
-              itemBuilder: (item) => item.name ?? '',
-              value: cubit.selectedUserType,
-              items: cubit.userTypeList?.data ?? [],
-              onChanged: (value) {
-                cubit.selectedUserType = value;
-                cubit.getDataUserSubType(
-                    userTypeId: cubit.selectedUserType?.id.toString() ?? '');
-              },
-            ),
-          ],
-        );
+        return (cubit.userTypeList?.data?.length == 0 ||
+                cubit.userTypeList == null)
+            ? Container()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
+                    child: Text(
+                      "user_type".tr(),
+                      style:
+                          TextStyle(color: AppColors.darkGray, fontSize: 16.sp),
+                    ),
+                  ),
+                  GeneralCustomDropdownButtonFormField<
+                      GetCountriesMainModelData>(
+                    itemBuilder: (item) => item.name ?? '',
+                    value: cubit.selectedUserType,
+                    items: cubit.userTypeList?.data ?? [],
+                    onChanged: (value) {
+                      cubit.selectedUserType = value;
+                      cubit.userSubTypeList = null;
+                      cubit.selectedUserSubType = null;
+                      cubit.getDataUserSubType(
+                          userTypeId:
+                              cubit.selectedUserType?.id.toString() ?? '');
+                    },
+                  ),
+                ],
+              );
       },
     );
   }
 
   Widget _buildUserSubTypeDropdown(NewAccountCubit cubit) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
-          child: Text(
-            "user_sub_type".tr(),
-            style: TextStyle(color: AppColors.darkGray, fontSize: 16.sp),
-          ),
-        ),
-        BlocBuilder<ProfileCubit, ProfileState>(
-          builder: (context, state) {
-            var profileCubit = context.read<ProfileCubit>();
+    return (cubit.userSubTypeList?.data?.length == 0 ||
+            cubit.userSubTypeList == null)
+        ? Container()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
+                child: Text(
+                  "user_sub_type".tr(),
+                  style: TextStyle(color: AppColors.darkGray, fontSize: 16.sp),
+                ),
+              ),
+              BlocBuilder<ProfileCubit, ProfileState>(
+                builder: (context, state) {
+                  var profileCubit = context.read<ProfileCubit>();
+                  return GeneralCustomDropdownButtonFormField<
+                      GetCountriesMainModelData>(
+                    itemBuilder: (item) => item.name ?? '',
+                    value: cubit.selectedUserSubType,
+                    items: cubit.userSubTypeList?.data ?? [],
+                    onChanged: (value) {
+                      cubit.selectedUserSubType = value;
 
-            return GeneralCustomDropdownButtonFormField<
-                GetCountriesMainModelData>(
-              itemBuilder: (item) => item.name ?? '',
-              value: cubit.selectedUserSubType,
-              items: cubit.userSubTypeList?.data ?? [],
-              onChanged: (value) {
-                cubit.selectedUserSubType = value;
+                      final alreadyExists = profileCubit.selectedUserSubTypes
+                          .any((element) => element.id == value?.id);
 
-                final alreadyExists = profileCubit.selectedUserSubTypes
-                    .any((element) => element.id == value?.id);
-
-                if (!alreadyExists && value != null) {
-                  profileCubit.addUserSubType(value);
-                }
-              },
-            );
-          },
-        ),
-      ],
-    );
+                      if (!alreadyExists && value != null) {
+                        profileCubit.addUserSubType(value);
+                      }
+                    },
+                  );
+                },
+              ),
+            ],
+          );
   }
 
   Widget _userSubType() {

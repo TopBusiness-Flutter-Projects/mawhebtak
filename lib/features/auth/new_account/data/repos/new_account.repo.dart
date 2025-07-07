@@ -18,7 +18,7 @@ class NewAccount {
     required String name,
     required String password,
     required String phone,
-    required String? userTypeId,
+    // required String? userTypeId,
     required String? countryCode,
     required List<GetCountriesMainModelData> selectedUserSubType,
   }) async {
@@ -27,6 +27,7 @@ class NewAccount {
 
       var response = await dio.post(
         EndPoints.registerUrl,
+        formDataIsEnabled: true,
         body: {
           'key': 'register',
           'email': email,

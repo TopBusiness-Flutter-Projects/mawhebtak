@@ -15,13 +15,11 @@ class VerificationRepo {
 
   //registerUrl
   Future<Either<Failure, ValidateDataMainModel>> validateData({
-   required String email,
+    required String email,
     required String name,
-    required  String password,
-    required  String phone,
-    required  String? userTypeId,
-    required  String? userSubTypeId,
-    required   String? countryCode,
+    required String password,
+    required String phone,
+    required String? countryCode,
     required List<GetCountriesMainModelData> selectedUserSubType,
   }) async {
     try {
@@ -32,11 +30,11 @@ class VerificationRepo {
           'key': 'validateData',
           'email': email,
           'name': name,
-          'country_code':countryCode,
+          'country_code': countryCode,
           'phone': phone,
           for (int i = 0; i < selectedUserSubType.length; i++)
             "user_sub_type_ids[$i]":
-            selectedUserSubType[i].id?.toString() ?? '',
+                selectedUserSubType[i].id?.toString() ?? '',
           'password': password
         },
       );

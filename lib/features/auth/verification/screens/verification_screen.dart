@@ -1,4 +1,3 @@
-
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
@@ -128,7 +127,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             ),
                           ),
                           showCursor: true,
-                
+
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'please_enter_verification_code'.tr();
@@ -147,7 +146,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           onTap: () {
                             cubit.validateOTP(widget.isRegister, context);
                             //! Regiser
-                
+
                             // Navigator.pushNamed(context, Routes.newPasswordRoute);
                           },
                         ),
@@ -171,18 +170,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 var cubitx = context.read<NewAccountCubit>();
                                 if (cubit.timerDate == null) {
                                   cubit.validateData(
-                                    selectedUserSubType: cubitx.selectedUserSubTypes,
+                                    selectedUserSubType:
+                                        cubitx.selectedUserSubTypes,
                                     countryCode: cubitx.countryCode,
                                     context,
                                     email: cubitx.emailAddressController.text,
                                     name: cubitx.fullNameController.text,
                                     password: cubitx.passwordController.text,
-                                    userTypeId:
-                                        cubitx.selectedUserType?.id?.toString() ??
-                                            '',
-                                    userSubTypeId: cubitx.selectedUserSubType?.id
-                                            ?.toString() ??
-                                        '',
                                   );
                                 }
                               },
@@ -192,7 +186,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                       fontWeight: FontWeight.w400,
                                       color: cubit.timerDate == null
                                           ? AppColors.darkGray.withOpacity(0.8)
-                                          : AppColors.darkGray.withOpacity(0.4))),
+                                          : AppColors.darkGray
+                                              .withOpacity(0.4))),
                             ),
                           ],
                         ),

@@ -80,15 +80,16 @@ class ProfileCubit extends Cubit<ProfileState> {
   // returns 'EG'
   String countryCode = '+20';
   saveData(BuildContext context, DeepLinkDataModel model) async {
-    phoneController.text =
-        (profileModel?.data?.phone ?? '').replaceAll('+', '');
+    phoneController.text = (profileModel?.data?.phone ?? '')
+        .replaceAll('+', '')
+        .toString()
+        .replaceAll(profileModel?.data?.countryCode ?? '', '')
+        .toString();
     countryCode = "${profileModel?.data?.countryCode}";
-    log('5dialCode${profileModel?.data?.countryCode}-${profileModel?.data?.phone}');
+    log('xx5dialCode${profileModel?.data?.countryCode}-${profileModel?.data?.phone}');
     selectedGender = 'male';
-    context.read<NewAccountCubit>().selectedUserType =
-        profileModel?.data?.userType;
-    selectedUserSubTypes = profileModel?.data?.userSubTypes ?? [];
 
+    selectedUserSubTypes = profileModel?.data?.userSubTypes ?? [];
 
     nameController.text = profileModel?.data?.name ?? '';
     emailController.text = profileModel?.data?.email ?? "";
@@ -193,6 +194,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(AddReviewStateError(e.toString()));
     }
   }
+
   void addUserSubType(GetCountriesMainModelData userSubType) {
     selectedUserSubTypes.add(userSubType);
     emit(ProfileFormChanged());
@@ -202,6 +204,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     selectedUserSubTypes.remove(userSubType);
     emit(ProfileFormChanged());
   }
+
   Future<void> updateProfileData(
       {required BuildContext context, required String profileId}) async {
     AppWidgets.create2ProgressDialog(context);
@@ -214,8 +217,6 @@ class ProfileCubit extends Cubit<ProfileState> {
         isPhoneHidden: isShowPhone ? 0 : 1,
         name: nameController.text.isEmpty ? null : nameController.text,
         phone: fullPhone,
-        userSubTypeId:
-            context.read<NewAccountCubit>().selectedUserSubType?.id.toString(),
         avatar: avatarImage != null && await avatarImage!.exists()
             ? avatarImage
             : null,

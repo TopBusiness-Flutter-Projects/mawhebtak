@@ -158,7 +158,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         postsCount: profileData?.postsCount.toString() ?? "0",
       );
     }
-
     return Padding(
       padding: EdgeInsets.only(left: 10.w, right: 10.w),
       child: Row(

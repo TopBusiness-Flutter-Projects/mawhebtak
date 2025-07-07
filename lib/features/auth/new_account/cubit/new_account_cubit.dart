@@ -25,38 +25,37 @@ class NewAccountCubit extends Cubit<NewAccountState> {
 
   List<GetCountriesMainModelData> selectedUserSubTypes = [];
   getDataUserType(BuildContext context,
-      {GetCountriesMainModelData? userTypeModel,
-        bool? isEditProfile}) async {
+      {GetCountriesMainModelData? userTypeModel, bool? isEditProfile}) async {
     emit(LoadingGetUserTypesState());
     var response = await api.getDataUserType();
     response.fold((l) {
       emit(ErrorGetUserTypesState('error_msg'.tr()));
     }, (r) {
       userTypeList = r;
-      selectedUserSubType = null;
-      if (userTypeModel != null) {
-        for (int i = 0; i < (userTypeList?.data?.length ?? 0); i++) {
-          if (userTypeList?.data?[i].id?.toString() ==
-              userTypeModel.id?.toString()) {
-            selectedUserType = userTypeList?.data?[i];
-          }
+      // selectedUserSubType = null;
+      selectedUserType = null;
 
-        }
-      }
-
-      if (isEditProfile == true) {
-        getDataUserSubType(
-            userTypeId: selectedUserType?.id?.toString() ?? '',
-            currentSubCategory:
-                context.read<ProfileCubit>().profileModel?.data?.userSubTypes);
-      }
+      // if (userTypeModel != null) {
+      //   for (int i = 0; i < (userTypeList?.data?.length ?? 0); i++) {
+      //     if (userTypeList?.data?[i].id?.toString() ==
+      //         userTypeModel.id?.toString()) {
+      //       selectedUserType = userTypeList?.data?[i];
+      //     }
+      //   }
+      // }
+      // if (isEditProfile == true) {
+      //   getDataUserSubType(
+      //       userTypeId: selectedUserType?.id?.toString() ?? '',
+      //       currentSubCategory:
+      //           context.read<ProfileCubit>().profileModel?.data?.userSubTypes);
+      // }
       emit(LoadedGetUserTypesState(r));
     });
   }
 
   getDataUserSubType({
     required String userTypeId,
-   List <GetCountriesMainModelData>? currentSubCategory,
+    List<GetCountriesMainModelData>? currentSubCategory,
   }) async {
     emit(LoadingGetUserSubTypesState());
     var response = await api.getDataUserSubType(userTypeId: userTypeId);
@@ -64,14 +63,14 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       emit(ErrorGetUserSubTypesState('error_msg'.tr()));
     }, (r) {
       userSubTypeList = r;
-      if (currentSubCategory != null) {
-        for (int i = 0; i < (userSubTypeList?.data?.length ?? 0); i++) {
-          if (userSubTypeList?.data?[i].id?.toString() ==
-              currentSubCategory[i].id?.toString()) {
-            selectedUserSubType = userSubTypeList?.data?[i];
-          }
-        }
-      }
+      // if (currentSubCategory != null) {
+      //   for (int i = 0; i < (userSubTypeList?.data?.length ?? 0); i++) {
+      //     if (userSubTypeList?.data?[i].id?.toString() ==
+      //         currentSubCategory[i].id?.toString()) {
+      //       selectedUserSubType = userSubTypeList?.data?[i];
+      //     }
+      //   }
+      // }
       emit(LoadedGetUserSubTypesState(r));
     });
   }
@@ -92,7 +91,7 @@ class NewAccountCubit extends Cubit<NewAccountState> {
       password: passwordController.text,
       phone: fullPhone,
       countryCode: countryCode,
-      userTypeId: selectedUserType?.id?.toString(),
+      // userTypeId: selectedUserType?.id?.toString(),
     );
 
     response.fold((l) {

@@ -41,7 +41,6 @@ class ProfileRepo {
   Future<Either<Failure, DefaultMainModel>> updateProfileData({
     String? name,
     String? phone,
-    String? userSubTypeId,
     File? avatar,
     File? byCaver,
     String? lat,
@@ -61,12 +60,13 @@ class ProfileRepo {
         EndPoints.updateProfile,
         formDataIsEnabled: true,
         body: {
-          if(isPhoneHidden == 0)
-          'is_phone_hidden':isPhoneHidden,
+          if (isPhoneHidden == 0) 'is_phone_hidden': isPhoneHidden,
           'name': name,
           if (phone != null) 'phone': phone,
-          if (countryCode != null) 'country_code':countryCode,
-          if (userSubTypeId != null) 'user_sub_type_id': userSubTypeId,
+          if (countryCode != null) 'country_code': countryCode,
+          for (int i = 0; i < selectedUserSubType.length; i++)
+            "user_sub_type_ids[$i]":
+                selectedUserSubType[i].id?.toString() ?? '',
           if (avatar != null)
             'avatar': MultipartFile.fromFileSync(avatar.path,
                 filename: avatar.path.split('/').last),
@@ -81,9 +81,6 @@ class ProfileRepo {
           if (age != null) 'age': age,
           if (gender != null) 'gender': gender,
           if (syndicate != null) 'syndicate': syndicate,
-          for (int i = 0; i < selectedUserSubType.length; i++)
-            "user_sub_type_ids[$i]":
-            selectedUserSubType[i].id?.toString() ?? '',
         },
       );
 
@@ -100,14 +97,12 @@ class ProfileRepo {
       String? title,
       DateTime? from,
       DateTime? to,
-
       bool isUntilNow = false}) async {
     try {
       final userModel = await Preferences.instance.getUserModel();
       var response = await dio.post(EndPoints.storeDataUrl, body: {
         'model': 'Experience',
         'user_id': userModel.data?.id.toString(),
-
         'title': title,
         'description': description,
         if (from != null) 'from': DateFormat('yyyy-MM-dd').format(from),

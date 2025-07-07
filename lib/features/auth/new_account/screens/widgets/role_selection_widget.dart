@@ -1,4 +1,3 @@
-
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_cubit.dart';
 import 'package:mawhebtak/features/auth/new_account/cubit/new_account_state.dart';
@@ -118,11 +117,16 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w400,
-                                color: (cubit.selectedUserSubType?.id
-                                            ?.toString() ==
-                                        item?.id?.toString())
-                                    ? AppColors.white
-                                    : Colors.black,
+                                color:
+                                    (cubit.selectedUserSubTypes.contains(item))
+                                        ? AppColors.white
+                                        : AppColors.black,
+
+                                // (cubit.selectedUserSubType?.id
+                                //             ?.toString() ==
+                                //         item?.id?.toString())
+                                //     ? AppColors.white
+                                //     : Colors.black,
                               ),
                             ),
                           ),
@@ -138,22 +142,24 @@ class _RoleSelectionWidgetState extends State<RoleSelectionWidget> {
                         Wrap(
                           spacing: 8.w,
                           runSpacing: 8.h,
-                          children: cubit.selectedUserSubTypes.map((selectedItem) {
+                          children:
+                              cubit.selectedUserSubTypes.map((selectedItem) {
                             return Chip(
                               label: Text(selectedItem?.name ?? ""),
                               onDeleted: () {
                                 setState(() {
-                                  cubit.selectedUserSubTypes.remove(selectedItem);
+                                  cubit.selectedUserSubTypes
+                                      .remove(selectedItem);
                                 });
                               },
-                              backgroundColor: AppColors.primary.withOpacity(0.2),
+                              backgroundColor:
+                                  AppColors.primary.withOpacity(0.2),
                               deleteIconColor: AppColors.primary,
                             );
                           }).toList(),
                         ),
                       ],
                     ),
-
                 ],
               )
           ],

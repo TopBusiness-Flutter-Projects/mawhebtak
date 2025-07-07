@@ -39,15 +39,13 @@ class VerificationCubit extends Cubit<VerificationState> {
   }
 
   validateData(
-      BuildContext context, {
-        required String email,
-        required String countryCode,
-        required String name,
-        required String password,
-        required String userTypeId,
-        required String userSubTypeId,
-        required List<GetCountriesMainModelData> selectedUserSubType,
-      }) async {
+    BuildContext context, {
+    required String email,
+    required String countryCode,
+    required String name,
+    required String password,
+    required List<GetCountriesMainModelData> selectedUserSubType,
+  }) async {
     AppWidgets.create2ProgressDialog(context);
     emit(ValidateDataStateLoading());
 
@@ -58,13 +56,11 @@ class VerificationCubit extends Cubit<VerificationState> {
           '${newAccountCubit.countryCode}${newAccountCubit.mobileNumberController.text.trim()}';
       final res = await api.validateData(
         countryCode: countryCode,
-       selectedUserSubType: selectedUserSubType,
-       email:  email,
+        selectedUserSubType: selectedUserSubType,
+        email: email,
         name: name,
         password: password,
         phone: fullPhone, // هنا التغيير المهم
-        userTypeId: userTypeId,
-        userSubTypeId: userSubTypeId,
       );
 
       res.fold((l) {
@@ -72,7 +68,8 @@ class VerificationCubit extends Cubit<VerificationState> {
       }, (r) {
         if (r.status == 200) {
           Navigator.pop(context);
-          Navigator.pushNamed(context, Routes.verificationRoute, arguments: true);
+          Navigator.pushNamed(context, Routes.verificationRoute,
+              arguments: true);
           correctOTP = r.data?.otp.toString();
           timerDate = r.data?.otpExpired;
           emit(ValidateDataStateLoaded());
@@ -87,5 +84,4 @@ class VerificationCubit extends Cubit<VerificationState> {
       return null;
     }
   }
-
 }
