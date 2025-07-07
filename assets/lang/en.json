@@ -352,5 +352,13 @@
   "egp": "EGP",
   "electronic_wallet": "Electronic Wallet",
   "maintenance_mode_description": "The app is currently under maintenance.\nWe are working to improve your experience. Please check back later.",
-  "no_posts": "No Posts"
+  "is_discount": "Is there a discount on it?",
+  "discount_value": "discount value",
+  "price_after_discount": "price after discount",
+  "must_lease_than_100": "must lease than 100 %",
+  "final_price": "final price",
+  "event_price_after_vat": "event price after vat",
+  "vat": "vat",
+  "event_price": "event price"
+
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/core/exports.dart';
 
@@ -20,8 +21,9 @@ class CustomTextField extends StatefulWidget {
   final String? hintText;
   final double? hintTextSize;
   final int? maxLines;
+  final List<TextInputFormatter>? inputFormatters;
   //FocusNode myFocusNode = FocusNode();
-  const CustomTextField({
+   CustomTextField({
     super.key,
     this.labelText,
     this.prefixIcon,
@@ -40,6 +42,7 @@ class CustomTextField extends StatefulWidget {
     this.hintText,
     this.hintTextSize,
     this.maxLines,
+    this.inputFormatters,
   });
 
   @override
@@ -73,7 +76,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.w),
         child: TextFormField(
-
+            inputFormatters: widget.inputFormatters,
             enabled: widget.enabled,
             controller: widget.controller,
             expands: false,

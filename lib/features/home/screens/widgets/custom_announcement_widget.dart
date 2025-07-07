@@ -238,20 +238,40 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                             ),
                           ],
                         ),
-                      ),
-                      Row(
+                      ),Row(
                         children: [
-                          // SvgPicture.asset(AppIcons.dollarSign),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: AutoSizeText(
-                              "${widget.announcement?.price?.toString() ?? ''}",
+                          if (widget.announcement?.priceAfterDiscount != null &&
+                              widget.announcement?.priceAfterDiscount != widget.announcement?.price)
+                            Row(
+                              children: [
+                                AutoSizeText(
+                                  "${widget.announcement?.price}",
+                                  style: getRegularStyle(
+                                    fontSize: 12.sp,
+                                    color: Colors.grey,
+                                  ).copyWith(decoration: TextDecoration.lineThrough),
+                                ),
+                                SizedBox(width: 4.w),
+                                AutoSizeText(
+                                  "${widget.announcement?.priceAfterDiscount}",
+                                  style: getRegularStyle(
+                                    fontSize: 16.sp,
+                                    color: AppColors.blueLight,
+                                  ),
+                                ),
+                              ],
+                            )
+                          else
+                            AutoSizeText(
+                              "${widget.announcement?.price ?? ''}",
                               style: getRegularStyle(
-                                  fontSize: 14.sp, color: AppColors.blueLight),
+                                fontSize: 14.sp,
+                                color: AppColors.blueLight,
+                              ),
                             ),
-                          )
                         ],
                       )
+
                     ],
                   )
                 ],

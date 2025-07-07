@@ -147,6 +147,7 @@ class AnnouncementRepo {
     required String subCategoryId,
     required DateTime expireIn,
     required String currencyId,
+    required String discount,
   }) async {
     try {
       LoginModel? user;
@@ -155,6 +156,7 @@ class AnnouncementRepo {
           .post(EndPoints.storeDataUrl, formDataIsEnabled: true, body: {
         "model": "Announce",
         "user_id": user.data?.id,
+        "discount":discount,
         "title": title,
         "description": description,
         "location": location,

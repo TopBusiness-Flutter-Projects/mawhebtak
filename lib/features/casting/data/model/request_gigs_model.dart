@@ -53,6 +53,8 @@ class EventAndGigsModel {
   String? description;
   String? location;
   String? price;
+  String? discount;
+  String? priceAfterDiscount;
   String? from;
   String? isRequested;
   bool? isMine;
@@ -68,6 +70,8 @@ class EventAndGigsModel {
     this.description,
     this.user,
     this.price,
+    this.discount,
+    this.priceAfterDiscount,
     this.from,
     this.isRequested,
     this.isMine,
@@ -86,6 +90,8 @@ class EventAndGigsModel {
         description: json["description"],
         location: json["location"],
         price: json["price"],
+        discount: json["discount"],
+        priceAfterDiscount: json["price_after_discount"],
         from: json["from"],
         isRequested: json["is_requested"],
         isMine: json["is_mine"],
@@ -104,6 +110,8 @@ class EventAndGigsModel {
             : List<dynamic>.from(media!.map((x) => x.toJson())),
         "description": description,
         "price": price,
+        "discount": discount,
+        "price_after_discount": priceAfterDiscount,
         "user": user?.toJson(),
         "from": from
       };
