@@ -67,33 +67,40 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                       GestureDetector(
                                         onTap: () {
                                           Navigator.pushNamed(
-                                              context, Routes.profileRoute,
-                                              arguments: DeepLinkDataModel(
-                                                  id: cubit
-                                                          .announcementDetailsModel
-                                                          ?.data
-                                                          ?.user
-                                                          ?.id
-                                                          .toString() ??
-                                                      "",
-                                                  isDeepLink: false));
+                                            context,
+                                            Routes.profileRoute,
+                                            arguments: DeepLinkDataModel(
+                                              id: cubit.announcementDetailsModel?.data?.user?.id?.toString() ?? "",
+                                              isDeepLink: false,
+                                            ),
+                                          );
                                         },
-                                        child: (cubit.announcementDetailsModel
-                                                    ?.data?.user?.image ==
-                                                null)
-                                            ? SizedBox(
-                                                height: 40.h,
+                                        child: ClipOval(
+                                          child: (cubit.announcementDetailsModel?.data?.user?.image == null ||
+                                              cubit.announcementDetailsModel!.data!.user!.image!.isEmpty)
+                                              ? Image.asset(
+                                            ImageAssets.profileImage,
+                                            width: 40.w,
+                                            height: 40.h,
+                                            fit: BoxFit.cover,
+                                          )
+                                              : Image.network(
+                                            cubit.announcementDetailsModel!.data!.user!.image!,
+                                            width: 40.w,
+                                            height: 40.h,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (context, error, stackTrace) {
+                                              return Image.asset(
+                                                ImageAssets.profileImage,
                                                 width: 40.w,
-                                                child: Image.asset(
-                                                    ImageAssets.profileImage),
-                                              )
-                                            : CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    cubit.announcementDetailsModel!
-                                                            .data!.user?.image ??
-                                                        ""),
-                                              ),
+                                                height: 40.h,
+                                                fit: BoxFit.cover,
+                                              );
+                                            },
+                                          ),
+                                        ),
                                       ),
+
                                       SizedBox(width: 8.w),
                                       Expanded(
                                         child: Row(
@@ -302,6 +309,7 @@ class _DetailsAnnouncementScreenState extends State<DetailsAnnouncementScreen> {
                                                       cubit.announcementDetailsModel?.data?.priceAfterDiscount !=
                                                           cubit.announcementDetailsModel?.data?.price)
                                                       ? Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
                                                     children: [
                                                       Flexible(
                                                         child: AutoSizeText(

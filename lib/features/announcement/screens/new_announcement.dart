@@ -41,8 +41,6 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
     double discount = double.tryParse(
         context.read<AnnouncementCubit>().discountController.text) ??
         0;
-
-
     return price - ((discount / 100) * price);
   }
   @override
@@ -494,8 +492,7 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
             return ListTile(
               title: Text(currency.currency ?? '', style: getRegularStyle()),
               onTap: () {
-                setState(() =>
-                    context.read<CalenderCubit>().selectedCurrency = currency);
+                context.read<CalenderCubit>().selectedCurrency = currency;
                 Navigator.pop(context);
               },
             );
