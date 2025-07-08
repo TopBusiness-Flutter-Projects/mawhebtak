@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:fluttertoast/fluttertoast.dart';
@@ -88,9 +87,8 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
 
   void getUserPackageDetailsData({required String idFromPackage}) async {
     emit(LoadingPackageDetailsState());
-    final res = await api.getUserPackageDetailsData(
-      idFromPackage: idFromPackage,
-    );
+    final res =
+        await api.getUserPackageDetailsData(idFromPackage: idFromPackage);
     res.fold((l) {
       emit(ErrorPackageDetailsState());
     }, (r) {
@@ -136,5 +134,4 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
       emit(SuccessAddAdsState());
     });
   }
-
 }

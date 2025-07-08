@@ -51,7 +51,7 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
                             Navigator.pushNamed(
                               context,
                               Routes.myAdvertismentRoute,
-                              arguments: item.packageId.toString(),
+                              arguments: item.id.toString(),
                             );
                           },
                           child: ContainerOfPackage(
@@ -61,7 +61,8 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       MySvgWidget(
                                         path: AppIcons.calendarIcon,
@@ -114,7 +115,8 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       MySvgWidget(
                                         path: AppIcons.calendarIcon,

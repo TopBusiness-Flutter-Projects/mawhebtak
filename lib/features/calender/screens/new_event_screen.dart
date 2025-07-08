@@ -66,12 +66,11 @@ class _NewEventScreenState extends State<NewEventScreen> {
 
   double getDiscountedPrice() {
     double price = double.tryParse(
-        context.read<CalenderCubit>().ticketPriceController.text) ??
+            context.read<CalenderCubit>().ticketPriceController.text) ??
         0;
     double discount = double.tryParse(
-        context.read<CalenderCubit>().discountController.text) ??
+            context.read<CalenderCubit>().discountController.text) ??
         0;
-
 
     return price - ((discount / 100) * price);
   }
@@ -494,8 +493,10 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         CustomTextField(
                           keyboardType: TextInputType.number,
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}')),
-                            TextInputFormatter.withFunction((oldValue, newValue) {
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d{0,3}')),
+                            TextInputFormatter.withFunction(
+                                (oldValue, newValue) {
                               try {
                                 final text = newValue.text;
                                 if (text.isEmpty) return newValue;
@@ -509,6 +510,9 @@ class _NewEventScreenState extends State<NewEventScreen> {
                               }
                             }),
                           ],
+                          onChanged: (v) {
+                            setState(() {});
+                          },
                           validator: (p0) {
                             if (p0 == null || p0.isEmpty) {
                               return 'enter_discount_price'.tr();
@@ -529,10 +533,12 @@ class _NewEventScreenState extends State<NewEventScreen> {
                           hintText: 'discount_value'.tr(),
                           hintTextSize: 18.sp,
                           suffixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 10.h),
                             child: Text(
                               "%",
-                              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                  fontSize: 20.sp, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),

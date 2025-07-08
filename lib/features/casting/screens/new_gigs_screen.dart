@@ -33,17 +33,18 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
     }
     super.initState();
   }
+
   double getDiscountedPrice() {
     double price = double.tryParse(
-        context.read<CastingCubit>().priceRangeController.text) ??
+            context.read<CastingCubit>().priceRangeController.text) ??
         0;
-    double discount = double.tryParse(
-        context.read<CastingCubit>().discountController.text) ??
-        0;
-
+    double discount =
+        double.tryParse(context.read<CastingCubit>().discountController.text) ??
+            0;
 
     return price - ((discount / 100) * price);
   }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -51,10 +52,10 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
       builder: (context, state) {
         var cubit = context.read<CastingCubit>();
         return WillPopScope(
-      onWillPop: () async {
-        context.read<FeedsCubit>().clearDataAndBack(context);
-        return Future.value(false);
-      },
+          onWillPop: () async {
+            context.read<FeedsCubit>().clearDataAndBack(context);
+            return Future.value(false);
+          },
           child: Scaffold(
             body: SafeArea(
               child: Form(
@@ -83,10 +84,10 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                 controller: cubit.gigTitleController,
                                 hintText: "John doe".tr(),
                                 hintTextSize: 18.sp,
-
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
+                                padding:
+                                    EdgeInsets.only(top: 10.h, bottom: 10.h),
                                 child: Text(
                                   "category".tr(),
                                   style: getRegularStyle(fontSize: 18.sp),
@@ -108,8 +109,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                   items: cubit.categoryModel?.data ?? [],
                                   onChanged: (value) {
                                     cubit.selectedCategory = value;
-                                    cubit.subCategoryFromCategoryGigsModel?.data =
-                                        [];
+                                    cubit.subCategoryFromCategoryGigsModel
+                                        ?.data = [];
                                     cubit.selectedSubCategory = null;
                                     cubit.subCategoryFromCategoryGigs(
                                         categoryId: value?.id.toString() ?? "");
@@ -121,28 +122,30 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  if (cubit.subCategoryFromCategoryGigsModel?.data
-                                          ?.length !=
+                                  if (cubit.subCategoryFromCategoryGigsModel
+                                          ?.data?.length !=
                                       0)
                                     Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 10.h, bottom: 10.h),
+                                      padding: EdgeInsets.only(
+                                          top: 10.h, bottom: 10.h),
                                       child: Text(
                                         "sub_category".tr(),
                                         style: getRegularStyle(fontSize: 18.sp),
                                       ),
                                     ),
-                                  if (cubit.subCategoryFromCategoryGigsModel?.data
-                                          ?.length !=
+                                  if (cubit.subCategoryFromCategoryGigsModel
+                                          ?.data?.length !=
                                       0)
                                     Container(
                                       height: 60.h,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                         color: AppColors.grayLite,
-                                        borderRadius: BorderRadius.circular(8.sp),
+                                        borderRadius:
+                                            BorderRadius.circular(8.sp),
                                       ),
-                                      child: GeneralCustomDropdownButtonFormField(
+                                      child:
+                                          GeneralCustomDropdownButtonFormField(
                                         itemBuilder: (item) {
                                           return item?.name ?? '';
                                         },
@@ -167,6 +170,9 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                   builder: (context, state) {
                                 var cubit2 = context.read<CalenderCubit>();
                                 return CustomTextField(
+                                  onChanged: (v) {
+                                    setState(() {});
+                                  },
                                   keyboardType: TextInputType.number,
                                   validator: (p0) {
                                     if (p0!.isEmpty) {
@@ -188,11 +194,14 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          cubit2.selectedCurrency?.currency ?? '',
+                                          cubit2.selectedCurrency?.currency ??
+                                              '',
                                           style: getRegularStyle(
-                                              color: Colors.blue, fontSize: 14.sp),
+                                              color: Colors.blue,
+                                              fontSize: 14.sp),
                                         ),
-                                        const Icon(Icons.keyboard_arrow_down_sharp,
+                                        const Icon(
+                                            Icons.keyboard_arrow_down_sharp,
                                             color: Colors.blue),
                                       ],
                                     ),
@@ -200,6 +209,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                 );
                               }),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
                                     padding: EdgeInsets.symmetric(
@@ -209,7 +219,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                       borderRadius: BorderRadius.circular(12.r),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Row(
                                           children: [
@@ -229,9 +240,11 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                           activeColor: AppColors.primary,
                                           onChanged: (value) {
                                             setState(() {
-                                              cubit.isDiscount = !cubit.isDiscount;
+                                              cubit.isDiscount =
+                                                  !cubit.isDiscount;
                                               if (cubit.isDiscount == false) {
-                                                cubit.discountController.clear();
+                                                cubit.discountController
+                                                    .clear();
                                               }
                                             });
                                           },
@@ -243,8 +256,10 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                     CustomTextField(
                                       keyboardType: TextInputType.number,
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(RegExp(r'^\d{0,3}')),
-                                        TextInputFormatter.withFunction((oldValue, newValue) {
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp(r'^\d{0,3}')),
+                                        TextInputFormatter.withFunction(
+                                            (oldValue, newValue) {
                                           try {
                                             final text = newValue.text;
                                             if (text.isEmpty) return newValue;
@@ -258,6 +273,9 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                           }
                                         }),
                                       ],
+                                      onChanged: (v) {
+                                        setState(() {});
+                                      },
                                       validator: (p0) {
                                         if (p0 == null || p0.isEmpty) {
                                           return 'enter_discount_price'.tr();
@@ -278,16 +296,20 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                       hintText: 'discount_value'.tr(),
                                       hintTextSize: 18.sp,
                                       suffixIcon: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.w, vertical: 10.h),
                                         child: Text(
                                           "%",
-                                          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                     ),
                                   if (cubit.isDiscount)
                                     Padding(
-                                      padding: EdgeInsets.only(top: 10.h, left: 10.w,bottom: 10.h),
+                                      padding: EdgeInsets.only(
+                                          left: 10.w, bottom: 10.h),
                                       child: Text(
                                         '${'price_after_discount'.tr()}: ${getDiscountedPrice().toStringAsFixed(2)} ',
                                         style: TextStyle(
@@ -391,14 +413,16 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                                       builder: (context) =>
                                                           ImageFileView(
                                                               image: cubit
-                                                                  .myImages![index]
+                                                                  .myImages![
+                                                                      index]
                                                                   .path)));
                                             },
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                               child: Image.file(
-                                                File(cubit.myImages![index].path),
+                                                File(cubit
+                                                    .myImages![index].path),
                                                 width: 80.w,
                                                 height: 80.w,
                                                 fit: BoxFit.cover,
@@ -410,8 +434,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                             right: 0,
                                             child: GestureDetector(
                                               onTap: () {
-                                                cubit.deleteImage(File(
-                                                    cubit.myImages![index].path));
+                                                cubit.deleteImage(File(cubit
+                                                    .myImages![index].path));
                                               },
                                               child: Container(
                                                 decoration: const BoxDecoration(
@@ -419,7 +443,8 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                                   shape: BoxShape.circle,
                                                 ),
                                                 child: const Icon(Icons.close,
-                                                    color: Colors.white, size: 18),
+                                                    color: Colors.white,
+                                                    size: 18),
                                               ),
                                             ),
                                           ),
@@ -445,15 +470,15 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                 title: "create_gig".tr(),
                 color: AppColors.primary,
                 onTap: () {
-                  final currency = context.read<CalenderCubit>().selectedCurrency?.currency;
+                  final currency =
+                      context.read<CalenderCubit>().selectedCurrency?.currency;
                   if (currency == null || currency.isEmpty) {
-                    errorGetBar("please_select_currency".tr()); // أو اكتبي الرسالة يدويًا
+                    errorGetBar("please_select_currency"
+                        .tr()); // أو اكتبي الرسالة يدويًا
                     return;
                   }
                   cubit.addNewGig(context: context);
                 },
-
-
               ),
             ),
           ),

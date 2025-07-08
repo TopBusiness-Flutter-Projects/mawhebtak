@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -13,18 +12,15 @@ class MyAdvertismentRepo {
   MyAdvertismentRepo(this.dio);
 
   // // الاشتراكات
-  Future<Either<Failure, UserPackageModel>>
-  getUserPackageData() async {
+  Future<Either<Failure, UserPackageModel>> getUserPackageData() async {
     final userModel = await Preferences.instance.getUserModel();
     try {
-      final response = await dio.get(
-        EndPoints.getDataBaseUrl,
-        queryParameters: {
-          'model':'UserPackage',
-          'where[0]':'status,1',
-          "where[1]": "user_id,${userModel.data?.id?.toString()}",
-        }
-      );
+      final response =
+          await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
+        'model': 'UserPackage',
+        'where[0]': 'status,1',
+        "where[1]": "user_id,${userModel.data?.id?.toString()}",
+      });
       return Right(UserPackageModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
@@ -52,16 +48,15 @@ class MyAdvertismentRepo {
       required String toDate,
       required File image}) async {
     try {
-      final response = await dio.post(EndPoints.addAddsUrl,
-          formDataIsEnabled: true,
-          body: {
-            'key':'addAd',
-            'user_package_id': id,
-            'from_date': fromDate,
-            'to_date': toDate,
-            'image': MultipartFile.fromFileSync(image.path,
-                filename: image.path.split('/').last),
-          });
+      final response =
+          await dio.post(EndPoints.addAddsUrl, formDataIsEnabled: true, body: {
+        'key': 'addAd',
+        'user_package_id': id,
+        'from_date': fromDate,
+        'to_date': toDate,
+        'image': MultipartFile.fromFileSync(image.path,
+            filename: image.path.split('/').last),
+      });
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());

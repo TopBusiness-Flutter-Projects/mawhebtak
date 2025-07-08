@@ -19,7 +19,9 @@ class _MyAdvertismentScreenState extends State<MyAdvertismentScreen> {
   @override
   initState() {
     super.initState();
-    context.read<MyAdvertismentCubit>().getUserPackageDetailsData(idFromPackage: widget.idFromPackage);
+    context
+        .read<MyAdvertismentCubit>()
+        .getUserPackageDetailsData(idFromPackage: widget.idFromPackage);
   }
 
   @override
@@ -55,207 +57,229 @@ class _MyAdvertismentScreenState extends State<MyAdvertismentScreen> {
       body: SafeArea(
         child: BlocBuilder<MyAdvertismentCubit, MyAdvertismentState>(
             builder: (context, state) {
-              var cubit = context.read<MyAdvertismentCubit>();
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomAppBarWithClearWidget(
-                    title: "apply_for_event".tr(),
-                  ),
-                  SizedBox(height: 40.h),
-                  (state is LoadingLawyerPackageAdsState)
-                      ? const Center(child: CustomLoadingIndicator())
-                      : Expanded(
-                    child: Column(
-                      children: [
-                        ContainerOfPackage(
-                          height: 125.h,
-                          widgetOne: Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    MySvgWidget(
-                                      path: AppIcons.calendarIcon,
-                                      imageColor: AppColors.primary,
-                                      size: 20.w,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.only(
-                                        start: 8.0.w,
-                                        bottom: 12.h,
-                                      ),
-                                      child: Text(
-                                        '${"from_date".tr()} ${cubit.userPackageDetailsModel?.data?.package?.fromDate.toString() ?? ""}',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontFamily: AppStrings.fontFamily,
-                                          color: AppColors.grayDark,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Flexible(
-                                  child: Text(
-                                    'monthly_package'.tr(),
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                      fontFamily: AppStrings.fontFamily,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  '${cubit.userPackageDetailsModel?.data?.package?.numberOfAds ?? 0} ${"ads_per_month".tr()}',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontFamily: AppStrings.fontFamily,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14.sp,
-                                    color: AppColors.grayDark,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          widgetTwo: Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    MySvgWidget(
-                                      path: AppIcons.calendarIcon,
-                                      imageColor: AppColors.primary,
-                                      size: 20.w,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.only(
-                                        start: 8.0.w,
-                                        bottom: 12.h,
-                                      ),
-                                      child: Text(
-                                        '${"to_date".tr()} ${cubit.userPackageDetailsModel?.data?.package?.toDate.toString()}',
-                                        maxLines: 1,
-                                        style: TextStyle(
-                                          fontFamily: AppStrings.fontFamily,
-                                          color: AppColors.grayDark,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Flexible(
-                                  child: Text(
-                                    'reset_advertisment'.tr(),
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                      fontFamily: AppStrings.fontFamily,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14.sp,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  '${cubit.userPackageDetailsModel?.data?.package?.numberOfBumps ?? 0} ${"ads".tr()}',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontFamily: AppStrings.fontFamily,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14.sp,
-                                    color: AppColors.grayDark,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: cubit.userPackageDetailsModel?.data?.ads?.length,
-                            itemBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
+          var cubit = context.read<MyAdvertismentCubit>();
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomAppBarWithClearWidget(
+                title: "apply_for_event".tr(),
+              ),
+              SizedBox(height: 40.h),
+              (state is LoadingLawyerPackageAdsState)
+                  ? const Center(child: CustomLoadingIndicator())
+                  : Expanded(
+                      child: Column(
+                        children: [
+                          ContainerOfPackage(
+                            height: 125.h,
+                            widgetOne: Expanded(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  cubit.userPackageDetailsModel?.data?.ads?[index].image == null
-                                      ? Image.asset(
-                                    "assets/images/app_icon_white.png",
-                                    height: 120.h,
-                                    width: double.infinity,
-                                  )
-                                      : Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                                    child: Image.network(
-                                      cubit.userPackageDetailsModel?.data?.ads?[index].image.toString() ?? "",
-                                      height: 120.h,
-                                      width: double.infinity,
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      MySvgWidget(
+                                        path: AppIcons.calendarIcon,
+                                        imageColor: AppColors.primary,
+                                        size: 20.w,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.only(
+                                          start: 8.0.w,
+                                          bottom: 12.h,
+                                        ),
+                                        child: Text(
+                                          '${"from_date".tr()} ${cubit.userPackageDetailsModel?.data?.package?.fromDate.toString() ?? ""}',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontFamily: AppStrings.fontFamily,
+                                            color: AppColors.grayDark,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 15.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      'monthly_package'.tr(),
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontFamily: AppStrings.fontFamily,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14.sp,
+                                      ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(Icons.date_range, size: 15.sp, color: AppColors.primary),
-                                            SizedBox(width: 10.w),
-                                            Text(
-                                              '${"expiration_date".tr()} ${cubit.userPackageDetailsModel?.data?.ads?[index].toDate.toString().substring(0, 10)}',
-                                              style: TextStyle(
-                                                color: AppColors.gray,
-                                                fontSize: 13.sp,
-                                                fontFamily: AppStrings.fontFamily,
-                                              ),
-                                            ),
-                                          ],
+                                  Text(
+                                    '${cubit.userPackageDetailsModel?.data?.package?.numberOfAds ?? 0} ${"ads_per_month".tr()}',
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontFamily: AppStrings.fontFamily,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                      color: AppColors.grayDark,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            widgetTwo: Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      MySvgWidget(
+                                        path: AppIcons.calendarIcon,
+                                        imageColor: AppColors.primary,
+                                        size: 20.w,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.only(
+                                          start: 8.0.w,
+                                          bottom: 12.h,
                                         ),
-                                        const Spacer(),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: AppColors.yellow,
-                                            borderRadius: BorderRadius.circular(5.sp),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-                                            child: Center(
-                                              child: Text(
-                                                cubit.userPackageDetailsModel?.data?.ads?[index].status ?? "",
-                                                style: TextStyle(
-                                                  fontSize: 12.sp,
-                                                  color: AppColors.white,
-                                                ),
-                                              ),
-                                            ),
+                                        child: Text(
+                                          '${"to_date".tr()} ${cubit.userPackageDetailsModel?.data?.package?.toDate.toString()}',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontFamily: AppStrings.fontFamily,
+                                            color: AppColors.grayDark,
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 15.sp,
                                           ),
                                         ),
-                                      ],
+                                      ),
+                                    ],
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      'reset_advertisment'.tr(),
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontFamily: AppStrings.fontFamily,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${cubit.userPackageDetailsModel?.data?.package?.numberOfBumps ?? 0} ${"ads".tr()}',
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      fontFamily: AppStrings.fontFamily,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.sp,
+                                      color: AppColors.grayDark,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: ListView.builder(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: cubit
+                                  .userPackageDetailsModel?.data?.ads?.length,
+                              itemBuilder: (context, index) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    cubit.userPackageDetailsModel?.data
+                                                ?.ads?[index].image ==
+                                            null
+                                        ? Image.asset(
+                                            "assets/images/app_icon_white.png",
+                                            height: 120.h,
+                                            width: double.infinity,
+                                          )
+                                        : Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 10.w,
+                                                vertical: 10.h),
+                                            child: Image.network(
+                                              cubit.userPackageDetailsModel
+                                                      ?.data?.ads?[index].image
+                                                      .toString() ??
+                                                  "",
+                                              height: 120.h,
+                                              width: double.infinity,
+                                            ),
+                                          ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(Icons.date_range,
+                                                  size: 15.sp,
+                                                  color: AppColors.primary),
+                                              SizedBox(width: 10.w),
+                                              Text(
+                                                '${"expiration_date".tr()} ${cubit.userPackageDetailsModel?.data?.ads?[index].toDate.toString().substring(0, 10)}',
+                                                style: TextStyle(
+                                                  color: AppColors.gray,
+                                                  fontSize: 13.sp,
+                                                  fontFamily:
+                                                      AppStrings.fontFamily,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Spacer(),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: AppColors.yellow,
+                                              borderRadius:
+                                                  BorderRadius.circular(5.sp),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 5.w,
+                                                  vertical: 2.h),
+                                              child: Center(
+                                                child: Text(
+                                                  (cubit
+                                                              .userPackageDetailsModel
+                                                              ?.data
+                                                              ?.ads?[index]
+                                                              .status ??
+                                                          "")
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 12.sp,
+                                                    color: AppColors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              );
-            }),
+            ],
+          );
+        }),
       ),
     );
   }
