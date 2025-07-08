@@ -6,21 +6,21 @@ import '../../../../config/routes/app_routes.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
+import '../../../../video_player.dart';
 import '../../../main/cubit/state.dart';
 
 class CustomAppBarRow extends StatefulWidget {
-  CustomAppBarRow(
-      {super.key,
-      this.color,
-      this.backgroundNotification,
-      this.isMore,
-      this.colorSearchIcon,
-      this.backgroundColorTextFieldSearch,
-      this.colorTextFromSearchTextField,
-      this.readNotification,
-
-      });
-  bool?  isMore;
+  CustomAppBarRow({
+    super.key,
+    this.color,
+    this.backgroundNotification,
+    this.isMore,
+    this.colorSearchIcon,
+    this.backgroundColorTextFieldSearch,
+    this.colorTextFromSearchTextField,
+    this.readNotification,
+  });
+  bool? isMore;
   Color? colorSearchIcon;
   Color? backgroundColorTextFieldSearch;
   Color? colorTextFromSearchTextField;
@@ -48,7 +48,7 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () async{
+                    onTap: () async {
                       final user = await Preferences.instance.getUserModel();
                       if (user.data?.token == null) {
                         checkLogin(context);
@@ -61,7 +61,6 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                               isDeepLink: false),
                         );
                       }
-
                     },
                     child: SizedBox(
                       height: 40.h,
@@ -124,8 +123,12 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                           padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                           child: InkWell(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, Routes.videoScreenRoute);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          YouTubePlayerScreen())); // Navigator.pushNamed(
+                              //     context, Routes.videoScreenRoute);
                             },
                             child: Container(
                               height: 40.h,
@@ -141,8 +144,6 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                             ),
                           ),
                         ),
-
-                  
                   GestureDetector(
                     onTap: () async {
                       final user = await Preferences.instance.getUserModel();
@@ -162,22 +163,22 @@ class _CustomAppBarRowState extends State<CustomAppBarRow> {
                               AppColors.grayDark,
                           borderRadius: BorderRadius.circular(8.r),
                         ),
-                        child: 
-                        
-                        widget.readNotification == true ?
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.notifications_sharp,color: AppColors.white,)
-                        ):
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SvgPicture.asset(
-                              height: 21.h,
-                              width: 18.w,
-                              (widget.isMore == true )
-                                  ? AppIcons.notificationWithBlueContainer
-                                  : AppIcons.notificationIcon),
-                        ),
+                        child: widget.readNotification == true
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.notifications_sharp,
+                                  color: AppColors.white,
+                                ))
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SvgPicture.asset(
+                                    height: 21.h,
+                                    width: 18.w,
+                                    (widget.isMore == true)
+                                        ? AppIcons.notificationWithBlueContainer
+                                        : AppIcons.notificationIcon),
+                              ),
                       ),
                     ),
                   ),

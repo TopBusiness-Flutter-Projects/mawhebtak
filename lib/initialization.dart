@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mawhebtak/core/preferences/hive/hive.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/injector.dart' as injector;
+import 'package:youtube_quality_player/initialized_function.dart';
 import 'app_bloc_observer.dart';
 import 'core/exports.dart';
 import 'core/notification_services/notification_service.dart';
@@ -29,4 +30,5 @@ Future<void> initialization() async {
   Hive.registerAdapter(WorkModelAdapter());
   Hive.registerAdapter(AssistantAdapter());
   await Hive.openBox(WorkHiveManager.workBoxName);
+  ensureYQPInitialized();
 }
