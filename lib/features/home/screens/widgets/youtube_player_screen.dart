@@ -1,30 +1,34 @@
+
 import 'package:mawhebtak/core/exports.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_quality_player/youtube_quality_player.dart';
 
-class YoutubePlayerScreen extends StatelessWidget {
-  final String videoId;
+class YouTubePlayerScreen extends StatefulWidget {
+  @override
+  _YouTubePlayerScreenState createState() => _YouTubePlayerScreenState();
+}
 
-  const YoutubePlayerScreen({Key? key, required this.videoId}) : super(key: key);
+class _YouTubePlayerScreenState extends State<YouTubePlayerScreen> {
+  String currentVideoUrl = 'https://www.youtube.com/watch?v=Eq6X_nNUbDo';
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayerBuilder(
-      player: YoutubePlayer(
-        controller: YoutubePlayerController(
-          initialVideoId: videoId,
-          flags: const YoutubePlayerFlags(
-            autoPlay: true,
-            mute: false,
-          ),
-        ),
-        showVideoProgressIndicator: true,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('YouTube Quality Player'),
       ),
-      builder: (context, player) {
-        return Scaffold(
-          appBar: AppBar(title: const Text("YouTube Video")),
-          body: player,
-        );
-      },
+      body: Column(
+        children: [
+          Container(
+            height: 250,
+            child: YQPlayer(
+              videoLink: currentVideoUrl,
+              primaryColor: Colors.blue,
+              secondaryColor: Colors.redAccent,
+            ),
+          ),
+          SizedBox(height: 20),
+        ],
+      ),
     );
   }
 }
