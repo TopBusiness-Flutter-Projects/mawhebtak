@@ -72,9 +72,9 @@ class AddAdvertismentScreen extends StatelessWidget {
                 items: cubit.modelTypeMap.entries.map((e) => e.key).toList(),
                 itemBuilder: (item) => cubit.modelTypeMap[item] ?? '',
               ),
-
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 10.h),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 10.h),
                 child: Text(
                   "types".tr(),
                   style: getRegularStyle(
@@ -83,30 +83,26 @@ class AddAdvertismentScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-           
               cubit.selectedList.isEmpty
                   ? Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0.w),
-                child: Text(
-                  "no_data_available".tr(),
-                  style: getRegularStyle(
-                    color: AppColors.grey,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              )
-                  :
-              GeneralCustomDropdownButtonFormField<String>(
-                value: cubit.selectedModelTypeId,
-                onChanged: (value) {
-                  cubit.selectedModelTypeId = value;
-                },
-                items: cubit.selectedList.map((e) => e.id).toList(),
-                itemBuilder: (id) => cubit.selectedList.firstWhere((e) => e.id == id).name,
-              ),
-
-
+                      padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                      child: Text(
+                        "no_data_available".tr(),
+                        style: getRegularStyle(
+                          color: AppColors.grey,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                    )
+                  : GeneralCustomDropdownButtonFormField<String>(
+                      value: cubit.selectedModelTypeId,
+                      onChanged: (value) {
+                        cubit.selectedModelTypeId = value;
+                      },
+                      items: cubit.selectedList.map((e) => e.id).toList(),
+                      itemBuilder: (id) =>
+                          cubit.selectedList.firstWhere((e) => e.id == id).name,
+                    ),
               Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 10.h),
