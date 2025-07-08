@@ -7,8 +7,10 @@ import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
+import 'package:mawhebtak/features/home/screens/widgets/local_video_player.dart';
 import 'package:mawhebtak/features/home/screens/widgets/under_custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../main/cubit/cubit.dart';
@@ -74,26 +76,55 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Stack(
                         children: [
-                          SizedBox(
-                            height: getHeightSize(context) / 1.6,
-                            width: getWidthSize(context),
-                            child: Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Image.network(homeData?.sliders?.image ?? "",
+                          GestureDetector(
+                            onTap: () async {
+                              final slider = homeData?.sliders?[0];
+
+                              if (slider == null || slider.url == null) return;
+
+                              if (slider.urlType?.toLowerCase() == "youtube") {
+                                final url = Uri.parse(slider.url!);
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url, mode: LaunchMode.externalApplication);
+                                } else {
+                                  debugPrint("❌ Can't launch URL: $url");
+                                }
+                              } else if (slider.urlType?.toLowerCase() == "video") {
+                                // افتح شاشة فيديو داخل التطبيق
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => LocalVideoPlayerScreen(videoUrl: slider.url!),
+                                  ),
+                                );
+                              } else {
+                                debugPrint("⚠️ Unknown url_type: ${slider.urlType}");
+                              }
+                            },
+                            child: SizedBox(
+                              height: getHeightSize(context) / 1.6,
+                              width: getWidthSize(context),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Image.network(
+                                    homeData?.sliders?[0].image ?? "",
                                     fit: BoxFit.cover,
                                     errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(
-                                    ImageAssets.imagePicked,
-                                    fit: BoxFit.contain,
-                                  );
-                                }),
-                                Container(
-                                  color: Colors.black.withOpacity(0.5),
-                                ),
-                              ],
+                                      return Image.asset(
+                                        ImageAssets.imagePicked,
+                                        fit: BoxFit.contain,
+                                      );
+                                    },
+                                  ),
+                                  Container(
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                          )
+,
                           Positioned(
                             bottom: 5.h,
                             left: 0,

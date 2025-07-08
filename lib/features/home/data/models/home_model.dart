@@ -24,7 +24,7 @@ class HomeModel {
 
 class HomeData {
   bool? seeAllNotification;
-  Slider? sliders;
+  List<Slider>? sliders;
   List<TopTalent>? userSliders;
   List<TopTalent>? topTalents;
   List<EventAndGigsModel>? topEvents;
@@ -43,11 +43,10 @@ class HomeData {
 
   factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
         seeAllNotification: json["is_i_see_all_notifications"],
-        sliders: (json["sliders"].isEmpty ||
-                json["sliders"] == null ||
-                json["sliders"] is List)
-            ? null
-            : Slider.fromJson(json["sliders"]),
+        sliders: (json["sliders"] == null || json["sliders"] == [])
+            ? []
+            : List<Slider>.from(
+                json["sliders"]!.map((x) => Slider.fromJson(x))),
         userSliders:
             (json["user_sliders"] == null || json["user_sliders"] == [])
                 ? []
@@ -74,7 +73,9 @@ class HomeData {
 
   Map<String, dynamic> toJson() => {
         "is_i_see_all_notifications": seeAllNotification,
-        "sliders": sliders?.toJson(),
+        "sliders":  (sliders == null || sliders == [])
+            ? []
+            : List<Slider>.from(sliders!.map((x) => x.toJson())),
         "user_sliders": (userSliders == null || userSliders == [])
             ? []
             : List<dynamic>.from(userSliders!.map((x) => x.toJson())),
