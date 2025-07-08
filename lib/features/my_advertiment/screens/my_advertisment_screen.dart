@@ -241,7 +241,21 @@ class _MyAdvertismentScreenState extends State<MyAdvertismentScreen> {
                                           const Spacer(),
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: AppColors.yellow,
+                                              color: cubit
+                                                          .userPackageDetailsModel
+                                                          ?.data
+                                                          ?.ads?[index]
+                                                          .adConfirmation ==
+                                                      "accepted"
+                                                  ? AppColors.green
+                                                  : cubit
+                                                              .userPackageDetailsModel
+                                                              ?.data
+                                                              ?.ads?[index]
+                                                              .adConfirmation ==
+                                                          "rejected"
+                                                      ? AppColors.red
+                                                      : AppColors.yellow,
                                               borderRadius:
                                                   BorderRadius.circular(5.sp),
                                             ),
@@ -255,7 +269,7 @@ class _MyAdvertismentScreenState extends State<MyAdvertismentScreen> {
                                                               .userPackageDetailsModel
                                                               ?.data
                                                               ?.ads?[index]
-                                                              .status ??
+                                                              .adConfirmation ??
                                                           "")
                                                       .toString(),
                                                   style: TextStyle(
