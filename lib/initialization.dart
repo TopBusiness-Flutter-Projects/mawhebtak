@@ -30,5 +30,5 @@ Future<void> initialization() async {
   Hive.registerAdapter(WorkModelAdapter());
   Hive.registerAdapter(AssistantAdapter());
   await Hive.openBox(WorkHiveManager.workBoxName);
-  ensureYQPInitialized(); // Required initialization
+  ensureYQPInitialized();
 }
