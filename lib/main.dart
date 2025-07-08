@@ -15,6 +15,7 @@ void main() async {
       await Permission.notification.request();
     }
   }
+
   runApp(EasyLocalization(
       supportedLocales: const [Locale('ar', ''), Locale('en', '')],
       path: 'assets/lang',
