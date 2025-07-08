@@ -20,8 +20,10 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   late final ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    context.read<AnnouncementCubit>().announcementsData(page: '1', isGetMore: false,orderBy: selctedFilterOption?.key);
-    context.read<AnnouncementCubit>().getCategoryFromAnnouncment(page: '1', isGetMore: false, orderBy: selctedFilterOption?.key);
+    context.read<AnnouncementCubit>().announcementsData(
+        page: '1', isGetMore: false, orderBy: selctedFilterOption?.key);
+    context.read<AnnouncementCubit>().getCategoryFromAnnouncment(
+        page: '1', isGetMore: false, orderBy: selctedFilterOption?.key);
     scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -186,45 +188,50 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                   ),
                   (state is AnnouncementsStateLoading)
                       ? const Expanded(
-                    child: Center(
-                      child: CustomLoadingIndicator(),
-                    ),
-                  )
-                      : (announcementsData?.data == [] || announcementsData?.data?.length == 0)
-                      ? Expanded(
-                      child: Center(
-                          child: Text(
-                            "no_data".tr(),
-                            style: TextStyle(color: AppColors.black),
-                          )))
-                      : Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                        child: RefreshIndicator(
-                          onRefresh:()async{
-                            context.read<AnnouncementCubit>().announcementsData(page: '1', orderBy: selctedFilterOption?.key);
-                          },
-                          child: ListView.builder(
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            controller: scrollController,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) =>
-                                SizedBox(
-                                  height: getSize(context)/1,
-                                  child: CustomAnnouncementWidget(
-                                    index: index,
-                                    isMainWidget: true,
-                                    announcement: announcementsData?.data?[index],
-
-                                  ),
-                                ),
-                            itemCount: announcementsData?.data?.length ?? 0,
+                          child: Center(
+                            child: CustomLoadingIndicator(),
                           ),
-                        ),
-                      )),
+                        )
+                      : (announcementsData?.data == [] ||
+                              announcementsData?.data?.length == 0)
+                          ? Expanded(
+                              child: Center(
+                                  child: Text(
+                              "no_data".tr(),
+                              style: TextStyle(color: AppColors.black),
+                            )))
+                          : Expanded(
+                              child: Padding(
+                              padding: EdgeInsets.only(left: 8.w, right: 8.w),
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  context
+                                      .read<AnnouncementCubit>()
+                                      .announcementsData(
+                                          page: '1',
+                                          orderBy: selctedFilterOption?.key);
+                                },
+                                child: ListView.builder(
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  controller: scrollController,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) => SizedBox(
+                                    height: getSize(context) / 1,
+                                    child: CustomAnnouncementWidget(
+                                      index: index,
+                                      isMainWidget: true,
+                                      announcement:
+                                          announcementsData?.data?[index],
+                                    ),
+                                  ),
+                                  itemCount:
+                                      announcementsData?.data?.length ?? 0,
+                                ),
+                              ),
+                            )),
                   if (state is AnnouncementsStateLoadingMore)
                     const Center(child: CustomLoadingIndicator()),
-
                 ],
               );
             }),

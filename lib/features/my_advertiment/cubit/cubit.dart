@@ -12,12 +12,14 @@ import 'package:mawhebtak/features/my_advertiment/data/models/user_package_model
 import '../../../core/exports.dart';
 import '../data/repos/my_advertisment_repo.dart';
 import 'state.dart';
+
 class DropdownModel {
   final String id;
   final String name;
 
   DropdownModel({required this.id, required this.name});
 }
+
 class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
   MyAdvertismentCubit(this.api) : super(SubscribtionStateInitial());
 
@@ -29,12 +31,10 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
   DateTime toDate = DateTime.now();
   String? selectedModelType;
   String? selectedModelTypeId;
-  Map<String, String> modelTypeMap =
-    {
-      "Event": "event".tr(),
-      "Announcement": "announcement".tr(),
-      "Gig": "gig".tr()
-
+  Map<String, String> modelTypeMap = {
+    "Event": "event".tr(),
+    "Announcement": "announcement".tr(),
+    "Gig": "gig".tr()
   };
 
   List<DropdownModel> get selectedList {
@@ -55,6 +55,7 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
         return [];
     }
   }
+
   Future<void> onSelectedDate(BuildContext context,
       {required bool isFromDate}) async {
     emit(LoadingMyAdvanceDateSelectedState());
@@ -116,6 +117,7 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
       emit(SuccessUserPackageState());
     });
   }
+
   // events
   TopEventsModel? eventsModel;
   void getEventsData() async {
@@ -128,6 +130,7 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
       emit(SuccessEventsDataState());
     });
   } // announcment
+
   AnnouncementsModel? announcementsModel;
   void getAnnouncementData() async {
     emit(LoadingAnnouncementDataState());
@@ -138,7 +141,8 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
       announcementsModel = r;
       emit(SuccessAnnouncementDataState());
     });
-  }// Gig
+  } // Gig
+
   RequestGigsModel? gigsModel;
   void getGigsData() async {
     emit(LoadingGigsDataState());
@@ -150,7 +154,6 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
       emit(SuccessGigsDataState());
     });
   }
-
 
   // // ✅ تفاصيل الاشتراك
   UserPackageDetailsModel? userPackageDetailsModel;
@@ -176,36 +179,43 @@ class MyAdvertismentCubit extends Cubit<MyAdvertismentState> {
       return;
     }
 
-    AppWidgets.create2ProgressDialog(context);
+    try {
+      AppWidgets.create2ProgressDialog(context);
 
-    final res = await api.addAdds(
-      modelId: selectedModelTypeId.toString(),
-      modelType: selectedModelType ?? "",
-      id: id,
-      fromDate: DateFormat('yyyy-MM-dd', 'en').format(fromData),
-      toDate: DateFormat('yyyy-MM-dd', 'en').format(toDate),
-      image: uploadedImage!,
-    );
+      final res = await api.addAdds(
+        modelId: selectedModelTypeId.toString(),
+        modelType: selectedModelType ?? "",
+        id: id,
+        fromDate: DateFormat('yyyy-MM-dd', 'en').format(fromData),
+        toDate: DateFormat('yyyy-MM-dd', 'en').format(toDate),
+        image: uploadedImage!,
+      );
 
-    res.fold((l) {
-      errorGetBar(l.toString());
-      emit(ErrorAddAdsState());
-    }, (r) {
-      if (r.status == 422) {
-        errorGetBar(r.msg ?? '');
-        Navigator.pop(context);
-      } else {
-        defaultMainModel = r;
-        successGetBar(r.msg ?? '');
-        getUserPackageData();
-        uploadedImage = null;
-        toDate == DateTime.now();
-        fromData == DateTime.now();
-        selectedModelType = null;
-        selectedModelTypeId = null;
-        Navigator.pop(context);
-      }
-      emit(SuccessAddAdsState());
-    });
+      res.fold((l) {
+        errorGetBar(l.toString());
+        emit(ErrorAddAdsState());
+      }, (r) {
+        if (r.status == 200) {
+          defaultMainModel = r;
+          successGetBar(r.msg ?? '');
+          getUserPackageData();
+          uploadedImage = null;
+          toDate == DateTime.now();
+          fromData == DateTime.now();
+          selectedModelType = null;
+          selectedModelTypeId = null;
+          Navigator.pop(context);
+          Navigator.pop(context);
+          emit(SuccessAddAdsState());
+        } else {
+          errorGetBar(r.msg ?? '');
+          Navigator.pop(context);
+          emit(ErrorAddAdsState());
+        }
+      });
+    } catch (e) {
+      errorGetBar(e.toString());
+      Navigator.pop(context);
+    }
   }
 }

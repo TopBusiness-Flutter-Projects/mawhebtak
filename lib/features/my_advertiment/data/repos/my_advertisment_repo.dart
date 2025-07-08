@@ -20,13 +20,13 @@ class MyAdvertismentRepo {
       var response = await dio.get(EndPoints.getDataBaseUrl, queryParameters: {
         "model": "Event",
         "where[1]": "user_id,${userModel.data?.id?.toString()}",
-
       });
       return Right(TopEventsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
+
   // announcment
   Future<Either<Failure, AnnouncementsModel>> announcmentData() async {
     try {
@@ -40,6 +40,7 @@ class MyAdvertismentRepo {
       return Left(ServerFailure());
     }
   }
+
   // gigs
   Future<Either<Failure, RequestGigsModel>> gigsData() async {
     try {
@@ -53,6 +54,7 @@ class MyAdvertismentRepo {
       return Left(ServerFailure());
     }
   }
+
   // // الاشتراكات
   Future<Either<Failure, UserPackageModel>> getUserPackageData() async {
     final userModel = await Preferences.instance.getUserModel();
@@ -88,8 +90,8 @@ class MyAdvertismentRepo {
       {required String id,
       required String fromDate,
       required String toDate,
-        required String modelType,
-        required String modelId,
+      required String modelType,
+      String? modelId,
       required File image}) async {
     try {
       final response =
@@ -98,8 +100,8 @@ class MyAdvertismentRepo {
         'user_package_id': id,
         'from_date': fromDate,
         'to_date': toDate,
-        'model_type':modelType,
-        'model_id':modelId,
+        'model_type': modelType,
+        if (modelId != null) 'model_id': modelId,
         'image': MultipartFile.fromFileSync(image.path,
             filename: image.path.split('/').last),
       });

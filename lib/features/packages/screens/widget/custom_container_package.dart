@@ -20,14 +20,9 @@ class ContainerOfPackage extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
       decoration: BoxDecoration(
-
           color: AppColors.white,
           boxShadow: [
-            BoxShadow(
-              blurRadius: 2,
-              spreadRadius: 0.02,
-              color: AppColors.grayDark
-            )
+            BoxShadow(blurRadius: 2, spreadRadius: 0.02, color: AppColors.grey)
           ],
           borderRadius: BorderRadius.circular(8.r)),
       child: Row(

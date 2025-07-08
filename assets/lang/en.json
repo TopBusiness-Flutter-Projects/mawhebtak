@@ -334,7 +334,7 @@
   "end_date_must_be_after_start_date": "End date must be after start date",
   "please_select_image": "Please select an image",
   "no_posts": "No Posts",
-  "please_select_image": "Please select an image",
+
   "maintenance_mode_title": "Maintenance Mode",
   "pull": "Pull",
   "current_balance": "Current Balance",
@@ -360,12 +360,11 @@
   "event_price_after_vat": "event price after vat",
   "vat": "vat",
   "event_price": "event price",
-  "model_type":"model type",
+  "model_type": "model type",
   "event": "Event",
   "announcement": "Announcment",
   "gig": "Gig",
   "packages": "packages",
   "types": "Types",
   "no_data_available": "No data available"
-
 }
