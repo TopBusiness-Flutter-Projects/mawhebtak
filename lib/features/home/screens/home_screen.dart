@@ -10,7 +10,7 @@ import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.
 import 'package:mawhebtak/features/home/screens/widgets/local_video_player.dart';
 import 'package:mawhebtak/features/home/screens/widgets/under_custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:mawhebtak/features/home/screens/widgets/youtube_player_screen.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../main/cubit/cubit.dart';
@@ -83,14 +83,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               if (slider == null || slider.url == null) return;
 
                               if (slider.urlType?.toLowerCase() == "youtube") {
-                                final url = Uri.parse(slider.url!);
-                                if (await canLaunchUrl(url)) {
-                                  await launchUrl(url, mode: LaunchMode.externalApplication);
-                                } else {
-                                  debugPrint("❌ Can't launch URL: $url");
-                                }
-                              } else if (slider.urlType?.toLowerCase() == "video") {
-                                // افتح شاشة فيديو داخل التطبيق
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => YouTubePlayerScreen(videoLink: slider.url!),
+                                  ),
+                                );
+                              }
+                              else if (slider.urlType?.toLowerCase() == "video") {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
