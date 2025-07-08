@@ -168,7 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   itemBuilder: (context, index) {
                                     return CustomTopTalentsList(
                                       topTalentsCubit: cubit,
-                                      topTalentsData: cubit.topTalents?.data?[index],
+                                      topTalentsData:
+                                          cubit.topTalents?.data?[index],
                                       index: index,
                                     );
                                   },
