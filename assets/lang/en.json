@@ -359,5 +359,13 @@
   "final_price": "final price",
   "event_price_after_vat": "event price after vat",
   "vat": "vat",
-  "event_price": "event price"
+  "event_price": "event price",
+  "model_type":"model type",
+  "event": "Event",
+  "announcement": "Announcment",
+  "gig": "Gig",
+  "packages": "packages",
+  "types": "Types",
+  "no_data_available": "No data available"
+
 }
