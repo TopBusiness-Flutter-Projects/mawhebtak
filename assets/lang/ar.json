@@ -358,5 +358,13 @@
   "final_price": "السعر النهائي",
   "event_price_after_vat": "السعر بعد الضريبة",
   "vat": "الضريبة",
-  "event_price": "سعر الحدث"
+  "event_price": "سعر الحدث",
+  "model_type":"نوع النموذج",
+  "event": "الحدث",
+  "announcement": "الاعلان",
+  "gig": "العرض",
+  "packages": "الباقات",
+  "types": "الانواع",
+  "no_data_available": "لا يوجد بيانات متاحة"
+
 }
