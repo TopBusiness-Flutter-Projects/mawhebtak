@@ -1,14 +1,9 @@
 import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
-
-import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_event_details_widget.dart';
 import 'package:mawhebtak/features/profile/cubit/profile_cubit.dart';
-
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
 import '../../../core/notification_services/notification_service.dart';

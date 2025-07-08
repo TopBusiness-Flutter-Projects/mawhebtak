@@ -26,3 +26,12 @@ class LoadingAddAdsToLawyerPackageState extends MyAdvertismentState {}
  class SuccessAddAdsState extends MyAdvertismentState {}
  class ErrorAddAdsState extends MyAdvertismentState {}
  class LoadingAddAdsState extends MyAdvertismentState {}
+ class SuccessEventsDataState extends MyAdvertismentState {}
+ class ErrorEventsDataState extends MyAdvertismentState {}
+ class LoadingEventsDataState extends MyAdvertismentState {}
+ class SuccessAnnouncementDataState extends MyAdvertismentState {}
+ class ErrorAnnouncementDataState extends MyAdvertismentState {}
+ class LoadingAnnouncementDataState extends MyAdvertismentState {}
+ class SuccessGigsDataState extends MyAdvertismentState {}
+ class ErrorGigsDataState extends MyAdvertismentState {}
+ class LoadingGigsDataState extends MyAdvertismentState {}
