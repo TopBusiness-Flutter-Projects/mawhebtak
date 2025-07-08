@@ -158,7 +158,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
                                                       ),
                                                       child: Text(
                                                           'confirm'.tr(),
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               color: Colors
                                                                   .white)),
                                                     ),
