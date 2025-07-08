@@ -278,6 +278,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                             ),
                             Expanded(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   5.w.horizontalSpace,
 
@@ -300,6 +301,7 @@ class _GigsWidgetState extends State<GigsWidget> {
                                       widget.eventAndGigsModel?.priceAfterDiscount != null) ...[
                                     Flexible(
                                       child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
                                           Flexible(
                                             child: AutoSizeText(

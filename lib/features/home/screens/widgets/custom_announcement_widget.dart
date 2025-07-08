@@ -63,42 +63,39 @@ class _CustomAnnouncementWidgetState extends State<CustomAnnouncementWidget> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      (widget.announcement?.user?.image == null)
-                          ? GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  Routes.profileRoute,
-                                  arguments: DeepLinkDataModel(
-                                      id: widget.announcement?.user?.id
-                                              .toString() ??
-                                          '',
-                                      isDeepLink: false),
-                                );
-                              },
-                              child: SizedBox(
-                                height: 40.h,
-                                width: 40.w,
-                                child: Image.asset(ImageAssets.profileImage),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  Routes.profileRoute,
-                                  arguments: DeepLinkDataModel(
-                                      id: widget.announcement?.user?.id
-                                              .toString() ??
-                                          '',
-                                      isDeepLink: false),
-                                );
-                              },
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    widget.announcement?.user?.image ?? ""),
-                              ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            Routes.profileRoute,
+                            arguments: DeepLinkDataModel(
+                              id: widget.announcement?.user?.id?.toString() ?? '',
+                              isDeepLink: false,
                             ),
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 20.r,
+                          backgroundColor: Colors.transparent,
+                          child: ClipOval(
+                            child: Image.network(
+                              widget.announcement?.user?.image ?? "",
+                              width: 40.w,
+                              height: 40.h,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  ImageAssets.profileImage,
+                                  width: 40.w,
+                                  height: 40.h,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+
                       SizedBox(width: 8.w),
                       Expanded(
                         child: Row(
