@@ -76,7 +76,6 @@ dependencies:
   flutter_local_notifications: ^19.2.0
   firebase_core: ^2.24.2
   firebase_messaging: ^14.4.0
-  youtube_player_flutter: ^9.1.1
   sign_in_with_apple: ^7.0.1
   geocoding: ^3.0.0
   geolocator: ^11.1.0
