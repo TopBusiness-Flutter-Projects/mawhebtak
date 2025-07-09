@@ -31,11 +31,8 @@ class ChangeLanguageScreen extends StatelessWidget {
                         changeLanguageContainer(
                           text: "English",
                           onTap: () {
-                            // EasyLocalization.of(context)!
-                            //     .setLocale(const Locale('en', ''));
-                            // Preferences.instance.savedLang('en');
                             cubit.changeLanguage(context, "English");
-                            //   Preferences.instance.getSavedLang();
+
                           },
                         ),
                         changeLanguageContainer(
@@ -43,10 +40,6 @@ class ChangeLanguageScreen extends StatelessWidget {
                           onTap: () {
                             cubit.changeLanguage(context, "Arabic");
 
-                            // EasyLocalization.of(context)!
-                            //     .setLocale(const Locale('ar', ''));
-                            // Preferences.instance.savedLang('ar');
-                            // Preferences.instance.getSavedLang();
                           },
                         ),
                       ],
