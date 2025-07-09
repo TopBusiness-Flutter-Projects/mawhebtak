@@ -365,5 +365,8 @@
   "gig": "العرض",
   "packages": "الباقات",
   "types": "الانواع",
-  "no_data_available": "لا يوجد بيانات متاحة"
+  "no_data_available": "لا يوجد بيانات متاحة",
+  "upload_now":"تحديث الان!",
+  "update_available":"متاح تحديث",
+  "invalid_version_format": "تنسيق إصدار غير صالح"
 }
