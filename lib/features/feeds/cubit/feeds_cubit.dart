@@ -379,7 +379,7 @@ class FeedsCubit extends Cubit<FeedsState> {
   void addVideo(File video) {
     validVideos ??= [];
     validVideos.add(video);
-    emit(FeedsStateUpdated());
+    emit(FeedsVideoStateUpdated());
   }
 
   addComment({required String postId}) async {
