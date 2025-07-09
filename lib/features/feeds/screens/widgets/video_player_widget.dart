@@ -22,7 +22,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       ..initialize().then((_) {
         if (mounted) {
           setState(() {});
-          _controller.play(); // تشغيل الفيديو تلقائيًا
+          // لا تشغل الفيديو تلقائيًا
         }
       }).catchError((error) {
         setState(() {
@@ -38,6 +38,12 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     super.dispose();
   }
 
+  void _togglePlayPause() {
+    setState(() {
+      _controller.value.isPlaying ? _controller.pause() : _controller.play();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_isError) {
@@ -50,15 +56,33 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return AspectRatio(
-      aspectRatio: _controller.value.aspectRatio,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          VideoPlayer(_controller),
-          VideoProgressIndicator(_controller, allowScrubbing: true),
-        ],
-      ),
+    return  Center(
+      child: _controller.value.isInitialized
+          ? GestureDetector(
+        onTap: _togglePlayPause,
+        child: FittedBox(
+          fit: BoxFit.contain, // مهم علشان ما يضغطش الفيديو
+          child: SizedBox(
+            width: _controller.value.size.width,
+            height: _controller.value.size.height,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                VideoPlayer(_controller),
+                VideoProgressIndicator(_controller,
+                    allowScrubbing: true),
+                if (!_controller.value.isPlaying)
+                  const Center(
+                    child: Icon(Icons.play_circle_fill,
+                        size: 64, color: Colors.white70),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      )
+          : const CircularProgressIndicator(),
     );
+
   }
 }
