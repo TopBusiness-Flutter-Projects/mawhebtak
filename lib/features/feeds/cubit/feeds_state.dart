@@ -8,6 +8,7 @@ sealed class FeedsState {}
 final class FeedsStateLoadingMore extends FeedsState {}
 
 final class FeedsStateLoading extends FeedsState {}
+final class FeedsVideoStateUpdated extends FeedsState {}
 
 final class FeedsStateLoaded extends FeedsState {
   final PostsModel? postsModel;
