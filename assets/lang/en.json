@@ -366,5 +366,8 @@
   "gig": "Gig",
   "packages": "packages",
   "types": "Types",
-  "no_data_available": "No data available"
+  "no_data_available": "No data available",
+  "upload_now":"Upload now!",
+  "update_available":"Update available",
+  "invalid_version_format": "Invalid version format"
 }

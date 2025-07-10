@@ -117,7 +117,7 @@ class MoreCubit extends Cubit<MoreState> {
     final targetMatch = versionRegExp.firstMatch(targetVersion);
 
     if (currentMatch == null || targetMatch == null) {
-      throw FormatException('Invalid version format');
+      throw FormatException('invalid_version_format'.tr());
     }
 
     final currentMajor = int.parse(currentMatch.group(1)!);
@@ -154,16 +154,16 @@ class MoreCubit extends Cubit<MoreState> {
         return WillPopScope(
           onWillPop: () async => false,
           child: AlertDialog(
-            title: const Row(
+            title:  Row(
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsetsDirectional.only(end: 8.0),
                   child: Icon(
                     Icons.tips_and_updates_rounded,
                     color: Colors.orange,
                   ),
                 ),
-                Flexible(child: Text('متاح تحديث')),
+                Flexible(child: Text("update_available".tr())),
               ],
             ),
             content: Text(
@@ -171,7 +171,7 @@ class MoreCubit extends Cubit<MoreState> {
             ),
             actions: <Widget>[
               TextButton(
-                child: Text('تحديث الان!'),
+                child: Text("upload_now".tr()),
                 onPressed: () async {
                   final url = isIOS
                       ? 'https://apps.apple.com/app/idYOUR_APP_ID' // <-- Replace with your App Store ID

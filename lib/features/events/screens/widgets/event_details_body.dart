@@ -14,10 +14,10 @@ import 'custom_row_event.dart';
 
 class EventDetailsBody extends StatelessWidget {
   const EventDetailsBody({
-    Key? key,
+    super.key,
     this.item,
     this.mainDeepLink,
-  }) : super(key: key);
+  });
   final GetMainEvenDetailsModelData? item;
   final DeepLinkDataModel? mainDeepLink;
   @override
@@ -108,7 +108,7 @@ class EventDetailsBody extends StatelessWidget {
           isSecond: true,
         ),
         const CustomRowEvent(
-          text: 'Description',
+          text: 'description',
           text2: '',
         ),
         Padding(

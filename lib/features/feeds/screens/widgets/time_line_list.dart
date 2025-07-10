@@ -59,8 +59,11 @@ class _TimeLineListState extends State<TimeLineList> {
                             onTap: () {
                               Navigator.pushNamed(context, Routes.profileRoute,
                                   arguments: DeepLinkDataModel(
-                                  id: widget.feedsCubit?.posts?.data?[widget.index]?.user?.id.toString() ??"",
-                              isDeepLink: false));
+                                      id: widget.feedsCubit?.posts
+                                              ?.data?[widget.index].user?.id
+                                              .toString() ??
+                                          "",
+                                      isDeepLink: false));
                             },
                             child: SizedBox(
                               height: 40.h,
@@ -136,11 +139,51 @@ class _TimeLineListState extends State<TimeLineList> {
         SizedBox(
           height: 5.h,
         ),
+
         if ((widget.feeds?.media?.isNotEmpty ?? false))
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: widget.feeds!.media!.map((media) {
+                if (media.extension == 'video') {
+                  return Container(
+                      width: getWidthSize(context),
+                      child: VideoPlayerWidget(videoUrl: media.file!));
+                } else {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImageFileView(
+                            isNetwork: true,
+                            image: media.file ?? "",
+                          ),
+                        ),
+                      );
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: media.file ?? '',
+                      fit: BoxFit.contain,
+                      width: getWidthSize(context),
+                      // Use contain to respect original size
+                      // Remove width/height constraints for natural size
+                      errorWidget: (context, error, stackTrace) =>
+                          Image.asset(ImageAssets.appIconWhite),
+                    ),
+                  );
+                }
+              }).toList(),
+            ),
+          ),
+
+        /*  if ((widget.feeds?.media?.isNotEmpty ?? false))
           SizedBox(
-            height: getHeightSize(context) / 3.7,
+height: 200,
             child: PageView.builder(
               itemCount: widget.feeds?.media?.length ?? 0,
+
               itemBuilder: (context, index) {
                 final media = widget.feeds!.media![index];
                 if (media.extension == 'video') {
@@ -167,7 +210,7 @@ class _TimeLineListState extends State<TimeLineList> {
                 }
               },
             ),
-          ),
+          ),*/
         SizedBox(height: 5.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
