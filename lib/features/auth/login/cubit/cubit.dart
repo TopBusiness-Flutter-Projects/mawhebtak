@@ -154,6 +154,8 @@ class LoginCubit extends Cubit<LoginState> {
           error: _getFirebaseErrorMessage(e.code),
         ));
         return null;
+      } catch (e) {
+        log("Firebase Auth Exception: ${e.toString()} 0");
       }
     } on PlatformException catch (e) {
       log("Platform Exception during Google Sign-In: ${e.code}, ${e.message}");
@@ -225,7 +227,7 @@ class LoginCubit extends Cubit<LoginState> {
               socialType: 'apple',
               email: auth.user?.email ?? '',
               phone: auth.user?.phoneNumber ?? '',
-              name: auth.user?.displayName ?? '');
+              name: auth.user?.displayName ?? 'apple${auth?.user?.uid}}');
         } else {}
       }).catchError((e) {
         log("Apple Sign-In Error: $e");
