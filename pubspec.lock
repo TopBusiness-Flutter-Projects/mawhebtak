@@ -350,14 +350,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  currency_code_to_currency_symbol:
-    dependency: "direct main"
-    description:
-      name: currency_code_to_currency_symbol
-      sha256: a8eccc7a10460f6c70e2b0b125e36f19db4531e54528d3426107726aa5c668d0
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.4"
   dart_style:
     dependency: transitive
     description:
@@ -843,7 +835,7 @@ packages:
     source: hosted
     version: "11.1.0"
   geolocator_android:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: geolocator_android
       sha256: fcb1760a50d7500deca37c9a666785c047139b5f9ee15aa5469fae7dbbe3170d
@@ -1502,10 +1494,10 @@ packages:
     dependency: "direct main"
     description:
       name: permission_handler
-      sha256: "2d070d8684b68efb580a5997eb62f675e8a885ef0be6e754fb9ef489c177470f"
+      sha256: bc917da36261b00137bbc8896bf1482169cd76f866282368948f032c8c1caae1
       url: "https://pub.dev"
     source: hosted
-    version: "12.0.0+1"
+    version: "12.0.1"
   permission_handler_android:
     dependency: transitive
     description:
@@ -1554,14 +1546,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
-  phone_number:
-    dependency: "direct main"
-    description:
-      name: phone_number
-      sha256: c66d3e2f2c69ce95f10bb923957049b1e5b8c6efea02d7366353fa3b80d4338a
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   photo_view:
     dependency: "direct main"
     description:
@@ -1606,10 +1590,10 @@ packages:
     dependency: transitive
     description:
       name: posix
-      sha256: f0d7856b6ca1887cfa6d1d394056a296ae33489db914e365e2044fdada449e62
+      sha256: "6323a5b0fa688b6a010df4905a56b00181479e6d10534cecfecede2aa55add61"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.2"
+    version: "6.0.3"
   pretty_dio_logger:
     dependency: "direct main"
     description:
