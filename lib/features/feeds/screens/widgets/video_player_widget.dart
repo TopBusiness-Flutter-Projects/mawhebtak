@@ -18,7 +18,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(widget.videoUrl)
+    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
       ..initialize().then((_) {
         if (mounted) {
           setState(() {});
@@ -56,33 +56,31 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return  Center(
+    return Center(
       child: _controller.value.isInitialized
           ? GestureDetector(
-        onTap: _togglePlayPause,
-        child: FittedBox(
-          fit: BoxFit.contain, // مهم علشان ما يضغطش الفيديو
-          child: SizedBox(
-            width: _controller.value.size.width,
-            height: _controller.value.size.height,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                VideoPlayer(_controller),
-                VideoProgressIndicator(_controller,
-                    allowScrubbing: true),
-                if (!_controller.value.isPlaying)
-                  const Center(
-                    child: Icon(Icons.play_circle_fill,
-                        size: 64, color: Colors.white70),
+              onTap: _togglePlayPause,
+              child: FittedBox(
+                fit: BoxFit.contain, // مهم علشان ما يضغطش الفيديو
+                child: SizedBox(
+                  width: _controller.value.size.width,
+                  height: _controller.value.size.height,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      VideoPlayer(_controller),
+                      VideoProgressIndicator(_controller, allowScrubbing: true),
+                      if (!_controller.value.isPlaying)
+                        const Center(
+                          child: Icon(Icons.play_circle_fill,
+                              size: 64, color: Colors.white70),
+                        ),
+                    ],
                   ),
-              ],
-            ),
-          ),
-        ),
-      )
+                ),
+              ),
+            )
           : const CircularProgressIndicator(),
     );
-
   }
 }

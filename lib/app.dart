@@ -74,7 +74,8 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(
             create: (_) => injector.serviceLocator<MoreCubit>(),
-          ),BlocProvider(
+          ),
+          BlocProvider(
             create: (_) => injector.serviceLocator<ElectronicWalletCubit>(),
           ),
           BlocProvider(

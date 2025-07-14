@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:video_player/video_player.dart';
@@ -24,15 +25,17 @@ class _FullScreenViewerState extends State<FullScreenViewer> {
 
   @override
   void initState() {
+    log('file ${widget.filePath} extension ${widget.fileType}');
     super.initState();
     if (widget.fileType == 'video') {
-      _videoController = VideoPlayerController.file(File(widget.filePath))
-        ..initialize().then((_) {
-          setState(() {
-            _isVideoInitialized = true;
-          });
-          _videoController!.play();
-        });
+      _videoController =
+          VideoPlayerController.networkUrl(Uri.parse(widget.filePath))
+            ..initialize().then((_) {
+              setState(() {
+                _isVideoInitialized = true;
+              });
+              _videoController!.play();
+            });
     }
   }
 

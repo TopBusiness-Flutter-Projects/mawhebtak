@@ -11,3 +11,4 @@
  class ImagePickedState extends AssistantState {}
  class UpdateAssistantState extends AssistantState {}
  class DeleteAssistantState extends AssistantState {}
+ class SuccessGenerateThumbnailState extends AssistantState {}

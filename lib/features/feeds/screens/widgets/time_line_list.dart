@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:typed_data';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,9 +12,11 @@ import 'package:mawhebtak/features/feeds/data/models/posts_model.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_player_widget.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 import '../../../../core/exports.dart';
 import '../../../../core/preferences/preferences.dart';
 import '../../../../core/utils/check_login.dart';
+import '../../../../core/widgets/full_screen_video_view.dart';
 import 'comment_widget.dart';
 
 class TimeLineList extends StatefulWidget {
@@ -35,7 +40,53 @@ class _TimeLineListState extends State<TimeLineList> {
   @override
   void initState() {
     context.read<FeedsCubit>().loadUserFromPreferences();
+    _initializeMediaHeight();
+
     super.initState();
+  }
+
+  double defaultVideoHeight = 200.h;
+  double? consistentMediaHeight;
+  bool isHeightCalculated = false;
+
+  // Initialize media height based on first media item
+  void _initializeMediaHeight() {
+    if (widget.feeds?.media?.isNotEmpty ?? false) {
+      final firstMedia = widget.feeds!.media!.first;
+      if (firstMedia.extension == 'video') {
+        consistentMediaHeight = defaultVideoHeight;
+        isHeightCalculated = true;
+      } else {
+        // For images, we'll calculate the height dynamically
+        _calculateImageHeight(firstMedia.file ?? '');
+      }
+    }
+  }
+
+  // Calculate actual image height
+  void _calculateImageHeight(String imageUrl) {
+    if (imageUrl.isEmpty) return;
+
+    final imageProvider = CachedNetworkImageProvider(imageUrl);
+    final imageStream = imageProvider.resolve(const ImageConfiguration());
+
+    imageStream.addListener(
+        ImageStreamListener((ImageInfo image, bool synchronousCall) {
+      if (mounted && !isHeightCalculated) {
+        final double aspectRatio = image.image.width / image.image.height;
+        final double calculatedHeight = getWidthSize(context) / aspectRatio;
+
+        setState(() {
+          consistentMediaHeight = calculatedHeight;
+          isHeightCalculated = true;
+        });
+      }
+    }));
+  }
+
+  // Function to get the consistent height for all media
+  double getConsistentMediaHeight() {
+    return consistentMediaHeight ?? defaultVideoHeight;
   }
 
   @override
@@ -146,10 +197,13 @@ class _TimeLineListState extends State<TimeLineList> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: widget.feeds!.media!.map((media) {
+                final mediaHeight = getConsistentMediaHeight();
+
                 if (media.extension == 'video') {
-                  return Container(
-                      width: getWidthSize(context),
-                      child: VideoPlayerWidget(videoUrl: media.file!));
+                  return PostVideoWidget(
+                    media: media.file,
+                    height: mediaHeight,
+                  );
                 } else {
                   return GestureDetector(
                     onTap: () {
@@ -166,11 +220,15 @@ class _TimeLineListState extends State<TimeLineList> {
                     child: CachedNetworkImage(
                       imageUrl: media.file ?? '',
                       fit: BoxFit.contain,
+                      height: mediaHeight,
+
                       width: getWidthSize(context),
                       // Use contain to respect original size
                       // Remove width/height constraints for natural size
-                      errorWidget: (context, error, stackTrace) =>
-                          Image.asset(ImageAssets.appIconWhite),
+                      errorWidget: (context, error, stackTrace) => Image.asset(
+                        ImageAssets.appIconWhite,
+                        height: mediaHeight,
+                      ),
                     ),
                   );
                 }
@@ -338,5 +396,79 @@ height: 200,
         Container(color: AppColors.grayLite, height: 10.h)
       ],
     );
+  }
+}
+
+class PostVideoWidget extends StatefulWidget {
+  const PostVideoWidget({
+    super.key,
+    this.media,
+    this.height,
+  });
+  final double? height;
+
+  final String? media;
+
+  @override
+  State<PostVideoWidget> createState() => _PostVideoWidgetState();
+}
+
+class _PostVideoWidgetState extends State<PostVideoWidget> {
+  Uint8List? thumbnailImage;
+  Future<void> generateThumbnail() async {
+    try {
+      final data = await VideoThumbnail.thumbnailData(
+        video: widget.media ?? '',
+        imageFormat: ImageFormat.JPEG,
+        maxWidth: 128,
+        quality: 25,
+      );
+      log('Thumbnail generation Success: $data');
+
+      setState(() {
+        thumbnailImage = data;
+      });
+    } catch (e) {
+      // setState(() {});
+      log('Thumbnail generation failed: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    generateThumbnail();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    log('PPPPPP  $thumbnailImage ${widget.media}');
+    return SizedBox(
+        width: getWidthSize(context),
+        height: widget.height ?? 200.h,
+        child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => FullScreenViewer(
+                        filePath: widget.media ?? '', fileType: 'video'),
+                  ));
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.memory(
+                  thumbnailImage ?? Uint8List(0),
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ),
+                Icon(Icons.play_circle_outline_rounded,
+                    color: AppColors.primary),
+              ],
+            )));
   }
 }

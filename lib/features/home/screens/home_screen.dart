@@ -7,12 +7,12 @@ import 'package:mawhebtak/features/home/screens/widgets/custom_list.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
-import 'package:mawhebtak/features/home/screens/widgets/local_video_player.dart';
 import 'package:mawhebtak/features/home/screens/widgets/under_custom_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/youtube_player_screen.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
+import '../../../core/widgets/full_screen_video_view.dart';
 import '../../main/cubit/cubit.dart';
 
 class HomeItem {
@@ -78,27 +78,31 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           GestureDetector(
                             onTap: () async {
-                              final slider = homeData?.sliders?[0];
-
+                              final slider = homeData?.sliders;
                               if (slider == null || slider.url == null) return;
-
                               if (slider.urlType?.toLowerCase() == "youtube") {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => YouTubePlayerScreen(videoLink: slider.url!),
+                                    builder: (_) => YouTubePlayerScreen(
+                                        videoLink: slider.url!),
                                   ),
                                 );
-                              }
-                              else if (slider.urlType?.toLowerCase() == "video") {
+                              } else if (slider.urlType?.toLowerCase() ==
+                                  "video") {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => LocalVideoPlayerScreen(videoUrl: slider.url!),
+                                    builder: (_) => FullScreenViewer(
+                                      filePath: slider.url ?? '',
+                                      fileType: slider.urlType?.toLowerCase() ??
+                                          'video',
+                                    ),
                                   ),
                                 );
                               } else {
-                                debugPrint("⚠️ Unknown url_type: ${slider.urlType}");
+                                debugPrint(
+                                    "⚠️ Unknown url_type: ${slider.urlType}");
                               }
                             },
                             child: SizedBox(
@@ -107,24 +111,29 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Stack(
                                 fit: StackFit.expand,
                                 children: [
-                                  Image.network(
-                                    homeData?.sliders?[0].image ?? "",
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Image.asset(
-                                        ImageAssets.imagePicked,
-                                        fit: BoxFit.contain,
-                                      );
-                                    },
-                                  ),
+                                  homeData?.sliders != null
+                                      ? Image.network(
+                                          homeData?.sliders?.image ?? "",
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Image.asset(
+                                              ImageAssets.imagePicked,
+                                              fit: BoxFit.contain,
+                                            );
+                                          },
+                                        )
+                                      : Image.asset(
+                                          ImageAssets.imagePicked,
+                                          fit: BoxFit.contain,
+                                        ),
                                   Container(
                                     color: Colors.black.withOpacity(0.5),
                                   ),
                                 ],
                               ),
                             ),
-                          )
-,
+                          ),
                           Positioned(
                             bottom: 5.h,
                             left: 0,

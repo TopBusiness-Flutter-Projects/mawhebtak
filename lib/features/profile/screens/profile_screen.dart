@@ -106,19 +106,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Text(
                       profile?.name ?? "",
-                      style: getSemiBoldStyle(fontSize: 16.sp, color: AppColors.black),
+                      style: getSemiBoldStyle(
+                          fontSize: 16.sp, color: AppColors.black),
                     ),
                     SizedBox(width: 8.w),
-                    if (profile?.userSubTypes != null && profile!.userSubTypes.isNotEmpty)
+                    if (profile?.userSubTypes != null &&
+                        profile!.userSubTypes.isNotEmpty)
                       Text(
                         "(${profile!.userSubTypes.map((e) => e.name).join('، ')})",
-                        style: getMediumStyle(fontSize: 14.sp, color: AppColors.primary),
+                        style: getMediumStyle(
+                            fontSize: 14.sp, color: AppColors.primary),
                       ),
                   ],
                 ),
               ),
-
-
               Padding(
                 padding: EdgeInsets.only(left: 16.0.w),
                 child: RichText(

@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/hive/hive.dart';
@@ -6,6 +8,7 @@ import 'package:mawhebtak/core/widgets/media_picker.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import 'package:mawhebtak/features/assistant/data/repos/assistant.repo.dart';
 import 'package:mawhebtak/initialization.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class AssistantCubit extends Cubit<AssistantState> {
   AssistantCubit(this.assistantRepository) : super(AssistantInitial());
@@ -15,6 +18,24 @@ class AssistantCubit extends Cubit<AssistantState> {
   TextEditingController assistantTitleController = TextEditingController();
   TextEditingController assistantDescriptionController =
       TextEditingController();
+  Uint8List? videoThumbnailData;
+  Future<void> generateThumbnail() async {
+    try {
+      final data = await VideoThumbnail.thumbnailData(
+        video: selectedVideo?.path ?? '',
+        imageFormat: ImageFormat.JPEG,
+        maxWidth: 128,
+        quality: 25,
+      );
+      log('Thumbnail generation Success: $data');
+
+      videoThumbnailData = data;
+      emit(SuccessGenerateThumbnailState());
+    } catch (e) {
+      // setState(() {});
+      log('Thumbnail generation failed: $e');
+    }
+  }
 
   DateTime? selectedReminderDate;
   void updateSelectedDate(DateTime date) {
@@ -99,6 +120,7 @@ class AssistantCubit extends Cubit<AssistantState> {
       isActive:
           selectedReminderDate != null && selectedReminderDate!.isAfter(now),
       image: selectedImage?.path ?? "",
+      video: selectedVideo?.path ?? "",
     );
 
     await WorkHiveManager.addAssistant(workId, newAssistant);
@@ -130,6 +152,7 @@ class AssistantCubit extends Cubit<AssistantState> {
     assistants = await WorkHiveManager.getAssistants(workId);
     final newList = works?.reversed.toList();
     works = newList;
+
     emit(GetAllAssistantState());
     return assistants ?? [];
   }
@@ -162,6 +185,9 @@ class AssistantCubit extends Cubit<AssistantState> {
       image: selectedImage?.path.isNotEmpty == true
           ? selectedImage!.path
           : oldAssistant.image,
+      video: selectedVideo?.path.isNotEmpty == true
+          ? selectedVideo?.path
+          : oldAssistant.video,
     );
     await WorkHiveManager.updateAssistant(workId, updatedAssistant);
     successGetBar("update_assistant_successful".tr());
@@ -183,8 +209,9 @@ class AssistantCubit extends Cubit<AssistantState> {
         selectedVideo = null;
         emit(ImagePickedState());
       },
-      onVideoPicked: (video) {
+      onVideoPicked: (video) async {
         selectedVideo = video;
+        await generateThumbnail();
         selectedImage = null;
         emit(VideoPickedState());
       },
@@ -204,5 +231,6 @@ class AssistantCubit extends Cubit<AssistantState> {
   void clearMedia() {
     selectedImage = null;
     selectedVideo = null;
+    videoThumbnailData = null;
   }
 }

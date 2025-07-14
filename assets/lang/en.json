@@ -334,7 +334,6 @@
   "end_date_must_be_after_start_date": "End date must be after start date",
   "please_select_image": "Please select an image",
   "no_posts": "No Posts",
-
   "maintenance_mode_title": "Maintenance Mode",
   "pull": "Pull",
   "current_balance": "Current Balance",
@@ -367,7 +366,10 @@
   "packages": "packages",
   "types": "Types",
   "no_data_available": "No data available",
-  "upload_now":"Upload now!",
-  "update_available":"Update available",
-  "invalid_version_format": "Invalid version format"
+  "upload_now": "Upload now!",
+  "update_available": "Update available",
+  "invalid_version_format": "Invalid version format",
+  "edit": "Edit",
+  "valid_phone": "Make sure you enter your phone number correctly!",
+  "4_mb": "The video should be max 4 MB"
 }

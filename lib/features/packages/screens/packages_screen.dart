@@ -121,6 +121,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
                                                   Expanded(
                                                     child: ElevatedButton(
                                                       onPressed: () async {
+                                                        Navigator.pop(context);
                                                         final user =
                                                             await Preferences
                                                                 .instance
@@ -158,9 +159,10 @@ class _PackagesScreenState extends State<PackagesScreen> {
                                                       ),
                                                       child: Text(
                                                           'confirm'.tr(),
-                                                          style: const TextStyle(
-                                                              color: Colors
-                                                                  .white)),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white)),
                                                     ),
                                                   ),
                                                 ],
@@ -177,7 +179,6 @@ class _PackagesScreenState extends State<PackagesScreen> {
                     ),
                   ],
                 ),
-
               ],
             );
           },

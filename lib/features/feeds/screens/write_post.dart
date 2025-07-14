@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,7 +10,6 @@ import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/video_from_file_screen.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
-import 'package:video_player/video_player.dart';
 import '../../../core/exports.dart';
 import '../../auth/login/data/models/login_model.dart';
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
@@ -37,7 +34,6 @@ class _WritePostState extends State<WritePost> {
     super.initState();
   }
 
-  VideoPlayerController? _controller;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -216,7 +212,7 @@ class _WritePostState extends State<WritePost> {
                                     children: [
                                       Text("upload_video".tr(),
                                           style: getMediumStyle(fontSize: 14)),
-                                      Text("The video should be max 4 MB".tr(),
+                                      Text("4_mb".tr(),
                                           style: getRegularStyle(
                                               fontSize: 14,
                                               color: AppColors.grayAfaf)),
@@ -313,71 +309,67 @@ class _WritePostState extends State<WritePost> {
                         ),
                       ),
                       SizedBox(height: getHeightSize(context) / 25),
-                      (state is AddPostStateLoading)
-                          ? const CustomLoadingIndicator()
-                          : CustomContainerButton(
-                              onTap: () {
-                                if (cubit.user?.data?.token == null) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                      title: Text("alert".tr()),
-                                      content: Text("must_login".tr()),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context)
-                                                .pushNamedAndRemoveUntil(
-                                                    Routes.loginRoute,
-                                                    (route) => false);
-                                          },
-                                          child: Text("login".tr()),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text("cancel".tr()),
-                                        ),
-                                      ],
+                      CustomContainerButton(
+                        onTap: () {
+                          if (cubit.user?.data?.token == null) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text("alert".tr()),
+                                content: Text("must_login".tr()),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil(
+                                              Routes.loginRoute,
+                                              (route) => false);
+                                    },
+                                    child: Text("login".tr()),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("cancel".tr()),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            final hasText =
+                                cubit.bodyController.text.trim().isNotEmpty;
+                            final hasImages = cubit.myImages != null &&
+                                cubit.myImages!.isNotEmpty;
+                            final hasVideos = cubit.validVideos.isNotEmpty;
+
+                            if (!hasText && !hasImages && !hasVideos) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text("alert".tr()),
+                                  content:
+                                      Text("please_add_text_or_media".tr()),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      child: Text("ok".tr()),
                                     ),
-                                  );
-                                } else {
-                                  final hasText = cubit.bodyController.text
-                                      .trim()
-                                      .isNotEmpty;
-                                  final hasImages = cubit.myImages != null &&
-                                      cubit.myImages!.isNotEmpty;
-                                  final hasVideos =
-                                      cubit.validVideos.isNotEmpty;
+                                  ],
+                                ),
+                              );
+                              return;
+                            }
 
-                                  if (!hasText && !hasImages && !hasVideos) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: Text("alert".tr()),
-                                        content: Text(
-                                            "please_add_text_or_media".tr()),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.of(context).pop(),
-                                            child: Text("ok".tr()),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                    return;
-                                  }
-
-                                  cubit.addPost(context: context);
-                                }
-                              },
-                              title: "post".tr(),
-                              color: AppColors.primary,
-                              height: 48.h,
-                            ),
+                            cubit.addPost(context: context);
+                          }
+                        },
+                        title: "post".tr(),
+                        color: AppColors.primary,
+                        height: 48.h,
+                      ),
                     ],
                   ),
                 ),

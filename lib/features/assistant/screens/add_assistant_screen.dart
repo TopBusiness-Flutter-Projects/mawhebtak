@@ -1,4 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'dart:developer';
+import 'dart:typed_data';
+
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/core/utils/custom_pick_media.dart';
@@ -6,6 +8,7 @@ import 'package:mawhebtak/core/widgets/custom_button.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
 import 'package:mawhebtak/features/events/screens/widgets/custom_apply_app_bar.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class AddAssistantScreen extends StatefulWidget {
   const AddAssistantScreen({super.key, this.work, this.assistant});
@@ -33,6 +36,32 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
       cubit.assistantDescriptionController.text = assistant.description ?? "";
       cubit.selectedReminderDate = assistant.remindedTime;
     }
+    log('video ${widget.assistant?.video} image ${widget.assistant?.image}');
+    if (widget.assistant?.video != null) {
+      generateThumbnail();
+    } else {
+      thumbnailData = null;
+    }
+  }
+
+  Uint8List? thumbnailData;
+
+  Future<void> generateThumbnail() async {
+    try {
+      final data = await VideoThumbnail.thumbnailData(
+        video: widget.assistant?.video ?? '',
+        imageFormat: ImageFormat.JPEG,
+        maxWidth: 128,
+        quality: 25,
+      );
+
+      setState(() {
+        thumbnailData = data;
+      });
+    } catch (e) {
+      // setState(() {});
+      print('Thumbnail generation failed: $e');
+    }
   }
 
   @override
@@ -55,13 +84,17 @@ class _AddAssistantScreenState extends State<AddAssistantScreen> {
                         //!
 
                         cubit.clearMedia();
+
                         setState(() {
                           widget.assistant?.image = null;
+                          widget.assistant?.video = null;
+                          thumbnailData = null;
                         });
                       },
+                      thumbnailData: thumbnailData,
                       imagePath: widget.assistant?.image,
-                      onTap: () {
-                        cubit.pickMedia(context);
+                      onTap: () async {
+                        await cubit.pickMedia(context);
                       },
                     ),
                     Padding(

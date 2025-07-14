@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -128,6 +127,7 @@ class FeedsCubit extends Cubit<FeedsState> {
               validVideos.add(file);
               Navigator.pop(context);
             }
+            emit(LoadedAddNewViedoState());
           } catch (e) {
             Navigator.pop(context);
             print("Error processing video: $e");
@@ -404,6 +404,7 @@ class FeedsCubit extends Cubit<FeedsState> {
   addPost({required BuildContext context}) async {
     emit(AddPostStateLoading());
     try {
+      AppWidgets.create2ProgressDialog(context);
       final user = await Preferences.instance.getUserModel();
       final userId = user.data?.id?.toString() ?? '';
       final res = await api!.addPost(
@@ -427,7 +428,10 @@ class FeedsCubit extends Cubit<FeedsState> {
         validVideos = [];
         thumbnails = [];
       });
+      Navigator.pop(context);
     } catch (e) {
+      Navigator.pop(context);
+
       emit(AddPostStateError(e.toString()));
     }
   }
