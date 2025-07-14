@@ -8,6 +8,7 @@ import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_state.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
+import 'package:mawhebtak/features/feeds/screens/widgets/video_from_file_screen.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/location/cubit/location_state.dart';
 import 'package:mawhebtak/features/location/screens/full_screen_map.dart';
@@ -473,6 +474,71 @@ class _NewAnnouncementScreenState extends State<NewAnnouncementScreen> {
                             ),
                             SizedBox(
                               height: getHeightSize(context) / 33,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                height: context.read<CalenderCubit>().validVideos.isEmpty ? 0 : 80,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: (context.read<CalenderCubit>().validVideos.length),
+                                  separatorBuilder: (_, __) =>
+                                  const SizedBox(width: 10),
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    VideoPlayerScreenFile(
+                                                      videoFile: File(context.read<CalenderCubit>()
+                                                          .validVideos[index].path),
+                                                    )));
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(8),
+                                            child: Container(
+                                              width: 80.w,
+                                              height: 80.w,
+                                              decoration: const BoxDecoration(
+                                                color: Colors.black12,
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      ImageAssets.videoImage),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  context.read<CalenderCubit>().deleteVideo(File(context.read<CalenderCubit>()
+                                                      .validVideos[index].path));
+                                                });
+                                              },
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.black45,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Icon(Icons.close,
+                                                    color: Colors.white, size: 18),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(right: 16.0.w),

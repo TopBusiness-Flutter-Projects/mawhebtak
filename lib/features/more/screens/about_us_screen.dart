@@ -15,7 +15,8 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: BlocBuilder<MoreCubit, MoreState>(builder: (context, state) {
+        body: BlocBuilder<MoreCubit, MoreState>
+          (builder: (context, state) {
           var cubit = context.read<MoreCubit>();
           return Column(
             children: [
