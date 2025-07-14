@@ -16,5 +16,7 @@ export 'package:mawhebtak/core/error/exceptions.dart';
 export 'package:mawhebtak/core/error/failures.dart';
 export 'package:mawhebtak/core/api/base_api_consumer.dart';
 export 'package:dartz/dartz.dart' hide State;
+export 'dart:convert';
+export 'dart:io';
 
 export 'package:easy_localization/easy_localization.dart' hide TextDirection;

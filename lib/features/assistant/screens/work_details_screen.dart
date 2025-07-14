@@ -256,6 +256,14 @@ class TimelineAssistantItem extends StatelessWidget {
                       fit: BoxFit.cover,
                       height: 300.h,
                       width: double.infinity,
+                    ),if (assistants.video != null &&
+                      assistants.video!.isNotEmpty &&
+                      File(assistants.video!).existsSync())
+                    Image.file(
+                      File(assistants.video ?? ""),
+                      fit: BoxFit.cover,
+                      height: 300.h,
+                      width: double.infinity,
                     ),
                   Text(
                     assistants.title ?? "",
