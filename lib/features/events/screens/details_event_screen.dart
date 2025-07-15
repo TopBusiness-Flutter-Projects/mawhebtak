@@ -100,11 +100,164 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                           if (user.data?.token == null) {
                                             checkLogin(context);
                                           } else {
-                                            cubit.followUnfollowEvent(
-                                                cubit.eventDetails?.data?.id
-                                                        ?.toString() ??
-                                                    '',
-                                                context);
+                                            showDialog(
+                                              context: context,
+                                              builder: (_) => Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                ),
+                                                insetPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 30.w,
+                                                        vertical: 24.h),
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(20.w),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        child: GestureDetector(
+                                                          onTap: () =>
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(),
+                                                          child: Icon(
+                                                              Icons.close,
+                                                              color: Colors.grey
+                                                                  .shade600,
+                                                              size: 24.sp),
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8.h),
+                                                      Icon(Icons.info_outline,
+                                                          color:
+                                                              AppColors.primary,
+                                                          size: 48.sp),
+                                                      SizedBox(height: 16.h),
+                                                      Text(
+                                                        'booking_method'
+                                                            .tr(),
+                                                        textAlign:
+                                                        TextAlign.center,
+                                                        style: TextStyle(
+                                                          fontSize: 18.sp,
+                                                          fontWeight: FontWeight.w700,
+                                                          color: AppColors.primary,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 24.h),
+                                                      Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child:
+                                                                ElevatedButton(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                                cubit
+                                                                    .followUnfollowEvent(
+                                                                  context:
+                                                                      context,
+                                                                  id: cubit
+                                                                          .eventDetails
+                                                                          ?.data
+                                                                          ?.id
+                                                                          ?.toString() ??
+                                                                      '',
+                                                                  paymentMethod:
+                                                                      0,
+                                                                );
+                                                              },
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                backgroundColor:
+                                                                    AppColors
+                                                                        .primary,
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            12.h),
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                ),
+                                                              ),
+                                                              child: Text(
+                                                                'pay_now'.tr(),
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          SizedBox(width: 12.w),
+                                                          Expanded(
+                                                            child: TextButton(
+                                                              onPressed: () {
+                                                                cubit
+                                                                    .followUnfollowEvent(
+                                                                  context:
+                                                                      context,
+                                                                  id: cubit
+                                                                          .eventDetails
+                                                                          ?.data
+                                                                          ?.id
+                                                                          ?.toString() ??
+                                                                      '',
+                                                                  paymentMethod:
+                                                                      1,
+                                                                );
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              style: TextButton
+                                                                  .styleFrom(
+                                                                foregroundColor:
+                                                                    AppColors
+                                                                        .primary,
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            12.h),
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  side: BorderSide(
+                                                                      color: AppColors
+                                                                          .primary),
+                                                                ),
+                                                              ),
+                                                              child: Text(
+                                                                  'pay_later'
+                                                                      .tr()),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
                                           }
                                         },
                                         item: cubit.eventDetails?.data,
@@ -136,10 +289,12 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                             checkLogin(context);
                                           } else {
                                             cubit.followUnfollowEvent(
-                                                cubit.eventDetails?.data?.id
-                                                        ?.toString() ??
-                                                    '',
-                                                context);
+                                              context: context,
+                                              id: cubit.eventDetails?.data?.id
+                                                      ?.toString() ??
+                                                  '',
+                                              paymentMethod: 1,
+                                            );
                                           }
                                         },
                                         item: cubit.eventDetails?.data,
@@ -285,7 +440,6 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                                       await Preferences
                                                                           .instance
                                                                           .getUserModel();
-
 
                                                                   Navigator.pushNamed(
                                                                       context,

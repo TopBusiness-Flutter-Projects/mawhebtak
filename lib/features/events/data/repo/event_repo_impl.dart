@@ -39,11 +39,14 @@ class EventRepo {
     }
   }
 
-  Future<Either<Failure, DefaultMainModel>> followUnfollowEvent(
-      String eventId) async {
+  Future<Either<Failure, DefaultMainModel>> followUnfollowEvent({
+   required String eventId,
+   required int paymentMethod,
+  }) async {
     try {
       var response = await dio.post(EndPoints.followUnfollowEventUrl, body: {
         "event_id": eventId,
+        "payment_method":paymentMethod,
       });
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {
