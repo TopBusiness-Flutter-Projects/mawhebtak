@@ -58,10 +58,14 @@ class EventCubit extends Cubit<EventState> {
     }
   }
 
-  followUnfollowEvent(String id, BuildContext context) async {
+  followUnfollowEvent({
+    required String id,
+    required BuildContext context,
+    required int paymentMethod
+  }) async {
     try {
       emit(FollowUnFollowEventLoadingState());
-      final result = await api.followUnfollowEvent(id);
+      final result = await api.followUnfollowEvent(eventId: id,paymentMethod: paymentMethod);
       result.fold((l) {
         errorGetBar(l.toString());
         emit(FollowUnFollowEventErrorState());

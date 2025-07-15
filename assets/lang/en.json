@@ -371,5 +371,11 @@
   "invalid_version_format": "Invalid version format",
   "edit": "Edit",
   "valid_phone": "Make sure you enter your phone number correctly!",
-  "4_mb": "The video should be max 4 MB"
+  "4_mb": "The video should be max 4 MB",
+  "pay_now": "Pay now",
+  "pay_on_attendance": "pay on attendance",
+  "pay": "Pay",
+  "please_choose_payment_method": "Please choose your preferred payment method",
+  "booking_method": "Booking method",
+  "pay_later": "Pay later"
 }
