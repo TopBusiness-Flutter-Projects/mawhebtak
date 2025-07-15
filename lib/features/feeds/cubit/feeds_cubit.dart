@@ -431,7 +431,6 @@ class FeedsCubit extends Cubit<FeedsState> {
       Navigator.pop(context);
     } catch (e) {
       Navigator.pop(context);
-
       emit(AddPostStateError(e.toString()));
     }
   }
