@@ -100,6 +100,7 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                           if (user.data?.token == null) {
                                             checkLogin(context);
                                           } else {
+                                            (cubit.eventDetails?.data?.isFree == 0)?
                                             showDialog(
                                               context: context,
                                               builder: (_) => Dialog(
@@ -257,7 +258,20 @@ class _DetailsEventScreenState extends State<DetailsEventScreen> {
                                                   ),
                                                 ),
                                               ),
-                                            );
+                                            ): cubit
+                                              .followUnfollowEvent(
+                                          context:
+                                          context,
+                                          id: cubit
+                                              .eventDetails
+                                              ?.data
+                                              ?.id
+                                              ?.toString() ??
+                                          '',
+                                          paymentMethod:
+                                          1,
+                                          );
+
                                           }
                                         },
                                         item: cubit.eventDetails?.data,
