@@ -94,9 +94,11 @@ dependencies:
   fluttertoast: ^8.2.4
   webview_flutter: ^4.10.0
   intl_phone_field: ^3.2.0
+  qr_flutter: ^4.0.0
   #  phone_number: ^2.1.0
   youtube_quality_player: ^1.1.1
   image_size_getter: ^2.4.0
+  ai_barcode_scanner: ^3.4.3
   # ! main packages
 
 dev_dependencies:

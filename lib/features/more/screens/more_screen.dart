@@ -99,6 +99,15 @@ class _MoreScreenState extends State<MoreScreen> {
                                       context, Routes.favouritesRoute);
                                 }),
                             if(cubit.user?.data?.token != null)
+                              moreContainer(
+                                text: "my_event".tr(),
+                                imageUrl: AppIcons.eventIcon,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.myEventsRoute);
+                                }),
+
+                            if(cubit.user?.data?.token != null)
 
                               moreContainer(
                                 text: "chats".tr(),

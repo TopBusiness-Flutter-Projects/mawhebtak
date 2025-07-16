@@ -58,3 +58,5 @@ class ExperienceSuccess extends ProfileState {}
 class ExperienceError extends ProfileState {}
 
 class ProfileFormChanged extends ProfileState {}
+class GetMyEventDataStateLoading extends ProfileState {}
+

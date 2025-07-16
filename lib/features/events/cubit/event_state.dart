@@ -38,3 +38,6 @@ final class ActionRequestEventErrorState extends EventState {}
 final class ActionRequestEventLoadingState extends EventState {}
 
 final class ActionRequestEventLoadedState extends EventState {}
+final class ScanQrCodeErrorState extends EventState {}
+final class ScanQrCodeLoadingState extends EventState {}
+final class ScanQrCodeLoadedState extends EventState {}
