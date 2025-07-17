@@ -3,6 +3,7 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 import 'package:mawhebtak/features/more/cubit/more_state.dart';
 import 'package:mawhebtak/features/more/data/model/announcement_favourite_model.dart';
@@ -38,7 +39,23 @@ class MoreCubit extends Cubit<MoreState> {
     print("ppppppppppppp${user?.data?.token}");
 
   }
+  RequestGigsModel? requestGigsModel;
+  getMyEventData() async {
+    emit(GetMyEventDataStateLoading());
 
+    try {
+      final res = await api.getMyEventData();
+
+      res.fold((l) {
+        emit(GetMyEventDataStateError(l.toString()));
+      }, (r) {
+        requestGigsModel = r;
+        emit(GetMyEventDataLoaded());
+      });
+    } catch (e) {
+      emit(GetMyEventDataStateError(e.toString()));
+    }
+  }
   SettingModel? settingModel;
   getSettingData(BuildContext context) async {
     emit(GetSettingDataStateLoading());

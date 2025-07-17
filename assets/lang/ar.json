@@ -377,5 +377,9 @@
   "pay": "الدفع",
   "please_choose_payment_method": "من فضلك اختر طريقة الدفع المناسبة",
   "booking_method": "طريقة الحجز",
-  "pay_later": "الدفع لاحقاً"
+  "pay_later": "الدفع لاحقاً",
+  "my_event": "فعالياتي",
+  "scan_to_join_event": "المسح للانضمام إلى الحدث",
+  "scan_qR_code":"مسح رمز الاستجابة السريعة",
+  "presence": "حضور"
 }

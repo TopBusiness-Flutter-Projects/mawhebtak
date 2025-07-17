@@ -377,5 +377,9 @@
   "pay": "Pay",
   "please_choose_payment_method": "Please choose your preferred payment method",
   "booking_method": "Booking method",
-  "pay_later": "Pay later"
+  "pay_later": "Pay later",
+  "my_event": "My event",
+  "scan_to_join_event": "Scan to Join Event",
+  "scan_qR_code":"Scan QR Code",
+  "presence": "presence"
 }

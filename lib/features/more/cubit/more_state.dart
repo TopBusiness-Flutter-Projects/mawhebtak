@@ -65,3 +65,10 @@ class AnnounceFavouritesDataStateError extends MoreState {
 
   AnnounceFavouritesDataStateError(this.errorMessage);
 }
+class GetMyEventDataLoaded extends MoreState {}
+class GetMyEventDataStateLoading extends MoreState {}
+class GetMyEventDataStateError extends MoreState {
+  final String errorMessage;
+
+  GetMyEventDataStateError(this.errorMessage);
+}

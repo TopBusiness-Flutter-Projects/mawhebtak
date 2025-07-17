@@ -20,6 +20,8 @@ import 'package:mawhebtak/features/casting/screens/details_of_main_category_top_
 import 'package:mawhebtak/features/casting/screens/gigs_details.dart';
 import 'package:mawhebtak/features/change_langauge/screens/change_language_screen.dart';
 import 'package:mawhebtak/features/electronic_wallet/screens/electronic_wallet_screen.dart';
+import 'package:mawhebtak/features/events/screens/qr_scanner_page.dart';
+import 'package:mawhebtak/features/events/screens/view_qrcode.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/request_gigs_screen.dart';
 import 'package:mawhebtak/features/home/screens/top_talents_screen.dart';
@@ -34,6 +36,7 @@ import 'package:mawhebtak/features/more/screens/contact_us_screen.dart';
 import 'package:mawhebtak/features/more/screens/favourites_screen.dart';
 import 'package:mawhebtak/features/more/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
+import 'package:mawhebtak/features/more/screens/my_events_screen.dart';
 import 'package:mawhebtak/features/my_advertiment/screens/add_advertisment_screen.dart';
 import 'package:mawhebtak/features/my_advertiment/screens/my_advertisment_screen.dart';
 import 'package:mawhebtak/features/my_advertiment/screens/subscribtion_screen.dart';
@@ -112,6 +115,8 @@ class Routes {
   static const String myAdvertismentRoute = '/myAdvertismentRoute';
   static const String packagesRoute = '/packagesRoute';
   static const String subscribtionRoute = '/subscribtionRoute';
+  static const String eventQRCodeUrl = '/eventQRCodeUrl';
+  static const String qRScannerUrl = '/qRScannerUrl';
   static const String electronicWalletRoute = '/electronicWalletRoute';
 
   static const String detailsOfMainCategoryFromGigsRoute =
@@ -132,6 +137,7 @@ class Routes {
   static const String eventsDetailsRoute = '/eventsDetailsRoute';
   static const String profileDetailsRoute = '/profileDetailsRoute';
   static const String searchRoute = '/searchRoute';
+  static const String myEventsRoute = '/myEventsRoute';
 }
 
 class AppRoutes {
@@ -677,6 +683,28 @@ class AppRoutes {
       case Routes.packagesRoute:
         return PageTransition(
           child: const PackagesScreen(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 100),
+        );
+        case Routes.eventQRCodeUrl:
+          String eventUrl = settings.arguments as String;
+        return PageTransition(
+          child:  EventQRCodePage(eventUrl: eventUrl,),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 100),
+        );
+        case Routes.qRScannerUrl:
+        return PageTransition(
+          child:  const QRScannerPage(),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 100),
+        );
+        case Routes.myEventsRoute:
+        return PageTransition(
+          child:  const MyEventsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 100),
