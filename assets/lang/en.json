@@ -373,7 +373,7 @@
   "valid_phone": "Make sure you enter your phone number correctly!",
   "4_mb": "The video should be max 4 MB",
   "pay_now": "Pay now",
-  "pay_on_attendance": "pay on attendance",
+  "pay_on_attendance": "Pay on attendance",
   "pay": "Pay",
   "please_choose_payment_method": "Please choose your preferred payment method",
   "booking_method": "Booking method",
@@ -381,5 +381,9 @@
   "my_event": "My event",
   "scan_to_join_event": "Scan to Join Event",
   "scan_qR_code":"Scan QR Code",
-  "presence": "presence"
+  "presence": "presence",
+  "payment_status": "Payment Status",
+  "paid": "Paid",
+  "not_paid": "Not Paid",
+  "payment_method": "Payment Method"
 }

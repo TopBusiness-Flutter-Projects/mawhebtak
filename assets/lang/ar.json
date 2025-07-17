@@ -381,5 +381,9 @@
   "my_event": "فعالياتي",
   "scan_to_join_event": "المسح للانضمام إلى الحدث",
   "scan_qR_code":"مسح رمز الاستجابة السريعة",
-  "presence": "حضور"
+  "presence": "حضور",
+  "payment_status": "حالة الدفع",
+  "paid": "مدفوع",
+  "not_paid": "غير مدفوع",
+  "payment_method": "طريقة الدفع"
 }

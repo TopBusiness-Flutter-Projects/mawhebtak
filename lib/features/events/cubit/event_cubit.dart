@@ -94,8 +94,14 @@ class EventCubit extends Cubit<EventState> {
         errorGetBar(l.toString());
         emit(ScanQrCodeErrorState());
       }, (r) {
-        successGetBar(r.msg ?? 'Success');
-        emit(ScanQrCodeLoadedState());
+        if(r.status == 200 ){
+          successGetBar(r.msg.toString());
+          emit(ScanQrCodeLoadedState());
+        }
+        else{
+          errorGetBar(r.msg.toString());
+        }
+
       });
     } catch (e) {
       errorGetBar(e.toString());
