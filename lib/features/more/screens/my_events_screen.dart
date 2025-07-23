@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
 import 'package:mawhebtak/features/more/cubit/more_cubit.dart';
 import 'package:mawhebtak/features/more/cubit/more_state.dart';
@@ -33,9 +34,13 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
 
               ),
               (state is GetMyEventDataStateLoading)
-                  ? Center(
-                      child: Text("no_data".tr()),
-                    )
+                  ?Center(
+              child: Lottie.asset(
+        'assets/animation_icons/no_event.json',
+        height: 200,
+        width: 200
+        ),
+        )
                   : Expanded(
                       child: (context
                                   .read<MoreCubit>()
@@ -43,7 +48,13 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                                   ?.data
                                   ?.length ==
                               0)
-                          ? Center(child: Text("no_data".tr()))
+                          ? Center(
+        child: Lottie.asset(
+        'assets/animation_icons/no_event.json',
+        height: 200,
+        width: 200
+        ),
+        )
                           : Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                               child: RefreshIndicator(

@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/home/cubits/top_events_cubit/top_events_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_event.dart';
@@ -63,7 +64,13 @@ class _TopEventsScreenState extends State<TopEventsScreen> {
                             .topEvents
                             ?.data
                             ?.length == 0)?
-                    Center(child: Text("no_data".tr())): Padding(
+                    Center(
+                      child: Lottie.asset(
+                          'assets/animation_icons/no_event.json',
+                          height: 200,
+                          width: 200
+                      ),
+                    ): Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                       child: RefreshIndicator(
                         onRefresh: () async {
