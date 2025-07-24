@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/announcement/cubit/announcement_cubit.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
@@ -60,9 +61,15 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                               (cubit.announcementFavouriteModel
                                                           ?.data?.length ==
                                                       0)
-                                                  ? Center(
-                                                      child:
-                                                          Text("no_data".tr()))
+                                                  ? Expanded(
+                                                child: Center(
+                                                  child: Lottie.asset(
+                                                    'assets/animation_icons/search_no_data.json',
+                                                      height: 200,
+                                                      width: 200
+                                                  ),
+                                                ),
+                                              )
                                                   : ListView.builder(
                                                       shrinkWrap: true,
                                                       itemCount: cubit
@@ -103,7 +110,15 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                   child: (cubit.userJobFavouriteModel?.data
                                               ?.length ==
                                           0)
-                                      ? Center(child: Text("no_data".tr()))
+                                      ?  Expanded(
+                                    child: Center(
+                                      child: Lottie.asset(
+                                        'assets/animation_icons/search_no_data.json',
+                                          height: 200,
+                                          width: 200
+                                      ),
+                                    ),
+                                  )
                                       : BlocBuilder<JobsCubit, JobsState>(
                                           builder: (context, state) {
                                           return ListView.builder(

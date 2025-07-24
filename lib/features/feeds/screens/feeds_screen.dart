@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_cubit.dart';
 import 'package:mawhebtak/features/feeds/cubit/feeds_state.dart';
@@ -79,8 +80,12 @@ class _FeedsScreenState extends State<FeedsScreen> {
                       },
                       child: (feeds?.data?.length == 0)
                           ? Center(
-                              child: Text("no_posts".tr()),
-                            )
+                          child: Lottie.asset(
+                            'assets/animation_icons/search_no_data.json',
+                              height: 200,
+                              width: 200
+                          ),
+                                                      )
                           : ListView.separated(
                               padding: const EdgeInsets.only(
                                   bottom: kBottomNavigationBarHeight),

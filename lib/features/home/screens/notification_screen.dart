@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/core/utils/filter.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/home/cubits/notifications_cubit/notification_cubit.dart';
@@ -54,20 +55,25 @@ class _NotificationScreenState extends State<NotificationScreen> {
         return Scaffold(
           body: Column(
             children: [
-              SizedBox(
-                height: 20.h,
-              ),
+
               CustomSimpleAppbar(title: 'notification'.tr()),
+              SizedBox(height: 10.h,),
               Expanded(
                 child: (state is NotificationLoading)
                     ? const Center(
                         child: CustomLoadingIndicator(),
                       )
                     : (cubit.getNotificationsModel?.data?.length == 0)
-                        ? Center(
-                            child: Text("no_data".tr()),
-                          )
-                        : ListView.separated(
+                        ?  Expanded(
+                  child: Center(
+                    child: Lottie.asset(
+                      'assets/animation_icons/no_event.json',
+                        height: 200,
+                        width: 200
+                    ),
+                  ),
+                )
+                        : ListView.builder(
                             shrinkWrap: true,
                             controller: scrollController,
                             itemCount:
@@ -78,12 +84,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     cubit.getNotificationsModel?.data?[index],
                               );
                             },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                height: 10.h,
-                              );
-                            },
+
                           ),
               )
             ],

@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/core/utils/filter.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
@@ -85,8 +86,12 @@ class _FollowerAndFollowingScreenState
                       child: (cubit.followerAndFollowingModel?.data?.length ==
                               0)
                           ? Center(
-                              child: Text("no_data".tr()),
-                            )
+        child: Lottie.asset(
+        'assets/animation_icons/no_event.json',
+        height: 200,
+        width: 200
+        ),
+        )
                           : ListView.builder(
                               controller: scrollController,
                               shrinkWrap: true,

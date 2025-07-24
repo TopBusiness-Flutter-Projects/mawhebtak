@@ -34,6 +34,7 @@ import 'package:mawhebtak/features/more/screens/about_us_screen.dart';
 import 'package:mawhebtak/features/more/screens/change_password_screen.dart';
 import 'package:mawhebtak/features/more/screens/contact_us_screen.dart';
 import 'package:mawhebtak/features/more/screens/favourites_screen.dart';
+import 'package:mawhebtak/features/more/screens/future_app.dart';
 import 'package:mawhebtak/features/more/screens/more_screen.dart';
 import 'package:mawhebtak/features/calender/screens/new_event_screen.dart';
 import 'package:mawhebtak/features/more/screens/my_events_screen.dart';
@@ -138,6 +139,7 @@ class Routes {
   static const String profileDetailsRoute = '/profileDetailsRoute';
   static const String searchRoute = '/searchRoute';
   static const String myEventsRoute = '/myEventsRoute';
+  static const String futureAppRoute = '/futureAppRoute';
 }
 
 class AppRoutes {
@@ -227,6 +229,16 @@ class AppRoutes {
         return PageTransition(
           child: DetailsOfMainCategoryGigs(
             categoryId: categoryId,
+          ),
+          type: PageTransitionType.fade,
+          alignment: Alignment.center,
+          duration: const Duration(milliseconds: 300),
+        );
+        case Routes.futureAppRoute:
+
+        return PageTransition(
+          child: const FutureApp(
+
           ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
@@ -424,8 +436,9 @@ class AppRoutes {
           duration: const Duration(milliseconds: 300),
         );
       case Routes.changeLanguageRoute:
+        bool isLocal = settings.arguments as bool;
         return PageTransition(
-          child: const ChangeLanguageScreen(),
+          child:  ChangeLanguageScreen(isLocal: isLocal,),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),

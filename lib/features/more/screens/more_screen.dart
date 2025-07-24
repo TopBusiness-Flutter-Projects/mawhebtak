@@ -98,6 +98,15 @@ class _MoreScreenState extends State<MoreScreen> {
                                   Navigator.pushNamed(
                                       context, Routes.favouritesRoute);
                                 }),
+
+
+                            moreContainer(
+                                text: "future_app".tr(),
+                                imageUrl: AppIcons.myFavoriteIcon,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.futureAppRoute);
+                                }),
                             if(cubit.user?.data?.token != null)
                               moreContainer(
                                 text: "my_event".tr(),
@@ -122,9 +131,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                         context, Routes.roomsScreen);
                                   }
                                 }),
-                            //TODO
                             if(cubit.user?.data?.token != null)
-
                             moreContainer(
                                 text: "wallet".tr(),
                                 imageUrl: AppIcons.walletIcon,
@@ -141,12 +148,13 @@ class _MoreScreenState extends State<MoreScreen> {
                                   Navigator.pushNamed(
                                       context, Routes.referralCodeRoute);
                                 }),
+                            if(cubit.user?.data?.token != null)
                             moreContainer(
                                 text: "change_language".tr(),
                                 imageUrl: AppIcons.changeLanguage,
                                 onTap: () {
                                   Navigator.pushNamed(
-                                      context, Routes.changeLanguageRoute);
+                                      context, Routes.changeLanguageRoute,arguments: false);
                                 }),
                             if(cubit.user?.data?.token != null)
 

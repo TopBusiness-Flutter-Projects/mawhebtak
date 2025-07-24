@@ -40,6 +40,35 @@ class ChangeLanguageCubit extends Cubit<ChangeLanguageState> {
     emit(AccountLanguageChanged()); // Emit a new state to notify the UI
   }
 
+  void changeLanguageLocal(BuildContext context, String newLanguage) async {
+    // selectedLanguage = newLanguage; // Update the selected language
+
+    // Map of language display names to their codes
+    final Map<String, String> languageCodes = {
+      'Arabic': 'ar',
+      'English': 'en',
+      'German': 'de',
+      'Italian': 'it',
+      'Korean': 'ko',
+      'Russian': 'ru',
+      'Spanish': 'es'
+    };
+
+    // Get the language code from the map
+    final String langCode = languageCodes[newLanguage] ?? 'en';
+
+    // Set the locale
+    context.setLocale(Locale(langCode));
+    // Save the language preference
+    Preferences.instance.savedLang(langCode);
+    Preferences.instance.getSavedLang();
+    HotRestartController.performHotRestart(context);
+
+    print("change lang and restart");
+
+    emit(AccountLanguageChanged()); // Emit a new state to notify the UI
+  }
+
   toggleLanguage({
     String? language,
     required BuildContext context,

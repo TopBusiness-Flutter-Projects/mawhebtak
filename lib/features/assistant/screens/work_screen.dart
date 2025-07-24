@@ -1,4 +1,5 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
@@ -57,7 +58,13 @@ class _AssistantScreenState extends State<AssistantScreen> {
                             if (cubit.works!.isEmpty) {
                               return Expanded(
                                   child:
-                                      Center(child: Text("no_works_yet".tr())));
+                                  Center(
+                                    child: Lottie.asset(
+                                      'assets/animation_icons/search_no_data.json',
+                                        height: 200,
+                                        width: 200
+                                    ),
+                                  ));
                             }
 
                             return Expanded(

@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/my_svg_widget.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
@@ -38,7 +39,20 @@ class _SubscribtionScreenState extends State<SubscribtionScreen> {
                 if (state is LoadingLawyerAdPackagesState)
                   const Center(child: CustomLoadingIndicator())
                 else if ((cubit.userPackageModel?.data?.isEmpty ?? true))
-                  Center(child: Text("no_subscribtion".tr()))
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Lottie.asset(
+                            'assets/animation_icons/search_no_data.json',
+                            height: 200,
+                            width: 200
+                        ),
+                        Center(child: Text("no_subscribtion".tr())),
+                      ],
+                    ),
+                  )
                 else
                   Flexible(
                     child: ListView.builder(
