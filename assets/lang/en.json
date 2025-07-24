@@ -385,5 +385,7 @@
   "payment_status": "Payment Status",
   "paid": "Paid",
   "not_paid": "Not Paid",
-  "payment_method": "Payment Method"
+  "payment_method": "Payment Method",
+  "langauge": "Langauge",
+  "future_app": "Future App"
 }

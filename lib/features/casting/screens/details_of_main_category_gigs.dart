@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
@@ -43,87 +44,83 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
                 builder: (context, state) {
                   var cubit = context.read<CastingCubit>();
                   var hasSelectedSub = cubit.selectedSubCategory != null;
-                  var hasNewData =
-                      cubit.allGigsModel?.data?.isNotEmpty == true;
-                  return
-                    hasNewData && hasSelectedSub ?
-                    Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildSubCategoryDropdown(context, cubit),
-                                const SizedBox(height: 16),
-                                (state is SubCategoryStateLoading)
-                                    ? const Center(child: CustomLoadingIndicator())
-                                    :
-                                Flexible(
-                                  child: (cubit.getGigsFromSubCategoryModel
-                                                  ?.data?.length ==
-                                              0 ||
-                                          cubit.getGigsFromSubCategoryModel ==
-                                              null)
-                                      ? Center(
-                                          child: Text('no_data'.tr()),
-                                        )
-                                      : ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const AlwaysScrollableScrollPhysics(),
-                                          itemCount: cubit
-                                              .getGigsFromSubCategoryModel
-                                              ?.data
-                                              ?.length,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 12.w),
-                                          itemBuilder: (context, index) =>
-                                              GigsWidget(
-                                            castingCubit: cubit,
-                                            eventAndGigsModel: cubit
+                  var hasNewData = cubit.allGigsModel?.data?.isNotEmpty == true;
+                  return hasNewData && hasSelectedSub
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildSubCategoryDropdown(context, cubit),
+                            const SizedBox(height: 16),
+                            (state is SubCategoryStateLoading)
+                                ? const Center(child: CustomLoadingIndicator())
+                                : Flexible(
+                                    child: (cubit.getGigsFromSubCategoryModel
+                                                    ?.data?.length ==
+                                                0 ||
+                                            cubit.getGigsFromSubCategoryModel ==
+                                                null)
+                                        ? Center(
+                                            child: Lottie.asset(
+                                                'assets/animation_icons/search_no_data.json',
+                                                height: 200,
+                                                width: 200),
+                                          )
+                                        : ListView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const AlwaysScrollableScrollPhysics(),
+                                            itemCount: cubit
                                                 .getGigsFromSubCategoryModel
-                                                ?.data?[index],
+                                                ?.data
+                                                ?.length,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 12.w),
+                                            itemBuilder: (context, index) =>
+                                                GigsWidget(
+                                              castingCubit: cubit,
+                                              eventAndGigsModel: cubit
+                                                  .getGigsFromSubCategoryModel
+                                                  ?.data?[index],
+                                            ),
                                           ),
-                                        ),
-                                )
-                              ],
-                            ):
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildSubCategoryDropdown(context, cubit),
-                        const SizedBox(height: 16),
-                        (state is SubCategoryStateLoading)
-                            ? const Center(child: CustomLoadingIndicator())
-                            :
-                        Flexible(
-                          child: (cubit.allGigsModel
-                              ?.data?.length ==
-                              0 ||
-                              cubit.allGigsModel ==
-                                  null)
-                              ? Center(
-                            child: Text('no_data'.tr()),
-                          )
-                              : ListView.builder(
-                            shrinkWrap: true,
-                            physics:
-                            const AlwaysScrollableScrollPhysics(),
-                            itemCount: cubit
-                                .allGigsModel
-                                ?.data
-                                ?.length,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12.w),
-                            itemBuilder: (context, index) =>
-                                GigsWidget(
-                                  castingCubit: cubit,
-                                  eventAndGigsModel: cubit
-                                      .allGigsModel
-                                      ?.data?[index],
-                                ),
-                          ),
+                                  )
+                          ],
                         )
-                      ],
-                    );
-
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildSubCategoryDropdown(context, cubit),
+                            const SizedBox(height: 16),
+                            (state is SubCategoryStateLoading)
+                                ? const Center(child: CustomLoadingIndicator())
+                                : Flexible(
+                                    child: (cubit.allGigsModel?.data?.length ==
+                                                0 ||
+                                            cubit.allGigsModel == null)
+                                        ?  Center(
+                                      child: Lottie.asset(
+                                          'assets/animation_icons/search_no_data.json',
+                                          height: 200,
+                                          width: 200),
+                                    )
+                                        : ListView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const AlwaysScrollableScrollPhysics(),
+                                            itemCount: cubit
+                                                .allGigsModel?.data?.length,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 12.w),
+                                            itemBuilder: (context, index) =>
+                                                GigsWidget(
+                                              castingCubit: cubit,
+                                              eventAndGigsModel: cubit
+                                                  .allGigsModel?.data?[index],
+                                            ),
+                                          ),
+                                  )
+                          ],
+                        );
                 },
               ),
             ),
@@ -143,7 +140,6 @@ class _DetailsOfMainCategoryGigsState extends State<DetailsOfMainCategoryGigs> {
         borderRadius: BorderRadius.circular(8.sp),
       ),
       child: GeneralCustomDropdownButtonFormField<GetCountriesMainModelData>(
-
         onChanged: (value) {
           cubit.selectedSubCategory = value;
 

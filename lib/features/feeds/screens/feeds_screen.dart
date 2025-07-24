@@ -79,14 +79,13 @@ class _FeedsScreenState extends State<FeedsScreen> {
                         await feedsCubit.postsData(page: '1', isGetMore: false);
                       },
                       child: (feeds?.data?.length == 0)
-                          ? Expanded(
-                              child: Center(
-                              child: Lottie.asset(
-                                'assets/animation_icons/search_no_data.json',
-                                  height: 200,
-                                  width: 200
-                              ),
-                            ))
+                          ? Center(
+                          child: Lottie.asset(
+                            'assets/animation_icons/search_no_data.json',
+                              height: 200,
+                              width: 200
+                          ),
+                                                      )
                           : ListView.separated(
                               padding: const EdgeInsets.only(
                                   bottom: kBottomNavigationBarHeight),
