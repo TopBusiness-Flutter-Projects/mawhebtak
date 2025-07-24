@@ -35,6 +35,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
+    context.read<ProfileCubit>().selectedIndex = 0;
     context
         .read<ProfileCubit>()
         .getProfileData(id: widget.model.id, context: context);

@@ -385,5 +385,7 @@
   "payment_status": "حالة الدفع",
   "paid": "مدفوع",
   "not_paid": "غير مدفوع",
-  "payment_method": "طريقة الدفع"
+  "payment_method": "طريقة الدفع",
+  "langauge": "اللغة",
+  "future_app": "تطبيقات المستقبل"
 }

@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/core/widgets/dropdown_button_form_field.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
@@ -59,7 +60,12 @@ class _DetailsOfMainCategoryTopTalentsState
                           ? const Center(child: CustomLoadingIndicator())
                           :Expanded(
                         child: ( cubit.topSubCategoryTalents?.data?.length == 0 || cubit.userSubTypeList?.data == [])
-                            ? Center(child: Text('no_data'.tr()))
+                            ?  Center(
+                          child: Lottie.asset(
+                              'assets/animation_icons/search_no_data.json',
+                              height: 200,
+                              width: 200),
+                        )
                             : GridView.builder(
                           gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -91,7 +97,12 @@ class _DetailsOfMainCategoryTopTalentsState
                               child: (state is TopTalentsStateLoading)?
                               const Center(child: CustomLoadingIndicator(),):
                               (cubit.topTalents?.data?.isEmpty ?? true)
-                                  ? Center(child: Text('no_data'.tr()))
+                                  ?  Center(
+                                child: Lottie.asset(
+                                    'assets/animation_icons/search_no_data.json',
+                                    height: 200,
+                                    width: 200),
+                              )
                                   : GridView.builder(
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(

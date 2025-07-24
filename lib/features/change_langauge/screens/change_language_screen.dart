@@ -1,11 +1,10 @@
-
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_cubit.dart';
 import 'package:mawhebtak/features/change_langauge/cubit/change_language_state.dart';
 import '../../../core/exports.dart';
 
 class ChangeLanguageScreen extends StatelessWidget {
-  const ChangeLanguageScreen({super.key});
-
+  const ChangeLanguageScreen({super.key, required this.isLocal});
+  final bool isLocal;
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ChangeLanguageCubit>();
@@ -31,15 +30,17 @@ class ChangeLanguageScreen extends StatelessWidget {
                         changeLanguageContainer(
                           text: "English",
                           onTap: () {
-                            cubit.changeLanguage(context, "English");
-
+                            (isLocal == true)
+                                ? cubit.changeLanguageLocal(context, "English")
+                                : cubit.changeLanguage(context, "English");
                           },
                         ),
                         changeLanguageContainer(
                           text: "اللغة العربية",
                           onTap: () {
-                            cubit.changeLanguage(context, "Arabic");
-
+                            (isLocal == false)
+                                ? cubit.changeLanguageLocal(context, "Arabic")
+                                : cubit.changeLanguage(context, "Arabic");
                           },
                         ),
                       ],
