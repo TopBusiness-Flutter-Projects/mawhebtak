@@ -149,7 +149,6 @@ class AppRoutes {
     log('the route is: $route');
     final uri = Uri.parse(route);
     log('the link is: $uri');
-
     if (uri.queryParameters.containsKey('id')) {
       idLink = uri.queryParameters['id'] ?? '0';
       log('Found ID in query params: $idLink');
@@ -169,7 +168,6 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
         );
-
       case Routes.loginRoute:
         return PageTransition(
           child: const LoginScreen(),
@@ -209,9 +207,10 @@ class AppRoutes {
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
-        );case Routes.electronicWalletRoute:
+        );
+      case Routes.electronicWalletRoute:
         return PageTransition(
-          child:  const ElectronicWalletScreen(),
+          child: const ElectronicWalletScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
@@ -236,7 +235,7 @@ class AppRoutes {
       case Routes.myAdvertismentRoute:
         String? idFromPackage = settings.arguments as String;
         return PageTransition(
-          child:  MyAdvertismentScreen(idFromPackage: idFromPackage),
+          child: MyAdvertismentScreen(idFromPackage: idFromPackage),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 100),
@@ -244,7 +243,7 @@ class AppRoutes {
       case Routes.addAdvertismentRoute:
         String? id = settings.arguments as String;
         return PageTransition(
-          child:  AddAdvertismentScreen(
+          child: AddAdvertismentScreen(
             id: id,
           ),
           type: PageTransitionType.fade,
@@ -687,24 +686,26 @@ class AppRoutes {
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 100),
         );
-        case Routes.eventQRCodeUrl:
-          String eventUrl = settings.arguments as String;
+      case Routes.eventQRCodeUrl:
+        String eventUrl = settings.arguments as String;
         return PageTransition(
-          child:  EventQRCodePage(eventUrl: eventUrl,),
+          child: EventQRCodePage(
+            eventUrl: eventUrl,
+          ),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 100),
         );
-        case Routes.qRScannerUrl:
+      case Routes.qRScannerUrl:
         return PageTransition(
-          child:  const QRScannerPage(),
+          child: const QRScannerPage(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 100),
         );
-        case Routes.myEventsRoute:
+      case Routes.myEventsRoute:
         return PageTransition(
-          child:  const MyEventsScreen(),
+          child: const MyEventsScreen(),
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 100),
