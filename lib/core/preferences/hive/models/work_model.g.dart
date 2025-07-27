@@ -64,13 +64,14 @@ class AssistantAdapter extends TypeAdapter<Assistant> {
       date: fields[4] as DateTime?,
       remindedTime: fields[5] as DateTime?,
       isActive: fields[6] as bool?,
+      video: fields[7] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Assistant obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -84,7 +85,9 @@ class AssistantAdapter extends TypeAdapter<Assistant> {
       ..writeByte(5)
       ..write(obj.remindedTime)
       ..writeByte(6)
-      ..write(obj.isActive);
+      ..write(obj.isActive)
+      ..writeByte(7)
+      ..write(obj.video);
   }
 
   @override

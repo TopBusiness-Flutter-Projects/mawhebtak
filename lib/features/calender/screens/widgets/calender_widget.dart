@@ -4,14 +4,12 @@ import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/utils/hex_color.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import '../../../../core/exports.dart';
-import '../../../../core/preferences/preferences.dart';
-import '../../../../core/utils/check_login.dart';
 import '../../../events/screens/details_event_screen.dart';
 import '../../cubit/calender_state.dart';
 import '../../data/repos/model/calender_model.dart';
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({Key? key}) : super(key: key);
+  const CalendarWidget({super.key});
 
   @override
   State<CalendarWidget> createState() => _CalendarWidgetState();
@@ -20,166 +18,6 @@ class CalendarWidget extends StatefulWidget {
 class _CalendarWidgetState extends State<CalendarWidget> {
   DateTime currentDate = DateTime.now();
   late List<MainCalendarEventData> events;
-
-  // // ----------------------------
-  // // عرض مودال إضافة حدث جديد
-  // // ----------------------------
-  // void _showAddEventModal(BuildContext context) {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     backgroundColor: AppColors.white,
-  //     isScrollControlled: true,
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-  //     ),
-  //     builder: (context) {
-  //       String eventTitle = '';
-  //       DateTime? startDate;
-  //       DateTime? endDate;
-  //
-  //       return StatefulBuilder(
-  //         builder: (context, setModalState) {
-  //           return Padding(
-  //             padding: EdgeInsets.only(
-  //               bottom: MediaQuery.of(context).viewInsets.bottom,
-  //               top: 16.h,
-  //               right: 16.w,
-  //               left: 16.w,
-  //             ),
-  //             child: SingleChildScrollView(
-  //               child: Column(
-  //                 mainAxisSize: MainAxisSize.min,
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //
-  //                   // حقل العنوان
-  //                   Text("Event Title", style: TextStyle(color: AppColors.blackLite, fontSize: 14.sp)),
-  //                   CustomTextField(
-  //                     hintText: "Event Title",
-  //                     onChanged: (value) => eventTitle = value,
-  //                   ),
-  //
-  //                   SizedBox(height: 10.h),
-  //
-  //                   // اختيار التواريخ
-  //                   Row(
-  //                     children: [
-  //                       // زر اختيار تاريخ البداية
-  //                       Expanded(
-  //                         child: ElevatedButton(
-  //                           onPressed: () async {
-  //                             final date = await showDatePicker(
-  //                               context: context,
-  //                               initialDate: DateTime.now(),
-  //                               firstDate: DateTime(2000),
-  //                               lastDate: DateTime(2100),
-  //                             );
-  //                             if (date != null) {
-  //                               setModalState(() {
-  //                                 startDate = date;
-  //                               });
-  //                             }
-  //                           },
-  //                           style: ElevatedButton.styleFrom(
-  //                             shape: RoundedRectangleBorder(
-  //                               borderRadius: BorderRadius.circular(12.r),
-  //                             ),
-  //                             padding: EdgeInsets.symmetric(vertical: 16.h),
-  //                             elevation: 6,
-  //                             shadowColor: Colors.deepPurpleAccent.withOpacity(0.3),
-  //                             side: BorderSide(color: AppColors.primary, width: 2),
-  //                           ),
-  //                           child: Text(
-  //                             startDate == null
-  //                                 ? "Select Start Date"
-  //                                 : "From: ${DateFormat.yMd().format(startDate!)}",
-  //                             style: TextStyle(
-  //                               fontSize: 14.sp,
-  //                               fontWeight: FontWeight.w600,
-  //                               letterSpacing: 1.0,
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ),
-  //
-  //                       SizedBox(width: 16.w),
-  //
-  //                       // زر اختيار تاريخ النهاية
-  //                       Expanded(
-  //                         child: ElevatedButton(
-  //                           onPressed: () async {
-  //                             final date = await showDatePicker(
-  //                               context: context,
-  //                               initialDate: startDate ?? DateTime.now(),
-  //                               firstDate: DateTime(2000),
-  //                               lastDate: DateTime(2100),
-  //                             );
-  //                             if (date != null) {
-  //                               setModalState(() {
-  //                                 endDate = date;
-  //                               });
-  //                             }
-  //                           },
-  //                           style: ElevatedButton.styleFrom(
-  //                             shape: RoundedRectangleBorder(
-  //                               borderRadius: BorderRadius.circular(12.r),
-  //                             ),
-  //                             padding: EdgeInsets.symmetric(vertical: 16.h),
-  //                             elevation: 4,
-  //                             shadowColor: Colors.deepPurpleAccent.withOpacity(0.3),
-  //                             side: BorderSide(color: AppColors.primary, width: 2),
-  //                           ),
-  //                           child: Text(
-  //                             endDate == null
-  //                                 ? "Select End Date"
-  //                                 : "To: ${DateFormat.yMd().format(endDate!)}",
-  //                             style: TextStyle(
-  //                               fontSize: 14.sp,
-  //                               fontWeight: FontWeight.w600,
-  //                               letterSpacing: 1.0,
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //
-  //                   SizedBox(height: 10.h),
-  //
-  //                   // زر تأكيد إضافة الحدث
-  //                   CustomButton(
-  //                     title: "Add Event",
-  //                     onTap: () {
-  //                       if (eventTitle.isNotEmpty && startDate != null) {
-  //                         final newEvent = CalendarEvent(
-  //                           title: eventTitle,
-  //                           date: startDate!,
-  //                           endDate: endDate != null && endDate!.isAfter(startDate!)
-  //                               ? endDate
-  //                               : null,
-  //                           color: Colors.deepPurpleAccent,
-  //                         );
-  //
-  //                         // إغلاق المودال ثم تحديث واجهة التقويم
-  //                         Navigator.pop(context);
-  //                         WidgetsBinding.instance.addPostFrameCallback((_) {
-  //                           setState(() {
-  //                             events.add(newEvent);
-  //                           });
-  //                         });
-  //                       }
-  //                     },
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -205,9 +43,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               ],
             ),
 
-            // ------------------------
-            // زر عائم لإضافة حدث
-            // ------------------------
           ],
         );
       },

@@ -1,11 +1,9 @@
-import 'dart:io';
 
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/events/data/repo/event_repo_impl.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/exports.dart';
-import '../../../core/widgets/media_picker.dart';
 import '../data/model/event_details_model.dart';
 
 part 'event_state.dart';
@@ -58,10 +56,14 @@ class EventCubit extends Cubit<EventState> {
     }
   }
 
-  followUnfollowEvent(String id, BuildContext context) async {
+  followUnfollowEvent({
+    required String id,
+    required BuildContext context,
+     int? paymentMethod
+  }) async {
     try {
       emit(FollowUnFollowEventLoadingState());
-      final result = await api.followUnfollowEvent(id);
+      final result = await api.followUnfollowEvent(eventId: id,paymentMethod: paymentMethod );
       result.fold((l) {
         errorGetBar(l.toString());
         emit(FollowUnFollowEventErrorState());
@@ -78,6 +80,32 @@ class EventCubit extends Cubit<EventState> {
     } catch (e) {
       errorGetBar(e.toString());
       emit(FollowUnFollowEventErrorState());
+    }
+  }
+
+
+  scanQrCode({
+    required String? eventFollowerId,
+  }) async {
+    try {
+      emit(ScanQrCodeLoadingState());
+      final result = await api.scanQrCode(eventFollowerId:eventFollowerId);
+      result.fold((l) {
+        errorGetBar(l.toString());
+        emit(ScanQrCodeErrorState());
+      }, (r) {
+        if(r.status == 200 ){
+          successGetBar(r.msg.toString());
+          emit(ScanQrCodeLoadedState());
+        }
+        else{
+          errorGetBar(r.msg.toString());
+        }
+
+      });
+    } catch (e) {
+      errorGetBar(e.toString());
+      emit(ScanQrCodeErrorState());
     }
   }
 

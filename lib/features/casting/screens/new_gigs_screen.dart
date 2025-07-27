@@ -8,6 +8,7 @@ import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
 import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
+import 'package:mawhebtak/features/feeds/screens/widgets/video_from_file_screen.dart';
 import 'package:mawhebtak/features/home/screens/widgets/follow_button.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/location/cubit/location_state.dart';
@@ -448,6 +449,7 @@ class _NewGigsScreenState extends State<NewGigsScreen> {
                                               ),
                                             ),
                                           ),
+
                                         ],
                                       );
                                     },

@@ -7,9 +7,13 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/preferences/hive/models/work_model.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_cubit.dart';
 import 'package:mawhebtak/features/assistant/cubit/assistant_state.dart';
+import 'package:mawhebtak/features/feeds/screens/widgets/image_view_file.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
+import '../../../core/widgets/full_screen_video_view.dart';
+import '../../feeds/screens/widgets/video_from_file_screen.dart';
 
 class WorkDetailsScreen extends StatefulWidget {
   const WorkDetailsScreen({super.key, this.work});
@@ -197,7 +201,7 @@ class AssistantsList extends StatelessWidget {
   }
 }
 
-class TimelineAssistantItem extends StatelessWidget {
+class TimelineAssistantItem extends StatefulWidget {
   final Assistant assistants;
   final bool isLast;
   final WorkModel work;
@@ -208,6 +212,43 @@ class TimelineAssistantItem extends StatelessWidget {
     required this.isLast,
     required this.work,
   }) : super(key: key);
+
+  @override
+  State<TimelineAssistantItem> createState() => _TimelineAssistantItemState();
+}
+
+class _TimelineAssistantItemState extends State<TimelineAssistantItem> {
+  Uint8List? thumbnailData;
+
+  @override
+  void initState() {
+    if (widget.assistants.video != null) {
+      generateThumbnail();
+      setState(() {});
+    } else {
+      thumbnailData = null;
+    }
+
+    super.initState();
+  }
+
+  Future<void> generateThumbnail() async {
+    try {
+      final data = await VideoThumbnail.thumbnailData(
+        video: widget.assistants.video ?? '',
+        imageFormat: ImageFormat.JPEG,
+        maxWidth: 128,
+        quality: 25,
+      );
+
+      setState(() {
+        thumbnailData = data;
+      });
+    } catch (e) {
+      // setState(() {});
+      print('Thumbnail generation failed: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -248,17 +289,55 @@ class TimelineAssistantItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (assistants.image != null &&
-                      assistants.image!.isNotEmpty &&
-                      File(assistants.image!).existsSync())
-                    Image.file(
-                      File(assistants.image ?? ""),
-                      fit: BoxFit.cover,
-                      height: 300.h,
-                      width: double.infinity,
+                  if (widget.assistants.image != null &&
+                      widget.assistants.image!.isNotEmpty &&
+                      File(widget.assistants.image!).existsSync())
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ImageFileView(
+                                      image: widget.assistants.image ?? "",
+                                      isNetwork: false,
+                                    )));
+                      },
+                      child: Image.file(
+                        File(widget.assistants.image ?? ""),
+                        fit: BoxFit.cover,
+                        height: 300.h,
+                        width: double.infinity,
+                      ),
+                    ),
+                  if (widget.assistants.video != null &&
+                      widget.assistants.video!.isNotEmpty &&
+                      File(widget.assistants.video!).existsSync())
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VideoPlayerScreenFile(
+                                      videoFile:
+                                          File(widget.assistants.video ?? ''),
+                                    )));
+                      },
+                      child: thumbnailData != null
+                          ? Image.memory(
+                              thumbnailData!,
+                              fit: BoxFit.cover,
+                              height: 300.h,
+                              width: double.infinity,
+                            )
+                          : Image.asset(
+                              ImageAssets.videoImage,
+                              fit: BoxFit.cover,
+                              height: 300.h,
+                              width: double.infinity,
+                            ),
                     ),
                   Text(
-                    assistants.title ?? "",
+                    widget.assistants.title ?? "",
                     style: TextStyle(
                       color: Colors.blue,
                       fontSize: 16.sp,
@@ -269,7 +348,7 @@ class TimelineAssistantItem extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Text(
-                      assistants.description ?? "",
+                      widget.assistants.description ?? "",
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: Colors.black87,
@@ -279,10 +358,10 @@ class TimelineAssistantItem extends StatelessWidget {
                   8.h.verticalSpace,
                   Row(
                     children: [
-                      assistants.date != null
+                      widget.assistants.date != null
                           ? Text(
                               DateFormat('d MMMM, y', 'en')
-                                  .format(assistants.date!),
+                                  .format(widget.assistants.date!),
                               style: TextStyle(
                                 color: Colors.grey.shade500,
                                 fontSize: 12,
@@ -306,29 +385,29 @@ class TimelineAssistantItem extends StatelessWidget {
                               context,
                               Routes.addAssistantRoute,
                               arguments: {
-                                'work': work,
-                                'assistant': assistants,
+                                'work': widget.work,
+                                'assistant': widget.assistants,
                               },
                             );
                           },
                           child: Row(
                             children: [
                               Icon(
-                                assistants.isActive ?? false
+                                widget.assistants.isActive ?? false
                                     ? Icons.notifications_active
                                     : Icons.notifications_none,
                                 size: 12,
-                                color: assistants.isActive ?? false
+                                color: widget.assistants.isActive ?? false
                                     ? Colors.blue
                                     : Colors.grey.shade500,
                               ),
                               SizedBox(width: 4.w),
                               Text(
-                                (assistants.remindedTime != null)
-                                    ? 'Set Reminder (${DateFormat('dd MMM yyyy • hh:mm a', 'en').format(assistants.remindedTime!)})'
+                                (widget.assistants.remindedTime != null)
+                                    ? 'Set Reminder (${DateFormat('dd MMM yyyy • hh:mm a', 'en').format(widget.assistants.remindedTime!)})'
                                     : 'Set Reminder',
                                 style: TextStyle(
-                                  color: (assistants.isActive ?? false)
+                                  color: (widget.assistants.isActive ?? false)
                                       ? Colors.blue
                                       : Colors.grey.shade500,
                                   fontSize: 12.sp,
@@ -342,19 +421,19 @@ class TimelineAssistantItem extends StatelessWidget {
                                       context,
                                       Routes.addAssistantRoute,
                                       arguments: {
-                                        'work': work,
-                                        'assistant': assistants,
+                                        'work': widget.work,
+                                        'assistant': widget.assistants,
                                       },
                                     );
 
                                     if (result != null) {
-                                      cubit.getAssistants(work.id ?? 0);
+                                      cubit.getAssistants(widget.work.id ?? 0);
                                     }
                                   } else if (value == 'delete') {
                                     cubit.deleteAssistant(
                                       context,
-                                      workId: work.id ?? 0,
-                                      assistantId: assistants.id ?? 0,
+                                      workId: widget.work.id ?? 0,
+                                      assistantId: widget.assistants.id ?? 0,
                                     );
                                   }
                                 },

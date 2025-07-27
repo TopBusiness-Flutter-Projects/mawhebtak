@@ -14,6 +14,7 @@ import 'package:mawhebtak/features/location/screens/full_screen_map.dart';
 
 import '../../events/screens/widgets/custom_apply_app_bar.dart';
 import '../../feeds/cubit/feeds_cubit.dart';
+import '../../feeds/screens/widgets/video_from_file_screen.dart';
 
 class AddNewJobScreen extends StatefulWidget {
   const AddNewJobScreen({super.key});
@@ -286,6 +287,71 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                                 },
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                height: context.read<CalenderCubit>().validVideos.isEmpty ? 0 : 80,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: (context.read<CalenderCubit>().validVideos.length),
+                                  separatorBuilder: (_, __) =>
+                                  const SizedBox(width: 10),
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    VideoPlayerScreenFile(
+                                                      videoFile: File(context.read<CalenderCubit>()
+                                                          .validVideos[index].path),
+                                                    )));
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(8),
+                                            child: Container(
+                                              width: 80.w,
+                                              height: 80.w,
+                                              decoration: const BoxDecoration(
+                                                color: Colors.black12,
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      ImageAssets.videoImage),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  context.read<CalenderCubit>().deleteVideo(File(context.read<CalenderCubit>()
+                                                      .validVideos[index].path));
+                                                });
+                                              },
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.black45,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: const Icon(Icons.close,
+                                                    color: Colors.white, size: 18),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
                             CustomButton(
                               onTap: () {
                                 final jopCubit = context.read<JobsCubit>();
@@ -293,7 +359,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                                     double.tryParse(jopCubit.priceStartAt.text);
                                 final end =
                                     double.tryParse(jopCubit.priceEndAt.text);
-      
+
                                 if (formKey.currentState!.validate()) {
                                   if (start == null || end == null) {
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -303,7 +369,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                                     );
                                     return;
                                   }
-      
+
                                   if (start >= end) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
@@ -313,7 +379,7 @@ class _AddNewJobScreenState extends State<AddNewJobScreen> {
                                     );
                                     return;
                                   }
-      
+
                                   jopCubit.addJopUser(context: context);
                                 }
                               },

@@ -58,7 +58,40 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  50.h.verticalSpace,
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      print("trueeeeeeeeeeeeeeeee");
+                      Navigator.pushNamed(context, Routes.changeLanguageRoute,arguments: true);
+                    },
+                    child: Padding(
+                      padding:
+                          EdgeInsets.only(top: 10.h, left: 10.w, right: 10.w),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.language,
+                            color: AppColors.secondPrimary,
+                            size: 24.sp,
+                          ),
+                          SizedBox(width: 10.w),
+                          Text(
+                            "langauge".tr(),
+                            style: TextStyle(
+                              fontSize: 17.sp,
+                              color: AppColors.secondPrimary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30.h,
+                  ),
                   Image.asset(
                     ImageAssets.appIconWhite,
                     height: 100.h,
@@ -66,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: 80.h, left: 20.w, right: 20.w, bottom: 20.h),
+                        top: 40.h, left: 20.w, right: 20.w, bottom: 20.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,

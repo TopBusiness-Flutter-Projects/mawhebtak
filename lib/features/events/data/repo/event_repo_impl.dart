@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:mawhebtak/features/home/data/models/top_events_model.dart';
@@ -8,7 +7,6 @@ import '../../../../core/api/end_points.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/models/default_model.dart';
-import '../../../calender/data/model/countries_model.dart';
 import '../model/event_details_model.dart';
 
 class EventRepo {
@@ -39,11 +37,29 @@ class EventRepo {
     }
   }
 
-  Future<Either<Failure, DefaultMainModel>> followUnfollowEvent(
-      String eventId) async {
+  Future<Either<Failure, DefaultMainModel>> followUnfollowEvent({
+   required String eventId,
+    int? paymentMethod,
+  }) async {
     try {
       var response = await dio.post(EndPoints.followUnfollowEventUrl, body: {
         "event_id": eventId,
+        if(paymentMethod != null)
+        "payment_method":paymentMethod,
+      });
+      return Right(DefaultMainModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, DefaultMainModel>> scanQrCode({
+    String? eventFollowerId,
+  }) async {
+    try {
+      var response = await dio.post(EndPoints.scanEventQrCode, body: {
+        if(eventFollowerId != null)
+        "event_follower_id": eventFollowerId,
       });
       return Right(DefaultMainModel.fromJson(response));
     } on ServerException {

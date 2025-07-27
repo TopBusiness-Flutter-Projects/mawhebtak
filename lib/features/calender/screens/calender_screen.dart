@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/calender/cubit/calender_cubit.dart';
 import 'package:mawhebtak/features/calender/screens/widgets/calender_widget.dart';
@@ -10,7 +11,7 @@ import '../../home/screens/widgets/custom_app_bar_row.dart';
 import '../cubit/calender_state.dart';
 
 class CalendarScreen extends StatefulWidget {
-  const CalendarScreen({Key? key}) : super(key: key);
+  const CalendarScreen({super.key});
 
   @override
   State<CalendarScreen> createState() => _CalendarScreenState();
@@ -130,17 +131,20 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                               : null,
                                         ),
                                         child: Center(
-                                          child: Text(
-                                            roles[index],
-                                            style: TextStyle(
-                                              fontSize: 16.sp,
-                                              fontWeight: isSelected
-                                                  ? FontWeight.w600
-                                                  : FontWeight.w500,
-                                              color: isSelected
-                                                  ? AppColors.white
-                                                  : AppColors.grayDark
-                                                      .withOpacity(0.5),
+                                          child: Padding(
+                                            padding:  EdgeInsets.only(left: 5.w,right: 5.w),
+                                            child: AutoSizeText(
+                                              roles[index],
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                fontWeight: isSelected
+                                                    ? FontWeight.w600
+                                                    : FontWeight.w500,
+                                                color: isSelected
+                                                    ? AppColors.white
+                                                    : AppColors.grayDark
+                                                        .withOpacity(0.5),
+                                              ),
                                             ),
                                           ),
                                         ),

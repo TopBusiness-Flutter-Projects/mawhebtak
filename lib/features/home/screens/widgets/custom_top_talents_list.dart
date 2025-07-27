@@ -1,4 +1,3 @@
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/features/events/screens/details_event_screen.dart';
@@ -29,22 +28,22 @@ class CustomTopTalentsList extends StatefulWidget {
 class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit,HomeState>(
-      builder: (context,state) {
-        return BlocBuilder<TopTalentsCubit, TopTalentsState>(
-            builder: (context, state) {
-          return GestureDetector(
-             onTap: () {
-               Navigator.pushNamed(context, Routes.profileRoute,
-                 arguments: DeepLinkDataModel(
-                     id: widget.topTalentsData?.id.toString() ??
-                         '',
-                     isDeepLink: false),
-               );
-             },
-            child: Padding(
-              padding: EdgeInsetsDirectional.only(start: 10.w, end: 5.w),
-              child:  Stack(
+    return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
+      return BlocBuilder<TopTalentsCubit, TopTalentsState>(
+          builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.profileRoute,
+              arguments: DeepLinkDataModel(
+                  id: widget.topTalentsData?.id.toString() ?? '',
+                  isDeepLink: false),
+            );
+          },
+          child: Padding(
+            padding: EdgeInsetsDirectional.only(start: 10.w, end: 5.w),
+            child: Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
               children: [
@@ -54,12 +53,14 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
                     children: [
                       SizedBox(
                         height: 200.h,
-                        width: 198.w,
+                        width: getWidthSize(context) / 2.1,
                         child: Image.network(
-                          widget.topTalentsData?.image ?? "your_default_base64_image",
+                          widget.topTalentsData?.image ??
+                              "your_default_base64_image",
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
-                              Image.asset(ImageAssets.imagePicked, fit: BoxFit.cover),
+                              Image.asset(ImageAssets.imagePicked,
+                                  fit: BoxFit.cover),
                         ),
                       ),
                       Positioned(
@@ -67,14 +68,16 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
                         right: 8.w,
                         child: GestureDetector(
                           onTap: () async {
-                            final user = await Preferences.instance.getUserModel();
+                            final user =
+                                await Preferences.instance.getUserModel();
                             if (user.data?.token == null) {
                               checkLogin(context);
                             } else {
                               widget.topTalentsCubit?.hideTopTalent(
                                 context: context,
                                 index: widget.index,
-                                unwantedUserId: widget.topTalentsData?.id.toString() ?? "0",
+                                unwantedUserId:
+                                    widget.topTalentsData?.id.toString() ?? "0",
                               );
                             }
                           },
@@ -88,7 +91,8 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
                         child: Container(
                           height: 198.h,
                           color: Colors.black.withOpacity(0.5),
-                          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 8.h, horizontal: 10.w),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -126,14 +130,17 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
                               SizedBox(height: 4.h),
                               CustomContainerButton(
                                 onTap: () async {
-                                  final user = await Preferences.instance.getUserModel();
+                                  final user =
+                                      await Preferences.instance.getUserModel();
                                   if (user.data?.token == null) {
                                     checkLogin(context);
                                   } else {
                                     widget.topTalentsCubit?.followAndUnFollow(
                                       context,
                                       item: widget.topTalentsData,
-                                      followedId: widget.topTalentsData?.id.toString() ?? "",
+                                      followedId: widget.topTalentsData?.id
+                                              .toString() ??
+                                          "",
                                     );
                                   }
                                 },
@@ -144,27 +151,24 @@ class _CustomTopTalentsListState extends State<CustomTopTalentsList> {
                                 color: widget.topTalentsData?.isIFollow == true
                                     ? AppColors.primary
                                     : AppColors.white,
-                                textColor: widget.topTalentsData?.isIFollow == true
-                                    ? Colors.white
-                                    : AppColors.primary,
-                                width: 120.w,
+                                textColor:
+                                    widget.topTalentsData?.isIFollow == true
+                                        ? Colors.white
+                                        : AppColors.primary,
+                                width: getWidthSize(context) / 3,
                               ),
                             ],
                           ),
                         ),
                       ),
-
-
                     ],
                   ),
                 ),
               ],
             ),
-
           ),
-          );
-        });
-      }
-    );
+        );
+      });
+    });
   }
 }

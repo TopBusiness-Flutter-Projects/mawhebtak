@@ -25,22 +25,26 @@ class PackagesCubit extends Cubit<PackagesState> {
     required String packageId,
     required BuildContext context,
   }) async {
-    emit(LoadingSubscribeToPackageState());
-    final res = await api.subscribeToPackage(
-      packageId: packageId,
-    );
-    res.fold((l) {
-      emit(ErrorSubscribeToPackageState());
-    }, (r) {
-      if (r.status == 200) {
-        successGetBar(r.msg ?? "");
-        Navigator.pop(context);
-      } else {
-        errorGetBar(r.msg ?? "");
-        Navigator.pop(context);
-      }
+    try {
+      emit(LoadingSubscribeToPackageState());
+      final res = await api.subscribeToPackage(
+        packageId: packageId,
+      );
+      res.fold((l) {
+        emit(ErrorSubscribeToPackageState());
+      }, (r) {
+        if (r.status == 200) {
+          successGetBar(r.msg ?? "");
+          Navigator.pop(context);
+        } else {
+          errorGetBar(r.msg ?? "");
+          Navigator.pop(context);
+        }
 
-      emit(LoadedSubscribeToPackageState());
-    });
-   }
+        emit(LoadedSubscribeToPackageState());
+      });
+    } catch (e) {
+      errorGetBar(e.toString());
+    }
+  }
 }

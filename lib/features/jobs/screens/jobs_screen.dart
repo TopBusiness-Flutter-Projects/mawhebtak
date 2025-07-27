@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/config/routes/app_routes.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/jobs/cubit/jobs_cubit.dart';
@@ -64,7 +65,17 @@ class _JobsScreenState extends State<JobsScreen> {
                         child: CustomLoadingIndicator(),
                       ))
                     : (jopUserData?.length == 0)
-                        ? Expanded(child: Center(child: Text("no_data".tr())))
+                        ? Expanded(child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Lottie.asset(
+                      'assets/animation_icons/search_no_data.json',
+                        height: 200,
+                        width: 200
+                    ),
+                  ],
+                ))
                         : Expanded(
                             child: RefreshIndicator(
                               onRefresh: () async {

@@ -75,6 +75,7 @@ dependencies:
   flutter_local_notifications: ^19.2.0
   sign_in_with_apple: ^7.0.1
   firebase_core: ^3.13.0
+  lottie: ^3.1.0
   firebase_auth: ^5.5.2
   firebase_messaging: ^15.2.5
   geocoding: ^3.0.0
@@ -94,8 +95,11 @@ dependencies:
   fluttertoast: ^8.2.4
   webview_flutter: ^4.10.0
   intl_phone_field: ^3.2.0
+  qr_flutter: ^4.0.0
   #  phone_number: ^2.1.0
   youtube_quality_player: ^1.1.1
+  image_size_getter: ^2.4.0
+  ai_barcode_scanner: ^3.4.3
   # ! main packages
 
 dev_dependencies:
@@ -135,6 +139,7 @@ flutter:
     - assets/images/
     - assets/videos/
     - assets/icons/
+    - assets/animation_icons/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

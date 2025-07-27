@@ -60,6 +60,7 @@ class EventAndGigsModel {
   bool? isMine;
   List<GigsRequestList>? gigsRequests;
   TopTalent? user;
+  String? qrcode;
 
   EventAndGigsModel({
     this.id,
@@ -76,6 +77,7 @@ class EventAndGigsModel {
     this.isRequested,
     this.isMine,
     this.gigsRequests,
+    this.qrcode,
   });
 
   factory EventAndGigsModel.fromJson(Map<String, dynamic> json) =>
@@ -99,6 +101,7 @@ class EventAndGigsModel {
             ? []
             : List<GigsRequestList>.from(
                 json["gigs_requests"]!.map((x) => GigsRequestList.fromJson(x))),
+        qrcode: json["qrcode"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -113,7 +116,8 @@ class EventAndGigsModel {
         "discount": discount,
         "price_after_discount": priceAfterDiscount,
         "user": user?.toJson(),
-        "from": from
+        "from": from,
+        "qrcode": qrcode,
       };
 }
 

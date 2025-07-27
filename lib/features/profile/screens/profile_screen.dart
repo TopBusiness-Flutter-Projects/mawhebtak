@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/core/widgets/show_loading_indicator.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
@@ -34,6 +35,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
+    context.read<ProfileCubit>().selectedIndex = 0;
     context
         .read<ProfileCubit>()
         .getProfileData(id: widget.model.id, context: context);
@@ -106,19 +108,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Text(
                       profile?.name ?? "",
-                      style: getSemiBoldStyle(fontSize: 16.sp, color: AppColors.black),
+                      style: getSemiBoldStyle(
+                          fontSize: 16.sp, color: AppColors.black),
                     ),
                     SizedBox(width: 8.w),
-                    if (profile?.userSubTypes != null && profile!.userSubTypes.isNotEmpty)
+                    if (profile?.userSubTypes != null &&
+                        profile!.userSubTypes.isNotEmpty)
                       Text(
                         "(${profile!.userSubTypes.map((e) => e.name).join('، ')})",
-                        style: getMediumStyle(fontSize: 14.sp, color: AppColors.primary),
+                        style: getMediumStyle(
+                            fontSize: 14.sp, color: AppColors.primary),
                       ),
                   ],
                 ),
               ),
-
-
               Padding(
                 padding: EdgeInsets.only(left: 16.0.w),
                 child: RichText(
@@ -286,10 +289,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 : Container();
           }
           if (timeline.isEmpty) {
-            return Center(
-              child: Text(
-                "no_data".tr(),
-                style: TextStyle(color: AppColors.black),
+            return Expanded(
+              child: Center(
+                child: Lottie.asset(
+                  'assets/animation_icons/search_no_data.json',
+height: 200,
+                  width: 200
+                ),
               ),
             );
           }
@@ -310,9 +316,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final gigs = context.read<ProfileCubit>().profileModel?.data?.myGigs ?? [];
 
     if (gigs.isEmpty) {
-      return Center(
-          child:
-              Text("no_data".tr(), style: TextStyle(color: AppColors.black)));
+      return Expanded(
+        child: Center(
+          child: Lottie.asset(
+            'assets/animation_icons/search_no_data.json',
+              height: 200,
+              width: 200
+          ),
+        ),
+      );
     }
 
     return Expanded(
@@ -337,9 +349,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final reviews = cubit.profileModel?.data?.reviews ?? [];
 
     if (reviews.isEmpty) {
-      return Center(
-          child:
-              Text("no_data".tr(), style: TextStyle(color: AppColors.black)));
+      return Expanded(
+        child: Center(
+          child: Lottie.asset(
+            'assets/animation_icons/search_no_data.json',
+              height: 200,
+              width: 200
+          ),
+        ),
+      );
     }
 
     return Expanded(

@@ -54,6 +54,8 @@ class GetMainEvenDetailsModelData {
   List<Requirement>? requirements;
   List<EventOwner>? enrolledUsers;
   List<EventRequest>? eventRequests;
+  String? qrcode;
+
 
   GetMainEvenDetailsModelData({
     this.id,
@@ -84,6 +86,7 @@ class GetMainEvenDetailsModelData {
     this.requirements,
     this.enrolledUsers,
     this.eventRequests,
+    this.qrcode,
   });
 
   factory GetMainEvenDetailsModelData.fromJson(Map<String, dynamic> json) =>
@@ -129,6 +132,8 @@ class GetMainEvenDetailsModelData {
             ? []
             : List<EventRequest>.from(
                 json["event_requests"]!.map((x) => EventRequest.fromJson(x))),
+        qrcode: json["qrcode"],
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -168,7 +173,9 @@ class GetMainEvenDetailsModelData {
         "event_requests": eventRequests == null
             ? []
             : List<dynamic>.from(eventRequests!.map((x) => x.toJson())),
-      };
+    "qrcode": qrcode,
+
+  };
 }
 
 class EventOwner {

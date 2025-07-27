@@ -5,6 +5,7 @@ import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import 'package:mawhebtak/features/home/data/models/followers_model.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 
@@ -37,6 +38,7 @@ class ProfileRepo {
       return Left(ServerFailure());
     }
   }
+
 
   Future<Either<Failure, DefaultMainModel>> updateProfileData({
     String? name,

@@ -1,4 +1,5 @@
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_cubit.dart';
 import 'package:mawhebtak/features/casting/cubit/casting_state.dart';
@@ -130,10 +131,15 @@ class _SearchScreenState extends State<SearchScreen> {
                             return const Center(
                                 child: CustomLoadingIndicator());
                           }
-
                           final data = cubit.announcementsModel?.data ?? [];
                           if (data.isEmpty) {
-                            return Center(child: Text("no_data".tr()));
+                            return Center(
+                              child: Lottie.asset(
+                                  'assets/animation_icons/search_no_data.json',
+                                  height: 200,
+                                  width: 200
+                              ),
+                            );
                           }
 
                           return ListView.builder(
@@ -155,7 +161,13 @@ class _SearchScreenState extends State<SearchScreen> {
                           }
                           final data = cubit.gigs?.data ?? [];
                           if (data.isEmpty) {
-                            return Center(child: Text("no_data".tr()));
+                            return Center(
+                              child: Lottie.asset(
+                                  'assets/animation_icons/search_no_data.json',
+                                  height: 200,
+                                  width: 200
+                              ),
+                            );
                           }
                           return BlocBuilder<CastingCubit, CastingState>(
                               builder: (context, state) {
@@ -180,7 +192,13 @@ class _SearchScreenState extends State<SearchScreen> {
                           }
                           final data = cubit.jobModel?.data ?? [];
                           if (data.isEmpty) {
-                            return Center(child: Text("no_data".tr()));
+                            return Center(
+                              child: Lottie.asset(
+                                  'assets/animation_icons/search_no_data.json',
+                                  height: 200,
+                                  width: 200
+                              ),
+                            );
                           }
                           return ListView.builder(
                             itemCount: data.length,
@@ -206,7 +224,13 @@ class _SearchScreenState extends State<SearchScreen> {
                           }
                           final data = cubit.postsModel?.data ?? [];
                           if (data.isEmpty) {
-                            return Center(child: Text("no_data".tr()));
+                            return Center(
+                              child: Lottie.asset(
+                                  'assets/animation_icons/search_no_data.json',
+                                  height: 200,
+                                  width: 200
+                              ),
+                            );
                           }
 
                           return ListView.builder(
@@ -235,7 +259,13 @@ class _SearchScreenState extends State<SearchScreen> {
                           }
                           final data = cubit.eventsModel?.data ?? [];
                           if (data.isEmpty) {
-                            return Center(child: Text("no_data".tr()));
+                            return Center(
+                              child: Lottie.asset(
+                                  'assets/animation_icons/search_no_data.json',
+                                  height: 200,
+                                  width: 200
+                              ),
+                            );
                           }
 
                           return ListView.builder(

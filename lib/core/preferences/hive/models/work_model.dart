@@ -44,6 +44,9 @@ class Assistant extends HiveObject {
   @HiveField(6)
   bool? isActive;
 
+  @HiveField(7)
+  String? video;
+
   Assistant({
     this.id,
     this.title,
@@ -52,5 +55,6 @@ class Assistant extends HiveObject {
     this.date,
     this.remindedTime,
     this.isActive,
+    this.video,
   });
 }

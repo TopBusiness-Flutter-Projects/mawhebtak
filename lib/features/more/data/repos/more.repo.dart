@@ -1,6 +1,7 @@
 import 'package:mawhebtak/core/exports.dart';
 import 'package:mawhebtak/core/models/default_model.dart';
 import 'package:mawhebtak/core/preferences/preferences.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import 'package:mawhebtak/features/jobs/data/model/user_jop_model.dart';
 import 'package:mawhebtak/features/more/data/model/announcement_favourite_model.dart';
 import 'package:mawhebtak/features/more/data/model/setting_model.dart';
@@ -18,7 +19,14 @@ class MoreRepo {
       return Left(ServerFailure());
     }
   }
-
+  Future<Either<Failure, RequestGigsModel>> getMyEventData() async {
+    try {
+      var response = await api.get(EndPoints.getMyEventUrl);
+      return Right(RequestGigsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
   Future<Either<Failure, AnnouncementFavouriteModel>>
       announcementFavourite() async {
     try {

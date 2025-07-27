@@ -14,9 +14,9 @@ class PackageItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:onTap,
+      onTap: onTap,
       child: ContainerOfPackage(
-        height: 72.h,
+        height: 80.h,
         widgetOne: Flexible(
             fit: FlexFit.tight,
             child: Column(
@@ -47,14 +47,33 @@ class PackageItemWidget extends StatelessWidget {
             )),
         widgetTwo: Row(
           children: [
-            Text(
-              '${item?.price?.toString()}',
-              maxLines: 1,
-              style: TextStyle(
-                  fontFamily: AppStrings.fontFamily,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.sp,
-                  color: AppColors.primary),
+            Column(
+              children: [
+                Text(
+                  '${item?.price?.toString()}',
+                  maxLines: 1,
+                  style: TextStyle(
+                      decoration: item?.priceAfterDiscount != null
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                      decorationColor: Colors.red,
+                      fontFamily: AppStrings.fontFamily,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
+                      color: item?.priceAfterDiscount != null
+                          ? AppColors.black
+                          : AppColors.primary),
+                ),
+                Text(
+                  '${item?.priceAfterDiscount != null ? item?.priceAfterDiscount?.toString() : ''}',
+                  maxLines: 1,
+                  style: TextStyle(
+                      fontFamily: AppStrings.fontFamily,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
+                      color: AppColors.primary),
+                ),
+              ],
             ),
             Padding(
               padding: EdgeInsetsDirectional.only(start: 8.0.w),

@@ -7,6 +7,7 @@ import 'package:mawhebtak/core/preferences/preferences.dart';
 import 'package:mawhebtak/core/utils/widget_from_application.dart';
 import 'package:mawhebtak/features/auth/login/data/models/login_model.dart';
 import 'package:mawhebtak/features/calender/data/model/countries_model.dart';
+import 'package:mawhebtak/features/casting/data/model/request_gigs_model.dart';
 import 'package:mawhebtak/features/location/cubit/location_cubit.dart';
 import 'package:mawhebtak/features/profile/data/models/profile_model.dart';
 import '../../../config/routes/app_routes.dart';
@@ -346,7 +347,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileFormChanged());
   }
 
-  /// Update an existing experience
+
+
   Future<void> updateExperience(BuildContext context,
       {required String id}) async {
     if (titleController.text.isEmpty || fromDate == null) {
@@ -368,7 +370,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       to: isUntilNow ? null : toDate,
       isUntilNow: isUntilNow,
     );
-
     result.fold((l) {
       Navigator.pop(context);
       emit(ExperienceError());
