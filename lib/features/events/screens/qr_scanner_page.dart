@@ -26,7 +26,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
           detectionSpeed: DetectionSpeed.noDuplicates,
           facing: CameraFacing.back,
         ),
-        onScan: (_) {},
+
         onDispose: () => debugPrint("QR Scanner disposed"),
 
           onDetect: (capture) async {
