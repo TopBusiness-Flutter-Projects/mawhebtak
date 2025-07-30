@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 
 class EndPoints {
   static const String baseUrl =
-      kReleaseMode
-          ? 'https://mawhebtac.com/api/v1/'
-          : 'http://192.168.1.18:8000/api/v1/';
+      'http://mawhebtac.com/api/v1/';
+
+  // kReleaseMode
+  //     ? 'http://mawhebtac.com/api/v1/'
+  //     : 'http://192.168.1.18:8000/api/v1/';
 
 //! Authentication
   static const String loginUrl = '${baseUrl}login';
@@ -21,11 +23,13 @@ class EndPoints {
   static const String addCommentUrl = '${baseUrl}add-comment';
   static const String addCommentReply = '${baseUrl}add-comment-reply';
   static const String addReview = '${baseUrl}add-review';
+
   //! add event
   static const String getDataBaseUrl = '${baseUrl}get-data';
   static const String getNotificationUrl = '${baseUrl}get-notifications';
   static const String storeDataUrl = '${baseUrl}store-data';
   static const String updateDataUrl = '${baseUrl}update-data';
+
   //! delete
   static const String deleteData = '${baseUrl}delete-data';
   static const String eventCalendarUrl = '${baseUrl}calendar';

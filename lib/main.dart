@@ -6,6 +6,7 @@ import 'package:mawhebtak/initialization.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'app.dart';
 import 'core/utils/restart_app_class.dart';
+import 'http.dart';
 
 void main() async {
   await initialization();
@@ -15,7 +16,7 @@ void main() async {
       await Permission.notification.request();
     }
   }
-
+  HttpOverrides.global = MyHttpOverrides();
   runApp(EasyLocalization(
       supportedLocales: const [Locale('ar', ''), Locale('en', '')],
       path: 'assets/lang',
