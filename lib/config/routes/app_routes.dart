@@ -439,6 +439,7 @@ class AppRoutes {
         bool isLocal = settings.arguments as bool;
         return PageTransition(
           child:  ChangeLanguageScreen(isLocal: isLocal,),
+
           type: PageTransitionType.fade,
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 300),
