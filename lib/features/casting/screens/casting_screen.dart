@@ -6,6 +6,7 @@ import 'package:mawhebtak/features/casting/screens/widgets/gigs_widgets.dart';
 import 'package:mawhebtak/features/home/cubits/top_talents_cubit/top_talents_cubit.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_app_bar_row.dart';
 import 'package:mawhebtak/features/home/screens/widgets/custom_top_talents_list.dart';
+
 import '../../../core/exports.dart';
 import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/check_login.dart';
@@ -13,6 +14,7 @@ import '../../../core/utils/filter.dart';
 
 class CastingScreen extends StatefulWidget {
   const CastingScreen({super.key, required this.isFromHome});
+
   final bool isFromHome;
 
   @override
@@ -24,6 +26,7 @@ class _CastingScreenState extends State<CastingScreen> {
   late List<String> tabs;
   late ScrollController scrollTopTalentController = ScrollController();
   late ScrollController scrollGigsController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -236,7 +239,7 @@ class _CastingScreenState extends State<CastingScreen> {
                           crossAxisSpacing: 0.w,
                           childAspectRatio: 0.999,
                         ),
-                        itemCount: cubit.topTalents?.data?.length,
+                        itemCount: cubit.topTalents?.data?.length ?? 0,
                         itemBuilder: (context, index) {
                           if (index == cubit.topTalents?.data?.length &&
                               state is TopTalentsStateLoadingMore) {

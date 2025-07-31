@@ -37,9 +37,9 @@ class MyProfileModelData {
   String? bgCover;
   GetCountriesMainModelData? userType;
   List<GetCountriesMainModelData>? userSubTypes;
-  dynamic followersCount;
-  dynamic followingCount;
-  dynamic postsCount;
+  int? followersCount;
+  int? followingCount;
+  int? postsCount;
   String? location;
   String? countryCode;
   String? bio;
@@ -109,8 +109,10 @@ class MyProfileModelData {
         userType: json["user_type"] == null
             ? null
             : GetCountriesMainModelData.fromJson(json["user_type"]),
-        userSubTypes: json["user_sub_types"] == null ? [] : List<GetCountriesMainModelData>.from(json["user_sub_types"]!.map((x) => GetCountriesMainModelData.fromJson(x))),
-
+        userSubTypes: json["user_sub_types"] == null
+            ? []
+            : List<GetCountriesMainModelData>.from(json["user_sub_types"]!
+                .map((x) => GetCountriesMainModelData.fromJson(x))),
         followersCount: json["followers_count"],
         followingCount: json["following_count"],
         postsCount: json["posts_count"],
@@ -133,8 +135,10 @@ class MyProfileModelData {
         "phone": phone,
         "bg_cover": bgCover,
         "user_type": userType?.toJson(),
-    "user_sub_types": userSubTypes == null ? [] : List<dynamic>.from(userSubTypes!.map((x) => x.toJson())),
-    "followers_count": followersCount,
+        "user_sub_types": userSubTypes == null
+            ? []
+            : List<dynamic>.from(userSubTypes!.map((x) => x.toJson())),
+        "followers_count": followersCount,
         "following_count": followingCount,
         "posts_count": postsCount,
         "location": location,

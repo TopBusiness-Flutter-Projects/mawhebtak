@@ -1,6 +1,7 @@
 import 'package:mawhebtak/features/home/cubits/home_cubit/home_state.dart';
 import 'package:mawhebtak/features/home/data/models/home_model.dart';
 import 'package:mawhebtak/features/home/data/repositories/home_repository.dart';
+
 import '../../../../core/exports.dart';
 import '../../screens/home_screen.dart';
 
@@ -35,27 +36,26 @@ class HomeCubit extends Cubit<HomeState> {
         label: 'Assistant'),
   ];
   HomeModel? homeModel;
+
   homeData() async {
     emit(HomeStateLoading());
-    try {
-      final res = await api.homeData();
-      res.fold((l) {
-        emit(HomeStateError(l.toString()));
-      }, (r) {
-        homeModel = r;
-        emit(HomeStateLoaded(r));
-      });
-    } catch (e) {
-      emit(HomeStateError(e.toString()));
-      return null;
-    }
+    // try {
+    final res = await api.homeData();
+    res.fold((l) {
+      emit(HomeStateError(l.toString()));
+    }, (r) {
+      homeModel = r;
+      emit(HomeStateLoaded(r));
+    });
+    // }
+    // catch (e) {
+    //   emit(HomeStateError(e.toString()));
+    //   return null;
+    // }
   }
+
   void removeTalentById(String id) {
     homeModel?.data?.topTalents?.removeWhere((e) => e.id == id);
     emit(HomeStateLoaded(homeModel!));
   }
-
-
-
-
 }
