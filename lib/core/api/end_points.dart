@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class EndPoints {
   static const String baseUrl =
-      'http://mawhebtac.com/api/v1/';
+      'https://mawhebtac.com/api/v1/';
 
   // kReleaseMode
   //     ? 'http://mawhebtac.com/api/v1/'
